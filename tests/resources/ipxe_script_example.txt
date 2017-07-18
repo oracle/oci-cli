@@ -1,0 +1,13 @@
+#!ipxe
+set keep-san 1
+set target-iqn iqn.2015-02.oracle.boot:uefi
+set root-path iscsi:169.254.0.2::::${target-iqn}
+sanhook ${root-path} || echo could not attach ${root-path}
+set uefi-filename \EFI\BOOT\grubx64.efi
+
+#CHANGE IP BELOW TO PXE BOOT SERVER IP
+sanboot || set url http://<IP>
+
+kernel ${url}/CentOS7/images/pxeboot/vmlinuz vmlinuxconsole=tty0 console=ttyS0,9600 netroot=iscsi:@169.254.0.2::::iqn.2015-02.oracle.boot:uefi iscsi_initiator=iqn.2015-02.oracle.boot:instance ip=dhcp ks=${URL}/extras/ks.cfg
+initrd ${url}/CentOS7/images/pxeboot/initrd.img
+boot
