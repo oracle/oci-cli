@@ -27,7 +27,13 @@ Usage
 To get help with the command line:
 ::
 
-    bmcs --help or bmcs -?
+    bmcs --help
+
+or
+
+::
+
+    bmcs -?
 
 
 Examples
@@ -42,14 +48,14 @@ Documentation
 
 Detailed documentation for CLI prerequisites, installation and configuration, and troubleshooting can be found here__.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm>
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm
 
 
 Help
 ====
 See the “Questions or Feedback?” section here__.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#questions
 
 
 Changes
@@ -70,7 +76,7 @@ __ https://github.com/oracle/bmcs-cli/blob/master/CONTRIBUTING.rst
 
 Known Issues
 ============
-You can find information on any known issues with the SDK here__ and under the “Issues__” tab of this project's `GitHub repository`__.
+You can find information on any known issues with the CLI here__ and under the “Issues__” tab of this project's `GitHub repository`__.
 
 __ https://docs.us-phoenix-1.oraclecloud.com/Content/knownissues.htm
 __ https://github.com/oracle/bmcs-cli/issues
