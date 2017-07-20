@@ -150,6 +150,7 @@ def test_resume_multipart_upload(runner, config_file, content_input_file, temp_b
     assert result.exit_code != 0
 
     # resume multipart upload
+    time.sleep(20)
     result = invoke(runner, config_file, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
     validate_response(result, json_response_expected=False)
 

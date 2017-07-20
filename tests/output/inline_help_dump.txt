@@ -98,7 +98,8 @@ Options:
   --volume-id TEXT     The OCID of the volume that needs to be backed up.
                        [required]
   --display-name TEXT  A user-friendly name for the volume backup. Does not have
-                       to be unique and it's changeable.
+                       to be unique and it's changeable. Avoid entering
+                       confidential information.
   -?, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -150,11 +151,13 @@ Options:
 $ bmcs bv backup update --help
 Usage: bmcs bv backup update [OPTIONS]
 
-  Updates the display name for the specified volume backup.
+  Updates the display name for the specified volume backup. Avoid entering
+  confidential information.
 
 Options:
   --volume-backup-id TEXT  The OCID of the volume backup.  [required]
   --display-name TEXT      A friendly user-specified name for the volume backup.
+                           Avoid entering confidential information.
   --if-match TEXT          For optimistic concurrency control. In the PUT or
                            DELETE call for a resource, set the `if-match`
                            parameter to the value of the etag from a previous
@@ -190,9 +193,10 @@ Commands:
 $ bmcs bv volume create --help
 Usage: bmcs bv volume create [OPTIONS]
 
-  Creates a new volume in the specified compartment. The size of a volume can
-  be either 256 GB or 2 TB. For general information about block volumes, see
-  [Overview of Block Volume Service].
+  Creates a new volume in the specified compartment. Volumes can be created in
+  sizes ranging from 50 GB (51200 MB) to 2 TB (2097152 MB), in 1 GB (1024 MB)
+  increments. By default, volumes are 1 TB (1048576 MB). For general
+  information about block volumes, see [Overview of Block Volume Service].
 
   A volume and instance can be in separate compartments but must be in the
   same Availability Domain. For information about access control and
@@ -203,7 +207,7 @@ Usage: bmcs bv volume create [OPTIONS]
 
   You may optionally specify a *display name* for the volume, which is simply
   a friendly name or description. It does not have to be unique, and you can
-  change it.
+  change it. Avoid entering confidential information.
 
 Options:
   --availability-domain TEXT  The Availability Domain of the volume.
@@ -213,7 +217,8 @@ Options:
   -c, --compartment-id TEXT   The OCID of the compartment that contains the
                               volume.  [required]
   --display-name TEXT         A user-friendly name. Does not have to be unique,
-                              and it's changeable.
+                              and it's changeable. Avoid entering confidential
+                              information.
   --size-in-mbs TEXT          The size of the volume in MBs.
   --volume-backup-id TEXT     The OCID of the volume backup from which the data
                               should be restored on the newly created volume.
@@ -273,12 +278,13 @@ Options:
 $ bmcs bv volume update --help
 Usage: bmcs bv volume update [OPTIONS]
 
-  Updates the specified volume's display name.
+  Updates the specified volume's display name. Avoid entering confidential
+  information.
 
 Options:
   --volume-id TEXT     The OCID of the volume.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -439,6 +445,7 @@ Options:
 Commands:
   create  Creates a boot disk image for the specified...
   delete  Deletes an image.
+  export  Exports the specified image to the Oracle...
   get     Gets the specified image.
   list    Lists the available images in the specified...
   update  Updates the display name of the image.
@@ -447,29 +454,60 @@ Commands:
 $ bmcs compute image create --help
 Usage: bmcs compute image create [OPTIONS]
 
-  Creates a boot disk image for the specified instance. For more information
-  about images, see [Managing Custom Images].
+  Creates a boot disk image for the specified instance or imports an exported
+  image from the Oracle Bare Metal Cloud Object Storage Service.
 
-  You must provide the OCID of the instance you want to use as the basis for
-  the image, and the OCID of the compartment containing that instance.
+  When creating a new image, you must provide the OCID of the instance you
+  want to use as the basis for the image, and the OCID of the compartment
+  containing that instance. For more information about images, see [Managing
+  Custom Images].
+
+  When importing an exported image from the Object Storage Service, you
+  specify the source information in [ImageSourceDetails].
+
+  When importing an image based on the namespace, bucket name, and object
+  name, use [ImageSourceViaObjectStorageTupleDetails].
+
+  When importing an image based on the Object Storage Service URL, use
+  [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-
+  authenticated requests] for constructing URLs for image import/export.
+
+  For more information about importing exported images, see [Image
+  Import/Export].
 
   You may optionally specify a *display name* for the image, which is simply a
   friendly name or description. It does not have to be unique, and you can
-  change it. See [UpdateImage].
+  change it. See [UpdateImage]. Avoid entering confidential information.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment containing the instance
-                             you want to use as the basis for the image.
-                             [required]
-  --instance-id TEXT         The OCID of the instance you want to use as the
-                             basis for the image.  [required]
-  --display-name TEXT        A user-friendly name for the image. It does not
-                             have to be unique, and it's changeable. You cannot
-                             use an Oracle-provided image name as a custom image
-                             name.
-                             
-                             Example: `My Oracle Linux image`
-  -?, --help                 Show this message and exit.
+  -c, --compartment-id TEXT    The OCID of the compartment containing the
+                               instance you want to use as the basis for the
+                               image.  [required]
+  --display-name TEXT          A user-friendly name for the image. It does not
+                               have to be unique, and it's changeable. Avoid
+                               entering confidential information.
+                               
+                               You cannot
+                               use an Oracle-provided image name as a custom
+                               image name.
+                               
+                               Example: `My Oracle Linux image`
+  --image-source-details TEXT  Details for creating an image through import
+                               Example: '{ "objectName": "image-to-
+                               import.qcow2", "bucketName": "MyBucket",
+                               "namespaceName": "MyNamespace", "sourceType":
+                               "objectStorageTuple" }'
+                               
+                               or
+                               
+                               '{ "sourceUri":
+                               "https://objectstorage.us-phoenix-1.oraclecloud.c
+                               om/n/MyNamespace/b/MyBucket/o/image-to-
+                               import.qcow2", "sourceType": "objectStorageUri"
+                               }'
+  --instance-id TEXT           The OCID of the instance you want to use as the
+                               basis for the image.
+  -?, --help                   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image delete --help
@@ -487,6 +525,50 @@ Options:
                    value.
   --force          Perform deletion without prompting for confirmation.
   -?, --help       Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute image export --help
+Usage: bmcs compute image export [OPTIONS]
+
+  Exports the specified image to the Oracle Bare Metal Cloud Object Storage
+  Service. You can use the Object Storage Service URL, or the namespace,
+  bucket name, and object name when specifying the location to export to.
+
+  For more information about exporting images, see [Image Import/Export].
+
+  To perform an image export, you need write access to the Object Storage
+  Service bucket for the image, see [Let Users Write Objects to Object Storage
+  Buckets].
+
+  See [Object Storage URLs] and [pre-authenticated requests] for constructing
+  URLs for image import/export.
+
+Options:
+  --image-id TEXT          The OCID of the image.  [required]
+  --destination-type TEXT  The destination type. Use `objectStorageTuple` when
+                           specifying the namespace, bucket name, and object
+                           name. Use `objectStorageUri` when specifying the
+                           Object Storage Service URL. 
+                           
+                           Example: '{
+                           "objectName": "image-to-import.qcow2", "bucketName":
+                           "MyBucket", "namespaceName": "MyNamespace",
+                           "sourceType": "objectStorageTuple" }'
+                           
+                           or
+                           
+                           '{
+                           "destinationUri": "https://objectstorage.us-phoenix-1
+                           .oraclecloud.com/n/MyNamespace/b/MyBucket/o/exported-
+                           image.qcow2", "destinationType": "objectStorageUri"
+                           }'  [required]
+  --if-match TEXT          For optimistic concurrency control. In the PUT or
+                           DELETE call for a resource, set the `if-match`
+                           parameter to the value of the etag from a previous
+                           GET or POST response for that resource.  The resource
+                           will be updated or deleted only if the etag you
+                           provide matches the resource's current etag value.
+  -?, --help               Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image get --help
@@ -508,7 +590,8 @@ Usage: bmcs compute image list [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment.  [required]
   --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable.
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
                                   
                                   Example: `My new
                                   resource`
@@ -531,14 +614,14 @@ Options:
 $ bmcs compute image update --help
 Usage: bmcs compute image update [OPTIONS]
 
-  Updates the display name of the image.
+  Updates the display name of the image. Avoid entering confidential
+  information.
 
 Options:
   --image-id TEXT      The OCID of the image.  [required]
-  --display-name TEXT  The non-unique, changeable name of the image.
-                       
-                       Example:
-                       `My custom Oracle Linux image`
+  --display-name TEXT  A user-friendly name. Does not have to be unique, and
+                       it's changeable. Avoid entering confidential information.
+                       Example: `My custom Oracle Linux image`
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -566,6 +649,8 @@ Options:
 
 Commands:
   action                     Performs one of the power actions (start,...
+  attach-vnic                Creates a secondary VNIC and attaches it to...
+  detach-vnic                Detaches and deletes the specified secondary...
   get                        Gets information about the specified...
   get-windows-initial-creds  Gets the generated credentials for the...
   launch                     Creates a new instance in the specified...
@@ -605,6 +690,68 @@ Options:
                       only if the etag you provide matches the resource's
                       current etag value.
   -?, --help          Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute instance attach-vnic --help
+Usage: bmcs compute instance attach-vnic [OPTIONS]
+
+  Creates a secondary VNIC and attaches it to the specified instance. For more
+  information about secondary VNICs, see [Managing Virtual Network Interface
+  Cards (VNICs)].
+
+Options:
+  --instance-id TEXT          The OCID of the instance.  [required]
+  --subnet-id TEXT            The OCID of the subnet to create the VNIC in.
+                              [required]
+  --vnic-display-name TEXT    A user-friendly name for the VNIC. Does not have
+                              to be unique.
+  --assign-public-ip BOOLEAN  Whether the VNIC should be assigned a public IP
+                              address. Defaults to whether the subnet is public
+                              or private. If not set and the VNIC is being
+                              created in a private subnet (i.e., where
+                              prohibitPublicIpOnVnic=true in the Subnet), then
+                              no public IP address is assigned. If not set and
+                              the subnet is public
+                              (prohibitPublicIpOnVnic=false), then a public IP
+                              address is assigned. If set to true and
+                              prohibitPublicIpOnVnic=true, an error is returned.
+  --private-ip TEXT           A private IP address of your choice to assign to
+                              the VNIC. Must be an available IP address within
+                              the subnet's CIDR. If no value is specified, a
+                              private IP address from the subnet will be
+                              automatically assigned.
+  --hostname-label TEXT       The hostname for the VNIC. Used for DNS. The value
+                              is the hostname portion of the VNIC's fully
+                              qualified domain name (FQDN) (e.g., `bminstance-1`
+                              in FQDN
+                              `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must
+                              be unique across all VNICs in the subnet and
+                              comply with [RFC
+                              952](https://tools.ietf.org/html/rfc952) and [RFC
+                              1123](https://tools.ietf.org/html/rfc1123). The
+                              value can be retrieved from the
+                              [Vnic](#/en/iaas/20160918/Vnic/).
+  --wait                      If set, then wait for the attachment to complete
+                              and return the newly attached VNIC. If not set,
+                              then the command will not wait and will return
+                              nothing on success.
+  -?, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute instance detach-vnic --help
+Usage: bmcs compute instance detach-vnic [OPTIONS]
+
+  Detaches and deletes the specified secondary VNIC. This operation cannot be
+  used on the instance's primary VNIC. When you terminate an instance, all
+  attached VNICs (primary and secondary) are automatically detached and
+  deleted.
+
+Options:
+  --vnic-id TEXT             The OCID of the VNIC.  [required]
+  -c, --compartment-id TEXT  The OCID of the instance's compartment.  [required]
+  --force                    Perform deletion without prompting for
+                             confirmation.
+  -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance get --help
@@ -649,11 +796,16 @@ Usage: bmcs compute instance launch [OPTIONS]
   retrieve a resource's OCID by using a List API operation on that resource
   type, or by viewing the resource in the Console.
 
-  When you launch an instance, it is automatically attached to a Virtual
-  Network Interface Card (VNIC). The VNIC has a private IP address from the
-  subnet's CIDR, and optionally a public IP address. To get the addresses, use
-  the [ListVnicAttachments] operation to get the VNIC ID for the instance, and
-  then call [GetVnic] with the VNIC ID.
+  When you launch an instance, it is automatically attached to a virtual
+  network interface card (VNIC), called the *primary VNIC*. The VNIC has a
+  private IP address from the subnet's CIDR. You can either assign a private
+  IP address of your choice or let Oracle automatically assign one. You can
+  choose whether the instance has a public IP address. To retrieve the
+  addresses, use the [ListVnicAttachments] operation to get the VNIC ID for
+  the instance, and then call [GetVnic] with the VNIC ID.
+
+  You can later add secondary VNICs to an instance. For more information, see
+  [Managing Virtual Network Interface Cards (VNICs)].
 
 Options:
   --availability-domain TEXT      The Availability Domain of the instance.
@@ -667,10 +819,11 @@ Options:
                                   You can enumerate all available shapes by
                                   calling [ListShapes].  [required]
   --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable.
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
                                   
-                                  Example: `My
-                                  bare metal instance`
+                                  Example: `My bare
+                                  metal instance`
   --extended-metadata TEXT        Additional metadata key/value pairs that you
                                   provide.  They serve a similar purpose and
                                   functionality from fields in the 'metadata'
@@ -823,7 +976,8 @@ Options:
                               Example:
                               `Uocm:PHX-AD-1`
   --display-name TEXT         A user-friendly name. Does not have to be unique,
-                              and it's changeable.
+                              and it's changeable. Avoid entering confidential
+                              information.
                               
                               Example: `My new resource`
   --limit TEXT                The maximum number of items to return in a
@@ -876,14 +1030,13 @@ Options:
 $ bmcs compute instance update --help
 Usage: bmcs compute instance update [OPTIONS]
 
-  Updates the display name of the specified instance. The OCID of the instance
-  remains the same.
+  Updates the display name of the specified instance. Avoid entering
+  confidential information. The OCID of the instance remains the same.
 
 Options:
   --instance-id TEXT   The OCID of the instance.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
-                       
+                       it's changeable. Avoid entering confidential information.
                        Example: `My bare metal instance`
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
@@ -933,20 +1086,32 @@ $ bmcs compute vnic-attachment --help
 Usage: bmcs compute vnic-attachment [OPTIONS] COMMAND [ARGS]...
 
   Represents an attachment between a VNIC and an instance. For more
-  information, see [Overview of the Compute Service].
+  information, see [Managing Virtual Network Interface Cards (VNICs)].
 
 Options:
   -?, --help  Show this message and exit.
 
 Commands:
-  list  Lists the VNIC attachments for the specified...
+  get   Gets the information for the specified VNIC...
+  list  Lists the VNIC attachments in the specified...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute vnic-attachment get --help
+Usage: bmcs compute vnic-attachment get [OPTIONS]
+
+  Gets the information for the specified VNIC attachment.
+
+Options:
+  --vnic-attachment-id TEXT  The OCID of the VNIC attachment.  [required]
+  -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute vnic-attachment list --help
 Usage: bmcs compute vnic-attachment list [OPTIONS]
 
-  Lists the VNIC attachments for the specified compartment. The list can be
-  filtered by instance and by VNIC.
+  Lists the VNIC attachments in the specified compartment. A VNIC attachment
+  resides in the same compartment as the attached instance. The list can be
+  filtered by instance, VNIC, or Availability Domain.
 
 Options:
   -c, --compartment-id TEXT   The OCID of the compartment.  [required]
@@ -996,7 +1161,8 @@ Options:
                        [required]
   --volume-id TEXT     The OCID of the volume.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and it
-                       cannot be changed.
+                       cannot be changed. Avoid entering confidential
+                       information.
   -?, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2139,7 +2305,8 @@ Usage: bmcs network cpe create [OPTIONS]
   [Configuring Your On-Premise Router].
 
   You may optionally specify a *display name* for the CPE, otherwise a default
-  is provided. It does not have to be unique, and you can change it.
+  is provided. It does not have to be unique, and you can change it. Avoid
+  entering confidential information.
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment to contain the CPE.
@@ -2147,7 +2314,8 @@ Options:
   --ip-address TEXT          The public IP address of the on-premise router.
                              Example: `143.19.23.16`  [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2200,12 +2368,13 @@ Options:
 $ bmcs network cpe update --help
 Usage: bmcs network cpe update [OPTIONS]
 
-  Updates the specified CPE's display name.
+  Updates the specified CPE's display name. Avoid entering confidential
+  information.
 
 Options:
   --cpe-id TEXT        The OCID of the CPE.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -2264,7 +2433,7 @@ Usage: bmcs network dhcp-options create [OPTIONS]
 
   You may optionally specify a *display name* for the set of DHCP options,
   otherwise a default is provided. It does not have to be unique, and you can
-  change it.
+  change it. Avoid entering confidential information.
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment to contain the set of
@@ -2277,7 +2446,8 @@ Options:
   --vcn-id TEXT              The OCID of the VCN the set of DHCP options belongs
                              to.  [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2335,13 +2505,15 @@ $ bmcs network dhcp-options update --help
 Usage: bmcs network dhcp-options update [OPTIONS]
 
   Updates the specified set of DHCP options. You can update the display name
-  or the options themselves. Note that the `options` object you provide
-  replaces the entire existing set of options.
+  or the options themselves. Avoid entering confidential information.
+
+  Note that the `options` object you provide replaces the entire existing set
+  of options.
 
 Options:
   --dhcp-id TEXT       The OCID for the set of DHCP options.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --options TEXT       This must be provided in JSON format. See API reference
                        for additional help.
                        
@@ -2398,13 +2570,15 @@ Usage: bmcs network drg create [OPTIONS]
   information about OCIDs, see [Resource Identifiers].
 
   You may optionally specify a *display name* for the DRG, otherwise a default
-  is provided. It does not have to be unique, and you can change it.
+  is provided. It does not have to be unique, and you can change it. Avoid
+  entering confidential information.
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment to contain the DRG.
                              [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2458,12 +2632,13 @@ Options:
 $ bmcs network drg update --help
 Usage: bmcs network drg update [OPTIONS]
 
-  Updates the specified DRG's display name.
+  Updates the specified DRG's display name. Avoid entering confidential
+  information.
 
 Options:
   --drg-id TEXT        The OCID of the DRG.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -2500,6 +2675,7 @@ Usage: bmcs network drg-attachment create [OPTIONS]
 
   You may optionally specify a *display name* for the attachment, otherwise a
   default is provided. It does not have to be unique, and you can change it.
+  Avoid entering confidential information.
 
   For the purposes of access control, the DRG attachment is automatically
   placed into the same compartment as the VCN. For more information about
@@ -2508,7 +2684,8 @@ Usage: bmcs network drg-attachment create [OPTIONS]
 Options:
   --drg-id TEXT        The OCID of the DRG.  [required]
   --vcn-id TEXT        The OCID of the VCN.  [required]
-  --display-name TEXT  A user-friendly name. Does not have to be unique.
+  --display-name TEXT  A user-friendly name. Does not have to be unique. Avoid
+                       entering confidential information.
   -?, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2564,12 +2741,14 @@ Options:
 $ bmcs network drg-attachment update --help
 Usage: bmcs network drg-attachment update [OPTIONS]
 
-  Updates the display name for the specified `DrgAttachment`.
+  Updates the display name for the specified `DrgAttachment`. Avoid entering
+  confidential information.
 
 Options:
   --drg-attachment-id TEXT  The OCID of the DRG attachment.  [required]
   --display-name TEXT       A user-friendly name. Does not have to be unique,
-                            and it's changeable.
+                            and it's changeable. Avoid entering confidential
+                            information.
   --if-match TEXT           For optimistic concurrency control. In the PUT or
                             DELETE call for a resource, set the `if-match`
                             parameter to the value of the etag from a previous
@@ -2619,7 +2798,7 @@ Usage: bmcs network internet-gateway create [OPTIONS]
 
   You may optionally specify a *display name* for the Internet Gateway,
   otherwise a default is provided. It does not have to be unique, and you can
-  change it.
+  change it. Avoid entering confidential information.
 
   For traffic to flow between a subnet and an Internet Gateway, you must
   create a route rule accordingly in the subnet's route table (e.g., 0.0.0.0/0
@@ -2639,7 +2818,8 @@ Options:
   --vcn-id TEXT              The OCID of the VCN the Internet Gateway is
                              attached to.  [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2697,7 +2877,7 @@ $ bmcs network internet-gateway update --help
 Usage: bmcs network internet-gateway update [OPTIONS]
 
   Updates the specified Internet Gateway. You can disable/enable it, or change
-  its display name.
+  its display name. Avoid entering confidential information.
 
   If the gateway is disabled, that means no traffic will flow to/from the
   internet even if there's a route rule that enables that traffic.
@@ -2705,7 +2885,7 @@ Usage: bmcs network internet-gateway update [OPTIONS]
 Options:
   --ig-id TEXT         The OCID of the Internet Gateway.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --is-enabled TEXT    Whether the gateway is enabled.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
@@ -2761,7 +2941,7 @@ Usage: bmcs network ip-sec-connection create [OPTIONS]
 
   You may optionally specify a *display name* for the IPSec connection,
   otherwise a default is provided. It does not have to be unique, and you can
-  change it.
+  change it. Avoid entering confidential information.
 
   After creating the IPSec connection, you need to configure your on-premise
   router with tunnel-specific information returned by
@@ -2785,7 +2965,8 @@ Options:
                              Example: '["10.0.0.0/16"]'
                              [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -2871,12 +3052,13 @@ Options:
 $ bmcs network ip-sec-connection update --help
 Usage: bmcs network ip-sec-connection update [OPTIONS]
 
-  Updates the display name for the specified IPSec connection.
+  Updates the display name for the specified IPSec connection. Avoid entering
+  confidential information.
 
 Options:
   --ipsc-id TEXT       The OCID of the IPSec connection.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -2928,6 +3110,7 @@ Usage: bmcs network route-table create [OPTIONS]
 
   You may optionally specify a *display name* for the route table, otherwise a
   default is provided. It does not have to be unique, and you can change it.
+  Avoid entering confidential information.
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment to contain the route
@@ -2944,7 +3127,8 @@ Options:
   --vcn-id TEXT              The OCID of the VCN the route table belongs to.
                              [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   -?, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -3002,14 +3186,16 @@ Options:
 $ bmcs network route-table update --help
 Usage: bmcs network route-table update [OPTIONS]
 
-  Updates the specified route table's display name or route rules. Note that
-  the `routeRules` object you provide replaces the entire existing set of
-  rules.
+  Updates the specified route table's display name or route rules. Avoid
+  entering confidential information.
+
+  Note that the `routeRules` object you provide replaces the entire existing
+  set of rules.
 
 Options:
   --rt-id TEXT         The OCID of the route table.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --route-rules TEXT   The collection of rules used for routing destination IPs
                        to network devices. This must be provided in JSON format.
                        See API reference for additional help.
@@ -3076,6 +3262,7 @@ Usage: bmcs network security-list create [OPTIONS]
 
   You may optionally specify a *display name* for the security list, otherwise
   a default is provided. It does not have to be unique, and you can change it.
+  Avoid entering confidential information.
 
 Options:
   -c, --compartment-id TEXT      The OCID of the compartment to contain the
@@ -3103,7 +3290,8 @@ Options:
   --vcn-id TEXT                  The OCID of the VCN the security list belongs
                                  to.  [required]
   --display-name TEXT            A user-friendly name. Does not have to be
-                                 unique, and it's changeable.
+                                 unique, and it's changeable. Avoid entering
+                                 confidential information.
   -?, --help                     Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -3159,14 +3347,17 @@ Options:
 $ bmcs network security-list update --help
 Usage: bmcs network security-list update [OPTIONS]
 
-  Updates the specified security list's display name or rules. Note that the
-  `egressSecurityRules` or `ingressSecurityRules` objects you provide replace
-  the entire existing objects.
+  Updates the specified security list's display name or rules. Avoid entering
+  confidential information.
+
+  Note that the `egressSecurityRules` or `ingressSecurityRules` objects you
+  provide replace the entire existing objects.
 
 Options:
   --security-list-id TEXT        The OCID of the security list.  [required]
   --display-name TEXT            A user-friendly name. Does not have to be
-                                 unique, and it's changeable.
+                                 unique, and it's changeable. Avoid entering
+                                 confidential information.
   --egress-security-rules TEXT   Rules for allowing egress IP packets. This must
                                  be provided in JSON format. See API reference
                                  for additional help.
@@ -3255,6 +3446,7 @@ Usage: bmcs network subnet create [OPTIONS]
 
   You may optionally specify a *display name* for the subnet, otherwise a
   default is provided. It does not have to be unique, and you can change it.
+  Avoid entering confidential information.
 
   You can also add a DNS label for the subnet, which is required if you want
   the Internet and VCN Resolver to resolve hostnames for instances in the
@@ -3274,7 +3466,8 @@ Options:
                                   subnet will use the VCN's default set of DHCP
                                   options.
   --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable.
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
   --dns-label TEXT                A DNS label for the subnet, used in
                                   conjunction with the VNIC's hostname and VCN's
                                   DNS label to form a fully qualified domain
@@ -3376,12 +3569,13 @@ Options:
 $ bmcs network subnet update --help
 Usage: bmcs network subnet update [OPTIONS]
 
-  Updates the specified subnet's display name.
+  Updates the specified subnet's display name. Avoid entering confidential
+  information.
 
 Options:
   --subnet-id TEXT     The OCID of the subnet.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -3419,11 +3613,11 @@ Usage: bmcs network vcn create [OPTIONS]
   Creates a new Virtual Cloud Network (VCN). For more information, see
   [Managing Virtual Cloud Networks (VCNs)].
 
-  For the VCN you must specify a single, contiguous IPv4 CIDR block in the
-  private IP address ranges specified in [RFC 1918] (10.0.0.0/8, 172.16/12,
-  and 192.168/16). Example: 172.16.0.0/16. The CIDR block can range from /16
-  to /30, and it must not overlap with your on-premise network. You can't
-  change the size of the VCN after creation.
+  For the VCN you must specify a single, contiguous IPv4 CIDR block. Oracle
+  recommends using one of the private IP address ranges specified in [RFC
+  1918] (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The
+  CIDR block can range from /16 to /30, and it must not overlap with your on-
+  premise network. You can't change the size of the VCN after creation.
 
   For the purposes of access control, you must provide the OCID of the
   compartment where you want the VCN to reside. Consult an Oracle Bare Metal
@@ -3434,7 +3628,8 @@ Usage: bmcs network vcn create [OPTIONS]
   Service]. For information about OCIDs, see [Resource Identifiers].
 
   You may optionally specify a *display name* for the VCN, otherwise a default
-  is provided. It does not have to be unique, and you can change it.
+  is provided. It does not have to be unique, and you can change it. Avoid
+  entering confidential information.
 
   You can also add a DNS label for the VCN, which is required if you want the
   instances to use the Interent and VCN Resolver option for DNS in the VCN.
@@ -3457,7 +3652,8 @@ Options:
   -c, --compartment-id TEXT  The OCID of the compartment to contain the VCN.
                              [required]
   --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
+                             and it's changeable. Avoid entering confidential
+                             information.
   --dns-label TEXT           A DNS label for the VCN, used in conjunction with
                              the VNIC's hostname and subnet's DNS label to form
                              a fully qualified domain name (FQDN) for each VNIC
@@ -3529,12 +3725,13 @@ Options:
 $ bmcs network vcn update --help
 Usage: bmcs network vcn update [OPTIONS]
 
-  Updates the specified VCN's display name.
+  Updates the specified VCN's display name. Avoid entering confidential
+  information.
 
 Options:
   --vcn-id TEXT        The OCID of the VCN.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique, and
-                       it's changeable.
+                       it's changeable. Avoid entering confidential information.
   --if-match TEXT      For optimistic concurrency control. In the PUT or DELETE
                        call for a resource, set the `if-match` parameter to the
                        value of the etag from a previous GET or POST response
@@ -3547,9 +3744,16 @@ Options:
 $ bmcs network vnic --help
 Usage: bmcs network vnic [OPTIONS] COMMAND [ARGS]...
 
-  A virtual network interface card. Each instance automatically has a VNIC
-  attached to it, and the VNIC connects the instance to the subnet. For more
-  information, see [Overview of the Compute Service].
+  A virtual network interface card. Each VNIC resides in a subnet in a VCN. An
+  instance attaches to a VNIC to obtain a network connection into the VCN
+  through that subnet. Each instance has a *primary VNIC* that is
+  automatically created and attached during launch. You can add *secondary
+  VNICs* to an instance after it's launched. For more information, see
+  [Managing Virtual Network Interface Cards (VNICs)].
+
+  Each VNIC has a *primary private IP* that is automatically assigned during
+  launch. You can add *secondary private IPs* to a VNIC after it's created.
+  For more information, see [CreatePrivateIp] and [Managing IP Addresses].
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -3560,19 +3764,49 @@ Options:
   -?, --help  Show this message and exit.
 
 Commands:
-  get  Gets the information for the specified...
+  get     Gets the information for the specified...
+  update  Updates the specified VNIC.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vnic get --help
 Usage: bmcs network vnic get [OPTIONS]
 
-  Gets the information for the specified Virtual Network Interface Card
-  (VNIC), including the IP addresses. You can get the instance's VNIC OCID
-  from the [ListVnicAttachments] operation.
+  Gets the information for the specified virtual network interface card
+  (VNIC). You can get the VNIC OCID from the [ListVnicAttachments] operation.
 
 Options:
   --vnic-id TEXT  The OCID of the VNIC.  [required]
   -?, --help      Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network vnic update --help
+Usage: bmcs network vnic update [OPTIONS]
+
+  Updates the specified VNIC.
+
+Options:
+  --vnic-id TEXT         The OCID of the VNIC.  [required]
+  --display-name TEXT    A user-friendly name. Does not have to be unique, and
+                         it's changeable.
+  --hostname-label TEXT  The hostname for the VNIC's primary private IP. Used
+                         for DNS. The value is the hostname portion of the
+                         primary private IP's fully qualified domain name (FQDN)
+                         (for example, `bminstance-1` in FQDN
+                         `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be
+                         unique across all VNICs in the subnet and comply with
+                         [RFC 952] and [RFC 1123]. The value appears in the
+                         [Vnic] object and also the [PrivateIp] object returned
+                         by [ListPrivateIps] and [GetPrivateIp].
+                         
+                         For more
+                         information, see [DNS in Your Virtual Cloud Network].
+  --if-match TEXT        For optimistic concurrency control. In the PUT or
+                         DELETE call for a resource, set the `if-match`
+                         parameter to the value of the etag from a previous GET
+                         or POST response for that resource.  The resource will
+                         be updated or deleted only if the etag you provide
+                         matches the resource's current etag value.
+  -?, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os --help

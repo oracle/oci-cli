@@ -13,7 +13,13 @@ def compute_group():
     pass
 
 
-@click.group(cli_util.override('volume_group.command_name', 'volume'), help="""""")
+@click.group(cli_util.override('volume_group.command_name', 'volume'), help="""A detachable block volume device that allows you to dynamically expand
+the storage capacity of an instance. For more information, see
+[Overview of Cloud Volume Storage].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
 @cli_util.help_option_group
 def volume_group():
     pass
@@ -57,7 +63,7 @@ def shape_group():
 
 
 @click.group(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), help="""Represents an attachment between a VNIC and an instance. For more information, see
-[Overview of the Compute Service].""")
+[Managing Virtual Network Interface Cards (VNICs)].""")
 @cli_util.help_option_group
 def vnic_attachment_group():
     pass
@@ -82,11 +88,36 @@ def console_history_group():
     pass
 
 
+@vnic_attachment_group.command(name=cli_util.override('attach_vnic.command_name', 'attach'), help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Managing Virtual Network Interface Cards (VNICs)].""")
+@click.option('--create-vnic-details', required=True, help="""Details for creating a new VNIC.""")
+@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@click.option('--display-name', help="""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def attach_vnic(ctx, create_vnic_details, instance_id, display_name):
+    kwargs = {}
+
+    details = {}
+    details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+    details['instanceId'] = instance_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.attach_vnic(
+        attach_vnic_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
 @volume_attachment_group.command(name=cli_util.override('attach_volume.command_name', 'attach'), help="""Attaches the specified storage volume to the specified instance.""")
 @click.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @click.option('--type', required=True, help="""The type of volume. The only supported value is \"iscsi\".""")
 @click.option('--volume-id', required=True, help="""The OCID of the volume.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -132,28 +163,44 @@ def capture_console_history(ctx, instance_id):
     cli_util.render_response(result)
 
 
-@image_group.command(name=cli_util.override('create_image.command_name', 'create'), help="""Creates a boot disk image for the specified instance. For more information about images, see [Managing Custom Images].
+@image_group.command(name=cli_util.override('create_image.command_name', 'create'), help="""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Bare Metal Cloud Object Storage Service.
 
-You must provide the OCID of the instance you want to use as the basis for the image, and the OCID of the compartment containing that instance.
+When creating a new image, you must provide the OCID of the instance you want to use as the basis for the image, and the OCID of the compartment containing that instance. For more information about images, see [Managing Custom Images].
 
-You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].""")
+When importing an exported image from the Object Storage Service, you specify the source information in [ImageSourceDetails].
+
+When importing an image based on the namespace, bucket name, and object name, use [ImageSourceViaObjectStorageTupleDetails].
+
+When importing an image based on the Object Storage Service URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+
+For more information about importing exported images, see [Image Import/Export].
+
+You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance you want to use as the basis for the image.""")
-@click.option('--display-name', help="""A user-friendly name for the image. It does not have to be unique, and it's changeable. You cannot use an Oracle-provided image name as a custom image name.
+@click.option('--display-name', help="""A user-friendly name for the image. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+You cannot use an Oracle-provided image name as a custom image name.
 
 Example: `My Oracle Linux image`""")
+@click.option('--image-source-details', help="""Details for creating an image through import""")
+@click.option('--instance-id', help="""The OCID of the instance you want to use as the basis for the image.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def create_image(ctx, compartment_id, instance_id, display_name):
+def create_image(ctx, compartment_id, display_name, image_source_details, instance_id):
     kwargs = {}
 
     details = {}
     details['compartmentId'] = compartment_id
-    details['instanceId'] = instance_id
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if image_source_details is not None:
+        details['imageSourceDetails'] = cli_util.parse_json_parameter("image_source_details", image_source_details)
+
+    if instance_id is not None:
+        details['instanceId'] = instance_id
 
     client = cli_util.build_client('compute', ctx)
     result = client.create_image(
@@ -201,6 +248,25 @@ def delete_image(ctx, image_id, if_match):
     cli_util.render_response(result)
 
 
+@vnic_attachment_group.command(name=cli_util.override('detach_vnic.command_name', 'detach'), help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
+@click.option('--vnic-attachment-id', required=True, help="""The OCID of the VNIC attachment.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def detach_vnic(ctx, vnic_attachment_id, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('compute', ctx)
+    result = client.detach_vnic(
+        vnic_attachment_id=vnic_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
 @volume_group.command(name=cli_util.override('detach_volume.command_name', 'detach'), help="""Detaches a storage volume from an instance. You must specify the OCID of the volume attachment.
 
 This is an asynchronous operation; the attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
@@ -217,6 +283,36 @@ def detach_volume(ctx, volume_attachment_id, if_match):
     client = cli_util.build_client('compute', ctx)
     result = client.detach_volume(
         volume_attachment_id=volume_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@image_group.command(name=cli_util.override('export_image.command_name', 'export'), help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service. You can use the Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to export to.
+
+For more information about exporting images, see [Image Import/Export].
+
+To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+@click.option('--image-id', required=True, help="""The OCID of the image.""")
+@click.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage Service URL.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def export_image(ctx, image_id, destination_type, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['destinationType'] = destination_type
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.export_image(
+        image_id=image_id,
+        export_image_details=details,
         **kwargs
     )
     cli_util.render_response(result)
@@ -284,6 +380,21 @@ def get_instance(ctx, instance_id):
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance(
         instance_id=instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@vnic_attachment_group.command(name=cli_util.override('get_vnic_attachment.command_name', 'get'), help="""Gets the information for the specified VNIC attachment.""")
+@click.option('--vnic-attachment-id', required=True, help="""The OCID of the VNIC attachment.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def get_vnic_attachment(ctx, vnic_attachment_id):
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_vnic_attachment(
+        vnic_attachment_id=vnic_attachment_id,
         **kwargs
     )
     cli_util.render_response(result)
@@ -357,7 +468,9 @@ For information about Availability Domains, see [Regions and Availability Domain
 
 All Oracle Bare Metal Cloud Services resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
 
-When you launch an instance, it is automatically attached to a Virtual Network Interface Card (VNIC). The VNIC has a private IP address from the subnet's CIDR, and optionally a public IP address. To get the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.""")
+When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
+
+You can later add secondary VNICs to an instance. For more information, see [Managing Virtual Network Interface Cards (VNICs)].""")
 @click.option('--availability-domain', required=True, help="""The Availability Domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -366,8 +479,8 @@ Example: `Uocm:PHX-AD-1`""")
 @click.option('--shape', required=True, help="""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
 
 You can enumerate all available shapes by calling [ListShapes].""")
-@click.option('--create-vnic-details', help="""Details for the VNIC that is automatically created when an instance is launched.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.
+@click.option('--create-vnic-details', help="""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
 @click.option('--extended-metadata', help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
@@ -493,7 +606,7 @@ def list_console_histories(ctx, compartment_id, availability_domain, limit, page
 
 @image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. For more information about images, see [Managing Custom Images].""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @click.option('--operating-system', help="""The image's operating system.
@@ -534,7 +647,7 @@ def list_images(ctx, compartment_id, display_name, operating_system, operating_s
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
@@ -593,7 +706,7 @@ def list_shapes(ctx, compartment_id, availability_domain, limit, page, image_id)
     cli_util.render_response(result)
 
 
-@vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help="""Lists the VNIC attachments for the specified compartment. The list can be filtered by instance and by VNIC.""")
+@vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help="""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or Availability Domain.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
@@ -684,9 +797,9 @@ def terminate_instance(ctx, instance_id, if_match):
     cli_util.render_response(result)
 
 
-@image_group.command(name=cli_util.override('update_image.command_name', 'update'), help="""Updates the display name of the image.""")
+@image_group.command(name=cli_util.override('update_image.command_name', 'update'), help="""Updates the display name of the image. Avoid entering confidential information.""")
 @click.option('--image-id', required=True, help="""The OCID of the image.""")
-@click.option('--display-name', help="""The non-unique, changeable name of the image.
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My custom Oracle Linux image`""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -712,9 +825,9 @@ def update_image(ctx, image_id, display_name, if_match):
     cli_util.render_response(result)
 
 
-@instance_group.command(name=cli_util.override('update_instance.command_name', 'update'), help="""Updates the display name of the specified instance. The OCID of the instance remains the same.""")
+@instance_group.command(name=cli_util.override('update_instance.command_name', 'update'), help="""Updates the display name of the specified instance. Avoid entering confidential information. The OCID of the instance remains the same.""")
 @click.option('--instance-id', required=True, help="""The OCID of the instance.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

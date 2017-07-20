@@ -16,7 +16,7 @@ CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
 class TestCompute(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.compute_cli.compute_group, expected_not_called_count=0)
+    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.compute_cli.compute_group, expected_not_called_count=1)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""
         self.validator = validator
@@ -25,8 +25,8 @@ class TestCompute(unittest.TestCase):
             self.subtest_setup()
             self.subtest_instance_operations()
             self.subtest_windows_instance_operations()
-            self.subtest_vnic_operations()
             self.subtest_list_vnics()
+            self.subtest_vnic_operations()
             self.subtest_volume_attachment_operations()
             self.subtest_shape_operations()
             self.subtest_console_history_operations()
@@ -179,6 +179,70 @@ class TestCompute(unittest.TestCase):
         result = self.invoke(
             ['network', 'vnic', 'get', '--vnic-id', vnic_id])
         util.validate_response(result)
+
+        # Attach a new vnic with --wait and all params set.
+        vnic_display_name = 'mysecondvnic'
+        vnic_hostname_label = 'myotherhostname'
+        vnic_private_ip = '10.0.0.121'
+        result = self.invoke(
+            ['compute', 'instance', 'attach-vnic', '--instance-id', self.instance_ocid, '--subnet-id', self.subnet_ocid,
+             '--vnic-display-name', vnic_display_name, '--assign-public-ip', 'false', '--private-ip', vnic_private_ip,
+             '--hostname-label', vnic_hostname_label, '--wait'])
+        util.validate_response(result)
+        second_vnic = json.loads(result.output)['data']
+        second_vnic_id = second_vnic['id']
+
+        # Ensure that all properties set in attach-vnic were set.
+        result = self.invoke(
+            ['network', 'vnic', 'get', '--vnic-id', second_vnic_id])
+        util.validate_response(result)
+        second_vnic = json.loads(result.output)['data']
+        self.assertEquals(vnic_hostname_label, second_vnic['hostname-label'])
+        self.assertEquals(vnic_private_ip, second_vnic['private-ip'])
+        self.assertEquals(vnic_display_name, second_vnic['display-name'])
+        self.assertEquals(None, second_vnic['public-ip'])
+
+        # Some extra time is needed after VNIC CRUD operations for state to stabilize.
+        time.sleep(5)
+
+        # Attach a new vnic with minimal params and without --wait.
+        result = self.invoke(
+            ['compute', 'instance', 'attach-vnic', '--instance-id', self.instance_ocid, '--subnet-id', self.subnet_ocid])
+        util.validate_response(result)
+        self.assertEquals(0, len(result.output))
+
+        # Ensure that new attachments are listed.
+        result = self.invoke(
+            ['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+             self.instance_ocid])
+        util.validate_response(result)
+        json_data = json.loads(result.output)
+        self.assertEquals(3, len(json_data['data']))
+
+        # Update vnic
+        result = self.invoke(
+            ['network', 'vnic', 'update', '--vnic-id', second_vnic_id, '--display-name', 'newdisplayname', '--hostname-label', 'newhostnamelabel'])
+        util.validate_response(result)
+
+        # Get the secondary attachment ID
+        result = self.invoke(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vnic-id', second_vnic_id])
+        util.validate_response(result)
+        json_data = json.loads(result.output)
+        self.assertEquals(1, len(json_data['data']))
+        second_vnic_attachment_id = json_data['data'][0]['id']
+
+        result = self.invoke(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id])
+        util.validate_response(result)
+
+        time.sleep(10)
+
+        # Detach vnic
+        result = self.invoke(
+            ['compute', 'instance', 'detach-vnic', '--vnic-id', second_vnic_id, '--compartment-id', util.COMPARTMENT_ID, '--force'])
+        util.validate_response(result)
+        util.wait_until(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id], 'DETACHED', max_wait_seconds=300, succeed_if_not_found=True)
+
+        time.sleep(10)
 
     @util.log_test
     def subtest_volume_attachment_operations(self):
