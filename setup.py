@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
 
 
 requires = [
-    'oraclebmc==1.3.3',
+    'oraclebmc==1.3.5',
     'certifi',
     'click==6.7',
     'configparser==3.5.0',

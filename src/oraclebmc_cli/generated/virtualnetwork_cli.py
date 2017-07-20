@@ -57,9 +57,17 @@ def ip_sec_connection_device_config_group():
     pass
 
 
-@click.group(cli_util.override('vnic_group.command_name', 'vnic'), help="""A virtual network interface card. Each instance automatically has a VNIC attached to it,
-and the VNIC connects the instance to the subnet. For more information, see
-[Overview of the Compute Service].
+@click.group(cli_util.override('vnic_group.command_name', 'vnic'), help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN.
+An instance attaches to a VNIC to obtain a network connection into the VCN
+through that subnet. Each instance has a *primary VNIC* that is automatically
+created and attached during launch. You can add *secondary VNICs* to an
+instance after it's launched. For more information, see
+[Managing Virtual Network Interface Cards (VNICs)].
+
+Each VNIC has a *primary private IP* that is automatically assigned during launch.
+You can add *secondary private IPs* to a VNIC after it's created. For more
+information, see [CreatePrivateIp] and
+[Managing IP Addresses].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
 talk to an administrator. If you're an administrator who needs to write policies to give users access, see
@@ -105,6 +113,38 @@ def virtual_circuit_bandwidth_shape_group():
 @click.group(cli_util.override('cross_connect_location_group.command_name', 'cross-connect-location'), help="""An individual FastConnect location.""")
 @cli_util.help_option_group
 def cross_connect_location_group():
+    pass
+
+
+@click.group(cli_util.override('private_ip_group.command_name', 'private-ip'), help="""A *private IP* is a conceptual term that refers to a private IP address and related properties.
+The `privateIp` object is the API representation of a private IP.
+
+Each instance has a *primary private IP* that is automatically created and
+assigned to the primary VNIC during instance launch. If you add a secondary
+VNIC to the instance, it also automatically gets a primary private IP. You
+can't remove a primary private IP from its VNIC. The primary private IP is
+automatically deleted when the VNIC is terminated.
+
+You can add *secondary private IPs* to a VNIC after it's created. For more
+information, see the `privateIp` operations and also
+[Managing IP Addresses].
+
+**Note:** Only
+[ListPrivateIps] and
+[GetPrivateIp] work with
+*primary* private IPs. To create and update primary private IPs, you instead
+work with instance and VNIC operations. For example, a primary private IP's
+properties come from the values you specify in
+[CreateVnicDetails] when calling either
+[LaunchInstance] or
+[AttachVnic]. To update the hostname
+for a primary private IP, you use [UpdateVnic].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def private_ip_group():
     pass
 
 
@@ -281,12 +321,12 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You must provide the public IP address of your on-premise router. See [Configuring Your On-Premise Router].
 
-You may optionally specify a *display name* for the CPE, otherwise a default is provided. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the CPE, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the CPE.""")
 @click.option('--ip-address', required=True, help="""The public IP address of the on-premise router.
 
 Example: `143.19.23.16`""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -314,7 +354,7 @@ After creating the `CrossConnect` object, you need to go the FastConnect locatio
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the cross-connect to reside. If you're not sure which compartment to use, put the cross-connect in the same compartment with your VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the cross-connect. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the cross-connect. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the cross-connect.""")
 @click.option('--location-name', required=True, help="""The name of the FastConnect location where this cross-connect will be installed. To get a list of the available locations, see [ListCrossConnectLocations].
 
@@ -323,7 +363,7 @@ Example: `CyrusOne, Chandler, AZ`""")
 
 Example: `10 Gbps`""")
 @click.option('--cross-connect-group-id', help="""The OCID of the cross-connect group to put this cross-connect in.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--far-cross-connect-or-cross-connect-group-id', help="""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on a different router (for the purposes of redundancy), provide the OCID of that existing cross-connect or cross-connect group.""")
 @click.option('--near-cross-connect-or-cross-connect-group-id', help="""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on the same router, provide the OCID of that existing cross-connect or cross-connect group.""")
 @cli_util.help_option
@@ -361,9 +401,9 @@ def create_cross_connect(ctx, compartment_id, location_name, port_speed_shape_na
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the cross-connect group to reside. If you're not sure which compartment to use, put the cross-connect group in the same compartment with your VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the cross-connect group. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the cross-connect group. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the cross-connect group.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -388,11 +428,11 @@ def create_cross_connect_group(ctx, compartment_id, display_name):
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the set of DHCP options to reside. Notice that the set of options doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the set of DHCP options in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the set of DHCP options, otherwise a default is provided. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the set of DHCP options, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the set of DHCP options.""")
 @click.option('--options', required=True, help="""A set of DHCP options.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN the set of DHCP options belongs to.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -419,9 +459,9 @@ def create_dhcp_options(ctx, compartment_id, options, vcn_id, display_name):
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the DRG to reside. Notice that the DRG doesn't have to be in the same compartment as the VCN, the DRG attachment, or other Networking Service components. If you're not sure which compartment to use, put the DRG in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the DRG, otherwise a default is provided. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the DRG, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the DRG.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -444,12 +484,12 @@ def create_drg(ctx, compartment_id, display_name):
 
 @drg_attachment_group.command(name=cli_util.override('create_drg_attachment.command_name', 'create'), help="""Attaches the specified DRG to the specified VCN. A VCN can be attached to only one DRG at a time, and vice versa. The response includes a `DrgAttachment` object with its own OCID. For more information about DRGs, see [Managing Dynamic Routing Gateways (DRGs)].
 
-You may optionally specify a *display name* for the attachment, otherwise a default is provided. It does not have to be unique, and you can change it.
+You may optionally specify a *display name* for the attachment, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For the purposes of access control, the DRG attachment is automatically placed into the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service].""")
 @click.option('--drg-id', required=True, help="""The OCID of the DRG.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -475,7 +515,7 @@ def create_drg_attachment(ctx, drg_id, vcn_id, display_name):
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the Internet Gateway to reside. Notice that the Internet Gateway doesn't have to be in the same compartment as the VCN or other Networking Service components. If you're not sure which compartment to use, put the Internet Gateway in the same compartment with the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the Internet Gateway, otherwise a default is provided. It does not have to be unique, and you can change it.
+You may optionally specify a *display name* for the Internet Gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For traffic to flow between a subnet and an Internet Gateway, you must create a route rule accordingly in the subnet's route table (e.g., 0.0.0.0/0 > Internet Gateway). See [UpdateRouteTable].
 
@@ -483,7 +523,7 @@ You must specify whether the Internet Gateway is enabled when you create it. If 
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the Internet Gateway.""")
 @click.option('--is-enabled', required=True, help="""Whether the gateway is enabled upon creation.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN the Internet Gateway is attached to.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -512,7 +552,7 @@ In the request, you must include at least one static route to the CPE object (yo
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the IPSec connection to reside. Notice that the IPSec connection doesn't have to be in the same compartment as the DRG, CPE, or other Networking Service components. If you're not sure which compartment to use, put the IPSec connection in the same compartment as the DRG. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the IPSec connection, otherwise a default is provided. It does not have to be unique, and you can change it.
+You may optionally specify a *display name* for the IPSec connection, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 After creating the IPSec connection, you need to configure your on-premise router with tunnel-specific information returned by [GetIPSecConnectionDeviceConfig]. For each tunnel, that operation gives you the IP address of Oracle's VPN headend and the shared secret (i.e., the pre-shared key). For more information, see [Configuring Your On-Premise Router].
 
@@ -523,7 +563,7 @@ To get the status of the tunnels (whether they're up or down), use [GetIPSecConn
 @click.option('--static-routes', required=True, help="""Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address.
 
 Example: `10.0.1.0/24`""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -547,15 +587,52 @@ def create_ip_sec_connection(ctx, compartment_id, cpe_id, drg_id, static_routes,
     cli_util.render_response(result)
 
 
+@private_ip_group.command(name=cli_util.override('create_private_ip.command_name', 'create'), help="""Creates a secondary private IP for the specified VNIC. For more information about secondary private IPs, see [Managing IP Addresses].""")
+@click.option('--vnic-id', required=True, help="""The OCID of the VNIC to assign the private IP to. The VNIC and private IP must be in the same subnet.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--hostname-label', help="""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
+
+For more information, see [DNS in Your Virtual Cloud Network].
+
+Example: `bminstance-1`""")
+@click.option('--ip-address', help="""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
+
+Example: `10.0.3.3`""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def create_private_ip(ctx, vnic_id, display_name, hostname_label, ip_address):
+    kwargs = {}
+
+    details = {}
+    details['vnicId'] = vnic_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if hostname_label is not None:
+        details['hostnameLabel'] = hostname_label
+
+    if ip_address is not None:
+        details['ipAddress'] = ip_address
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_private_ip(
+        create_private_ip_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
 @route_table_group.command(name=cli_util.override('create_route_table.command_name', 'create'), help="""Creates a new route table for the specified VCN. In the request you must also include at least one route rule for the new route table. For information on the number of rules you can have in a route table, see [Service Limits]. For general information about route tables in your VCN, see [Managing Route Tables].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the route table to reside. Notice that the route table doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the route table in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the route table, otherwise a default is provided. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the route table, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the route table.""")
 @click.option('--route-rules', required=True, help="""The collection of rules used for routing destination IPs to network devices.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN the route table belongs to.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -582,12 +659,12 @@ def create_route_table(ctx, compartment_id, route_rules, vcn_id, display_name):
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the security list to reside. Notice that the security list doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the security list in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the security list, otherwise a default is provided. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the security list, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the security list.""")
 @click.option('--egress-security-rules', required=True, help="""Rules for allowing egress IP packets.""")
 @click.option('--ingress-security-rules', required=True, help="""Rules for allowing ingress IP packets.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN the security list belongs to.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -621,7 +698,7 @@ You may optionally associate a security list with the subnet. If you don't, the 
 
 You may optionally associate a set of DHCP options with the subnet. If you don't, the subnet will use the VCN's default set. For more information about DHCP options, see [Managing DHCP Options].
 
-You may optionally specify a *display name* for the subnet, otherwise a default is provided. It does not have to be unique, and you can change it.
+You may optionally specify a *display name* for the subnet, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network].""")
 @click.option('--availability-domain', required=True, help="""The Availability Domain to contain the subnet.
@@ -633,7 +710,7 @@ Example: `172.16.1.0/24`""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the subnet.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN to contain the subnet.""")
 @click.option('--dhcp-options-id', help="""The OCID of the set of DHCP options the subnet will use. If you don't provide a value, the subnet will use the VCN's default set of DHCP options.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--dns-label', help="""A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (e.g., `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be an alphanumeric string that begins with a letter and is unique within the VCN. The value cannot be changed.
 
 This value must be set if you want to use the Internet and VCN Resolver to resolve the hostnames of instances in the subnet. It can only be set if the VCN itself was created with a DNS label.
@@ -641,7 +718,7 @@ This value must be set if you want to use the Internet and VCN Resolver to resol
 For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `subnet123`""")
-@click.option('--prohibit-public-ip-on-vnic', help="""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (i.e., it's a private subnet).
+@click.option('--prohibit-public-ip-on-vnic', help="""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch or VNIC creation (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (i.e., it's a private subnet).
 
 Example: `true`""")
 @click.option('--route-table-id', help="""The OCID of the route table the subnet will use. If you don't provide a value, the subnet will use the VCN's default route table.""")
@@ -686,11 +763,11 @@ def create_subnet(ctx, availability_domain, cidr_block, compartment_id, vcn_id, 
 
 @vcn_group.command(name=cli_util.override('create_vcn.command_name', 'create'), help="""Creates a new Virtual Cloud Network (VCN). For more information, see [Managing Virtual Cloud Networks (VCNs)].
 
-For the VCN you must specify a single, contiguous IPv4 CIDR block in the private IP address ranges specified in [RFC 1918] (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The CIDR block can range from /16 to /30, and it must not overlap with your on-premise network. You can't change the size of the VCN after creation.
+For the VCN you must specify a single, contiguous IPv4 CIDR block. Oracle recommends using one of the private IP address ranges specified in [RFC 1918] (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The CIDR block can range from /16 to /30, and it must not overlap with your on-premise network. You can't change the size of the VCN after creation.
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the VCN to reside. Consult an Oracle Bare Metal Cloud Services administrator in your organization if you're not sure which compartment to use. Notice that the VCN doesn't have to be in the same compartment as the subnets or other Networking Service components. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the VCN, otherwise a default is provided. It does not have to be unique, and you can change it.
+You may optionally specify a *display name* for the VCN, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 You can also add a DNS label for the VCN, which is required if you want the instances to use the Interent and VCN Resolver option for DNS in the VCN. For more information, see [DNS in Your Virtual Cloud Network].
 
@@ -701,7 +778,7 @@ The VCN and subnets you create are not accessible until you attach an Internet G
 
 Example: `172.16.0.0/16`""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the VCN.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--dns-label', help="""A DNS label for the VCN, used in conjunction with the VNIC's hostname and subnet's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (e.g., `bminstance-1.subnet123.vcn1.oraclevcn.com`). Not required to be unique, but it's a best practice to set unique DNS labels for VCNs in your tenancy. Must be an alphanumeric string that begins with a letter. The value cannot be changed.
 
 You must set this value if you want instances to be able to use hostnames to resolve other instances in the VCN. Otherwise the Internet and VCN Resolver will not work.
@@ -737,7 +814,7 @@ def create_vcn(ctx, cidr_block, compartment_id, display_name, dns_label):
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the virtual circuit to reside. If you're not sure which compartment to use, put the virtual circuit in the same compartment with the DRG it's using. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the virtual circuit. It does not have to be unique, and you can change it.
+You may optionally specify a *display name* for the virtual circuit. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 **Important:** When creating a virtual circuit, you specify a DRG for the traffic to flow through. Make sure you attach the DRG to your VCN and confirm the VCN's routing sends traffic to the DRG. Otherwise traffic will not flow. For more information, see [Managing Route Tables].""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the virtual circuit.""")
@@ -750,7 +827,7 @@ Example: `phx`""")
 Example: `10 Gbps`""")
 @click.option('--cross-connect-mappings', help="""Create a `CrossConnectMapping` for each cross-connect or cross-connect group this virtual circuit will run on.""")
 @click.option('--customer-bgp-asn', help="""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--gateway-id', help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.""")
 @click.option('--provider-name', help="""The name of the provider (if you're connecting via a provider). To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @click.option('--provider-service-name', help="""The name of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
@@ -947,6 +1024,27 @@ def delete_ip_sec_connection(ctx, ipsc_id, if_match):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.delete_ip_sec_connection(
         ipsc_id=ipsc_id,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@private_ip_group.command(name=cli_util.override('delete_private_ip.command_name', 'delete'), help="""Unassigns and deletes the specified private IP. You must specify the object's OCID. The private IP address is returned to the subnet's pool of available addresses.
+
+This operation cannot be used with primary private IPs, which are automatically unassigned and deleted when the VNIC is terminated.""")
+@click.option('--private-ip-id', required=True, help="""The private IP's OCID.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def delete_private_ip(ctx, private_ip_id, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_private_ip(
+        private_ip_id=private_ip_id,
         **kwargs
     )
     cli_util.render_response(result)
@@ -1233,6 +1331,21 @@ def get_ip_sec_connection_device_status(ctx, ipsc_id):
     cli_util.render_response(result)
 
 
+@private_ip_group.command(name=cli_util.override('get_private_ip.command_name', 'get'), help="""Gets the specified private IP. You must specify the object's OCID. Alternatively, you can get the object by using [ListPrivateIps] with the private IP address (for example, 10.0.3.3) and subnet OCID.""")
+@click.option('--private-ip-id', required=True, help="""The private IP's OCID.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def get_private_ip(ctx, private_ip_id):
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_private_ip(
+        private_ip_id=private_ip_id,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
 @route_table_group.command(name=cli_util.override('get_route_table.command_name', 'get'), help="""Gets the specified route table's information.""")
 @click.option('--rt-id', required=True, help="""The OCID of the route table.""")
 @cli_util.help_option
@@ -1308,7 +1421,7 @@ def get_virtual_circuit(ctx, virtual_circuit_id):
     cli_util.render_response(result)
 
 
-@vnic_group.command(name=cli_util.override('get_vnic.command_name', 'get'), help="""Gets the information for the specified Virtual Network Interface Card (VNIC), including the IP addresses. You can get the instance's VNIC OCID from the [ListVnicAttachments] operation.""")
+@vnic_group.command(name=cli_util.override('get_vnic.command_name', 'get'), help="""Gets the information for the specified virtual network interface card (VNIC). You can get the VNIC OCID from the [ListVnicAttachments] operation.""")
 @click.option('--vnic-id', required=True, help="""The OCID of the VNIC.""")
 @cli_util.help_option
 @click.pass_context
@@ -1599,6 +1712,42 @@ def list_ip_sec_connections(ctx, compartment_id, drg_id, cpe_id, limit, page):
     cli_util.render_response(result)
 
 
+@private_ip_group.command(name=cli_util.override('list_private_ips.command_name', 'list'), help="""Lists the [PrivateIp] objects based on one of these filters:
+
+  - Subnet OCID.   - VNIC OCID.   - Both private IP address and subnet OCID: This lets   you get a `privateIP` object based on its private IP   address (for example, 10.0.3.3) and not its OCID. For comparison,   [GetPrivateIp]   requires the OCID.
+
+If you're listing all the private IPs associated with a given subnet or VNIC, the response includes both primary and secondary private IPs.""")
+@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--ip-address', help="""The private IP address of the `privateIp` object.
+
+Example: `10.0.3.3`""")
+@click.option('--subnet-id', help="""The OCID of the subnet.""")
+@click.option('--vnic-id', help="""The OCID of the VNIC.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def list_private_ips(ctx, limit, page, ip_address, subnet_id, vnic_id):
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if ip_address is not None:
+        kwargs['ip_address'] = ip_address
+    if subnet_id is not None:
+        kwargs['subnet_id'] = subnet_id
+    if vnic_id is not None:
+        kwargs['vnic_id'] = vnic_id
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.list_private_ips(
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
 @route_table_group.command(name=cli_util.override('list_route_tables.command_name', 'list'), help="""Lists the route tables in the specified VCN and specified compartment. The response includes the default route table that automatically comes with each VCN, plus any route tables you've created.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN.""")
@@ -1747,9 +1896,9 @@ def list_virtual_circuits(ctx, compartment_id, limit, page):
     cli_util.render_response(result)
 
 
-@cpe_group.command(name=cli_util.override('update_cpe.command_name', 'update'), help="""Updates the specified CPE's display name.""")
+@cpe_group.command(name=cli_util.override('update_cpe.command_name', 'update'), help="""Updates the specified CPE's display name. Avoid entering confidential information.""")
 @click.option('--cpe-id', required=True, help="""The OCID of the CPE.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -1775,7 +1924,7 @@ def update_cpe(ctx, cpe_id, display_name, if_match):
 
 @cross_connect_group.command(name=cli_util.override('update_cross_connect.command_name', 'update'), help="""Updates the specified cross-connect.""")
 @click.option('--cross-connect-id', required=True, help="""The OCID of the cross-connect.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--is-active', help="""Set to true to activate the cross-connect. You activate it after the physical cabling is complete, and you've confirmed the cross-connect's light levels are good and your side of the interface is up. Activation indicates to Oracle that the physical connection is ready.
 
 Example: `true`""")
@@ -1805,9 +1954,9 @@ def update_cross_connect(ctx, cross_connect_id, display_name, is_active, if_matc
     cli_util.render_response(result)
 
 
-@cross_connect_group_group.command(name=cli_util.override('update_cross_connect_group.command_name', 'update'), help="""Updates the specified cross-connect group's display name.""")
+@cross_connect_group_group.command(name=cli_util.override('update_cross_connect_group.command_name', 'update'), help="""Updates the specified cross-connect group's display name. Avoid entering confidential information.""")
 @click.option('--cross-connect-group-id', required=True, help="""The OCID of the cross-connect group.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -1831,9 +1980,11 @@ def update_cross_connect_group(ctx, cross_connect_group_id, display_name, if_mat
     cli_util.render_response(result)
 
 
-@dhcp_options_group.command(name=cli_util.override('update_dhcp_options.command_name', 'update'), help="""Updates the specified set of DHCP options. You can update the display name or the options themselves. Note that the `options` object you provide replaces the entire existing set of options.""")
+@dhcp_options_group.command(name=cli_util.override('update_dhcp_options.command_name', 'update'), help="""Updates the specified set of DHCP options. You can update the display name or the options themselves. Avoid entering confidential information.
+
+Note that the `options` object you provide replaces the entire existing set of options.""")
 @click.option('--dhcp-id', required=True, help="""The OCID for the set of DHCP options.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--options', help="""""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -1866,9 +2017,9 @@ def update_dhcp_options(ctx, force, dhcp_id, display_name, options, if_match):
     cli_util.render_response(result)
 
 
-@drg_group.command(name=cli_util.override('update_drg.command_name', 'update'), help="""Updates the specified DRG's display name.""")
+@drg_group.command(name=cli_util.override('update_drg.command_name', 'update'), help="""Updates the specified DRG's display name. Avoid entering confidential information.""")
 @click.option('--drg-id', required=True, help="""The OCID of the DRG.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -1892,9 +2043,9 @@ def update_drg(ctx, drg_id, display_name, if_match):
     cli_util.render_response(result)
 
 
-@drg_attachment_group.command(name=cli_util.override('update_drg_attachment.command_name', 'update'), help="""Updates the display name for the specified `DrgAttachment`.""")
+@drg_attachment_group.command(name=cli_util.override('update_drg_attachment.command_name', 'update'), help="""Updates the display name for the specified `DrgAttachment`. Avoid entering confidential information.""")
 @click.option('--drg-attachment-id', required=True, help="""The OCID of the DRG attachment.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -1918,11 +2069,11 @@ def update_drg_attachment(ctx, drg_attachment_id, display_name, if_match):
     cli_util.render_response(result)
 
 
-@internet_gateway_group.command(name=cli_util.override('update_internet_gateway.command_name', 'update'), help="""Updates the specified Internet Gateway. You can disable/enable it, or change its display name.
+@internet_gateway_group.command(name=cli_util.override('update_internet_gateway.command_name', 'update'), help="""Updates the specified Internet Gateway. You can disable/enable it, or change its display name. Avoid entering confidential information.
 
 If the gateway is disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic.""")
 @click.option('--ig-id', required=True, help="""The OCID of the Internet Gateway.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--is-enabled', help="""Whether the gateway is enabled.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
@@ -1950,9 +2101,9 @@ def update_internet_gateway(ctx, ig_id, display_name, is_enabled, if_match):
     cli_util.render_response(result)
 
 
-@ip_sec_connection_group.command(name=cli_util.override('update_ip_sec_connection.command_name', 'update'), help="""Updates the display name for the specified IPSec connection.""")
+@ip_sec_connection_group.command(name=cli_util.override('update_ip_sec_connection.command_name', 'update'), help="""Updates the display name for the specified IPSec connection. Avoid entering confidential information.""")
 @click.option('--ipsc-id', required=True, help="""The OCID of the IPSec connection.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -1976,9 +2127,53 @@ def update_ip_sec_connection(ctx, ipsc_id, display_name, if_match):
     cli_util.render_response(result)
 
 
-@route_table_group.command(name=cli_util.override('update_route_table.command_name', 'update'), help="""Updates the specified route table's display name or route rules. Note that the `routeRules` object you provide replaces the entire existing set of rules.""")
+@private_ip_group.command(name=cli_util.override('update_private_ip.command_name', 'update'), help="""Updates the specified private IP. You must specify the object's OCID. Use this operation if you want to:
+
+  - Move a secondary private IP to a different VNIC in the same subnet.   - Change the display name for a secondary private IP.   - Change the hostname for a secondary private IP.
+
+This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
+@click.option('--private-ip-id', required=True, help="""The private IP's OCID.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--hostname-label', help="""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
+
+For more information, see [DNS in Your Virtual Cloud Network].
+
+Example: `bminstance-1`""")
+@click.option('--vnic-id', help="""The OCID of the VNIC to reassign the private IP to. The VNIC must be in the same subnet as the current VNIC.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def update_private_ip(ctx, private_ip_id, display_name, hostname_label, vnic_id, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if hostname_label is not None:
+        details['hostnameLabel'] = hostname_label
+
+    if vnic_id is not None:
+        details['vnicId'] = vnic_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_private_ip(
+        private_ip_id=private_ip_id,
+        update_private_ip_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@route_table_group.command(name=cli_util.override('update_route_table.command_name', 'update'), help="""Updates the specified route table's display name or route rules. Avoid entering confidential information.
+
+Note that the `routeRules` object you provide replaces the entire existing set of rules.""")
 @click.option('--rt-id', required=True, help="""The OCID of the route table.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--route-rules', help="""The collection of rules used for routing destination IPs to network devices.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -2011,9 +2206,11 @@ def update_route_table(ctx, force, rt_id, display_name, route_rules, if_match):
     cli_util.render_response(result)
 
 
-@security_list_group.command(name=cli_util.override('update_security_list.command_name', 'update'), help="""Updates the specified security list's display name or rules. Note that the `egressSecurityRules` or `ingressSecurityRules` objects you provide replace the entire existing objects.""")
+@security_list_group.command(name=cli_util.override('update_security_list.command_name', 'update'), help="""Updates the specified security list's display name or rules. Avoid entering confidential information.
+
+Note that the `egressSecurityRules` or `ingressSecurityRules` objects you provide replace the entire existing objects.""")
 @click.option('--security-list-id', required=True, help="""The OCID of the security list.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--egress-security-rules', help="""Rules for allowing egress IP packets.""")
 @click.option('--ingress-security-rules', help="""Rules for allowing ingress IP packets.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2050,9 +2247,9 @@ def update_security_list(ctx, force, security_list_id, display_name, egress_secu
     cli_util.render_response(result)
 
 
-@subnet_group.command(name=cli_util.override('update_subnet.command_name', 'update'), help="""Updates the specified subnet's display name.""")
+@subnet_group.command(name=cli_util.override('update_subnet.command_name', 'update'), help="""Updates the specified subnet's display name. Avoid entering confidential information.""")
 @click.option('--subnet-id', required=True, help="""The OCID of the subnet.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -2076,9 +2273,9 @@ def update_subnet(ctx, subnet_id, display_name, if_match):
     cli_util.render_response(result)
 
 
-@vcn_group.command(name=cli_util.override('update_vcn.command_name', 'update'), help="""Updates the specified VCN's display name.""")
+@vcn_group.command(name=cli_util.override('update_vcn.command_name', 'update'), help="""Updates the specified VCN's display name. Avoid entering confidential information.""")
 @click.option('--vcn-id', required=True, help="""The OCID of the VCN.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -2117,7 +2314,7 @@ The customer and provider can update different properties in the mapping dependi
 If the BGP session is from the customer's edge router to Oracle, the required value is the customer's ASN, and it can be updated only by the customer.
 
 If the BGP session is from the provider's edge router to Oracle, the required value is the provider's ASN, and it can be updated only by the provider.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique.
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique. Avoid entering confidential information.
 
 To be updated only by the customer who owns the virtual circuit.""")
 @click.option('--gateway-id', help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.
@@ -2170,6 +2367,38 @@ def update_virtual_circuit(ctx, force, virtual_circuit_id, bandwidth_shape_name,
     result = client.update_virtual_circuit(
         virtual_circuit_id=virtual_circuit_id,
         update_virtual_circuit_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@vnic_group.command(name=cli_util.override('update_vnic.command_name', 'update'), help="""Updates the specified VNIC.""")
+@click.option('--vnic-id', required=True, help="""The OCID of the VNIC.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--hostname-label', help="""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
+
+For more information, see [DNS in Your Virtual Cloud Network].""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def update_vnic(ctx, vnic_id, display_name, hostname_label, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if hostname_label is not None:
+        details['hostnameLabel'] = hostname_label
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_vnic(
+        vnic_id=vnic_id,
+        update_vnic_details=details,
         **kwargs
     )
     cli_util.render_response(result)

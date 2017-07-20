@@ -37,16 +37,16 @@ def volume_backup_group():
     pass
 
 
-@volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. The size of a volume can be either 256 GB or 2 TB. For general information about block volumes, see [Overview of Block Volume Service].
+@volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 2 TB (2097152 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 
 A volume and instance can be in separate compartments but must be in the same Availability Domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
-You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it.""")
+You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--availability-domain', required=True, help="""The Availability Domain of the volume.
 
 Example: `Uocm:PHX-AD-1`""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment that contains the volume.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--size-in-mbs', help="""The size of the volume in MBs.""")
 @click.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume.""")
 @cli_util.help_option
@@ -80,7 +80,7 @@ def create_volume(ctx, availability_domain, compartment_id, display_name, size_i
 
 When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state.""")
 @click.option('--volume-id', required=True, help="""The OCID of the volume that needs to be backed up.""")
-@click.option('--display-name', help="""A user-friendly name for the volume backup. Does not have to be unique and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name for the volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
@@ -223,9 +223,9 @@ def list_volumes(ctx, compartment_id, availability_domain, limit, page):
     cli_util.render_response(result)
 
 
-@volume_group.command(name=cli_util.override('update_volume.command_name', 'update'), help="""Updates the specified volume's display name.""")
+@volume_group.command(name=cli_util.override('update_volume.command_name', 'update'), help="""Updates the specified volume's display name. Avoid entering confidential information.""")
 @click.option('--volume-id', required=True, help="""The OCID of the volume.""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
@@ -249,9 +249,9 @@ def update_volume(ctx, volume_id, display_name, if_match):
     cli_util.render_response(result)
 
 
-@volume_backup_group.command(name=cli_util.override('update_volume_backup.command_name', 'update'), help="""Updates the display name for the specified volume backup.""")
+@volume_backup_group.command(name=cli_util.override('update_volume_backup.command_name', 'update'), help="""Updates the display name for the specified volume backup. Avoid entering confidential information.""")
 @click.option('--volume-backup-id', required=True, help="""The OCID of the volume backup.""")
-@click.option('--display-name', help="""A friendly user-specified name for the volume backup.""")
+@click.option('--display-name', help="""A friendly user-specified name for the volume backup. Avoid entering confidential information.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context

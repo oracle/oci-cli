@@ -9,7 +9,10 @@ import sys
 from .generated import blockstorage_cli
 from .generated import compute_cli
 from .generated import virtualnetwork_cli
+
+from oraclebmc import wait_until
 from oraclebmc.exceptions import ServiceError
+from oraclebmc.exceptions import MaximumWaitTimeExceeded
 from . import cli_util
 
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
@@ -23,6 +26,8 @@ compute_cli.compute_group.add_command(compute_cli.volume_attachment_group)
 compute_cli.compute_group.add_command(compute_cli.console_history_group)
 compute_cli.instance_group.add_command(compute_cli.get_windows_instance_initial_credentials)
 compute_cli.volume_attachment_group.add_command(compute_cli.detach_volume)
+compute_cli.vnic_attachment_group.commands.pop(compute_cli.attach_vnic.name)
+compute_cli.vnic_attachment_group.commands.pop(compute_cli.detach_vnic.name)
 
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.vcn_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.subnet_group)
@@ -54,6 +59,21 @@ For more information, see [DNS in Your Virtual Cloud Network]."""
 cli_util.update_param_help(compute_cli.launch_instance, 'metadata', compute_instance_launch_metadata_help, append=False, example=compute_instance_launch_metadata_example)
 cli_util.update_param_help(compute_cli.launch_instance, 'subnet_id', compute_instance_launch_subnet_id_help)
 cli_util.update_param_help(compute_cli.launch_instance, 'hostname_label', compute_instance_launch_hostname_label_help, example='`bminstance-1`')
+
+
+image_source_details_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "sourceType": "objectStorageTuple" }'
+
+or
+
+'{ "sourceUri": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/MyNamespace/b/MyBucket/o/image-to-import.qcow2", "sourceType": "objectStorageUri" }'"""
+cli_util.update_param_help(compute_cli.create_image, 'image_source_details', "", append=True, example=image_source_details_example)
+
+destination_type_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "sourceType": "objectStorageTuple" }'
+
+or
+
+'{ "destinationUri": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/MyNamespace/b/MyBucket/o/exported-image.qcow2", "destinationType": "objectStorageUri" }'"""
+cli_util.update_param_help(compute_cli.export_image, 'destination_type', "", append=True, example=destination_type_example)
 
 # help for bmcs network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
@@ -201,3 +221,72 @@ def launch_instance_extended(ctx, **kwargs):
     del kwargs['vnic_display_name']
 
     ctx.invoke(compute_cli.launch_instance, **kwargs)
+
+
+@compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Managing Virtual Network Interface Cards (VNICs)].""")
+@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@click.option('--subnet-id', required=True, help="""The OCID of the subnet to create the VNIC in.""")
+@click.option('--vnic-display-name', required=False, help="""A user-friendly name for the VNIC. Does not have to be unique.""")
+@click.option('--assign-public-ip', required=False, type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
+@click.option('--private-ip', required=False, help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
+@click.option('--hostname-label', help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
+@click.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def attach_vnic(ctx, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, hostname_label, wait):
+    kwargs = {}
+
+    vnic_details = {}
+    vnic_details['subnetId'] = subnet_id
+    vnic_details['displayName'] = vnic_display_name
+    vnic_details['assignPublicIp'] = assign_public_ip
+    vnic_details['privateIp'] = private_ip
+    vnic_details['hostnameLabel'] = hostname_label
+
+    attachment_details = {}
+    attachment_details['createVnicDetails'] = vnic_details
+    attachment_details['instanceId'] = instance_id
+
+    compute_client = cli_util.build_client('compute', ctx)
+    response = compute_client.attach_vnic(
+        attach_vnic_details=attachment_details,
+        **kwargs
+    )
+
+    if not wait:
+        return
+
+    response = compute_client.get_vnic_attachment(response.data.id)
+
+    try:
+        response = wait_until(compute_client, response, 'lifecycle_state', 'ATTACHED', max_wait_seconds=180)
+    except MaximumWaitTimeExceeded:
+        sys.exit('Timed out while waiting for the VNIC attachment to reach the ATTACHED state.')
+
+    if not response.data.vnic_id:
+        sys.exit('The VNIC ID is not set on the VNIC attachment.')
+
+    network_client = cli_util.build_client('virtual_network', ctx)
+    response = network_client.get_vnic(vnic_id=response.data.vnic_id)
+    cli_util.render_response(response)
+
+
+@compute_cli.instance_group.command(name='detach-vnic', help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
+@click.option('--vnic-id', required=True, help="""The OCID of the VNIC.""")
+@click.option('--compartment-id', required=True, help="""The OCID of the instance's compartment.""")
+@cli_util.confirm_delete_option
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def detach_vnic(ctx, vnic_id, compartment_id):
+    compute_client = cli_util.build_client('compute', ctx)
+    result = compute_client.list_vnic_attachments(compartment_id=compartment_id, vnic_id=vnic_id)
+
+    if result.data is None or len(result.data) == 0:
+        sys.exit('A VNIC attachment could not be found for the given VNIC ID.')
+
+    vnic_attachment_id = result.data[0].id
+    result = compute_client.detach_vnic(vnic_attachment_id=vnic_attachment_id)
+
+    cli_util.render_response(result)
