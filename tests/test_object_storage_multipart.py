@@ -11,7 +11,7 @@ import oraclebmc_cli
 from . import util
 
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
-LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 20
+LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 100
 DEFAULT_TEST_PART_SIZE = 1
 
 

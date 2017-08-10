@@ -19,6 +19,8 @@ blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_group)
 
 compute_cli.compute_group.add_command(compute_cli.image_group)
+compute_cli.image_group.commands.pop(compute_cli.export_image.name)
+
 compute_cli.compute_group.add_command(compute_cli.instance_group)
 compute_cli.compute_group.add_command(compute_cli.shape_group)
 compute_cli.compute_group.add_command(compute_cli.vnic_attachment_group)
@@ -40,6 +42,9 @@ virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.drg_grou
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.route_table_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cpe_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.security_list_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.private_ip_group)
+virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
+virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)
 
 virtualnetwork_cli.get_ip_sec_connection_device_config.name = 'get-config'
 virtualnetwork_cli.get_ip_sec_connection_device_status.name = 'get-status'
@@ -68,7 +73,7 @@ or
 '{ "sourceUri": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/MyNamespace/b/MyBucket/o/image-to-import.qcow2", "sourceType": "objectStorageUri" }'"""
 cli_util.update_param_help(compute_cli.create_image, 'image_source_details', "", append=True, example=image_source_details_example)
 
-destination_type_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "sourceType": "objectStorageTuple" }'
+destination_type_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "destinationType": "objectStorageTuple" }'
 
 or
 
@@ -117,6 +122,168 @@ network_create_security_list_ingress_security_rules_example = """'[{"source": "1
 network_create_security_list_ingress_security_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
 cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'ingress_security_rules', network_create_security_list_ingress_security_rules_help, append=True, example=network_create_security_list_ingress_security_rules_example)
 cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'ingress_security_rules', network_create_security_list_ingress_security_rules_help, append=True, example=network_create_security_list_ingress_security_rules_example)
+
+# Formatting of the help for the bcms network private-ip list command
+virtualnetwork_cli.list_private_ips.help = """Lists the [PrivateIp] objects based on one of these filters:
+
+  \b
+  - Subnet OCID.
+  - VNIC OCID.
+  - Both private IP address and subnet OCID: This lets you get a `privateIP` object
+    based on its private IP address (for example, 10.0.3.3)  and not its OCID.
+    For comparison, [GetPrivateIp] requires the OCID.
+
+If you're listing all the private IPs associated with a given subnet or VNIC, the response includes both primary and secondary private IPs."""
+
+cli_util.update_param_help(compute_cli.create_image, 'image_source_details', """[DEPRECATED] The use of the `bmcs compute image create` command to import an image from Object Storage is deprecated.
+
+\b
+Please use the `bmcs compute image import` command instead.
+
+""" + cli_util.get_param(compute_cli.create_image, 'image_source_details').help, append=False)
+
+
+@compute_cli.image_group.group(cli_util.override('export_image_group.command_name', 'export'), help="""Exports an image to the Oracle Bare Metal Cloud Object Storage Service. You can use the
+Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to export to.
+
+For more information about exporting images, see [Image Import/Export].
+
+To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+""")
+@cli_util.help_option_group
+def export_image_group():
+    pass
+
+
+@compute_cli.image_group.group(cli_util.override('import_image_group.command_name', 'import'), help="""Imports an exported image from the Oracle Bare Metal Cloud Object Storage Service. You can use the
+Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to import from.
+
+For more information about importing exported images, see [Image Import/Export].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+
+You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering
+confidential information.
+""")
+@cli_util.help_option_group
+def import_image_group():
+    pass
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type'])
+@export_image_group.command(name='to-object', help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service using the namespace, bucket name, and object name to identify the location to export to.
+
+For more information about exporting images, see [Image Import/Export].
+
+To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
+""")
+@click.option('-ns', '--namespace', required=True, help='The Object Storage Service namespace to export the image to.')
+@click.option('-bn', '--bucket-name', required=True, help='The name of the bucket to export the image to.')
+@click.option('--name', required=True, help='The name which will be given to the exported image object.')
+@click.pass_context
+def export_image_to_object(ctx, image_id, if_match, namespace, bucket_name, name):
+    export_image_details = {}
+    export_image_details['destinationType'] = 'objectStorageTuple'
+    export_image_details['namespaceName'] = namespace
+    export_image_details['bucketName'] = bucket_name
+    export_image_details['objectName'] = name
+
+    export_image_internal(ctx, image_id, export_image_details, if_match)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type'])
+@export_image_group.command(name='to-object-uri', help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service using the Object Storage Service URL to identify the location to export to.
+
+For more information about exporting images, see [Image Import/Export].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+""")
+@click.option('--uri', required=True, help='The Object Storage URL to export the image to.')
+@click.pass_context
+def export_image_to_uri(ctx, image_id, if_match, uri):
+    export_image_details = {}
+    export_image_details['destinationType'] = 'objectStorageUri'
+    export_image_details['destinationUri'] = uri
+
+    export_image_internal(ctx, image_id, export_image_details, if_match)
+
+
+def export_image_internal(ctx, image_id, export_image_details, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.export_image(
+        image_id=image_id,
+        export_image_details=export_image_details,
+        **kwargs
+    )
+
+    cli_util.render_response(result)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id'])
+@import_image_group.command(name='from-object', help="""Imports an exported image from the Oracle Bare Metal Cloud Object Storage Service using the namespace, bucket name, and object name to identify the location to import from.
+
+For more information about importing exported images, see [Image Import/Export].
+
+You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].
+Avoid entering confidential information.
+""")
+@click.option('-ns', '--namespace', required=True, help='The Object Storage Service namespace to import the image from.')
+@click.option('-bn', '--bucket-name', required=True, help='The name of the bucket to import the image from.')
+@click.option('--name', required=True, help='The name of the object identifying the image to import.')
+@click.pass_context
+def import_image_from_object(ctx, compartment_id, display_name, namespace, bucket_name, name):
+    import_image_details = {}
+    import_image_details['sourceType'] = 'objectStorageTuple'
+    import_image_details['namespaceName'] = namespace
+    import_image_details['bucketName'] = bucket_name
+    import_image_details['objectName'] = name
+
+    import_image_internal(ctx, compartment_id, display_name, import_image_details)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id'])
+@import_image_group.command(name='from-object-uri', help="""Imports an exported image from the Oracle Bare Metal Cloud Object Storage Service using the Object Storage Service URL to identify the location to import from.
+
+For more information about importing exported images, see [Image Import/Export].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+
+You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].
+Avoid entering confidential information.
+""")
+@click.option('--uri', required=True, help='The Object Storage URL to import the image from.')
+@click.pass_context
+def import_image_from_uri(ctx, compartment_id, display_name, uri):
+    import_image_details = {}
+    import_image_details['sourceType'] = 'objectStorageUri'
+    import_image_details['sourceUri'] = uri
+
+    import_image_internal(ctx, compartment_id, display_name, import_image_details)
+
+
+def import_image_internal(ctx, compartment_id, display_name, import_image_details):
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['imageSourceDetails'] = import_image_details
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.create_image(
+        create_image_details=details,
+        **kwargs
+    )
+
+    cli_util.render_response(result)
 
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
@@ -290,3 +457,144 @@ def detach_vnic(ctx, vnic_id, compartment_id):
     result = compute_client.detach_vnic(vnic_attachment_id=vnic_attachment_id)
 
     cli_util.render_response(result)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_private_ip, params_to_exclude=[''])
+@virtualnetwork_cli.vnic_group.command(name='assign-private-ip', help="""Assigns a secondary private IP address to the specified VNIC. The secondary private IP must be in the same subnet as the VNIC.
+This command can also be used to move an existing secondary private IP to the specified VNIC.
+
+For more information about secondary private IPs, see [Managing IP Addresses]
+""")
+@click.option('--unassign-if-already-assigned', is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
+@click.pass_context
+@cli_util.wrap_exceptions
+def assign_private_ip(ctx, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned):
+    networking_client = cli_util.build_client('virtual_network', ctx)
+
+    # First we get the VNIC because we need to know the subnet OCID for the ListPrivateIps call
+    vnic = networking_client.get_vnic(vnic_id).data
+    subnet_id = vnic.subnet_id
+
+    is_ip_reassignment = False
+    if ip_address is not None:
+        # Try and see whether the private IP is already in use by calling ListPrivateIps with the IP address and subnet. In this case, we don't
+        # worry about pagination because we expect at most 1 entry
+        list_private_ips_response = networking_client.list_private_ips(ip_address=ip_address, subnet_id=subnet_id)
+        list_private_ips_response_data = list_private_ips_response.data
+
+        if list_private_ips_response_data is not None:
+            if len(list_private_ips_response_data) == 1:
+                # If the IP is already on the VNIC, make this a no-op
+                if list_private_ips_response_data[0].vnic_id == vnic_id:
+                    click.echo('Taking no action as IP address {} is already assigned to VNIC {}'.format(ip_address, vnic_id), err=True)
+                    return
+
+                # The IP address exists and it can theoretically be moved since it isn't the primary IP and it is on a separate VNIC. However,
+                # if the user did not specify the --unassign-if-already-assigned flag then we do not proceed as they haven't explicitly
+                # said they want to do the reassignment
+                if not unassign_if_already_assigned:
+                    sys.exit(
+                        'IP address {} is already assigned to a different VNIC: {}. To reassign it, re-run this command with the --unassign-if-already-assigned option'.format(
+                            ip_address, list_private_ips_response_data[0].vnic_id
+                        )
+                    )
+
+                is_ip_reassignment = True
+            elif len(list_private_ips_response_data) > 1:
+                # This would be unexpected as it means that the IP exists twice in the subnet
+                sys.exit(
+                    'IP address {} appeared {} times in subnet with OCID {}. It is expected to appear at most once (Request ID: {})'.format(
+                        ip_address, len(list_private_ips_response_data), subnet_id, list_private_ips_response.request_id
+                    )
+                )
+
+    assign_private_ip_request_body = {}
+    assign_private_ip_request_body['vnicId'] = vnic_id
+
+    # These are optional in the request, so check whether we should set them or not.
+    if display_name is not None:
+        assign_private_ip_request_body['displayName'] = display_name
+    if hostname_label is not None:
+        assign_private_ip_request_body['hostnameLabel'] = hostname_label
+
+    # If we are here then either the IP address does not exist or it is a candidate to be moved
+    if not is_ip_reassignment:
+        if ip_address is not None:
+            assign_private_ip_request_body['ipAddress'] = ip_address
+
+        result = networking_client.create_private_ip(assign_private_ip_request_body)
+    else:
+        result = networking_client.update_private_ip(list_private_ips_response_data[0].id, assign_private_ip_request_body)
+
+    private_ip_id = result.data.id
+    get_private_id_result = networking_client.get_private_ip(private_ip_id)
+
+    cli_util.render_response(get_private_id_result)
+
+
+@virtualnetwork_cli.vnic_group.command(name='unassign-private-ip', help="""Unassigns a secondary private IP address from a VNIC. After the IP address is unassigned, you
+can assign to another VNIC in the subnet.
+
+This operation cannot be used with primary private IPs, which are automatically unassigned, and then deleted when the VNIC is
+terminated.
+
+For more information about secondary private IPs, see [Managing IP Addresses]
+""")
+@click.option('--vnic-id', required=True, help="""The OCID of the VNIC to unassign the private IP from.""")
+@click.option('--ip-address', required=True, help="""The secondary private IP to unassign from the VNIC.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def unassign_private_ip(ctx, vnic_id, ip_address):
+    networking_client = cli_util.build_client('virtual_network', ctx)
+
+    list_private_ips_response = networking_client.list_private_ips(vnic_id=vnic_id)
+
+    if list_private_ips_response.data is None:
+        sys.exit('No IP addresses found for VNIC {}'.format(vnic_id))
+
+    private_ip_addresses = list_private_ips_response.data
+    next_page = list_private_ips_response.next_page
+    while next_page is not None:
+        list_private_ips_response = networking_client.list_private_ips(vnic_id=vnic_id, page=next_page)
+
+        if list_private_ips_response.data is not None:
+            private_ip_addresses += list_private_ips_response.data
+
+        next_page = list_private_ips_response.next_page
+
+    target_ip_address = None
+    for private_ip in private_ip_addresses:
+        if private_ip.ip_address == ip_address:
+            target_ip_address = private_ip
+            break
+
+    if target_ip_address is None:
+        sys.exit('IP address {} was not found on VNIC {}'.format(ip_address, vnic_id))
+
+    if target_ip_address.is_primary:
+        sys.exit('Taking no action as {} is the primary private IP on VNIC {}'.format(ip_address, vnic_id))
+
+    networking_client.delete_private_ip(target_ip_address.id)
+
+    # The delete result has an empty body on success so doing cli_util.render_response provides no feedback. Instead, just echo out a
+    # confirmation
+    click.echo('Unassigned IP address {} from VNIC {}'.format(ip_address, vnic_id), err=True)
+
+
+# This method exists so that we can suppress the --vnic-id option to update_private_ip. The reason that we suppress it is because this parameter
+# is used to move the private IP to another VNIC, which can be done via the assign-private-ip command with the --unassign-if-already-assigned flag
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.update_private_ip, params_to_exclude=['vnic_id'])
+@virtualnetwork_cli.private_ip_group.command(name='update', help="""Updates the specified private IP. You must specify the object's OCID. Use this operation if you want to:
+
+  \b
+  - Change the display name for a secondary private IP.
+  - Change the hostname for a secondary private IP.
+
+To move a secondary private IP to another VNIC, use the `bcms network vnic assign-private-ip` command with the --unassign-if-already-assigned switch.
+
+This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
+@click.pass_context
+@cli_util.wrap_exceptions
+def update_private_ip_extended(ctx, **kwargs):
+    ctx.invoke(virtualnetwork_cli.update_private_ip, **kwargs)

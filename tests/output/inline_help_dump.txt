@@ -37,7 +37,7 @@ Options:
                       SSL verification. This will override the default CA
                       certificate bundle.
   -d, --debug         Show additional debug information.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 Commands:
   bv       Block Volume Service
@@ -54,7 +54,7 @@ Usage: bmcs bv [OPTIONS] COMMAND [ARGS]...
   Block Volume Service
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   backup  A point-in-time copy of a volume that can...
@@ -74,7 +74,7 @@ Usage: bmcs bv backup [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new backup of the specified volume.
@@ -100,7 +100,7 @@ Options:
   --display-name TEXT  A user-friendly name for the volume backup. Does not have
                        to be unique and it's changeable. Avoid entering
                        confidential information.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv backup delete --help
@@ -117,7 +117,7 @@ Options:
                            will be updated or deleted only if the etag you
                            provide matches the resource's current etag value.
   --force                  Perform deletion without prompting for confirmation.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv backup get --help
@@ -127,7 +127,7 @@ Usage: bmcs bv backup get [OPTIONS]
 
 Options:
   --volume-backup-id TEXT  The OCID of the volume backup.  [required]
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv backup list --help
@@ -145,7 +145,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv backup update --help
@@ -164,7 +164,7 @@ Options:
                            GET or POST response for that resource.  The resource
                            will be updated or deleted only if the etag you
                            provide matches the resource's current etag value.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv volume --help
@@ -180,7 +180,7 @@ Usage: bmcs bv volume [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new volume in the specified...
@@ -222,7 +222,7 @@ Options:
   --size-in-mbs TEXT          The size of the volume in MBs.
   --volume-backup-id TEXT     The OCID of the volume backup from which the data
                               should be restored on the newly created volume.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv volume delete --help
@@ -242,7 +242,7 @@ Options:
                     if the etag you provide matches the resource's current etag
                     value.
   --force           Perform deletion without prompting for confirmation.
-  -?, --help        Show this message and exit.
+  -?, -h, --help    Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv volume get --help
@@ -252,7 +252,7 @@ Usage: bmcs bv volume get [OPTIONS]
 
 Options:
   --volume-id TEXT  The OCID of the volume.  [required]
-  -?, --help        Show this message and exit.
+  -?, -h, --help    Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv volume list --help
@@ -272,7 +272,7 @@ Options:
                               Example: `500`
   --page TEXT                 The value of the `opc-next-page` response header
                               from the previous "List" call.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs bv volume update --help
@@ -291,7 +291,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute --help
@@ -300,7 +300,7 @@ Usage: bmcs compute [OPTIONS] COMMAND [ARGS]...
   Compute Service
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   console-history    An instance's serial console data.
@@ -320,7 +320,7 @@ Usage: bmcs compute console-history [OPTIONS] COMMAND [ARGS]...
   console data is minimally formatted ASCII text.
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   capture      Captures the most recent serial console data...
@@ -352,7 +352,7 @@ Usage: bmcs compute console-history capture [OPTIONS]
 Options:
   --instance-id TEXT  The OCID of the instance to get the console history from.
                       [required]
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute console-history delete --help
@@ -372,7 +372,7 @@ Options:
                                   the resource's current etag value.
   --force                         Perform deletion without prompting for
                                   confirmation.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute console-history get --help
@@ -385,7 +385,7 @@ Usage: bmcs compute console-history get [OPTIONS]
 Options:
   --instance-console-history-id TEXT
                                   The OCID of the console history.  [required]
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute console-history get-content --help
@@ -403,7 +403,7 @@ Options:
                                   [required]
   --offset TEXT                   Offset of the snapshot data to retrieve.
   --length TEXT                   Length of the snapshot data to retrieve.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute console-history list --help
@@ -425,7 +425,7 @@ Options:
   --page TEXT                 The value of the `opc-next-page` response header
                               from the previous "List" call.
   --instance-id TEXT          The OCID of the instance.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image --help
@@ -440,13 +440,14 @@ Usage: bmcs compute image [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a boot disk image for the specified...
   delete  Deletes an image.
-  export  Exports the specified image to the Oracle...
+  export  Exports an image to the Oracle Bare Metal...
   get     Gets the specified image.
+  import  Imports an exported image from the Oracle...
   list    Lists the available images in the specified...
   update  Updates the display name of the image.
 
@@ -492,11 +493,22 @@ Options:
                                image name.
                                
                                Example: `My Oracle Linux image`
-  --image-source-details TEXT  Details for creating an image through import
-                               Example: '{ "objectName": "image-to-
-                               import.qcow2", "bucketName": "MyBucket",
-                               "namespaceName": "MyNamespace", "sourceType":
-                               "objectStorageTuple" }'
+  --image-source-details TEXT  [DEPRECATED] The use of the `bmcs compute image
+                               create` command to import an image from Object
+                               Storage is deprecated.
+                               
+                               
+                               Please use the `bmcs
+                               compute image import` command instead.
+                               
+                               Details
+                               for creating an image through import 
+                               
+                               Example:
+                               '{ "objectName": "image-to-import.qcow2",
+                               "bucketName": "MyBucket", "namespaceName":
+                               "MyNamespace", "sourceType": "objectStorageTuple"
+                               }'
                                
                                or
                                
@@ -507,7 +519,7 @@ Options:
                                }'
   --instance-id TEXT           The OCID of the instance you want to use as the
                                basis for the image.
-  -?, --help                   Show this message and exit.
+  -?, -h, --help               Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image delete --help
@@ -524,15 +536,15 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image export --help
-Usage: bmcs compute image export [OPTIONS]
+Usage: bmcs compute image export [OPTIONS] COMMAND [ARGS]...
 
-  Exports the specified image to the Oracle Bare Metal Cloud Object Storage
-  Service. You can use the Object Storage Service URL, or the namespace,
-  bucket name, and object name when specifying the location to export to.
+  Exports an image to the Oracle Bare Metal Cloud Object Storage Service. You
+  can use the Object Storage Service URL, or the namespace, bucket name, and
+  object name when specifying the location to export to.
 
   For more information about exporting images, see [Image Import/Export].
 
@@ -544,31 +556,65 @@ Usage: bmcs compute image export [OPTIONS]
   URLs for image import/export.
 
 Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  to-object      Exports the specified image to the Oracle...
+  to-object-uri  Exports the specified image to the Oracle...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute image export to-object --help
+Usage: bmcs compute image export to-object [OPTIONS]
+
+  Exports the specified image to the Oracle Bare Metal Cloud Object Storage
+  Service using the namespace, bucket name, and object name to identify the
+  location to export to.
+
+  For more information about exporting images, see [Image Import/Export].
+
+  To perform an image export, you need write access to the Object Storage
+  Service bucket for the image, see [Let Users Write Objects to Object Storage
+  Buckets].
+
+Options:
   --image-id TEXT          The OCID of the image.  [required]
-  --destination-type TEXT  The destination type. Use `objectStorageTuple` when
-                           specifying the namespace, bucket name, and object
-                           name. Use `objectStorageUri` when specifying the
-                           Object Storage Service URL. 
-                           
-                           Example: '{
-                           "objectName": "image-to-import.qcow2", "bucketName":
-                           "MyBucket", "namespaceName": "MyNamespace",
-                           "sourceType": "objectStorageTuple" }'
-                           
-                           or
-                           
-                           '{
-                           "destinationUri": "https://objectstorage.us-phoenix-1
-                           .oraclecloud.com/n/MyNamespace/b/MyBucket/o/exported-
-                           image.qcow2", "destinationType": "objectStorageUri"
-                           }'  [required]
   --if-match TEXT          For optimistic concurrency control. In the PUT or
                            DELETE call for a resource, set the `if-match`
                            parameter to the value of the etag from a previous
                            GET or POST response for that resource.  The resource
                            will be updated or deleted only if the etag you
                            provide matches the resource's current etag value.
-  -?, --help               Show this message and exit.
+  -ns, --namespace TEXT    The Object Storage Service namespace to export the
+                           image to.  [required]
+  -bn, --bucket-name TEXT  The name of the bucket to export the image to.
+                           [required]
+  --name TEXT              The name which will be given to the exported image
+                           object.  [required]
+  -?, -h, --help           Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute image export to-object-uri --help
+Usage: bmcs compute image export to-object-uri [OPTIONS]
+
+  Exports the specified image to the Oracle Bare Metal Cloud Object Storage
+  Service using the Object Storage Service URL to identify the location to
+  export to.
+
+  For more information about exporting images, see [Image Import/Export].
+
+  See [Object Storage URLs] and [pre-authenticated requests] for constructing
+  URLs for image import/export.
+
+Options:
+  --image-id TEXT  The OCID of the image.  [required]
+  --if-match TEXT  For optimistic concurrency control. In the PUT or DELETE call
+                   for a resource, set the `if-match` parameter to the value of
+                   the etag from a previous GET or POST response for that
+                   resource.  The resource will be updated or deleted only if
+                   the etag you provide matches the resource's current etag
+                   value.
+  --uri TEXT       The Object Storage URL to export the image to.  [required]
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image get --help
@@ -578,7 +624,103 @@ Usage: bmcs compute image get [OPTIONS]
 
 Options:
   --image-id TEXT  The OCID of the image.  [required]
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute image import --help
+Usage: bmcs compute image import [OPTIONS] COMMAND [ARGS]...
+
+  Imports an exported image from the Oracle Bare Metal Cloud Object Storage
+  Service. You can use the Object Storage Service URL, or the namespace,
+  bucket name, and object name when specifying the location to import from.
+
+  For more information about importing exported images, see [Image
+  Import/Export].
+
+  See [Object Storage URLs] and [pre-authenticated requests] for constructing
+  URLs for image import/export.
+
+  You may optionally specify a display name for the image, which is simply a
+  friendly name or description. It does not have to be unique, and you can
+  change it. See [UpdateImage]. Avoid entering confidential information.
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  from-object      Imports an exported image from the Oracle...
+  from-object-uri  Imports an exported image from the Oracle...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute image import from-object --help
+Usage: bmcs compute image import from-object [OPTIONS]
+
+  Imports an exported image from the Oracle Bare Metal Cloud Object Storage
+  Service using the namespace, bucket name, and object name to identify the
+  location to import from.
+
+  For more information about importing exported images, see [Image
+  Import/Export].
+
+  You may optionally specify a display name for the image, which is simply a
+  friendly name or description. It does not have to be unique, and you can
+  change it. See [UpdateImage]. Avoid entering confidential information.
+
+Options:
+  -c, --compartment-id TEXT  The OCID of the compartment containing the instance
+                             you want to use as the basis for the image.
+                             [required]
+  --display-name TEXT        A user-friendly name for the image. It does not
+                             have to be unique, and it's changeable. Avoid
+                             entering confidential information.
+                             
+                             You cannot use
+                             an Oracle-provided image name as a custom image
+                             name.
+                             
+                             Example: `My Oracle Linux image`
+  -ns, --namespace TEXT      The Object Storage Service namespace to import the
+                             image from.  [required]
+  -bn, --bucket-name TEXT    The name of the bucket to import the image from.
+                             [required]
+  --name TEXT                The name of the object identifying the image to
+                             import.  [required]
+  -?, -h, --help             Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs compute image import from-object-uri --help
+Usage: bmcs compute image import from-object-uri [OPTIONS]
+
+  Imports an exported image from the Oracle Bare Metal Cloud Object Storage
+  Service using the Object Storage Service URL to identify the location to
+  import from.
+
+  For more information about importing exported images, see [Image
+  Import/Export].
+
+  See [Object Storage URLs] and [pre-authenticated requests] for constructing
+  URLs for image import/export.
+
+  You may optionally specify a display name for the image, which is simply a
+  friendly name or description. It does not have to be unique, and you can
+  change it. See [UpdateImage]. Avoid entering confidential information.
+
+Options:
+  -c, --compartment-id TEXT  The OCID of the compartment containing the instance
+                             you want to use as the basis for the image.
+                             [required]
+  --display-name TEXT        A user-friendly name for the image. It does not
+                             have to be unique, and it's changeable. Avoid
+                             entering confidential information.
+                             
+                             You cannot use
+                             an Oracle-provided image name as a custom image
+                             name.
+                             
+                             Example: `My Oracle Linux image`
+  --uri TEXT                 The Object Storage URL to import the image from.
+                             [required]
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image list --help
@@ -608,7 +750,7 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute image update --help
@@ -628,7 +770,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance --help
@@ -645,7 +787,7 @@ Usage: bmcs compute instance [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   action                     Performs one of the power actions (start,...
@@ -689,7 +831,7 @@ Options:
                       that resource.  The resource will be updated or deleted
                       only if the etag you provide matches the resource's
                       current etag value.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance attach-vnic --help
@@ -735,7 +877,7 @@ Options:
                               and return the newly attached VNIC. If not set,
                               then the command will not wait and will return
                               nothing on success.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance detach-vnic --help
@@ -751,7 +893,7 @@ Options:
   -c, --compartment-id TEXT  The OCID of the instance's compartment.  [required]
   --force                    Perform deletion without prompting for
                              confirmation.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance get --help
@@ -761,7 +903,7 @@ Usage: bmcs compute instance get [OPTIONS]
 
 Options:
   --instance-id TEXT  The OCID of the instance.  [required]
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance get-windows-initial-creds --help
@@ -772,7 +914,7 @@ Usage: bmcs compute instance get-windows-initial-creds [OPTIONS]
 
 Options:
   --instance-id TEXT  The OCID of the instance.  [required]
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance launch --help
@@ -958,7 +1100,7 @@ Options:
                                   see documentation: https://docs.us-phoenix-1.o
                                   raclecloud.com/api/#/en/iaas/20160918/requests
                                   /LaunchInstanceDetails.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance list --help
@@ -986,7 +1128,7 @@ Options:
                               Example: `500`
   --page TEXT                 The value of the `opc-next-page` response header
                               from the previous "List" call.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance list-vnics --help
@@ -1003,7 +1145,7 @@ Options:
                       Example: `500`
   --page TEXT         The value of the `opc-next-page` response header from the
                       previous "List" call.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance terminate --help
@@ -1024,7 +1166,7 @@ Options:
                       only if the etag you provide matches the resource's
                       current etag value.
   --force             Perform deletion without prompting for confirmation.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute instance update --help
@@ -1044,7 +1186,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute shape --help
@@ -1054,7 +1196,7 @@ Usage: bmcs compute shape [OPTIONS] COMMAND [ARGS]...
   information, see [Overview of the Compute Service].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   list  Lists the shapes that can be used to launch...
@@ -1079,7 +1221,7 @@ Options:
   --page TEXT                 The value of the `opc-next-page` response header
                               from the previous "List" call.
   --image-id TEXT             The OCID of an image.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute vnic-attachment --help
@@ -1089,7 +1231,7 @@ Usage: bmcs compute vnic-attachment [OPTIONS] COMMAND [ARGS]...
   information, see [Managing Virtual Network Interface Cards (VNICs)].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   get   Gets the information for the specified VNIC...
@@ -1103,7 +1245,7 @@ Usage: bmcs compute vnic-attachment get [OPTIONS]
 
 Options:
   --vnic-attachment-id TEXT  The OCID of the VNIC attachment.  [required]
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute vnic-attachment list --help
@@ -1127,7 +1269,7 @@ Options:
   --page TEXT                 The value of the `opc-next-page` response header
                               from the previous "List" call.
   --vnic-id TEXT              The OCID of the VNIC.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute volume-attachment --help
@@ -1141,7 +1283,7 @@ Usage: bmcs compute volume-attachment [OPTIONS] COMMAND [ARGS]...
   Volume Storage].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   attach  Attaches the specified storage volume to the...
@@ -1163,7 +1305,7 @@ Options:
   --display-name TEXT  A user-friendly name. Does not have to be unique, and it
                        cannot be changed. Avoid entering confidential
                        information.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute volume-attachment detach --help
@@ -1186,7 +1328,7 @@ Options:
                                current etag value.
   --force                      Perform deletion without prompting for
                                confirmation.
-  -?, --help                   Show this message and exit.
+  -?, -h, --help               Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute volume-attachment get --help
@@ -1196,7 +1338,7 @@ Usage: bmcs compute volume-attachment get [OPTIONS]
 
 Options:
   --volume-attachment-id TEXT  The OCID of the volume attachment.  [required]
-  -?, --help                   Show this message and exit.
+  -?, -h, --help               Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs compute volume-attachment list --help
@@ -1222,7 +1364,7 @@ Options:
                               from the previous "List" call.
   --instance-id TEXT          The OCID of the instance.
   --volume-id TEXT            The OCID of the volume.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam --help
@@ -1231,7 +1373,7 @@ Usage: bmcs iam [OPTIONS] COMMAND [ARGS]...
   Identity and Access Management Service
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   availability-domain  One or more isolated, fault-tolerant Oracle...
@@ -1252,7 +1394,7 @@ Usage: bmcs iam availability-domain [OPTIONS] COMMAND [ARGS]...
   Domains].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   list  Lists the Availability Domains in your...
@@ -1270,7 +1412,7 @@ Options:
   -c, --compartment-id TEXT  The OCID of the compartment (remember that the
                              tenancy is simply the root compartment).
                              [required]
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam compartment --help
@@ -1297,7 +1439,7 @@ Usage: bmcs iam compartment [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new compartment in your tenancy.
@@ -1340,7 +1482,7 @@ Options:
   --description TEXT         The description you assign to the compartment
                              during creation. Does not have to be unique, and
                              it's changeable.  [required]
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam compartment get --help
@@ -1359,7 +1501,7 @@ Usage: bmcs iam compartment get [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment.  [required]
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam compartment list --help
@@ -1377,7 +1519,7 @@ Options:
                              from the previous "List" call.
   --limit TEXT               The maximum number of items to return in a
                              paginated "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam compartment update --help
@@ -1396,7 +1538,7 @@ Options:
                              resource will be updated or deleted only if the
                              etag you provide matches the resource's current
                              etag value.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group --help
@@ -1417,7 +1559,7 @@ Usage: bmcs iam group [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   add-user     Adds the specified user to the specified...
@@ -1438,7 +1580,7 @@ Usage: bmcs iam group add-user [OPTIONS]
 Options:
   --user-id TEXT   The OCID of the user.  [required]
   --group-id TEXT  The OCID of the group.  [required]
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group create --help
@@ -1478,7 +1620,7 @@ Options:
   --description TEXT         The description you assign to the group during
                              creation. Does not have to be unique, and it's
                              changeable.  [required]
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group delete --help
@@ -1495,7 +1637,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group get --help
@@ -1509,7 +1651,7 @@ Usage: bmcs iam group get [OPTIONS]
 
 Options:
   --group-id TEXT  The OCID of the group.  [required]
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group list --help
@@ -1527,7 +1669,7 @@ Options:
                              from the previous "List" call.
   --limit TEXT               The maximum number of items to return in a
                              paginated "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group list-users --help
@@ -1546,7 +1688,7 @@ Options:
                              from the previous "List" call.
   --limit TEXT               The maximum number of items to return in a
                              paginated "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group remove-user --help
@@ -1561,7 +1703,7 @@ Options:
   --user-id TEXT             The OCID of the user.  [required]
   --group-id TEXT            The OCID of the group.  [required]
   --force                    Perform removal without prompting for confirmation.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam group update --help
@@ -1579,7 +1721,7 @@ Options:
                       that resource.  The resource will be updated or deleted
                       only if the etag you provide matches the resource's
                       current etag value.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam policy --help
@@ -1601,7 +1743,7 @@ Usage: bmcs iam policy [OPTIONS] COMMAND [ARGS]...
   If you're not authorized, talk to an administrator.
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new policy in the specified...
@@ -1659,7 +1801,7 @@ Options:
                              at that moment. If set to a particular date (YYYY-
                              MM-DD), the policy will be evaluated according to
                              the behavior of the services on that date.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam policy delete --help
@@ -1677,7 +1819,7 @@ Options:
                     if the etag you provide matches the resource's current etag
                     value.
   --force           Perform deletion without prompting for confirmation.
-  -?, --help        Show this message and exit.
+  -?, -h, --help    Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam policy get --help
@@ -1687,7 +1829,7 @@ Usage: bmcs iam policy get [OPTIONS]
 
 Options:
   --policy-id TEXT  The OCID of the policy.  [required]
-  -?, --help        Show this message and exit.
+  -?, -h, --help    Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam policy list --help
@@ -1709,7 +1851,7 @@ Options:
                              from the previous "List" call.
   --limit TEXT               The maximum number of items to return in a
                              paginated "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam policy update --help
@@ -1741,7 +1883,7 @@ Options:
                        deleted only if the etag you provide matches the
                        resource's current etag value.
   --force              Perform update without prompting for confirmation.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam region --help
@@ -1759,7 +1901,7 @@ Usage: bmcs iam region [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   list  Lists all the regions offered by Oracle Bare...
@@ -1771,7 +1913,7 @@ Usage: bmcs iam region list [OPTIONS]
   Lists all the regions offered by Oracle Bare Metal Cloud Services.
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam region-subscription --help
@@ -1787,7 +1929,7 @@ Usage: bmcs iam region-subscription [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a subscription to a region for a...
@@ -1805,7 +1947,7 @@ Options:
                      Allowed values are: - `PHX` - `IAD`
                      Example: `PHX`  [required]
   --tenancy-id TEXT  The OCID of the tenancy.  [required]
-  -?, --help         Show this message and exit.
+  -?, -h, --help     Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam region-subscription list --help
@@ -1815,7 +1957,7 @@ Usage: bmcs iam region-subscription list [OPTIONS]
 
 Options:
   --tenancy-id TEXT  The OCID of the tenancy.  [required]
-  -?, --help         Show this message and exit.
+  -?, -h, --help     Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user --help
@@ -1842,7 +1984,7 @@ Usage: bmcs iam user [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   api-key            A PEM-format RSA credential for securing...
@@ -1873,7 +2015,7 @@ Usage: bmcs iam user api-key [OPTIONS] COMMAND [ARGS]...
   For more information about user credentials, see [User Credentials].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   delete  Deletes the specified API signing key for the...
@@ -1902,7 +2044,7 @@ Options:
                       only if the etag you provide matches the resource's
                       current etag value.
   --force             Perform deletion without prompting for confirmation.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user api-key list --help
@@ -1917,7 +2059,7 @@ Usage: bmcs iam user api-key list [OPTIONS]
 
 Options:
   --user-id TEXT  The OCID of the user.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user api-key upload --help
@@ -1945,7 +2087,7 @@ Usage: bmcs iam user api-key upload [OPTIONS]
 Options:
   --user-id TEXT  The OCID of the user.  [required]
   --key TEXT      The public key.  Must be an RSA key in PEM format.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user create --help
@@ -2001,7 +2143,7 @@ Options:
   --description TEXT         The description you assign to the user during
                              creation. Does not have to be unique, and it's
                              changeable.  [required]
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user delete --help
@@ -2018,7 +2160,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user get --help
@@ -2028,7 +2170,7 @@ Usage: bmcs iam user get [OPTIONS]
 
 Options:
   --user-id TEXT  The OCID of the user.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user list --help
@@ -2046,7 +2188,7 @@ Options:
                              from the previous "List" call.
   --limit TEXT               The maximum number of items to return in a
                              paginated "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user list-groups --help
@@ -2066,7 +2208,7 @@ Options:
                              from the previous "List" call.
   --limit TEXT               The maximum number of items to return in a
                              paginated "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user swift-password --help
@@ -2084,7 +2226,7 @@ Usage: bmcs iam user swift-password [OPTIONS] COMMAND [ARGS]...
   For more information, see [Managing User Credentials].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new Swift password for the...
@@ -2114,7 +2256,7 @@ Options:
                       creation. Does not have to be unique, and it's changeable.
                       [required]
   --user-id TEXT      The OCID of the user.  [required]
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user swift-password delete --help
@@ -2133,7 +2275,7 @@ Options:
                             you provide matches the resource's current etag
                             value.
   --force                   Perform deletion without prompting for confirmation.
-  -?, --help                Show this message and exit.
+  -?, -h, --help            Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user swift-password list --help
@@ -2145,7 +2287,7 @@ Usage: bmcs iam user swift-password list [OPTIONS]
 
 Options:
   --user-id TEXT  The OCID of the user.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user swift-password update --help
@@ -2165,7 +2307,7 @@ Options:
                             resource will be updated or deleted only if the etag
                             you provide matches the resource's current etag
                             value.
-  -?, --help                Show this message and exit.
+  -?, -h, --help            Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user ui-password --help
@@ -2177,7 +2319,7 @@ Usage: bmcs iam user ui-password [OPTIONS] COMMAND [ARGS]...
   For more information about user credentials, see [User Credentials].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create-or-reset  Creates a new Console one-time password for...
@@ -2201,7 +2343,7 @@ Usage: bmcs iam user ui-password create-or-reset [OPTIONS]
 
 Options:
   --user-id TEXT  The OCID of the user.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user update --help
@@ -2219,7 +2361,7 @@ Options:
                       that resource.  The resource will be updated or deleted
                       only if the etag you provide matches the resource's
                       current etag value.
-  -?, --help          Show this message and exit.
+  -?, -h, --help      Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs iam user update-user-state --help
@@ -2237,7 +2379,7 @@ Options:
                    resource.  The resource will be updated or deleted only if
                    the etag you provide matches the resource's current etag
                    value.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network --help
@@ -2246,7 +2388,7 @@ Usage: bmcs network [OPTIONS] COMMAND [ARGS]...
   Networking Service
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   cpe                An object you create when setting up an IPSec...
@@ -2255,6 +2397,7 @@ Commands:
   drg-attachment     A link between a DRG and VCN.
   internet-gateway   Represents a router that connects the edge of...
   ip-sec-connection  A connection between a DRG and CPE.
+  private-ip         A *private IP* is a conceptual term that...
   route-table        A collection of `RouteRule` objects, which...
   security-list      A set of virtual firewall rules for your VCN.
   subnet             A logical subdivision of a VCN.
@@ -2277,7 +2420,7 @@ Usage: bmcs network cpe [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new virtual Customer-Premises...
@@ -2316,7 +2459,7 @@ Options:
   --display-name TEXT        A user-friendly name. Does not have to be unique,
                              and it's changeable. Avoid entering confidential
                              information.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network cpe delete --help
@@ -2335,7 +2478,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network cpe get --help
@@ -2344,8 +2487,8 @@ Usage: bmcs network cpe get [OPTIONS]
   Gets the specified CPE's information.
 
 Options:
-  --cpe-id TEXT  The OCID of the CPE.  [required]
-  -?, --help     Show this message and exit.
+  --cpe-id TEXT   The OCID of the CPE.  [required]
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network cpe list --help
@@ -2362,7 +2505,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network cpe update --help
@@ -2381,7 +2524,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network dhcp-options --help
@@ -2406,7 +2549,7 @@ Usage: bmcs network dhcp-options [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new set of DHCP options for the...
@@ -2448,7 +2591,7 @@ Options:
   --display-name TEXT        A user-friendly name. Does not have to be unique,
                              and it's changeable. Avoid entering confidential
                              information.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network dhcp-options delete --help
@@ -2469,7 +2612,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network dhcp-options get --help
@@ -2479,7 +2622,7 @@ Usage: bmcs network dhcp-options get [OPTIONS]
 
 Options:
   --dhcp-id TEXT  The OCID for the set of DHCP options.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network dhcp-options list --help
@@ -2498,7 +2641,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network dhcp-options update --help
@@ -2527,7 +2670,7 @@ Options:
                        deleted only if the etag you provide matches the
                        resource's current etag value.
   --force              Perform update without prompting for confirmation.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg --help
@@ -2545,7 +2688,7 @@ Usage: bmcs network drg [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new Dynamic Routing Gateway (DRG)...
@@ -2579,7 +2722,7 @@ Options:
   --display-name TEXT        A user-friendly name. Does not have to be unique,
                              and it's changeable. Avoid entering confidential
                              information.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg delete --help
@@ -2600,7 +2743,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg get --help
@@ -2609,8 +2752,8 @@ Usage: bmcs network drg get [OPTIONS]
   Gets the specified DRG's information.
 
 Options:
-  --drg-id TEXT  The OCID of the DRG.  [required]
-  -?, --help     Show this message and exit.
+  --drg-id TEXT   The OCID of the DRG.  [required]
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg list --help
@@ -2626,7 +2769,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg update --help
@@ -2645,7 +2788,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg-attachment --help
@@ -2655,7 +2798,7 @@ Usage: bmcs network drg-attachment [OPTIONS] COMMAND [ARGS]...
   Networking Service].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Attaches the specified DRG to the specified...
@@ -2686,7 +2829,7 @@ Options:
   --vcn-id TEXT        The OCID of the VCN.  [required]
   --display-name TEXT  A user-friendly name. Does not have to be unique. Avoid
                        entering confidential information.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg-attachment delete --help
@@ -2706,7 +2849,7 @@ Options:
                             you provide matches the resource's current etag
                             value.
   --force                   Perform deletion without prompting for confirmation.
-  -?, --help                Show this message and exit.
+  -?, -h, --help            Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg-attachment get --help
@@ -2716,7 +2859,7 @@ Usage: bmcs network drg-attachment get [OPTIONS]
 
 Options:
   --drg-attachment-id TEXT  The OCID of the DRG attachment.  [required]
-  -?, --help                Show this message and exit.
+  -?, -h, --help            Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg-attachment list --help
@@ -2735,7 +2878,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network drg-attachment update --help
@@ -2756,7 +2899,7 @@ Options:
                             resource will be updated or deleted only if the etag
                             you provide matches the resource's current etag
                             value.
-  -?, --help                Show this message and exit.
+  -?, -h, --help            Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network internet-gateway --help
@@ -2772,7 +2915,7 @@ Usage: bmcs network internet-gateway [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new Internet Gateway for the...
@@ -2820,7 +2963,7 @@ Options:
   --display-name TEXT        A user-friendly name. Does not have to be unique,
                              and it's changeable. Avoid entering confidential
                              information.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network internet-gateway delete --help
@@ -2842,7 +2985,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network internet-gateway get --help
@@ -2851,8 +2994,8 @@ Usage: bmcs network internet-gateway get [OPTIONS]
   Gets the specified Internet Gateway's information.
 
 Options:
-  --ig-id TEXT  The OCID of the Internet Gateway.  [required]
-  -?, --help    Show this message and exit.
+  --ig-id TEXT    The OCID of the Internet Gateway.  [required]
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network internet-gateway list --help
@@ -2870,7 +3013,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network internet-gateway update --help
@@ -2893,7 +3036,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection --help
@@ -2910,7 +3053,7 @@ Usage: bmcs network ip-sec-connection [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create      Creates a new IPSec connection between the...
@@ -2967,7 +3110,7 @@ Options:
   --display-name TEXT        A user-friendly name. Does not have to be unique,
                              and it's changeable. Avoid entering confidential
                              information.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection delete --help
@@ -2993,7 +3136,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection get --help
@@ -3005,7 +3148,7 @@ Usage: bmcs network ip-sec-connection get [OPTIONS]
 
 Options:
   --ipsc-id TEXT  The OCID of the IPSec connection.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection get-config --help
@@ -3017,7 +3160,7 @@ Usage: bmcs network ip-sec-connection get-config [OPTIONS]
 
 Options:
   --ipsc-id TEXT  The OCID of the IPSec connection.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection get-status --help
@@ -3027,7 +3170,7 @@ Usage: bmcs network ip-sec-connection get-status [OPTIONS]
 
 Options:
   --ipsc-id TEXT  The OCID of the IPSec connection.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection list --help
@@ -3046,7 +3189,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network ip-sec-connection update --help
@@ -3065,7 +3208,152 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network private-ip --help
+Usage: bmcs network private-ip [OPTIONS] COMMAND [ARGS]...
+
+  A *private IP* is a conceptual term that refers to a private IP address and
+  related properties. The `privateIp` object is the API representation of a
+  private IP.
+
+  Each instance has a *primary private IP* that is automatically created and
+  assigned to the primary VNIC during instance launch. If you add a secondary
+  VNIC to the instance, it also automatically gets a primary private IP. You
+  can't remove a primary private IP from its VNIC. The primary private IP is
+  automatically deleted when the VNIC is terminated.
+
+  You can add *secondary private IPs* to a VNIC after it's created. For more
+  information, see the `privateIp` operations and also [Managing IP
+  Addresses].
+
+  **Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary*
+  private IPs. To create and update primary private IPs, you instead work with
+  instance and VNIC operations. For example, a primary private IP's properties
+  come from the values you specify in [CreateVnicDetails] when calling either
+  [LaunchInstance] or [AttachVnic]. To update the hostname for a primary
+  private IP, you use [UpdateVnic].
+
+  To use any of the API operations, you must be authorized in an IAM policy.
+  If you're not authorized, talk to an administrator. If you're an
+  administrator who needs to write policies to give users access, see [Getting
+  Started with Policies].
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  delete  Unassigns and deletes the specified private...
+  get     Gets the specified private IP.
+  list    Lists the [PrivateIp] objects based on one of...
+  update  Updates the specified private IP.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network private-ip delete --help
+Usage: bmcs network private-ip delete [OPTIONS]
+
+  Unassigns and deletes the specified private IP. You must specify the
+  object's OCID. The private IP address is returned to the subnet's pool of
+  available addresses.
+
+  This operation cannot be used with primary private IPs, which are
+  automatically unassigned and deleted when the VNIC is terminated.
+
+Options:
+  --private-ip-id TEXT  The private IP's OCID.  [required]
+  --if-match TEXT       For optimistic concurrency control. In the PUT or DELETE
+                        call for a resource, set the `if-match` parameter to the
+                        value of the etag from a previous GET or POST response
+                        for that resource.  The resource will be updated or
+                        deleted only if the etag you provide matches the
+                        resource's current etag value.
+  --force               Perform deletion without prompting for confirmation.
+  -?, -h, --help        Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network private-ip get --help
+Usage: bmcs network private-ip get [OPTIONS]
+
+  Gets the specified private IP. You must specify the object's OCID.
+  Alternatively, you can get the object by using [ListPrivateIps] with the
+  private IP address (for example, 10.0.3.3) and subnet OCID.
+
+Options:
+  --private-ip-id TEXT  The private IP's OCID.  [required]
+  -?, -h, --help        Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network private-ip list --help
+Usage: bmcs network private-ip list [OPTIONS]
+
+  Lists the [PrivateIp] objects based on one of these filters:
+
+      - Subnet OCID.
+      - VNIC OCID.
+      - Both private IP address and subnet OCID: This lets you get a `privateIP` object
+        based on its private IP address (for example, 10.0.3.3)  and not its OCID.
+        For comparison, [GetPrivateIp] requires the OCID.
+
+  If you're listing all the private IPs associated with a given subnet or
+  VNIC, the response includes both primary and secondary private IPs.
+
+Options:
+  --limit TEXT       The maximum number of items to return in a paginated "List"
+                     call.
+                     
+                     Example: `500`
+  --page TEXT        The value of the `opc-next-page` response header from the
+                     previous "List" call.
+  --ip-address TEXT  The private IP address of the `privateIp` object.
+                     
+                     Example:
+                     `10.0.3.3`
+  --subnet-id TEXT   The OCID of the subnet.
+  --vnic-id TEXT     The OCID of the VNIC.
+  -?, -h, --help     Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network private-ip update --help
+Usage: bmcs network private-ip update [OPTIONS]
+
+  Updates the specified private IP. You must specify the object's OCID. Use
+  this operation if you want to:
+
+      - Change the display name for a secondary private IP.
+      - Change the hostname for a secondary private IP.
+
+  To move a secondary private IP to another VNIC, use the `bcms network vnic
+  assign-private-ip` command with the --unassign-if-already-assigned switch.
+
+  This operation cannot be used with primary private IPs. To update the
+  hostname for the primary IP on a VNIC, use [UpdateVnic].
+
+Options:
+  --private-ip-id TEXT   The private IP's OCID.  [required]
+  --display-name TEXT    A user-friendly name. Does not have to be unique, and
+                         it's changeable. Avoid entering confidential
+                         information.
+  --hostname-label TEXT  The hostname for the private IP. Used for DNS. The
+                         value is the hostname portion of the private IP's fully
+                         qualified domain name (FQDN) (for example,
+                         `bminstance-1` in FQDN
+                         `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be
+                         unique across all VNICs in the subnet and comply with
+                         [RFC 952] and [RFC 1123].
+                         
+                         For more information, see
+                         [DNS in Your Virtual Cloud Network].
+                         
+                         Example:
+                         `bminstance-1`
+  --if-match TEXT        For optimistic concurrency control. In the PUT or
+                         DELETE call for a resource, set the `if-match`
+                         parameter to the value of the etag from a previous GET
+                         or POST response for that resource.  The resource will
+                         be updated or deleted only if the etag you provide
+                         matches the resource's current etag value.
+  -?, -h, --help         Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network route-table --help
@@ -3081,7 +3369,7 @@ Usage: bmcs network route-table [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new route table for the specified...
@@ -3129,7 +3417,7 @@ Options:
   --display-name TEXT        A user-friendly name. Does not have to be unique,
                              and it's changeable. Avoid entering confidential
                              information.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network route-table delete --help
@@ -3151,7 +3439,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network route-table get --help
@@ -3160,8 +3448,8 @@ Usage: bmcs network route-table get [OPTIONS]
   Gets the specified route table's information.
 
 Options:
-  --rt-id TEXT  The OCID of the route table.  [required]
-  -?, --help    Show this message and exit.
+  --rt-id TEXT    The OCID of the route table.  [required]
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network route-table list --help
@@ -3180,7 +3468,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network route-table update --help
@@ -3211,7 +3499,7 @@ Options:
                        deleted only if the etag you provide matches the
                        resource's current etag value.
   --force              Perform update without prompting for confirmation.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network security-list --help
@@ -3234,7 +3522,7 @@ Usage: bmcs network security-list [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new security list for the specified...
@@ -3292,7 +3580,7 @@ Options:
   --display-name TEXT            A user-friendly name. Does not have to be
                                  unique, and it's changeable. Avoid entering
                                  confidential information.
-  -?, --help                     Show this message and exit.
+  -?, -h, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network security-list delete --help
@@ -3314,7 +3602,7 @@ Options:
                            will be updated or deleted only if the etag you
                            provide matches the resource's current etag value.
   --force                  Perform deletion without prompting for confirmation.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network security-list get --help
@@ -3324,7 +3612,7 @@ Usage: bmcs network security-list get [OPTIONS]
 
 Options:
   --security-list-id TEXT  The OCID of the security list.  [required]
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network security-list list --help
@@ -3341,7 +3629,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network security-list update --help
@@ -3387,7 +3675,7 @@ Options:
                                  the resource's current etag value.
   --force                        Perform update without prompting for
                                  confirmation.
-  -?, --help                     Show this message and exit.
+  -?, -h, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network subnet --help
@@ -3405,7 +3693,7 @@ Usage: bmcs network subnet [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new subnet in the specified VCN.
@@ -3516,7 +3804,7 @@ Options:
                                   Example: '["ocid1.securitylist.oc1.phx.aaaaaaa
                                   adyndu2n3hcmdsjfiljwyq7vpxsvv7ynp4ori7aealcvhz
                                   icnzhyq"]'
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network subnet delete --help
@@ -3536,7 +3824,7 @@ Options:
                     if the etag you provide matches the resource's current etag
                     value.
   --force           Perform deletion without prompting for confirmation.
-  -?, --help        Show this message and exit.
+  -?, -h, --help    Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network subnet get --help
@@ -3546,7 +3834,7 @@ Usage: bmcs network subnet get [OPTIONS]
 
 Options:
   --subnet-id TEXT  The OCID of the subnet.  [required]
-  -?, --help        Show this message and exit.
+  -?, -h, --help    Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network subnet list --help
@@ -3563,7 +3851,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network subnet update --help
@@ -3582,7 +3870,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vcn --help
@@ -3597,7 +3885,7 @@ Usage: bmcs network vcn [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a new Virtual Cloud Network (VCN).
@@ -3674,7 +3962,7 @@ Options:
                              Virtual Cloud Network].
                              
                              Example: `vcn1`
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vcn delete --help
@@ -3693,7 +3981,7 @@ Options:
                    the etag you provide matches the resource's current etag
                    value.
   --force          Perform deletion without prompting for confirmation.
-  -?, --help       Show this message and exit.
+  -?, -h, --help   Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vcn get --help
@@ -3702,8 +3990,8 @@ Usage: bmcs network vcn get [OPTIONS]
   Gets the specified VCN's information.
 
 Options:
-  --vcn-id TEXT  The OCID of the VCN.  [required]
-  -?, --help     Show this message and exit.
+  --vcn-id TEXT   The OCID of the VCN.  [required]
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vcn list --help
@@ -3719,7 +4007,7 @@ Options:
                              Example: `500`
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vcn update --help
@@ -3738,7 +4026,7 @@ Options:
                        for that resource.  The resource will be updated or
                        deleted only if the etag you provide matches the
                        resource's current etag value.
-  -?, --help           Show this message and exit.
+  -?, -h, --help       Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vnic --help
@@ -3761,11 +4049,57 @@ Usage: bmcs network vnic [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
-  get     Gets the information for the specified...
-  update  Updates the specified VNIC.
+  assign-private-ip    Assigns a secondary private IP address to the...
+  get                  Gets the information for the specified...
+  unassign-private-ip  Unassigns a secondary private IP address from...
+  update               Updates the specified VNIC.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network vnic assign-private-ip --help
+Usage: bmcs network vnic assign-private-ip [OPTIONS]
+
+  Assigns a secondary private IP address to the specified VNIC. The secondary
+  private IP must be in the same subnet as the VNIC. This command can also be
+  used to move an existing secondary private IP to the specified VNIC.
+
+  For more information about secondary private IPs, see [Managing IP
+  Addresses]
+
+Options:
+  --vnic-id TEXT                  The OCID of the VNIC to assign the private IP
+                                  to. The VNIC and private IP must be in the
+                                  same subnet.  [required]
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
+  --hostname-label TEXT           The hostname for the private IP. Used for DNS.
+                                  The value is the hostname portion of the
+                                  private IP's fully qualified domain name
+                                  (FQDN) (for example, `bminstance-1` in FQDN
+                                  `bminstance-1.subnet123.vcn1.oraclevcn.com`).
+                                  Must be unique across all VNICs in the subnet
+                                  and comply with [RFC 952] and [RFC 1123].
+                                  
+                                  For
+                                  more information, see [DNS in Your Virtual
+                                  Cloud Network].
+                                  
+                                  Example: `bminstance-1`
+  --ip-address TEXT               A private IP address of your choice. Must be
+                                  an available IP address within the subnet's
+                                  CIDR. If you don't specify a value, Oracle
+                                  automatically assigns a private IP address
+                                  from the subnet.
+                                  
+                                  Example: `10.0.3.3`
+  --unassign-if-already-assigned  Force reassignment of the IP address if it's
+                                  already assigned to another VNIC in the
+                                  subnet. This is only relevant if an IP address
+                                  is associated with this command.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vnic get --help
@@ -3776,7 +4110,27 @@ Usage: bmcs network vnic get [OPTIONS]
 
 Options:
   --vnic-id TEXT  The OCID of the VNIC.  [required]
-  -?, --help      Show this message and exit.
+  -?, -h, --help  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ bmcs network vnic unassign-private-ip --help
+Usage: bmcs network vnic unassign-private-ip [OPTIONS]
+
+  Unassigns a secondary private IP address from a VNIC. After the IP address
+  is unassigned, you can assign to another VNIC in the subnet.
+
+  This operation cannot be used with primary private IPs, which are
+  automatically unassigned, and then deleted when the VNIC is terminated.
+
+  For more information about secondary private IPs, see [Managing IP
+  Addresses]
+
+Options:
+  --vnic-id TEXT     The OCID of the VNIC to unassign the private IP from.
+                     [required]
+  --ip-address TEXT  The secondary private IP to unassign from the VNIC.
+                     [required]
+  -?, -h, --help     Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs network vnic update --help
@@ -3806,7 +4160,7 @@ Options:
                          or POST response for that resource.  The resource will
                          be updated or deleted only if the etag you provide
                          matches the resource's current etag value.
-  -?, --help             Show this message and exit.
+  -?, -h, --help         Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os --help
@@ -3815,7 +4169,7 @@ Usage: bmcs os [OPTIONS] COMMAND [ARGS]...
   Object Storage Service
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   bucket
@@ -3829,7 +4183,7 @@ $ bmcs os bucket --help
 Usage: bmcs os bucket [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a bucket in the given namespace with...
@@ -3869,7 +4223,7 @@ Options:
                                   public access. When the type is ObjectRead the
                                   bucket allows public access to the GetObject
                                   operation only.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os bucket delete --help
@@ -3885,7 +4239,7 @@ Options:
   --name TEXT            The name of the bucket.  [required]
   --if-match TEXT        The entity tag to match.
   --force                Perform deletion without prompting for confirmation.
-  -?, --help             Show this message and exit.
+  -?, -h, --help         Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os bucket get --help
@@ -3901,7 +4255,7 @@ Options:
   --name TEXT            The name of the bucket.  [required]
   --if-match TEXT        The entity tag to match.
   --if-none-match TEXT   The entity tag to avoid matching.
-  -?, --help             Show this message and exit.
+  -?, -h, --help         Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os bucket list --help
@@ -3923,7 +4277,7 @@ Options:
                              100]
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
-  -?, --help                 Show this message and exit.
+  -?, -h, --help             Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os bucket update --help
@@ -3955,14 +4309,14 @@ Options:
                                   public access. When the type is ObjectRead the
                                   bucket allows public access to the GetObject
                                   operation only.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os multipart --help
 Usage: bmcs os multipart [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   abort  Aborts an uncommitted multipart upload...
@@ -3985,7 +4339,7 @@ Options:
   --upload-id TEXT         Upload ID to abort.  [required]
   --force                  Abort the existing multipart upload without a
                            confirmation prompt.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os multipart list --help
@@ -4003,14 +4357,14 @@ Options:
                            100]
   --page TEXT              The value of the `opc-next-page` response header from
                            the previous "List" call.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os ns --help
 Usage: bmcs os ns [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   get  Gets the name of the namespace for the user...
@@ -4024,14 +4378,14 @@ Usage: bmcs os ns get [OPTIONS]
   Example:     bmcs os ns get
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os object --help
 Usage: bmcs os object [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   delete      Deletes an object.
@@ -4057,7 +4411,7 @@ Options:
   --name TEXT              The name of the object to delete.  [required]
   --if-match TEXT          The entity tag to match.
   --force                  Perform deletion without prompting for confirmation.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os object get --help
@@ -4080,7 +4434,7 @@ Options:
   --range TEXT             Byte range to fetch. Follows
                            https://tools.ietf.org/html/rfc7233#section-2.1.
                            Example: bytes=2-10
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os object head --help
@@ -4098,7 +4452,7 @@ Options:
   --name TEXT              The name of the object.  [required]
   --if-match TEXT          The entity tag to match.
   --if-none-match TEXT     The entity tag to avoid matching.
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os object list --help
@@ -4136,7 +4490,7 @@ Options:
                            parameter should be a comma separated, case-
                            insensitive list of those field names.  [default:
                            name,size,timeCreated,md5]
-  -?, --help               Show this message and exit.
+  -?, -h, --help           Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os object put --help
@@ -4183,7 +4537,7 @@ Options:
                                   in parallel. This option cannot be used with
                                   --disable-parallel-uploads or --no-multipart.
                                   Defaults to 3.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os object resume-put --help
@@ -4212,7 +4566,7 @@ Options:
                                   number of parts that can be uploaded in
                                   parallel. This option cannot be used with
                                   --disable-parallel-uploads. Defaults to 3.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os preauth-request --help
@@ -4226,7 +4580,7 @@ Usage: bmcs os preauth-request [OPTIONS] COMMAND [ARGS]...
   creation in order to use the pre-authenticated request later.
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   create  Creates a pre-authenticated request.
@@ -4269,7 +4623,7 @@ Options:
                                   This option cannot be specified if the
                                   --access-type is AnyObjectWrite.
   --opc-client-request-id TEXT    The client request ID for tracing.
-  -?, --help                      Show this message and exit.
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os preauth-request delete --help
@@ -4290,7 +4644,7 @@ Options:
   --opc-client-request-id TEXT  The client request ID for tracing.
   --force                       Perform deletion without prompting for
                                 confirmation.
-  -?, --help                    Show this message and exit.
+  -?, -h, --help                Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os preauth-request get --help
@@ -4309,7 +4663,7 @@ Options:
                                 request (PAR). This can be used to manage the
                                 PAR such as GET or DELETE the PAR  [required]
   --opc-client-request-id TEXT  The client request ID for tracing.
-  -?, --help                    Show this message and exit.
+  -?, -h, --help                Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs os preauth-request list --help
@@ -4329,7 +4683,7 @@ Options:
   --limit TEXT                  The maximum number of items to return.
   --page TEXT                   The page at which to start retrieving results.
   --opc-client-request-id TEXT  The client request ID for tracing.
-  -?, --help                    Show this message and exit.
+  -?, -h, --help                Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs setup --help
@@ -4338,7 +4692,7 @@ Usage: bmcs setup [OPTIONS] COMMAND [ARGS]...
   Setup commands for CLI
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 Commands:
   autocomplete  Interactive script to set up tab completion...
@@ -4352,7 +4706,7 @@ Usage: bmcs setup autocomplete [OPTIONS]
   Interactive script to set up tab completion for commands and parameters.
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs setup config --help
@@ -4361,7 +4715,7 @@ Usage: bmcs setup config [OPTIONS]
   Interactive script to generate bmcs config file.
 
 Options:
-  -?, --help  Show this message and exit.
+  -?, -h, --help  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ bmcs setup keys --help
@@ -4382,5 +4736,5 @@ Options:
                               read from stdin).
   --overwrite                 An option to overwrite existing files without a
                               confirmation prompt.
-  -?, --help                  Show this message and exit.
+  -?, -h, --help              Show this message and exit.
 

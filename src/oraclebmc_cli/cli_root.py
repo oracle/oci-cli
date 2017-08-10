@@ -42,7 +42,7 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
 @click.option('--endpoint', help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
 @click.option('--cert-bundle', help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
-@click.option('-?', '--help', is_flag=True, help='Show this message and exit.')
+@click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
 def cli(ctx, config_file, profile, request_id, region, endpoint, cert_bundle, debug, help):
     # Show help in any case if there are no subcommands, or if the help option

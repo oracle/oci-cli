@@ -388,35 +388,6 @@ def test_object_put_default_name(runner, config_file, test_id):
     os.remove(filename)
 
 
-def test_object_put_from_stdin(runner, config_file, test_id):
-    bucket_name = "CliReadOnlyTestBucket7"
-    object_name = "TestObject_" + test_id
-    filename = os.path.join("tests/temp", object_name)
-
-    with open(filename, 'w') as f:
-        f.write("Test object content")
-
-    with open(filename, 'r') as f:
-        put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--force', '--file',
-                             '-', '--name', object_name]
-
-        # supply object content file through stdin
-        put_result = invoke(runner, config_file, put_required_args, input=f)
-        print(put_result.output)
-
-    validate_response(put_result)
-
-    assert json.loads(put_result.output)['opc-content-md5'] == 'H8BEg3FCR+1WmoYYrQbc2Q=='
-
-    # delete object to clean up
-    delete_required_args = ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
-                            '--force']
-    invoke(runner, config_file, delete_required_args)
-
-    # remove file to cleanup
-    os.remove(filename)
-
-
 def test_object_put_from_stdin_requires_object_name(runner, config_file):
     bucket_name = "CliReadOnlyTestBucket7"
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--file', '-', '--force']
