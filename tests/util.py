@@ -40,6 +40,12 @@ slow = pytest.mark.skipif(
 )
 
 
+enable_long_running = pytest.mark.skipif(
+    not pytest.config.getoption("--enable-long-running"),
+    reason="Long running tests are only run when specifically asked for"
+)
+
+
 def random_name(prefix, insert_underscore=True):
     return prefix + ('_' if insert_underscore else '') + str(random.randint(0, 1000000))
 

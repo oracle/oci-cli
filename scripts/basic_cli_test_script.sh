@@ -28,6 +28,10 @@ touch $EMPTY_FILE
 bmcs $ARGS os object put -ns $NS -bn $BUCKET --name object3 --file $EMPTY_FILE
 bmcs $ARGS os object get -ns $NS -bn $BUCKET --name object3 --file -
 
+# Put a file from stdin and get it back
+bmcs $ARGS os object put -ns $NS -bn $BUCKET --name object4 --file - <<< "This is some object content"
+bmcs $ARGS os object get -ns $NS -bn $BUCKET --name object4 --file - | grep "This is some object content"
+
 # Try a few variations on metadata format.
 bmcs $ARGS os object put -ns $NS -bn $BUCKET --name object2 --file $FILE --metadata '{"foo1":"a b c '"'d'"'","foo2": "bar2"}' --force
 bmcs $ARGS os object head -ns $NS -bn $BUCKET --name object2 | grep "a b c 'd'"
@@ -60,6 +64,7 @@ bmcs $ARGS os bucket list -ns $NS --compartment-id $C
 bmcs $ARGS os object delete -ns $NS -bn $BUCKET --name object1 --force
 bmcs $ARGS os object delete -ns $NS -bn $BUCKET --name object2 --force
 bmcs $ARGS os object delete -ns $NS -bn $BUCKET --name object3 --force
+bmcs $ARGS os object delete -ns $NS -bn $BUCKET --name object4 --force
 bmcs $ARGS os bucket delete -ns $NS --name $BUCKET --force
 
 echo "Success!"

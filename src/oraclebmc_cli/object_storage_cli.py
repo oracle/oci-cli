@@ -381,17 +381,18 @@ def object_put(ctx, namespace, bucket_name, name, file, if_match, content_md5, m
     if content_encoding is not None:
         kwargs['content_encoding'] = content_encoding
 
-    # Do not use multipart if the stream is coming from stdin.
-    if file.name == '<stdin>':
-        no_multipart = True
-
     if part_size is not None:
         kwargs['part_size'] = part_size * MEBIBYTE
 
     total_size = os.fstat(file.fileno()).st_size
     size_qualifies_for_multipart = UploadManager._use_multipart(total_size, part_size) if part_size else UploadManager._use_multipart(total_size)
 
-    if total_size == 0 or no_multipart or not size_qualifies_for_multipart:
+    if not hasattr(file, 'name') or file.name == '<stdin>':
+        # for now upload manager only supports uploading using a path on disk
+        # if this file does not have a location on disk (e.g. file.name does not exist) just
+        # use regular object_put
+        response = client.put_object(namespace, bucket_name, name, file, **kwargs)
+    elif total_size == 0 or no_multipart or not size_qualifies_for_multipart:
         if parallel_upload_count is not None:
             click.echo(
                 'Warning: File is being uploaded as a single part so --parallel-upload-count will be ignored.',

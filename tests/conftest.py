@@ -10,6 +10,7 @@ import random
 
 def pytest_addoption(parser):
     parser.addoption("--fast", action="store_true", default=False, help="Skip slow tests, as marked with the @slow annotation.")
+    parser.addoption("--enable-long-running", action="store_true", default=False, help="Enables tests marked with the @enable_long_running annotation")
 
 
 @pytest.fixture(scope='session')

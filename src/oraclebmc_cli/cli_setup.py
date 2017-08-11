@@ -109,7 +109,7 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
 def generate_bmcs_config():
     click.echo(click.wrap_text(text=generate_bmcs_config_instructions, preserve_paragraphs=True))
 
-    config_location = click.prompt('Enter a location for your config', default=os.path.join(default_directory, 'config'), value_proc=validate_config_filename)
+    config_location = click.prompt('Enter a location for your config', default=os.path.join(default_directory, 'config'), value_proc=process_config_filename)
     if os.path.exists(config_location):
         if not click.confirm('File: {} already exists. Do you want to overwrite?'.format(config_location)):
             click.echo(config_generation_canceled_message)
@@ -308,11 +308,12 @@ def validate_region(region):
     return region
 
 
-def validate_config_filename(filename):
-    if os.path.isdir(filename):
+def process_config_filename(filename):
+    filename_expanded = os.path.expanduser(filename)
+    if os.path.isdir(filename_expanded):
         raise click.BadParameter("Config location must be a filename not a directory")
 
-    return filename
+    return filename_expanded
 
 
 def validate_ocid(ocid, pattern):

@@ -7,6 +7,28 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.6 - 2017-08-10
+------------------
+
+Added
+~~~~~
+- Subcommands to 'bmcs compute image import / export' to allow specifying 
+  source / destination in multiple formats.
+- Secondary IP operations ('bmcs network private-ip', 'bmcs network vnic 
+  assign/unassign-private-ip').
+- '-h' alias for global '--help' option (https://github.com/oracle/bmcs-cli/issues/6)
+
+Fixed
+~~~~~
+- 'bmcs os object put' accepts input from stdin (https://github.com/oracle/bmcs-cli/issues/7)
+- 'bmcs compute image export' successfully exports image (https://github.com/oracle/bmcs-cli/issues/4)
+
+Changed
+~~~~~~~
+- Upgraded cryptography dependency to 1.8.2 (https://github.com/oracle/bmcs-cli/issues/5)
+- Deprecated --image-source-details param of 'bmcs compute image create' in 
+  favor of subcommands (see Added section).
+
 2.4.5 - 2017-07-20
 ------------------
 

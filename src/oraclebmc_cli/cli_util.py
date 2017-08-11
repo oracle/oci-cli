@@ -295,11 +295,11 @@ def help_callback(ctx, param, value):
 
 
 '''Help option to use for commands.'''
-help_option = click.option('-?', '--help', is_flag=True, help='Show this message and exit.', expose_value=False, is_eager=True, callback=help_callback)
+help_option = click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.', expose_value=False, is_eager=True, callback=help_callback)
 
 
 '''Help option to use for groups (except for bmcs).'''
-help_option_group = click.help_option('-?', '--help', help='Show this message and exit.')
+help_option_group = click.help_option('-?', '-h', '--help', help='Show this message and exit.')
 
 
 def confirmation_callback(ctx, param, value):
