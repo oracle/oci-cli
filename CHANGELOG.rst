@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.7 - 2017-08-22
+------------------
+
+Fixed
+~~~~~
+- Upgraded pyOpenSSL dependency to 17.0.0
+
 2.4.6 - 2017-08-10
 ------------------
 
