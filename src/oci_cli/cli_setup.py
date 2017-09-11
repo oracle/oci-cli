@@ -11,13 +11,14 @@ import hashlib
 import os.path
 import sys
 
-from oraclebmc.regions import is_region
-from oraclebmc import config
+from oci.regions import is_region
+from oci.regions import REGIONS
+from oci import config
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
-generate_bmcs_config_instructions = """
+generate_oci_config_instructions = """
     This command provides a walkthrough of creating a valid CLI config file.
 
     The following links explain where to find the information required by this script:
@@ -60,7 +61,7 @@ private_key_filename_suffix = '.pem'
 
 config_generation_canceled_message = "Config creation canceled."
 
-default_directory = os.path.join(os.path.expanduser('~'), '.oraclebmc')
+default_directory = os.path.join(os.path.expanduser('~'), '.oci')
 
 
 @cli.group('setup', help="""Setup commands for CLI""")
@@ -70,7 +71,7 @@ def setup_group():
 
 
 @setup_group.command('keys', help="""Generates an RSA key pair. A passphrase for the private key can be provided using either the 'passphrase' or 'passphrase-file' option. If neither option is provided, the user will be prompted for a passphrase via stdin.""")
-@click.option('--key-name', default='bmcs_api_key', help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
+@click.option('--key-name', default='oci_api_key', help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
 @click.option('--output-dir', default=default_directory, help="""An optional directory to output the generated keys.""", type=click.Path())
 @click.option('--passphrase', help="""An optional passphrase to encrypt the private key.""")
 @click.option('--passphrase-file', help="""An optional file with the first line specifying a passphrase to encrypt the private key (or '-' to read from stdin).""", type=click.File(mode='r'))
@@ -104,10 +105,10 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
     click.echo(click.wrap_text(upload_public_key_instructions, preserve_paragraphs=True))
 
 
-@setup_group.command('config', help="""Interactive script to generate bmcs config file.""")
+@setup_group.command('config', help="""Interactive script to generate oci config file.""")
 @cli_util.help_option
-def generate_bmcs_config():
-    click.echo(click.wrap_text(text=generate_bmcs_config_instructions, preserve_paragraphs=True))
+def generate_oci_config():
+    click.echo(click.wrap_text(text=generate_oci_config_instructions, preserve_paragraphs=True))
 
     config_location = click.prompt('Enter a location for your config', default=os.path.join(default_directory, 'config'), value_proc=process_config_filename)
     if os.path.exists(config_location):
@@ -126,7 +127,8 @@ def generate_bmcs_config():
 
     region = None
     while not region:
-        region = click.prompt(text='Enter a region', value_proc=validate_region)
+        region_list = ', '.join(sorted(REGIONS))
+        region = click.prompt(text='Enter a region (e.g. {})'.format(region_list), value_proc=validate_region)
 
     if click.confirm("Do you want to generate a new RSA key pair? (If you decline you will be asked to supply the path to an existing key.)", default=True):
         key_location = click.prompt(text='Enter a directory for your keys to be created', default=default_directory)
@@ -137,7 +139,7 @@ def generate_bmcs_config():
         private_key = cli_util.generate_key()
         public_key = private_key.public_key()
 
-        key_name = click.prompt('Enter a name for your key', 'bmcs_api_key')
+        key_name = click.prompt('Enter a name for your key', 'oci_api_key')
         if not write_public_key_to_file(os.path.join(key_location, key_name + public_key_filename_suffix), public_key):
             click.echo(config_generation_canceled_message)
             return
@@ -189,7 +191,7 @@ def setup_autocomplete():
         bash_config_location = bash_profile_location
 
     # source bash completion script in CLI install directory
-    script_relative_path = os.path.join('bin', 'bmcs_autocomplete.sh')
+    script_relative_path = os.path.join('bin', 'oci_autocomplete.sh')
     path_to_install_dir = os.path.dirname(os.path.abspath(__file__))
     completion_script_file = os.path.join(path_to_install_dir, script_relative_path)
     if not os.path.exists(completion_script_file):
@@ -198,7 +200,7 @@ def setup_autocomplete():
 
     click.echo("Using tab completion script at: {}".format(completion_script_file))
 
-    bash_profile_line = '. {}'.format(completion_script_file)
+    bash_profile_line = '[[ -e "{completion_script_file}" ]] && source "{completion_script_file}"'.format(completion_script_file=completion_script_file)
     confirm_prompt = 'To set up autocomplete, we need to add a few lines to your {bash_config_location} file. Please confirm this is ok.'.format(bash_config_location=bash_config_location)
 
     if click.confirm(confirm_prompt, default=True):
@@ -208,7 +210,7 @@ def setup_autocomplete():
 
             # this check is not foolproof but we want to avoid adding a bunch of lines to .bash_profile/.bashrc if the user re-runs the command
             if script_relative_path in content:
-                click.echo("It looks like tab completion for bmcs is already configured in {bash_config_location}. If you want to re-run the setup command please remove the line containing '{script_relative_path}' from {bash_config_location}.".format(script_relative_path=script_relative_path, bash_config_location=bash_config_location))
+                click.echo("It looks like tab completion for oci is already configured in {bash_config_location}. If you want to re-run the setup command please remove the line containing '{script_relative_path}' from {bash_config_location}.".format(script_relative_path=script_relative_path, bash_config_location=bash_config_location))
                 return
 
             f.write('\n{}\n'.format(bash_profile_line))

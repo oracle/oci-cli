@@ -1,7 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
-import oraclebmc_cli
+import oci_cli
 
 
 def test_control_case(runner, config_file):
@@ -48,8 +48,9 @@ def test_region_option_without_region_in_config(runner):
 
 def test_cert_bundle_option(runner, config_file):
     result = invoke_example_operation(runner, ['--cert-bundle', 'tests/resources/doesnotexist'], config_file)
+    assert 'BadParameter: Cannot find cert_bundle file' in result.output
     assert 0 != result.exit_code
 
 
 def invoke_example_operation(runner, root_args, config_file):
-    return runner.invoke(oraclebmc_cli.cli, root_args + ['--config-file', config_file, 'os', 'ns', 'get'])
+    return runner.invoke(oci_cli.cli, root_args + ['--config-file', config_file, 'os', 'ns', 'get'])

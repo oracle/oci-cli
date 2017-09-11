@@ -1,4 +1,4 @@
-Contributing to the Oracle Bare Metal Cloud Services CLI
+Contributing to the Oracle Cloud Infrastructure CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.*

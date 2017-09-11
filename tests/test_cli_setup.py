@@ -1,11 +1,11 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
-import oraclebmc_cli
+import oci_cli
 import unittest
 from . import command_coverage_validator
 from . import util
-from oraclebmc_cli import config
+from oci_cli import config
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
@@ -21,14 +21,14 @@ REGION = 'us-phoenix-1'
 PASSPHRASE = 'passphrase'
 PASSPHRASE_FILE = 'tests/resources/test_passphrase_file.txt'
 
-PUBLIC_KEY_FILENAME = os.path.join(TEMP_DIR, 'bmcs_api_key_public.pem')
-PRIVATE_KEY_FILENAME = os.path.join(TEMP_DIR, 'bmcs_api_key.pem')
+PUBLIC_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key_public.pem')
+PRIVATE_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key.pem')
 
 
 class TestSetup(unittest.TestCase):
 
     @util.log_test
-    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.cli_setup.setup_group)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.cli_setup.setup_group)
     def test_all_operations(self, validator):
         self.validator = validator
 
@@ -56,14 +56,14 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite'], input='\n'.join(stdin))
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'bmcs setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'bmcs setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
         self.cleanup_default_generated_files()
 
@@ -73,14 +73,14 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite', '--passphrase', PASSPHRASE])
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'bmcs setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'bmcs setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
         self.cleanup_default_generated_files()
 
@@ -90,14 +90,14 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite', '--passphrase-file', PASSPHRASE_FILE])
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'bmcs setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'bmcs setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
         self.cleanup_default_generated_files()
 
@@ -107,14 +107,14 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite', '--passphrase-file', '-'], input=PASSPHRASE)
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'bmcs setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'bmcs setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
         self.cleanup_default_generated_files()
 
@@ -137,14 +137,14 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite'], input=stdin)
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'bmcs setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'bmcs setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME)
 
         self.cleanup_default_generated_files()
 
@@ -188,7 +188,7 @@ class TestSetup(unittest.TestCase):
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key w/ passphrase
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
         # clean up config and keys
         self.cleanup_default_generated_files()
@@ -239,7 +239,7 @@ class TestSetup(unittest.TestCase):
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
 
         # validate private key w/ passphrase
-        assert oraclebmc_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+        assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
         # clean up config and keys
         self.cleanup_default_generated_files()

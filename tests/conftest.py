@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 from click.testing import CliRunner
-import oraclebmc
+import oci
 import os
 import pytest
 import random
@@ -11,6 +11,7 @@ import random
 def pytest_addoption(parser):
     parser.addoption("--fast", action="store_true", default=False, help="Skip slow tests, as marked with the @slow annotation.")
     parser.addoption("--enable-long-running", action="store_true", default=False, help="Enables tests marked with the @enable_long_running annotation")
+    parser.addoption("--config-profile", action="store", help="profile to use from the config file", default=oci.config.DEFAULT_PROFILE)
 
 
 @pytest.fixture(scope='session')
@@ -47,17 +48,17 @@ def malformed_config_file(config):
 
 @pytest.fixture(scope='session')
 def config_file():
-    return os.environ['BMCS_CLI_CONFIG_FILE']
+    return os.environ['OCI_CLI_CONFIG_FILE']
 
 
 @pytest.fixture(scope='session')
-def config_profile():
-    return oraclebmc.config.DEFAULT_PROFILE
+def config_profile(request):
+    return request.config.getoption("--config-profile")
 
 
 @pytest.fixture(scope='session')
 def config(config_file, config_profile):
-    config = oraclebmc.config.from_file(file_location=config_file, profile_name=config_profile)
+    config = oci.config.from_file(file_location=config_file, profile_name=config_profile)
     pass_phrase = os.environ.get('PYTHON_CLI_ADMIN_PASS_PHRASE')
     if pass_phrase:
         config['pass_phrase'] = pass_phrase
@@ -76,7 +77,12 @@ def test_id():
 
 @pytest.fixture(scope='session')
 def object_storage_client(config):
-    return oraclebmc.object_storage.ObjectStorageClient(config)
+    return oci.object_storage.ObjectStorageClient(config)
+
+
+@pytest.fixture(scope='session')
+def network_client(config):
+    return oci.core.VirtualNetworkClient(config)
 
 
 def get_resource_directory():

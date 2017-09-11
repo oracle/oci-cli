@@ -7,7 +7,7 @@ import time
 import unittest
 from . import command_coverage_validator
 from . import util
-import oraclebmc_cli
+import oci_cli
 
 
 CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
@@ -16,7 +16,7 @@ CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
 class TestCompute(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.compute_cli.compute_group, expected_not_called_count=4)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_group, expected_not_called_count=4)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  The exceptions are the image import and export
         commands as they are handled by test_image_import_export.py
@@ -60,7 +60,7 @@ class TestCompute(unittest.TestCase):
         result = self.invoke(
             ['network', 'subnet', 'create',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', subnet_name,
              '--dns-label', 'clisubnet',
              '--vcn-id', self.vcn_ocid,
@@ -73,7 +73,7 @@ class TestCompute(unittest.TestCase):
 
         # Create a volume
         volume_name = util.random_name('cli_test_compute_volume')
-        result = self.invoke(['bv', 'volume', 'create', '--availability-domain', util.AVAILABILITY_DOMAIN, '--compartment-id',
+        result = self.invoke(['bv', 'volume', 'create', '--availability-domain', util.availability_domain(), '--compartment-id',
                               util.COMPARTMENT_ID, '--display-name', volume_name])
         util.validate_response(result)
         self.volume_ocid = util.find_id_in_response(result.output)
@@ -82,18 +82,18 @@ class TestCompute(unittest.TestCase):
     @util.log_test
     def subtest_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.8'
 
         result = self.invoke(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
-             '--metadata', util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.compute_instance_launch_metadata_example)])
+             '--metadata', util.remove_outer_quotes(oci_cli.core_cli_extended.compute_instance_launch_metadata_example)])
         self.instance_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
 
@@ -117,13 +117,13 @@ class TestCompute(unittest.TestCase):
     @util.log_test
     def subtest_windows_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaa53cliasgvqmutflwqkafbro2y4ywjebci5szc4eus5byy2e2b7ua'  # Windows2012ServerR2-Standard
+        image_id = util.windows_vm_image()
         shape = 'VM.Standard1.2'
 
         result = self.invoke(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,

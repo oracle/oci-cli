@@ -1,6 +1,6 @@
 import json
 from . import util
-import oraclebmc
+import oci
 
 
 class TestImageImportExport(object):
@@ -49,7 +49,7 @@ class TestImageImportExport(object):
     def subtest_image_import_export_via_uri(self, config):
         self.export_via_uri_object_name = 'export-via-uri'
         object_uri = '{}/n/{}/b/{}/o/{}'.format(
-            oraclebmc.regions.endpoint_for('object_storage', config['region']),
+            oci.regions.endpoint_for('object_storage', config['region']),
             self.object_storage_namespace,
             self.bucket_name,
             self.export_via_uri_object_name)
@@ -91,7 +91,7 @@ class TestImageImportExport(object):
         #    /p/...../n/internalbriangustafson/b/A_CliImportExportBucket/o/test_export_1
         #
         # So we need to prepend the domain only (as the URI references the object alreadt)
-        object_par_access_uri = '{}{}'.format(oraclebmc.regions.endpoint_for('object_storage', config['region']), par_details['data']['access-uri'])
+        object_par_access_uri = '{}{}'.format(oci.regions.endpoint_for('object_storage', config['region']), par_details['data']['access-uri'])
 
         result = self.invoke(
             ['compute', 'image', 'import', 'from-object-uri',
@@ -133,7 +133,7 @@ class TestImageImportExport(object):
     #     #
     #     # So we need to prepend the domain and append the object name in order to put something in the bucket
     #     bucket_par_access_uri = '{}{}{}'.format(
-    #         oraclebmc.regions.endpoint_for('object_storage', config['region']),
+    #         oci.regions.endpoint_for('object_storage', config['region']),
     #         par_details['data']['access-uri'],
     #         self.export_via_par_object_name)
 
@@ -163,7 +163,7 @@ class TestImageImportExport(object):
     #     #    /p/...../n/internalbriangustafson/b/A_CliImportExportBucket/o/test_export_1
     #     #
     #     # So we need to prepend the domain only (as the URI references the object alreadt)
-    #     object_par_access_uri = '{}{}'.format(oraclebmc.regions.endpoint_for('object_storage', config['region']), par_details['data']['access-uri'])
+    #     object_par_access_uri = '{}{}'.format(oci.regions.endpoint_for('object_storage', config['region']), par_details['data']['access-uri'])
 
     #     result = self.invoke(
     #         ['compute', 'image', 'import', 'from-object-uri',
@@ -209,7 +209,7 @@ class TestImageImportExport(object):
         result = self.invoke(
             ['network', 'subnet', 'create',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', subnet_name,
              '--dns-label', 'clisubnet',
              '--vcn-id', self.vcn_ocid,
@@ -220,13 +220,13 @@ class TestImageImportExport(object):
         util.wait_until(['network', 'subnet', 'get', '--subnet-id', self.subnet_ocid], 'AVAILABLE', max_wait_seconds=300)
 
         # Create an instance
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.1'
         instance_name = util.random_name('cli_test_instance')
         result = self.invoke(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,

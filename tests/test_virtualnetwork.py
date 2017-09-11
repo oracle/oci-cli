@@ -5,14 +5,14 @@ import json
 import unittest
 from . import command_coverage_validator
 from . import util
-import oraclebmc_cli
+import oci_cli
 import time
 
 
 class TestVirtualNetwork(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.virtualnetwork_cli.virtual_network_group, expected_not_called_count=8)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.virtualnetwork_cli.virtual_network_group, expected_not_called_count=8)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options. The exceptions are 'vnic get' and 'vnic update', which are tested
         in test_compute.py since they require an instance.
@@ -68,8 +68,8 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_security_list_operations(self):
         sl_name = util.random_name('cli_test_security_list')
-        egress_rules = util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.network_create_security_list_egress_security_rules_example)
-        ingress_rules = util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.network_create_security_list_ingress_security_rules_example)
+        egress_rules = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_security_list_egress_security_rules_example)
+        ingress_rules = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_security_list_ingress_security_rules_example)
 
         result = self.invoke(
             ['security-list', 'create',
@@ -184,13 +184,13 @@ class TestVirtualNetwork(unittest.TestCase):
     def subtest_subnet_operations(self):
         subnet_name = util.random_name('cli_test_subnet')
         cidr_block = "10.0.0.0/16"
-        security_list_ids = util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.network_create_subnet_security_list_ids_example.format(sl_id=self.sl_ocid))
+        security_list_ids = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_subnet_security_list_ids_example.format(sl_id=self.sl_ocid))
         subnet_dns_label = util.random_name('subnet', insert_underscore=False)
 
         result = self.invoke(
             ['subnet', 'create',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', subnet_name,
              '--vcn-id', self.vcn_ocid,
              '--cidr-block', cidr_block,
@@ -272,7 +272,7 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_dhcp_option_operations(self):
         dhcp_options_name = util.random_name('cli_test_dhcp_options')
-        options = util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.network_create_dhcp_options_options_example)
+        options = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_dhcp_options_options_example)
 
         result = self.invoke(
             ['dhcp-options', 'create',
@@ -381,7 +381,7 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_ip_sec_connection_operations(self):
         ipsc_name = util.random_name('cli_test_ipsc')
-        routes = util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.network_create_ip_sec_connection_static_routes_example)
+        routes = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_ip_sec_connection_static_routes_example)
 
         result = self.invoke(
             ['ip-sec-connection', 'create',
@@ -416,7 +416,7 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_route_table_operations(self):
         rt_name = util.random_name('cli_test_route_table')
-        rules = util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.network_create_route_table_route_rules_example.format(ig_id=self.ig_ocid))
+        rules = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_route_table_route_rules_example.format(ig_id=self.ig_ocid))
 
         result = self.invoke(
             ['route-table', 'create',

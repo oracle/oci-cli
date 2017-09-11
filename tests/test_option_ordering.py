@@ -51,16 +51,16 @@ class TestOptionOrdering(unittest.TestCase):
         assert self.has_debug_data(result)
 
     def test_help_at_root(self):
-        self.verify_help([], [None, '-?', '--help'], 'Usage: bmcs [OPTIONS]')
+        self.verify_help([], [None, '-?', '--help'], 'Usage: oci [OPTIONS]')
 
     def test_help_at_service(self):
-        self.verify_help(['os'], [None, '-?', '--help'], 'Usage: bmcs os [OPTIONS]')
+        self.verify_help(['os'], [None, '-?', '--help'], 'Usage: oci os [OPTIONS]')
 
     def test_help_at_noun(self):
-        self.verify_help(['os', 'ns'], [None, '-?', '--help'], 'Usage: bmcs os ns [OPTIONS]')
+        self.verify_help(['os', 'ns'], [None, '-?', '--help'], 'Usage: oci os ns [OPTIONS]')
 
     def test_help_at_verb(self):
-        self.verify_help(['os', 'ns', 'get'], ['-?', '--help'], 'Usage: bmcs os ns get [OPTIONS]')
+        self.verify_help(['os', 'ns', 'get'], ['-?', '--help'], 'Usage: oci os ns get [OPTIONS]')
 
     def invoke_operation(self, command):
         return util.invoke_command_as_admin(command)

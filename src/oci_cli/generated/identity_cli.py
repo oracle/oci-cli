@@ -21,6 +21,18 @@ def availability_domain_group():
     pass
 
 
+@click.group(cli_util.override('customer_secret_key_group.command_name', 'customer-secret-key'), help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's
+[Amazon S3 compatible API].
+A user can have up to two secret keys at a time.
+
+**Note:** The secret key is always an Oracle-generated string; you can't change it to a string of your choice.
+
+For more information, see [Managing User Credentials].""")
+@cli_util.help_option_group
+def customer_secret_key_group():
+    pass
+
+
 @click.group(cli_util.override('idp_group_mapping_group.command_name', 'idp-group-mapping'), help="""A mapping between a single group defined by the identity provider (IdP) you're federating with
 and a single IAM Service [group] in Oracle Bare Metal Cloud
 Services. For more information about group mappings and what they're for, see
@@ -124,6 +136,13 @@ talk to an administrator. If you're an administrator who needs to write policies
 see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def compartment_group():
+    pass
+
+
+@click.group(cli_util.override('customer_secret_key_summary_group.command_name', 'customer-secret-key-summary'), help="""As the name suggests, a `CustomerSecretKeySummary` object contains information about a `CustomerSecretKey`.
+A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's Amazon S3 compatible API.""")
+@cli_util.help_option_group
+def customer_secret_key_summary_group():
     pass
 
 
@@ -243,7 +262,7 @@ You must also specify a *description* for the compartment (although it can be an
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the tenancy containing the compartment.""")
-@click.option('--name', required=True, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy and cannot be changed.""")
+@click.option('--name', required=True, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy.""")
 @click.option('--description', required=True, help="""The description you assign to the compartment during creation. Does not have to be unique, and it's changeable.""")
 @cli_util.help_option
 @click.pass_context
@@ -259,6 +278,31 @@ def create_compartment(ctx, compartment_id, name, description):
     client = cli_util.build_client('identity', ctx)
     result = client.create_compartment(
         create_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@customer_secret_key_group.command(name=cli_util.override('create_customer_secret_key.command_name', 'create'), help="""Creates a new secret key for the specified user. Secret keys are used for authentication with the Object Storage Service's Amazon S3 compatible API. For information, see [Managing User Credentials].
+
+You must specify a *description* for the secret key (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCustomerSecretKey].
+
+Every user has permission to create a secret key for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to create a secret key for any user, including themselves.""")
+@click.option('--display-name', required=True, help="""The name you assign to the secret key during creation. Does not have to be unique, and it's changeable.""")
+@click.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def create_customer_secret_key(ctx, display_name, user_id):
+    kwargs = {}
+
+    details = {}
+    details['displayName'] = display_name
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_customer_secret_key(
+        user_id=user_id,
+        create_customer_secret_key_details=details,
         **kwargs
     )
     cli_util.render_response(result)
@@ -309,7 +353,7 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @click.option('--compartment-id', required=True, help="""The OCID of your tenancy.""")
 @click.option('--name', required=True, help="""The name you assign to the `IdentityProvider` during creation. The name must be unique across all `IdentityProvider` objects in the tenancy and cannot be changed.""")
 @click.option('--description', required=True, help="""The description you assign to the `IdentityProvider` during creation. Does not have to be unique, and it's changeable.""")
-@click.option('--product-type', required=True, help="""The identity provider service or product (e.g., Oracle Identity Cloud Service).
+@click.option('--product-type', required=True, help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
 
 Example: `IDCS`""")
 @click.option('--protocol', required=True, help="""The protocol used for federation.
@@ -420,7 +464,7 @@ def create_policy(ctx, compartment_id, name, statements, description, version_da
 @region_subscription_group.command(name=cli_util.override('create_region_subscription.command_name', 'create'), help="""Creates a subscription to a region for a tenancy.""")
 @click.option('--region-key', required=True, help="""The regions's key.
 
-Allowed values are: - `PHX` - `IAD`
+Allowed values are: - `PHX` - `IAD` - `FRA`
 
 Example: `PHX`""")
 @click.option('--tenancy-id', required=True, help="""The OCID of the tenancy.""")
@@ -520,6 +564,27 @@ def delete_api_key(ctx, user_id, fingerprint, if_match):
     result = client.delete_api_key(
         user_id=user_id,
         fingerprint=fingerprint,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@customer_secret_key_group.command(name=cli_util.override('delete_customer_secret_key.command_name', 'delete'), help="""Deletes the specified secret key for the specified user.""")
+@click.option('--user-id', required=True, help="""The OCID of the user.""")
+@click.option('--customer-secret-key-id', required=True, help="""The OCID of the secret key.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def delete_customer_secret_key(ctx, user_id, customer_secret_key_id, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_customer_secret_key(
+        user_id=user_id,
+        customer_secret_key_id=customer_secret_key_id,
         **kwargs
     )
     cli_util.render_response(result)
@@ -822,6 +887,21 @@ def list_compartments(ctx, compartment_id, page, limit):
     cli_util.render_response(result)
 
 
+@customer_secret_key_summary_group.command(name=cli_util.override('list_customer_secret_keys.command_name', 'list-customer-secret-keys'), help="""Lists the secret keys for the specified user. The returned object contains the secret key's OCID, but not the secret key itself. The actual secret key is returned only upon creation.""")
+@click.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def list_customer_secret_keys(ctx, user_id):
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.list_customer_secret_keys(
+        user_id=user_id,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
 @group_group.command(name=cli_util.override('list_groups.command_name', 'list'), help="""Lists the groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -844,14 +924,14 @@ def list_groups(ctx, compartment_id, page, limit):
 
 
 @identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help="""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--type', required=True, help="""Identity provider type.""")
+@click.option('--protocol', required=True, help="""The protocol used for federation.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def list_identity_providers(ctx, type, compartment_id, page, limit):
+def list_identity_providers(ctx, protocol, compartment_id, page, limit):
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -859,7 +939,7 @@ def list_identity_providers(ctx, type, compartment_id, page, limit):
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
     result = client.list_identity_providers(
-        type=type,
+        protocol=protocol,
         compartment_id=compartment_id,
         **kwargs
     )
@@ -1025,11 +1105,12 @@ def remove_user_from_group(ctx, user_group_membership_id, if_match):
 @compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help="""Updates the specified compartment's description.""")
 @click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @click.option('--description', help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
+@click.option('--name', help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def update_compartment(ctx, compartment_id, description, if_match):
+def update_compartment(ctx, compartment_id, description, name, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1039,10 +1120,41 @@ def update_compartment(ctx, compartment_id, description, if_match):
     if description is not None:
         details['description'] = description
 
+    if name is not None:
+        details['name'] = name
+
     client = cli_util.build_client('identity', ctx)
     result = client.update_compartment(
         compartment_id=compartment_id,
         update_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result)
+
+
+@customer_secret_key_summary_group.command(name=cli_util.override('update_customer_secret_key.command_name', 'update-customer-secret-key'), help="""Updates the specified secret key's description.""")
+@click.option('--user-id', required=True, help="""The OCID of the user.""")
+@click.option('--customer-secret-key-id', required=True, help="""The OCID of the secret key.""")
+@click.option('--display-name', help="""The description you assign to the secret key. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def update_customer_secret_key(ctx, user_id, customer_secret_key_id, display_name, if_match):
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_customer_secret_key(
+        user_id=user_id,
+        customer_secret_key_id=customer_secret_key_id,
+        update_customer_secret_key_details=details,
         **kwargs
     )
     cli_util.render_response(result)

@@ -1,7 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
-import oraclebmc_cli
+import oci_cli
 
 
 def test_missing_user(runner, malformed_config_file):
@@ -47,4 +47,4 @@ def validate_missing_param_error(result, key, message):
 
 
 def invoke_example_operation(runner, config_file, profile, root_args=[], command_args=[]):
-    return runner.invoke(oraclebmc_cli.cli, root_args + ['--config-file', config_file, '--profile', profile, 'os', 'ns', 'get'] + command_args)
+    return runner.invoke(oci_cli.cli, root_args + ['--config-file', config_file, '--profile', profile, 'os', 'ns', 'get'] + command_args)

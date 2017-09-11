@@ -5,11 +5,11 @@ import io
 import unittest
 from click.testing import CliRunner
 from . import util
-import oraclebmc_cli
+import oci_cli
 
 help_template = u"""
 ++++++++++++++++++++++++++++++++++++++++++++++
-$ bmcs {cmd}
+$ oci {cmd}
 {output}
 """.lstrip()
 
@@ -23,7 +23,7 @@ class TestHelp(unittest.TestCase):
     def test_help_on_all_commands(self):
         # Get a list of commands, where each command is a list of strings corresponding to the
         # command structure. Example: ['bucket', 'list']
-        commands = sorted(util.collect_commands(oraclebmc_cli.cli))
+        commands = sorted(util.collect_commands(oci_cli.cli))
 
         with io.open(self.output_file, mode='w+') as f:
             f.write(
@@ -49,7 +49,7 @@ class TestHelp(unittest.TestCase):
                 ))
 
     def invoke_example_operation(self, command_list):
-        return self.runner.invoke(oraclebmc_cli.cli, command_list)
+        return self.runner.invoke(oci_cli.cli, command_list)
 
     def validate_response(self, result):
         self.assertEqual(0, result.exit_code)

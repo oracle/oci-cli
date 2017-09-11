@@ -5,13 +5,13 @@ import json
 import unittest
 from . import command_coverage_validator
 from . import util
-import oraclebmc_cli
+import oci_cli
 
 
 class TestBlockStorage(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.blockstorage_cli.blockstorage_group)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""
         self.validator = validator
@@ -27,7 +27,7 @@ class TestBlockStorage(unittest.TestCase):
         volume_name = util.random_name('cli_test_volume')
 
         result = self.invoke(
-            ['volume', 'create', '--availability-domain', util.AVAILABILITY_DOMAIN, '--compartment-id', util.COMPARTMENT_ID,
+            ['volume', 'create', '--availability-domain', util.availability_domain(), '--compartment-id', util.COMPARTMENT_ID,
              '--display-name', volume_name])
         util.validate_response(result)
         self.volume_id = util.find_id_in_response(result.output)

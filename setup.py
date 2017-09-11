@@ -18,7 +18,7 @@ def open_relative(*path):
     return io.open(filename, mode="r", encoding="utf-8")
 
 
-with open_relative("src", "oraclebmc_cli", "version.py") as fd:
+with open_relative("src", "oci_cli", "version.py") as fd:
     version = re.search(
         r"^__version__\s*=\s*['\"]([^'\"]*)['\"]",
         fd.read(), re.MULTILINE).group(1)
@@ -30,30 +30,31 @@ with open_relative("README.rst") as f:
 
 
 requires = [
-    'oraclebmc==1.3.6',
+    'oci==1.3.7',
     'certifi',
     'click==6.7',
     'configparser==3.5.0',
     'cryptography==1.8.2',
+    'pyOpenSSL<=17.0.0',
     'httpsig_cffi==15.0.0',
-    'pyOpenSSL==17.0.0',
     'python-dateutil==2.5.3',
     'pytz==2016.7',
+    'retrying==1.3.3',
     'requests[security]==2.11.1',
     'six==1.10.0',
     'terminaltables==3.1.0'
 ]
 
 setup(
-    name='oraclebmc-cli',
+    name='oci-cli',
     url='https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm',
     version=version,
     author='Oracle',
     author_email='joe.levy@oracle.com',
-    description='Oracle Bare Metal Cloud Services CLI',
+    description='Oracle Cloud Infrastructure CLI',
     long_description=readme,
     entry_points={
-        'console_scripts': ["bmcs=oraclebmc_cli.cli:cli"]
+        'console_scripts': ["bmcs=oci_cli.cli:cli", "oci=oci_cli.cli:cli"]
     },
     install_requires=requires,
     packages=find_packages(where="src"),

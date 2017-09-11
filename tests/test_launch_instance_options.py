@@ -4,7 +4,7 @@
 import json
 import unittest
 from . import util
-import oraclebmc_cli
+import oci_cli
 
 
 IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'
@@ -49,7 +49,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         result = util.invoke_command(
             ['network', 'subnet', 'create',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', subnet_name,
              '--vcn-id', self.vcn_ocid,
              '--cidr-block', cidr_block,
@@ -63,7 +63,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
     @util.log_test
     def subtest_launch_instance_ipxe_script_file_and_extended_metadata(self):
         instance_name = util.random_name('cli_test_instance_options')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.2'
         hostname_label = util.random_name('bminstance', insert_underscore=False)
         vnic_display_name = 'vnic_display_name'
@@ -75,7 +75,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         launch_instance_result = util.invoke_command(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
@@ -132,28 +132,28 @@ class TestLaunchInstanceOptions(unittest.TestCase):
     @util.log_test
     def subtest_launch_instance_ssh_authorized_keys_in_param_and_in_metadata_throws_error(self):
         instance_name = util.random_name('cli_test_instance_options')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.2'
         hostname_label = util.random_name('bminstance', insert_underscore=False)
 
         launch_instance_result = util.invoke_command(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
              '--hostname-label', hostname_label,
              '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
-             '--metadata', util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.compute_instance_launch_metadata_example)])
+             '--metadata', util.remove_outer_quotes(oci_cli.core_cli_extended.compute_instance_launch_metadata_example)])
 
         assert launch_instance_result.exit_code != 0
 
     @util.log_test
     def subtest_launch_instance_user_data_in_param_and_in_metadata_throws_error(self):
         instance_name = util.random_name('cli_test_instance_options')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.2'
         hostname_label = util.random_name('bminstance', insert_underscore=False)
 
@@ -162,7 +162,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         launch_instance_result = util.invoke_command(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
@@ -176,14 +176,14 @@ class TestLaunchInstanceOptions(unittest.TestCase):
     @util.log_test
     def subtest_launch_instance_user_data_file_and_ssh_authorized_users_file(self):
         instance_name = util.random_name('cli_test_instance_options')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.2'
         hostname_label = util.random_name('bminstance', insert_underscore=False)
 
         launch_instance_result = util.invoke_command(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
@@ -208,21 +208,21 @@ class TestLaunchInstanceOptions(unittest.TestCase):
     @util.log_test
     def subtest_launch_instance_merges_user_data_file_param_with_metadata(self):
         instance_name = util.random_name('cli_test_instance_options')
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.2'
         hostname_label = util.random_name('bminstance', insert_underscore=False)
 
         launch_instance_result = util.invoke_command(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
              '--hostname-label', hostname_label,
              '--user-data-file', USER_DATA_FILE,
-             '--metadata', util.remove_outer_quotes(oraclebmc_cli.core_cli_extended.compute_instance_launch_metadata_example)])
+             '--metadata', util.remove_outer_quotes(oci_cli.core_cli_extended.compute_instance_launch_metadata_example)])
 
         util.validate_response(launch_instance_result, expect_etag=True)
         temp_instance_ocid = util.find_id_in_response(launch_instance_result.output)

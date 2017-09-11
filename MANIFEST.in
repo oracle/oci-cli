@@ -1,5 +1,5 @@
 include LICENSE.txt
 include README.rst
 include CHANGELOG.md
-include src/oraclebmc_cli/bin/bmcs_autocomplete.sh
+include src/oci_cli/bin/oci_autocomplete.sh
 exclude setup.cfg

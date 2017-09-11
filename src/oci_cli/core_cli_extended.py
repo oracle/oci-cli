@@ -10,9 +10,9 @@ from .generated import blockstorage_cli
 from .generated import compute_cli
 from .generated import virtualnetwork_cli
 
-from oraclebmc import wait_until
-from oraclebmc.exceptions import ServiceError
-from oraclebmc.exceptions import MaximumWaitTimeExceeded
+from oci import wait_until
+from oci.exceptions import ServiceError
+from oci.exceptions import MaximumWaitTimeExceeded
 from . import cli_util
 
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
@@ -51,7 +51,7 @@ virtualnetwork_cli.get_ip_sec_connection_device_status.name = 'get-status'
 virtualnetwork_cli.ip_sec_connection_group.add_command(virtualnetwork_cli.get_ip_sec_connection_device_config)
 virtualnetwork_cli.ip_sec_connection_group.add_command(virtualnetwork_cli.get_ip_sec_connection_device_status)
 
-# help for bmcs compute instance launch --metadata
+# help for oci compute instance launch --metadata
 compute_instance_launch_metadata_example = """'{"ssh_authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl my public key"}'"""
 compute_instance_launch_metadata_help = """Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails. This must be provided in JSON format.
 
@@ -80,7 +80,7 @@ or
 '{ "destinationUri": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/MyNamespace/b/MyBucket/o/exported-image.qcow2", "destinationType": "objectStorageUri" }'"""
 cli_util.update_param_help(compute_cli.export_image, 'destination_type', "", append=True, example=destination_type_example)
 
-# help for bmcs network ip-sec-connection create --static-routes
+# help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
 network_create_ip_sec_connection_static_routes_help = """Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address. This must be provided in JSON format."""
 cli_util.update_param_help(virtualnetwork_cli.create_ip_sec_connection, 'static_routes', network_create_ip_sec_connection_static_routes_help, append=False, example=network_create_ip_sec_connection_static_routes_example)
@@ -89,20 +89,20 @@ network_create_subnet_prohibit_public_ip_on_vnic_help = """Whether VNICs within 
 network_create_subnet_prohibit_public_ip_on_vnic_example = "`true`"
 cli_util.update_param_help(virtualnetwork_cli.create_subnet, 'prohibit_public_ip_on_vnic', network_create_subnet_prohibit_public_ip_on_vnic_help, example=network_create_subnet_prohibit_public_ip_on_vnic_example)
 
-# help for bmcs network subnet create --security-list-ids
+# help for oci network subnet create --security-list-ids
 security_list_example_id = 'ocid1.securitylist.oc1.phx.aaaaaaaadyndu2n3hcmdsjfiljwyq7vpxsvv7ynp4ori7aealcvhzicnzhyq'
 network_create_subnet_security_list_ids_example = """'["{sl_id}"]'"""
 network_create_subnet_security_list_ids_help = cli_util.GENERIC_JSON_FORMAT_HELP
 cli_util.update_param_help(virtualnetwork_cli.create_subnet, 'security_list_ids', network_create_subnet_security_list_ids_help,
                            append=True, example=network_create_subnet_security_list_ids_example.format(sl_id=security_list_example_id))
 
-# help for bmcs network dhcp-options create --options
+# help for oci network dhcp-options create --options
 network_create_dhcp_options_options_example = """'[{"type": "DomainNameServer", "customDnsServers": ["202.44.61.9"], "serverType": "CustomDnsServer"}]'"""
 network_create_dhcp_options_options_help = cli_util.GENERIC_JSON_FORMAT_HELP
 cli_util.update_param_help(virtualnetwork_cli.create_dhcp_options, 'options', network_create_dhcp_options_options_help, append=True, example=network_create_dhcp_options_options_example)
 cli_util.update_param_help(virtualnetwork_cli.update_dhcp_options, 'options', network_create_dhcp_options_options_help, append=True, example=network_create_dhcp_options_options_example)
 
-# help for bmcs network route-table create --route-rules
+# help for oci network route-table create --route-rules
 internet_gateway_example_id = 'ocid1.internetgateway.oc1.phx.aaaaaaaaxtfqb2srw7hoi5cmdum4n6ow2xm2zhrzqqypmlteiiebtmvl75ya'
 network_create_route_table_route_rules_example = """'[{{"cidrBlock":"0.0.0.0/0","networkEntityId":"{ig_id}"}}]'"""
 network_create_route_table_route_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
@@ -111,13 +111,13 @@ cli_util.update_param_help(virtualnetwork_cli.create_route_table, 'route_rules',
 cli_util.update_param_help(virtualnetwork_cli.update_route_table, 'route_rules', network_create_route_table_route_rules_help,
                            append=True, example=network_create_route_table_route_rules_example.format(ig_id=internet_gateway_example_id))
 
-# help for bmcs network security-list create --egress-security-rules
+# help for oci network security-list create --egress-security-rules
 network_create_security_list_egress_security_rules_example = """'[{"destination": "10.0.2.0/24", "protocol": "6", "isStateless": true, "tcpOptions": {"destinationPortRange": {"max": 1521, "min": 1521}, "sourcePortRange": {"max": 1521, "min": 1521}}}]'"""
 network_create_security_list_egress_security_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
 cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'egress_security_rules', network_create_security_list_egress_security_rules_help, append=True, example=network_create_security_list_egress_security_rules_example)
 cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'egress_security_rules', network_create_security_list_egress_security_rules_help, append=True, example=network_create_security_list_egress_security_rules_example)
 
-# help for bmcs network security-list create --ingress-security-rules
+# help for oci network security-list create --ingress-security-rules
 network_create_security_list_ingress_security_rules_example = """'[{"source": "10.0.2.0/24", "protocol": "6", "isStateless": true, "tcpOptions": {"destinationPortRange": {"max": 1521, "min": 1521}, "sourcePortRange": {"max": 1521, "min": 1521}}}]'"""
 network_create_security_list_ingress_security_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
 cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'ingress_security_rules', network_create_security_list_ingress_security_rules_help, append=True, example=network_create_security_list_ingress_security_rules_example)
@@ -135,15 +135,15 @@ virtualnetwork_cli.list_private_ips.help = """Lists the [PrivateIp] objects base
 
 If you're listing all the private IPs associated with a given subnet or VNIC, the response includes both primary and secondary private IPs."""
 
-cli_util.update_param_help(compute_cli.create_image, 'image_source_details', """[DEPRECATED] The use of the `bmcs compute image create` command to import an image from Object Storage is deprecated.
+cli_util.update_param_help(compute_cli.create_image, 'image_source_details', """[DEPRECATED] The use of the `oci compute image create` command to import an image from Object Storage is deprecated.
 
 \b
-Please use the `bmcs compute image import` command instead.
+Please use the `oci compute image import` command instead.
 
 """ + cli_util.get_param(compute_cli.create_image, 'image_source_details').help, append=False)
 
 
-@compute_cli.image_group.group(cli_util.override('export_image_group.command_name', 'export'), help="""Exports an image to the Oracle Bare Metal Cloud Object Storage Service. You can use the
+@compute_cli.image_group.group(cli_util.override('export_image_group.command_name', 'export'), help="""Exports an image to the Oracle Cloud Infrastructure Object Storage Service. You can use the
 Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
@@ -157,7 +157,7 @@ def export_image_group():
     pass
 
 
-@compute_cli.image_group.group(cli_util.override('import_image_group.command_name', 'import'), help="""Imports an exported image from the Oracle Bare Metal Cloud Object Storage Service. You can use the
+@compute_cli.image_group.group(cli_util.override('import_image_group.command_name', 'import'), help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service. You can use the
 Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to import from.
 
 For more information about importing exported images, see [Image Import/Export].
@@ -173,7 +173,7 @@ def import_image_group():
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type'])
-@export_image_group.command(name='to-object', help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service using the namespace, bucket name, and object name to identify the location to export to.
+@export_image_group.command(name='to-object', help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage Service using the namespace, bucket name, and object name to identify the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
 
@@ -194,7 +194,7 @@ def export_image_to_object(ctx, image_id, if_match, namespace, bucket_name, name
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type'])
-@export_image_group.command(name='to-object-uri', help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service using the Object Storage Service URL to identify the location to export to.
+@export_image_group.command(name='to-object-uri', help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage Service using the Object Storage Service URL to identify the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
 
@@ -226,7 +226,7 @@ def export_image_internal(ctx, image_id, export_image_details, if_match):
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id'])
-@import_image_group.command(name='from-object', help="""Imports an exported image from the Oracle Bare Metal Cloud Object Storage Service using the namespace, bucket name, and object name to identify the location to import from.
+@import_image_group.command(name='from-object', help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service using the namespace, bucket name, and object name to identify the location to import from.
 
 For more information about importing exported images, see [Image Import/Export].
 
@@ -248,7 +248,7 @@ def import_image_from_object(ctx, compartment_id, display_name, namespace, bucke
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id'])
-@import_image_group.command(name='from-object-uri', help="""Imports an exported image from the Oracle Bare Metal Cloud Object Storage Service using the Object Storage Service URL to identify the location to import from.
+@import_image_group.command(name='from-object-uri', help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service using the Object Storage Service URL to identify the location to import from.
 
 For more information about importing exported images, see [Image Import/Export].
 
