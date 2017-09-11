@@ -19,7 +19,7 @@ identity_cli.user_group.add_command(identity_cli.swift_password_group)
 identity_cli.user_group.add_command(identity_cli.ui_password_group)
 
 
-# help for bmcs iam policy create --statements
+# help for oci iam policy create --statements
 identity_policy_create_statements_example = """'["statement 1","statement 2"]'"""
 identity_policy_create_statements_help = cli_util.GENERIC_JSON_FORMAT_HELP
 cli_util.update_param_help(identity_cli.create_policy, 'statements', identity_policy_create_statements_help, append=True, example=identity_policy_create_statements_example)

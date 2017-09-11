@@ -1,0 +1,6 @@
+{ 
+    "objectName": "image-to-import.qcow2",
+    "bucketName": "MyBucket",
+    "namespaceName": "MyNamespace",
+    "sourceType": "objectStorageTuple"
+}

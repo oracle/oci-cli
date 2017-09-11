@@ -7,6 +7,8 @@ import datetime
 import functools
 import getpass
 import json
+import os
+import os.path
 import pytz
 import six
 import sys
@@ -17,12 +19,13 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 
-from oraclebmc import exceptions, config
-from oraclebmc.core import BlockstorageClient
-from oraclebmc.core import ComputeClient
-from oraclebmc.core import VirtualNetworkClient
-from oraclebmc.identity import IdentityClient
-from oraclebmc.object_storage import ObjectStorageClient
+from oci import exceptions, config
+from oci.core import BlockstorageClient
+from oci.core import ComputeClient
+from oci.core import VirtualNetworkClient
+from oci.identity import IdentityClient
+from oci.object_storage import ObjectStorageClient
+from oci.database import DatabaseClient
 
 from .version import __version__
 
@@ -46,6 +49,12 @@ OVERRIDES = {
     "blockstorage_group.help": "Block Volume Service",
     "compute_group.command_name": "compute",
     "compute_group.help": "Compute Service",
+    "db_group.help": "Database Service",
+    "db_group.command_name": "db",
+    "db_node_group.command_name": "node",
+    "db_system_group.command_name": "system",
+    "db_system_shape_group.command_name": "system-shape",
+    "db_version_group.command_name": "version",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
     "identity_group.command_name": "iam",
     "identity_group.help": "Identity and Access Management Service",
@@ -91,6 +100,7 @@ def build_client(service_name, ctx):
             "os": ObjectStorageClient,
             "blockstorage": BlockstorageClient,
             "compute": ComputeClient,
+            "database": DatabaseClient,
             "virtual_network": VirtualNetworkClient
         }[service_name]
 
@@ -103,7 +113,11 @@ def build_client(service_name, ctx):
         if ctx.obj['endpoint']:
             client.base_client.endpoint = ctx.obj['endpoint']
 
-        if ctx.obj['cert_bundle']:
+        cert_bundle = ctx.obj['cert_bundle']
+        if cert_bundle:
+            if not os.path.isfile(cert_bundle):
+                raise click.BadParameter(param_hint='cert_bundle', message='Cannot find cert_bundle file: {}'.format(cert_bundle))
+
             # TODO: Update this once alternate certs are exposed in the SDK.
             client.base_client.session.verify = ctx.obj['cert_bundle']
 
@@ -243,8 +257,14 @@ def parse_json_parameter(parameter_name, parameter_value, default=None):
     if parameter_value is None:
         return default
 
+    # Try to load from a file first. If we couldn't (e.g. because the parameter didn't specify a file) then
+    # just try to load the parameter_value raw
+    json_to_parse = load_file_contents(parameter_value)
+    if json_to_parse is None:
+        json_to_parse = parameter_value
+
     try:
-        return json.loads(parameter_value)
+        return json.loads(json_to_parse)
     except ValueError:
         sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#complexinput'.format(parameter_name))
 
@@ -298,7 +318,7 @@ def help_callback(ctx, param, value):
 help_option = click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.', expose_value=False, is_eager=True, callback=help_callback)
 
 
-'''Help option to use for groups (except for bmcs).'''
+'''Help option to use for groups (except for oci).'''
 help_option_group = click.help_option('-?', '-h', '--help', help='Show this message and exit.')
 
 
@@ -359,3 +379,29 @@ def copy_params_from_generated_command(generated_command, params_to_exclude):
         return extended_func
 
     return copy_params
+
+
+def load_file_contents(path):
+    file_contents = None
+    if isinstance(path, six.string_types):
+        for prefix, function_spec in FILE_LOAD_PREFIX_MAP.items():
+            if path.startswith(prefix):
+                function, kwargs = function_spec
+                file_contents = function(prefix, path, **kwargs)
+
+    return file_contents
+
+
+def get_file(prefix, path, mode):
+    file_path = os.path.expandvars(os.path.expanduser(path[len(prefix):]))
+
+    if not os.path.exists(file_path):
+        sys.exit("The specified file '{}' did not exist  (Resolved to path: '{}')".format(path, file_path))
+
+    with open(file_path, mode) as f:
+        return f.read()
+
+
+FILE_LOAD_PREFIX_MAP = {
+    'file://': (get_file, {'mode': 'r'})
+}

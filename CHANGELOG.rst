@@ -7,6 +7,31 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.8 - 2017-09-11
+------------------
+
+Deprecated
+~~~~~~~~~~
+* The default configuration file location has been changed from ~/.oraclebmc/config to ~/.oci/config. The old location still works if the file at the new location does not exist.
+
+Added
+~~~~~
+* Support for the Database service
+* Object Storage bulk operations (oci os object bulk-upload / bulk-download / bulk-delete)
+* Support for compartment renaming
+* Scripts to simplify install process
+* Complex input can now be provided as a file instead of having to escape JSON input at the command line. The path to the file can be provided using the file:// prefix, for example --my-complex-param file://<path>, and the following paths are supported
+
+  * Relative paths from the same directory, such as file://my-input.json and file://relative/path/to/input.json
+  * Absolute paths on Linux, macOS or Unix, such as file:///absolute/path/to/input.json
+  * Full file paths on Windows, such as file://C:\path\to\input.json
+  * Using file path expansions, for example '~/', './', and '../' is supported. On Windows, the '~/' expression expands to your user directory, stored in the %USERPROFILE% environment variable
+  * Using environment variables in paths is also supported
+
+Changed
+~~~~~~~
+* The default configuration file location is now ~/.oci/config
+
 2.4.7 - 2017-08-22
 ------------------
 

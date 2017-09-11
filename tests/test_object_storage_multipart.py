@@ -7,7 +7,7 @@ import os
 import pytest
 import threading
 import time
-import oraclebmc_cli
+import oci_cli
 from . import util
 
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
@@ -29,16 +29,16 @@ def content_input_file():
 
 
 @pytest.fixture(scope='module')
-def temp_bucket(runner, config_file, test_id):
+def temp_bucket(runner, config_file, config_profile, test_id):
     bucket_name = 'cli_temp_multipart_bucket_' + test_id
 
     # ns get
-    result = invoke(runner, config_file, ['ns', 'get'])
+    result = invoke(runner, config_file, config_profile, ['ns', 'get'])
     validate_response(result)
     assert util.NAMESPACE in result.output
 
     # bucket create
-    result = invoke(runner, config_file, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
     validate_response(result)
 
     yield bucket_name
@@ -46,13 +46,13 @@ def temp_bucket(runner, config_file, test_id):
     # clean up, delete bucket
     error_count = 0
     try:
-        result = invoke(runner, config_file, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
+        result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
         validate_response(result)
         response = json.loads(result.output)
         if 'data' in response:
             objects = response['data']
             for obj in objects:
-                invoke(runner, config_file, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', obj['name'], '--force'])
+                invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', obj['name'], '--force'])
                 validate_response(result)
     except Exception as error:
         util.print_latest_exception(error)
@@ -60,7 +60,7 @@ def temp_bucket(runner, config_file, test_id):
 
     try:
         print("Deleting bucket")
-        result = invoke(runner, config_file, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
+        result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
         validate_response(result)
     except Exception as error:
         util.print_latest_exception(error)
@@ -74,13 +74,13 @@ def setup_function():
         os.remove(CONTENT_OUTPUT_FILE)
 
 
-def test_multipart_put_object(runner, config_file, temp_bucket, content_input_file):
+def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a'
 
     # object put (large file so multipart is used)
-    result = invoke(runner, config_file, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
-                                          '--name', object_name, '--file', content_input_file,
-                                          '--part-size', str(DEFAULT_TEST_PART_SIZE)])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name, '--file', content_input_file,
+                                                          '--part-size', str(DEFAULT_TEST_PART_SIZE)])
 
     validate_response(result, json_response_expected=False)
 
@@ -94,20 +94,19 @@ def test_multipart_put_object(runner, config_file, temp_bucket, content_input_fi
     assert upload_id
 
     # object get (confirm object exists)
-    result = invoke(runner, config_file, ['object', 'get', '-ns', util.NAMESPACE,
-                                          '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
     validate_response(result, json_response_expected=False)
 
     assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
     assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
 
     # object delete
-    result = invoke(runner, config_file,
+    result = invoke(runner, config_file, config_profile,
                     ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name], input='y')
     validate_response(result, json_response_expected=False)
 
 
-def test_resume_multipart_upload(runner, config_file, content_input_file, temp_bucket):
+def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket):
     object_name = 'a'
 
     def move_file(src, dest):
@@ -122,7 +121,7 @@ def test_resume_multipart_upload(runner, config_file, content_input_file, temp_b
     t1.start()
 
     # object put (relatively large file with small part size, so multipart is used)
-    result = invoke(runner, config_file, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
 
     # copy file back to initial location to continue upload
     os.rename(temp_filename, content_input_file)
@@ -135,7 +134,7 @@ def test_resume_multipart_upload(runner, config_file, content_input_file, temp_b
     upload_id = parse_upload_id_from_multipart_output(result.output)
 
     # list uploads and confirm this one shows up
-    result = invoke(runner, config_file, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
+    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
     validate_response(result)
 
     multipart_uploads = json.loads(result.output)["data"]
@@ -146,16 +145,16 @@ def test_resume_multipart_upload(runner, config_file, content_input_file, temp_b
     assert current_upload["upload-id"] == upload_id
 
     # validate cannot resume with different part size
-    result = invoke(runner, config_file, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id, '--part-size', str(DEFAULT_TEST_PART_SIZE + 1)])
+    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id, '--part-size', str(DEFAULT_TEST_PART_SIZE + 1)])
     assert result.exit_code != 0
 
     # resume multipart upload
     time.sleep(20)
-    result = invoke(runner, config_file, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
+    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
     validate_response(result, json_response_expected=False)
 
     # object get (confirm object exists and is the same as input content)
-    result = invoke(runner, config_file, ['object', 'get', '-ns', util.NAMESPACE,
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE,
                     '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
     validate_response(result, json_response_expected=False)
 
@@ -163,11 +162,11 @@ def test_resume_multipart_upload(runner, config_file, content_input_file, temp_b
     assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
 
     # object delete
-    result = invoke(runner, config_file, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--force'])
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--force'])
     validate_response(result)
 
 
-def test_abort_multipart_upload(runner, config_file, temp_bucket, content_input_file):
+def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a_abort'
 
     def remove_file(src):
@@ -179,7 +178,7 @@ def test_abort_multipart_upload(runner, config_file, temp_bucket, content_input_
     t1.start()
 
     # object put (large file so multipart is used)
-    result = invoke(runner, config_file, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
 
     # TODO: update response validation logic once it is JSON
     # validate that upload failed due to file moving
@@ -189,7 +188,7 @@ def test_abort_multipart_upload(runner, config_file, temp_bucket, content_input_
     upload_id = parse_upload_id_from_multipart_output(result.output)
 
     # list uploads and confirm this one shows up
-    result = invoke(runner, config_file, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
+    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
     validate_response(result)
 
     multipart_uploads = json.loads(result.output)["data"]
@@ -200,20 +199,20 @@ def test_abort_multipart_upload(runner, config_file, temp_bucket, content_input_
     assert current_upload["upload-id"] == upload_id
 
     # abort multipart upload
-    result = invoke(runner, config_file, ['multipart', 'abort', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--object-name', object_name, '--upload-id', upload_id], input='y')
+    result = invoke(runner, config_file, config_profile, ['multipart', 'abort', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--object-name', object_name, '--upload-id', upload_id], input='y')
     validate_response(result, json_response_expected=False)
 
     # list uploads and confirm that there are none
-    result = invoke(runner, config_file, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
+    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
     validate_response(result)
     assert result.output == ''
 
 
-def test_multipart_upload_with_metadata(runner, config_file, temp_bucket, content_input_file):
+def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a_metadata'
 
     # object put (large file so multipart is used)
-    result = invoke(runner, config_file, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE), '--metadata', '{"foo1":"bar1","key_with_underscore":"value_with_underscore"}'])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE), '--metadata', '{"foo1":"bar1","key_with_underscore":"value_with_underscore"}'])
 
     # TODO: we dont expect JSON because there are print statements from the SDK right now
     validate_response(result, json_response_expected=False)
@@ -225,53 +224,52 @@ def test_multipart_upload_with_metadata(runner, config_file, temp_bucket, conten
     assert response["opc-multipart-md5"]
 
     # object get (confirm object exists)
-    result = invoke(runner, config_file, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
     validate_response(result, json_response_expected=False)
 
     assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
     assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
 
     # object head to confirm metadata
-    result = invoke(runner, config_file, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name])
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name])
     validate_response(result, json_response_expected=False)
     assert 'foo1' in result.output
     assert 'key_with_underscore' in result.output
 
     # object delete
-    result = invoke(runner, config_file, ['object', 'delete', '-ns', util.NAMESPACE,
-                                          '-bn', temp_bucket, '--name', object_name], input='y')
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name], input='y')
     validate_response(result, json_response_expected=False)
 
 
-def test_resume_with_unknown_upload_id(runner, config_file, temp_bucket, content_input_file):
+def test_resume_with_unknown_upload_id(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a'
     upload_id = 'UNKNOWN_UPLOAD_ID'
 
     # resume multipart upload
-    result = invoke(runner, config_file, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id])
+    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id])
     util.validate_service_error(result, error_message='No such upload')
 
 
-def test_put_object_multipart_and_parallel_options(runner, config_file, content_input_file):
+def test_put_object_multipart_and_parallel_options(runner, config_file, config_profile, content_input_file):
     object_name = 'a'
 
     # validate error is returned if --parallel-upload-count and --disable-parallel-uploads are used
-    result = invoke(runner, config_file, ['object', 'put', '-ns', util.NAMESPACE, '-bn', 'unknown_bucket', '--name', object_name, '--file', content_input_file, '--parallel-upload-count', '2', '--disable-parallel-uploads'])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', 'unknown_bucket', '--name', object_name, '--file', content_input_file, '--parallel-upload-count', '2', '--disable-parallel-uploads'])
     util.validate_service_error(result)
 
     # validate error is returned if --parallel-upload-count and --no-multipart are used
-    result = invoke(runner, config_file, ['object', 'put', '-ns', util.NAMESPACE, '-bn', 'unknown_bucket', '--name', object_name, '--file', content_input_file, '--parallel-upload-count', '2', '--no-multipart'])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', 'unknown_bucket', '--name', object_name, '--file', content_input_file, '--parallel-upload-count', '2', '--no-multipart'])
     util.validate_service_error(result)
 
 
-def invoke(runner, config_file, params, debug=False, root_params=None, ** args):
+def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, ** args):
     root_params = root_params or []
     if debug is True:
         result = runner.invoke(
-            oraclebmc_cli.cli, root_params + ['--debug', '--config-file', config_file, 'os'] + params, ** args)
+            oci_cli.cli, root_params + ['--debug', '--config-file', config_file, '--profile', config_profile, 'os'] + params, ** args)
     else:
         result = runner.invoke(
-            oraclebmc_cli.cli, root_params + ['--config-file', config_file, 'os'] + params, ** args)
+            oci_cli.cli, root_params + ['--config-file', config_file, '--profile', config_profile, 'os'] + params, ** args)
 
     return result
 

@@ -3,7 +3,7 @@
 
 import unittest
 from click.testing import CliRunner
-import oraclebmc_cli
+import oci_cli
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
@@ -78,20 +78,20 @@ class TestPassphrase(unittest.TestCase):
 
     def test_prompt_for_passphrase_correct(self):
         create_temp_private_key_file(password=PASSPHRASE)
-        oraclebmc_cli.cli_util.prompt_for_passphrase = passphrase_provider
+        oci_cli.cli_util.prompt_for_passphrase = passphrase_provider
         result = self.invoke_example_operation(profile='TEMP_CONFIG_NO_PASSPHRASE')
         self.assertNotEqual(0, result.exit_code)
         assert ("NotAuthenticated" in result.output)
 
     def test_prompt_for_passphrase_incorrect(self):
         create_temp_private_key_file(password="some other passphrase")
-        oraclebmc_cli.cli_util.prompt_for_passphrase = passphrase_provider
+        oci_cli.cli_util.prompt_for_passphrase = passphrase_provider
         result = self.invoke_example_operation(profile='TEMP_CONFIG_NO_PASSPHRASE')
         self.assertNotEqual(0, result.exit_code)
         assert ("provided passphrase is incorrect" in result.output)
 
     def invoke_example_operation(self, profile='DEFAULT'):
-        return self.runner.invoke(oraclebmc_cli.cli, ['--config-file', os.environ['BMCS_CLI_CONFIG_FILE'], '--profile', profile, 'os', 'ns', 'get'])
+        return self.runner.invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', profile, 'os', 'ns', 'get'])
 
 
 if __name__ == '__main__':

@@ -27,14 +27,14 @@ class TestSecondaryPrivateIp(unittest.TestCase):
         # First we need to launch two instances and get their VNICs. We get two instances
         # so that we can move the secondary private IP around. The instances need to be
         # in the same subnet for the secondary private IP address moves to be valid
-        image_id = 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'  # ol6.8-base-0.0.2
+        image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.1'
 
         first_instance_name = util.random_name('cli_test_instance')
         result = self.invoke(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', first_instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
@@ -45,7 +45,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
         result = self.invoke(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', second_instance_name,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
@@ -342,7 +342,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
         result = self.invoke(
             ['network', 'subnet', 'create',
              '--compartment-id', util.COMPARTMENT_ID,
-             '--availability-domain', util.AVAILABILITY_DOMAIN,
+             '--availability-domain', util.availability_domain(),
              '--display-name', subnet_name,
              '--dns-label', 'clisubnet',
              '--vcn-id', self.vcn_ocid,

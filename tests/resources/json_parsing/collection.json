@@ -1,0 +1,10 @@
+[
+    {
+        "cidrBlock": "0.0.0.0/0",
+        "networkEntityId": "ocid1.internetgateway.oc1.phx.aaaaaaaa3vcd7gmqqh4po6wnsjhcdkxlddeqinmnbanzz2wsh5gdrwt574ka"
+    },
+    {
+        "cidrBlock": "10.0.0.0/16",
+        "networkEntityId": "ocid1.internetgateway.oc1.phx.aaaaaaaa3vcd7gmqqh4po6wnsjhcdkxlddeqinmnbanzz2wsh5gdrwt574kb"
+    }
+]

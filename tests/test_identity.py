@@ -3,24 +3,28 @@
 
 import json
 import random
+import time
 import unittest
 from . import command_coverage_validator
 from . import util
-import oraclebmc_cli
+import oci_cli
 
 
 class TestIdentity(unittest.TestCase):
 
+    RENAME_COMPARTMENT_PREFIX = "PythonCliCompartmentRenameTest-"
+
     def setUp(self):
         util.set_admin_pass_phrase()
 
-    @command_coverage_validator.CommandCoverageValidator(oraclebmc_cli.identity_cli.identity_group, expected_not_called_count=3)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=3)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
         self.validator = validator
 
         self.subtest_availability_domain_operations()
         self.subtest_compartment_operations()
+        self.subtest_compartment_rename()
         self.subtest_user_operations()
         self.subtest_group_operations()
         self.subtest_user_group_membership_operations()
@@ -51,6 +55,19 @@ class TestIdentity(unittest.TestCase):
             ['compartment', 'update', '--compartment-id', util.COMPARTMENT_ID, '--description', update_description])
         self.validate_response(result, expect_etag=True)
         self.assertEquals(update_description, json.loads(result.output)['data']['description'])
+
+    def subtest_compartment_rename(self):
+        compartment_to_rename = self.get_compartment_to_rename()
+
+        updated_name = '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, int(time.time()))
+        updated_description = 'Updated {}'.format(updated_name)
+        result = self.invoke(['compartment', 'update', '--compartment-id', compartment_to_rename['id'], '--name', updated_name, '--description', updated_description])
+        self.validate_response(result, expect_etag=True)
+
+        parsed_result = json.loads(result.output)
+        self.assertEquals(compartment_to_rename['id'], parsed_result['data']['id'])
+        self.assertEquals(updated_description, parsed_result['data']['description'])
+        self.assertEquals(updated_name, parsed_result['data']['name'])
 
     def subtest_user_operations(self):
         self.user_name = util.random_name('cli_test_user')
@@ -206,7 +223,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
              '--statements', '["{statement}"]'.format(statement=statement_a)])
         policy_ocid = util.find_id_in_response(result.output)
         self.validate_response(result, expect_etag=True)
-        assert statement_a in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output)
 
         # Update description only.
         policy_description = policy_description + "UPDATED!"
@@ -216,7 +233,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
              '--policy-id', policy_ocid,
              '--description', policy_description])
         self.validate_response(result, expect_etag=True)
-        assert statement_a in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output)
 
         statements = '["{statement_a}", "{statement_b}"]'.format(statement_a=statement_a, statement_b=statement_b)
         version_date = "2016-01-01"
@@ -255,8 +272,8 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
              '--version-date', version_date,
              '--force'])
         self.validate_response(result, expect_etag=True)
-        assert statement_a in result.output
-        assert statement_b in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output)
+        self.check_policy_statements_case_insensitive(statement_b, result.output)
         assert version_date in result.output
 
         etag = json.loads(result.output)['etag']
@@ -293,8 +310,8 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
              '--if-match', etag,
              '--force'])
         self.validate_response(result, expect_etag=True)
-        assert statement_a not in result.output
-        assert statement_b in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output, check_not_in=True)
+        self.check_policy_statements_case_insensitive(statement_b, result.output)
         assert version_date not in result.output
 
         # Set correct etag when updating description
@@ -308,24 +325,24 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
              '--if-match', etag])
         self.validate_response(result, expect_etag=True)
         assert policy_description in result.output
-        assert statement_a not in result.output
-        assert statement_b in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output, check_not_in=True)
+        self.check_policy_statements_case_insensitive(statement_b, result.output)
         assert version_date not in result.output
 
         # Get policy
         result = self.invoke(['policy', 'get', '--policy-id', policy_ocid])
         self.validate_response(result, expect_etag=True)
         assert policy_description in result.output
-        assert statement_a not in result.output
-        assert statement_b in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output, check_not_in=True)
+        self.check_policy_statements_case_insensitive(statement_b, result.output)
         assert version_date not in result.output
 
         # List policies
         result = self.invoke(['policy', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
         self.validate_response(result)
         assert policy_description in result.output
-        assert statement_a not in result.output
-        assert statement_b in result.output
+        self.check_policy_statements_case_insensitive(statement_a, result.output, check_not_in=True)
+        self.check_policy_statements_case_insensitive(statement_b, result.output)
 
         result = self.invoke(['policy', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1'])
         self.validate_response(result)
@@ -377,6 +394,42 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
             commands = ['--debug'] + commands
 
         return util.invoke_command_as_admin(commands, ** args)
+
+    def check_policy_statements_case_insensitive(self, statement, result_output, check_not_in=False):
+        if check_not_in:
+            assert statement.lower() not in result_output.lower()
+        else:
+            assert statement.lower() in result_output.lower()
+
+    def get_compartment_to_rename(self):
+        keep_paginating = True
+        next_page = None
+        while keep_paginating:
+            if next_page:
+                result = self.invoke(['compartment', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000', '--page', next_page])
+            else:
+                result = self.invoke(['compartment', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
+
+            parsed_result = json.loads(result.output)
+
+            for item in parsed_result['data']:
+                if item['name'].find(self.RENAME_COMPARTMENT_PREFIX) == 0:
+                    return item
+
+            next_page = parsed_result['opc-next-page']
+            keep_paginating = (next_page is not None)
+
+        # If we're here, we need to create the compartment
+        result = self.invoke([
+            'compartment', 'create',
+            '--compartment-id', util.TENANT_ID,
+            '--name', '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, int(time.time())),
+            '--description', 'Compartment for CLI compartment rename testing'
+        ])
+        parsed_result = json.loads(result.output)
+        print('Created compartment: {}'.format(parsed_result['data']))
+
+        return parsed_result['data']
 
 
 if __name__ == '__main__':

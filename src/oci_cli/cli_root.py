@@ -1,6 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
+import sys
 import click
 import logging
 
@@ -20,31 +21,36 @@ from .version import __version__
 # important security information.
 logging.basicConfig(level=logging.WARN)
 
+BMCS_DEPRECATION_NOTICE = """WARNING: Invoking the CLI using 'bmcs' is deprecated and will be removed in future versions, starting in March 2018. To avoid interruption at that time, please move to invoking the CLI using 'oci' instead."""
 
-@click.group(name='bmcs', invoke_without_command=True, context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True), help="""Oracle Bare Metal Cloud Services command line interface, with support for Block Volume, Compute, IAM, Networking, and Object Storage Services.
+
+@click.group(name='oci', invoke_without_command=True, context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True), help="""Oracle Cloud Infrastructure command line interface, with support for Block Volume, Compute, Database, IAM, Networking, and Object Storage Services.
 
 Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where $T contains the OCID of the current tenant):
 
-  bmcs iam user list --compartment-id $T
+  oci iam user list --compartment-id $T
 
 Output is in JSON format.
 
 For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--config-file',
-              default='~/.oraclebmc/config', show_default=True,
+              default='~/.oci/config', show_default=True,
               help='The path to the config file.')
 @click.option('--profile',
               default='DEFAULT', show_default=True,
               help='The profile in the config file to load.')
 @click.option('--request-id', help='The request id to use for tracking the request.')
-@click.option('--region', help='The region to make calls against.  For a list of valid region names use the command: "bmcs iam region list".')
+@click.option('--region', help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
 @click.option('--endpoint', help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
 @click.option('--cert-bundle', help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
 def cli(ctx, config_file, profile, request_id, region, endpoint, cert_bundle, debug, help):
+    if ctx.command_path == 'bmcs':
+        click.echo(click.style(BMCS_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
+
     # Show help in any case if there are no subcommands, or if the help option
     # is used but there are subcommands, then set a flag for user later.
     if not ctx.invoked_subcommand:

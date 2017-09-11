@@ -11,9 +11,9 @@ import six
 import time
 import traceback
 from click.testing import CliRunner
-import oraclebmc_cli.cli_util
-import oraclebmc
-from oraclebmc.object_storage.transfer.constants import MEBIBYTE
+import oci_cli.cli_util
+import oci
+from oci.object_storage.transfer.constants import MEBIBYTE
 
 try:
     # PY3+
@@ -24,20 +24,71 @@ except ImportError:
 
 TEST_DATA_VERSION = '1'
 
-USER_ID = os.environ['BMCS_CLI_USER_ID']
-TENANT_ID = os.environ['BMCS_CLI_TENANT_ID']
-COMPARTMENT_ID = os.environ['BMCS_CLI_COMPARTMENT_ID']
-COMPARTMENT_NAME = os.environ['BMCS_CLI_COMPARTMENT_NAME']
-AVAILABILITY_DOMAIN = os.environ['BMCS_CLI_AD']
-NAMESPACE = os.environ['BMCS_CLI_NAMESPACE']
-SSH_AUTHORIZED_KEYS_FILE = os.environ['BMCS_CLI_PUBLIC_SSH_KEY_FILE']
+USER_ID = os.environ['OCI_CLI_USER_ID']
+TENANT_ID = os.environ['OCI_CLI_TENANT_ID']
+COMPARTMENT_ID = os.environ['OCI_CLI_COMPARTMENT_ID']
+COMPARTMENT_NAME = os.environ['OCI_CLI_COMPARTMENT_NAME']
+NAMESPACE = os.environ['OCI_CLI_NAMESPACE']
+SSH_AUTHORIZED_KEYS_FILE = os.environ['OCI_CLI_PUBLIC_SSH_KEY_FILE']
 
+REGIONAL_CONFIG = {
+    'us-phoenix-1': {
+        'bucket_regional_prefix': '',
+        'windows_vm_image': 'ocid1.image.oc1.phx.aaaaaaaa53cliasgvqmutflwqkafbro2y4ywjebci5szc4eus5byy2e2b7ua',
+        'oracle_linux_image': 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'},
+    'us-ashburn-1': {
+        'bucket_regional_prefix': 'iad_',
+        'windows_vm_image': 'ocid1.image.oc1.iad.aaaaaaaatob7wb2ljtvsvjy7olpsyuttodb7ok3osflx3hqd2nt4l6jagxla',
+        'oracle_linux_image': 'ocid1.image.oc1.iad.aaaaaaaay7kt3yikvnm47x7rhb7myj5yxbsl7hfuuxn5fikdpb73y76woiba'}
+}
+
+PROFILE_TO_REGION = {
+    'ADMIN': 'us-phoenix-1',
+    oci.config.DEFAULT_PROFILE: 'us-phoenix-1',
+    'IAD': 'us-ashburn-1'
+}
+
+# This global can be changed to influence what configuration data this module vends.
+target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
+
+# Primary and secondary availability domains used as part of the tests
+first_ad = None
+second_ad = None
 
 # Tests marked with @slow will only be skipped if '--fast' is specified for the test run.
 slow = pytest.mark.skipif(
     pytest.config.getoption("--fast"),
     reason="Slow tests are skipped when using the --fast option."
 )
+
+
+def availability_domain():
+    init_availability_domain_variables()
+    return first_ad
+
+
+def second_availability_domain():
+    init_availability_domain_variables()
+    return second_ad
+
+
+def init_availability_domain_variables():
+    global first_ad, second_ad
+
+    if first_ad is None or second_ad is None:
+        response = invoke_command(['iam', 'availability-domain', 'list', '--compartment-id', TENANT_ID])
+        availability_domains = json.loads(response.output)['data']
+
+        if len(availability_domains) == 1:
+            first_ad = availability_domains[0]['name']
+            second_ad = availability_domains[0]['name']
+        elif len(availability_domains) == 2:
+            first_ad = availability_domains[0]['name']
+            second_ad = availability_domains[1]['name']
+        else:
+            chosen_domains = random.sample(availability_domains, 2)
+            first_ad = chosen_domains[0]['name']
+            second_ad = chosen_domains[1]['name']
 
 
 enable_long_running = pytest.mark.skipif(
@@ -48,6 +99,18 @@ enable_long_running = pytest.mark.skipif(
 
 def random_name(prefix, insert_underscore=True):
     return prefix + ('_' if insert_underscore else '') + str(random.randint(0, 1000000))
+
+
+def bucket_regional_prefix():
+    return REGIONAL_CONFIG[target_region]['bucket_regional_prefix']
+
+
+def oracle_linux_image():
+    return REGIONAL_CONFIG[target_region]['oracle_linux_image']
+
+
+def windows_vm_image():
+    return REGIONAL_CONFIG[target_region]['windows_vm_image']
 
 
 def find_id_in_response(response):
@@ -93,7 +156,7 @@ def validate_service_error(result, error_message=None, debug=False):
     try:
         assert result.exit_code != 0
         if debug:
-            assert isinstance(result.exception, oraclebmc.exceptions.ServiceError)
+            assert isinstance(result.exception, oci.exceptions.ServiceError)
             if error_message:
                 assert error_message in str(result.exception)
         else:
@@ -106,11 +169,11 @@ def validate_service_error(result, error_message=None, debug=False):
 
 
 def invoke_command_as_admin(command, ** args):
-    return CliRunner().invoke(oraclebmc_cli.cli, ['--config-file', os.environ['BMCS_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
+    return CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
 
 
 def invoke_command(command, ** args):
-    return CliRunner().invoke(oraclebmc_cli.cli, ['--config-file', os.environ['BMCS_CLI_CONFIG_FILE']] + command, ** args)
+    return CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
 
 
 def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15, succeed_if_not_found=False, item_index_in_list_response=None):
@@ -232,12 +295,12 @@ def check_json_key_format(json_data):
 
 
 def set_admin_pass_phrase():
-    oraclebmc_cli.cli_util.build_config = build_config_decorator(oraclebmc_cli.cli_util.build_config)
+    oci_cli.cli_util.build_config = build_config_decorator(oci_cli.cli_util.build_config)
 
 
 def unset_admin_pass_phrase():
-    if hasattr(oraclebmc_cli.cli_util.build_config, 'original_method'):
-        oraclebmc_cli.cli_util.build_config = oraclebmc_cli.cli_util.build_config.original_method
+    if hasattr(oci_cli.cli_util.build_config, 'original_method'):
+        oci_cli.cli_util.build_config = oci_cli.cli_util.build_config.original_method
 
 
 def ensure_test_data(api, namespace, compartment, bucket_prefix):
@@ -298,7 +361,7 @@ def ensure_test_data(api, namespace, compartment, bucket_prefix):
 
 def create_bucket(api, namespace, compartment, bucket_name, metadata=None, objects=None):
     """Deletes all buckets and objects in the given compartment."""
-    request = oraclebmc.object_storage.models.CreateBucketDetails()
+    request = oci.object_storage.models.CreateBucketDetails()
     request.name = bucket_name
     request.compartment_id = compartment
     request.metadata = metadata
