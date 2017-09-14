@@ -1951,6 +1951,7 @@ Options:
 Commands:
   availability-domain  One or more isolated, fault-tolerant Oracle...
   compartment          A collection of related resources.
+  customer-secret-key  A `CustomerSecretKey` is an Oracle-provided...
   group                A collection of users who all need the same...
   policy               A document that specifies the type of access...
   region               A localized geographic area, such as Phoenix,...
@@ -2114,6 +2115,106 @@ Options:
                              etag you provide matches the resource's current
                              etag value.
   -?, -h, --help             Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam customer-secret-key --help
+Usage: oci iam customer-secret-key [OPTIONS] COMMAND [ARGS]...
+
+  A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage
+  Service's [Amazon S3 compatible API]. A user can have up to two secret keys
+  at a time.
+
+  **Note:** The secret key is always an Oracle-generated string; you can't
+  change it to a string of your choice.
+
+  For more information, see [Managing User Credentials].
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  create  Creates a new secret key for the specified...
+  delete  Deletes the specified secret key for the...
+  list    Lists the secret keys for the specified user.
+  update  Updates the specified secret key's...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam customer-secret-key create --help
+Usage: oci iam customer-secret-key create [OPTIONS]
+
+  Creates a new secret key for the specified user. Secret keys are used for
+  authentication with the Object Storage Service's Amazon S3 compatible API.
+  For information, see [Managing User Credentials].
+
+  You must specify a *description* for the secret key (although it can be an
+  empty string). It does not have to be unique, and you can change it anytime
+  with [UpdateCustomerSecretKey].
+
+  Every user has permission to create a secret key for *their own user ID*. An
+  administrator in your organization does not need to write a policy to give
+  users this ability. To compare, administrators who have permission to the
+  tenancy can use this operation to create a secret key for any user,
+  including themselves.
+
+Options:
+  --display-name TEXT  The name you assign to the secret key during creation.
+                       Does not have to be unique, and it's changeable.
+                       [required]
+  --user-id TEXT       The OCID of the user.  [required]
+  -?, -h, --help       Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam customer-secret-key delete --help
+Usage: oci iam customer-secret-key delete [OPTIONS]
+
+  Deletes the specified secret key for the specified user.
+
+Options:
+  --user-id TEXT                 The OCID of the user.  [required]
+  --customer-secret-key-id TEXT  The OCID of the secret key.  [required]
+  --if-match TEXT                For optimistic concurrency control. In the PUT
+                                 or DELETE call for a resource, set the `if-
+                                 match` parameter to the value of the etag from
+                                 a previous GET or POST response for that
+                                 resource.  The resource will be updated or
+                                 deleted only if the etag you provide matches
+                                 the resource's current etag value.
+  --force                        Perform deletion without prompting for
+                                 confirmation.
+  -?, -h, --help                 Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam customer-secret-key list --help
+Usage: oci iam customer-secret-key list [OPTIONS]
+
+  Lists the secret keys for the specified user. The returned object contains
+  the secret key's OCID, but not the secret key itself. The actual secret key
+  is returned only upon creation.
+
+Options:
+  --user-id TEXT  The OCID of the user.  [required]
+  -?, -h, --help  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam customer-secret-key update --help
+Usage: oci iam customer-secret-key update [OPTIONS]
+
+  Updates the specified secret key's description.
+
+Options:
+  --user-id TEXT                 The OCID of the user.  [required]
+  --customer-secret-key-id TEXT  The OCID of the secret key.  [required]
+  --display-name TEXT            The description you assign to the secret key.
+                                 Does not have to be unique, and it's
+                                 changeable.
+  --if-match TEXT                For optimistic concurrency control. In the PUT
+                                 or DELETE call for a resource, set the `if-
+                                 match` parameter to the value of the etag from
+                                 a previous GET or POST response for that
+                                 resource.  The resource will be updated or
+                                 deleted only if the etag you provide matches
+                                 the resource's current etag value.
+  -?, -h, --help                 Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam group --help

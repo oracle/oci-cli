@@ -14,6 +14,9 @@ class TestIdentity(unittest.TestCase):
 
     RENAME_COMPARTMENT_PREFIX = "PythonCliCompartmentRenameTest-"
 
+    VALID_ACTIVE_CUSTOMER_SECRET_KEY_STATES = ['ACTIVE', 'CREATING']
+    VALID_DELETED_CUSTOMER_SECRET_KEY_STATES = ['DELETED', 'DELETING']
+
     def setUp(self):
         util.set_admin_pass_phrase()
 
@@ -32,6 +35,7 @@ class TestIdentity(unittest.TestCase):
         self.subtest_ui_password_operations()
         self.subtest_swift_password_operations()
         self.subtest_policy_operations()
+        self.subtest_customer_secret_key_operations()
         self.subtest_cleanup()
 
     def subtest_availability_domain_operations(self):
@@ -352,6 +356,60 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         result = self.invoke(['policy', 'delete', '--policy-id', policy_ocid, '--force'])
         self.validate_response(result)
 
+    def subtest_customer_secret_key_operations(self):
+        create_secret_key_one_parsed_result = self.create_and_assert_customer_secret_key('Secret Key One')
+
+        result = self.invoke([
+            'customer-secret-key', 'update',
+            '--user-id', self.user_ocid,
+            '--customer-secret-key-id',
+            create_secret_key_one_parsed_result['data']['id'],
+            '--display-name',
+            'Updated Secret Key One'
+        ])
+        update_secret_key_one_parsed_result = json.loads(result.output)
+
+        assert update_secret_key_one_parsed_result['data']['id'] == create_secret_key_one_parsed_result['data']['id']
+        assert update_secret_key_one_parsed_result['data']['user-id'] == self.user_ocid
+        assert update_secret_key_one_parsed_result['data']['display-name'] == 'Updated Secret Key One'
+        assert update_secret_key_one_parsed_result['data']['time-created'] is not None
+        assert update_secret_key_one_parsed_result['data']['time-expires'] is None
+        assert update_secret_key_one_parsed_result['data']['lifecycle-state'] in self.VALID_ACTIVE_CUSTOMER_SECRET_KEY_STATES
+
+        create_secret_key_two_parsed_result = self.create_and_assert_customer_secret_key('Secret Key Two')
+
+        result = self.invoke(['customer-secret-key', 'list', '--user-id', self.user_ocid])
+        parsed_list_result = json.loads(result.output)
+
+        assert len(parsed_list_result['data']) == 2
+        if parsed_list_result['data'][0]['id'] == create_secret_key_one_parsed_result['data']['id']:
+            self.compare_secret_key_dicts(parsed_list_result['data'][0], update_secret_key_one_parsed_result['data'])
+            self.compare_secret_key_dicts(parsed_list_result['data'][1], create_secret_key_two_parsed_result['data'])
+        else:
+            self.compare_secret_key_dicts(parsed_list_result['data'][0], create_secret_key_two_parsed_result['data'])
+            self.compare_secret_key_dicts(parsed_list_result['data'][1], update_secret_key_one_parsed_result['data'])
+
+        self.invoke([
+            'customer-secret-key', 'delete',
+            '--user-id', self.user_ocid,
+            '--customer-secret-key-id', create_secret_key_one_parsed_result['data']['id'],
+            '--force'
+        ])
+        self.invoke([
+            'customer-secret-key', 'delete',
+            '--user-id', self.user_ocid,
+            '--customer-secret-key-id', create_secret_key_two_parsed_result['data']['id'],
+            '--force'
+        ])
+
+        result = self.invoke(['customer-secret-key', 'list', '--user-id', self.user_ocid])
+        if result.output:
+            parsed_list_result = json.loads(result.output)
+
+            if len(parsed_list_result['data']) != 0:
+                for item in parsed_list_result['data']:
+                    assert item['lifecycle-state'] in self.VALID_DELETED_CUSTOMER_SECRET_KEY_STATES
+
     def subtest_cleanup(self):
         result = self.invoke(['user', 'delete', '--user-id', self.user_ocid], input='n')
         assert result.exit_code != 0
@@ -430,6 +488,29 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         print('Created compartment: {}'.format(parsed_result['data']))
 
         return parsed_result['data']
+
+    def create_and_assert_customer_secret_key(self, display_name):
+        result = self.invoke(['customer-secret-key', 'create', '--user-id', self.user_ocid, '--display-name', display_name])
+        create_secret_parsed_result = json.loads(result.output)
+
+        assert create_secret_parsed_result['data']['key'] is not None
+        assert create_secret_parsed_result['data']['id'] is not None
+        assert create_secret_parsed_result['data']['user-id'] == self.user_ocid
+        assert create_secret_parsed_result['data']['display-name'] == display_name
+        assert create_secret_parsed_result['data']['time-created'] is not None
+        assert create_secret_parsed_result['data']['time-expires'] is None
+        assert create_secret_parsed_result['data']['lifecycle-state'] in self.VALID_ACTIVE_CUSTOMER_SECRET_KEY_STATES
+
+        return create_secret_parsed_result
+
+    def compare_secret_key_dicts(self, dict_one, dict_two):
+        assert dict_one['id'] == dict_two['id']
+        assert dict_one['display-name'] == dict_two['display-name']
+        assert dict_one['user-id'] == dict_two['user-id']
+        assert dict_one['display-name'] == dict_two['display-name']
+        assert dict_one['time-created'] == dict_two['time-created']
+        assert dict_one['time-expires'] == dict_two['time-expires']
+        assert dict_one['lifecycle-state'] == dict_two['lifecycle-state']
 
 
 if __name__ == '__main__':

@@ -139,13 +139,6 @@ def compartment_group():
     pass
 
 
-@click.group(cli_util.override('customer_secret_key_summary_group.command_name', 'customer-secret-key-summary'), help="""As the name suggests, a `CustomerSecretKeySummary` object contains information about a `CustomerSecretKey`.
-A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's Amazon S3 compatible API.""")
-@cli_util.help_option_group
-def customer_secret_key_summary_group():
-    pass
-
-
 @click.group(cli_util.override('region_group.command_name', 'region'), help="""A localized geographic area, such as Phoenix, AZ. Oracle Bare Metal Cloud Services is hosted in regions and Availability
 Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers
 located within a region. For more information, see [Regions and Availability Domains].
@@ -887,7 +880,7 @@ def list_compartments(ctx, compartment_id, page, limit):
     cli_util.render_response(result)
 
 
-@customer_secret_key_summary_group.command(name=cli_util.override('list_customer_secret_keys.command_name', 'list-customer-secret-keys'), help="""Lists the secret keys for the specified user. The returned object contains the secret key's OCID, but not the secret key itself. The actual secret key is returned only upon creation.""")
+@customer_secret_key_group.command(name=cli_util.override('list_customer_secret_keys.command_name', 'list'), help="""Lists the secret keys for the specified user. The returned object contains the secret key's OCID, but not the secret key itself. The actual secret key is returned only upon creation.""")
 @click.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.help_option
 @click.pass_context
@@ -1132,7 +1125,7 @@ def update_compartment(ctx, compartment_id, description, name, if_match):
     cli_util.render_response(result)
 
 
-@customer_secret_key_summary_group.command(name=cli_util.override('update_customer_secret_key.command_name', 'update-customer-secret-key'), help="""Updates the specified secret key's description.""")
+@customer_secret_key_group.command(name=cli_util.override('update_customer_secret_key.command_name', 'update'), help="""Updates the specified secret key's description.""")
 @click.option('--user-id', required=True, help="""The OCID of the user.""")
 @click.option('--customer-secret-key-id', required=True, help="""The OCID of the secret key.""")
 @click.option('--display-name', help="""The description you assign to the secret key. Does not have to be unique, and it's changeable.""")
