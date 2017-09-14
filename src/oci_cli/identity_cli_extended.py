@@ -9,6 +9,7 @@ from . import cli_util
 
 identity_cli.identity_group.add_command(identity_cli.availability_domain_group)
 identity_cli.identity_group.add_command(identity_cli.compartment_group)
+identity_cli.identity_group.add_command(identity_cli.customer_secret_key_group)
 identity_cli.identity_group.add_command(identity_cli.group_group)
 identity_cli.identity_group.add_command(identity_cli.policy_group)
 identity_cli.identity_group.add_command(identity_cli.region_group)
@@ -17,7 +18,6 @@ identity_cli.identity_group.add_command(identity_cli.user_group)
 identity_cli.user_group.add_command(identity_cli.api_key_group)
 identity_cli.user_group.add_command(identity_cli.swift_password_group)
 identity_cli.user_group.add_command(identity_cli.ui_password_group)
-
 
 # help for oci iam policy create --statements
 identity_policy_create_statements_example = """'["statement 1","statement 2"]'"""

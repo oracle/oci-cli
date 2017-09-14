@@ -7,6 +7,17 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.9 - 2017-09-13
+------------------
+
+Fixed
+~~~~~~~~~~
+* On Windows, fall back to old default config location (%USERPROFILE%\.oraclebmc\config) if new default location doesn't exist (%USERPROFILE%\.oci\config).
+
+Added
+~~~~~~~~~~
+* Support for CustomerSecretKey operations (oci iam customer-secret-key create / delete / list / update).
+
 2.4.8 - 2017-09-11
 ------------------
 

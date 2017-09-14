@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import sys
+from oci.config import DEFAULT_LOCATION
 import click
 import logging
 
@@ -35,7 +36,7 @@ Output is in JSON format.
 For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--config-file',
-              default='~/.oci/config', show_default=True,
+              default=DEFAULT_LOCATION, show_default=True,
               help='The path to the config file.')
 @click.option('--profile',
               default='DEFAULT', show_default=True,
