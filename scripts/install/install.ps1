@@ -26,7 +26,8 @@ $OriginalErrorActionPreference = $ErrorActionPreference
 
 $PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.4.8/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.2"    # version of Python to install if none exists
-$MinValidPythonVersion = "2.7"       # minimum required version of Python on system
+$MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
+$MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
 
 function LogOutput($Output) {
     Write-Verbose $Output
@@ -72,11 +73,16 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
     # need to escape spaces in the path for Invoke-Expression
     $EscapedExecutable = $PythonExecutable -replace ' ','` '
     $PythonVersion = Invoke-Expression "$EscapedExecutable -c 'import platform;print(platform.python_version())'"
-    if (VersionMeetsMinimumRequirements $PythonVersion $MinValidPythonVersion) {
+    $MinVersionToCheck = $MinValidPython2Version
+    if ($PythonVersion.StartsWith("3")) {
+        $MinVersionToCheck = $MinValidPython3Version
+    }
+
+    if (VersionMeetsMinimumRequirements $PythonVersion $MinVersionToCheck) {
         return $true
     }
     
-    LogOutput "$PythonExecutable Python version $PythonVersion is below minimum required version $MinValidPythonVersion"
+    LogOutput "$PythonExecutable Python version $PythonVersion is below minimum required version $MinVersionToCheck"
     return $false
 }
 

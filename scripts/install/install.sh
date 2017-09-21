@@ -11,8 +11,6 @@ install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
 echo "Downloading Oracle Cloud Infrastructure CLI install script from $INSTALL_SCRIPT_URL to $install_script."
 curl -# $INSTALL_SCRIPT_URL > $install_script || exit
 
-MIN_VALID_PYTHON_VERSION=2.7.0
-
 # use default system executable on path unless we have to install one below
 python_exe=python
 
@@ -32,12 +30,12 @@ command -v python >/dev/null 2>&1
 if [ $? -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    python -c "import sys;import platform;from distutils.version import StrictVersion; sys.exit(0) if StrictVersion(platform.python_version()) >= StrictVersion('$MIN_VALID_PYTHON_VERSION') else sys.exit(1)"
+    python -c "import sys; v = sys.version_info; valid = v >= (2, 7, 5) if v.major == 2 else v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
     if [ $? -eq 0 ]; then
-        # if python is installed and >= MIN_VALID_PYTHON_VERSION then we dont need to install it
+        # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
     else
-        echo "System version of Python does not meet minimum required version: $MIN_VALID_PYTHON_VERSION"
+        echo "System version of Python must be either a Python 2 version >= 2.7.5 or a Python 3 version >= 3.5.0."
     fi
 else
     echo "Python not found on system PATH"
