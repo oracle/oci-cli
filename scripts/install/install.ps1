@@ -24,7 +24,7 @@ $OriginalErrorActionPreference = $ErrorActionPreference
 # Explicitly support TLS 1.2
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12';
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.4.8/scripts/install/install.py"
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/1e2df8f61fcf85fcda9e9938365e76fbbece0ca3/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.2"    # version of Python to install if none exists
 $MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
 $MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
