@@ -23,6 +23,8 @@ Added
 
 Deprecated
 ~~~~~~~~~~
+* The CLI entry point (command name) has been changed from bmcs to oci. The old entry point will continue to work, but is deprecated.
+* The CLI package name has been changed from oraclebmc-cli to oci-cli. The oraclebmc-cli package is deprecated and will no longer be maintained starting March 2018. Please upgrade to the oci-cli package to avoid interruption at that time.
 * The default configuration file location has been changed from ~/.oraclebmc/config to ~/.oci/config. The old location still works if the file at the new location does not exist.
 
 Added
