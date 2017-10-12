@@ -1,0 +1,5 @@
+{
+    "fakeAttribute1": "value",
+    "fakeAttribute2": 123,
+    "fakeArray": ["a", "b", "c"]
+}

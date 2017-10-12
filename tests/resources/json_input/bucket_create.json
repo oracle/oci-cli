@@ -1,0 +1,7 @@
+{
+    "metadata": {
+        "key1": "hello",
+        "key_with_underscores": "world"
+    },
+    "bucketName": "will_be_ignored_on_create"
+}

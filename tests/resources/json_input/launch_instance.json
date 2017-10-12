@@ -1,0 +1,17 @@
+{
+    "ipxeScriptFile": "tests/resources/ipxe_script_example.txt",
+    "metadata": {"meta1": "meta2", "meta3": "meta4"},
+    "extendedMetadata": {
+        "a": "1",
+        "b": {
+            "c": "3",
+            "d": {}
+        },
+        "preserve_underscore": "underscores retained",
+        "preserve-snake": "snake casing-retained"
+    },
+    "displayName": "From JSON Skeleton",
+    "assignPublicIp": false,
+    "vnicDisplayName": "JSON Skeleton VNIC",
+    "shape": "VM.Standard1.2"
+}

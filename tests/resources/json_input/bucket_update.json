@@ -1,0 +1,8 @@
+{
+    "metadata": {
+        "key1": "hello_updated",
+        "another_key_with_underscores": "replace previous",
+        "history": "previous"
+    },
+    "bucketName": "will_be_overridden_on_update"
+}
