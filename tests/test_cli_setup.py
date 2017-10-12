@@ -12,14 +12,16 @@ from cryptography.hazmat.backends import default_backend
 
 import os
 import os.path
+import stat
+import subprocess
 import sys
 
-TEMP_DIR = 'tests/temp'
+TEMP_DIR = os.path.join('tests', 'temp')
 
 CONFIG_FILENAME = os.path.join(TEMP_DIR, 'config')
 REGION = 'us-phoenix-1'
 PASSPHRASE = 'passphrase'
-PASSPHRASE_FILE = 'tests/resources/test_passphrase_file.txt'
+PASSPHRASE_FILE = os.path.join('tests', 'resources', 'test_passphrase_file.txt')
 
 PUBLIC_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key_public.pem')
 PRIVATE_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key.pem')
@@ -53,8 +55,7 @@ class TestSetup(unittest.TestCase):
             PASSPHRASE      # confirm passphrase
         ]
 
-        self.invoke(
-            ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite'], input='\n'.join(stdin))
+        self.invoke(['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite'], input='\n'.join(stdin))
 
         assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
         assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
@@ -64,6 +65,9 @@ class TestSetup(unittest.TestCase):
 
         # validate private key
         assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+
+        assert self.validate_file_user_rw_permissions(PRIVATE_KEY_FILENAME)
+        assert self.validate_file_user_rw_permissions(PUBLIC_KEY_FILENAME)
 
         self.cleanup_default_generated_files()
 
@@ -175,7 +179,7 @@ class TestSetup(unittest.TestCase):
         assert 'Config written to' in result.output, 'Config generation script should run until completion'
 
         test_config = config.from_file(file_location=CONFIG_FILENAME, profile_name='DEFAULT')
-        config.validate_config(test_config)
+        self.validate_config(test_config)
 
         print('Config: {}'.format(str(test_config)))
 
@@ -189,6 +193,8 @@ class TestSetup(unittest.TestCase):
 
         # validate private key w/ passphrase
         assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
+
+        assert self.validate_file_user_rw_permissions(CONFIG_FILENAME)
 
         # clean up config and keys
         self.cleanup_default_generated_files()
@@ -226,7 +232,7 @@ class TestSetup(unittest.TestCase):
         assert 'Config written to' in result.output, 'Config generation script should run until completion'
 
         test_config = config.from_file(file_location=CONFIG_FILENAME, profile_name='DEFAULT')
-        config.validate_config(test_config)
+        self.validate_config(test_config)
 
         print('Config: {}'.format(str(test_config)))
 
@@ -374,6 +380,30 @@ class TestSetup(unittest.TestCase):
                     pass
 
         return False
+
+    def validate_file_user_rw_permissions(self, filename):
+        if oci_cli.cli_setup.is_windows():
+            # sample correct output:
+            #   file.txt WINDOWSTESTBOX\opc:(F)
+            #
+            #   Successfully processed 1 file(s)
+            output = subprocess.check_output('icacls {}'.format(filename)).decode('UTF-8')
+            current_user = subprocess.check_output('whoami').decode('UTF-8').strip()
+            acls = output.split('\n\n')[0]
+            permissions_line = '{} {}:(F)'.format(filename, current_user)
+            return permissions_line.lower() == acls.lower()
+        else:
+            if os.path.isfile(filename):
+                user_rw_perms = oct(384)  # 600
+            else:
+                # Directory permissions have S_IXUSER applied. See apply_user_only_access_permissions() in cli_setup.py for more information
+                user_rw_perms = oct(448)  # 700
+
+            return oct(stat.S_IMODE(os.lstat(filename).st_mode)) == user_rw_perms
+
+    def validate_config(self, input_config):
+        config.validate_config(input_config)
+        assert os.path.isabs(input_config['key_file'])
 
     def invoke(self, commands, debug=False, ** args):
         self.validator.register_call(commands)

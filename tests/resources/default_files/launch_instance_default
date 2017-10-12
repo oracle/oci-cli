@@ -1,0 +1,3 @@
+[DEFAULT]
+compute.instance.ipxe-script-file=tests/resources/ipxe_script_example.txt
+compute.instance.launch.extended-metadata={"a": "1", "b": {"c": "3", "d": {}}}

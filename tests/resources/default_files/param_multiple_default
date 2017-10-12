@@ -1,0 +1,4 @@
+[DEFAULT]
+os.object.bulk-upload.include =
+    *.txt
+    subfolder/*.png

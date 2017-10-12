@@ -5,6 +5,7 @@ from __future__ import print_function
 import click
 from ..cli_root import cli
 from .. import cli_util
+from .. import json_skeleton_utils
 
 
 @cli.group(cli_util.override('compute_group.command_name', 'compute'), help=cli_util.override('compute_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
@@ -63,7 +64,7 @@ def shape_group():
 
 
 @click.group(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), help="""Represents an attachment between a VNIC and an instance. For more information, see
-[Managing Virtual Network Interface Cards (VNICs)].""")
+[Virtual Network Interface Cards (VNICs)].""")
 @cli_util.help_option_group
 def vnic_attachment_group():
     pass
@@ -80,6 +81,16 @@ def volume_attachment_group():
     pass
 
 
+@click.group(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), help="""The `InstanceConsoleConnection` API provides you with serial console access to virtual machine (VM) instances,
+enabling you to troubleshoot malfunctioning instances remotely.
+
+For more information about serial console access, see
+[Accessing the Serial Console].""")
+@cli_util.help_option_group
+def instance_console_connection_group():
+    pass
+
+
 @click.group(cli_util.override('console_history_group.command_name', 'console-history'), help="""An instance's serial console data. It includes configuration messages that occur when the
 instance boots, such as kernel and BIOS messages, and is useful for checking the status of
 the instance or diagnosing problems. The console data is minimally formatted ASCII text.""")
@@ -88,14 +99,35 @@ def console_history_group():
     pass
 
 
-@vnic_attachment_group.command(name=cli_util.override('attach_vnic.command_name', 'attach'), help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Managing Virtual Network Interface Cards (VNICs)].""")
-@click.option('--create-vnic-details', required=True, help="""Details for creating a new VNIC.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@vnic_attachment_group.command(name=cli_util.override('attach_vnic.command_name', 'attach'), help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
+@click.option('--create-vnic-details', help="""Details for creating a new VNIC. [required]""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
 @click.option('--display-name', help="""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}}, output_type={'module': 'core', 'class': 'VnicAttachment'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, create_vnic_details, instance_id, display_name):
+def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, create_vnic_details, instance_id, display_name):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    create_vnic_details = cli_util.coalesce_provided_and_default_value(ctx, 'create-vnic-details', create_vnic_details, True)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+
     kwargs = {}
 
     details = {}
@@ -110,18 +142,40 @@ def attach_vnic(ctx, create_vnic_details, instance_id, display_name):
         attach_vnic_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @volume_attachment_group.command(name=cli_util.override('attach_volume.command_name', 'attach'), help="""Attaches the specified storage volume to the specified instance.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
-@click.option('--type', required=True, help="""The type of volume. The only supported value is \"iscsi\".""")
-@click.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
+@click.option('--type', help="""The type of volume. The only supported value is \"iscsi\". [required]""")
+@click.option('--volume-id', help="""The OCID of the volume. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume(ctx, instance_id, type, volume_id, display_name):
+def attach_volume(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, type, volume_id, display_name):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    type = cli_util.coalesce_provided_and_default_value(ctx, 'type', type, True)
+    volume_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-id', volume_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+
     kwargs = {}
 
     details = {}
@@ -137,7 +191,7 @@ def attach_volume(ctx, instance_id, type, volume_id, display_name):
         attach_volume_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('capture_console_history.command_name', 'capture'), help="""Captures the most recent serial console data (up to a megabyte) for the specified instance.
@@ -145,22 +199,46 @@ def attach_volume(ctx, instance_id, type, volume_id, display_name):
 The `CaptureConsoleHistory` operation works with the other console history operations as described below.
 
 1. Use `CaptureConsoleHistory` to request the capture of up to a megabyte of the most recent console history. This call returns a `ConsoleHistory` object. The object will have a state of REQUESTED. 2. Wait for the capture operation to succeed by polling `GetConsoleHistory` with the identifier of the console history metadata. The state of the `ConsoleHistory` object will go from REQUESTED to GETTING-HISTORY and then SUCCEEDED (or FAILED). 3. Use `GetConsoleHistoryContent` to get the actual console history data (not the metadata). 4. Optionally, use `DeleteConsoleHistory` to delete the console history metadata and the console history data.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance to get the console history from.""")
+@click.option('--instance-id', help="""The OCID of the instance to get the console history from. [required]""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
 @cli_util.wrap_exceptions
-def capture_console_history(ctx, instance_id):
+def capture_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, display_name):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+
     kwargs = {}
 
     details = {}
     details['instanceId'] = instance_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
 
     client = cli_util.build_client('compute', ctx)
     result = client.capture_console_history(
         capture_console_history_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('create_image.command_name', 'create'), help="""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Bare Metal Cloud Object Storage Service.
@@ -176,7 +254,7 @@ When importing an image based on the Object Storage Service URL, use [ImageSourc
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
+@click.option('--compartment-id', help="""The OCID of the compartment containing the instance you want to use as the basis for the image. [required]""")
 @click.option('--display-name', help="""A user-friendly name for the image. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 You cannot use an Oracle-provided image name as a custom image name.
@@ -184,10 +262,32 @@ You cannot use an Oracle-provided image name as a custom image name.
 Example: `My Oracle Linux image`""")
 @click.option('--image-source-details', help="""Details for creating an image through import""")
 @click.option('--instance-id', help="""The OCID of the instance you want to use as the basis for the image.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def create_image(ctx, compartment_id, display_name, image_source_details, instance_id):
+def create_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, display_name, image_source_details, instance_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    image_source_details = cli_util.coalesce_provided_and_default_value(ctx, 'image-source-details', image_source_details, False)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
+
     kwargs = {}
 
     details = {}
@@ -207,17 +307,82 @@ def create_image(ctx, compartment_id, display_name, image_source_details, instan
         create_image_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
+
+
+@instance_console_connection_group.command(name=cli_util.override('create_instance_console_connection.command_name', 'create'), help="""Creates a new serial console connection to the specified instance. Once the serial console connection has been created and is available, you connect to the serial console using an SSH client.
+
+The default number of enabled serial console connections per tenancy is 10.
+
+For more information about serial console access, see [Accessing the Serial Console].""")
+@click.option('--instance-id', help="""The OCID of the instance to create the serial console connection to. [required]""")
+@click.option('--public-key', help="""The SSH public key used to authenticate the serial console connection. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@cli_util.wrap_exceptions
+def create_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, public_key):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    public_key = cli_util.coalesce_provided_and_default_value(ctx, 'public-key', public_key, True)
+
+    kwargs = {}
+
+    details = {}
+    details['instanceId'] = instance_id
+    details['publicKey'] = public_key
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.create_instance_console_connection(
+        create_instance_console_connection_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('delete_console_history.command_name', 'delete'), help="""Deletes the specified console history metadata and the console history data.""")
-@click.option('--instance-console-history-id', required=True, help="""The OCID of the console history.""")
+@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_console_history(ctx, instance_console_history_id, if_match):
+def delete_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_history_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -226,17 +391,37 @@ def delete_console_history(ctx, instance_console_history_id, if_match):
         instance_console_history_id=instance_console_history_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('delete_image.command_name', 'delete'), help="""Deletes an image.""")
-@click.option('--image-id', required=True, help="""The OCID of the image.""")
+@click.option('--image-id', help="""The OCID of the image. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_image(ctx, image_id, if_match):
+def delete_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -245,17 +430,78 @@ def delete_image(ctx, image_id, if_match):
         image_id=image_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
-@vnic_attachment_group.command(name=cli_util.override('detach_vnic.command_name', 'detach'), help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
-@click.option('--vnic-attachment-id', required=True, help="""The OCID of the VNIC attachment.""")
+@instance_console_connection_group.command(name=cli_util.override('delete_instance_console_connection.command_name', 'delete'), help="""Deletes the specified serial console connection.""")
+@click.option('--instance-console-connection-id', help="""The OCID of the intance console connection [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def detach_vnic(ctx, vnic_attachment_id, if_match):
+def delete_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_connection_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_console_connection_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-connection-id', instance_console_connection_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('compute', ctx)
+    result = client.delete_instance_console_connection(
+        instance_console_connection_id=instance_console_connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vnic_attachment_group.command(name=cli_util.override('detach_vnic.command_name', 'detach'), help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.
+
+**Important:** If the VNIC has a [private IP] that is the [target of a route rule], deleting the VNIC causes that route rule to blackhole and the traffic will be dropped.""")
+@click.option('--vnic-attachment-id', help="""The OCID of the VNIC attachment. [required]""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def detach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_attachment_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    vnic_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-attachment-id', vnic_attachment_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -264,19 +510,39 @@ def detach_vnic(ctx, vnic_attachment_id, if_match):
         vnic_attachment_id=vnic_attachment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @volume_group.command(name=cli_util.override('detach_volume.command_name', 'detach'), help="""Detaches a storage volume from an instance. You must specify the OCID of the volume attachment.
 
-This is an asynchronous operation; the attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
-@click.option('--volume-attachment-id', required=True, help="""The OCID of the volume attachment.""")
+This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
+@click.option('--volume-attachment-id', help="""The OCID of the volume attachment. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def detach_volume(ctx, volume_attachment_id, if_match):
+def detach_volume(ctx, generate_full_command_json_input, generate_param_json_input, from_json, volume_attachment_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    volume_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-attachment-id', volume_attachment_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -285,7 +551,7 @@ def detach_volume(ctx, volume_attachment_id, if_match):
         volume_attachment_id=volume_attachment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('export_image.command_name', 'export'), help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service. You can use the Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to export to.
@@ -295,13 +561,34 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
-@click.option('--image-id', required=True, help="""The OCID of the image.""")
-@click.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage Service URL.""")
+@click.option('--image-id', help="""The OCID of the image. [required]""")
+@click.option('--destination-type', help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage Service URL. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image(ctx, image_id, destination_type, if_match):
+def export_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, destination_type, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
+    destination_type = cli_util.coalesce_provided_and_default_value(ctx, 'destination-type', destination_type, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -315,33 +602,77 @@ def export_image(ctx, image_id, destination_type, if_match):
         export_image_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('get_console_history.command_name', 'get'), help="""Shows the metadata for the specified console history. See [CaptureConsoleHistory] for details about using the console history operations.""")
-@click.option('--instance-console-history-id', required=True, help="""The OCID of the console history.""")
+@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
 @cli_util.wrap_exceptions
-def get_console_history(ctx, instance_console_history_id):
+def get_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_history_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_console_history(
         instance_console_history_id=instance_console_history_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('get_console_history_content.command_name', 'get-console-history-content'), help="""Gets the actual console history data (not the metadata). See [CaptureConsoleHistory] for details about using the console history operations.""")
-@click.option('--instance-console-history-id', required=True, help="""The OCID of the console history.""")
-@click.option('--file', required=True, type=click.File(mode='wb'), help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
-@click.option('--offset', help="""Offset of the snapshot data to retrieve.""")
-@click.option('--length', help="""Length of the snapshot data to retrieve.""")
+@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
+@click.option('--file', type=click.File(mode='wb'), help="The name of the file that will receive the response data, or '-' to write to STDOUT. [required]")
+@click.option('--offset', type=click.INT, help="""Offset of the snapshot data to retrieve.""")
+@click.option('--length', type=click.INT, help="""Length of the snapshot data to retrieve.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def get_console_history_content(ctx, file, instance_console_history_id, offset, length):
+def get_console_history_content(ctx, generate_full_command_json_input, generate_param_json_input, from_json, file, instance_console_history_id, offset, length):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
+    offset = cli_util.coalesce_provided_and_default_value(ctx, 'offset', offset, False)
+    length = cli_util.coalesce_provided_and_default_value(ctx, 'length', length, False)
+    if not file:
+        file_from_default_values = cli_util.get_click_file_from_default_values_file(ctx, 'file', 'wb', True)
+        if file_from_default_values:
+            file = file_from_default_values
+
     kwargs = {}
     if offset is not None:
         kwargs['offset'] = offset
@@ -356,78 +687,207 @@ def get_console_history_content(ctx, file, instance_console_history_id, offset, 
 
 
 @image_group.command(name=cli_util.override('get_image.command_name', 'get'), help="""Gets the specified image.""")
-@click.option('--image-id', required=True, help="""The OCID of the image.""")
+@click.option('--image-id', help="""The OCID of the image. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def get_image(ctx, image_id):
+def get_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_image(
         image_id=image_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('get_instance.command_name', 'get'), help="""Gets information about the specified instance.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def get_instance(ctx, instance_id):
+def get_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance(
         instance_id=instance_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
+
+
+@instance_console_connection_group.command(name=cli_util.override('get_instance_console_connection.command_name', 'get'), help="""Gets the specified serial console connection's information.""")
+@click.option('--instance-console-connection-id', help="""The OCID of the intance console connection [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@cli_util.wrap_exceptions
+def get_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_connection_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_console_connection_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-connection-id', instance_console_connection_id, True)
+
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_instance_console_connection(
+        instance_console_connection_id=instance_console_connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @vnic_attachment_group.command(name=cli_util.override('get_vnic_attachment.command_name', 'get'), help="""Gets the information for the specified VNIC attachment.""")
-@click.option('--vnic-attachment-id', required=True, help="""The OCID of the VNIC attachment.""")
+@click.option('--vnic-attachment-id', help="""The OCID of the VNIC attachment. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VnicAttachment'})
 @cli_util.wrap_exceptions
-def get_vnic_attachment(ctx, vnic_attachment_id):
+def get_vnic_attachment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_attachment_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    vnic_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-attachment-id', vnic_attachment_id, True)
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_vnic_attachment(
         vnic_attachment_id=vnic_attachment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @volume_attachment_group.command(name=cli_util.override('get_volume_attachment.command_name', 'get'), help="""Gets information about the specified volume attachment.""")
-@click.option('--volume-attachment-id', required=True, help="""The OCID of the volume attachment.""")
+@click.option('--volume-attachment-id', help="""The OCID of the volume attachment. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def get_volume_attachment(ctx, volume_attachment_id):
+def get_volume_attachment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, volume_attachment_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    volume_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-attachment-id', volume_attachment_id, True)
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_volume_attachment(
         volume_attachment_id=volume_attachment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @instance_credentials_group.command(name=cli_util.override('get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help="""Gets the generated credentials for the instance. Only works for Windows instances. The returned credentials are only valid for the initial login.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceCredentials'})
 @cli_util.wrap_exceptions
-def get_windows_instance_initial_credentials(ctx, instance_id):
+def get_windows_instance_initial_credentials(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_windows_instance_initial_credentials(
         instance_id=instance_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('instance_action.command_name', 'instance-action'), help="""Performs one of the power actions (start, stop, softreset, or reset) on the specified instance.
@@ -441,13 +901,34 @@ def get_windows_instance_initial_credentials(ctx, instance_id):
 **reset** - power off and power on
 
 Note that the **stop** state has no effect on the resources you consume. Billing continues for instances that you stop, and related resources continue to apply against any relevant quotas. You must terminate an instance ([TerminateInstance]) to remove its resources from billing and quotas.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
-@click.option('--action', required=True, help="""The action to perform on the instance.""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
+@click.option('--action', help="""The action to perform on the instance. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def instance_action(ctx, instance_id, action, if_match):
+def instance_action(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, action, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    action = cli_util.coalesce_provided_and_default_value(ctx, 'action', action, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -457,7 +938,7 @@ def instance_action(ctx, instance_id, action, if_match):
         action=action,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('launch_instance.command_name', 'launch'), help="""Creates a new instance in the specified compartment and the specified Availability Domain. For general information about instances, see [Overview of the Compute Service].
@@ -470,15 +951,15 @@ All Oracle Bare Metal Cloud Services resources, including instances, get an Orac
 
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
-You can later add secondary VNICs to an instance. For more information, see [Managing Virtual Network Interface Cards (VNICs)].""")
-@click.option('--availability-domain', required=True, help="""The Availability Domain of the instance.
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+@click.option('--availability-domain', help="""The Availability Domain of the instance.
 
-Example: `Uocm:PHX-AD-1`""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@click.option('--image-id', required=True, help="""The OCID of the image used to boot the instance.""")
-@click.option('--shape', required=True, help="""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+Example: `Uocm:PHX-AD-1` [required]""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
+@click.option('--image-id', help="""The OCID of the image used to boot the instance. [required]""")
+@click.option('--shape', help="""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
 
-You can enumerate all available shapes by calling [ListShapes].""")
+You can enumerate all available shapes by calling [ListShapes]. [required]""")
 @click.option('--create-vnic-details', help="""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
@@ -532,10 +1013,43 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
  You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""")
 @click.option('--subnet-id', help="""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, availability_domain, compartment_id, image_id, shape, create_vnic_details, display_name, extended_metadata, hostname_label, ipxe_script_file, metadata, subnet_id):
+def launch_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, availability_domain, compartment_id, image_id, shape, create_vnic_details, display_name, extended_metadata, hostname_label, ipxe_script_file, metadata, subnet_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, True)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
+    shape = cli_util.coalesce_provided_and_default_value(ctx, 'shape', shape, True)
+    create_vnic_details = cli_util.coalesce_provided_and_default_value(ctx, 'create-vnic-details', create_vnic_details, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    extended_metadata = cli_util.coalesce_provided_and_default_value(ctx, 'extended-metadata', extended_metadata, False)
+    hostname_label = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', hostname_label, False)
+    metadata = cli_util.coalesce_provided_and_default_value(ctx, 'metadata', metadata, False)
+    subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, False)
+
+    if not ipxe_script_file:
+        file_from_default_values = cli_util.get_click_file_from_default_values_file(ctx, 'ipxe-script-file', 'r', False)
+        if file_from_default_values:
+            ipxe_script_file = file_from_default_values
+
     kwargs = {}
 
     details = {}
@@ -570,23 +1084,46 @@ def launch_instance(ctx, availability_domain, compartment_id, image_id, shape, c
         launch_instance_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('list_console_histories.command_name', 'list'), help="""Lists the console history metadata for the specified compartment or instance.""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--instance-id', help="""The OCID of the instance.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ConsoleHistory]'})
 @cli_util.wrap_exceptions
-def list_console_histories(ctx, compartment_id, availability_domain, limit, page, instance_id):
+def list_console_histories(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, limit, page, instance_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -601,11 +1138,11 @@ def list_console_histories(ctx, compartment_id, availability_domain, limit, page
         compartment_id=compartment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. For more information about images, see [Managing Custom Images].""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -615,14 +1152,38 @@ Example: `Oracle Linux`""")
 @click.option('--operating-system-version', help="""The image's operating system version.
 
 Example: `7.2`""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Image]'})
 @cli_util.wrap_exceptions
-def list_images(ctx, compartment_id, display_name, operating_system, operating_system_version, limit, page):
+def list_images(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, display_name, operating_system, operating_system_version, limit, page):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    operating_system = cli_util.coalesce_provided_and_default_value(ctx, 'operating-system', operating_system, False)
+    operating_system_version = cli_util.coalesce_provided_and_default_value(ctx, 'operating-system-version', operating_system_version, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
@@ -639,25 +1200,98 @@ def list_images(ctx, compartment_id, display_name, operating_system, operating_s
         compartment_id=compartment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
+
+
+@instance_console_connection_group.command(name=cli_util.override('list_instance_console_connections.command_name', 'list'), help="""Lists the serial console connections for the specified compartment or instance.
+
+For more information about serial console access, see [Accessing the Serial Console].""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
+@click.option('--instance-id', help="""The OCID of the instance.""")
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[InstanceConsoleConnection]'})
+@cli_util.wrap_exceptions
+def list_instance_console_connections(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, instance_id, limit, page):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+
+    kwargs = {}
+    if instance_id is not None:
+        kwargs['instance_id'] = instance_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('compute', ctx)
+    result = client.list_instance_console_connections(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('list_instances.command_name', 'list'), help="""Lists the instances in the specified compartment and the specified Availability Domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Instance]'})
 @cli_util.wrap_exceptions
-def list_instances(ctx, compartment_id, availability_domain, display_name, limit, page):
+def list_instances(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, display_name, limit, page):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -672,23 +1306,46 @@ def list_instances(ctx, compartment_id, availability_domain, display_name, limit
         compartment_id=compartment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @shape_group.command(name=cli_util.override('list_shapes.command_name', 'list'), help="""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image.""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--image-id', help="""The OCID of an image.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Shape]'})
 @cli_util.wrap_exceptions
-def list_shapes(ctx, compartment_id, availability_domain, limit, page, image_id):
+def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, limit, page, image_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, False)
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -703,24 +1360,48 @@ def list_shapes(ctx, compartment_id, availability_domain, limit, page, image_id)
         compartment_id=compartment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help="""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or Availability Domain.""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @click.option('--instance-id', help="""The OCID of the instance.""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--vnic-id', help="""The OCID of the VNIC.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VnicAttachment]'})
 @cli_util.wrap_exceptions
-def list_vnic_attachments(ctx, compartment_id, availability_domain, instance_id, limit, page, vnic_id):
+def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, instance_id, limit, page, vnic_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, False)
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -737,26 +1418,50 @@ def list_vnic_attachments(ctx, compartment_id, availability_domain, instance_id,
         compartment_id=compartment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @volume_attachment_group.command(name=cli_util.override('list_volume_attachments.command_name', 'list'), help="""Lists the volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, volume OCID, or both.
 
 Currently, the only supported volume attachment type is [IScsiVolumeAttachment].""")
-@click.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--instance-id', help="""The OCID of the instance.""")
 @click.option('--volume-id', help="""The OCID of the volume.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeAttachment]'})
 @cli_util.wrap_exceptions
-def list_volume_attachments(ctx, compartment_id, availability_domain, limit, page, instance_id, volume_id):
+def list_volume_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, limit, page, instance_id, volume_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
+    volume_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-id', volume_id, False)
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -773,19 +1478,39 @@ def list_volume_attachments(ctx, compartment_id, availability_domain, limit, pag
         compartment_id=compartment_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('terminate_instance.command_name', 'terminate'), help="""Terminates the specified instance. Any attached VNICs and volumes are automatically detached when the instance terminates.
 
-This is an asynchronous operation; the instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+This is an asynchronous operation. The instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed.""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def terminate_instance(ctx, instance_id, if_match):
+def terminate_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -794,19 +1519,87 @@ def terminate_instance(ctx, instance_id, if_match):
         instance_id=instance_id,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
+
+
+@console_history_group.command(name=cli_util.override('update_console_history.command_name', 'update'), help="""Updates the specified console history metadata.""")
+@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
+@cli_util.wrap_exceptions
+def update_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_history_id, display_name, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.update_console_history(
+        instance_console_history_id=instance_console_history_id,
+        update_console_history_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('update_image.command_name', 'update'), help="""Updates the display name of the image. Avoid entering confidential information.""")
-@click.option('--image-id', required=True, help="""The OCID of the image.""")
+@click.option('--image-id', help="""The OCID of the image. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My custom Oracle Linux image`""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def update_image(ctx, image_id, display_name, if_match):
+def update_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, display_name, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -822,19 +1615,40 @@ def update_image(ctx, image_id, display_name, if_match):
         update_image_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('update_instance.command_name', 'update'), help="""Updates the display name of the specified instance. Avoid entering confidential information. The OCID of the instance remains the same.""")
-@click.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@click.option('--instance-id', help="""The OCID of the instance. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, instance_id, display_name, if_match):
+def update_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, display_name, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -850,4 +1664,4 @@ def update_instance(ctx, instance_id, display_name, if_match):
         update_instance_details=details,
         **kwargs
     )
-    cli_util.render_response(result)
+    cli_util.render_response(result, ctx)
