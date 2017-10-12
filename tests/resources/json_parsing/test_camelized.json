@@ -1,0 +1,11 @@
+{ 
+    "object-name": "image-to-import.qcow2",
+    "anArray": ["value1", "value2"], 
+    "aNestedObject": { 
+        "key": "value", 
+        "anotherArray": [1, 2, 3], 
+        "complex-array": [{"one": "two"}, {"purple-people-eater": "three"}],
+        "another-complex": { "nested-key": "nestedVal", "someNumber": 11 }  
+    },
+    "aNumber": 12345
+}

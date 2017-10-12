@@ -9,6 +9,7 @@ import oci_cli
 import os
 import random
 import shutil
+import six
 import string
 import time
 from . import util
@@ -243,14 +244,6 @@ def test_bulk_put_default_options():
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
-    # Check that we multipart uploaded the big files
-    for file in bulk_put_large_files:
-        assert 'Split file {} into'.format(get_object_name_from_path(root_bulk_put_folder, file)) in result.output
-
-    # Sanity check that we didn't multipart upload the smaller files
-    for file in bulk_put_mid_sized_files:
-        assert 'Split file {} into'.format(get_object_name_from_path(root_bulk_put_folder, file)) not in result.output
-
     # Pull everything down and verify that the files match (everything in source appears in destination and they are equal)
     download_folder = 'tests/temp/verify_files_{}'.format(bulk_put_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder])
@@ -310,19 +303,12 @@ def test_bulk_put_with_multipart_params(object_storage_client):
         '--namespace', util.NAMESPACE,
         '--bucket-name', create_bucket_request.name,
         '--src-dir', root_bulk_put_folder,
-        '--part-size', '10',
-        '--parallel-upload-count', '5'
+        '--part-size', '10'
     ])
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
-
-    # Check that we multipart uploaded the big and small files
-    for file in bulk_put_large_files:
-        assert 'Split file {} into'.format(get_object_name_from_path(root_bulk_put_folder, file)) in result.output
-    for file in bulk_put_mid_sized_files:
-        assert 'Split file {} into'.format(get_object_name_from_path(root_bulk_put_folder, file)) in result.output
 
     result = invoke([
         'os', 'object', 'bulk-upload',
@@ -337,13 +323,34 @@ def test_bulk_put_with_multipart_params(object_storage_client):
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
-    # Check that we didn't multipart uploaded either the big or small files
-    for file in bulk_put_large_files:
-        assert 'Split file {} into'.format(get_object_name_from_path(root_bulk_put_folder, file)) not in result.output
-    for file in bulk_put_mid_sized_files:
-        assert 'Split file {} into'.format(get_object_name_from_path(root_bulk_put_folder, file)) not in result.output
-
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+
+
+def test_bulk_put_with_prefix():
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--object-prefix', 'bulk_put_prefix_test/'])
+
+    # No failures or skips and we uploaded everything
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    download_folder = 'tests/temp/verify_files_bulk_put_prefix_{}'.format(bulk_put_bucket_name)
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder, '--prefix', 'bulk_put_prefix_test/'])
+
+    actual_download_folder = os.path.join(download_folder, 'bulk_put_prefix_test')
+    for dir_name, subdir_list, file_list in os.walk(root_bulk_put_folder):
+        for file in file_list:
+            source_file_path = os.path.join(dir_name, file)
+            downloaded_file_path = source_file_path.replace(root_bulk_put_folder, actual_download_folder)
+
+            assert os.path.exists(downloaded_file_path)
+            assert filecmp.cmp(source_file_path, downloaded_file_path, shallow=False)
+
+            # Sanity check that we're reporting back that we uploaded the right files
+            assert 'bulk_put_prefix_test/{}'.format(get_object_name_from_path(root_bulk_put_folder, source_file_path)) in parsed_result['uploaded-objects']
+
+    shutil.rmtree(download_folder)
 
 
 def test_bulk_put_with_non_existent_folder():
@@ -352,6 +359,291 @@ def test_bulk_put_with_non_existent_folder():
 
     assert 'UsageError' in result.output
     assert 'The specified --src-dir {} (expanded to: {}) does not exist'.format(fake_directory, fake_directory) in result.output
+
+
+def test_bulk_put_get_delete_with_inclusions(object_storage_client):
+    inclusion_test_folder = os.path.join('tests', 'temp', 'os_bulk_upload_inclusion_test')
+    if not os.path.exists(inclusion_test_folder):
+        os.makedirs(inclusion_test_folder)
+
+    # Make some files for include/exclude
+    folders_to_files = {
+        '': ['test_file1.txt', 'test_file2.png'],
+        'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
+        'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
+    }
+    for folder, files in six.iteritems(folders_to_files):
+        folder_path = os.path.join(inclusion_test_folder, folder)
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+        for file in files:
+            file_path = os.path.join(folder_path, file)
+            with open(file_path, 'w') as f:
+                # For non-text extension types this won't create a valid file, but for testing is probably OK
+                f.write(generate_random_string(CONTENT_STRING_LENGTH))
+
+    result = invoke([
+        'os',
+        'object',
+        'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--src-dir', inclusion_test_folder,
+        '--object-prefix', 'inclusion_test/',
+        '--include', '*.txt',  # Matches test_file1.txt, subfolder/hello.txt, subfolder/subfolder2/blag.txt
+        '--include', 'subfolder/*.png',  # Matches subfolder/testfile3.png, subfolder/subfolder2/testfile4.png
+        '--include', 'subfolder/[b]lah.pdf',  # Matches subfolder/blah.pdf
+        '--include', '*/[ax]yz.jpg'  # Matches subfolder/subfolder2/xyz.jpg
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+
+    expected_uploaded_files = [
+        '{}{}'.format('inclusion_test/', 'test_file1.txt'),
+        '{}{}'.format('inclusion_test/', 'subfolder/hello.txt'),
+        '{}{}'.format('inclusion_test/', 'subfolder/subfolder2/blag.txt'),
+        '{}{}'.format('inclusion_test/', 'subfolder/testfile3.png'),
+        '{}{}'.format('inclusion_test/', 'subfolder/subfolder2/testfile4.png'),
+        '{}{}'.format('inclusion_test/', 'subfolder/blah.pdf'),
+        '{}{}'.format('inclusion_test/', 'subfolder/subfolder2/xyz.jpg')
+    ]
+
+    # Check that we uploaded what we said we did
+    assert len(parsed_result['uploaded-objects']) == len(expected_uploaded_files)
+    for f in expected_uploaded_files:
+        assert f in parsed_result['uploaded-objects']
+
+    download_folder_base = os.path.join('tests', 'temp', 'verify_os_bulk_upload_inclusion_test')
+    verify_downloaded_folders_for_inclusion_exclusion_tests(
+        expected_uploaded_files=expected_uploaded_files,
+        source_folder=inclusion_test_folder,
+        download_folder=download_folder_base,
+        download_prefix_no_slash='inclusion_test'
+    )
+
+    # Download objects with inclusions to make sure that works
+    target_download_folder = os.path.join(download_folder_base, 'get_with_include')
+    invoke([
+        'os', 'object', 'bulk-download',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--download-dir', target_download_folder,
+        '--prefix', 'inclusion_test/',
+        '--include', '*.txt',
+        '--include', 'subfolder/*.png',
+        '--include', 'subfolder/blah.pdf',
+    ])
+    expected_uploaded_files.remove('{}{}'.format('inclusion_test/', 'subfolder/subfolder2/xyz.jpg'))  # This is not in our --include switches
+    assert not os.path.exists(os.path.join(target_download_folder, 'inclusion_test', 'subfolder', 'subfolder2', 'xyz.jpg'))
+    for expected_file in expected_uploaded_files:
+        target_file = os.path.join(target_download_folder, expected_file)
+        original_file = target_file.replace(os.path.join(target_download_folder, 'inclusion_test'), inclusion_test_folder)
+
+        assert os.path.exists(target_file)
+        assert filecmp.cmp(original_file, target_file, shallow=False)
+
+    # Download a specific object with inclusions
+    invoke([
+        'os', 'object', 'bulk-download',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--download-dir', target_download_folder,
+        '--prefix', 'inclusion_test/',
+        '--include', 'subfolder/subfolder2/xyz.jpg'
+    ])
+    assert os.path.exists(os.path.join(target_download_folder, 'inclusion_test', 'subfolder', 'subfolder2', 'xyz.jpg'))
+
+    # Delete objects with inclusions
+    result = invoke([
+        'os', 'object', 'bulk-delete',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--prefix', 'inclusion_test/',
+        '--include', '*.txt',
+        '--include', 'subfolder/blah.pdf',
+        '--dry-run'
+    ])
+    parsed_dry_run_result = parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_dry_run_result['deleted-objects']) == 4
+
+    result = invoke([
+        'os', 'object', 'bulk-delete',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--prefix', 'inclusion_test/',
+        '--include', '*.txt',
+        '--include', 'subfolder/blah.pdf',
+        '--force'
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
+
+    list_objects_responses = oci_cli.object_storage_cli.retrying_list_objects(
+        client=object_storage_client,
+        request_id=None,
+        namespace=util.NAMESPACE,
+        bucket_name=bulk_put_bucket_name,
+        prefix='inclusion_test/',
+        start=None,
+        end=None,
+        limit=1000,
+        delimiter=None,
+        fields='name',
+        retrieve_all=True
+    )
+    remaining_objects = []
+    for response in list_objects_responses:
+        remaining_objects.extend(map(lambda obj: obj.name, response.data.objects))
+    assert len(remaining_objects) == 3
+    assert '{}{}'.format('inclusion_test/', 'subfolder/testfile3.png') in remaining_objects
+    assert '{}{}'.format('inclusion_test/', 'subfolder/subfolder2/testfile4.png') in remaining_objects
+    assert '{}{}'.format('inclusion_test/', 'subfolder/subfolder2/xyz.jpg') in remaining_objects
+
+    shutil.rmtree(target_download_folder)
+    shutil.rmtree(inclusion_test_folder)
+
+
+def test_bulk_put_get_delete_with_exclusions(object_storage_client):
+    exclusion_test_folder = os.path.join('tests', 'temp', 'os_bulk_upload_exclusion_test')
+    if not os.path.exists(exclusion_test_folder):
+        os.makedirs(exclusion_test_folder)
+
+    # Make some files for include/exclude
+    folders_to_files = {
+        '': ['test_file1.txt', 'test_file2.png'],
+        'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
+        'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
+    }
+    for folder, files in six.iteritems(folders_to_files):
+        folder_path = os.path.join(exclusion_test_folder, folder)
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+        for file in files:
+            file_path = os.path.join(folder_path, file)
+            with open(file_path, 'w') as f:
+                # For non-text extension types this won't create a valid file, but for testing is probably OK
+                f.write(generate_random_string(CONTENT_STRING_LENGTH))
+
+    result = invoke([
+        'os',
+        'object',
+        'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--src-dir', exclusion_test_folder,
+        '--object-prefix', 'exclusion_test/',
+        '--exclude', '*.txt',
+        '--exclude', '*.ps1',  # Shouldn't match anything
+        '--exclude', 'subfolder/subfolder2/xyz.jpg',
+        '--exclude', 'subfolder/[spqr]lah.pdf'  # blah.pdf should still be included because it's not slah.pdf, plah.pdf, qlah.pdf or rlah.pdf
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+
+    expected_uploaded_files = [
+        '{}{}'.format('exclusion_test/', 'test_file2.png'),
+        '{}{}'.format('exclusion_test/', 'subfolder/blah.pdf'),
+        '{}{}'.format('exclusion_test/', 'subfolder/testfile3.png'),
+        '{}{}'.format('exclusion_test/', 'subfolder/subfolder2/byz.jpg'),
+        '{}{}'.format('exclusion_test/', 'subfolder/subfolder2/testfile4.png')
+    ]
+
+    # Check that we uploaded what we said we did
+    assert len(parsed_result['uploaded-objects']) == len(expected_uploaded_files)
+    for f in expected_uploaded_files:
+        assert f in parsed_result['uploaded-objects']
+
+    download_folder_base = os.path.join('tests', 'temp', 'verify_os_bulk_upload_exclusion_test')
+    verify_downloaded_folders_for_inclusion_exclusion_tests(
+        expected_uploaded_files=expected_uploaded_files,
+        source_folder=exclusion_test_folder,
+        download_folder=download_folder_base,
+        download_prefix_no_slash='exclusion_test'
+    )
+
+    # Download objects with exclusions to make sure that works
+    target_download_folder = os.path.join(download_folder_base, 'get_with_exclude')
+    invoke([
+        'os', 'object', 'bulk-download',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--download-dir', target_download_folder,
+        '--prefix', 'exclusion_test/',
+        '--exclude', '*.jpg',
+        '--exclude', 'subfolder/subfolder2/*.png',
+        '--exclude', 'subfolder/blah.pdf',
+    ])
+
+    assert not os.path.exists(os.path.join(target_download_folder, 'exclusion_test', 'subfolder', 'blah.pdf'))
+    assert not os.path.exists(os.path.join(target_download_folder, 'exclusion_test', 'subfolder', 'subfolder2', 'byz.jpg'))
+    assert not os.path.exists(os.path.join(target_download_folder, 'exclusion_test', 'subfolder', 'subfolder2', 'testfile4.png'))
+
+    assert get_count_of_files_in_folder_and_subfolders(target_download_folder) == 2
+    assert os.path.exists(os.path.join(target_download_folder, 'exclusion_test', 'test_file2.png'))
+    assert os.path.exists(os.path.join(target_download_folder, 'exclusion_test', 'subfolder', 'testfile3.png'))
+
+    assert filecmp.cmp(
+        os.path.join(exclusion_test_folder, 'test_file2.png'),
+        os.path.join(target_download_folder, 'exclusion_test', 'test_file2.png')
+    )
+    assert filecmp.cmp(
+        os.path.join(exclusion_test_folder, 'subfolder', 'testfile3.png'),
+        os.path.join(target_download_folder, 'exclusion_test', 'subfolder', 'testfile3.png')
+    )
+
+    # Delete objects with exclusions
+    result = invoke([
+        'os', 'object', 'bulk-delete',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--prefix', 'exclusion_test/',
+        '--exclude', '*.jpg',
+        '--exclude', 'subfolder/blah.pdf',
+        '--dry-run'
+    ])
+    parsed_dry_run_result = parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_dry_run_result['deleted-objects']) == 3
+
+    result = invoke([
+        'os', 'object', 'bulk-delete',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--prefix', 'exclusion_test/',
+        '--exclude', '*.jpg',
+        '--exclude', 'subfolder/blah.pdf',
+        '--force'
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
+
+    list_objects_responses = oci_cli.object_storage_cli.retrying_list_objects(
+        client=object_storage_client,
+        request_id=None,
+        namespace=util.NAMESPACE,
+        bucket_name=bulk_put_bucket_name,
+        prefix='exclusion_test/',
+        start=None,
+        end=None,
+        limit=1000,
+        delimiter=None,
+        fields='name',
+        retrieve_all=True
+    )
+    remaining_objects = []
+    for response in list_objects_responses:
+        remaining_objects.extend(map(lambda obj: obj.name, response.data.objects))
+    assert len(remaining_objects) == 2
+    assert '{}{}'.format('exclusion_test/', 'subfolder/blah.pdf') in remaining_objects
+    assert '{}{}'.format('exclusion_test/', 'subfolder/subfolder2/byz.jpg') in remaining_objects
+
+    shutil.rmtree(target_download_folder)
+    shutil.rmtree(exclusion_test_folder)
 
 
 def test_delete_when_no_objects_in_bucket(object_storage_client):
@@ -447,9 +739,10 @@ def parse_json_response_from_mixed_output(output):
     return json.loads(json_str)
 
 
-# For the bulk operations, object names are taken from the file path of the thing we uploaded.
+# For the bulk operations, object names are taken from the file path of the thing we uploaded. Normalize to
+# / in the paths (Windows can go both ways) then chop the front bit off
 def get_object_name_from_path(path_root, full_path):
-    return full_path.replace(path_root + '/', '')
+    return full_path.replace(os.sep, '/').replace(path_root + '/', '')
 
 
 def delete_bucket_and_all_items(object_storage_client, bucket_name):
@@ -491,3 +784,23 @@ def get_number_of_objects_in_bucket(object_storage_client, bucket_name):
         num_objects_in_bucket = num_objects_in_bucket + len(response.data.objects)
 
     return num_objects_in_bucket
+
+
+def verify_downloaded_folders_for_inclusion_exclusion_tests(expected_uploaded_files, source_folder, download_folder, download_prefix_no_slash):
+    # Download uploaded files and check they are the same
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder, '--prefix', download_prefix_no_slash + '/'])
+
+    actual_download_folder = os.path.join(download_folder, download_prefix_no_slash)
+    files_compared = 0
+    for dir_name, subdir_list, file_list in os.walk(source_folder):
+        for file in file_list:
+            source_file_path = os.path.join(dir_name, file)
+            downloaded_file_path = source_file_path.replace(source_folder, actual_download_folder)
+
+            if downloaded_file_path.replace(actual_download_folder, download_prefix_no_slash) in expected_uploaded_files:
+                files_compared += 1
+                assert os.path.exists(downloaded_file_path)
+                assert filecmp.cmp(source_file_path, downloaded_file_path, shallow=False)
+    assert files_compared == len(expected_uploaded_files)
+
+    shutil.rmtree(actual_download_folder)

@@ -1,8 +1,8 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
+import arrow
 import click
-from datetime import datetime, timedelta
 import json
 import math
 import os
@@ -123,6 +123,18 @@ def test_run_all_operations(runner, config_file, config_profile, debug, test_id)
     assert result.exit_code != 0
     result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y', debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
+
+    # object put with default file
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name + '_from_defaults_file', '--defaults-file', 'tests/resources/default_files/specific_command_default'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # object get with default file
+    os.remove(CONTENT_OUTPUT_FILE)
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name + '_from_defaults_file', '--defaults-file', 'tests/resources/default_files/specific_command_default'], debug=debug)
+    validate_response(result, json_response_expected=False, includes_debug_data=debug)
+    assertEqual(get_file_content(CONTENT_INPUT_FILE), get_file_content(CONTENT_OUTPUT_FILE))
+
+    invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name + '_from_defaults_file'], input='y', debug=debug)
 
     # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
@@ -607,29 +619,37 @@ def subtest_object_list_paging(runner, config_file, config_profile):
     assert (pages == math.ceil(float(list_size) / page_size))
 
 
-def disabled_test_preauthenticated_requests(runner, config_file, config_profile):
+def test_preauthenticated_requests(runner, config_file, config_profile):
     preauthenticated_request_name = util.random_name('cli_preauth_request')
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
-    time_expires = (datetime.now() + timedelta(days=2)).isoformat()
 
-    # create PAR
-    result = invoke(runner, config_file, config_profile, ['preauth-request', 'create', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', preauthenticated_request_name, '--access-type', 'ObjectRead', '--time-expires', time_expires])
-    validate_response(result)
+    target_year = arrow.now().year + 1
+    target_date_for_epoch_timestamp = arrow.now().replace(year=target_year)
 
-    response = json.loads(result.output)
-    par_id = response["data"]["id"]
+    expiry_time_input_and_expected = [
+        {'input': target_date_for_epoch_timestamp.format('X'), 'expected': target_date_for_epoch_timestamp.replace(microsecond=0)},
+        {'input': '{}-10-10'.format(target_year), 'expected': arrow.Arrow(target_year, 10, 10, 0, 0, 0, 0, tzinfo='utc')},
+        {'input': '{}-05-31T17:15:15.123+08:00'.format(target_year), 'expected': arrow.Arrow(target_year, 5, 31, 17, 15, 15, 123000, tzinfo='+08:00')},
+        {'input': '{}-06-01T06:15:15-07:00'.format(target_year), 'expected': arrow.Arrow(target_year, 6, 1, 6, 15, 15, 0, tzinfo='-07:00')},
+        {'input': '{}-12-31T00:15:15.444Z'.format(target_year), 'expected': arrow.Arrow(target_year, 12, 31, 0, 15, 15, 444000, tzinfo='utc')},
+        {'input': '{}-11-30T06:15:15Z'.format(target_year), 'expected': arrow.Arrow(target_year, 11, 30, 6, 15, 15, 0, tzinfo='utc')},
+    ]
 
-    # get PAR
-    result = invoke(runner, config_file, config_profile, ['preauth-request', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id])
-    validate_response(result)
+    for item in expiry_time_input_and_expected:
+        # create PAR
+        par_id = create_and_validate_bucket_level_par(runner, config_file, config_profile, preauthenticated_request_name, bucket_name, item['input'], item['expected'])
 
-    # list PAR
-    result = invoke(runner, config_file, config_profile, ['preauth-request', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
-    validate_response(result)
+        # get PAR
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id])
+        validate_response(result)
 
-    # delete PAR
-    result = invoke(runner, config_file, config_profile, ['preauth-request', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id])
-    validate_response(result)
+        # list PAR
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
+        validate_response(result)
+
+        # delete PAR
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id, '--force'])
+        validate_response(result)
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
@@ -678,6 +698,29 @@ def validate_response(result, includes_debug_data=False, json_response_expected=
     if includes_debug_data:
         extra_validation = extra_response_validation
     util.validate_response(result, extra_validation=extra_validation, includes_debug_data=includes_debug_data, json_response_expected=json_response_expected)
+
+
+def create_and_validate_bucket_level_par(runner, config_file, config_profile, preauthenticated_request_name, bucket_name, specified_date, expected_arrow_date):
+    result = invoke(runner, config_file, config_profile, ['preauth-request', 'create', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', preauthenticated_request_name, '--access-type', 'AnyObjectWrite', '--time-expires', specified_date])
+    validate_response(result)
+
+    response = json.loads(result.output)
+    assert response['data']['id'] is not None
+    assert response['data']['access-uri'] is not None
+    assert response['data']['time-created'] is not None
+    assert response['data']['object-name'] is None  # Bucket PARs don't have a referenced object
+    assert response['data']['access-type'] == 'AnyObjectWrite'
+    assert response['data']['name'] == preauthenticated_request_name
+
+    # RFC3339 date. Currently we always emit the date in UTC so we coerce the expected data passed to this method
+    if expected_arrow_date.microsecond == 0:
+        assert response['data']['time-expires'] == expected_arrow_date.to('utc').format('YYYY-MM-DDTHH:mm:ssZZ')
+    else:
+        assert response['data']['time-expires'] == expected_arrow_date.to('utc').format('YYYY-MM-DDTHH:mm:ss.SSSSSSZZ')
+
+    par_id = response['data']['id']
+
+    return par_id
 
 
 # TODO: clean up and remove all of these which are drop in replacements for unittest validations

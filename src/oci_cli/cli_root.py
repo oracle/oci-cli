@@ -4,6 +4,8 @@
 import sys
 from oci.config import DEFAULT_LOCATION
 import click
+import configparser
+import os.path
 import logging
 
 from .version import __version__
@@ -41,14 +43,19 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
 @click.option('--profile',
               default='DEFAULT', show_default=True,
               help='The profile in the config file to load.')
+@click.option('--defaults-file',
+              default='~/.oci/cli-defaults', show_default=True,
+              help='The path to a file containing default values for the CLI.')
 @click.option('--request-id', help='The request id to use for tracking the request.')
 @click.option('--region', help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
 @click.option('--endpoint', help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
 @click.option('--cert-bundle', help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
+@click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
+@click.option('--query', help='JMESPath query [http://jmespath.org/] to run on the response JSON before output.')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
-def cli(ctx, config_file, profile, request_id, region, endpoint, cert_bundle, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, debug, help):
     if ctx.command_path == 'bmcs':
         click.echo(click.style(BMCS_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
 
@@ -61,10 +68,28 @@ def cli(ctx, config_file, profile, request_id, region, endpoint, cert_bundle, de
     ctx.obj = {
         'config_file': config_file,
         'profile': profile,
+        'defaults_file': defaults_file,
         'request_id': request_id,
         'region': region,
         'endpoint': endpoint,
         'cert_bundle': cert_bundle,
+        'output': output,
+        'query': query,
         'debug': debug}
+
+    load_default_values(ctx, defaults_file, profile)
+
     if help:
         ctx.obj['help'] = True
+
+
+def load_default_values(ctx, defaults_file, profile):
+    file_location = os.path.expandvars(os.path.expanduser(defaults_file))
+    ctx.obj['default_values_from_file'] = {}
+
+    if os.path.exists(file_location):
+        parser = configparser.ConfigParser(interpolation=None)
+        parser.read(file_location)
+
+        if profile in parser:
+            ctx.obj['default_values_from_file'] = dict(parser.items(profile))

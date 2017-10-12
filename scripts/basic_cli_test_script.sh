@@ -10,6 +10,8 @@ BUCKET=TestScriptBucket$(( ( RANDOM % 10000 )  + 1 ))
 C=$OCI_CLI_COMPARTMENT_ID
 FILE=scripts/temp/content.txt
 EMPTY_FILE=scripts/temp/empty_file
+LARGE_FILE_PATH=scripts/temp/large_file
+LARGE_FILE_DOWNLOAD_PATH=scripts/temp/large_file_downloaded
 ARGS="--config-file $OCI_CLI_CONFIG_FILE"
 
 # test that invoking with deprecated entry point 'bmcs' still works
@@ -30,11 +32,39 @@ touch $EMPTY_FILE
 oci $ARGS os object put -ns $NS -bn $BUCKET --name object3 --file $EMPTY_FILE
 oci $ARGS os object get -ns $NS -bn $BUCKET --name object3 --file -
 
-# Put a file from stdin and get it back. Also check we can assign metadata when putting from stdin
+# Put a file from stdin with a here string and get it back. Also check we can assign metadata when putting from stdin
 oci $ARGS os object put -ns $NS -bn $BUCKET --name object4 --metadata '{"foo1":"bar1","foo2":"bar2"}' --file - <<< "This is some object content"
 oci $ARGS os object get -ns $NS -bn $BUCKET --name object4 --file - | grep "This is some object content"
 oci $ARGS os object head -ns $NS -bn $BUCKET --name object4 | grep foo1
 oci $ARGS os object head -ns $NS -bn $BUCKET --name object4 | grep bar2
+
+# Put an empty file from stdin when piping and get it back
+cat $EMPTY_FILE | oci $ARGS os object put -ns $NS -bn $BUCKET --name object5 --file -
+oci $ARGS os object get -ns $NS -bn $BUCKET --name object5 --file -
+
+# Put a file from stdin with piping and get it back. Also check we can assign metadata when piping
+echo "I am the very model of a modern Major General" | oci $ARGS os object put -ns $NS -bn $BUCKET --name object5 --metadata '{"foo1":"bar1","foo2":"bar2"}' --file - --force
+oci $ARGS os object get -ns $NS -bn $BUCKET --name object5 --file - | grep "I am the very model of a modern Major General"
+oci $ARGS os object head -ns $NS -bn $BUCKET --name object5 | grep foo1
+oci $ARGS os object head -ns $NS -bn $BUCKET --name object5 | grep bar2
+
+# Put a large file into object storage, then get it and pipe it to another put.
+# The large file is 50MiB (12,800 4k blocks)
+dd if=/dev/zero of=$LARGE_FILE_PATH bs=4k count=12800
+oci $ARGS os object put -ns $NS -bn $BUCKET --name object6 --file $LARGE_FILE_PATH
+oci $ARGS os object get -ns $NS -bn $BUCKET --name object6 --file - | oci $ARGS os object put -ns $NS -bn $BUCKET --name object7 --file - 
+oci $ARGS os object get -ns $NS -bn $BUCKET --name object7 --file $LARGE_FILE_DOWNLOAD_PATH
+
+# Belt and suspenders (may be overkill) - compare the file and the MD5
+cmp $LARGE_FILE_PATH $LARGE_FILE_DOWNLOAD_PATH
+ORIGINAL_MD5=$(openssl md5 $LARGE_FILE_PATH | cut -d ' ' -f2)
+FINAL_MD5=$(openssl md5 $LARGE_FILE_DOWNLOAD_PATH | cut -d ' ' -f2)
+if [[ $FINAL_MD5 == $ORIGINAL_MD5 ]]; then
+    echo "MD5 validated."
+else
+    echo "MD5 does not match."
+    exit 1
+fi
 
 # Try a few variations on metadata format.
 oci $ARGS os object put -ns $NS -bn $BUCKET --name object2 --file $FILE --metadata '{"foo1":"a b c '"'d'"'","foo2": "bar2"}' --force
@@ -69,6 +99,9 @@ oci $ARGS os object delete -ns $NS -bn $BUCKET --name object1 --force
 oci $ARGS os object delete -ns $NS -bn $BUCKET --name object2 --force
 oci $ARGS os object delete -ns $NS -bn $BUCKET --name object3 --force
 oci $ARGS os object delete -ns $NS -bn $BUCKET --name object4 --force
+oci $ARGS os object delete -ns $NS -bn $BUCKET --name object5 --force
+oci $ARGS os object delete -ns $NS -bn $BUCKET --name object6 --force
+oci $ARGS os object delete -ns $NS -bn $BUCKET --name object7 --force
 oci $ARGS os bucket delete -ns $NS --name $BUCKET --force
 
 echo "Success!"

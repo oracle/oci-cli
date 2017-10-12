@@ -1,0 +1,2 @@
+[DEFAULT]
+os.namespace=namespacefromfile

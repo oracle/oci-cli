@@ -1,0 +1,4 @@
+[DEFAULT]
+os.bucket.list.namespace=namespacefromfile
+os.object.put.file=tests/resources/content_input.txt
+os.object.get.file=tests/resources/content_output.txt

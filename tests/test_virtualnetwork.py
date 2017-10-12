@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import json
+import pytest
 import unittest
 from . import command_coverage_validator
 from . import util
@@ -337,6 +338,12 @@ class TestVirtualNetwork(unittest.TestCase):
              '--compartment-id', util.COMPARTMENT_ID,
              '--display-name', drg_name
              ])
+
+        # If we have hit a limit, skip the test
+        if 'Limit vcn-tenant-drg' in result.output:
+            self.drg_capacity_issue = True
+            pytest.skip('Unable to execute test as a DRG is not available')
+
         self.drg_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
 
@@ -355,6 +362,9 @@ class TestVirtualNetwork(unittest.TestCase):
 
     @util.log_test
     def subtest_drg_attachment_operations(self):
+        if hasattr(self, 'drg_capacity_issue'):
+            pytest.skip('Unable to execute test as a DRG is not available')
+
         drg_attachment_name = util.random_name('cli_test_drg_attachment')
 
         result = self.invoke(
@@ -380,6 +390,9 @@ class TestVirtualNetwork(unittest.TestCase):
 
     @util.log_test
     def subtest_ip_sec_connection_operations(self):
+        if hasattr(self, 'drg_capacity_issue'):
+            pytest.skip('Unable to execute test as a DRG is not available')
+
         ipsc_name = util.random_name('cli_test_ipsc')
         routes = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_ip_sec_connection_static_routes_example)
 
