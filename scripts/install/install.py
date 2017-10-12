@@ -8,6 +8,7 @@
 from __future__ import print_function
 import argparse
 import os
+import os.path
 import sys
 import platform
 import stat
@@ -31,14 +32,16 @@ except NameError:
     # Python 3 doesn't have raw_input
     pass
 
+
 def is_windows():
     return sys.platform == 'win32'
+
 
 ACCEPT_ALL_DEFAULTS = False
 
 VIRTUALENV_VERSION = '15.0.0'
-VIRTUALENV_ARCHIVE = 'virtualenv-'+VIRTUALENV_VERSION+'.tar.gz'
-VIRTUALENV_DOWNLOAD_URL = 'https://pypi.python.org/packages/source/v/virtualenv/'+VIRTUALENV_ARCHIVE
+VIRTUALENV_ARCHIVE = 'virtualenv-' + VIRTUALENV_VERSION + '.tar.gz'
+VIRTUALENV_DOWNLOAD_URL = 'https://pypi.python.org/packages/source/v/virtualenv/' + VIRTUALENV_ARCHIVE
 VIRTUALENV_ARCHIVE_SHA256 = '70d63fb7e949d07aeb37f6ecc94e8b60671edb15b890aa86dba5dfaf2225dc19'
 
 DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
@@ -51,6 +54,7 @@ USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
 USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
 SOURCE_AUTOCOMPLETE_COMMAND_TEMPLATE = '[[ -e "{completion_file_path}" ]] && source "{completion_file_path}"'
 RELATIVE_PATH_TO_AUTOCOMPLETE_SCRIPT = os.path.join('oci_cli', 'bin', 'oci_autocomplete.sh')
+RELATIVE_PATH_TO_POWERSHELL_AUTOCOMPLETE_SCRIPT = os.path.join('oci_cli', 'bin', 'OciTabExpansion.ps1')
 
 
 class CLIInstallError(Exception):
@@ -58,11 +62,11 @@ class CLIInstallError(Exception):
 
 
 def print_status(msg=''):
-    print('-- '+msg)
+    print('-- ' + msg)
 
 
 def prompt_input(msg):
-    return input('\n===> '+msg)
+    return input('\n===> ' + msg)
 
 
 def prompt_input_with_default(msg, default):
@@ -95,7 +99,7 @@ def prompt_y_n(msg, default=None):
 
 
 def exec_command(command_list, cwd=None, env=None):
-    print_status('Executing: '+str(command_list))
+    print_status('Executing: ' + str(command_list))
     subprocess.check_call(command_list, cwd=cwd, env=env)
 
 
@@ -122,7 +126,8 @@ def create_virtualenv(tmp_dir, install_dir):
     download_location = os.path.join(tmp_dir, VIRTUALENV_ARCHIVE)
     print_status('Downloading virtualenv package from {}.'.format(VIRTUALENV_DOWNLOAD_URL))
     response = urlopen(VIRTUALENV_DOWNLOAD_URL)
-    with open(download_location, 'wb') as f: f.write(response.read())
+    with open(download_location, 'wb') as f:
+        f.write(response.read())
     print_status("Downloaded virtualenv package to {}.".format(download_location))
     if is_valid_sha256sum(download_location, VIRTUALENV_ARCHIVE_SHA256):
         print_status("Checksum of {} OK.".format(download_location))
@@ -132,10 +137,10 @@ def create_virtualenv(tmp_dir, install_dir):
     package_tar = tarfile.open(download_location)
     package_tar.extractall(path=tmp_dir)
     package_tar.close()
-    virtualenv_dir_name = 'virtualenv-'+VIRTUALENV_VERSION
+    virtualenv_dir_name = 'virtualenv-' + VIRTUALENV_VERSION
     working_dir = os.path.join(tmp_dir, virtualenv_dir_name)
 
-    # due to an issue with virtualenv on windows, we need to explicitly copy some dlls into the virtual environment 
+    # due to an issue with virtualenv on windows, we need to explicitly copy some dlls into the virtual environment
     # or the python executable in the virtualenv will crash upon invocation
     # for python 3 one possible alternative is to use venv instead of virtualenv
     if is_windows():
@@ -146,7 +151,7 @@ def create_virtualenv(tmp_dir, install_dir):
         for dll in glob.glob(os.path.join(src_dir, '*.dll')):
             print_status('Copying {} to {}'.format(dll, dest_dir))
             shutil.copy(dll, dest_dir)
-    
+
     cmd = [sys.executable, 'virtualenv.py', '--python', sys.executable, install_dir]
     exec_command(cmd, cwd=working_dir)
 
@@ -177,7 +182,7 @@ def get_install_dir():
                 if ans_yes:
                     try:
                         shutil.rmtree(install_dir)
-                    except Exception as e:
+                    except Exception:
                         sys.exit("Failed to remove directory: {}. Please remove directory manually and re-run installation script.".format(install_dir))
 
                     print_status("Deleted '{}'.".format(install_dir))
@@ -205,8 +210,8 @@ def get_exec_dir():
 
 def _backup_rc(rc_file):
     try:
-        shutil.copyfile(rc_file, rc_file+'.backup')
-        print_status("Backed up '{}' to '{}'".format(rc_file, rc_file+'.backup'))
+        shutil.copyfile(rc_file, rc_file + '.backup')
+        print_status("Backed up '{}' to '{}'".format(rc_file, rc_file + '.backup'))
     except (OSError, IOError):
         pass
 
@@ -244,7 +249,7 @@ def _find_line_in_file(file_path, search_pattern):
 def _modify_rc(rc_file_path, line_to_add):
     if not _find_line_in_file(rc_file_path, line_to_add):
         with open(rc_file_path, 'a') as rc_file:
-            rc_file.write('\n'+line_to_add+'\n')
+            rc_file.write('\n' + line_to_add + '\n')
 
 
 def get_rc_file_path():
@@ -282,8 +287,35 @@ def warn_other_oci_or_bmcs_on_path(exec_dir, exec_filepath):
 
 def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir):
     if is_windows():
-        ans_yes = prompt_y_n('Modify PATH to include the CLI?', 'y')
+        ans_yes = prompt_y_n('Modify PATH to include the CLI and enable tab completion in PowerShell now?', 'y')
         if ans_yes:
+            # Add autocomplete to the user's profile. Assume that powershell is on the path
+            profile_file_path = subprocess.check_output(['powershell', '-NoProfile', 'echo $profile']).decode(sys.stdout.encoding).strip()
+            if not os.path.exists(profile_file_path):
+                if not os.path.exists(os.path.dirname(profile_file_path)):
+                    os.makedirs(os.path.dirname(profile_file_path))
+
+                with open(profile_file_path, 'w') as f:
+                    f.write('. {}'.format(completion_file_path))
+            else:
+                with open(profile_file_path, 'r') as f:
+                    current_file_contents = f.read()
+
+                if current_file_contents.find(completion_file_path) >= 0:
+                    # They have the tab completion script in the place we thought already. No action needed
+                    pass
+                elif current_file_contents.find('OciTabExpansion.ps1') >= 0:
+                    # They have the tab completion script, but not in the place we thought. Print out a warning
+                    # but otherwise take no action on the profile
+                    print_status()
+
+                    format_str = "It looks like tab completion for oci is already configured in {profile_file_path}. If you wish to replace this with the tab completion script included in this version of the CLI, please remove any lines containing 'OciTabExpansion.ps1' from {profile_file_path} and then run 'oci setup autocomplete'"
+                    print_status(format_str.format(profile_file_path=profile_file_path))
+                else:
+                    # They don't have the tab completion script in their profile. Add it
+                    with open(profile_file_path, 'a'):
+                        f.write('\n. {}\n'.format(completion_file_path))
+
             # powershell one-liner to append the exec_dir to the USER path permanently
             # makes the assumption that powershell is on the PATH already
             command = "powershell -Command \"[Environment]::SetEnvironmentVariable(\\\"PATH\\\", \\\"{};\\\" + (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).Path, \\\"User\\\")".format(exec_dir)
@@ -292,6 +324,7 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
             print_status('** Close and re-open powershell to reload changes to your PATH **')
             print_status()
         else:
+            print_status("If you change your mind, dot source {} in your PowerShell profile and restart your shell to enable tab completion.".format(completion_file_path))
             print_status("You can run the CLI with '{}'.".format(exec_filepath))
     else:
         ans_yes = prompt_y_n('Modify profile to update your $PATH and enable shell/tab completion now?', 'y')
@@ -408,14 +441,15 @@ def main():
     install_cli(install_dir, tmp_dir)
 
     if is_windows():
-        # tab completion is not supported on windows
-        completion_file_path = None
-        # copy the executable created from the pip install to the bin directory specified by the user 
+        venv_python_executable = os.path.join(install_dir, 'Scripts', 'python')
+        venv_site_packages_directory = subprocess.check_output([venv_python_executable, '-c', 'from distutils.sysconfig import get_python_lib; print(get_python_lib())']).strip()
+        completion_file_path = os.path.join(venv_site_packages_directory.decode(sys.stdout.encoding), RELATIVE_PATH_TO_POWERSHELL_AUTOCOMPLETE_SCRIPT)
+
+        # copy the executable created from the pip install to the bin directory specified by the user
         shutil.copyfile(os.path.join(install_dir, 'Scripts', OCI_EXECUTABLE_NAME), oci_exec_path)
         shutil.copyfile(os.path.join(install_dir, 'Scripts', BMCS_EXECUTABLE_NAME), bmcs_exec_path)
     else:
-        original_exec_filepath = os.path.join(install_dir, 'bin', OCI_EXECUTABLE_NAME)
-        # copy the executable created from the pip install to the bin directory specified by the user 
+        # copy the executable created from the pip install to the bin directory specified by the user
         shutil.copyfile(os.path.join(install_dir, 'bin', OCI_EXECUTABLE_NAME), oci_exec_path)
         shutil.copyfile(os.path.join(install_dir, 'bin', BMCS_EXECUTABLE_NAME), bmcs_exec_path)
         oci_exec_cur_stat = os.stat(oci_exec_path)
@@ -439,11 +473,12 @@ def main():
     print_status("Installation successful.")
     print_status("Run the CLI with {} --help".format(oci_exec_path))
 
+
 if __name__ == '__main__':
     try:
         main()
     except CLIInstallError as cie:
-        print('ERROR: '+str(cie), file=sys.stderr)
+        print('ERROR: ' + str(cie), file=sys.stderr)
         sys.exit(1)
     except KeyboardInterrupt:
         print('\n\nExiting...')

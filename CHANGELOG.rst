@@ -7,6 +7,30 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.10 - 2017-10-12
+-------------------
+
+Added
+~~~~~~~~~~
+* Support for new Database service operations: VM DBs, Bring Your Own License, and Data Guard.
+* Support for autocomplete on Windows (PowerShell only)
+* Support for defaults file to specify default values for CLI parameters (https://github.com/oracle/oci-cli/issues/20)
+* Support for parallelization in bulk object storage commands: bulk upload / download / delete).
+* Support for including / excluding files in bulk upload / download / delete based on file patterns.
+* Support for enabling / disabling VNIC source/destination checks (https://github.com/oracle/oci-cli/issues/15)
+* Support for adding and updating display names for captured instance serial console data.
+* Display public key fingerprint in output of 'oci setup config' (https://github.com/oracle/oci-cli/issues/18)
+
+Fixed
+~~~~~~~~~~
+* Allow piping input through STDIN for 'oci os object put' (https://github.com/oracle/oci-cli/issues/21)
+* Use full path when writing 'key_file' in 'oci setup config' (https://github.com/oracle/oci-cli/issues/19)
+* Added missing files and instructions to allow running tests
+
+Deprecated
+~~~~~~~~~~
+* oci bv volume create --size-in-mbs parameter is now deprecated in favor of the new --size-in-gbs parameter
+
 2.4.9 - 2017-09-13
 ------------------
 

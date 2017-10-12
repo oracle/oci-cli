@@ -33,6 +33,7 @@ class TestCompute(unittest.TestCase):
             self.subtest_shape_operations()
             self.subtest_console_history_operations()
             self.subtest_instance_action_operations()
+            self.subtest_instance_console_connections()
             self.subtest_image_operations()
         finally:
             self.subtest_delete()
@@ -279,11 +280,17 @@ class TestCompute(unittest.TestCase):
 
     @util.log_test
     def subtest_console_history_operations(self):
-        result = self.invoke(
-            ['compute', 'console-history', 'capture', '--instance-id', self.instance_ocid])
+        result = self.invoke(['compute', 'console-history', 'capture', '--instance-id', self.instance_ocid, '--display-name', 'Original'])
+        parsed_result = json.loads(result.output)
+        self.assertEquals('Original', parsed_result['data']['display-name'])
+
         self.ch_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
         util.wait_until(['compute', 'console-history', 'get', '--instance-console-history-id', self.ch_ocid], 'SUCCEEDED', max_wait_seconds=300)
+
+        result = self.invoke(['compute', 'console-history', 'update', '--instance-console-history-id', self.ch_ocid, '--display-name', 'Updated'])
+        parsed_result = json.loads(result.output)
+        self.assertEquals('Updated', parsed_result['data']['display-name'])
 
         result = self.invoke(['compute', 'console-history', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id', self.instance_ocid])
         util.validate_response(result)
@@ -336,6 +343,67 @@ class TestCompute(unittest.TestCase):
         image_name = image_name + "_updated"
         result = self.invoke(['compute', 'image', 'update', '--image-id', self.image_ocid, '--display-name', image_name])
         util.validate_response(result, expect_etag=True)
+
+    @util.log_test
+    def subtest_instance_console_connections(self):
+        result = self.invoke(['compute', 'instance-console-connection', 'create', '--instance-id', self.instance_ocid, '--ssh-public-key-file', util.SSH_AUTHORIZED_KEYS_FILE])
+        util.validate_response(result)
+
+        instance_console_connection_details = json.loads(result.output)
+        self.assertIsNotNone(instance_console_connection_details['data']['connection-string'])
+        self.assertIsNotNone(instance_console_connection_details['data']['id'])
+        self.assertIsNotNone(instance_console_connection_details['data']['lifecycle-state'])
+        self.assertEquals(self.instance_ocid, instance_console_connection_details['data']['instance-id'])
+        self.assertEquals(util.SSH_AUTHORISED_KEY_FINGERPRINT, instance_console_connection_details['data']['fingerprint'])
+        self.assertEquals(util.COMPARTMENT_ID, instance_console_connection_details['data']['compartment-id'])
+
+        result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
+        parsed_result = json.loads(result.output)
+        self.assertEquals(instance_console_connection_details['data']['id'], parsed_result['data']['id'])
+        self.assertEquals(instance_console_connection_details['data']['instance-id'], parsed_result['data']['instance-id'])
+        self.assertEquals(instance_console_connection_details['data']['fingerprint'], parsed_result['data']['fingerprint'])
+        self.assertEquals(instance_console_connection_details['data']['compartment-id'], parsed_result['data']['compartment-id'])
+        self.assertEquals(instance_console_connection_details['data']['connection-string'], parsed_result['data']['connection-string'])
+        self.assertIsNotNone(parsed_result['data']['lifecycle-state'])
+
+        keep_paginating = True
+        next_page = None
+        all_connections = []
+        while keep_paginating:
+            if next_page:
+                result = self.invoke(['compute', 'instance-console-connection', 'list', '--compartment-id', util.COMPARTMENT_ID, '--page', next_page])
+            else:
+                result = self.invoke(['compute', 'instance-console-connection', 'list', '--compartment-id', util.COMPARTMENT_ID])
+
+            if result.output:
+                parsed_result = json.loads(result.output)
+                all_connections.extend(parsed_result['data'])
+                if 'opc-next-page' in parsed_result:
+                    next_page = parsed_result['opc-next-page']
+                    keep_paginating = next_page is not None
+                else:
+                    keep_paginating = False
+            else:
+                keep_paginating = False
+
+        match_found = False
+        for conn in all_connections:
+            if conn['id'] == instance_console_connection_details['data']['id']:
+                match_found = True
+                self.assertEquals(instance_console_connection_details['data']['instance-id'], conn['instance-id'])
+                self.assertEquals(instance_console_connection_details['data']['fingerprint'], conn['fingerprint'])
+                self.assertEquals(instance_console_connection_details['data']['compartment-id'], conn['compartment-id'])
+                self.assertEquals(instance_console_connection_details['data']['connection-string'], conn['connection-string'])
+                self.assertIsNotNone(conn['lifecycle-state'])
+                break
+
+        self.assertTrue(match_found)
+
+        self.invoke(['compute', 'instance-console-connection', 'delete', '--instance-console-connection-id', instance_console_connection_details['data']['id'], '--force'])
+
+        result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
+        parsed_result = json.loads(result.output)
+        self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')
 
     @util.log_test
     def subtest_delete(self):

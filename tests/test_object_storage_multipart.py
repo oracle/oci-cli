@@ -4,11 +4,13 @@
 import hashlib
 import json
 import os
+import platform
 import pytest
 import threading
 import time
 import oci_cli
 from . import util
+from oci.object_storage import MultipartObjectAssembler
 
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 100
@@ -106,43 +108,14 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
-def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket):
+def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client):
     object_name = 'a'
 
-    def move_file(src, dest):
-        time.sleep(2)
-        os.rename(src, dest)
-
-    parts = os.path.splitext(content_input_file)
-    temp_filename = parts[0] + '_updated' + parts[1]
-
-    # rename file to break upload while in progress
-    t1 = threading.Thread(target=lambda: move_file(content_input_file, temp_filename))
-    t1.start()
-
-    # object put (relatively large file with small part size, so multipart is used)
-    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
-
-    # copy file back to initial location to continue upload
-    os.rename(temp_filename, content_input_file)
-
-    # TODO: update response validation logic once it is JSON
-    # validate that upload failed due to file moving
-    error_message = 'No such file or directory'
-    assert error_message in result.output
-
-    upload_id = parse_upload_id_from_multipart_output(result.output)
-
-    # list uploads and confirm this one shows up
-    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
-    validate_response(result)
-
-    multipart_uploads = json.loads(result.output)["data"]
-    assert len(multipart_uploads) == 1
-    current_upload = multipart_uploads[0]
-    assert current_upload["bucket"] == temp_bucket
-    assert current_upload["object"] == object_name
-    assert current_upload["upload-id"] == upload_id
+    if platform.platform().find('Windows') != -1:
+        # Some sort of Windows
+        upload_id = setup_resume_abort_multipart_upload_windows(content_input_file, object_storage_client, util.NAMESPACE, temp_bucket, object_name)
+    else:
+        upload_id = setup_resume_multipart_upload_non_windows(runner, config_file, config_profile, content_input_file, temp_bucket, object_name)
 
     # validate cannot resume with different part size
     result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id, '--part-size', str(DEFAULT_TEST_PART_SIZE + 1)])
@@ -166,9 +139,82 @@ def test_resume_multipart_upload(runner, config_file, config_profile, content_in
     validate_response(result)
 
 
-def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket, content_input_file):
+# On Windows we can't do the file moving around in the test_resume_multipart_upload and test_abort_multipart_upload test cases
+# to cause issues (since the files get locked and the separate thread). Instead we will start a multipart upload outside of the CLI
+# using the base MultipartObjectAssembler from the PythonSDK and then we will resume it using the CLI.
+def setup_resume_abort_multipart_upload_windows(content_input_file, object_storage_client, namespace, bucket_name, object_name):
+    # Upload the first part. part_size is 1 MiB
+    kwargs = {'part_size': DEFAULT_TEST_PART_SIZE * 1024 * 1024}
+    ma = MultipartObjectAssembler(object_storage_client, namespace, bucket_name, object_name, **kwargs)
+    ma.new_upload()
+    ma.add_parts_from_file(content_input_file)
+    parts = list(enumerate(ma.manifest['parts']))
+    ma._upload_part(part_num=parts[0][0] + 1, part=parts[0][1])
+
+    upload_id = ma.manifest['uploadId']
+
+    return upload_id
+
+
+def setup_resume_multipart_upload_non_windows(runner, config_file, config_profile, content_input_file, temp_bucket, object_name):
+    def move_file(src, dest):
+        time.sleep(2)
+        os.rename(src, dest)
+
+    parts = os.path.splitext(content_input_file)
+    temp_filename = parts[0] + '_updated' + parts[1]
+
+    # rename file to break upload while in progress
+    t1 = threading.Thread(target=lambda: move_file(content_input_file, temp_filename))
+    t1.start()
+
+    # object put (relatively large file with small part size, so multipart is used)
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE)])
+    print(result.output)
+
+    # copy file back to initial location to continue upload
+    os.rename(temp_filename, content_input_file)
+
+    # TODO: update response validation logic once it is JSON
+    # validate that upload failed due to file moving
+    error_message = 'No such file or directory'
+    assert error_message in result.output
+
+    upload_id = parse_upload_id_from_multipart_output(result.output)
+
+    # list uploads and confirm this one shows up
+    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
+    validate_response(result)
+
+    multipart_uploads = json.loads(result.output)["data"]
+    assert len(multipart_uploads) == 1
+    current_upload = multipart_uploads[0]
+    assert current_upload["bucket"] == temp_bucket
+    assert current_upload["object"] == object_name
+    assert current_upload["upload-id"] == upload_id
+
+    return upload_id
+
+
+def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket, content_input_file, object_storage_client):
     object_name = 'a_abort'
 
+    if platform.platform().find('Windows') != -1:
+        upload_id = setup_resume_abort_multipart_upload_windows(content_input_file, object_storage_client, util.NAMESPACE, temp_bucket, object_name)
+    else:
+        upload_id = setup_abort_multipart_upload_non_windows(runner, config_file, config_profile, content_input_file, temp_bucket, object_name)
+
+    # abort multipart upload
+    result = invoke(runner, config_file, config_profile, ['multipart', 'abort', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--object-name', object_name, '--upload-id', upload_id], input='y')
+    validate_response(result, json_response_expected=False)
+
+    # list uploads and confirm that there are none
+    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
+    validate_response(result)
+    assert result.output == ''
+
+
+def setup_abort_multipart_upload_non_windows(runner, config_file, config_profile, content_input_file, temp_bucket, object_name):
     def remove_file(src):
         time.sleep(2)
         os.remove(src)
@@ -198,14 +244,7 @@ def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket
     assert current_upload["object"] == object_name
     assert current_upload["upload-id"] == upload_id
 
-    # abort multipart upload
-    result = invoke(runner, config_file, config_profile, ['multipart', 'abort', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--object-name', object_name, '--upload-id', upload_id], input='y')
-    validate_response(result, json_response_expected=False)
-
-    # list uploads and confirm that there are none
-    result = invoke(runner, config_file, config_profile, ['multipart', 'list', '-ns', util.NAMESPACE, '-bn', temp_bucket])
-    validate_response(result)
-    assert result.output == ''
+    return upload_id
 
 
 def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file):
