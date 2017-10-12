@@ -85,6 +85,11 @@ def network_client(config):
     return oci.core.VirtualNetworkClient(config)
 
 
+@pytest.fixture(scope='session')
+def compute_client(config):
+    return oci.core.ComputeClient(config)
+
+
 def get_resource_directory():
     """Get the absolute path to the test resources directory.
     File is located based on the relative location of this file (util.py).

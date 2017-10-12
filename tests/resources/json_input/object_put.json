@@ -1,0 +1,9 @@
+{
+    "metadata": {
+        "key1": "hello_updated",
+        "another-key-with-snake": "underscores rejected?",
+        "history": "previous"
+    },
+    "bucketName": "will_be_overridden_on_put",
+    "content_type": "text/json"
+}

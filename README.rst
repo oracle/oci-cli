@@ -13,13 +13,21 @@ __ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm
 Installation
 ============
 
+Mac / Linux
+-----------
 ::
 
-    pip install oci-cli
+    curl -L "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" | bash
 
-See the `installation guide`__ for installation options and installation troubleshooting.
+Windows
+-------
+::
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#cli-install
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1'))"
+
+See the `installation guide`__ for detailed installation instructions, options and troubleshooting.
+
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#CLIInstallationOptions
 
 
 Usage

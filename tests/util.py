@@ -24,12 +24,17 @@ except ImportError:
 
 TEST_DATA_VERSION = '1'
 
+NUM_INVOKE_COMMAND_RETRIES = 3
+
 USER_ID = os.environ['OCI_CLI_USER_ID']
 TENANT_ID = os.environ['OCI_CLI_TENANT_ID']
 COMPARTMENT_ID = os.environ['OCI_CLI_COMPARTMENT_ID']
 COMPARTMENT_NAME = os.environ['OCI_CLI_COMPARTMENT_NAME']
 NAMESPACE = os.environ['OCI_CLI_NAMESPACE']
 SSH_AUTHORIZED_KEYS_FILE = os.environ['OCI_CLI_PUBLIC_SSH_KEY_FILE']
+
+# Currently used for serial console validation
+SSH_AUTHORISED_KEY_FINGERPRINT = os.environ['OCI_CLI_PUBLIC_SSH_KEY_FINGERPRINT']
 
 REGIONAL_CONFIG = {
     'us-phoenix-1': {
@@ -169,11 +174,42 @@ def validate_service_error(result, error_message=None, debug=False):
 
 
 def invoke_command_as_admin(command, ** args):
-    return CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
+    num_tries = 0
+
+    while num_tries < NUM_INVOKE_COMMAND_RETRIES:
+        command_output = CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
+        if should_retry(command_output.output):
+            num_tries += 1
+            if num_tries >= NUM_INVOKE_COMMAND_RETRIES:
+                return command_output
+            else:
+                time.sleep(2 ** num_tries)  # Backoff
+                time.sleep(random.random() * 2)  # Jitter
+        else:
+            return command_output
+
+    # Always return some sort of output so that the test can handle it (or try and do something). Retries are
+    # a bit strange here because we don't get exceptions (as such) but they are instead dumped out into the
+    # terminal
+    return command_output
 
 
 def invoke_command(command, ** args):
-    return CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
+    num_tries = 0
+
+    while num_tries < NUM_INVOKE_COMMAND_RETRIES:
+        command_output = CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
+        if should_retry(command_output.output):
+            num_tries += 1
+            if num_tries >= NUM_INVOKE_COMMAND_RETRIES:
+                return command_output
+            else:
+                time.sleep(2 ** num_tries)  # Backoff
+                time.sleep(random.random() * 2)  # Jitter
+        else:
+            return command_output
+
+    return command_output
 
 
 def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15, succeed_if_not_found=False, item_index_in_list_response=None):
@@ -285,7 +321,7 @@ def check_json_key_format(json_data):
         pass
     elif isinstance(json_data, abc.Mapping):
         for key, value in six.iteritems(json_data):
-            if key != "metadata":
+            if key != "metadata" and key != "extended-metadata":
                 assert "_" not in key
                 assert key.islower()
                 check_json_key_format(value)
@@ -447,3 +483,26 @@ def create_large_file(filename, size_in_mebibytes):
     sample_content = b'a'
     with open(filename, 'wb') as f:
         f.write(sample_content * MEBIBYTE * size_in_mebibytes)
+
+
+# We retry on:
+#
+#   - Timeouts
+#   - Connection errors
+#   - Internal server errors
+#   - Throttles (HTTP 429)
+#   - HTTP 409s which have a code of Conflict
+def should_retry(command_output):
+    if 'Timeout' in command_output or 'ConnectionError' in command_output:
+        return True
+    elif 'ServiceError' in command_output:
+        # Note: This could also parse the output into JSON as the service error appears in a JSON structure, but
+        # string checking seems to work OK for now
+        if '"status": 5' in command_output or '429' in command_output:
+            return True
+        elif '409' in command_output:
+            return 'Conflict' in command_output
+        else:
+            return False
+    else:
+        return False

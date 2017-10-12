@@ -8,7 +8,11 @@ from . import cli_util
 
 import base64
 import hashlib
+
+import os
 import os.path
+import stat
+import subprocess
 import sys
 
 from oci.regions import is_region
@@ -92,7 +96,7 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
 
     output_dir = os.path.expanduser(output_dir)
     if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        create_directory(output_dir)
 
     private_key = cli_util.generate_key()
     public_key = private_key.public_key()
@@ -110,7 +114,7 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
 def generate_oci_config():
     click.echo(click.wrap_text(text=generate_oci_config_instructions, preserve_paragraphs=True))
 
-    config_location = click.prompt('Enter a location for your config', default=os.path.join(default_directory, 'config'), value_proc=process_config_filename)
+    config_location = os.path.abspath(click.prompt('Enter a location for your config', default=os.path.join(default_directory, 'config'), value_proc=process_config_filename))
     if os.path.exists(config_location):
         if not click.confirm('File: {} already exists. Do you want to overwrite?'.format(config_location)):
             click.echo(config_generation_canceled_message)
@@ -120,7 +124,7 @@ def generate_oci_config():
 
         # if user inputs only a filename (dirname=='') it implies the current directory so no need to create a dir
         if dirname and not os.path.exists(dirname):
-            os.makedirs(dirname)
+            create_directory(dirname)
 
     user_id = click.prompt('Enter a user OCID', value_proc=lambda ocid: validate_ocid(ocid, config.PATTERNS['user']))
     tenant_id = click.prompt('Enter a tenancy OCID', value_proc=lambda ocid: validate_ocid(ocid, config.PATTERNS['tenancy']))
@@ -131,10 +135,10 @@ def generate_oci_config():
         region = click.prompt(text='Enter a region (e.g. {})'.format(region_list), value_proc=validate_region)
 
     if click.confirm("Do you want to generate a new RSA key pair? (If you decline you will be asked to supply the path to an existing key.)", default=True):
-        key_location = click.prompt(text='Enter a directory for your keys to be created', default=default_directory)
+        key_location = os.path.abspath(click.prompt(text='Enter a directory for your keys to be created', default=default_directory))
         key_location = os.path.expanduser(key_location)
         if not os.path.exists(key_location):
-            os.makedirs(key_location)
+            create_directory(key_location)
 
         private_key = cli_util.generate_key()
         public_key = private_key.public_key()
@@ -151,8 +155,10 @@ def generate_oci_config():
             return
 
         fingerprint = public_key_to_fingerprint(public_key)
+        click.echo("Fingerprint: {}".format(fingerprint))
     else:
         private_key_file, has_passphrase, private_key = click.prompt(text='Enter the location of your private key file', value_proc=validate_private_key_file)
+        private_key_file = os.path.abspath(private_key_file)
 
         key_passphrase = None
         if has_passphrase:
@@ -174,10 +180,52 @@ def generate_oci_config():
 @cli_util.help_option
 def setup_autocomplete():
     # TODO: we might be able to support completion in bash on windows so we should test that but in the meantime it is better to return a clear error for most Windows users who will not be able to use this
-    if sys.platform == 'win32' or sys.platform == 'cygwin':
-        click.echo("Tab completion is not currently available on Windows.")
+    if sys.platform == 'cygwin':
+        click.echo("Tab completion only available on Windows when using Powershell.")
         return
 
+    if sys.platform == 'win32':
+        setup_autocomplete_windows()
+    else:
+        setup_autocomplete_non_windows()
+
+
+def setup_autocomplete_windows():
+    oci_tab_completion_file = 'OciTabExpansion.ps1'
+
+    script_relative_path = os.path.join('bin', oci_tab_completion_file)
+    path_to_install_dir = os.path.dirname(os.path.abspath(__file__))
+    completion_script_file = os.path.join(path_to_install_dir, script_relative_path)
+    if not os.path.exists(completion_script_file):
+        click.echo('Could not locate autocomplete script at {}. Exiting script.'.format(completion_script_file))
+        sys.exit(1)
+
+    click.echo("Using tab completion script at: {}".format(completion_script_file))
+
+    # subprocess.check_output looks like it comes back as a byte string, so coerce to a regular string
+    ps_profile_file_path = subprocess.check_output(['powershell', '-NoProfile', 'echo $profile']).decode(sys.stdout.encoding).strip()
+    confirm_prompt = 'To set up autocomplete, we need to add a few lines to your Powershell profile: {}. Please confirm this is ok.'.format(ps_profile_file_path)
+
+    if click.confirm(confirm_prompt, default=True):
+        if not os.path.exists(os.path.dirname(ps_profile_file_path)):
+            os.makedirs(os.path.dirname(ps_profile_file_path))
+
+        with open(ps_profile_file_path, mode='a+') as f:
+            f.seek(0)
+            content = f.read()
+
+            if oci_tab_completion_file in content:
+                click.echo("It looks like tab completion for oci is already configured in {ps_profile_file_path}. If you want to re-run the setup command please remove any lines containing '{oci_tab_completion_file}' from {ps_profile_file_path}.".format(oci_tab_completion_file=oci_tab_completion_file, ps_profile_file_path=ps_profile_file_path))
+                return
+
+            f.write('\n. {}\n'.format(completion_script_file))
+            click.echo('Success!\nReload your Powershell profile or restart your shell for the changes to take effect.')
+    else:
+        click.echo('Exiting script. Tab completion not set up.')
+        return
+
+
+def setup_autocomplete_non_windows():
     # guidance from click is to add to .bashrc so if user has a .bashrc file, use that
     # if .bashrc does not exist but .bash_profile does exist, we fall back to that
     # if neither exist, we must create one. On Linux we use bashrc as recommended by click,
@@ -196,7 +244,7 @@ def setup_autocomplete():
     completion_script_file = os.path.join(path_to_install_dir, script_relative_path)
     if not os.path.exists(completion_script_file):
         click.echo('Could not locate autocomplete script at {}. Exiting script.'.format(completion_script_file))
-        return
+        sys.exit(1)
 
     click.echo("Using tab completion script at: {}".format(completion_script_file))
 
@@ -247,6 +295,9 @@ def write_config(filename, user_id, fingerprint, key_file, tenant_id, region, pa
         if passphrase:
             f.write("pass_phrase={}\n".format(passphrase))
 
+    # only user has R/W permissions to the config file
+    apply_user_only_access_permissions(filename)
+
 
 def write_public_key_to_file(filename, public_key, overwrite=False):
     if not overwrite and os.path.isfile(filename) and not click.confirm('File {} already exists, do you want to overwrite?'.format(filename)):
@@ -254,6 +305,9 @@ def write_public_key_to_file(filename, public_key, overwrite=False):
 
     with open(filename, "wb") as f:
         f.write(cli_util.serialize_key(public_key=public_key))
+
+    # only user has R/W permissions to the key file
+    apply_user_only_access_permissions(filename)
 
     click.echo('Public key written to: {}'.format(filename))
     return True
@@ -266,8 +320,46 @@ def write_private_key_to_file(filename, private_key, passphrase, overwrite=False
     with open(filename, "wb") as f:
         f.write(cli_util.serialize_key(private_key=private_key, passphrase=passphrase))
 
+    # only user has R/W permissions to the key file
+    apply_user_only_access_permissions(filename)
+
     click.echo('Private key written to: {}'.format(filename))
     return True
+
+
+def apply_user_only_access_permissions(path):
+    if not os.path.exists(path):
+        raise RuntimeError("Failed attempting to set permissions on path that does not exist: {}".format(path))
+
+    if is_windows():
+        # General permissions strategy is:
+        #   - if we create a new folder (e.g. C:\Users\opc\.oci), set access to allow full control for current user and no access for anyone else
+        #   - if we create a new file, set access to allow full control for current user and no access for anyone else
+        #   - thus if the user elects to place a new file (config or key) in an existing directory, we will not change the
+        #     permissions of that directory but will explicitly set the permissions on that file
+        username = os.environ['USERNAME']
+        try:
+            if os.path.isfile(path):
+                subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
+                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F'.format(path=path, username=username), stderr=subprocess.STDOUT)
+            else:
+                if os.listdir(path):
+                    # safety check to make sure we aren't changing permissions of existing files
+                    raise RuntimeError("Failed attempting to set permissions on existing folder that is not empty.")
+
+                subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
+                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F'.format(path=path, username=username), stderr=subprocess.STDOUT)
+
+        except subprocess.CalledProcessError as exc_info:
+            print("Error occurred while attempting to set permissions for {path}: {exception}".format(path=path, exception=str(exc_info)))
+            sys.exit(exc_info.returncode)
+    else:
+        if os.path.isfile(path):
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR)
+        else:
+            # For directories, we need to apply S_IXUSER otherwise it looks like on Linux/Unix/macOS if we create the directory then
+            # it won't behave like a directory and let files be put into it
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
 
 
 def validate_private_key_passphrase(filename, passphrase):
@@ -323,3 +415,12 @@ def validate_ocid(ocid, pattern):
         raise click.BadParameter("Invalid OCID format. Instructions to find OCIDs: https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/apisigningkey.htm#Other")
 
     return ocid
+
+
+def create_directory(dirname):
+    os.makedirs(dirname)
+    apply_user_only_access_permissions(dirname)
+
+
+def is_windows():
+    return sys.platform == 'win32' or sys.platform == 'cygwin'
