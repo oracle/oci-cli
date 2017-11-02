@@ -8,7 +8,8 @@ def test_generate_input_dict_simple_types_only():
         click.Option(['--param-one'], type=click.STRING),
         click.Option(['--param2'], type=click.INT),
         click.Option(['--some-float-param'], type=click.FLOAT),
-        click.Option(['--boolparam'], type=click.BOOL)
+        click.Option(['--boolparam'], type=click.BOOL),
+        click.Option(['--datetimeparam'], type=oci_cli.custom_types.CLI_DATETIME)
     ]
 
     ctx = set_up_command_and_context(params)
@@ -18,7 +19,8 @@ def test_generate_input_dict_simple_types_only():
         'paramOne': 'string',
         'param2': 0,
         'someFloatParam': 0.0,
-        'boolparam': True
+        'boolparam': True,
+        'datetimeparam': '2017-01-01T00:00:00.000000+00:00'
     }
 
     assert expected_dict == generated_dict

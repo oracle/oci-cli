@@ -7,7 +7,7 @@ from oci.object_storage import UploadManager
 
 from .work_pool import WorkPool
 from .delete_tasks import DeleteObjectTask
-from .get_object_tasks import GetObjectTask
+from .get_object_tasks import GetObjectTask, GetObjectMultipartTask
 from .head_object_tasks import HeadObjectTask
 from .multipart_upload_tasks import MultipartUploadProcessorTask
 from .upload_tasks import SimpleSingleUploadTask
@@ -25,8 +25,8 @@ class TransferManager():
         # what the file chunks are) and then put those requests in the main request pool to be done, and then committing the upload at the end.
         self._multipart_upload_processor_pool = WorkPool(pool_size=self._config.max_multipart_files_to_process, max_workers=self._config.max_multipart_files_to_process)
 
-        # This is a pool which is intended to process multipart upload requests to Object Storage only. We have a separate pool to prevent too much contention between
-        # very big uploads and other tasks (as a single multipart upload could consume all the processes in the pool, which may be undesirable depending on other
+        # This is a pool which is intended to process multipart upload/download requests to Object Storage only. We have a separate pool to prevent too much contention between
+        # very big uploads/downloads and other tasks (as a single multipart could consume all the processes in the pool, which may be undesirable depending on other
         # work which has been queued)
         self._object_storage_multipart_request_pool = WorkPool(pool_size=self._config.max_object_storage_multipart_requests, max_workers=self._config.max_object_storage_multipart_requests)
 
@@ -63,6 +63,10 @@ class TransferManager():
     def get_object(self, callbacks_container, **kwargs):
         get_object_task = GetObjectTask(self._client, callbacks_container, **kwargs)
         return self._object_storage_request_pool.submit(get_object_task)
+
+    def get_object_multipart(self, callbacks_container, destination_file_handle, **kwargs):
+        get_object_multipart_task = GetObjectMultipartTask(self._client, callbacks_container, self._object_storage_multipart_request_pool, destination_file_handle, **kwargs)
+        return self._object_storage_request_pool.submit(get_object_multipart_task)
 
     def delete_object(self, callbacks_container, **kwargs):
         delete_task = DeleteObjectTask(self._client, callbacks_container, **kwargs)

@@ -21,31 +21,53 @@ Usage: oci [OPTIONS] COMMAND [ARGS]...
   phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm.
 
 Options:
-  -v, --version          Show the version and exit.
-  --config-file TEXT     The path to the config file.  [default: ~/.oci/config]
-  --profile TEXT         The profile in the config file to load.  [default:
-                         DEFAULT]
-  --defaults-file TEXT   The path to a file containing default values for the
-                         CLI.  [default: ~/.oci/cli-defaults]
-  --request-id TEXT      The request id to use for tracking the request.
-  --region TEXT          The region to make calls against.  For a list of valid
-                         region names use the command: "oci iam region list".
-  --endpoint TEXT        The value to use as the service endpoint, including any
-                         required API version path. For example:
-                         "https://iaas.us-phoenix-1.oracle.com/20160918". This
-                         will override the default service endpoint / API
-                         version path. Note: The --region parameter is the
-                         recommended way of targeting different regions.
-  --cert-bundle TEXT     The full path to a CA certificate bundle to be used for
-                         SSL verification. This will override the default CA
-                         certificate bundle.
-  --output [json|table]  The output format. [Default is json]
-  --query TEXT           JMESPath query [http://jmespath.org/] to run on the
-                         response JSON before output.
-  -d, --debug            Show additional debug information.
-  -?, -h, --help         Show this message and exit.
+  -v, --version                   Show the version and exit.
+  --config-file TEXT              The path to the config file.  [default:
+                                  ~/.oci/config]
+  --profile TEXT                  The profile in the config file to load. This
+                                  profile will also be used to locate any
+                                  default parameter values which have been
+                                  specified in the OCI CLI-specific
+                                  configuration file  [default: DEFAULT]
+  --cli-rc-file, --defaults-file TEXT
+                                  The path to the OCI CLI-specific configuration
+                                  file, containing parameter default values and
+                                  other configuration information such as
+                                  command aliases and predefined queries. The
+                                  --defaults-file option is deprecated and you
+                                  should use the --cli-rc-file option instead.
+                                  [default: ~/.oci/oci_cli_rc]
+  --request-id TEXT               The request id to use for tracking the
+                                  request.
+  --region TEXT                   The region to make calls against.  For a list
+                                  of valid region names use the command: "oci
+                                  iam region list".
+  --endpoint TEXT                 The value to use as the service endpoint,
+                                  including any required API version path. For
+                                  example: "https://iaas.us-
+                                  phoenix-1.oracle.com/20160918". This will
+                                  override the default service endpoint / API
+                                  version path. Note: The --region parameter is
+                                  the recommended way of targeting different
+                                  regions.
+  --cert-bundle TEXT              The full path to a CA certificate bundle to be
+                                  used for SSL verification. This will override
+                                  the default CA certificate bundle.
+  --output [json|table]           The output format. [Default is json]
+  --query TEXT                    JMESPath query [http://jmespath.org/] to run
+                                  on the response JSON before output.
+                                  
+                                  Queries
+                                  can be entered directly on the command line or
+                                  referenced from the [OCI_CLI_COMMAND_ALIASES]
+                                  section of your configuration file by using
+                                  the syntax query://<query_name>, for example
+                                  query://get_id_and_name
+  -d, --debug                     Show additional debug information.
+  -?, -h, --help                  Show this message and exit.
 
 Commands:
+  audit    Audit Service
   bv       Block Volume Service
   compute  Compute Service
   db       Database Service
@@ -53,6 +75,189 @@ Commands:
   network  Networking Service
   os       Object Storage Service
   setup    Setup commands for CLI
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci audit --help
+Usage: oci audit [OPTIONS] COMMAND [ARGS]...
+
+  Audit Service
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  config
+  event
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci audit config --help
+Usage: oci audit config [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  get     Get the configuration
+  update  Update the configuration
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci audit config get --help
+Usage: oci audit config get [OPTIONS]
+
+  Get the configuration
+
+Options:
+  -c, --compartment-id TEXT       ID of the root compartment (tenancy)
+                                  [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci audit config update --help
+Usage: oci audit config update [OPTIONS]
+
+  Update the configuration
+
+Options:
+  -c, --compartment-id TEXT       ID of the root compartment (tenancy)
+                                  [required]
+  --retention-period-days INTEGER
+                                  The retention period days
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci audit event --help
+Usage: oci audit event [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  list  Returns all audit events for the specified...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci audit event list --help
+Usage: oci audit event list [OPTIONS]
+
+  Returns all audit events for the specified compartment that were processed
+  within the specified time range.
+
+Options:
+  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  --start-time DATETIME           Returns events that were processed at or after
+                                  this start date and time, expressed in [RFC
+                                  3339] timestamp format. For example, a start
+                                  value of `2017-01-15T11:30:00Z` will retrieve
+                                  a list of all events processed since 30
+                                  minutes after the 11th hour of January 15,
+                                  2017, in Coordinated Universal Time (UTC). You
+                                  can specify a value with granularity to the
+                                  minute. Seconds (and milliseconds, if
+                                  included) must be set to `0`. [required]
+  --end-time DATETIME             Returns events that were processed before this
+                                  end date and time, expressed in [RFC 3339]
+                                  timestamp format. For example, a start value
+                                  of `2017-01-01T00:00:00Z` and an end value of
+                                  `2017-01-02T00:00:00Z` will retrieve a list of
+                                  all events processed on January 1, 2017.
+                                  Similarly, a start value of
+                                  `2017-01-01T00:00:00Z` and an end value of
+                                  `2017-02-01T00:00:00Z` will result in a list
+                                  of all events processed between January 1,
+                                  2017 and January 31, 2017. You can specify a
+                                  value with granularity to the minute. Seconds
+                                  (and milliseconds, if included) must be set to
+                                  `0`. [required]
+  --page TEXT                     The value of the `opc-next-page` response
+                                  header from the previous list query.
+  --opc-request-id TEXT           Unique Oracle-assigned identifier for the
+                                  request. If you need to contact Oracle about a
+                                  particular request, please provide the request
+                                  ID.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv --help
@@ -236,6 +441,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [CREATING|AVAILABLE|TERMINATING|TERMINATED|FAULTY|REQUEST_RECEIVED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -358,19 +581,44 @@ Usage: oci bv volume create [OPTIONS]
 
 Options:
   --availability-domain TEXT      The Availability Domain of the volume.
-                                  Example: `Uocm:PHX-AD-1` [required]
+                                  Example: `Uocm:PHX-AD-1`.
+                                  
+                                  This is optional
+                                  when cloning a volume as the newly created
+                                  volume will be created in the same
+                                  Availability Domain as its source. This is
+                                  required when creating an empty volume or
+                                  restoring a volume from a backup.
   -c, --compartment-id TEXT       The OCID of the compartment that contains the
-                                  volume. [required]
+                                  volume. This is optional when cloning a volume
+                                  or restoring a volume from a backup. If it is
+                                  not supplied then the volume will be created
+                                  in the same compartment as the source. This is
+                                  requied when creating an empty volume.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
-  --size-in-gbs INTEGER           The size of the volume in GBs.
-  --size-in-mbs INTEGER           The size of the volume in MBs. The value must
-                                  be a multiple of 1024. This field is
-                                  deprecated. Please use sizeInGBs.
+  --size-in-gbs INTEGER           The size of the volume in GBs. This option
+                                  cannot be supplied when cloning a volume or
+                                  restoring a volume from a backup
+  --size-in-mbs INTEGER           [DEPRECATED] The size of the volume in MBs.
+                                  The value must be a multiple of 1024. This
+                                  field is deprecated. Use --size-in-gbs
+                                  instead. This option cannot be supplied when
+                                  cloning a volume or restoring a volume from a
+                                  backup
+  --source-volume-id TEXT         The OCID of a Block volume in the same
+                                  Availability Domain from which the data should
+                                  be cloned to the newly created volume. You can
+                                  specify either this or --volume-backup-id but
+                                  not both. If neither is specified then the new
+                                  Block volume will be empty.
   --volume-backup-id TEXT         The OCID of the volume backup from which the
                                   data should be restored on the newly created
-                                  volume.
+                                  volume. You can specify either this or
+                                  --source-volume-id but not both. If neither is
+                                  specified then the new Block volume will be
+                                  empty.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -504,6 +752,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|RESTORING|AVAILABLE|TERMINATING|TERMINATED|FAULTY]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -825,6 +1091,22 @@ Options:
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
   --instance-id TEXT              The OCID of the instance.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [REQUESTED|GETTING-HISTORY|SUCCEEDED|FAILED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -930,20 +1212,20 @@ $ oci compute image create --help
 Usage: oci compute image create [OPTIONS]
 
   Creates a boot disk image for the specified instance or imports an exported
-  image from the Oracle Bare Metal Cloud Object Storage Service.
+  image from the Oracle Cloud Infrastructure Object Storage service.
 
   When creating a new image, you must provide the OCID of the instance you
   want to use as the basis for the image, and the OCID of the compartment
   containing that instance. For more information about images, see [Managing
   Custom Images].
 
-  When importing an exported image from the Object Storage Service, you
-  specify the source information in [ImageSourceDetails].
+  When importing an exported image from Object Storage, you specify the source
+  information in [ImageSourceDetails].
 
   When importing an image based on the namespace, bucket name, and object
   name, use [ImageSourceViaObjectStorageTupleDetails].
 
-  When importing an image based on the Object Storage Service URL, use
+  When importing an image based on the Object Storage URL, use
   [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-
   authenticated requests] for constructing URLs for image import/export.
 
@@ -968,7 +1250,8 @@ Options:
                                   
                                   Example: `My Oracle Linux
                                   image`
-  --image-source-details TEXT     [DEPRECATED] The use of the `oci compute image
+  --image-source-details COMPLEX TYPE
+                                  [DEPRECATED] The use of the `oci compute image
                                   create` command to import an image from Object
                                   Storage is deprecated.
                                   
@@ -976,6 +1259,19 @@ Options:
                                   Please use the `oci
                                   compute image import` command instead.
                                   Details for creating an image through import
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax. 
+                                  
                                   Example: '{ "objectName": "image-to-
                                   import.qcow2", "bucketName": "MyBucket",
                                   "namespaceName": "MyNamespace", "sourceType":
@@ -1112,6 +1408,12 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  -ns, --namespace TEXT           The Object Storage Service namespace to export
+                                  the image to. [required]
+  -bn, --bucket-name TEXT         The name of the bucket to export the image to.
+                                  [required]
+  --name TEXT                     The name which will be given to the exported
+                                  image object. [required]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -1131,12 +1433,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  -ns, --namespace TEXT           The Object Storage Service namespace to export
-                                  the image to. [required]
-  -bn, --bucket-name TEXT         The name of the bucket to export the image to.
-                                  [required]
-  --name TEXT                     The name which will be given to the exported
-                                  image object. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -1169,6 +1465,8 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --uri TEXT                      The Object Storage URL to export the image to.
+                                  [required]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -1188,8 +1486,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  --uri TEXT                      The Object Storage URL to export the image to.
-                                  [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -1292,6 +1588,12 @@ Options:
                                   
                                   Example: `My Oracle Linux
                                   image`
+  -ns, --namespace TEXT           The Object Storage Service namespace to import
+                                  the image from. [required]
+  -bn, --bucket-name TEXT         The name of the bucket to import the image
+                                  from. [required]
+  --name TEXT                     The name of the object identifying the image
+                                  to import. [required]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -1311,12 +1613,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  -ns, --namespace TEXT           The Object Storage Service namespace to import
-                                  the image from. [required]
-  -bn, --bucket-name TEXT         The name of the bucket to import the image
-                                  from. [required]
-  --name TEXT                     The name of the object identifying the image
-                                  to import. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -1359,6 +1655,8 @@ Options:
                                   
                                   Example: `My Oracle Linux
                                   image`
+  --uri TEXT                      The Object Storage URL to import the image
+                                  from. [required]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -1378,8 +1676,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  --uri TEXT                      The Object Storage URL to import the image
-                                  from. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -1399,12 +1695,8 @@ Usage: oci compute image list [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable. Avoid entering
-                                  confidential information.
-                                  
-                                  Example: `My new
-                                  resource`
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
   --operating-system TEXT         The image's operating system.
                                   
                                   Example:
@@ -1418,6 +1710,22 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|IMPORTING|AVAILABLE|EXPORTING|DISABLED|DELETED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -1550,7 +1858,8 @@ Usage: oci compute instance action [OPTIONS]
 
 Options:
   --instance-id TEXT              The OCID of the instance. [required]
-  --action TEXT                   The action to perform on the instance.
+  --action TEXT                   The action to perform on the instance. Allowed
+                                  values are: STOP, START, SOFTRESET, RESET
                                   [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
@@ -1803,7 +2112,7 @@ Usage: oci compute instance launch [OPTIONS]
   `ListAvailabilityDomains` operation in the Identity and Access Management
   Service API.
 
-  All Oracle Bare Metal Cloud Services resources, including instances, get an
+  All Oracle Cloud Infrastructure resources, including instances, get an
   Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When
   you create a resource, you can find its OCID in the response. You can also
   retrieve a resource's OCID by using a List API operation on that resource
@@ -1837,7 +2146,8 @@ Options:
                                   
                                   Example: `My bare
                                   metal instance`
-  --extended-metadata TEXT        Additional metadata key/value pairs that you
+  --extended-metadata COMPLEX TYPE
+                                  Additional metadata key/value pairs that you
                                   provide.  They serve a similar purpose and
                                   functionality from fields in the 'metadata'
                                   object.
@@ -1851,6 +2161,20 @@ Options:
                                   nested metadata values, it is strongly advised
                                   to avoid using this object and use the
                                   Metadata object instead.
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --hostname-label TEXT           The hostname for the VNIC that is created
                                   during instance launch. Used for DNS. The
                                   value is the hostname portion of the
@@ -1869,39 +2193,38 @@ Options:
                                   Example: `bminstance-1`
   --ipxe-script-file FILENAME     This is an advanced option.
                                   
-                                  When an Oracle
-                                  Bare Metal Cloud Services or virtual machine
-                                  instance boots, the iPXE firmware that runs on
-                                  the instance is configured to run an iPXE
-                                  script to continue the boot process.
+                                  When a bare metal
+                                  or virtual machine instance boots, the iPXE
+                                  firmware that runs on the instance is
+                                  configured to run an iPXE script to continue
+                                  the boot process.
                                   
-                                  If you
-                                  want more control over the boot process, you
-                                  can provide your own custom iPXE script that
-                                  will run when the instance boots; however, you
-                                  should be aware that the same iPXE script will
-                                  run every time an instance boots; not only
-                                  after the initial LaunchInstance call.
+                                  If you want more control
+                                  over the boot process, you can provide your
+                                  own custom iPXE script that will run when the
+                                  instance boots; however, you should be aware
+                                  that the same iPXE script will run every time
+                                  an instance boots; not only after the initial
+                                  LaunchInstance call.
                                   
-                                  The
-                                  default iPXE script connects to the instance's
-                                  local boot volume over iSCSI and performs a
-                                  network boot. If you use a custom iPXE script
-                                  and want to network-boot from the instance's
-                                  local boot volume over iSCSI the same way as
-                                  the default iPXE script, you should use the
-                                  following iSCSI IP address: 169.254.0.2, and
-                                  boot volume IQN: iqn.2015-02.oracle.boot.
+                                  The default iPXE script
+                                  connects to the instance's local boot volume
+                                  over iSCSI and performs a network boot. If you
+                                  use a custom iPXE script and want to network-
+                                  boot from the instance's local boot volume
+                                  over iSCSI the same way as the default iPXE
+                                  script, you should use the following iSCSI IP
+                                  address: 169.254.0.2, and boot volume IQN:
+                                  iqn.2015-02.oracle.boot.
                                   
-                                  For
-                                  more information about the Bring Your Own
-                                  Image feature of Oracle Bare Metal Cloud
-                                  Services, see [Bring Your Own Image].
+                                  For more information
+                                  about the Bring Your Own Image feature of
+                                  Oracle Cloud Infrastructure, see [Bring Your
+                                  Own Image].
                                   
-                                  For
-                                  more information about iPXE, see
-                                  http://ipxe.org.
-  --metadata TEXT                 Custom metadata key/value pairs that you
+                                  For more information about iPXE,
+                                  see http://ipxe.org.
+  --metadata COMPLEX TYPE         Custom metadata key/value pairs that you
                                   provide, such as the SSH public key required
                                   to connect to the instance. For more info see
                                   documentation: https://docs.us-phoenix-1.oracl
@@ -1927,25 +2250,6 @@ Options:
                                   public key"}'
   --subnet-id TEXT                The OCID of the subnet where the VNIC attached
                                   to this instance will be created.
-  --generate-full-command-json-input
-                                  Prints out a JSON document which represents
-                                  all possible options that can be provided to
-                                  this command.
-                                  
-                                  This JSON document can be saved
-                                  to a file, modified with the appropriate
-                                  option values, and then passed back via the
-                                  --from-json option. This provides an
-                                  alternative to typing options out on the
-                                  command line.
-  --generate-param-json-input TEXT
-                                  Complex input, such as arrays and objects, are
-                                  passed in JSON format.
-                                  
-                                  When passed the name
-                                  of an option which takes complex input, this
-                                  will print out example JSON of what needs to
-                                  be passed to that option.
   --vnic-display-name TEXT        A user-friendly name for the default VNIC
                                   attached to this instance. Does not have to be
                                   unique.
@@ -1995,6 +2299,25 @@ Options:
                                   see documentation: https://docs.us-phoenix-1.o
                                   raclecloud.com/api/#/en/iaas/20160918/requests
                                   /LaunchInstanceDetails.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -2020,18 +2343,30 @@ Options:
                                   
                                   Example:
                                   `Uocm:PHX-AD-1`
-  --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable. Avoid entering
-                                  confidential information.
-                                  
-                                  Example: `My new
-                                  resource`
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
   --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
                                   
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2070,12 +2405,18 @@ Usage: oci compute instance list-vnics [OPTIONS]
 
 Options:
   --instance-id TEXT              The OCID of the instance. [required]
-  --limit TEXT                    The maximum number of items to return in a
+  --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
                                   
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2242,6 +2583,9 @@ Usage: oci compute instance-console-connection create [OPTIONS]
 Options:
   --instance-id TEXT              The OCID of the instance to create the serial
                                   console connection to. [required]
+  --ssh-public-key-file FILENAME  A file containing the SSH public key used to
+                                  authenticate the serial console connection
+                                  [required]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2261,9 +2605,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  --ssh-public-key-file FILENAME  A file containing the SSH public key used to
-                                  authenticate the serial console connection
-                                  [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -2380,6 +2721,12 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2442,6 +2789,12 @@ Options:
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
   --image-id TEXT                 The OCID of an image.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2544,6 +2897,12 @@ Options:
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
   --vnic-id TEXT                  The OCID of the VNIC.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2747,6 +3106,12 @@ Options:
                                   header from the previous "List" call.
   --instance-id TEXT              The OCID of the instance.
   --volume-id TEXT                The OCID of the volume.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2786,12 +3151,207 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
+  backup                  A database backup To use any of the API...
   data-guard-association  The properties that define a Data Guard...
   database                An Oracle database on a DB System.
   node                    A server where Oracle database software is...
+  patch                   A Patch for a DB System or DB Home.
+  patch-history           The record of a patch action on a specified...
   system                  The Database Service supports several types...
   system-shape            The shape of the DB System.
   version                 The Oracle database software version.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup --help
+Usage: oci db backup [OPTIONS] COMMAND [ARGS]...
+
+  A database backup To use any of the API operations, you must be authorized
+  in an IAM policy. If you're not authorized, talk to an administrator. If
+  you're an administrator who needs to write policies to give users access,
+  see [Getting Started with Policies].
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  create  Creates a new backup in the specified...
+  delete  Deletes a full backup.
+  get     Gets information about the specified backup.
+  list    Gets a list of backups based on the...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup create --help
+Usage: oci db backup create [OPTIONS]
+
+  Creates a new backup in the specified database based on the request
+  parameters you provide. If you previously used RMAN or dbcli to configure
+  backups and then you switch to using the Console or the API for backups, a
+  new backup configuration is created and associated with your database. This
+  means that you can no longer rely on your previously configured unmanaged
+  backups to work.
+
+Options:
+  --database-id TEXT              The OCID of the database. [required]
+  --display-name TEXT             The user-friendly name for the backup. It does
+                                  not have to be unique. [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup delete --help
+Usage: oci db backup delete [OPTIONS]
+
+  Deletes a full backup. You cannot delete automatic backups using this API.
+
+Options:
+  --backup-id TEXT                The backup OCID. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup get --help
+Usage: oci db backup get [OPTIONS]
+
+  Gets information about the specified backup.
+
+Options:
+  --backup-id TEXT                The backup OCID. [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup list --help
+Usage: oci db backup list [OPTIONS]
+
+  Gets a list of backups based on the databaseId or compartmentId specified.
+  Either one of the query parameters must be provided.
+
+Options:
+  --database-id TEXT              The OCID of the database.
+  -c, --compartment-id TEXT       The compartment OCID.
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association --help
@@ -2885,14 +3445,16 @@ Options:
                                   **The password MUST
                                   be the same as the primary admin password.**
                                   [required]
-  --protection-mode TEXT          The protection mode to set up between the
+  --protection-mode [MAXIMUM_AVAILABILITY|MAXIMUM_PERFORMANCE|MAXIMUM_PROTECTION]
+                                  The protection mode to set up between the
                                   primary and standby databases. For more
                                   information, see [Oracle Data Guard Protection
                                   Modes] in the Oracle Data Guard documentation.
                                   **IMPORTANT** - The only protection mode
                                   currently supported by the Database Service is
                                   MAXIMUM_PERFORMANCE. [required]
-  --transport-type TEXT           The redo transport type to use for this Data
+  --transport-type [SYNC|ASYNC|FASTSYNC]
+                                  The redo transport type to use for this Data
                                   Guard association.  Valid values depend on the
                                   specified `protectionMode`:
                                   
@@ -2907,6 +3469,8 @@ Options:
                                   **IMPORTANT** - The only transport type
                                   currently supported by the Database Service is
                                   ASYNC. [required]
+  --peer-db-system-id TEXT        The OCID of the DB System to create the
+                                  standby database on. [required]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -2926,8 +3490,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  --peer-db-system-id TEXT        The OCID of the DB System to create the
-                                  standby database on. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -3042,6 +3604,12 @@ Options:
   --database-id TEXT              The database [OCID]. [required]
   --limit INTEGER                 The maximum number of items to return.
   --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -3190,10 +3758,13 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  create  Creates a new database in the given DB...
-  delete  Deletes a database.
-  get     Gets information about a specific database.
-  list    Lists all databases in a given DB System.
+  create   Creates a new database in the given DB...
+  delete   Deletes a database.
+  get      Gets information about a specific database.
+  list     Lists all databases in a given DB System.
+  patch    Perform a patch action for a given patch and...
+  restore  Restore a Database based on the request...
+  update   Update a Database based on the request...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database create --help
@@ -3203,25 +3774,6 @@ Usage: oci db database create [OPTIONS]
 
 Options:
   --db-system-id TEXT             The OCID of the DB System. [required]
-  --generate-full-command-json-input
-                                  Prints out a JSON document which represents
-                                  all possible options that can be provided to
-                                  this command.
-                                  
-                                  This JSON document can be saved
-                                  to a file, modified with the appropriate
-                                  option values, and then passed back via the
-                                  --from-json option. This provides an
-                                  alternative to typing options out on the
-                                  command line.
-  --generate-param-json-input TEXT
-                                  Complex input, such as arrays and objects, are
-                                  passed in JSON format.
-                                  
-                                  When passed the name
-                                  of an option which takes complex input, this
-                                  will print out example JSON of what needs to
-                                  be passed to that option.
   --admin-password TEXT           A strong password for SYS, SYSTEM, and PDB
                                   Admin. The password must be at least nine
                                   characters and contain at least two uppercase,
@@ -3277,6 +3829,25 @@ Options:
   --db-version TEXT               A valid Oracle database version. To get a list
                                   of supported versions, use the command 'oci db
                                   version list'. [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -3404,6 +3975,142 @@ Options:
   -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db database patch --help
+Usage: oci db database patch [OPTIONS]
+
+  Perform a patch action for a given patch and database.
+
+Options:
+  --database-id TEXT              The OCID of the database.  [required]
+  --patch-action TEXT             The action to perform on the patch.
+  --patch-id TEXT                 The OCID of the patch.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db database restore --help
+Usage: oci db database restore [OPTIONS]
+
+  Restore a Database based on the request parameters you provide.
+
+Options:
+  --database-id TEXT              The database [OCID]. [required]
+  --database-scn TEXT             Restores using the backup with the System
+                                  Change Number (SCN) specified.
+  --latest BOOLEAN                Restores to the last known good state with the
+                                  least possible data loss.
+  --timestamp DATETIME            Restores to the timestamp specified.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db database update --help
+Usage: oci db database update [OPTIONS]
+
+  Update a Database based on the request parameters you provide.
+
+Options:
+  --database-id TEXT              The database [OCID]. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --auto-backup-enabled BOOLEAN   If set to true, schedules backups
+                                  automatically. Default is false.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node --help
 Usage: oci db node [OPTIONS] COMMAND [ARGS]...
 
@@ -3474,6 +4181,12 @@ Options:
   --db-system-id TEXT             The [OCID] of the DB System. [required]
   --limit INTEGER                 The maximum number of items to return.
   --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -3680,6 +4393,426 @@ Options:
   -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch --help
+Usage: oci db patch [OPTIONS] COMMAND [ARGS]...
+
+  A Patch for a DB System or DB Home.
+
+  To use any of the API operations, you must be authorized in an IAM policy.
+  If you're not authorized, talk to an administrator. If you're an
+  administrator who needs to write policies to give users access, see [Getting
+  Started with Policies].
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  get   Gets information about a specified patch...
+  list  Lists patches applicable to the requested...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch get --help
+Usage: oci db patch get [OPTIONS] COMMAND [ARGS]...
+
+  Gets information about a specified patch package.
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  by-database   Get patch for a given database
+  by-db-system  Gets information about a specified patch...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch get by-database --help
+Usage: oci db patch get by-database [OPTIONS]
+
+  Get patch for a given database
+
+Options:
+  --patch-id TEXT                 The OCID of the patch. [required]
+  --database-id TEXT              The database [OCID]. [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch get by-db-system --help
+Usage: oci db patch get by-db-system [OPTIONS]
+
+  Gets information about a specified patch package.
+
+Options:
+  --db-system-id TEXT             The DB System [OCID]. [required]
+  --patch-id TEXT                 The OCID of the patch. [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch list --help
+Usage: oci db patch list [OPTIONS] COMMAND [ARGS]...
+
+  Lists patches applicable to the requested database home.
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  by-database   List patches for a given database
+  by-db-system  Lists the patches applicable to the requested...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch list by-database --help
+Usage: oci db patch list by-database [OPTIONS]
+
+  List patches for a given database
+
+Options:
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --database-id TEXT              The database [OCID]. [required]
+  -?, -h, --help                  Show this message and exit.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch list by-db-system --help
+Usage: oci db patch list by-db-system [OPTIONS]
+
+  Lists the patches applicable to the requested DB System.
+
+Options:
+  --db-system-id TEXT             The DB System [OCID]. [required]
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history --help
+Usage: oci db patch-history [OPTIONS] COMMAND [ARGS]...
+
+  The record of a patch action on a specified target.
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  get   Gets the patch history details for the...
+  list  Gets history of the actions taken for patches...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history get --help
+Usage: oci db patch-history get [OPTIONS] COMMAND [ARGS]...
+
+  Gets the patch history details for the specified patchHistoryEntryId
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  by-database   Get patch history for a given database
+  by-db-system  Gets the patch history details for the...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history get by-database --help
+Usage: oci db patch-history get by-database [OPTIONS]
+
+  Get patch history for a given database
+
+Options:
+  --patch-history-entry-id TEXT   The OCID of the patch history entry.
+                                  [required]
+  --database-id TEXT              The database [OCID]. [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history get by-db-system --help
+Usage: oci db patch-history get by-db-system [OPTIONS]
+
+  Gets the patch history details for the specified patchHistoryEntryId.
+
+Options:
+  --db-system-id TEXT             The DB System [OCID]. [required]
+  --patch-history-entry-id TEXT   The OCID of the patch history entry.
+                                  [required]
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history list --help
+Usage: oci db patch-history list [OPTIONS] COMMAND [ARGS]...
+
+  Gets history of the actions taken for patches for the specified database
+  home.
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  by-database   List patch history entries for a given...
+  by-db-system  Gets the history of the patch actions...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history list by-database --help
+Usage: oci db patch-history list by-database [OPTIONS]
+
+  List patch history entries for a given database
+
+Options:
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --database-id TEXT              The database [OCID]. [required]
+  -?, -h, --help                  Show this message and exit.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db patch-history list by-db-system --help
+Usage: oci db patch-history list by-db-system [OPTIONS]
+
+  Gets the history of the patch actions performed on the specified DB System.
+
+Options:
+  --db-system-id TEXT             The DB System [OCID]. [required]
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system --help
 Usage: oci db system [OPTIONS] COMMAND [ARGS]...
 
@@ -3709,6 +4842,7 @@ Commands:
   get        Gets information about the specified DB...
   launch     Launches a new DB System in the specified...
   list       Gets a list of the DB Systems in the...
+  patch      Perform an action on a Patch for a DB System.
   terminate  Terminates a DB System and permanently...
   update     Updates the properties of a DB System, such...
 
@@ -3782,7 +4916,8 @@ Options:
                                   Exadata.Half1.168 - Specify a multiple of 4,
                                   from 44 to 168. - Exadata.Full1.336 - Specify
                                   a multiple of 8, from 88 to 336. [required]
-  --database-edition TEXT         The Oracle Database Edition that applies to
+  --database-edition [STANDARD_EDITION|ENTERPRISE_EDITION|ENTERPRISE_EDITION_EXTREME_PERFORMANCE|ENTERPRISE_EDITION_HIGH_PERFORMANCE]
+                                  The Oracle Database Edition that applies to
                                   all the databases on the DB System.
                                   
                                   Exadata
@@ -3847,7 +4982,8 @@ Options:
                                   The default is 80 percent assigned to DATA
                                   storage. This is not applicable for VM based
                                   DB systems.
-  --disk-redundancy TEXT          The type of redundancy configured for the DB
+  --disk-redundancy [HIGH|NORMAL]
+                                  The type of redundancy configured for the DB
                                   System. Normal is 2-way redundancy,
                                   recommended for test and development systems.
                                   High is 3-way redundancy, recommended for
@@ -3868,30 +5004,12 @@ Options:
                                   attached will be more than what is requested,
                                   to account for REDO/RECO space and software
                                   volume.
-  --license-model TEXT            The Oracle license model that applies to all
+  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
+                                  The Oracle license model that applies to all
                                   the databases on the DB System. The default is
                                   LICENSE_INCLUDED.
   --node-count INTEGER            Number of nodes to launch for a VM-shape based
                                   RAC DB system.
-  --generate-full-command-json-input
-                                  Prints out a JSON document which represents
-                                  all possible options that can be provided to
-                                  this command.
-                                  
-                                  This JSON document can be saved
-                                  to a file, modified with the appropriate
-                                  option values, and then passed back via the
-                                  --from-json option. This provides an
-                                  alternative to typing options out on the
-                                  command line.
-  --generate-param-json-input TEXT
-                                  Complex input, such as arrays and objects, are
-                                  passed in JSON format.
-                                  
-                                  When passed the name
-                                  of an option which takes complex input, this
-                                  will print out example JSON of what needs to
-                                  be passed to that option.
   --admin-password TEXT           A strong password for SYS, SYSTEM, and PDB
                                   Admin. The password must be at least nine
                                   characters and contain at least two uppercase,
@@ -3953,26 +5071,6 @@ Options:
                                   newline character to separate multiple keys.
                                   The length of the combined keys cannot exceed
                                   10,000 characters. [required]
-  --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
-                                  
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
-  -?, -h, --help                  Show this message and exit.
-
-++++++++++++++++++++++++++++++++++++++++++++++
-$ oci db system list --help
-Usage: oci db system list [OPTIONS]
-
-  Gets a list of the DB Systems in the specified compartment.
-
-Options:
-  -c, --compartment-id TEXT       The compartment [OCID]. [required]
-  --limit INTEGER                 The maximum number of items to return.
-  --page TEXT                     The pagination token to continue listing from.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -4001,6 +5099,90 @@ Options:
                                   command line then the command line specified
                                   value will be used
   -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db system list --help
+Usage: oci db system list [OPTIONS]
+
+  Gets a list of the DB Systems in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The compartment [OCID]. [required]
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db system patch --help
+Usage: oci db system patch [OPTIONS]
+
+  Perform an action on a Patch for a DB System.
+
+Options:
+  --db-system-id TEXT             The OCID of the DB System.
+  --patch-action TEXT             The action to perform on the patch.
+  --patch-id TEXT                 The OCID of the patch.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  -?, -h, --help                  Show this message and exit.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system terminate --help
@@ -4063,7 +5245,7 @@ Options:
   --cpu-core-count INTEGER        The number of CPU Cores to be set on the DB
                                   System. Applicable only for non-VM based DB
                                   systems.
-  --data-storage-size-in-gb INTEGER
+  --data-storage-size-in-gbs INTEGER
                                   Size, in GBs, to which the currently attached
                                   storage needs to be scaled up to for VM based
                                   DB system. This must be greater than current
@@ -4080,6 +5262,14 @@ Options:
                                   the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
+  --patch-action TEXT             The action to perform on the patch.
+  --patch-id TEXT                 The OCID of the patch.
+  --ssh-authorized-keys-file FILENAME
+                                  A file containing one or more public SSH keys
+                                  to use for SSH access to the DB System. Use a
+                                  newline character to separate multiple keys.
+                                  The length of the combined keys cannot exceed
+                                  10,000 characters.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -4099,12 +5289,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  --ssh-authorized-keys-file FILENAME
-                                  A file containing one or more public SSH keys
-                                  to use for SSH access to the DB System. Use a
-                                  newline character to separate multiple keys.
-                                  The length of the combined keys cannot exceed
-                                  10,000 characters.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -4148,6 +5332,12 @@ Options:
   -c, --compartment-id TEXT       The compartment [OCID]. [required]
   --limit INTEGER                 The maximum number of items to return.
   --page TEXT                     The pagination token to continue listing from.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -4207,6 +5397,12 @@ Options:
   --db-system-shape TEXT          If provided, filters the results to the set of
                                   database versions which are supported for the
                                   given shape.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -4317,7 +5513,7 @@ $ oci iam compartment --help
 Usage: oci iam compartment [OPTIONS] COMMAND [ARGS]...
 
   A collection of related resources. Compartments are a fundamental component
-  of Oracle Bare Metal Cloud Services for organizing and isolating your cloud
+  of Oracle Cloud Infrastructure for organizing and isolating your cloud
   resources. You use them to clearly separate resources for the purposes of
   measuring usage and billing, access (through the use of IAM Service
   policies), and isolation (separating the resources for one project or
@@ -4351,16 +5547,16 @@ Usage: oci iam compartment create [OPTIONS]
 
   Creates a new compartment in your tenancy.
 
-  **Important:** Compartments cannot be renamed or deleted.
+  **Important:** Compartments cannot be deleted.
 
   You must specify your tenancy's OCID as the compartment ID in the request
   object. Remember that the tenancy is simply the root compartment. For
   information about OCIDs, see [Resource Identifiers].
 
   You must also specify a *name* for the compartment, which must be unique
-  across all compartments in your tenancy and cannot be changed. You can use
-  this name or the OCID when writing policies that apply to the compartment.
-  For more information about policies, see [How Policies Work].
+  across all compartments in your tenancy. You can use this name or the OCID
+  when writing policies that apply to the compartment. For more information
+  about policies, see [How Policies Work].
 
   You must also specify a *description* for the compartment (although it can
   be an empty string). It does not have to be unique, and you can change it
@@ -4470,6 +5666,12 @@ Options:
                                   header from the previous "List" call.
   --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -4503,7 +5705,8 @@ Options:
 $ oci iam compartment update --help
 Usage: oci iam compartment update [OPTIONS]
 
-  Updates the specified compartment's description.
+  Updates the specified compartment's description or name. You can't update
+  the root compartment.
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
@@ -4997,6 +6200,12 @@ Options:
                                   header from the previous "List" call.
   --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -5041,8 +6250,14 @@ Options:
   --group-id TEXT                 The OCID of the user. [required]
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
-  --limit TEXT                    The maximum number of items to return in a
+  --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -5223,14 +6438,28 @@ Options:
                                   creation. The name must be unique across all
                                   policies in the tenancy and cannot be changed.
                                   [required]
-  --statements TEXT               An array of policy statements written in the
+  --statements COMPLEX TYPE       An array of policy statements written in the
                                   policy language. See [How Policies Work] and
-                                  [Common Policies]. [required] This must be
-                                  provided in JSON format. See API reference for
-                                  additional help.
+                                  [Common Policies]. [required]
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  Example: '["statement
-                                  1","statement 2"]'
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  This must be provided in JSON format. See API
+                                  reference for additional help.
+                                  
+                                  Example:
+                                  '["statement 1","statement 2"]'
   --description TEXT              The description you assign to the policy
                                   during creation. Does not have to be unique,
                                   and it's changeable. [required]
@@ -5375,6 +6604,12 @@ Options:
                                   header from the previous "List" call.
   --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -5472,11 +6707,11 @@ Options:
 $ oci iam region --help
 Usage: oci iam region [OPTIONS] COMMAND [ARGS]...
 
-  A localized geographic area, such as Phoenix, AZ. Oracle Bare Metal Cloud
-  Services is hosted in regions and Availability Domains. A region is composed
-  of several Availability Domains. An Availability Domain is one or more data
-  centers located within a region. For more information, see [Regions and
-  Availability Domains].
+  A localized geographic area, such as Phoenix, AZ. Oracle Cloud
+  Infrastructure is hosted in regions and Availability Domains. A region is
+  composed of several Availability Domains. An Availability Domain is one or
+  more data centers located within a region. For more information, see
+  [Regions and Availability Domains].
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -5487,13 +6722,13 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  list  Lists all the regions offered by Oracle Bare...
+  list  Lists all the regions offered by Oracle Cloud...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam region list --help
 Usage: oci iam region list [OPTIONS]
 
-  Lists all the regions offered by Oracle Bare Metal Cloud Services.
+  Lists all the regions offered by Oracle Cloud Infrastructure.
 
 Options:
   --generate-full-command-json-input
@@ -5631,18 +6866,17 @@ $ oci iam user --help
 Usage: oci iam user [OPTIONS] COMMAND [ARGS]...
 
   An individual employee or system that needs to manage or use your company's
-  Oracle Bare Metal Cloud Services resources. Users might need to launch
-  instances, manage remote disks, work with your cloud network, etc. Users
-  have one or more IAM Service credentials ([ApiKey], [UIPassword], and
-  [SwiftPassword]). For more information, see [User Credentials]). End users
-  of your application are not typically IAM Service users. For conceptual
-  information about users and other IAM Service components, see [Overview of
-  the IAM Service].
+  Oracle Cloud Infrastructure resources. Users might need to launch instances,
+  manage remote disks, work with your cloud network, etc. Users have one or
+  more IAM Service credentials ([ApiKey], [UIPassword], and [SwiftPassword]).
+  For more information, see [User Credentials]). End users of your application
+  are not typically IAM Service users. For conceptual information about users
+  and other IAM Service components, see [Overview of the IAM Service].
 
-  These users are created directly within the Oracle Bare Metal Cloud Services
+  These users are created directly within the Oracle Cloud Infrastructure
   system, via the IAM service. They are different from *federated users*, who
-  authenticate themselves to the Oracle Bare Metal Cloud Services Console via
-  an identity provider. For more information, see [Identity Providers and
+  authenticate themselves to the Oracle Cloud Infrastructure Console via an
+  identity provider. For more information, see [Identity Providers and
   Federation].
 
   To use any of the API operations, you must be authorized in an IAM policy.
@@ -5669,8 +6903,8 @@ Commands:
 $ oci iam user api-key --help
 Usage: oci iam user api-key [OPTIONS] COMMAND [ARGS]...
 
-  A PEM-format RSA credential for securing requests to the Oracle Bare Metal
-  Cloud Services REST API. Also known as an *API signing key*. Specifically,
+  A PEM-format RSA credential for securing requests to the Oracle Cloud
+  Infrastructure REST API. Also known as an *API signing key*. Specifically,
   this is the public key from the key pair. The private key remains with the
   user calling the API. For information about generating a key pair in the
   required PEM format, see [Required Keys and OCIDs].
@@ -5877,9 +7111,9 @@ Usage: oci iam user create [OPTIONS]
   A new user has no permissions until you place the user in one or more groups
   (see [AddUserToGroup]). If the user needs to access the Console, you need to
   provide the user a password (see [CreateOrResetUIPassword]). If the user
-  needs to access the Oracle Bare Metal Cloud Services REST API, you need to
-  upload a public API signing key for that user (see [Required Keys and OCIDs]
-  and also [UploadApiKey]).
+  needs to access the Oracle Cloud Infrastructure REST API, you need to upload
+  a public API signing key for that user (see [Required Keys and OCIDs] and
+  also [UploadApiKey]).
 
   **Important:** Make sure to inform the new user which compartment(s) they
   have access to.
@@ -6023,6 +7257,12 @@ Options:
                                   header from the previous "List" call.
   --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -6068,8 +7308,14 @@ Options:
   --user-id TEXT                  The OCID of the user. [required]
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
-  --limit TEXT                    The maximum number of items to return in a
+  --limit INTEGER                 The maximum number of items to return in a
                                   paginated "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -6104,8 +7350,8 @@ $ oci iam user swift-password --help
 Usage: oci iam user swift-password [OPTIONS] COMMAND [ARGS]...
 
   Swift is the OpenStack object storage service. A `SwiftPassword` is an
-  Oracle-provided password for using a Swift client with the Oracle Bare Metal
-  Cloud Services Object Storage Service. This password is associated with the
+  Oracle-provided password for using a Swift client with the Oracle Cloud
+  Infrastructure Object Storage Service. This password is associated with the
   user's Console login. Swift passwords never expire. A user can have up to
   two Swift passwords at a time.
 
@@ -6313,7 +7559,7 @@ $ oci iam user ui-password --help
 Usage: oci iam user ui-password [OPTIONS] COMMAND [ARGS]...
 
   A text password that enables a user to sign in to the Console, the user
-  interface for interacting with Oracle Bare Metal Cloud Services.
+  interface for interacting with Oracle Cloud Infrastructure.
 
   For more information about user credentials, see [User Credentials].
 
@@ -6673,6 +7919,12 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -6805,14 +8057,24 @@ Usage: oci network dhcp-options create [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment to contain the set
                                   of DHCP options. [required]
-  --options TEXT                  A set of DHCP options. [required] This must be
-                                  provided in JSON format. See API reference for
-                                  additional help.
+  --options COMPLEX TYPE          A set of DHCP options. [required]
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  Example: '[{"type":
-                                  "DomainNameServer", "customDnsServers":
-                                  ["202.44.61.9"], "serverType":
-                                  "CustomDnsServer"}]'
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  Example: '[{"type": "DomainNameServer",
+                                  "customDnsServers": ["202.44.61.9"],
+                                  "serverType": "CustomDnsServer"}]'
   --vcn-id TEXT                   The OCID of the VCN the set of DHCP options
                                   belongs to. [required]
   --display-name TEXT             A user-friendly name. Does not have to be
@@ -6953,6 +8215,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -6998,13 +8278,23 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
-  --options TEXT                  This must be provided in JSON format. See API
-                                  reference for additional help.
+  --options COMPLEX TYPE          This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax. 
                                   
-                                  Example:
-                                  '[{"type": "DomainNameServer",
-                                  "customDnsServers": ["202.44.61.9"],
-                                  "serverType": "CustomDnsServer"}]'
+                                  Example: '[{"type":
+                                  "DomainNameServer", "customDnsServers":
+                                  ["202.44.61.9"], "serverType":
+                                  "CustomDnsServer"}]'
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -7050,8 +8340,8 @@ Usage: oci network drg [OPTIONS] COMMAND [ARGS]...
   A Dynamic Routing Gateway (DRG), which is a virtual router that provides a
   path for private network traffic between your VCN and your existing network.
   You use it with other Networking Service components to create an IPSec VPN
-  or a connection that uses Oracle Bare Metal Cloud Services FastConnect. For
-  more information, see [Overview of the Networking Service].
+  or a connection that uses Oracle Cloud Infrastructure FastConnect. For more
+  information, see [Overview of the Networking Service].
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -7223,6 +8513,12 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -7471,6 +8767,12 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -7743,6 +9045,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -7887,7 +9207,7 @@ Options:
                                   IPSec connection. [required]
   --cpe-id TEXT                   The OCID of the CPE. [required]
   --drg-id TEXT                   The OCID of the DRG. [required]
-  --static-routes TEXT            Static routes to the CPE. At least one route
+  --static-routes COMPLEX TYPE    Static routes to the CPE. At least one route
                                   must be included. The CIDR must not be a
                                   multicast address or class E address. This
                                   must be provided in JSON format.
@@ -8113,6 +9433,12 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -8350,6 +9676,12 @@ Options:
                                   Example: `10.0.3.3`
   --subnet-id TEXT                The OCID of the subnet.
   --vnic-id TEXT                  The OCID of the VNIC.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -8497,15 +9829,25 @@ Usage: oci network route-table create [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment to contain the
                                   route table. [required]
-  --route-rules TEXT              The collection of rules used for routing
+  --route-rules COMPLEX TYPE      The collection of rules used for routing
                                   destination IPs to network devices. [required]
-                                  This must be provided in JSON format. See API
-                                  reference for additional help.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax. 
                                   
-                                  Example: '[{"c
-                                  idrBlock":"0.0.0.0/0","networkEntityId":"ocid1
-                                  .internetgateway.oc1.phx.aaaaaaaaxtfqb2srw7hoi
-                                  5cmdum4n6ow2xm2zhrzqqypmlteiiebtmvl75ya"}]'
+                                  Example: '[{"cidrBlock":"0.0.0.0/0",
+                                  "networkEntityId":"ocid1.internetgateway.oc1.p
+                                  hx.aaaaaaaaxtfqb2srw7hoi5cmdum4n6ow2xm2zhrzqqy
+                                  pmlteiiebtmvl75ya"}]'
   --vcn-id TEXT                   The OCID of the VCN the route table belongs
                                   to. [required]
   --display-name TEXT             A user-friendly name. Does not have to be
@@ -8645,6 +9987,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -8689,15 +10049,26 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
-  --route-rules TEXT              The collection of rules used for routing
-                                  destination IPs to network devices. This must
-                                  be provided in JSON format. See API reference
-                                  for additional help.
+  --route-rules COMPLEX TYPE      The collection of rules used for routing
+                                  destination IPs to network devices.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  Example: '[{"cidrBlock":
-                                  "0.0.0.0/0","networkEntityId":"ocid1.internetg
-                                  ateway.oc1.phx.aaaaaaaaxtfqb2srw7hoi5cmdum4n6o
-                                  w2xm2zhrzqqypmlteiiebtmvl75ya"}]'
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  Example: '[{"cidrBlock":"0.0.0.0/0","networkEn
+                                  tityId":"ocid1.internetgateway.oc1.phx.aaaaaaa
+                                  axtfqb2srw7hoi5cmdum4n6ow2xm2zhrzqqypmlteiiebt
+                                  mvl75ya"}]'
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -8745,11 +10116,11 @@ Usage: oci network security-list [OPTIONS] COMMAND [ARGS]...
   traffic for the individual instances in the subnet. The rules can be
   stateful or stateless. For more information, see [Security Lists].
 
-  **Important:** Oracle Bare Metal Cloud Services images automatically include
-  firewall rules (for example, Linux iptables, Windows firewall). If there are
-  issues with some type of access to an instance, make sure both the security
-  lists associated with the instance's subnet and the instance's firewall
-  rules are set correctly.
+  **Important:** Oracle Cloud Infrastructure Compute service images
+  automatically include firewall rules (for example, Linux iptables, Windows
+  firewall). If there are issues with some type of access to an instance, make
+  sure both the security lists associated with the instance's subnet and the
+  instance's firewall rules are set correctly.
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -8790,22 +10161,52 @@ Usage: oci network security-list create [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment to contain the
                                   security list. [required]
-  --egress-security-rules TEXT    Rules for allowing egress IP packets.
-                                  [required] This must be provided in JSON
-                                  format. See API reference for additional help.
-                                  Example: '[{"destination": "10.0.2.0/24",
-                                  "protocol": "6", "isStateless": true,
-                                  "tcpOptions": {"destinationPortRange": {"max":
-                                  1521, "min": 1521}, "sourcePortRange": {"max":
-                                  1521, "min": 1521}}}]'
-  --ingress-security-rules TEXT   Rules for allowing ingress IP packets.
-                                  [required] This must be provided in JSON
-                                  format. See API reference for additional help.
-                                  Example: '[{"source": "10.0.2.0/24",
-                                  "protocol": "6", "isStateless": true,
-                                  "tcpOptions": {"destinationPortRange": {"max":
-                                  1521, "min": 1521}, "sourcePortRange": {"max":
-                                  1521, "min": 1521}}}]'
+  --egress-security-rules COMPLEX TYPE
+                                  Rules for allowing egress IP packets.
+                                  [required]
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax. 
+                                  
+                                  Example: '[{"destination":
+                                  "10.0.2.0/24", "protocol": "6", "isStateless":
+                                  true, "tcpOptions": {"destinationPortRange":
+                                  {"max": 1521, "min": 1521}, "sourcePortRange":
+                                  {"max": 1521, "min": 1521}}}]'
+  --ingress-security-rules COMPLEX TYPE
+                                  Rules for allowing ingress IP packets.
+                                  [required]
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax. 
+                                  
+                                  Example: '[{"source":
+                                  "10.0.2.0/24", "protocol": "6", "isStateless":
+                                  true, "tcpOptions": {"destinationPortRange":
+                                  {"max": 1521, "min": 1521}, "sourcePortRange":
+                                  {"max": 1521, "min": 1521}}}]'
   --vcn-id TEXT                   The OCID of the VCN the security list belongs
                                   to. [required]
   --display-name TEXT             A user-friendly name. Does not have to be
@@ -8943,6 +10344,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -8987,26 +10406,48 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
-  --egress-security-rules TEXT    Rules for allowing egress IP packets. This
-                                  must be provided in JSON format. See API
-                                  reference for additional help.
+  --egress-security-rules COMPLEX TYPE
+                                  Rules for allowing egress IP packets.
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  Example:
-                                  '[{"destination": "10.0.2.0/24", "protocol":
-                                  "6", "isStateless": true, "tcpOptions":
-                                  {"destinationPortRange": {"max": 1521, "min":
-                                  1521}, "sourcePortRange": {"max": 1521, "min":
-                                  1521}}}]'
-  --ingress-security-rules TEXT   Rules for allowing ingress IP packets. This
-                                  must be provided in JSON format. See API
-                                  reference for additional help.
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  Example: '[{"destination": "10.0.2.0/24",
+                                  "protocol": "6", "isStateless": true,
+                                  "tcpOptions": {"destinationPortRange": {"max":
+                                  1521, "min": 1521}, "sourcePortRange": {"max":
+                                  1521, "min": 1521}}}]'
+  --ingress-security-rules COMPLEX TYPE
+                                  Rules for allowing ingress IP packets.
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  Example:
-                                  '[{"source": "10.0.2.0/24", "protocol": "6",
-                                  "isStateless": true, "tcpOptions":
-                                  {"destinationPortRange": {"max": 1521, "min":
-                                  1521}, "sourcePortRange": {"max": 1521, "min":
-                                  1521}}}]'
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  Example: '[{"source": "10.0.2.0/24",
+                                  "protocol": "6", "isStateless": true,
+                                  "tcpOptions": {"destinationPortRange": {"max":
+                                  1521, "min": 1521}, "sourcePortRange": {"max":
+                                  1521, "min": 1521}}}]'
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -9161,17 +10602,32 @@ Options:
   --route-table-id TEXT           The OCID of the route table the subnet will
                                   use. If you don't provide a value, the subnet
                                   will use the VCN's default route table.
-  --security-list-ids TEXT        OCIDs for the security lists to associate with
+  --security-list-ids COMPLEX TYPE
+                                  OCIDs for the security lists to associate with
                                   the subnet. If you don't provide a value, the
                                   VCN's default security list will be associated
                                   with the subnet. Remember that security lists
                                   are associated at the subnet level, but the
                                   rules are applied to the individual VNICs in
-                                  the subnet. This must be provided in JSON
-                                  format. See API reference for additional help.
-                                  Example: '["ocid1.securitylist.oc1.phx.aaaaaaa
-                                  adyndu2n3hcmdsjfiljwyq7vpxsvv7ynp4ori7aealcvhz
-                                  icnzhyq"]'
+                                  the subnet.
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax. 
+                                  
+                                  Example: '["ocid1.securityli
+                                  st.oc1.phx.aaaaaaaadyndu2n3hcmdsjfiljwyq7vpxsv
+                                  v7ynp4ori7aealcvhzicnzhyq"]'
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -9302,6 +10758,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -9415,8 +10889,8 @@ Usage: oci network vcn create [OPTIONS]
   premises network. You can't change the size of the VCN after creation.
 
   For the purposes of access control, you must provide the OCID of the
-  compartment where you want the VCN to reside. Consult an Oracle Bare Metal
-  Cloud Services administrator in your organization if you're not sure which
+  compartment where you want the VCN to reside. Consult an Oracle Cloud
+  Infrastructure administrator in your organization if you're not sure which
   compartment to use. Notice that the VCN doesn't have to be in the same
   compartment as the subnets or other Networking Service components. For more
   information about compartments and access control, see [Overview of the IAM
@@ -9595,6 +11069,24 @@ Options:
                                   Example: `500`
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --display-name TEXT             A filter to only return resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  Only one sort order may
+                                  be provided.  Time created is default ordered
+                                  as descending. Display name is default ordered
+                                  as ascending.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -9739,6 +11231,10 @@ Options:
                                   from the subnet.
                                   
                                   Example: `10.0.3.3`
+  --unassign-if-already-assigned  Force reassignment of the IP address if it's
+                                  already assigned to another VNIC in the
+                                  subnet. This is only relevant if an IP address
+                                  is associated with this command.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -9758,10 +11254,6 @@ Options:
                                   of an option which takes complex input, this
                                   will print out example JSON of what needs to
                                   be passed to that option.
-  --unassign-if-already-assigned  Force reassignment of the IP address if it's
-                                  already assigned to another VNIC in the
-                                  subnet. This is only relevant if an IP address
-                                  is associated with this command.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -9988,6 +11480,14 @@ Options:
                                   public access. When the type is ObjectRead the
                                   bucket allows public access to the GetObject
                                   operation only.
+  --storage-tier [Standard|Archive]
+                                  The type of storage tier for this bucket. A
+                                  bucket is set to Standard tier by default,
+                                  which means the bucket will be put in the
+                                  standard storage tier. When the Archive tier
+                                  type is set explicitly, the bucket is put in
+                                  the Archive Storage tier. The storage-tier
+                                  property is immutable after bucket is created.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -10124,6 +11624,12 @@ Options:
                                   [default: 100]
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -10322,7 +11828,9 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  get  Gets the name of the namespace for the user...
+  get              Gets the name of the namespace for the user...
+  get-metadata     Get the metadata for the namespace, which...
+  update-metadata  Change the default Swift/S3 compartmentId of...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os ns get --help
@@ -10363,6 +11871,100 @@ Options:
   -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci os ns get-metadata --help
+Usage: oci os ns get-metadata [OPTIONS]
+
+  Get the metadata for the namespace, which contains defaultS3CompartmentId
+  and defaultSwiftCompartmentId. Any user with the NAMESPACE_READ permission
+  will be able to see the current metadata. If you're not authorized, talk to
+  an administrator. If you're an administrator who needs to write policies to
+  give users access, see [Getting Started with Policies].
+
+Options:
+  -ns, --namespace TEXT           The top-level namespace used for the request.
+                                  [required]
+  --opc-client-request-id TEXT    The client request ID for tracing.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci os ns update-metadata --help
+Usage: oci os ns update-metadata [OPTIONS]
+
+  Change the default Swift/S3 compartmentId of user's namespace into the user-
+  defined compartmentId. Upon doing this, all subsequent bucket creations will
+  use the new default compartment, but no previously created buckets will be
+  modified. A user must have the NAMESPACE_UPDATE permission to make changes
+  to the default compartments for S3 and Swift.
+
+Options:
+  -ns, --namespace TEXT           The top-level namespace used for the request.
+                                  [required]
+  --default-s3-compartment-id TEXT
+                                  The update compartment id for an S3 client if
+                                  this field is set. Avoid entering confidential
+                                  information.
+  --default-swift-compartment-id TEXT
+                                  The update compartment id for a Swift client
+                                  if this field is set. Avoid entering
+                                  confidential information.
+  --opc-client-request-id TEXT    The client request ID for tracing.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object --help
 Usage: oci os object [OPTIONS] COMMAND [ARGS]...
 
@@ -10372,12 +11974,14 @@ Options:
 Commands:
   bulk-delete    Deletes all objects in a bucket which match...
   bulk-download  Downloads all objects which match the given...
-  bulk-upload    Uploads all objects in a given directory and...
+  bulk-upload    Uploads all files in a given directory and...
   delete         Deletes an object.
   get            Gets the metadata and body of an object.
   head           Gets the user-defined metadata and entity tag...
   list           Lists the objects in a bucket.
   put            Creates a new object or overwrites an...
+  rename         Rename an object from source key to target...
+  restore        Restore an object by specifying the name...
   resume-put     Resume a previous multipart put.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -10601,6 +12205,13 @@ Options:
                                   download times, but the upload process will
                                   consume more system resources and network
                                   bandwidth.  [default: 10]
+  --multipart-download-threshold INTEGER RANGE
+                                  Objects larger than this size (in MiB) will be
+                                  downloaded in multiple parts. The minimum
+                                  allowable threshold is 128 MiB.
+  --part-size INTEGER RANGE       Part size (in MiB) to use when downloading an
+                                  object in multiple parts. The minimum
+                                  allowable size is 128 MiB.
   --include TEXT                  Only download objects which match the provided
                                   pattern. Patterns are taken relative to the
                                   DOWNLOAD directory. This option can be
@@ -10662,7 +12273,7 @@ Options:
 $ oci os object bulk-upload --help
 Usage: oci os object bulk-upload [OPTIONS]
 
-  Uploads all objects in a given directory and all subdirectories.
+  Uploads all files in a given directory and all subdirectories.
 
   Examples
   ========
@@ -10685,7 +12296,8 @@ Usage: oci os object bulk-upload [OPTIONS]
   oci os object bulk-upload -ns mynamespace -bn mybucket --src-dir path/to/upload/directory --overwrite
 
   If a file being uploaded already exists in Object Storage, it can be overwritten without a prompt by
-  using the --overwrite flag.
+  using the --overwrite flag. Specifying --overwrite will also allow for faster uploads as the CLI will not
+  initially check whether or not the files already exist in Object Storage.
 
   Prevent object overwrite to resolve object name collision
   ----------------------------------------------------------
@@ -10717,7 +12329,11 @@ Options:
                                   in Object Storage without a confirmation
                                   prompt. If neither this flag nor --no-
                                   overwrite is specified, you will be prompted
-                                  each time an object would be overwritten
+                                  each time an object would be overwritten.
+                                  Specifying this flag will also allow for
+                                  faster uploads as the CLI will not initially
+                                  check whether or not the files already exist
+                                  in Object Storage.
   --no-overwrite                  If a file being uploaded already exists in
                                   Object Storage, do not overwite it. If neither
                                   this flag nor --overwrite is specified, you
@@ -10869,6 +12485,22 @@ Options:
   --range TEXT                    Byte range to fetch. Follows https://tools.iet
                                   f.org/html/rfc7233#section-2.1. Example:
                                   bytes=2-10
+  --multipart-download-threshold INTEGER RANGE
+                                  Objects larger than this size (in MiB) will be
+                                  downloaded in multiple parts. The minimum
+                                  allowable threshold is 128 MiB.
+  --part-size INTEGER RANGE       Part size (in MiB) to use when downloading an
+                                  object in multiple parts. The minimum
+                                  allowable size is 128 MiB.
+  --parallel-download-count INTEGER
+                                  The number of parallel operations to perform
+                                  when downloading an object in multiple parts.
+                                  Decreasing this value will make multipart
+                                  downloads less resource intensive but they may
+                                  take longer. Increasing this value may improve
+                                  download times, but the download process will
+                                  consume more system resources and network
+                                  bandwidth.  [default: 10]
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -10964,6 +12596,12 @@ Options:
                                   will be returned.
   --limit INTEGER                 The maximum number of items to return.
                                   [default: 100]
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
   --delimiter TEXT                When this parameter is set, only objects whose
                                   names do not contain the delimiter character
                                   (after an optionally specified prefix) are
@@ -11016,6 +12654,24 @@ Usage: oci os object put [OPTIONS]
 
   Creates a new object or overwrites an existing one.
 
+  The object can be uploaded as a single part or as multiple parts. Below are
+  the rules for whether an object will be uploaded via single or multipart
+  upload (listed in order of precedence):
+
+      * If the object is being uploaded from STDIN, it will be uploaded as a
+      multipart upload (if the object content is smaller than --part-size,
+      default for STDIN is 10 MiB, the multipart upload may contain only one
+      part, but it will still use the MultipartUpload API)
+
+      * If the --no-multipart flag is specified, the object will be uploaded
+      as a single part regardless of size (specifying --no-multipart when
+      uploading from STDIN will result in an error)
+
+      * If the object is larger than --part-size, it will be uploaded as
+      multiple parts (the default part size is 128 MiB)
+
+      * If the object is empty it will be uploaded as a single part
+
   Example:     oci os object put -ns mynamespace -bn mybucket --name
   myfile.txt --file /Users/me/myfile.txt --metadata
   '{"key1":"value1","key2":"value2"}'
@@ -11055,6 +12711,100 @@ Options:
                                   in parallel. This option cannot be used with
                                   --disable-parallel-uploads or --no-multipart.
                                   Defaults to 3.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci os object rename --help
+Usage: oci os object rename [OPTIONS]
+
+  Rename an object from source key to target key in the given namespace.
+
+Options:
+  -ns, --namespace TEXT           The top-level namespace used for the request.
+                                  [required]
+  -bn, --bucket TEXT              The name of the bucket. Avoid entering
+                                  confidential information. Example: `my-new-
+                                  bucket1` [required]
+  --name TEXT                     The name of the object to rename. Avoid
+                                  entering confidential information. [required]
+  --new-name TEXT                 The new name of the object. Avoid entering
+                                  confidential information. [required]
+  --src-if-match TEXT             The if-match entity tag of the source object.
+  --new-if-match TEXT             The if-match entity tag of the new object.
+  --new-if-none-match TEXT        The if-none-match entity tag of the new
+                                  object.
+  --opc-client-request-id TEXT    The client request ID for tracing.
+  --generate-full-command-json-input
+                                  Prints out a JSON document which represents
+                                  all possible options that can be provided to
+                                  this command.
+                                  
+                                  This JSON document can be saved
+                                  to a file, modified with the appropriate
+                                  option values, and then passed back via the
+                                  --from-json option. This provides an
+                                  alternative to typing options out on the
+                                  command line.
+  --generate-param-json-input TEXT
+                                  Complex input, such as arrays and objects, are
+                                  passed in JSON format.
+                                  
+                                  When passed the name
+                                  of an option which takes complex input, this
+                                  will print out example JSON of what needs to
+                                  be passed to that option.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci os object restore --help
+Usage: oci os object restore [OPTIONS]
+
+  Restore an object by specifying the name parameter.
+
+Options:
+  -ns, --namespace TEXT           The top-level namespace used for the request.
+                                  [required]
+  -bn, --bucket TEXT              The name of the bucket. Avoid entering
+                                  confidential information. Example: `my-new-
+                                  bucket1` [required]
+  --name TEXT                     A object which was in an archived state and
+                                  need to be restored. [required]
+  --opc-client-request-id TEXT    The client request ID for tracing.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
                                   all possible options that can be provided to
@@ -11156,7 +12906,7 @@ Options:
 
 Commands:
   create  Creates a pre-authenticated request.
-  delete  Deletes a pre-authenticateted request.
+  delete  Deletes a pre-authenticated request.
   get     Gets a pre-authenticated request.
   list    Lists pre-authenticated requests for the...
 
@@ -11277,7 +13027,7 @@ Options:
 $ oci os preauth-request delete --help
 Usage: oci os preauth-request delete [OPTIONS]
 
-  Deletes a pre-authenticateted request.
+  Deletes a pre-authenticated request.
 
 Options:
   -ns, --namespace TEXT           The top-level namespace used for the request.
@@ -11385,8 +13135,14 @@ Options:
   --object-name-prefix TEXT       Pre-authenticated requests returned by the
                                   list must have object names starting with
                                   prefix
-  --limit TEXT                    The maximum number of items to return.
+  --limit INTEGER                 The maximum number of items to return.
   --page TEXT                     The page at which to start retrieving results.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --opc-client-request-id TEXT    The client request ID for tracing.
   --generate-full-command-json-input
                                   Prints out a JSON document which represents
@@ -11427,9 +13183,11 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  autocomplete  Interactive script to set up tab completion...
-  config        Interactive script to generate oci config...
-  keys          Generates an RSA key pair.
+  autocomplete             Interactive script to set up tab completion...
+  config                   Interactive script to generate oci config...
+  keys                     Generates an RSA key pair.
+  oci-cli-rc               Generates a oci_cli_rc file that can contain...
+  repair-file-permissions  Resets permissions on a given file to an...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci setup autocomplete --help
@@ -11469,4 +13227,34 @@ Options:
   --overwrite                 An option to overwrite existing files without a
                               confirmation prompt.
   -?, -h, --help              Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci setup oci-cli-rc --help
+Usage: oci setup oci-cli-rc [OPTIONS]
+
+  Generates a oci_cli_rc file that can contain parameter default values and
+  other configuration information such as command aliases and predefined
+  queries.
+
+  This command will populate the file with some default aliases and predefined
+  queries.
+
+Options:
+  --file FILENAME  The file into which default aliases and predefined queries
+                   will be loaded  [required]
+  -?, -h, --help   Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci setup repair-file-permissions --help
+Usage: oci setup repair-file-permissions [OPTIONS]
+
+  Resets permissions on a given file to an appropriate access level for
+  sensitive files. Generally this is used to fix permissions on a private key
+  file or config file to meet the requirements of the CLI. On Windows, full
+  control will be given to System, Administrators, and the current user.  On
+  Unix, Read / Write permissions will be given to the current user.
+
+Options:
+  --file TEXT     The file to repair permissions on.  [required]
+  -?, -h, --help  Show this message and exit.
 

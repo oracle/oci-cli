@@ -3,18 +3,22 @@
 
 from __future__ import print_function
 import click
+import six
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
+from .. import retry_utils  # noqa: F401
+from .. import custom_types  # noqa: F401
+from ..aliasing import CommandGroupWithAlias
 
 
-@cli.group(cli_util.override('identity_group.command_name', 'identity'), help=cli_util.override('identity_group.help', """APIs for managing users, groups, compartments, and policies."""))
+@cli.command(cli_util.override('identity_group.command_name', 'identity'), cls=CommandGroupWithAlias, help=cli_util.override('identity_group.help', """APIs for managing users, groups, compartments, and policies."""))
 @cli_util.help_option_group
 def identity_group():
     pass
 
 
-@click.group(cli_util.override('availability_domain_group.command_name', 'availability-domain'), help="""One or more isolated, fault-tolerant Oracle data centers that host cloud resources such as instances, volumes,
+@click.command(cli_util.override('availability_domain_group.command_name', 'availability-domain'), cls=CommandGroupWithAlias, help="""One or more isolated, fault-tolerant Oracle data centers that host cloud resources such as instances, volumes,
 and subnets. A region contains several Availability Domains. For more information, see
 [Regions and Availability Domains].""")
 @cli_util.help_option_group
@@ -22,7 +26,7 @@ def availability_domain_group():
     pass
 
 
-@click.group(cli_util.override('customer_secret_key_group.command_name', 'customer-secret-key'), help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's
+@click.command(cli_util.override('customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's
 [Amazon S3 compatible API].
 A user can have up to two secret keys at a time.
 
@@ -34,9 +38,9 @@ def customer_secret_key_group():
     pass
 
 
-@click.group(cli_util.override('idp_group_mapping_group.command_name', 'idp-group-mapping'), help="""A mapping between a single group defined by the identity provider (IdP) you're federating with
-and a single IAM Service [group] in Oracle Bare Metal Cloud
-Services. For more information about group mappings and what they're for, see
+@click.command(cli_util.override('idp_group_mapping_group.command_name', 'idp-group-mapping'), cls=CommandGroupWithAlias, help="""A mapping between a single group defined by the identity provider (IdP) you're federating with
+and a single IAM Service [group] in Oracle Cloud Infrastructure.
+For more information about group mappings and what they're for, see
 [Identity Providers and Federation].
 
 A given IdP group can be mapped to zero, one, or multiple IAM Service groups, and vice versa.
@@ -44,14 +48,14 @@ But each `IdPGroupMapping` object is between only a single IdP group and IAM Ser
 Each `IdPGroupMapping` object has its own OCID.
 
 **Note:** Any users who are in more than 50 IdP groups cannot be authenticated to use the Oracle
-Bare Metal Cloud Services Console.""")
+Cloud Infrastructure Console.""")
 @cli_util.help_option_group
 def idp_group_mapping_group():
     pass
 
 
-@click.group(cli_util.override('tenancy_group.command_name', 'tenancy'), help="""The root compartment that contains all of your organization's compartments and other
-Oracle Bare Metal Cloud Services cloud resources. When you sign up for Oracle Bare Metal Cloud Services,
+@click.command(cli_util.override('tenancy_group.command_name', 'tenancy'), cls=CommandGroupWithAlias, help="""The root compartment that contains all of your organization's compartments and other
+Oracle Cloud Infrastructure cloud resources. When you sign up for Oracle Cloud Infrastructure,
 Oracle creates a tenancy for your company, which is a secure and isolated partition
 where you can create, organize, and administer your cloud resources.
 
@@ -63,14 +67,14 @@ def tenancy_group():
     pass
 
 
-@click.group(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a
+@click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a
 `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
 @cli_util.help_option_group
 def user_group_membership_group():
     pass
 
 
-@click.group(cli_util.override('identity_provider_group.command_name', 'identity-provider'), help="""The resulting base object when you add an identity provider to your tenancy. A
+@click.command(cli_util.override('identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A
 [Saml2IdentityProvider]
 is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each
 `IdentityProvider` object has its own OCID. For more information, see
@@ -84,8 +88,8 @@ def identity_provider_group():
     pass
 
 
-@click.group(cli_util.override('ui_password_group.command_name', 'ui-password'), help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Bare
-Metal Cloud Services.
+@click.command(cli_util.override('ui_password_group.command_name', 'ui-password'), cls=CommandGroupWithAlias, help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle
+Cloud Infrastructure.
 
 For more information about user credentials, see [User Credentials].""")
 @cli_util.help_option_group
@@ -93,7 +97,7 @@ def ui_password_group():
     pass
 
 
-@click.group(cli_util.override('api_key_group.command_name', 'api-key'), help="""A PEM-format RSA credential for securing requests to the Oracle Bare Metal Cloud Services REST API. Also known
+@click.command(cli_util.override('api_key_group.command_name', 'api-key'), cls=CommandGroupWithAlias, help="""A PEM-format RSA credential for securing requests to the Oracle Cloud Infrastructure REST API. Also known
 as an *API signing key*. Specifically, this is the public key from the key pair. The private key remains with
 the user calling the API. For information about generating a key pair
 in the required PEM format, see [Required Keys and OCIDs].
@@ -108,7 +112,7 @@ def api_key_group():
     pass
 
 
-@click.group(cli_util.override('region_subscription_group.command_name', 'region-subscription'), help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that
+@click.command(cli_util.override('region_subscription_group.command_name', 'region-subscription'), cls=CommandGroupWithAlias, help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that
 access, and whether that region is the home region. For more information, see [Managing Regions].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
@@ -119,7 +123,7 @@ def region_subscription_group():
     pass
 
 
-@click.group(cli_util.override('compartment_group.command_name', 'compartment'), help="""A collection of related resources. Compartments are a fundamental component of Oracle Bare Metal Cloud Services
+@click.command(cli_util.override('compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure
 for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes
 of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the
 resources for one project or business unit from another). A common approach is to create a compartment for each
@@ -140,7 +144,7 @@ def compartment_group():
     pass
 
 
-@click.group(cli_util.override('region_group.command_name', 'region'), help="""A localized geographic area, such as Phoenix, AZ. Oracle Bare Metal Cloud Services is hosted in regions and Availability
+@click.command(cli_util.override('region_group.command_name', 'region'), cls=CommandGroupWithAlias, help="""A localized geographic area, such as Phoenix, AZ. Oracle Cloud Infrastructure is hosted in regions and Availability
 Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers
 located within a region. For more information, see [Regions and Availability Domains].
 
@@ -152,8 +156,8 @@ def region_group():
     pass
 
 
-@click.group(cli_util.override('swift_password_group.command_name', 'swift-password'), help="""Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a
-Swift client with the Oracle Bare Metal Cloud Services Object Storage Service. This password is associated with
+@click.command(cli_util.override('swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a
+Swift client with the Oracle Cloud Infrastructure Object Storage Service. This password is associated with
 the user's Console login. Swift passwords never expire. A user can have up to two Swift passwords at a time.
 
 **Note:** The password is always an Oracle-generated string; you can't change it to a string of your choice.
@@ -164,7 +168,7 @@ def swift_password_group():
     pass
 
 
-@click.group(cli_util.override('user_group.command_name', 'user'), help="""An individual employee or system that needs to manage or use your company's Oracle Bare Metal Cloud Services
+@click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure
 resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users
 have one or more IAM Service credentials ([ApiKey],
 [UIPassword], and [SwiftPassword]).
@@ -172,9 +176,9 @@ For more information, see [User Credentials]). End users of your
 application are not typically IAM Service users. For conceptual information about users and other IAM Service
 components, see [Overview of the IAM Service].
 
-These users are created directly within the Oracle Bare Metal Cloud Services system, via the IAM service.
-They are different from *federated users*, who authenticate themselves to the Oracle Bare Metal
-Cloud Services Console via an identity provider. For more information, see
+These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service.
+They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure
+Console via an identity provider. For more information, see
 [Identity Providers and Federation].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
@@ -185,7 +189,7 @@ def user_group():
     pass
 
 
-@click.group(cli_util.override('group_group.command_name', 'group'), help="""A collection of users who all need the same type of access to a particular set of resources or compartment.
+@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment.
 For conceptual information about groups and other IAM Service components, see
 [Overview of the IAM Service].
 
@@ -203,7 +207,7 @@ def group_group():
     pass
 
 
-@click.group(cli_util.override('policy_group.command_name', 'policy'), help="""A document that specifies the type of access a group has to the resources in a compartment. For information about
+@click.command(cli_util.override('policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about
 policies and other IAM Service components, see
 [Overview of the IAM Service]. If you're new to policies, see
 [Getting Started with Policies].
@@ -266,11 +270,11 @@ def add_user_to_group(ctx, generate_full_command_json_input, generate_param_json
 
 @compartment_group.command(name=cli_util.override('create_compartment.command_name', 'create'), help="""Creates a new compartment in your tenancy.
 
-**Important:** Compartments cannot be renamed or deleted.
+**Important:** Compartments cannot be deleted.
 
 You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
-You must also specify a *name* for the compartment, which must be unique across all compartments in your tenancy and cannot be changed. You can use this name or the OCID when writing policies that apply to the compartment. For more information about policies, see [How Policies Work].
+You must also specify a *name* for the compartment, which must be unique across all compartments in your tenancy. You can use this name or the OCID when writing policies that apply to the compartment. For more information about policies, see [How Policies Work].
 
 You must also specify a *description* for the compartment (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCompartment].
 
@@ -348,6 +352,9 @@ def create_customer_secret_key(ctx, generate_full_command_json_input, generate_p
     cli_util.load_context_obj_values_from_defaults(ctx)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, True)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
 
@@ -429,10 +436,10 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @click.option('--compartment-id', help="""The OCID of your tenancy. [required]""")
 @click.option('--name', help="""The name you assign to the `IdentityProvider` during creation. The name must be unique across all `IdentityProvider` objects in the tenancy and cannot be changed. [required]""")
 @click.option('--description', help="""The description you assign to the `IdentityProvider` during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--product-type', help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
+@click.option('--product-type', type=custom_types.CliCaseInsensitiveChoice(["IDCS", "ADFS"]), help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
 
 Example: `IDCS` [required]""")
-@click.option('--protocol', help="""The protocol used for federation.
+@click.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
 
 Example: `SAML2` [required]""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -508,6 +515,9 @@ def create_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
     group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
     identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
 
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -552,6 +562,9 @@ def create_or_reset_ui_password(ctx, generate_full_command_json_input, generate_
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.create_or_reset_ui_password(
@@ -574,9 +587,9 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 New policies take effect typically within 10 seconds.""")
 @click.option('--compartment-id', help="""The OCID of the compartment containing the policy (either the tenancy or another compartment). [required]""")
 @click.option('--name', help="""The name you assign to the policy during creation. The name must be unique across all policies in the tenancy and cannot be changed. [required]""")
-@click.option('--statements', help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. [required]""")
+@click.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--description', help="""The description you assign to the policy during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--version-date', type=click.STRING, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--version-date', type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -654,6 +667,9 @@ def create_region_subscription(ctx, generate_full_command_json_input, generate_p
     region_key = cli_util.coalesce_provided_and_default_value(ctx, 'region-key', region_key, True)
     tenancy_id = cli_util.coalesce_provided_and_default_value(ctx, 'tenancy-id', tenancy_id, True)
 
+    if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
+        raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -699,6 +715,9 @@ def create_swift_password(ctx, generate_full_command_json_input, generate_param_
     description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -723,7 +742,7 @@ You must also specify a *description* for the user (although it can be an empty 
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.
 
-A new user has no permissions until you place the user in one or more groups (see [AddUserToGroup]). If the user needs to access the Console, you need to provide the user a password (see [CreateOrResetUIPassword]). If the user needs to access the Oracle Bare Metal Cloud Services REST API, you need to upload a public API signing key for that user (see [Required Keys and OCIDs] and also [UploadApiKey]).
+A new user has no permissions until you place the user in one or more groups (see [AddUserToGroup]). If the user needs to access the Console, you need to provide the user a password (see [CreateOrResetUIPassword]). If the user needs to access the Oracle Cloud Infrastructure REST API, you need to upload a public API signing key for that user (see [Required Keys and OCIDs] and also [UploadApiKey]).
 
 **Important:** Make sure to inform the new user which compartment(s) they have access to.""")
 @click.option('--compartment-id', help="""The OCID of the tenancy containing the user. [required]""")
@@ -801,6 +820,12 @@ def delete_api_key(ctx, generate_full_command_json_input, generate_param_json_in
     fingerprint = cli_util.coalesce_provided_and_default_value(ctx, 'fingerprint', fingerprint, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(fingerprint, six.string_types) and len(fingerprint.strip()) == 0:
+        raise click.UsageError('Parameter --fingerprint cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -843,6 +868,12 @@ def delete_customer_secret_key(ctx, generate_full_command_json_input, generate_p
     customer_secret_key_id = cli_util.coalesce_provided_and_default_value(ctx, 'customer-secret-key-id', customer_secret_key_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -883,6 +914,9 @@ def delete_group(ctx, generate_full_command_json_input, generate_param_json_inpu
     group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+        raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -921,6 +955,9 @@ def delete_identity_provider(ctx, generate_full_command_json_input, generate_par
     cli_util.load_context_obj_values_from_defaults(ctx)
     identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -963,6 +1000,12 @@ def delete_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
     mapping_id = cli_util.coalesce_provided_and_default_value(ctx, 'mapping-id', mapping_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
+    if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1002,6 +1045,9 @@ def delete_policy(ctx, generate_full_command_json_input, generate_param_json_inp
     cli_util.load_context_obj_values_from_defaults(ctx)
     policy_id = cli_util.coalesce_provided_and_default_value(ctx, 'policy-id', policy_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1044,6 +1090,12 @@ def delete_swift_password(ctx, generate_full_command_json_input, generate_param_
     swift_password_id = cli_util.coalesce_provided_and_default_value(ctx, 'swift-password-id', swift_password_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(swift_password_id, six.string_types) and len(swift_password_id.strip()) == 0:
+        raise click.UsageError('Parameter --swift-password-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1084,6 +1136,9 @@ def delete_user(ctx, generate_full_command_json_input, generate_param_json_input
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1122,6 +1177,9 @@ def get_compartment(ctx, generate_full_command_json_input, generate_param_json_i
     cli_util.load_context_obj_values_from_defaults(ctx)
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
 
+    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+        raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_compartment(
@@ -1158,6 +1216,9 @@ def get_group(ctx, generate_full_command_json_input, generate_param_json_input, 
     cli_util.load_context_obj_values_from_defaults(ctx)
     group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
 
+    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+        raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_group(
@@ -1191,6 +1252,9 @@ def get_identity_provider(ctx, generate_full_command_json_input, generate_param_
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
@@ -1228,6 +1292,12 @@ def get_idp_group_mapping(ctx, generate_full_command_json_input, generate_param_
     identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
     mapping_id = cli_util.coalesce_provided_and_default_value(ctx, 'mapping-id', mapping_id, True)
 
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
+    if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_idp_group_mapping(
@@ -1263,6 +1333,9 @@ def get_policy(ctx, generate_full_command_json_input, generate_param_json_input,
     cli_util.load_context_obj_values_from_defaults(ctx)
     policy_id = cli_util.coalesce_provided_and_default_value(ctx, 'policy-id', policy_id, True)
 
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_policy(
@@ -1296,6 +1369,9 @@ def get_tenancy(ctx, generate_full_command_json_input, generate_param_json_input
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     tenancy_id = cli_util.coalesce_provided_and_default_value(ctx, 'tenancy-id', tenancy_id, True)
+
+    if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
+        raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
@@ -1331,6 +1407,9 @@ def get_user(ctx, generate_full_command_json_input, generate_param_json_input, f
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_user(
@@ -1364,6 +1443,9 @@ def get_user_group_membership(ctx, generate_full_command_json_input, generate_pa
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_group_membership_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-group-membership-id', user_group_membership_id, True)
+
+    if isinstance(user_group_membership_id, six.string_types) and len(user_group_membership_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
@@ -1400,6 +1482,9 @@ def list_api_keys(ctx, generate_full_command_json_input, generate_param_json_inp
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
@@ -1448,6 +1533,8 @@ def list_availability_domains(ctx, generate_full_command_json_input, generate_pa
 @click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1459,7 +1546,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
 @cli_util.wrap_exceptions
-def list_compartments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, page, limit):
+def list_compartments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1472,6 +1559,10 @@ def list_compartments(ctx, generate_full_command_json_input, generate_param_json
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if page is not None:
@@ -1479,10 +1570,28 @@ def list_compartments(ctx, generate_full_command_json_input, generate_param_json
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_compartments(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_compartments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_compartments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compartments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1511,6 +1620,9 @@ def list_customer_secret_keys(ctx, generate_full_command_json_input, generate_pa
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_customer_secret_keys(
@@ -1524,6 +1636,8 @@ def list_customer_secret_keys(ctx, generate_full_command_json_input, generate_pa
 @click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1535,7 +1649,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Group]'})
 @cli_util.wrap_exceptions
-def list_groups(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, page, limit):
+def list_groups(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1548,6 +1662,10 @@ def list_groups(ctx, generate_full_command_json_input, generate_param_json_input
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if page is not None:
@@ -1555,18 +1673,38 @@ def list_groups(ctx, generate_full_command_json_input, generate_param_json_input
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_groups(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_groups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_groups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_groups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
 @identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help="""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--protocol', help="""The protocol used for federation. [required]""")
+@click.option('--protocol', help="""The protocol used for federation. Allowed values are: SAML2 [required]""")
 @click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1578,7 +1716,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdentityProvider]'})
 @cli_util.wrap_exceptions
-def list_identity_providers(ctx, generate_full_command_json_input, generate_param_json_input, from_json, protocol, compartment_id, page, limit):
+def list_identity_providers(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, protocol, compartment_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1592,6 +1730,10 @@ def list_identity_providers(ctx, generate_full_command_json_input, generate_para
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if page is not None:
@@ -1599,11 +1741,31 @@ def list_identity_providers(ctx, generate_full_command_json_input, generate_para
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_identity_providers(
-        protocol=protocol,
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_identity_providers,
+            protocol=protocol,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_identity_providers,
+            limit,
+            page_size,
+            protocol=protocol,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_identity_providers(
+            protocol=protocol,
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1611,6 +1773,8 @@ def list_identity_providers(ctx, generate_full_command_json_input, generate_para
 @click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1622,7 +1786,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdpGroupMapping]'})
 @cli_util.wrap_exceptions
-def list_idp_group_mappings(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id, page, limit):
+def list_idp_group_mappings(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, identity_provider_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1635,6 +1799,13 @@ def list_idp_group_mappings(ctx, generate_full_command_json_input, generate_para
     identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
     if page is not None:
@@ -1642,10 +1813,28 @@ def list_idp_group_mappings(ctx, generate_full_command_json_input, generate_para
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_idp_group_mappings(
-        identity_provider_id=identity_provider_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_idp_group_mappings,
+            identity_provider_id=identity_provider_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_idp_group_mappings,
+            limit,
+            page_size,
+            identity_provider_id=identity_provider_id,
+            **kwargs
+        )
+    else:
+        result = client.list_idp_group_mappings(
+            identity_provider_id=identity_provider_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1655,6 +1844,8 @@ To determine which policies apply to a particular group or compartment, you must
 @click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1666,7 +1857,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Policy]'})
 @cli_util.wrap_exceptions
-def list_policies(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, page, limit):
+def list_policies(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1679,6 +1870,10 @@ def list_policies(ctx, generate_full_command_json_input, generate_param_json_inp
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if page is not None:
@@ -1686,10 +1881,28 @@ def list_policies(ctx, generate_full_command_json_input, generate_param_json_inp
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_policies(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1718,6 +1931,9 @@ def list_region_subscriptions(ctx, generate_full_command_json_input, generate_pa
     cli_util.load_context_obj_values_from_defaults(ctx)
     tenancy_id = cli_util.coalesce_provided_and_default_value(ctx, 'tenancy-id', tenancy_id, True)
 
+    if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
+        raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_region_subscriptions(
@@ -1727,7 +1943,7 @@ def list_region_subscriptions(ctx, generate_full_command_json_input, generate_pa
     cli_util.render_response(result, ctx)
 
 
-@region_group.command(name=cli_util.override('list_regions.command_name', 'list'), help="""Lists all the regions offered by Oracle Bare Metal Cloud Services.""")
+@region_group.command(name=cli_util.override('list_regions.command_name', 'list'), help="""Lists all the regions offered by Oracle Cloud Infrastructure.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1783,6 +1999,9 @@ def list_swift_passwords(ctx, generate_full_command_json_input, generate_param_j
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_swift_passwords(
@@ -1800,6 +2019,8 @@ def list_swift_passwords(ctx, generate_full_command_json_input, generate_param_j
 @click.option('--group-id', help="""The OCID of the group.""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1811,7 +2032,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[UserGroupMembership]'})
 @cli_util.wrap_exceptions
-def list_user_group_memberships(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, user_id, group_id, page, limit):
+def list_user_group_memberships(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, user_id, group_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1826,6 +2047,10 @@ def list_user_group_memberships(ctx, generate_full_command_json_input, generate_
     group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if user_id is not None:
@@ -1837,10 +2062,28 @@ def list_user_group_memberships(ctx, generate_full_command_json_input, generate_
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_user_group_memberships(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_user_group_memberships,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_user_group_memberships,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_user_group_memberships(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1848,6 +2091,8 @@ def list_user_group_memberships(ctx, generate_full_command_json_input, generate_
 @click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1859,7 +2104,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[User]'})
 @cli_util.wrap_exceptions
-def list_users(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, page, limit):
+def list_users(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1872,6 +2117,10 @@ def list_users(ctx, generate_full_command_json_input, generate_param_json_input,
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if page is not None:
@@ -1879,10 +2128,28 @@ def list_users(ctx, generate_full_command_json_input, generate_param_json_input,
     if limit is not None:
         kwargs['limit'] = limit
     client = cli_util.build_client('identity', ctx)
-    result = client.list_users(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_users,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_users,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_users(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1914,6 +2181,9 @@ def remove_user_from_group(ctx, generate_full_command_json_input, generate_param
     user_group_membership_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-group-membership-id', user_group_membership_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_group_membership_id, six.string_types) and len(user_group_membership_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1925,7 +2195,7 @@ def remove_user_from_group(ctx, generate_full_command_json_input, generate_param
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help="""Updates the specified compartment's description.""")
+@compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help="""Updates the specified compartment's description or name. You can't update the root compartment.""")
 @click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--description', help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
 @click.option('--name', help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy.""")
@@ -1955,6 +2225,9 @@ def update_compartment(ctx, generate_full_command_json_input, generate_param_jso
     description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
     name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+        raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -2008,6 +2281,12 @@ def update_customer_secret_key(ctx, generate_full_command_json_input, generate_p
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2056,6 +2335,9 @@ def update_group(ctx, generate_full_command_json_input, generate_param_json_inpu
     description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+        raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2076,7 +2358,7 @@ def update_group(ctx, generate_full_command_json_input, generate_param_json_inpu
 
 @identity_provider_group.command(name=cli_util.override('update_identity_provider.command_name', 'update'), help="""Updates the specified identity provider.""")
 @click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--protocol', help="""The protocol used for federation.
+@click.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
 
 Example: `SAML2` [required]""")
 @click.option('--description', help="""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
@@ -2106,6 +2388,9 @@ def update_identity_provider(ctx, generate_full_command_json_input, generate_par
     protocol = cli_util.coalesce_provided_and_default_value(ctx, 'protocol', protocol, True)
     description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -2159,6 +2444,12 @@ def update_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
     group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
+    if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
+        raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2186,8 +2477,8 @@ def update_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
 Policy changes take effect typically within 10 seconds.""")
 @click.option('--policy-id', help="""The OCID of the policy. [required]""")
 @click.option('--description', help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
-@click.option('--statements', help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies].""")
-@click.option('--version-date', type=click.STRING, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--version-date', type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -2217,6 +2508,9 @@ def update_policy(ctx, generate_full_command_json_input, generate_param_json_inp
     version_date = cli_util.coalesce_provided_and_default_value(ctx, 'version-date', version_date, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     if not force:
         if statements:
@@ -2277,6 +2571,12 @@ def update_swift_password(ctx, generate_full_command_json_input, generate_param_
     description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(swift_password_id, six.string_types) and len(swift_password_id.strip()) == 0:
+        raise click.UsageError('Parameter --swift-password-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2325,6 +2625,9 @@ def update_user(ctx, generate_full_command_json_input, generate_param_json_input
     description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2371,6 +2674,9 @@ def update_user_state(ctx, generate_full_command_json_input, generate_param_json
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
     blocked = cli_util.coalesce_provided_and_default_value(ctx, 'blocked', blocked, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -2422,6 +2728,9 @@ def upload_api_key(ctx, generate_full_command_json_input, generate_param_json_in
     cli_util.load_context_obj_values_from_defaults(ctx)
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
     key = cli_util.coalesce_provided_and_default_value(ctx, 'key', key, True)
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
 

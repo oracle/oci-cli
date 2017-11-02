@@ -136,7 +136,8 @@ def test_normalize_object_name_path():
 
 def test_get_all_objects_in_bucket():
     download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name)
-    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
+    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
+    print(result.output)
 
     # Ensure that content matches
     for object_name in bulk_get_object_to_content:
@@ -232,6 +233,67 @@ def test_get_no_objects():
     assert 0 == get_count_of_files_in_folder_and_subfolders(download_folder)
 
     shutil.rmtree(download_folder)
+
+
+def test_get_multipart(object_storage_client):
+    create_bucket_request = oci.object_storage.models.CreateBucketDetails()
+    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(int(time.time()))
+    create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+
+    large_file_root_dir = os.path.join('tests', 'temp', 'multipart_get_large_files')
+    os.makedirs(large_file_root_dir)
+    util.create_large_file(os.path.join(large_file_root_dir, '1.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    util.create_large_file(os.path.join(large_file_root_dir, '2.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    util.create_large_file(os.path.join(large_file_root_dir, '3.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    util.create_large_file(os.path.join(large_file_root_dir, '4.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    util.create_large_file(os.path.join(large_file_root_dir, '5.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+
+    invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', large_file_root_dir
+    ])
+
+    large_file_verify_dir = os.path.join('tests', 'temp', 'multipart_get_large_files_verify')
+
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--download-dir', large_file_verify_dir, '--multipart-download-threshold', '128'])
+
+    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 5
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '1.bin'), os.path.join(large_file_verify_dir, '1.bin'))
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '2.bin'), os.path.join(large_file_verify_dir, '2.bin'))
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '3.bin'), os.path.join(large_file_verify_dir, '3.bin'))
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '4.bin'), os.path.join(large_file_verify_dir, '4.bin'))
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '5.bin'), os.path.join(large_file_verify_dir, '5.bin'))
+
+    shutil.rmtree(large_file_root_dir)
+    shutil.rmtree(large_file_verify_dir)
+
+    delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+
+
+# Since we've created a reasonable number of objects in this test suite, it's a good opportunity to test using the --all and --limit parameters
+def test_list_all_objects_operations():
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--all'])
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']) == OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET
+    assert 'next-start-with' not in result.output
+
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--all', '--page-size', '20'])
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']) == OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET
+    assert 'next-start-with' not in result.output
+
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--limit', '47'])
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']) == 47
+    assert 'next-start-with' in result.output
+
+    result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--limit', '33', '--page-size', '3'])
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']) == 33
+    assert 'next-start-with' in result.output
 
 
 # Bulk puts objects, uses multipart where appropriate (when we breach the default of 128MiB)
@@ -704,6 +766,41 @@ def test_delete(object_storage_client):
     assert get_number_of_objects_in_bucket(object_storage_client, create_bucket_request.name) == 0
 
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+
+
+def test_bulk_operation_table_output_query(object_storage_client):
+    create_bucket_request = oci.object_storage.models.CreateBucketDetails()
+    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(int(time.time()))
+    create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
+
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder, '--output', 'table', '--query', "[?action=='Uploaded'].{file: file, \"opc-content-md5\": \"opc-content-md5\"}"])
+    assert 'file' in result.output
+    assert 'opc-content-md5' in result.output
+    assert 'etag' not in result.output
+
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run', '--output', 'table'])
+    assert 'action' in result.output
+    assert 'object' in result.output
+    assert '/a/Object_1' in result.output
+
+    result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run', '--output', 'table', '--query', "[?object=='Object_0'][object]"])
+    assert 'action' not in result.output
+    assert '/a/Object_1' not in result.output
+    assert 'Object_0' in result.output
+
+    target_download_folder = os.path.join('tests', 'temp', create_bucket_request.name)
+    result = invoke([
+        'os', 'object', 'bulk-download',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--download-dir', target_download_folder,
+        '--output', 'table',
+    ])
+
+    delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
+
+    shutil.rmtree(target_download_folder)
 
 
 def invoke(commands, debug=False, ** args):

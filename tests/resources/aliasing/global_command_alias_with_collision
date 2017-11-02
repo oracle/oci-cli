@@ -1,0 +1,4 @@
+[OCI_CLI_COMMAND_ALIASES]
+create = list
+ls = list
+net = network

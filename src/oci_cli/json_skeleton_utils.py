@@ -7,7 +7,7 @@ import sys
 
 from . import cli_util
 
-from .custom_types import CliFromJson
+from .custom_types import CliFromJson, CLI_DATETIME
 from .string_utils import camelize, underscore
 
 try:
@@ -21,7 +21,8 @@ CLICK_TYPES_TO_EXAMPLE_VALUES = {
     click.STRING: 'string',
     click.INT: 0,
     click.FLOAT: 0.0,
-    click.BOOL: True
+    click.BOOL: True,
+    CLI_DATETIME: '2017-01-01T00:00:00.000000+00:00'
 }
 
 
@@ -136,6 +137,8 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
 
                     if option_type in CLICK_TYPES_TO_EXAMPLE_VALUES:
                         input_as_dict[attribute_name] = CLICK_TYPES_TO_EXAMPLE_VALUES[option_type]
+                    elif isinstance(option_type, click.Choice):
+                        input_as_dict[attribute_name] = '|'.join(option_type.choices)
 
     if targeted_complex_param is not None:
         example_obj = translate_complex_param_to_example_object(input_params_to_complex_types[targeted_complex_param])

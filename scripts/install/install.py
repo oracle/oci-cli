@@ -321,7 +321,8 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
             command = "powershell -Command \"[Environment]::SetEnvironmentVariable(\\\"PATH\\\", \\\"{};\\\" + (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).Path, \\\"User\\\")".format(exec_dir)
             subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
             print_status()
-            print_status('** Close and re-open powershell to reload changes to your PATH **')
+            print_status('** Close and re-open PowerShell to reload changes to your PATH **')
+            print_status('In order to run the autocomplete script, you may also need to set your PowerShell execution policy to allow for running local scripts (as an Administrator run Set-ExecutionPolicy RemoteSigned in a PowerShell prompt)')
             print_status()
         else:
             print_status("If you change your mind, dot source {} in your PowerShell profile and restart your shell to enable tab completion.".format(completion_file_path))

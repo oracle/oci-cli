@@ -9,6 +9,7 @@ import oci
 from . import cli_util
 from . import json_skeleton_utils
 from .generated import database_cli
+from .aliasing import CommandGroupWithAlias
 
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
@@ -88,6 +89,85 @@ def create_database(ctx, **kwargs):
     cli_util.render(database, None, ctx)
 
 
+@cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config'])
+@database_cli.database_group.command(name='update', help="""Update a Database based on the request parameters you provide.""")
+@click.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
+@click.pass_context
+@cli_util.wrap_exceptions
+def update_database_extended(ctx, **kwargs):
+    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs.get('generate_full_command_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs.get('generate_param_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['auto_backup_enabled'] = cli_util.coalesce_provided_and_default_value(ctx, 'auto-backup-enabled', kwargs.get('auto_backup_enabled'), False)
+
+    if kwargs['auto_backup_enabled'] is not None:
+        db_backup_config = {}
+        db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
+
+        kwargs['db_backup_config'] = json.dumps(db_backup_config)
+
+    del kwargs['auto_backup_enabled']
+
+    ctx.invoke(database_cli.update_database, **kwargs)
+
+
+@database_cli.database_group.command(name='patch', help="""Perform a patch action for a given patch and database.""")
+@click.option('--database-id', required=True, help="""The OCID of the database.""")
+@click.option('--patch-action', required=False, help="""The action to perform on the patch.""")
+@click.option('--patch-id', required=False, help="""The OCID of the patch.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.pass_context
+@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.help_option
+@cli_util.wrap_exceptions
+def patch_database(ctx, **kwargs):
+    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs.get('generate_full_command_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs.get('generate_param_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['database_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', kwargs.get('database_id'), True)
+    kwargs['patch_action'] = cli_util.coalesce_provided_and_default_value(ctx, 'patch-action', kwargs.get('patch_action'), True)
+    kwargs['patch_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'patch-id', kwargs.get('patch_id'), True)
+
+    client = cli_util.build_client('database', ctx)
+
+    response = client.get_database(kwargs['database_id'])
+    db_home_id = response.data.db_home_id
+
+    patch_details = oci.database.models.PatchDetails()
+    patch_details.action = kwargs['patch_action']
+    patch_details.patch_id = kwargs['patch_id']
+
+    update_db_home_details = oci.database.models.UpdateDbHomeDetails()
+    update_db_home_details.db_version = patch_details
+
+    client.update_db_home(db_home_id, update_db_home_details)
+
+    # update_db_home returns the DbHome, so we need to get the
+    # corresponding database and print that out for the user
+    result = client.get_database(kwargs['database_id'])
+    database = result.data
+
+    cli_util.render(database, None, ctx)
+
+
 @database_cli.database_group.command(name='delete', help="""Deletes a database.""")
 @click.option('--database-id', required=True, help="""The OCID of the database to delete.""")
 @cli_util.confirm_delete_option
@@ -135,7 +215,7 @@ def delete_database(ctx, **kwargs):
     cli_util.render_response(response, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page'])
+@cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size'])
 @database_cli.database_group.command(name='list', help="""Lists all databases in a given DB System.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
@@ -372,6 +452,8 @@ def launch_db_system_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version'])
 @database_cli.db_system_group.command(name='update', help=database_cli.update_db_system.help)
+@click.option('--patch-action', required=False, help="""The action to perform on the patch.""")
+@click.option('--patch-id', required=False, help="""The OCID of the patch.""")
 @click.option('--ssh-authorized-keys-file', required=False, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
@@ -397,13 +479,73 @@ def update_db_system_extended(ctx, **kwargs):
         content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
         kwargs['ssh_public_keys'] = json.dumps(content)
 
+    patch_action = kwargs.get('patch_action')
+    patch_id = kwargs.get('patch_id')
+    if patch_action and not patch_id:
+        raise click.UsageError('--patch-id is required if --patch-action is specified')
+    elif patch_id and not patch_action:
+        raise click.UsageError('--patch-action is required if --patch-id is specified')
+    elif patch_id and patch_action:
+        kwargs['version'] = {
+            "action": patch_action,
+            "patchId": patch_id
+        }
+
     # remove kwargs that update_db_system wont recognize
     del kwargs['ssh_authorized_keys_file']
+    del kwargs['patch_action']
+    del kwargs['patch_id']
 
     ctx.invoke(database_cli.update_db_system, **kwargs)
 
 
-@database_cli.data_guard_association_group.group(name=cli_util.override('create_data_guard_association.command_name', 'create'), help="""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+@database_cli.db_system_group.command(name='patch', help="""Perform an action on a Patch for a DB System.""")
+@click.option('--db-system-id', required=False, help="""The OCID of the DB System.""")
+@click.option('--patch-action', required=False, help="""The action to perform on the patch.""")
+@click.option('--patch-id', required=False, help="""The OCID of the patch.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.pass_context
+@cli_util.help_option
+@cli_util.wrap_exceptions
+@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
+def patch_db_system(ctx, **kwargs):
+    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs.get('generate_full_command_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs.get('generate_param_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
+
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['db_system_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', kwargs.get('db_system_id'), True)
+    kwargs['patch_action'] = cli_util.coalesce_provided_and_default_value(ctx, 'patch-action', kwargs.get('patch_action'), True)
+    kwargs['patch_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'patch-id', kwargs.get('patch_id'), True)
+
+    client = cli_util.build_client('database', ctx)
+
+    patch_details = oci.database.models.PatchDetails()
+    patch_details.action = kwargs['patch_action']
+    patch_details.patch_id = kwargs['patch_id']
+
+    update_db_system_details = oci.database.models.UpdateDbSystemDetails()
+    update_db_system_details.db_version = patch_details
+
+    result = client.update_db_system(kwargs['db_system_id'], update_db_system_details)
+    db_system = result.data
+
+    cli_util.render(db_system, None, ctx)
+
+
+@database_cli.data_guard_association_group.command(name=cli_util.override('create_data_guard_association.command_name', 'create'), cls=CommandGroupWithAlias, help="""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
 @cli_util.help_option_group
@@ -453,6 +595,153 @@ def create_data_guard_association_from_existing_db_system(ctx, generate_param_js
     cli_util.render_response(result, ctx)
 
 
+@database_cli.patch_group.command('get', cls=CommandGroupWithAlias, help=database_cli.get_db_home_patch.help)
+@cli_util.help_option_group
+def patch_get_group():
+    pass
+
+
+@database_cli.patch_group.command('list', cls=CommandGroupWithAlias, help=database_cli.list_db_home_patches.help)
+@cli_util.help_option_group
+def patch_list_group():
+    pass
+
+
+@database_cli.patch_history_entry_group.command('get', cls=CommandGroupWithAlias, help=database_cli.get_db_home_patch_history_entry.help)
+@cli_util.help_option_group
+def patch_history_get_group():
+    pass
+
+
+@database_cli.patch_history_entry_group.command('list', cls=CommandGroupWithAlias, help=database_cli.list_db_home_patch_history_entries.help)
+@cli_util.help_option_group
+def patch_history_list_group():
+    pass
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_db_home_patch, params_to_exclude=['db_home_id'])
+@patch_get_group.command('by-database', help="""Get patch for a given database""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@click.pass_context
+@cli_util.wrap_exceptions
+def get_patch_by_database(ctx, **kwargs):
+    if kwargs['generate_param_json_input'] and kwargs['generate_full_command_json_input']:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs['generate_full_command_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs['generate_param_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs['generate_param_json_input'])
+
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['database_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', kwargs.get('database_id'), True)
+
+    client = cli_util.build_client('database', ctx)
+
+    # get the db-home for this database
+    response = client.get_database(kwargs['database_id'])
+    kwargs['db_home_id'] = response.data.db_home_id
+
+    del kwargs['database_id']
+
+    ctx.invoke(database_cli.get_db_home_patch, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.list_db_home_patches, params_to_exclude=['db_home_id'])
+@patch_list_group.command('by-database', help="""List patches for a given database""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def list_patch_by_database(ctx, **kwargs):
+    if kwargs['generate_param_json_input'] and kwargs['generate_full_command_json_input']:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs['generate_full_command_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs['generate_param_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs['generate_param_json_input'])
+
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['database_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', kwargs.get('database_id'), True)
+
+    client = cli_util.build_client('database', ctx)
+
+    # get the db-home for this database
+    response = client.get_database(kwargs['database_id'])
+    kwargs['db_home_id'] = response.data.db_home_id
+
+    del kwargs['database_id']
+
+    ctx.invoke(database_cli.list_db_home_patches, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_db_home_patch_history_entry, params_to_exclude=['db_home_id'])
+@patch_history_get_group.command('by-database', help="""Get patch history for a given database""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@click.pass_context
+@cli_util.wrap_exceptions
+def get_patch_history_entry_by_database(ctx, **kwargs):
+    if kwargs['generate_param_json_input'] and kwargs['generate_full_command_json_input']:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs['generate_full_command_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs['generate_param_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs['generate_param_json_input'])
+
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['database_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', kwargs.get('database_id'), True)
+
+    client = cli_util.build_client('database', ctx)
+
+    # get the db-home for this database
+    response = client.get_database(kwargs['database_id'])
+    kwargs['db_home_id'] = response.data.db_home_id
+
+    del kwargs['database_id']
+
+    ctx.invoke(database_cli.get_db_home_patch_history_entry, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.list_db_home_patch_history_entries, params_to_exclude=['db_home_id'])
+@patch_history_list_group.command('by-database', help="""List patch history entries for a given database""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def list_patch_history_entries_by_database(ctx, **kwargs):
+    if kwargs['generate_param_json_input'] and kwargs['generate_full_command_json_input']:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs['generate_full_command_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs['generate_param_json_input']:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs['generate_param_json_input'])
+
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['database_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', kwargs.get('database_id'), True)
+
+    client = cli_util.build_client('database', ctx)
+
+    # get the db-home for this database
+    response = client.get_database(kwargs['database_id'])
+    kwargs['db_home_id'] = response.data.db_home_id
+
+    del kwargs['database_id']
+
+    ctx.invoke(database_cli.list_db_home_patch_history_entries, **kwargs)
+
+
+database_cli.db_group.add_command(database_cli.backup_group)
 database_cli.db_group.add_command(database_cli.database_group)
 database_cli.db_group.add_command(database_cli.db_node_group)
 database_cli.db_group.add_command(database_cli.db_system_group)
@@ -464,6 +753,8 @@ database_cli.db_node_group.commands.pop(database_cli.db_node_action.name)
 database_cli.db_system_group.commands.pop(database_cli.launch_db_system.name)
 database_cli.db_system_group.commands.pop(database_cli.update_db_system.name)
 database_cli.db_group.add_command(database_cli.data_guard_association_group)
+database_cli.db_group.add_command(database_cli.patch_group)
+database_cli.db_group.add_command(database_cli.patch_history_entry_group)
 
 # we need to expose customized create / delete / list database commands in order to avoid exposing DbHomes
 database_cli.database_group.add_command(create_database)
@@ -471,6 +762,20 @@ database_cli.database_group.add_command(delete_database)
 database_cli.database_group.add_command(list_databases)
 database_cli.db_system_group.add_command(launch_db_system_extended)
 database_cli.db_system_group.add_command(update_db_system_extended)
+
+database_cli.patch_group.commands.pop(database_cli.get_db_home_patch.name)
+database_cli.patch_group.commands.pop(database_cli.list_db_home_patches.name)
+database_cli.patch_group.commands.pop(database_cli.get_db_system_patch.name)
+
+patch_get_group.add_command(database_cli.get_db_system_patch)
+patch_list_group.add_command(database_cli.list_db_system_patches)
+
+database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_home_patch_history_entry.name)
+database_cli.patch_history_entry_group.commands.pop(database_cli.list_db_home_patch_history_entries.name)
+database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_system_patch_history_entry.name)
+
+patch_history_get_group.add_command(database_cli.get_db_system_patch_history_entry)
+patch_history_list_group.add_command(database_cli.list_db_system_patch_history_entries)
 
 cpu_core_count_help_override = """The number of CPU cores to enable. The valid values depend on the specified shape:
 

@@ -7,6 +7,30 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.11 - 2017-11-02
+-------------------
+Added
+~~~~~~~~~~
+* 'oci setup oci-cli-rc' command to generate an oci_cli_rc file with default aliases and pre-defined queries
+* Support for defining named JMESPath queries and command / parameter aliases in oci_cli_rc file
+* 'oci setup repair-file-permissions' command to set appropriate file permissions on key / config files. Warnings are emitted if permissions are too open on these files.
+* Support for --all parameter for 'list' operations to return all items in a list without manual pagination
+* Support for audit operations: 'oci audit'
+* Support for archive storage tier, object rename and namespace metadata in Object Storage
+* Support for fast clones of volumes in Block Storage service
+* Support for backup and restore in Database service
+* Support for sorting and filtering in list APIs in Core Services
+* Support for multipart download for 'oci os object get' and 'oci os object bulk-get'
+
+Deprecated
+~~~~~~~~~~~
+* The top level parameter --defaults-file has been renamed to --oci-cli-rc and the default location for the file has moved from ~/.oci/cli-defaults to ~/.oci/oci_cli_rc.
+
+Changed
+~~~~~~~~~~
+* Upgraded cryptography dependency to 1.9.
+* Minimum version of Mac OS supported is now 10.8
+
 2.4.10 - 2017-10-12
 -------------------
 
@@ -20,6 +44,8 @@ Added
 * Support for enabling / disabling VNIC source/destination checks (https://github.com/oracle/oci-cli/issues/15)
 * Support for adding and updating display names for captured instance serial console data.
 * Display public key fingerprint in output of 'oci setup config' (https://github.com/oracle/oci-cli/issues/18)
+* Support for table output using --output table
+* Support for JMESPath queries using --query parameter
 
 Fixed
 ~~~~~~~~~~

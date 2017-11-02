@@ -10,11 +10,14 @@ from oci_cli import config
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
+from io import StringIO
 import os
 import os.path
+import six
 import stat
 import subprocess
 import sys
+import tempfile
 
 TEMP_DIR = os.path.join('tests', 'temp')
 
@@ -48,6 +51,10 @@ class TestSetup(unittest.TestCase):
 
         self.subtest_autocomplete_deny_bash_rc_access()
 
+        self.subtest_repair_file_permissions()
+
+        self.subtest_oci_cli_rc_file()
+
     @util.log_test
     def subtest_keys(self):
         stdin = [
@@ -66,8 +73,8 @@ class TestSetup(unittest.TestCase):
         # validate private key
         assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
-        assert self.validate_file_user_rw_permissions(PRIVATE_KEY_FILENAME)
-        assert self.validate_file_user_rw_permissions(PUBLIC_KEY_FILENAME)
+        assert self.validate_file_permissions(PRIVATE_KEY_FILENAME)
+        assert self.validate_file_permissions(PUBLIC_KEY_FILENAME)
 
         self.cleanup_default_generated_files()
 
@@ -77,8 +84,8 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite', '--passphrase', PASSPHRASE])
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate public key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate private key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
@@ -94,8 +101,8 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite', '--passphrase-file', PASSPHRASE_FILE])
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate public key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate private key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
@@ -111,8 +118,8 @@ class TestSetup(unittest.TestCase):
         self.invoke(
             ['setup', 'keys', '--output-dir', TEMP_DIR, '--overwrite', '--passphrase-file', '-'], input=PASSPHRASE)
 
-        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate private key file'
-        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate public key file'
+        assert os.path.isfile(PUBLIC_KEY_FILENAME), 'oci setup keys should generate public key file'
+        assert os.path.isfile(PRIVATE_KEY_FILENAME), 'oci setup keys should generate private key file'
 
         # validate public key
         assert self.validate_public_key_file(PUBLIC_KEY_FILENAME)
@@ -194,7 +201,7 @@ class TestSetup(unittest.TestCase):
         # validate private key w/ passphrase
         assert oci_cli.cli_setup.validate_private_key_passphrase(PRIVATE_KEY_FILENAME, PASSPHRASE)
 
-        assert self.validate_file_user_rw_permissions(CONFIG_FILENAME)
+        assert self.validate_file_permissions(CONFIG_FILENAME)
 
         # clean up config and keys
         self.cleanup_default_generated_files()
@@ -291,6 +298,7 @@ class TestSetup(unittest.TestCase):
         # clean up config and keys
         self.cleanup_default_generated_files()
 
+    @util.log_test
     def subtest_config_invalid_user_ocid(self):
         self.cleanup_default_generated_files()
 
@@ -318,6 +326,7 @@ class TestSetup(unittest.TestCase):
 
         self.cleanup_default_generated_files()
 
+    @util.log_test
     def subtest_config_invalid_tenancy_ocid(self):
         self.cleanup_default_generated_files()
 
@@ -345,7 +354,19 @@ class TestSetup(unittest.TestCase):
 
         self.cleanup_default_generated_files()
 
+    @util.log_test
     def subtest_autocomplete_deny_bash_rc_access(self):
+        if oci_cli.cli_util.is_windows() and six.PY2:
+            print(
+                """
+                Skipping subtest_autocomplete_deny_bash_rc_access on Windows with Python 2.7 as the CliRunner click offers for testing seems to use a StringIO
+                to back stdout, which throws an error when sys.stdout.encoding is called since there is no encoding attribute on a StringIO.
+
+                Running manually on Windows with Python 2.7 works and Windows tests with Python 3 work, just this case breaks.
+                """
+            )
+            return
+
         # fully testing the command would edit the machine's bash_profile / bash_rc
         # this test rejects the prompt to edit the bash_profile but provides a basic smoke test for the command
         result = self.invoke(
@@ -354,10 +375,87 @@ class TestSetup(unittest.TestCase):
         assert result.exit_code == 0
 
         # on windows the command quits with an error message
-        if sys.platform == 'win32' or sys.platform == 'cygwin':
-            assert 'not currently available on Windows' in result.output
+        if sys.platform == 'cygwin':
+            assert 'Tab completion only available on Windows when using Powershell' in result.output
         else:
             assert 'Exiting script. Tab completion not set up.' in result.output
+
+    @util.log_test
+    def subtest_repair_file_permissions(self):
+        try:
+            # for this test we need to make sure the warning is NOT suppressed, but set it back to current setting at the end
+            original_suppress_warning_value = os.environ.get('OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING')
+            os.environ['OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING'] = 'False'
+
+            # capture stdout / stderr so we can validate warnings
+            with util.capture() as out:
+                if oci_cli.cli_util.is_windows():
+                    # create a temporary file and set some unnecessary permissions
+                    tmp = tempfile.NamedTemporaryFile()
+                    subprocess.check_output('icacls "{path}" /grant Everyone:F'.format(path=tmp.name), stderr=subprocess.STDOUT)
+
+                    # warning should be emitted because permissions are too loose
+                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    assert 'WARNING' in out[1].getvalue()
+
+                    # reset captured stderr
+                    out[1] = StringIO()
+
+                    result = self.invoke(
+                        ['setup', 'repair-file-permissions', '--file', tmp.name]
+                    )
+
+                    assert result.exit_code == 0
+
+                    # no warning should be emitted because we repaired the permissions
+                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    assert 'WARNING' not in out[1].getvalue()
+                else:
+                    # create a temporary file and set some unnecessary permissions
+                    tmp = tempfile.NamedTemporaryFile()
+                    os.chmod(tmp.name, 755)
+
+                    # warning should be emitted because permissions are too loose
+                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    assert 'WARNING' in out[1].getvalue()
+
+                    # reset captured stderr
+                    out[1] = StringIO()
+
+                    result = self.invoke(
+                        ['setup', 'repair-file-permissions', '--file', tmp.name]
+                    )
+
+                    assert result.exit_code == 0
+                    assert oct(stat.S_IMODE(os.lstat(tmp.name).st_mode)) == oct(384)  # 600
+
+                    # no warning should be emitted because we repaired the permissions
+                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    assert 'WARNING' not in out[1].getvalue()
+        finally:
+            if original_suppress_warning_value is None:
+                del os.environ['OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING']
+            else:
+                os.environ['OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING'] = original_suppress_warning_value
+
+    @util.log_test
+    def subtest_oci_cli_rc_file(self):
+        result = self.invoke(['setup', 'oci-cli-rc', '--file', CONFIG_FILENAME])
+        assert 'Predefined queries written under section {}'.format(oci_cli.cli_root.CLI_RC_CANNED_QUERIES_SECTION_NAME) in result.output
+        assert 'Command aliases written under section {}'.format(oci_cli.cli_root.CLI_RC_COMMAND_ALIASES_SECTION_NAME) in result.output
+        assert 'Parameter aliases written under section {}'.format(oci_cli.cli_root.CLI_RC_PARAM_ALIASES_SECTION_NAME) in result.output
+
+        with open(CONFIG_FILENAME, 'rb') as f:
+            contents = f.read().decode()
+
+        assert oci_cli.cli_setup.default_canned_queries in contents
+        assert oci_cli.cli_setup.default_command_aliases in contents
+        assert oci_cli.cli_setup.default_param_aliases in contents
+
+        result = self.invoke(['setup', 'oci-cli-rc', '--file', CONFIG_FILENAME])
+        assert 'Predefined queries will not be written as the specified file already contains a section for these queries' in result.output
+        assert 'Command aliases will not be written as the specified file already contains a section for command aliases' in result.output
+        assert 'Parameter aliases will not be written as the specified file already contains a section for parameter aliases' in result.output
 
     def cleanup_default_generated_files(self):
         # ensure that keys don't already exists
@@ -381,25 +479,10 @@ class TestSetup(unittest.TestCase):
 
         return False
 
-    def validate_file_user_rw_permissions(self, filename):
-        if oci_cli.cli_setup.is_windows():
-            # sample correct output:
-            #   file.txt WINDOWSTESTBOX\opc:(F)
-            #
-            #   Successfully processed 1 file(s)
-            output = subprocess.check_output('icacls {}'.format(filename)).decode('UTF-8')
-            current_user = subprocess.check_output('whoami').decode('UTF-8').strip()
-            acls = output.split('\n\n')[0]
-            permissions_line = '{} {}:(F)'.format(filename, current_user)
-            return permissions_line.lower() == acls.lower()
-        else:
-            if os.path.isfile(filename):
-                user_rw_perms = oct(384)  # 600
-            else:
-                # Directory permissions have S_IXUSER applied. See apply_user_only_access_permissions() in cli_setup.py for more information
-                user_rw_perms = oct(448)  # 700
-
-            return oct(stat.S_IMODE(os.lstat(filename).st_mode)) == user_rw_perms
+    def validate_file_permissions(self, filename):
+        with util.capture() as out:
+            oci_cli.cli_util.warn_on_invalid_file_permissions(filename)
+            return 'WARNING' not in out
 
     def validate_config(self, input_config):
         config.validate_config(input_config)

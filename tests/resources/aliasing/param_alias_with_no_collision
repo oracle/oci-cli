@@ -1,0 +1,9 @@
+[OCI_CLI_PARAM_ALIASES]
+--compy=--compartment-id
+--ad=--availability-domain
+-a=--availability-domain
+--vid=--vcn-id
+--dn=--display-name
+--gen-full-json=--generate-full-command-json-input
+--egress=--egress-security-rules
+--ingress=--ingress-security-rules

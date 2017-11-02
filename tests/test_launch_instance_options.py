@@ -128,6 +128,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         assert content[:5] in launch_instance_result.output
 
         self.delete_instance(temp_instance_ocid)
+        self.instance_ocids.remove(temp_instance_ocid)
 
     @util.log_test
     def subtest_launch_instance_ssh_authorized_keys_in_param_and_in_metadata_throws_error(self):
@@ -274,10 +275,10 @@ class TestLaunchInstanceOptions(unittest.TestCase):
 
     def delete_instance(self, instance_ocid):
         print("Deleting instance")
+        util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'RUNNING', max_wait_seconds=600, succeed_if_not_found=True)
         result = util.invoke_command(['compute', 'instance', 'terminate', '--instance-id', instance_ocid, '--force'])
         util.validate_response(result)
-        util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'TERMINATED',
-                        max_wait_seconds=600, succeed_if_not_found=True)
+        util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
 
 
 if __name__ == '__main__':

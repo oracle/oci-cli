@@ -26,26 +26,25 @@ def retry_on_timeouts_connection_internal_server_and_throttles(exception):
     return retryable
 
 
-def list_call_get_up_to_limit_with_default_retries(list_func_ref, limit, page_size, **func_kwargs):
-    list_call_get_up_to_limit(list_func_ref, limit, page_size, DEFAULT_RETRY_STRATEGY_NAME, **func_kwargs)
+def list_call_get_up_to_limit_with_default_retries(list_func_ref, record_limit, page_size, **func_kwargs):
+    return list_call_get_up_to_limit(list_func_ref, record_limit, page_size, DEFAULT_RETRY_STRATEGY_NAME, **func_kwargs)
 
 
-def list_call_get_up_to_limit(list_func_ref, limit, page_size, retry_strategy_name, **func_kwargs):
+def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, retry_strategy_name, **func_kwargs):
     # If no limit was provided, make a single call
-    if limit is None:
+    if record_limit is None:
         return call_function_with_retries(list_func_ref, retry_strategy_name, **func_kwargs)
 
     # If we have a limit, make calls until we get that amount of data
     keep_paginating = True
-    remaining_items_to_fetch = limit
+    remaining_items_to_fetch = record_limit
     call_result = None
     aggregated_results = []
     while keep_paginating and remaining_items_to_fetch > 0:
-        # If a page size was specified, use it otherwise pass in nothing (to honour whatever the service default is)
         if page_size:
             func_kwargs['limit'] = min(page_size, remaining_items_to_fetch)
         elif 'limit' in func_kwargs:
-            del func_kwargs['limit']
+            func_kwargs['limit'] = min(func_kwargs['limit'], remaining_items_to_fetch)
 
         call_result = call_function_with_retries(list_func_ref, retry_strategy_name, **func_kwargs)
         aggregated_results.extend(call_result.data)
@@ -57,7 +56,7 @@ def list_call_get_up_to_limit(list_func_ref, limit, page_size, retry_strategy_na
         keep_paginating = call_result.has_next_page
 
     # Truncate the list to the first limit items, as potentially we could have gotten more than what the caller asked for
-    final_response = Response(call_result.status, call_result.headers, aggregated_results[:limit], call_result.request)
+    final_response = Response(call_result.status, call_result.headers, aggregated_results[:record_limit], call_result.request)
     return final_response
 
 
@@ -79,8 +78,24 @@ def list_call_get_all_results(list_func_ref, retry_strategy_name, **func_kwargs)
 
         keep_paginating = call_result.has_next_page
 
+    post_processed_results = aggregated_results
+    if 'sort_by' in func_kwargs:
+        if func_kwargs['sort_by'].upper() == 'DISPLAYNAME':
+            sort_direction = 'ASC'
+            if 'sort_order' in func_kwargs:
+                sort_direction = func_kwargs['sort_order'].upper()
+
+            post_processed_results = sorted(aggregated_results, key=lambda r: getattr(r, 'display_name'), reverse=(sort_direction == 'DESC'))
+        elif func_kwargs['sort_by'].upper() == 'TIMECREATED':
+            sort_direction = 'DESC'
+            if 'sort_order' in func_kwargs:
+                sort_direction = func_kwargs['sort_order'].upper()
+
+                post_processed_results = sorted(aggregated_results, key=lambda r: getattr(r, 'time_created'), reverse=(sort_direction == 'DESC'))
+
     # Most of this is just dummy since we're discarding the intermediate requests
-    final_response = Response(call_result.status, call_result.headers, aggregated_results, call_result.request)
+    final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
+
     return final_response
 
 

@@ -2,15 +2,18 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
+import contextlib
 import functools
 import json
 import random
 import os
 import pytest
 import six
+import sys
 import time
 import traceback
 from click.testing import CliRunner
+from six import StringIO
 import oci_cli.cli_util
 import oci
 from oci.object_storage.transfer.constants import MEBIBYTE
@@ -212,7 +215,7 @@ def invoke_command(command, ** args):
     return command_output
 
 
-def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15, succeed_if_not_found=False, item_index_in_list_response=None):
+def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15, succeed_if_not_found=False, item_index_in_list_response=None, state_property_name='lifecycle-state'):
     """Poll the given get command until the result has a lifecycle-state that matches the given state.
     The Polling interval will double with each call until max_interval_seconds is reached."""
     sleep_interval_seconds = 1
@@ -231,9 +234,9 @@ def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15,
         # if an index is supplied, check the state of the corresponding item in the list
         if result.output:
             if item_index_in_list_response is not None:
-                if json.loads(result.output)['data'][item_index_in_list_response]['lifecycle-state'] == state:
+                if json.loads(result.output)['data'][item_index_in_list_response][state_property_name] == state:
                     break
-            elif json.loads(result.output)['data']['lifecycle-state'] == state:
+            elif json.loads(result.output)['data'][state_property_name] == state:
                 break
 
         time.sleep(sleep_interval_seconds)
@@ -483,6 +486,19 @@ def create_large_file(filename, size_in_mebibytes):
     sample_content = b'a'
     with open(filename, 'wb') as f:
         f.write(sample_content * MEBIBYTE * size_in_mebibytes)
+
+
+@contextlib.contextmanager
+def capture():
+    oldout, olderr = sys.stdout, sys.stderr
+    try:
+        out = [StringIO(), StringIO()]
+        sys.stdout, sys.stderr = out
+        yield out
+    finally:
+        sys.stdout, sys.stderr = oldout, olderr
+        out[0] = out[0].getvalue()
+        out[1] = out[1].getvalue()
 
 
 # We retry on:

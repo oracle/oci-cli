@@ -1,0 +1,4 @@
+[OCI_CLI_COMMAND_ALIASES]
+create=os.bucket.list
+meta=os.object.head
+ls=os.bucket.list

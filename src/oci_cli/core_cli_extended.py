@@ -15,9 +15,13 @@ from oci.exceptions import ServiceError
 from oci.exceptions import MaximumWaitTimeExceeded
 from . import cli_util
 from . import json_skeleton_utils
+from . import retry_utils
+from .aliasing import CommandGroupWithAlias
 
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_group)
+
+blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 
 compute_cli.compute_group.add_command(compute_cli.image_group)
 compute_cli.image_group.commands.pop(compute_cli.export_image.name)
@@ -95,36 +99,28 @@ cli_util.update_param_help(virtualnetwork_cli.create_subnet, 'prohibit_public_ip
 # help for oci network subnet create --security-list-ids
 security_list_example_id = 'ocid1.securitylist.oc1.phx.aaaaaaaadyndu2n3hcmdsjfiljwyq7vpxsvv7ynp4ori7aealcvhzicnzhyq'
 network_create_subnet_security_list_ids_example = """'["{sl_id}"]'"""
-network_create_subnet_security_list_ids_help = cli_util.GENERIC_JSON_FORMAT_HELP
-cli_util.update_param_help(virtualnetwork_cli.create_subnet, 'security_list_ids', network_create_subnet_security_list_ids_help,
-                           append=True, example=network_create_subnet_security_list_ids_example.format(sl_id=security_list_example_id))
+cli_util.update_param_help(virtualnetwork_cli.create_subnet, 'security_list_ids', '', append=True, example=network_create_subnet_security_list_ids_example.format(sl_id=security_list_example_id))
 
 # help for oci network dhcp-options create --options
 network_create_dhcp_options_options_example = """'[{"type": "DomainNameServer", "customDnsServers": ["202.44.61.9"], "serverType": "CustomDnsServer"}]'"""
-network_create_dhcp_options_options_help = cli_util.GENERIC_JSON_FORMAT_HELP
-cli_util.update_param_help(virtualnetwork_cli.create_dhcp_options, 'options', network_create_dhcp_options_options_help, append=True, example=network_create_dhcp_options_options_example)
-cli_util.update_param_help(virtualnetwork_cli.update_dhcp_options, 'options', network_create_dhcp_options_options_help, append=True, example=network_create_dhcp_options_options_example)
+cli_util.update_param_help(virtualnetwork_cli.create_dhcp_options, 'options', '', append=True, example=network_create_dhcp_options_options_example)
+cli_util.update_param_help(virtualnetwork_cli.update_dhcp_options, 'options', '', append=True, example=network_create_dhcp_options_options_example)
 
 # help for oci network route-table create --route-rules
 internet_gateway_example_id = 'ocid1.internetgateway.oc1.phx.aaaaaaaaxtfqb2srw7hoi5cmdum4n6ow2xm2zhrzqqypmlteiiebtmvl75ya'
 network_create_route_table_route_rules_example = """'[{{"cidrBlock":"0.0.0.0/0","networkEntityId":"{ig_id}"}}]'"""
-network_create_route_table_route_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
-cli_util.update_param_help(virtualnetwork_cli.create_route_table, 'route_rules', network_create_route_table_route_rules_help,
-                           append=True, example=network_create_route_table_route_rules_example.format(ig_id=internet_gateway_example_id))
-cli_util.update_param_help(virtualnetwork_cli.update_route_table, 'route_rules', network_create_route_table_route_rules_help,
-                           append=True, example=network_create_route_table_route_rules_example.format(ig_id=internet_gateway_example_id))
+cli_util.update_param_help(virtualnetwork_cli.create_route_table, 'route_rules', '', append=True, example=network_create_route_table_route_rules_example.format(ig_id=internet_gateway_example_id))
+cli_util.update_param_help(virtualnetwork_cli.update_route_table, 'route_rules', '', append=True, example=network_create_route_table_route_rules_example.format(ig_id=internet_gateway_example_id))
 
 # help for oci network security-list create --egress-security-rules
 network_create_security_list_egress_security_rules_example = """'[{"destination": "10.0.2.0/24", "protocol": "6", "isStateless": true, "tcpOptions": {"destinationPortRange": {"max": 1521, "min": 1521}, "sourcePortRange": {"max": 1521, "min": 1521}}}]'"""
-network_create_security_list_egress_security_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
-cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'egress_security_rules', network_create_security_list_egress_security_rules_help, append=True, example=network_create_security_list_egress_security_rules_example)
-cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'egress_security_rules', network_create_security_list_egress_security_rules_help, append=True, example=network_create_security_list_egress_security_rules_example)
+cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'egress_security_rules', '', append=True, example=network_create_security_list_egress_security_rules_example)
+cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'egress_security_rules', '', append=True, example=network_create_security_list_egress_security_rules_example)
 
 # help for oci network security-list create --ingress-security-rules
 network_create_security_list_ingress_security_rules_example = """'[{"source": "10.0.2.0/24", "protocol": "6", "isStateless": true, "tcpOptions": {"destinationPortRange": {"max": 1521, "min": 1521}, "sourcePortRange": {"max": 1521, "min": 1521}}}]'"""
-network_create_security_list_ingress_security_rules_help = cli_util.GENERIC_JSON_FORMAT_HELP
-cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'ingress_security_rules', network_create_security_list_ingress_security_rules_help, append=True, example=network_create_security_list_ingress_security_rules_example)
-cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'ingress_security_rules', network_create_security_list_ingress_security_rules_help, append=True, example=network_create_security_list_ingress_security_rules_example)
+cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'ingress_security_rules', '', append=True, example=network_create_security_list_ingress_security_rules_example)
+cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'ingress_security_rules', '', append=True, example=network_create_security_list_ingress_security_rules_example)
 
 # Formatting of the help for the bcms network private-ip list command
 virtualnetwork_cli.list_private_ips.help = """Lists the [PrivateIp] objects based on one of these filters:
@@ -150,7 +146,7 @@ Please use the `oci compute image import` command instead.
 cli_util.get_param(virtualnetwork_cli.update_vnic, 'skip_source_dest_check').type = click.BOOL
 
 
-@compute_cli.image_group.group(cli_util.override('export_image_group.command_name', 'export'), help="""Exports an image to the Oracle Cloud Infrastructure Object Storage Service. You can use the
+@compute_cli.image_group.command(cli_util.override('export_image_group.command_name', 'export'), cls=CommandGroupWithAlias, help="""Exports an image to the Oracle Cloud Infrastructure Object Storage Service. You can use the
 Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
@@ -164,7 +160,7 @@ def export_image_group():
     pass
 
 
-@compute_cli.image_group.group(cli_util.override('import_image_group.command_name', 'import'), help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service. You can use the
+@compute_cli.image_group.command(cli_util.override('import_image_group.command_name', 'import'), cls=CommandGroupWithAlias, help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service. You can use the
 Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to import from.
 
 For more information about importing exported images, see [Image Import/Export].
@@ -359,10 +355,12 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
 @click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -374,7 +372,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vnic]'})
 @cli_util.wrap_exceptions
-def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, limit, page):
+def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, limit, page, all_pages, page_size):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -387,6 +385,10 @@ def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input,
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     client = cli_util.build_client('compute', ctx)
     compartment_id = client.get_instance(instance_id=instance_id).data.compartment_id
@@ -397,11 +399,31 @@ def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input,
     if page is not None:
         kwargs['page'] = page
 
-    vnic_attachments_result = client.list_vnic_attachments(
-        compartment_id=compartment_id,
-        instance_id=instance_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        vnic_attachments_result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_vnic_attachments,
+            compartment_id=compartment_id,
+            instance_id=instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        vnic_attachments_result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_vnic_attachments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            instance_id=instance_id,
+            **kwargs
+        )
+    else:
+        vnic_attachments_result = client.list_vnic_attachments(
+            compartment_id=compartment_id,
+            instance_id=instance_id,
+            **kwargs
+        )
 
     networking_client = cli_util.build_client('virtual_network', ctx)
     result = []
@@ -430,6 +452,7 @@ def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input,
 @click.option('--ssh-authorized-keys-file', required=False, type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
 def launch_instance_extended(ctx, **kwargs):
     if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
@@ -879,4 +902,94 @@ def create_instance_console_connection(ctx, generate_full_command_json_input, ge
         'public_key': ssh_public_key_file.read()
     }
 
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
     ctx.invoke(compute_cli.create_instance_console_connection, **kwargs)
+
+
+cli_util.update_param_help(blockstorage_cli.create_volume, 'availability_domain', """The Availability Domain of the volume. Example: `Uocm:PHX-AD-1`.
+
+This is optional when cloning a volume as the newly created volume will be created in the same Availability Domain as its source. This is required when creating an empty volume or restoring a volume from a backup.""", append=False)
+cli_util.update_param_help(blockstorage_cli.create_volume, 'compartment_id', """The OCID of the compartment that contains the volume. This is optional when cloning a volume or restoring a volume from a backup. If it is not supplied then the volume will be created in the same compartment as the source. This is requied when creating an empty volume.""", append=False)
+cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_gbs', """This option cannot be supplied when cloning a volume or restoring a volume from a backup""", append=True)
+cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_mbs', """[DEPRECATED] The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use --size-in-gbs instead. This option cannot be supplied when cloning a volume or restoring a volume from a backup""", append=False)
+
+
+@cli_util.copy_params_from_generated_command(blockstorage_cli.create_volume, params_to_exclude=['source_details', 'volume_backup_id'])
+@blockstorage_cli.volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 16 TB (16777216 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+
+A volume and instance can be in separate compartments but must be in the same Availability Domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@click.option('--source-volume-id', help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
+@click.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Volume'})
+@cli_util.wrap_exceptions
+def create_volume_extended(ctx, **kwargs):
+    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs.get('generate_full_command_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs.get('generate_param_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+
+    kwargs['availability_domain'] = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', kwargs.get('availability_domain'), False)
+    kwargs['compartment_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', kwargs.get('compartment_id'), False)
+    kwargs['display_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', kwargs.get('display_name'), False)
+    kwargs['size_in_gbs'] = cli_util.coalesce_provided_and_default_value(ctx, 'size-in-gbs', kwargs.get('size_in_gbs'), False)
+    kwargs['size_in_mbs'] = cli_util.coalesce_provided_and_default_value(ctx, 'size-in-mbs', kwargs.get('size_in_mbs'), False)
+    kwargs['volume_backup_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'volume-backup-id', kwargs.get('volume_backup_id'), False)
+    kwargs['source_volume_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'source-volume-id', kwargs.get('source_volume_id'), False)
+
+    if kwargs['source_volume_id'] and kwargs['volume_backup_id']:
+        raise click.UsageError('You cannot specify both the --volume-backup-id and --source-volume-id options')
+
+    if not kwargs['source_volume_id'] and not kwargs['availability_domain']:
+        raise click.UsageError('An availability domain must be specified when creating an empty volume or restoring a volume from a backup')
+
+    if not kwargs['source_volume_id'] and not kwargs['volume_backup_id'] and not kwargs['compartment_id']:
+        raise click.UsageError('A compartment ID must be specified when creating an empty volume')
+
+    if (kwargs['volume_backup_id'] or kwargs['source_volume_id']) and (kwargs['size_in_gbs'] or kwargs['size_in_mbs']):
+        raise click.UsageError('You cannot specify a size when cloning a volume or restoring a volume from a backup')
+
+    if (kwargs['size_in_mbs'] and kwargs['size_in_gbs']):
+        raise click.UsageError('You cannot specify both --size-in-mbs and --size-in-gbs')
+
+    client = cli_util.build_client('blockstorage', ctx)
+
+    if kwargs['source_volume_id']:
+        source_volume = client.get_volume(volume_id=kwargs['source_volume_id'])
+        kwargs['availability_domain'] = source_volume.data.availability_domain
+        if not kwargs['compartment_id']:
+            kwargs['compartment_id'] = source_volume.data.compartment_id
+
+    if kwargs['volume_backup_id']:
+        source_backup = client.get_volume_backup(volume_backup_id=kwargs['volume_backup_id'])
+        if not kwargs['compartment_id']:
+            kwargs['compartment_id'] = source_backup.data.compartment_id
+
+    if kwargs['source_volume_id'] or kwargs['volume_backup_id']:
+        if kwargs['volume_backup_id']:
+            source_details = {
+                'type': 'volumeBackup',
+                'id': kwargs['volume_backup_id']
+            }
+        else:
+            source_details = {
+                'type': 'volume',
+                'id': kwargs['source_volume_id']
+            }
+
+        kwargs['source_details'] = json.dumps(source_details)
+
+    kwargs.pop('source_volume_id', None)
+    kwargs.pop('volume_backup_id', None)
+
+    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
+
+    ctx.invoke(blockstorage_cli.create_volume, **kwargs)

@@ -62,6 +62,11 @@ class TestOptionOrdering(unittest.TestCase):
     def test_help_at_verb(self):
         self.verify_help(['os', 'ns', 'get'], ['-?', '--help'], 'Usage: oci os ns get [OPTIONS]')
 
+    def test_empty_path_option_returns_error(self):
+        result = self.invoke_operation(['iam', 'user', 'get', '--user-id', ''])
+        self.assertNotEqual(0, result.exit_code)
+        assert "UsageError: Parameter --user-id cannot be whitespace or empty string" in result.output
+
     def invoke_operation(self, command):
         return util.invoke_command_as_admin(command)
 

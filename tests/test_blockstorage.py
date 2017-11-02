@@ -5,6 +5,7 @@ import json
 import unittest
 from . import command_coverage_validator
 from . import util
+from .test_list_filter import retrieve_list_and_ensure_sorted
 import oci_cli
 
 
@@ -18,10 +19,38 @@ class TestBlockStorage(unittest.TestCase):
 
         try:
             self.subtest_volume_operations()
-            self.subtest_create_volume_both_mb_and_gbs()
+            self.subtest_clone_operations()
             self.subtest_volume_backup_operations()
         finally:
             self.subtest_delete()
+
+    def test_volume_create_validations(self):
+        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test'])
+        assert 'You cannot specify both the --volume-backup-id and --source-volume-id options' in result.output
+
+        result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--size-in-gbs', '50'])
+        assert 'An availability domain must be specified when creating an empty volume or restoring a volume from a backup' in result.output
+
+        result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--volume-backup-id', 'unit-test'])
+        assert 'An availability domain must be specified when creating an empty volume or restoring a volume from a backup' in result.output
+
+        result = self.invoke(['volume', 'create', '--availability-domain', util.availability_domain()])
+        assert 'A compartment ID must be specified when creating an empty volume' in result.output
+
+        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--size-in-mbs', '51200'])
+        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
+
+        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--size-in-gbs', '50'])
+        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
+
+        result = self.invoke(['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test', '--size-in-mbs', '51200'])
+        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
+
+        result = self.invoke(['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test', '--size-in-gbs', '50'])
+        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
+
+        result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(), '--size-in-gbs', '50', '--size-in-mbs', '51200'])
+        assert 'You cannot specify both --size-in-mbs and --size-in-gbs' in result.output
 
     @util.log_test
     def subtest_volume_operations(self):
@@ -31,21 +60,26 @@ class TestBlockStorage(unittest.TestCase):
         self.volume_id = self.volume_operations_internal(volume_name, params, None, str(50 * 1024))
         self.volume_id_two = self.volume_operations_internal(volume_name, params, '50', None)
 
-    @util.log_test
-    def subtest_create_volume_both_mb_and_gbs(self):
-        volume_name = util.random_name('cli_test_volume')
-        params = [
-            'volume', 'create',
-            '--availability-domain', util.availability_domain(),
-            '--compartment-id', util.COMPARTMENT_ID,
-            '--display-name', volume_name,
-            '--size-in-gbs', '50',
-            '--size-in-mbs', str(50 * 1024)
-        ]
-
-        result = self.invoke(params)
-        assert result.exit_code != 0
-        assert 'InvalidParameter' in result.output
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'volume', 'list', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(), '--sort-by', 'DISPLAYNAME', '--sort-order', 'asc'],
+            'display-name',
+            'asc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'volume', 'list', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(), '--sort-by', 'DISPLAYNAME', '--sort-order', 'desc'],
+            'display-name',
+            'desc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'volume', 'list', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(), '--sort-by', 'TIMECREATED', '--sort-order', 'asc', '--all'],
+            'time-created',
+            'asc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'volume', 'list', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(), '--sort-by', 'TIMECREATED', '--sort-order', 'desc', '--all'],
+            'time-created',
+            'desc'
+        )
 
     def volume_operations_internal(self, volume_name, command_params, size_gb, size_mb):
         params_to_use = list(command_params)
@@ -83,6 +117,28 @@ class TestBlockStorage(unittest.TestCase):
         return volume_id
 
     @util.log_test
+    def subtest_clone_operations(self):
+        volume_name = util.random_name('cli_test_clone_vol')
+        params = ['volume', 'create', '--source-volume-id', self.volume_id, '--display-name', volume_name]
+
+        result = self.invoke(params)
+        util.validate_response(result)
+
+        parsed_result = json.loads(result.output)
+        source_details = {'id': self.volume_id, 'type': 'volume'}
+        assert source_details == parsed_result['data']['source-details']
+        assert util.COMPARTMENT_ID == parsed_result['data']['compartment-id']
+        assert util.availability_domain() == parsed_result['data']['availability-domain']
+        assert 50 == int(parsed_result['data']['size-in-gbs'])  # We initially created a 50GB volume
+
+        volume_id = util.find_id_in_response(result.output)
+        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], 'AVAILABLE', max_wait_seconds=180)
+        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], True, max_wait_seconds=360, state_property_name="is-hydrated")
+
+        result = self.invoke(['volume', 'delete', '--volume-id', volume_id, '--force'])
+        util.validate_response(result)
+
+    @util.log_test
     def subtest_volume_backup_operations(self):
         backup_name = util.random_name('cli_test_backup')
         result = self.invoke(['backup', 'create', '--volume-id', self.volume_id, '--display-name', backup_name])
@@ -108,9 +164,46 @@ class TestBlockStorage(unittest.TestCase):
         util.validate_response(result)
         self.assertEquals(1, len(json.loads(result.output)['data']))
 
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'backup', 'list', '-c', util.COMPARTMENT_ID, '--sort-by', 'DISPLAYNAME', '--sort-order', 'asc'],
+            'display-name',
+            'asc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'backup', 'list', '-c', util.COMPARTMENT_ID, '--sort-by', 'DISPLAYNAME', '--sort-order', 'desc'],
+            'display-name',
+            'desc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'backup', 'list', '-c', util.COMPARTMENT_ID, '--sort-by', 'TIMECREATED', '--sort-order', 'asc', '--all'],
+            'time-created',
+            'asc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['bv', 'backup', 'list', '-c', util.COMPARTMENT_ID, '--sort-by', 'TIMECREATED', '--sort-order', 'desc', '--all'],
+            'time-created',
+            'desc'
+        )
+
         backup_name = backup_name + "_UPDATED"
         result = self.invoke(
             ['backup', 'update', '--volume-backup-id', self.backup_id, '--display-name', backup_name])
+        util.validate_response(result)
+
+        result = self.invoke(['volume', 'create', '--volume-backup-id', self.backup_id, '--availability-domain', util.second_availability_domain()])
+        util.validate_response(result)
+
+        parsed_result = json.loads(result.output)
+        source_details = {'id': self.backup_id, 'type': 'volumeBackup'}
+        assert source_details == parsed_result['data']['source-details']
+        assert util.COMPARTMENT_ID == parsed_result['data']['compartment-id']
+        assert util.second_availability_domain() == parsed_result['data']['availability-domain']
+        assert 50 == int(parsed_result['data']['size-in-gbs'])  # We initially created a 50GB volume
+
+        volume_id = util.find_id_in_response(result.output)
+        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], 'AVAILABLE', max_wait_seconds=180)
+
+        result = self.invoke(['volume', 'delete', '--volume-id', volume_id, '--force'])
         util.validate_response(result)
 
         # Make sure we're still in a good state before deleting.
@@ -151,7 +244,9 @@ class TestBlockStorage(unittest.TestCase):
 
     def invoke(self, params, debug=False, ** args):
         commands = ['bv'] + params
-        self.validator.register_call(commands)
+
+        if hasattr(self, 'validator'):
+            self.validator.register_call(commands)
 
         if debug is True:
             commands = ['--debug'] + commands

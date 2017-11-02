@@ -83,7 +83,6 @@ class TestIdentity(unittest.TestCase):
 
         result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
         self.validate_response(result, extra_validation=self.validate_user)
-        assert "opc-next-page" in result.output
 
         # Call again with debug data for extra validation.
         result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'], debug=True)
@@ -128,6 +127,12 @@ class TestIdentity(unittest.TestCase):
             ['group', 'list-users', '--compartment-id', util.TENANT_ID, '--group-id', self.group_ocid])
         self.validate_response(result)
         assert len(json.loads(result.output)['data']) == 1
+
+        result = self.invoke(
+            ['group', 'list-users', '--compartment-id', util.TENANT_ID, '--group-id', self.group_ocid, '--all'])
+        self.validate_response(result)
+        assert len(json.loads(result.output)['data']) == 1
+        assert 'opc-next-page' not in result.output
 
         result = self.invoke(
             ['user', 'list-groups', '--compartment-id', util.TENANT_ID, '--user-id', self.user_ocid])

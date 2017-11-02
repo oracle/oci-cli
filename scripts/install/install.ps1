@@ -21,17 +21,19 @@ Param(
 
 $OriginalErrorActionPreference = $ErrorActionPreference
 
-# Explicitly support TLS 1.2
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12';
+# Explicitly support TLS 1.2 only if OS supports it
+if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12') {
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12';
+}
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.4.10/scripts/install/install.py"
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.4.11/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.2"    # version of Python to install if none exists
 $MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
 $MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
 
 function LogOutput($Output) {
     Write-Verbose $Output
-    Write-Progress -Activity $Output
+    Write-Progress -Activity $Output -Status 'In progress...'
 }
 
 function VersionMeetsMinimumRequirements($Version, $MinVersion) {
@@ -113,6 +115,90 @@ function FindLatestPythonExecutableInRegistry {
     return $PythonExecutable
 }
 
+function DownloadFile($Uri, $OutFile) {
+    # PowerShell V2 doesn't support Invoke-WebRequest so use WebClient
+    # Use Invoke-WebRequest on versions that support it since it writes progress
+    if ($PsVersionTable.PsVersion.Major > 2) {
+        Invoke-WebRequest -Uri $Uri -OutFile $OutFile -UseBasicParsing
+    }
+    else {
+        (New-Object System.Net.WebClient).DownloadFile($Uri, $OutFile)
+    } 
+}
+
+function DownloadAndRunPythonExeInstaller($InstallDir, $Version) {
+    LogOutput "Downloading Python..."
+
+    # Download python executable installer
+    $PythonInstallerUrl = "https://www.python.org/ftp/python/$Version/python-$Version.exe"
+    $PythonInstallerExe = [System.IO.Path]::GetTempFileName() + ".exe"
+
+    # IntPtrSize == 8 on 64 bit machines
+    $IntPtrSize = Invoke-Expression [IntPtr]::Size
+    if ($IntPtrSize -eq 8) {
+        $PythonInstallerUrl = "https://www.python.org/ftp/python/$Version/python-$Version-amd64.exe"
+    }
+
+    DownloadFile -Uri $PythonInstallerUrl -OutFile $PythonInstallerExe
+
+    LogOutput "Download Complete! Installer executable written to: $PythonInstallerExe"
+
+    LogOutput "Installing Python to $InstallDir..."
+
+    # Do a 'passive' install of Python which will not require any user interaction but will pop up a progress window
+    # Options documented here: https://docs.python.org/3/using/windows.html#installing-without-ui
+    $Args = "/passive PrependPath=0 Include_test=0 Include_tcltk=0 Include_launcher=0 Include_symbols=0 DefaultJustForMeTargetDir=" + $InstallDir
+    $Process = Start-Process -FilePath $PythonInstallerExe -ArgumentList $Args -Wait -PassThru
+    if ($Process.ExitCode -ne 0) {
+        Write-Error "Failed to install Python. On some systems installing Python can require running the script as an Administrator. More detailed information can be found in the Python installation logs in $env:LOCALAPPDATA\Temp"
+    }
+
+    LogOutput "Successfully installed Python!"
+}
+
+function DownloadAndRunPythonMsiInstaller($InstallDir, $Version) {
+
+    LogOutput "Downloading Python..."
+
+    # Download python executable installer
+    $PythonInstallerUrl = "https://www.python.org/ftp/python/$Version/python-$Version.msi"
+    $PythonInstallerMsi = [System.IO.Path]::GetTempFileName() + ".msi"
+
+    # IntPtrSize == 8 on 64 bit machines
+    $IntPtrSize = Invoke-Expression [IntPtr]::Size
+    if ($IntPtrSize -eq 8) {
+        $PythonInstallerUrl = "https://www.python.org/ftp/python/$Version/python-$Version.amd64.msi"
+    }
+
+    DownloadFile -Uri $PythonInstallerUrl -OutFile $PythonInstallerMsi
+
+    LogOutput "Download Complete! Installer MSI written to: $PythonInstallerMsi"
+
+    LogOutput "Installing Python to $InstallDir..."
+
+    $InstallDir = (Get-ChildItem Env:\USERPROFILE).Value + "\Python\"
+    $DataStamp = get-date -Format yyyyMMddTHHmmss
+    $logFile = '{0}-{1}.log' -f $PythonInstallerMsi,$DataStamp
+
+    # documentation: https://www.python.org/download/releases/2.4/msi/
+    $MSIArguments = @(
+        "/i"
+        ('"{0}"' -f $PythonInstallerMsi)
+        "/qr"
+        "/norestart"
+        "/L*v"
+        $logFile
+        "TARGETDIR=`"$InstallDir`""
+    )
+
+    $Process = Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow -PassThru
+    if ($Process.ExitCode -ne 0) {
+        Write-Error "Failed to install Python. On some systems installing Python can require running the script as an Administrator. More detailed information can be found in the Python installation log: $logFile"
+    }
+
+    LogOutput "Successfully installed Python!"
+}
+
 Try {
     # ensure that the script stops executing if any errors are encountered so we don't get in a weird state
     $ErrorActionPreference = "Stop"
@@ -155,36 +241,17 @@ Try {
             }
         }
 
-        LogOutput "Downloading Python..."
-
-        # Download python executable installer
-        $PythonInstallerUrl = "https://www.python.org/ftp/python/$PythonVersionToInstall/python-$PythonVersionToInstall.exe"
-        $PythonInstallerExe = [System.IO.Path]::GetTempFileName() + ".exe"
-
-        # IntPtrSize == 8 on 64 bit machines
-        $IntPtrSize = Invoke-Expression [IntPtr]::Size
-        if ($IntPtrSize -eq 8) {
-            $PythonInstallerUrl = "https://www.python.org/ftp/python/$PythonVersionToInstall/python-$PythonVersionToInstall-amd64.exe"
-        }
-
-        Invoke-WebRequest -Uri $PythonInstallerUrl -OutFile $PythonInstallerExe -UseBasicParsing
-
-        LogOutput "Download Complete! Installer executable written to: $PythonInstallerExe"
-
         # (e.g. C:\Users\{USER}\Python\)
         $InstallDir = (Get-ChildItem Env:\USERPROFILE).Value + "\Python\"
 
-        LogOutput "Installing Python to $InstallDir..."
-
-        # Do a 'passive' install of Python which will not require any user interaction but will pop up a progress window
-        # Options documented here: https://docs.python.org/3/using/windows.html#installing-without-ui
-        $Args = "/passive PrependPath=0 Include_test=0 Include_tcltk=0 Include_launcher=0 Include_symbols=0 DefaultJustForMeTargetDir=" + $InstallDir
-        $Process = Start-Process -FilePath $PythonInstallerExe -ArgumentList $Args -Wait -PassThru
-        if ($Process.ExitCode -ne 0) {
-            Write-Error "Failed to install Python. On some systems installing Python can require running the script as an Administrator. More detailed information can be found in the Python installation logs in $env:LOCALAPPDATA\Temp"
+        # use MSI installer for python 2.7.x on Windows Server 2008 SP 0
+        $OsInfo = Get-WMIObject Win32_OperatingSystem -ComputerName $env:COMPUTERNAME
+        if ($OsInfo.Caption.Contains('Windows Server 2008') -And $OsInfo.ServicePackMajorVersion -eq 0) {
+            DownloadAndRunPythonMsiInstaller -InstallDir $InstallDir -Version "2.7.14"
         }
-
-        LogOutput "Successfully installed Python!"
+        else {
+            DownloadAndRunPythonExeInstaller -InstallDir $InstallDir -Version $PythonVersionToInstall
+        }
 
         $PythonExecutable = Join-Path $InstallDir 'python.exe'
     }
@@ -192,7 +259,7 @@ Try {
     # Once python is installed, execute the CLI install script
     $PythonInstallScriptPath = [System.IO.Path]::GetTempFileName()
     LogOutput "Downloading install script to $PythonInstallScriptPath"
-    Invoke-WebRequest $PythonInstallScriptUrl -UseBasicParsing -OutFile $PythonInstallScriptPath
+    DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
     $ArgumentList = $PythonInstallScriptPath
     if ($AcceptAllDefaults) {
         $ArgumentList = "$ArgumentList --accept-all-defaults"
