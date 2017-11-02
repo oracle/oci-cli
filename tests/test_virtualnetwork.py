@@ -6,6 +6,7 @@ import pytest
 import unittest
 from . import command_coverage_validator
 from . import util
+from .test_list_filter import retrieve_list_by_field_and_check, retrieve_list_and_ensure_sorted
 import oci_cli
 import time
 
@@ -34,6 +35,9 @@ class TestVirtualNetwork(unittest.TestCase):
             self.subtest_drg_attachment_operations()
             self.subtest_ip_sec_connection_operations()
             self.subtest_route_table_operations()
+
+            if hasattr(self, 'drg_capacity_issue'):
+                pytest.skip('Skipped DRG tests due to capacity issues')
         finally:
             time.sleep(20)
             self.subtest_delete()
@@ -89,6 +93,8 @@ class TestVirtualNetwork(unittest.TestCase):
         result = self.invoke(
             ['security-list', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid])
         util.validate_response(result)
+
+        self.run_list_filter_verification('security-list', sl_name)
 
         result = self.invoke(['security-list', 'get', '--security-list-id', self.sl_ocid])
         util.validate_response(result, expect_etag=True)
@@ -208,6 +214,8 @@ class TestVirtualNetwork(unittest.TestCase):
         result = self.invoke(['subnet', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid])
         util.validate_response(result)
 
+        self.run_list_filter_verification('subnet', subnet_name)
+
         subnet_name = subnet_name + "_updated"
         result = self.invoke(['subnet', 'update', '--subnet-id', self.subnet_ocid, '--display-name', subnet_name])
         util.validate_response(result, expect_etag=True)
@@ -238,6 +246,8 @@ class TestVirtualNetwork(unittest.TestCase):
 
         result = self.invoke(['internet-gateway', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid])
         util.validate_response(result)
+
+        self.run_list_filter_verification('internet-gateway', ig_name)
 
         ig_name = ig_name + "_updated"
         result = self.invoke(['internet-gateway', 'update', '--ig-id', self.ig_ocid, '--display-name', ig_name])
@@ -288,6 +298,8 @@ class TestVirtualNetwork(unittest.TestCase):
 
         result = self.invoke(['dhcp-options', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid])
         util.validate_response(result)
+
+        self.run_list_filter_verification('dhcp-options', dhcp_options_name)
 
         result = self.invoke(['dhcp-options', 'get', '--dhcp-id', self.dhcp_options_ocid])
         util.validate_response(result, expect_etag=True)
@@ -342,7 +354,8 @@ class TestVirtualNetwork(unittest.TestCase):
         # If we have hit a limit, skip the test
         if 'Limit vcn-tenant-drg' in result.output:
             self.drg_capacity_issue = True
-            pytest.skip('Unable to execute test as a DRG is not available')
+            print('Unable to execute subtest_drg_operations as a DRG is not available')
+            return
 
         self.drg_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
@@ -363,7 +376,8 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_drg_attachment_operations(self):
         if hasattr(self, 'drg_capacity_issue'):
-            pytest.skip('Unable to execute test as a DRG is not available')
+            print('Unable to execute subtest_drg_attachment_operations as a DRG is not available')
+            return
 
         drg_attachment_name = util.random_name('cli_test_drg_attachment')
 
@@ -391,7 +405,8 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_ip_sec_connection_operations(self):
         if hasattr(self, 'drg_capacity_issue'):
-            pytest.skip('Unable to execute test as a DRG is not available')
+            print('Unable to execute subtest_ip_sec_connection_operations as a DRG is not available')
+            return
 
         ipsc_name = util.random_name('cli_test_ipsc')
         routes = util.remove_outer_quotes(oci_cli.core_cli_extended.network_create_ip_sec_connection_static_routes_example)
@@ -446,6 +461,8 @@ class TestVirtualNetwork(unittest.TestCase):
 
         result = self.invoke(['route-table', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid])
         util.validate_response(result)
+
+        self.run_list_filter_verification('route-table', rt_name)
 
         result = self.invoke(['route-table', 'get', '--rt-id', self.rt_ocid])
         util.validate_response(result, expect_etag=True)
@@ -594,6 +611,42 @@ class TestVirtualNetwork(unittest.TestCase):
             commands = ['--debug'] + commands
 
         return util.invoke_command(commands, ** args)
+
+    def run_list_filter_verification(self, virtual_network_subgroup_name, display_name):
+        retrieve_list_by_field_and_check(
+            ['network', virtual_network_subgroup_name, 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid, '--display-name', display_name, '--all'],
+            'display-name',
+            display_name,
+            match_at_least_one=True
+        )
+        retrieve_list_by_field_and_check(
+            ['network', virtual_network_subgroup_name, 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid, '--lifecycle-state', 'AVAILABLE', '--all'],
+            'lifecycle-state',
+            'AVAILABLE',
+            match_at_least_one=True
+        )
+
+        retrieve_list_and_ensure_sorted(
+            ['network', virtual_network_subgroup_name, 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid, '--sort-by', 'DISPLAYNAME', '--sort-order', 'asc', '--all'],
+            'display-name',
+            'asc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['network', virtual_network_subgroup_name, 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid, '--sort-by', 'DISPLAYNAME', '--sort-order', 'desc', '--all'],
+            'display-name',
+            'desc'
+        )
+
+        retrieve_list_and_ensure_sorted(
+            ['network', virtual_network_subgroup_name, 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid, '--sort-by', 'TIMECREATED', '--sort-order', 'asc', '--all'],
+            'time-created',
+            'asc'
+        )
+        retrieve_list_and_ensure_sorted(
+            ['network', virtual_network_subgroup_name, 'list', '--compartment-id', util.COMPARTMENT_ID, '--vcn-id', self.vcn_ocid, '--sort-by', 'TIMECREATED', '--sort-order', 'desc', '--all'],
+            'time-created',
+            'desc'
+        )
 
 
 if __name__ == '__main__':

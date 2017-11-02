@@ -1,6 +1,7 @@
 import json
 import os
 import os.path
+import pytest
 import random
 import shutil
 import six
@@ -118,6 +119,9 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
                  '--assign-public-ip', assign_public_ip,
                  '--vnic-display-name', vnic_display_name,
                  '--defaults-file', 'tests/resources/default_files/launch_instance_default'])
+
+            if (launch_instance_result.output and 'LimitExceeded' in launch_instance_result.output) or (launch_instance_result.exception and 'LimitExceeded' in str(launch_instance_result.exception)):
+                pytest.skip('Skipping test_launch_instance as we received a limit exceeded error from the service')
 
             temp_instance_ocid = util.find_id_in_response(launch_instance_result.output)
             util.validate_response(launch_instance_result, expect_etag=True)

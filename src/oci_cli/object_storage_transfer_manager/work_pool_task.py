@@ -24,6 +24,15 @@ class WorkPoolTask(object):
     def add_error_callback(self, callback):
         self._error_callbacks.append(callback)
 
+    def get_completion_callbacks(self):
+        return list(self._completion_callbacks)
+
+    def get_success_callbacks(self):
+        return list(self._success_callbacks)
+
+    def get_error_callbacks(self):
+        return list(self._error_callbacks)
+
     def do_work(self):
         result = None
         try:

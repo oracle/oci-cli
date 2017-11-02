@@ -1,17 +1,39 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
+from .work_pool import WorkPool
 from .work_pool_task import WorkPoolTask
+from .work_pool_task import WorkPoolTaskCallbacksContainer, WorkPoolTaskErrorCallback
 
 from retrying import retry
 from .. import retry_utils
 
+import heapq
+import oci
+import six
+import threading
 
-# A task which can retrieve an object from Object Storage
+
+MEBIBYTE = 1024 * 1024
+OBJECT_GET_CHUNK_SIZE = MEBIBYTE
+
+
+@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
+       retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
+def _make_retrying_get_call(object_storage_client, **kwargs):
+    return object_storage_client.get_object(
+        kwargs['namespace'],
+        kwargs['bucket_name'],
+        kwargs['object_name'],
+        if_match=kwargs.get('if_match'),
+        if_none_match=kwargs.get('if_none_match'),
+        range=kwargs.get('range'),
+        opc_client_request_id=kwargs.get('request_id')
+    )
+
+
+# A task which can retrieve an object from Object Storage and write it to a file
 class GetObjectTask(WorkPoolTask):
-    MEBIBYTE = 1024 * 1024
-    OBJECT_GET_CHUNK_SIZE = MEBIBYTE
-
     def __init__(self, object_storage_client, callbacks_container, **kwargs):
         super(GetObjectTask, self).__init__(callbacks_container=callbacks_container)
 
@@ -19,21 +41,299 @@ class GetObjectTask(WorkPoolTask):
         self.kwargs = kwargs
 
     def do_work_hook(self):
-        get_object_response = self._make_retrying_get_call()
+        get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
 
         with open(self.kwargs['full_file_path'], "wb") as file:
-            for chunk in get_object_response.data.raw.stream(self.OBJECT_GET_CHUNK_SIZE, decode_content=False):
+            for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
                 file.write(chunk)
+
+
+# A task which coordinates getting an object in multiple parts (using ranged GetObject calls), combining them and then sending them
+# to their output destination. It does this by:
+#
+#   - Figuring out what the ranges are
+#   - Sending those to be procesed by the appropriate worker pool
+#   - Spawning an extra thread to coordinate writing data in the right order and as it becomes ready to the destination. We have an
+#     extra thread for this so that we can write as we go rather than waiting until the end (this is also handier for piping/streaming scenarios
+#     since the other end is probably not expecting to get everything all at once)
+class GetObjectMultipartTask(WorkPoolTask):
+    DEFAULT_MULTIPART_DOWNLOAD_SIZE = 10 * MEBIBYTE
+
+    def __init__(self, object_storage_client, callbacks_container, object_storage_request_pool, destination_file_handle, **kwargs):
+        super(GetObjectMultipartTask, self).__init__(callbacks_container=callbacks_container)
+
+        self.object_storage_client = object_storage_client
+        self.object_storage_request_pool = object_storage_request_pool
+        self.range_tuples = []
+
+        self.kwargs = kwargs.copy()
+        self.multipart_download_threshold = self.kwargs['multipart_download_threshold']
+        self.kwargs.pop('multipart_download_threshold')
+
+        if 'chunk_written_callback' in self.kwargs:
+            self.chunk_written_callback = self.kwargs['chunk_written_callback']
+            self.kwargs.pop('chunk_written_callback')
+        else:
+            self.chunk_written_callback = None
+
+        if 'part_completed_callback' in self.kwargs:
+            self.part_completed_callback = self.kwargs['part_completed_callback']
+            self.kwargs.pop('part_completed_callback')
+        else:
+            self.part_completed_callback = None
+
+        if 'part_size' in self.kwargs:
+            self.part_size = self.kwargs['part_size']
+            self.kwargs.pop('part_size')
+        else:
+            self.part_size = self.DEFAULT_MULTIPART_DOWNLOAD_SIZE
+
+        if isinstance(destination_file_handle, six.string_types):
+            # If it's a string, treat it like a file path. Also, since we open the file of our own volition, close it after we're
+            # done. To constrast, if someone provided us something we assume is a file (or file-like) then don't auto-close because
+            # they may want to do something with it after we've done our work
+            self.destination_file_handle = open(destination_file_handle, 'wb')
+            self.auto_close_destination_file = True
+        else:
+            self.destination_file_handle = destination_file_handle
+            self.auto_close_destination_file = False
+
+        self.add_pending_write_lock = threading.Lock()
+        self.all_done_lock = threading.Lock()
+        self.pending_writes = PendingWrites(self.all_done_lock)
+        self.io_writer_pool = WorkPool(pool_size=1, max_workers=1)  # Only one thing writes to the destination
+
+    def do_work_hook(self):
+        if 'total_size' in self.kwargs:
+            content_length = self.kwargs['total_size']
+        else:
+            head_object_result = self._make_retrying_head_object_call()
+            if not head_object_result:
+                raise RuntimeError('Cannot download object as it does not exist')
+            content_length = int(head_object_result.headers['Content-Length'])
+            if self.part_completed_callback:
+                self.part_completed_callback(1, total_bytes=content_length)
+
+        if content_length <= self.multipart_download_threshold:
+            # If the content is not larget than the threshold then just grab the object and put it where it needs to go
+            get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
+            for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
+                self.destination_file_handle.write(chunk)
+        else:
+            # According to https://tools.ietf.org/rfc/rfc7233 section 2.1, we want things like:
+            #
+            #   bytes=0-499 (first 500 bytes, inclusive)
+            #   bytes=500-999 (second 500 bytes, inclusive)
+            start_byte = 0
+            end_byte = self.part_size - 1
+            tuple_counter = 0
+
+            while end_byte < content_length:
+                if start_byte != end_byte:
+                    self.range_tuples.append(
+                        (
+                            tuple_counter,
+                            {'range': 'bytes={}-{}'.format(start_byte, end_byte)}
+                        )
+                    )
+
+                tuple_counter += 1
+
+                # Next window of bytes
+                start_byte = start_byte + self.part_size
+                end_byte = end_byte + self.part_size
+
+                if start_byte >= content_length:
+                    break
+
+                # Don't overshoot the end part of the window
+                if end_byte >= content_length:
+                    end_byte = content_length - 1
+
+            self.pending_writes.total_parts = len(self.range_tuples)
+
+            errors = list()
+
+            for rt in self.range_tuples:
+                failure_callback_kwargs = {'errors': errors}
+                failure_callback = WorkPoolTaskErrorCallback(self._enqueue_errors, **failure_callback_kwargs)
+
+                release_lock_on_error_kwargs = {}
+                release_lock_on_failure_callback = WorkPoolTaskErrorCallback(self.pending_writes.release_lock_on_error, **release_lock_on_error_kwargs)
+
+                callbacks_container = WorkPoolTaskCallbacksContainer(error_callbacks=[failure_callback, release_lock_on_failure_callback])
+
+                copy_kwargs = self.kwargs.copy()
+                copy_kwargs['range'] = rt[1]['range']
+                copy_kwargs['part_completed_callback'] = self.part_completed_callback
+                copy_kwargs['chunk_written_callback'] = self.chunk_written_callback
+                get_object_range_task = GetObjectRangeTask(
+                    self.object_storage_client,
+                    callbacks_container,
+                    self.destination_file_handle,
+                    rt[0],
+                    self.io_writer_pool,
+                    self.add_pending_write_lock,
+                    self.pending_writes,
+                    **copy_kwargs
+                )
+
+                # Because we delegate work to another pool, errors could happen anytime so check before and after we submit work (noting that submitting work is a blocking
+                # operation if the pool does not have any slots available)
+                self._handle_errors(errors)
+                self.object_storage_request_pool.submit(get_object_range_task)
+                self._handle_errors(errors)
+
+            # This blocks until something makes the PendingWrites object releases the lock
+            self.all_done_lock.acquire()
+
+            self._handle_errors(errors)
+
+        if self.auto_close_destination_file:
+            self.destination_file_handle.close()
+
+    def _enqueue_errors(self, **kwargs):
+        kwargs['errors'].append(str(kwargs['callback_exception']))
+
+    def _handle_errors(self, errors):
+        if not errors:
+            return
+
+        raise RuntimeError('Error downloading parts: {}'.format('\n'.join(errors)))
 
     @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
            retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
-    def _make_retrying_get_call(self):
-        return self.object_storage_client.get_object(
-            self.kwargs['namespace'],
-            self.kwargs['bucket_name'],
-            self.kwargs['object_name'],
-            if_match=self.kwargs.get('if_match'),
-            if_none_match=self.kwargs.get('if_none_match'),
-            range=self.kwargs.get('range'),
-            opc_client_request_id=self.kwargs.get('request_id')
-        )
+    def _make_retrying_head_object_call(self):
+        try:
+            return self.object_storage_client.head_object(
+                namespace_name=self.kwargs['namespace'],
+                bucket_name=self.kwargs['bucket_name'],
+                object_name=self.kwargs['object_name'],
+                if_match=self.kwargs.get('if_match'),
+                if_none_match=self.kwargs.get('if_none_match'),
+                opc_client_request_id=self.kwargs.get('request_id')
+            )
+        except oci.exceptions.ServiceError as e:
+            if e.status == 404:
+                return None
+            else:
+                raise
+
+
+# A task which can retrieve a range of bytes for an object from object storage. Intended for internal use by GetObjectMultipartTask and not as a general task.
+class GetObjectRangeTask(WorkPoolTask):
+    def __init__(self, object_storage_client, callbacks_container, destination_file_handle, tuple_counter, io_writer_pool, add_pending_write_lock, pending_writes, **kwargs):
+        super(GetObjectRangeTask, self).__init__(callbacks_container=callbacks_container)
+
+        self.object_storage_client = object_storage_client
+        self.kwargs = kwargs
+        self.tuple_counter = tuple_counter
+        self.io_writer_pool = io_writer_pool
+        self.pending_writes = pending_writes
+        self.add_pending_write_lock = add_pending_write_lock
+
+        self.destination_file_handle = destination_file_handle
+        self.downloaded_data = six.BytesIO()
+
+        if 'chunk_written_callback' in self.kwargs:
+            self.chunk_written_callback = self.kwargs['chunk_written_callback']
+            self.kwargs.pop('chunk_written_callback')
+        else:
+            self.chunk_written_callback = None
+
+        if 'part_completed_callback' in self.kwargs:
+            self.part_completed_callback = self.kwargs['part_completed_callback']
+            self.kwargs.pop('part_completed_callback')
+        else:
+            self.part_completed_callback = None
+
+    def do_work_hook(self):
+        get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
+        total_size = 0
+        for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
+            self.downloaded_data.write(chunk)
+            total_size += len(chunk)
+            if self.chunk_written_callback:
+                self.chunk_written_callback(len(chunk) / 2)
+
+        if self.part_completed_callback:
+            self.part_completed_callback(total_size)
+
+        # PendingWrites uses heapq, which is not thread safe, so we need to lock it
+        with self.add_pending_write_lock:
+            parts_to_write = self.pending_writes.process_pending_write(self.tuple_counter, self.downloaded_data)
+            self.io_writer_pool.submit(
+                GetObjectRangeIOWriterTask(
+                    WorkPoolTaskCallbacksContainer(error_callbacks=self.get_error_callbacks()),  # Pass along any error callbacks so that we can signal the parent task that something bad has happened
+                    parts_to_write=parts_to_write,
+                    destination_file_handle=self.destination_file_handle,
+                    pending_writes=self.pending_writes,
+                    chunk_written_callback=self.chunk_written_callback,
+                    part_completed_callback=self.part_completed_callback
+                )
+            )
+
+
+class GetObjectRangeIOWriterTask(WorkPoolTask):
+    READ_WRITE_CHUNK_SIZE = 10 * MEBIBYTE
+
+    def __init__(self, callbacks_container, **kwargs):
+        super(GetObjectRangeIOWriterTask, self).__init__(callbacks_container=callbacks_container)
+        self.parts_to_write = kwargs['parts_to_write']
+        self.destination_file_handle = kwargs['destination_file_handle']
+        self.pending_writes = kwargs['pending_writes']
+        self.chunk_written_callback = kwargs.get('chunk_written_callback')
+        self.part_completed_callback = kwargs.get('part_completed_callback')
+
+    def do_work_hook(self):
+        total_size = 0
+        for part in self.parts_to_write:
+            part[1].seek(0)
+            self.destination_file_handle.write(part[1].read())
+            if self.part_completed_callback:
+                self.part_completed_callback(part[1].tell() / 2)
+            part[1].close()
+
+        if self.part_completed_callback:
+            self.part_completed_callback(total_size)
+
+        # After we have written this set of parts, check if we have written all the parts. This also signals back to the overarching
+        # GetObjectMultipartTask that all the work has been done
+        self.pending_writes.check_if_all_parts_written()
+
+
+# Stores the writes we have left to do. Has a lock which it acquires on initialization and releases
+# once all parts have been written to their destination
+class PendingWrites(object):
+    def __init__(self, all_done_lock):
+        self.pending = []
+        self.next_part = 0  # Always start at zero
+        self._total_parts = 0
+        self.all_done_lock = all_done_lock
+
+        self.all_done_lock.acquire()
+
+    @property
+    def total_parts(self):
+        return self._total_parts
+
+    @total_parts.setter
+    def total_parts(self, value):
+        self._total_parts = value
+
+    def process_pending_write(self, tuple_counter, data):
+        heapq.heappush(self.pending, (tuple_counter, data))
+
+        able_to_write = []
+        while self.pending and self.pending[0][0] == self.next_part:
+            able_to_write.append(heapq.heappop(self.pending))
+            self.next_part += 1
+
+        return able_to_write
+
+    def check_if_all_parts_written(self):
+        if not self.pending and self.next_part == self._total_parts:
+            self.all_done_lock.release()
+
+    def release_lock_on_error(self, **kwargs):
+        self.all_done_lock.release()

@@ -3,18 +3,22 @@
 
 from __future__ import print_function
 import click
+import six
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
+from .. import retry_utils  # noqa: F401
+from .. import custom_types  # noqa: F401
+from ..aliasing import CommandGroupWithAlias
 
 
-@cli.group(cli_util.override('virtual_network_group.command_name', 'virtual_network'), help=cli_util.override('virtual_network_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('virtual_network_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
 @cli_util.help_option_group
 def virtual_network_group():
     pass
 
 
-@click.group(cli_util.override('vcn_group.command_name', 'vcn'), help="""A Virtual Cloud Network (VCN). For more information, see
+@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A Virtual Cloud Network (VCN). For more information, see
 [Overview of the Networking Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
@@ -25,7 +29,7 @@ def vcn_group():
     pass
 
 
-@click.group(cli_util.override('subnet_group.command_name', 'subnet'), help="""A logical subdivision of a VCN. Each subnet exists in a single Availability Domain and
+@click.command(cli_util.override('subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single Availability Domain and
 consists of a contiguous range of IP addresses that do not overlap with
 other subnets in the VCN. Example: 172.16.1.0/24. For more information, see
 [Overview of the Networking Service] and
@@ -39,26 +43,26 @@ def subnet_group():
     pass
 
 
-@click.group(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), help="""Status of the IPSec connection.""")
+@click.command(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Status of the IPSec connection.""")
 @cli_util.help_option_group
 def ip_sec_connection_device_status_group():
     pass
 
 
-@click.group(cli_util.override('drg_attachment_group.command_name', 'drg-attachment'), help="""A link between a DRG and VCN. For more information, see
+@click.command(cli_util.override('drg_attachment_group.command_name', 'drg-attachment'), cls=CommandGroupWithAlias, help="""A link between a DRG and VCN. For more information, see
 [Overview of the Networking Service].""")
 @cli_util.help_option_group
 def drg_attachment_group():
     pass
 
 
-@click.group(cli_util.override('ip_sec_connection_device_config_group.command_name', 'ip-sec-connection-device-config'), help="""Information about the IPSecConnection device configuration.""")
+@click.command(cli_util.override('ip_sec_connection_device_config_group.command_name', 'ip-sec-connection-device-config'), cls=CommandGroupWithAlias, help="""Information about the IPSecConnection device configuration.""")
 @cli_util.help_option_group
 def ip_sec_connection_device_config_group():
     pass
 
 
-@click.group(cli_util.override('vnic_group.command_name', 'vnic'), help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN.
+@click.command(cli_util.override('vnic_group.command_name', 'vnic'), cls=CommandGroupWithAlias, help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN.
 An instance attaches to a VNIC to obtain a network connection into the VCN
 through that subnet. Each instance has a *primary VNIC* that is automatically
 created and attached during launch. You can add *secondary VNICs* to an
@@ -78,7 +82,7 @@ def vnic_group():
     pass
 
 
-@click.group(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), help="""A set of DHCP options. Used by the VCN to automatically provide configuration
+@click.command(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), cls=CommandGroupWithAlias, help="""A set of DHCP options. Used by the VCN to automatically provide configuration
 information to the instances when they boot up. There are two options you can set:
 
 - [DhcpDnsOption]: Lets you specify how DNS (hostname resolution) is
@@ -98,26 +102,26 @@ def dhcp_options_group():
     pass
 
 
-@click.group(cli_util.override('fast_connect_provider_service_group.command_name', 'fast-connect-provider-service'), help="""A service offering from a supported provider. For more information,
+@click.command(cli_util.override('fast_connect_provider_service_group.command_name', 'fast-connect-provider-service'), cls=CommandGroupWithAlias, help="""A service offering from a supported provider. For more information,
 see [FastConnect Overview].""")
 @cli_util.help_option_group
 def fast_connect_provider_service_group():
     pass
 
 
-@click.group(cli_util.override('virtual_circuit_bandwidth_shape_group.command_name', 'virtual-circuit-bandwidth-shape'), help="""An individual bandwidth level for virtual circuits.""")
+@click.command(cli_util.override('virtual_circuit_bandwidth_shape_group.command_name', 'virtual-circuit-bandwidth-shape'), cls=CommandGroupWithAlias, help="""An individual bandwidth level for virtual circuits.""")
 @cli_util.help_option_group
 def virtual_circuit_bandwidth_shape_group():
     pass
 
 
-@click.group(cli_util.override('cross_connect_location_group.command_name', 'cross-connect-location'), help="""An individual FastConnect location.""")
+@click.command(cli_util.override('cross_connect_location_group.command_name', 'cross-connect-location'), cls=CommandGroupWithAlias, help="""An individual FastConnect location.""")
 @cli_util.help_option_group
 def cross_connect_location_group():
     pass
 
 
-@click.group(cli_util.override('private_ip_group.command_name', 'private-ip'), help="""A *private IP* is a conceptual term that refers to a private IP address and related properties.
+@click.command(cli_util.override('private_ip_group.command_name', 'private-ip'), cls=CommandGroupWithAlias, help="""A *private IP* is a conceptual term that refers to a private IP address and related properties.
 The `privateIp` object is the API representation of a private IP.
 
 Each instance has a *primary private IP* that is automatically created and
@@ -149,7 +153,7 @@ def private_ip_group():
     pass
 
 
-@click.group(cli_util.override('virtual_circuit_group.command_name', 'virtual-circuit'), help="""For use with Oracle Bare Metal Cloud Services FastConnect.
+@click.command(cli_util.override('virtual_circuit_group.command_name', 'virtual-circuit'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect.
 
 A virtual circuit is an isolated network path that runs over one or more physical
 network connections to provide a single, logical connection between the edge router
@@ -175,7 +179,7 @@ def virtual_circuit_group():
     pass
 
 
-@click.group(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario
+@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario
 that uses an Internet Gateway, see
 [Typical Networking Service Scenarios].
 
@@ -187,7 +191,7 @@ def internet_gateway_group():
     pass
 
 
-@click.group(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), help="""A connection between a DRG and CPE. This connection consists of multiple IPSec
+@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec
 tunnels. Creating this connection is one of the steps required when setting up
 an IPSec VPN. For more information, see
 [Overview of the Networking Service].
@@ -200,16 +204,16 @@ def ip_sec_connection_group():
     pass
 
 
-@click.group(cli_util.override('cross_connect_port_speed_shape_group.command_name', 'cross-connect-port-speed-shape'), help="""An individual port speed level for cross-connects.""")
+@click.command(cli_util.override('cross_connect_port_speed_shape_group.command_name', 'cross-connect-port-speed-shape'), cls=CommandGroupWithAlias, help="""An individual port speed level for cross-connects.""")
 @cli_util.help_option_group
 def cross_connect_port_speed_shape_group():
     pass
 
 
-@click.group(cli_util.override('drg_group.command_name', 'drg'), help="""A Dynamic Routing Gateway (DRG), which is a virtual router that provides a path for private
+@click.command(cli_util.override('drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A Dynamic Routing Gateway (DRG), which is a virtual router that provides a path for private
 network traffic between your VCN and your existing network. You use it with other Networking
 Service components to create an IPSec VPN or a connection that uses
-Oracle Bare Metal Cloud Services FastConnect. For more information, see
+Oracle Cloud Infrastructure FastConnect. For more information, see
 [Overview of the Networking Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
@@ -220,7 +224,7 @@ def drg_group():
     pass
 
 
-@click.group(cli_util.override('route_table_group.command_name', 'route-table'), help="""A collection of `RouteRule` objects, which are used to route packets
+@click.command(cli_util.override('route_table_group.command_name', 'route-table'), cls=CommandGroupWithAlias, help="""A collection of `RouteRule` objects, which are used to route packets
 based on destination IP to a particular network entity. For more information, see
 [Overview of the Networking Service].
 
@@ -232,7 +236,7 @@ def route_table_group():
     pass
 
 
-@click.group(cli_util.override('cpe_group.command_name', 'cpe'), help="""An object you create when setting up an IPSec VPN between your on-premises network
+@click.command(cli_util.override('cpe_group.command_name', 'cpe'), cls=CommandGroupWithAlias, help="""An object you create when setting up an IPSec VPN between your on-premises network
 and VCN. The `Cpe` is a virtual representation of your Customer-Premises Equipment,
 which is the actual router on-premises at your site at your end of the IPSec VPN connection.
 For more information,
@@ -246,7 +250,7 @@ def cpe_group():
     pass
 
 
-@click.group(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), help="""For use with Oracle Bare Metal Cloud Services FastConnect. A cross-connect group
+@click.command(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect group
 is a link aggregation group (LAG), which can contain one or more
 [CrossConnects]. Customers who are colocated with
 Oracle in a FastConnect location create and use cross-connect groups. For more
@@ -264,7 +268,7 @@ def cross_connect_group_group():
     pass
 
 
-@click.group(cli_util.override('cross_connect_group.command_name', 'cross-connect'), help="""For use with Oracle Bare Metal Cloud Services FastConnect. A cross-connect represents a
+@click.command(cli_util.override('cross_connect_group.command_name', 'cross-connect'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect represents a
 physical connection between an existing network and Oracle. Customers who are colocated
 with Oracle in a FastConnect location create and use cross-connects. For more
 information, see [FastConnect Overview].
@@ -285,25 +289,25 @@ def cross_connect_group():
     pass
 
 
-@click.group(cli_util.override('letter_of_authority_group.command_name', 'letter-of-authority'), help="""The Letter of Authority for the cross-connect. You must submit this letter when
+@click.command(cli_util.override('letter_of_authority_group.command_name', 'letter-of-authority'), cls=CommandGroupWithAlias, help="""The Letter of Authority for the cross-connect. You must submit this letter when
 requesting cabling for the cross-connect at the FastConnect location.""")
 @cli_util.help_option_group
 def letter_of_authority_group():
     pass
 
 
-@click.group(cli_util.override('cross_connect_status_group.command_name', 'cross-connect-status'), help="""The status of the cross-connect.""")
+@click.command(cli_util.override('cross_connect_status_group.command_name', 'cross-connect-status'), cls=CommandGroupWithAlias, help="""The status of the cross-connect.""")
 @cli_util.help_option_group
 def cross_connect_status_group():
     pass
 
 
-@click.group(cli_util.override('security_list_group.command_name', 'security-list'), help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet
+@click.command(cli_util.override('security_list_group.command_name', 'security-list'), cls=CommandGroupWithAlias, help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet
 level, but the rules are applied to the ingress and egress traffic for the individual instances
 in the subnet. The rules can be stateful or stateless. For more information, see
 [Security Lists].
 
-**Important:** Oracle Bare Metal Cloud Services images automatically include firewall rules (for example,
+**Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example,
 Linux iptables, Windows firewall). If there are issues with some type of access to an instance,
 make sure both the security lists associated with the instance's subnet and the instance's
 firewall rules are set correctly.
@@ -444,7 +448,7 @@ def create_cross_connect(ctx, generate_full_command_json_input, generate_param_j
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group_group.command(name=cli_util.override('create_cross_connect_group.command_name', 'create'), help="""Creates a new cross-connect group to use with Oracle Bare Metal Cloud Services FastConnect. For more information, see [FastConnect Overview].
+@cross_connect_group_group.command(name=cli_util.override('create_cross_connect_group.command_name', 'create'), help="""Creates a new cross-connect group to use with Oracle Cloud Infrastructure FastConnect. For more information, see [FastConnect Overview].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the cross-connect group to reside. If you're not sure which compartment to use, put the cross-connect group in the same compartment with your VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
@@ -497,7 +501,7 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You may optionally specify a *display name* for the set of DHCP options, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', help="""The OCID of the compartment to contain the set of DHCP options. [required]""")
-@click.option('--options', help="""A set of DHCP options. [required]""")
+@click.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help="""A set of DHCP options. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--vcn-id', help="""The OCID of the VCN the set of DHCP options belongs to. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -712,9 +716,9 @@ To get the status of the tunnels (whether they're up or down), use [GetIPSecConn
 @click.option('--compartment-id', help="""The OCID of the compartment to contain the IPSec connection. [required]""")
 @click.option('--cpe-id', help="""The OCID of the CPE. [required]""")
 @click.option('--drg-id', help="""The OCID of the DRG. [required]""")
-@click.option('--static-routes', help="""Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address.
+@click.option('--static-routes', type=custom_types.CLI_COMPLEX_TYPE, help="""Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address.
 
-Example: `10.0.1.0/24` [required]""")
+Example: `10.0.1.0/24` [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -827,7 +831,7 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You may optionally specify a *display name* for the route table, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', help="""The OCID of the compartment to contain the route table. [required]""")
-@click.option('--route-rules', help="""The collection of rules used for routing destination IPs to network devices. [required]""")
+@click.option('--route-rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The collection of rules used for routing destination IPs to network devices. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--vcn-id', help="""The OCID of the VCN the route table belongs to. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -880,8 +884,8 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You may optionally specify a *display name* for the security list, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @click.option('--compartment-id', help="""The OCID of the compartment to contain the security list. [required]""")
-@click.option('--egress-security-rules', help="""Rules for allowing egress IP packets. [required]""")
-@click.option('--ingress-security-rules', help="""Rules for allowing ingress IP packets. [required]""")
+@click.option('--egress-security-rules', type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing egress IP packets. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--ingress-security-rules', type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing ingress IP packets. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--vcn-id', help="""The OCID of the VCN the security list belongs to. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -964,7 +968,7 @@ Example: `subnet123`""")
 
 Example: `true`""")
 @click.option('--route-table-id', help="""The OCID of the route table the subnet will use. If you don't provide a value, the subnet will use the VCN's default route table.""")
-@click.option('--security-list-ids', help="""OCIDs for the security lists to associate with the subnet. If you don't provide a value, the VCN's default security list will be associated with the subnet. Remember that security lists are associated at the subnet level, but the rules are applied to the individual VNICs in the subnet.""")
+@click.option('--security-list-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""OCIDs for the security lists to associate with the subnet. If you don't provide a value, the VCN's default security list will be associated with the subnet. Remember that security lists are associated at the subnet level, but the rules are applied to the individual VNICs in the subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1035,7 +1039,7 @@ def create_subnet(ctx, generate_full_command_json_input, generate_param_json_inp
 
 For the VCN you must specify a single, contiguous IPv4 CIDR block. Oracle recommends using one of the private IP address ranges specified in [RFC 1918] (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The CIDR block can range from /16 to /30, and it must not overlap with your on-premises network. You can't change the size of the VCN after creation.
 
-For the purposes of access control, you must provide the OCID of the compartment where you want the VCN to reside. Consult an Oracle Bare Metal Cloud Services administrator in your organization if you're not sure which compartment to use. Notice that the VCN doesn't have to be in the same compartment as the subnets or other Networking Service components. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
+For the purposes of access control, you must provide the OCID of the compartment where you want the VCN to reside. Consult an Oracle Cloud Infrastructure administrator in your organization if you're not sure which compartment to use. Notice that the VCN doesn't have to be in the same compartment as the subnets or other Networking Service components. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
 You may optionally specify a *display name* for the VCN, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
@@ -1102,7 +1106,7 @@ def create_vcn(ctx, generate_full_command_json_input, generate_param_json_input,
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_group.command(name=cli_util.override('create_virtual_circuit.command_name', 'create'), help="""Creates a new virtual circuit to use with Oracle Bare Metal Cloud Services FastConnect. For more information, see [FastConnect Overview].
+@virtual_circuit_group.command(name=cli_util.override('create_virtual_circuit.command_name', 'create'), help="""Creates a new virtual circuit to use with Oracle Cloud Infrastructure FastConnect. For more information, see [FastConnect Overview].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the virtual circuit to reside. If you're not sure which compartment to use, put the virtual circuit in the same compartment with the DRG it's using. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
@@ -1110,19 +1114,18 @@ You may optionally specify a *display name* for the virtual circuit. It does not
 
 **Important:** When creating a virtual circuit, you specify a DRG for the traffic to flow through. Make sure you attach the DRG to your VCN and confirm the VCN's routing sends traffic to the DRG. Otherwise traffic will not flow. For more information, see [Route Tables].""")
 @click.option('--compartment-id', help="""The OCID of the compartment to contain the virtual circuit. [required]""")
-@click.option('--region', help="""The Oracle Bare Metal Cloud Services region where this virtual circuit is located.
-
-Example: `phx` [required]""")
-@click.option('--type', help="""The type of IP addresses used in this virtual circuit. PRIVATE means [RFC 1918] addresses (10.0.0.0/8, 172.16/12, and 192.168/16). Only PRIVATE is supported. [required]""")
+@click.option('--type', type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help="""The type of IP addresses used in this virtual circuit. PRIVATE means [RFC 1918] addresses (10.0.0.0/8, 172.16/12, and 192.168/16). Only PRIVATE is supported. [required]""")
 @click.option('--bandwidth-shape-name', help="""The provisioned data rate of the connection.  To get a list of the available bandwidth levels (that is, shapes), see [ListVirtualCircuitBandwidthShapes].
 
 Example: `10 Gbps`""")
-@click.option('--cross-connect-mappings', help="""Create a `CrossConnectMapping` for each cross-connect or cross-connect group this virtual circuit will run on.""")
+@click.option('--cross-connect-mappings', type=custom_types.CLI_COMPLEX_TYPE, help="""Create a `CrossConnectMapping` for each cross-connect or cross-connect group this virtual circuit will run on.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--customer-bgp-asn', type=click.INT, help="""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null.""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--gateway-id', help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.""")
 @click.option('--provider-name', help="""The name of the provider (if you're connecting via a provider). To get a list of the provider names, see [ListFastConnectProviderServices].""")
-@click.option('--provider-service-name', help="""The name of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
+@click.option('--provider-service-id', help="""The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
+@click.option('--provider-service-name', help="""The name of the provider (if you're connecting via a provider). To get a list of the provider names, see [ListFastConnectProviderServices].""")
+@click.option('--region', help="""The Oracle Cloud Infrastructure region where this virtual circuit is located. Example: `phx`""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1134,7 +1137,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, region, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_name):
+def create_virtual_circuit(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_id, provider_service_name, region):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1145,7 +1148,6 @@ def create_virtual_circuit(ctx, generate_full_command_json_input, generate_param
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    region = cli_util.coalesce_provided_and_default_value(ctx, 'region', region, True)
     type = cli_util.coalesce_provided_and_default_value(ctx, 'type', type, True)
     bandwidth_shape_name = cli_util.coalesce_provided_and_default_value(ctx, 'bandwidth-shape-name', bandwidth_shape_name, False)
     cross_connect_mappings = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-mappings', cross_connect_mappings, False)
@@ -1153,13 +1155,14 @@ def create_virtual_circuit(ctx, generate_full_command_json_input, generate_param
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     gateway_id = cli_util.coalesce_provided_and_default_value(ctx, 'gateway-id', gateway_id, False)
     provider_name = cli_util.coalesce_provided_and_default_value(ctx, 'provider-name', provider_name, False)
+    provider_service_id = cli_util.coalesce_provided_and_default_value(ctx, 'provider-service-id', provider_service_id, False)
     provider_service_name = cli_util.coalesce_provided_and_default_value(ctx, 'provider-service-name', provider_service_name, False)
+    region = cli_util.coalesce_provided_and_default_value(ctx, 'region', region, False)
 
     kwargs = {}
 
     details = {}
     details['compartmentId'] = compartment_id
-    details['region'] = region
     details['type'] = type
 
     if bandwidth_shape_name is not None:
@@ -1180,8 +1183,14 @@ def create_virtual_circuit(ctx, generate_full_command_json_input, generate_param
     if provider_name is not None:
         details['providerName'] = provider_name
 
+    if provider_service_id is not None:
+        details['providerServiceId'] = provider_service_id
+
     if provider_service_name is not None:
         details['providerServiceName'] = provider_service_name
+
+    if region is not None:
+        details['region'] = region
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_virtual_circuit(
@@ -1218,6 +1227,9 @@ def delete_cpe(ctx, generate_full_command_json_input, generate_param_json_input,
     cli_util.load_context_obj_values_from_defaults(ctx)
     cpe_id = cli_util.coalesce_provided_and_default_value(ctx, 'cpe-id', cpe_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+        raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1258,6 +1270,9 @@ def delete_cross_connect(ctx, generate_full_command_json_input, generate_param_j
     cross_connect_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-id', cross_connect_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1296,6 +1311,9 @@ def delete_cross_connect_group(ctx, generate_full_command_json_input, generate_p
     cli_util.load_context_obj_values_from_defaults(ctx)
     cross_connect_group_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-group-id', cross_connect_group_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1338,6 +1356,9 @@ def delete_dhcp_options(ctx, generate_full_command_json_input, generate_param_js
     dhcp_id = cli_util.coalesce_provided_and_default_value(ctx, 'dhcp-id', dhcp_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+        raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1377,6 +1398,9 @@ def delete_drg(ctx, generate_full_command_json_input, generate_param_json_input,
     drg_id = cli_util.coalesce_provided_and_default_value(ctx, 'drg-id', drg_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1415,6 +1439,9 @@ def delete_drg_attachment(ctx, generate_full_command_json_input, generate_param_
     cli_util.load_context_obj_values_from_defaults(ctx)
     drg_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'drg-attachment-id', drg_attachment_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1457,6 +1484,9 @@ def delete_internet_gateway(ctx, generate_full_command_json_input, generate_para
     ig_id = cli_util.coalesce_provided_and_default_value(ctx, 'ig-id', ig_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+        raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1497,6 +1527,9 @@ def delete_ip_sec_connection(ctx, generate_full_command_json_input, generate_par
     cli_util.load_context_obj_values_from_defaults(ctx)
     ipsc_id = cli_util.coalesce_provided_and_default_value(ctx, 'ipsc-id', ipsc_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1541,6 +1574,9 @@ def delete_private_ip(ctx, generate_full_command_json_input, generate_param_json
     private_ip_id = cli_util.coalesce_provided_and_default_value(ctx, 'private-ip-id', private_ip_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1581,6 +1617,9 @@ def delete_route_table(ctx, generate_full_command_json_input, generate_param_jso
     cli_util.load_context_obj_values_from_defaults(ctx)
     rt_id = cli_util.coalesce_provided_and_default_value(ctx, 'rt-id', rt_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+        raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1623,6 +1662,9 @@ def delete_security_list(ctx, generate_full_command_json_input, generate_param_j
     security_list_id = cli_util.coalesce_provided_and_default_value(ctx, 'security-list-id', security_list_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1662,6 +1704,9 @@ def delete_subnet(ctx, generate_full_command_json_input, generate_param_json_inp
     subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1700,6 +1745,9 @@ def delete_vcn(ctx, generate_full_command_json_input, generate_param_json_input,
     cli_util.load_context_obj_values_from_defaults(ctx)
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+        raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1742,6 +1790,9 @@ def delete_virtual_circuit(ctx, generate_full_command_json_input, generate_param
     virtual_circuit_id = cli_util.coalesce_provided_and_default_value(ctx, 'virtual-circuit-id', virtual_circuit_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1778,6 +1829,9 @@ def get_cpe(ctx, generate_full_command_json_input, generate_param_json_input, fr
     cli_util.load_context_obj_values_from_defaults(ctx)
     cpe_id = cli_util.coalesce_provided_and_default_value(ctx, 'cpe-id', cpe_id, True)
 
+    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+        raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cpe(
@@ -1811,6 +1865,9 @@ def get_cross_connect(ctx, generate_full_command_json_input, generate_param_json
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     cross_connect_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-id', cross_connect_id, True)
+
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -1846,6 +1903,9 @@ def get_cross_connect_group(ctx, generate_full_command_json_input, generate_para
     cli_util.load_context_obj_values_from_defaults(ctx)
     cross_connect_group_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-group-id', cross_connect_group_id, True)
 
+    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cross_connect_group(
@@ -1879,6 +1939,9 @@ def get_cross_connect_letter_of_authority(ctx, generate_full_command_json_input,
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     cross_connect_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-id', cross_connect_id, True)
+
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -1914,6 +1977,9 @@ def get_cross_connect_status(ctx, generate_full_command_json_input, generate_par
     cli_util.load_context_obj_values_from_defaults(ctx)
     cross_connect_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-id', cross_connect_id, True)
 
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cross_connect_status(
@@ -1947,6 +2013,9 @@ def get_dhcp_options(ctx, generate_full_command_json_input, generate_param_json_
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     dhcp_id = cli_util.coalesce_provided_and_default_value(ctx, 'dhcp-id', dhcp_id, True)
+
+    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+        raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -1982,6 +2051,9 @@ def get_drg(ctx, generate_full_command_json_input, generate_param_json_input, fr
     cli_util.load_context_obj_values_from_defaults(ctx)
     drg_id = cli_util.coalesce_provided_and_default_value(ctx, 'drg-id', drg_id, True)
 
+    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_drg(
@@ -2015,6 +2087,9 @@ def get_drg_attachment(ctx, generate_full_command_json_input, generate_param_jso
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     drg_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'drg-attachment-id', drg_attachment_id, True)
+
+    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -2050,6 +2125,9 @@ def get_internet_gateway(ctx, generate_full_command_json_input, generate_param_j
     cli_util.load_context_obj_values_from_defaults(ctx)
     ig_id = cli_util.coalesce_provided_and_default_value(ctx, 'ig-id', ig_id, True)
 
+    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+        raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_internet_gateway(
@@ -2083,6 +2161,9 @@ def get_ip_sec_connection(ctx, generate_full_command_json_input, generate_param_
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     ipsc_id = cli_util.coalesce_provided_and_default_value(ctx, 'ipsc-id', ipsc_id, True)
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -2118,6 +2199,9 @@ def get_ip_sec_connection_device_config(ctx, generate_full_command_json_input, g
     cli_util.load_context_obj_values_from_defaults(ctx)
     ipsc_id = cli_util.coalesce_provided_and_default_value(ctx, 'ipsc-id', ipsc_id, True)
 
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_ip_sec_connection_device_config(
@@ -2151,6 +2235,9 @@ def get_ip_sec_connection_device_status(ctx, generate_full_command_json_input, g
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     ipsc_id = cli_util.coalesce_provided_and_default_value(ctx, 'ipsc-id', ipsc_id, True)
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -2186,6 +2273,9 @@ def get_private_ip(ctx, generate_full_command_json_input, generate_param_json_in
     cli_util.load_context_obj_values_from_defaults(ctx)
     private_ip_id = cli_util.coalesce_provided_and_default_value(ctx, 'private-ip-id', private_ip_id, True)
 
+    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_private_ip(
@@ -2219,6 +2309,9 @@ def get_route_table(ctx, generate_full_command_json_input, generate_param_json_i
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     rt_id = cli_util.coalesce_provided_and_default_value(ctx, 'rt-id', rt_id, True)
+
+    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+        raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -2254,6 +2347,9 @@ def get_security_list(ctx, generate_full_command_json_input, generate_param_json
     cli_util.load_context_obj_values_from_defaults(ctx)
     security_list_id = cli_util.coalesce_provided_and_default_value(ctx, 'security-list-id', security_list_id, True)
 
+    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_security_list(
@@ -2287,6 +2383,9 @@ def get_subnet(ctx, generate_full_command_json_input, generate_param_json_input,
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, True)
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -2322,6 +2421,9 @@ def get_vcn(ctx, generate_full_command_json_input, generate_param_json_input, fr
     cli_util.load_context_obj_values_from_defaults(ctx)
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
 
+    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+        raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_vcn(
@@ -2355,6 +2457,9 @@ def get_virtual_circuit(ctx, generate_full_command_json_input, generate_param_js
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     virtual_circuit_id = cli_util.coalesce_provided_and_default_value(ctx, 'virtual-circuit-id', virtual_circuit_id, True)
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
@@ -2390,6 +2495,9 @@ def get_vnic(ctx, generate_full_command_json_input, generate_param_json_input, f
     cli_util.load_context_obj_values_from_defaults(ctx)
     vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, True)
 
+    if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
+        raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_vnic(
@@ -2405,6 +2513,8 @@ def get_vnic(ctx, generate_full_command_json_input, generate_param_json_input, f
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2416,7 +2526,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Cpe]'})
 @cli_util.wrap_exceptions
-def list_cpes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_cpes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2429,6 +2539,10 @@ def list_cpes(ctx, generate_full_command_json_input, generate_param_json_input, 
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -2436,10 +2550,28 @@ def list_cpes(ctx, generate_full_command_json_input, generate_param_json_input, 
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_cpes(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_cpes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_cpes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cpes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2449,6 +2581,12 @@ def list_cpes(ctx, generate_full_command_json_input, generate_param_json_input, 
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2460,7 +2598,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CrossConnectGroup]'})
 @cli_util.wrap_exceptions
-def list_cross_connect_groups(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_cross_connect_groups(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2473,17 +2611,51 @@ def list_cross_connect_groups(ctx, generate_full_command_json_input, generate_pa
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_cross_connect_groups(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_cross_connect_groups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_cross_connect_groups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cross_connect_groups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2493,6 +2665,8 @@ def list_cross_connect_groups(ctx, generate_full_command_json_input, generate_pa
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2504,7 +2678,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CrossConnectLocation]'})
 @cli_util.wrap_exceptions
-def list_cross_connect_locations(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_cross_connect_locations(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2517,6 +2691,10 @@ def list_cross_connect_locations(ctx, generate_full_command_json_input, generate
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -2524,10 +2702,28 @@ def list_cross_connect_locations(ctx, generate_full_command_json_input, generate
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_cross_connect_locations(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_cross_connect_locations,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_cross_connect_locations,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cross_connect_locations(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2538,6 +2734,12 @@ def list_cross_connect_locations(ctx, generate_full_command_json_input, generate
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2549,7 +2751,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CrossConnect]'})
 @cli_util.wrap_exceptions
-def list_cross_connects(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, cross_connect_group_id, limit, page):
+def list_cross_connects(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, cross_connect_group_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2563,6 +2765,14 @@ def list_cross_connects(ctx, generate_full_command_json_input, generate_param_js
     cross_connect_group_id = cli_util.coalesce_provided_and_default_value(ctx, 'cross-connect-group-id', cross_connect_group_id, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if cross_connect_group_id is not None:
@@ -2571,11 +2781,37 @@ def list_cross_connects(ctx, generate_full_command_json_input, generate_param_js
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_cross_connects(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_cross_connects,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_cross_connects,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cross_connects(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2585,6 +2821,8 @@ def list_cross_connects(ctx, generate_full_command_json_input, generate_param_js
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2596,7 +2834,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CrossConnectPortSpeedShape]'})
 @cli_util.wrap_exceptions
-def list_crossconnect_port_speed_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_crossconnect_port_speed_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2609,6 +2847,10 @@ def list_crossconnect_port_speed_shapes(ctx, generate_full_command_json_input, g
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -2616,10 +2858,28 @@ def list_crossconnect_port_speed_shapes(ctx, generate_full_command_json_input, g
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_crossconnect_port_speed_shapes(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_crossconnect_port_speed_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_crossconnect_port_speed_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crossconnect_port_speed_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2630,6 +2890,12 @@ def list_crossconnect_port_speed_shapes(ctx, generate_full_command_json_input, g
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2641,7 +2907,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DhcpOptions]'})
 @cli_util.wrap_exceptions
-def list_dhcp_options(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, limit, page):
+def list_dhcp_options(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2655,18 +2921,54 @@ def list_dhcp_options(ctx, generate_full_command_json_input, generate_param_json
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_dhcp_options(
-        compartment_id=compartment_id,
-        vcn_id=vcn_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_dhcp_options,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_dhcp_options,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dhcp_options(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2678,6 +2980,8 @@ def list_dhcp_options(ctx, generate_full_command_json_input, generate_param_json
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2689,7 +2993,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DrgAttachment]'})
 @cli_util.wrap_exceptions
-def list_drg_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, drg_id, limit, page):
+def list_drg_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, drg_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2704,6 +3008,10 @@ def list_drg_attachments(ctx, generate_full_command_json_input, generate_param_j
     drg_id = cli_util.coalesce_provided_and_default_value(ctx, 'drg-id', drg_id, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if vcn_id is not None:
@@ -2715,10 +3023,28 @@ def list_drg_attachments(ctx, generate_full_command_json_input, generate_param_j
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_drg_attachments(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_drg_attachments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_drg_attachments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_drg_attachments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2728,6 +3054,8 @@ def list_drg_attachments(ctx, generate_full_command_json_input, generate_param_j
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2739,7 +3067,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Drg]'})
 @cli_util.wrap_exceptions
-def list_drgs(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_drgs(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2752,6 +3080,10 @@ def list_drgs(ctx, generate_full_command_json_input, generate_param_json_input, 
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -2759,10 +3091,28 @@ def list_drgs(ctx, generate_full_command_json_input, generate_param_json_input, 
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_drgs(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_drgs,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_drgs,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_drgs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2776,6 +3126,8 @@ For more information, see [FastConnect Overview].""")
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2787,7 +3139,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[FastConnectProviderService]'})
 @cli_util.wrap_exceptions
-def list_fast_connect_provider_services(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_fast_connect_provider_services(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2800,6 +3152,10 @@ def list_fast_connect_provider_services(ctx, generate_full_command_json_input, g
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -2807,10 +3163,28 @@ def list_fast_connect_provider_services(ctx, generate_full_command_json_input, g
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_fast_connect_provider_services(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_fast_connect_provider_services,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_fast_connect_provider_services,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_fast_connect_provider_services(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2821,6 +3195,12 @@ def list_fast_connect_provider_services(ctx, generate_full_command_json_input, g
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2832,7 +3212,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[InternetGateway]'})
 @cli_util.wrap_exceptions
-def list_internet_gateways(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, limit, page):
+def list_internet_gateways(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2846,18 +3226,54 @@ def list_internet_gateways(ctx, generate_full_command_json_input, generate_param
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_internet_gateways(
-        compartment_id=compartment_id,
-        vcn_id=vcn_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_internet_gateways,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_internet_gateways,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_internet_gateways(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2869,6 +3285,8 @@ def list_internet_gateways(ctx, generate_full_command_json_input, generate_param
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2880,7 +3298,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[IPSecConnection]'})
 @cli_util.wrap_exceptions
-def list_ip_sec_connections(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, drg_id, cpe_id, limit, page):
+def list_ip_sec_connections(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, drg_id, cpe_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2895,6 +3313,10 @@ def list_ip_sec_connections(ctx, generate_full_command_json_input, generate_para
     cpe_id = cli_util.coalesce_provided_and_default_value(ctx, 'cpe-id', cpe_id, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if drg_id is not None:
@@ -2906,10 +3328,28 @@ def list_ip_sec_connections(ctx, generate_full_command_json_input, generate_para
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_ip_sec_connections(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_ip_sec_connections,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_ip_sec_connections,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_ip_sec_connections(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2927,6 +3367,8 @@ Example: `500`""")
 Example: `10.0.3.3`""")
 @click.option('--subnet-id', help="""The OCID of the subnet.""")
 @click.option('--vnic-id', help="""The OCID of the VNIC.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2938,7 +3380,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[PrivateIp]'})
 @cli_util.wrap_exceptions
-def list_private_ips(ctx, generate_full_command_json_input, generate_param_json_input, from_json, limit, page, ip_address, subnet_id, vnic_id):
+def list_private_ips(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2953,6 +3395,10 @@ def list_private_ips(ctx, generate_full_command_json_input, generate_param_json_
     ip_address = cli_util.coalesce_provided_and_default_value(ctx, 'ip-address', ip_address, False)
     subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, False)
     vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -2966,9 +3412,25 @@ def list_private_ips(ctx, generate_full_command_json_input, generate_param_json_
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_private_ips(
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_private_ips,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_private_ips,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_private_ips(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -2979,6 +3441,12 @@ def list_private_ips(ctx, generate_full_command_json_input, generate_param_json_
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -2990,7 +3458,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[RouteTable]'})
 @cli_util.wrap_exceptions
-def list_route_tables(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, limit, page):
+def list_route_tables(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -3004,18 +3472,54 @@ def list_route_tables(ctx, generate_full_command_json_input, generate_param_json
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_route_tables(
-        compartment_id=compartment_id,
-        vcn_id=vcn_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_route_tables,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_route_tables,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_route_tables(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3026,6 +3530,12 @@ def list_route_tables(ctx, generate_full_command_json_input, generate_param_json
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -3037,7 +3547,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[SecurityList]'})
 @cli_util.wrap_exceptions
-def list_security_lists(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, limit, page):
+def list_security_lists(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -3051,18 +3561,54 @@ def list_security_lists(ctx, generate_full_command_json_input, generate_param_js
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_security_lists(
-        compartment_id=compartment_id,
-        vcn_id=vcn_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_security_lists,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_security_lists,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_security_lists(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3073,6 +3619,12 @@ def list_security_lists(ctx, generate_full_command_json_input, generate_param_js
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -3084,7 +3636,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Subnet]'})
 @cli_util.wrap_exceptions
-def list_subnets(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, limit, page):
+def list_subnets(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -3098,18 +3650,54 @@ def list_subnets(ctx, generate_full_command_json_input, generate_param_json_inpu
     vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_subnets(
-        compartment_id=compartment_id,
-        vcn_id=vcn_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_subnets,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_subnets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subnets(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3119,6 +3707,12 @@ def list_subnets(ctx, generate_full_command_json_input, generate_param_json_inpu
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -3130,7 +3724,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vcn]'})
 @cli_util.wrap_exceptions
-def list_vcns(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_vcns(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -3143,30 +3737,62 @@ def list_vcns(ctx, generate_full_command_json_input, generate_param_json_input, 
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_vcns(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_vcns,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_vcns,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vcns(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help="""Lists the available bandwidth levels for virtual circuits. You need this information so you can specify your desired bandwidth level (that is, shape) when you create a virtual circuit.
-
-For the compartment ID, provide the OCID of your tenancy (the root compartment).
-
-For more information about virtual circuits, see [FastConnect Overview].""")
+@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help="""Lists the available bandwidth levels for virtual circuits. You need this information so you can specify your desired bandwidth level (that is, shape) when you create a virtual circuit. For the compartment ID, provide the OCID of your tenancy (the root compartment).""")
 @click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -3178,7 +3804,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VirtualCircuitBandwidthShape]'})
 @cli_util.wrap_exceptions
-def list_virtual_circuit_bandwidth_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_virtual_circuit_bandwidth_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -3191,6 +3817,10 @@ def list_virtual_circuit_bandwidth_shapes(ctx, generate_full_command_json_input,
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -3198,10 +3828,28 @@ def list_virtual_circuit_bandwidth_shapes(ctx, generate_full_command_json_input,
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_virtual_circuit_bandwidth_shapes(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_virtual_circuit_bandwidth_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_virtual_circuit_bandwidth_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_virtual_circuit_bandwidth_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3211,6 +3859,12 @@ def list_virtual_circuit_bandwidth_shapes(ctx, generate_full_command_json_input,
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -3222,7 +3876,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VirtualCircuit]'})
 @cli_util.wrap_exceptions
-def list_virtual_circuits(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_virtual_circuits(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -3235,17 +3889,51 @@ def list_virtual_circuits(ctx, generate_full_command_json_input, generate_param_
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('virtual_network', ctx)
-    result = client.list_virtual_circuits(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_virtual_circuits,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_virtual_circuits,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_virtual_circuits(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3277,6 +3965,9 @@ def update_cpe(ctx, generate_full_command_json_input, generate_param_json_input,
     cpe_id = cli_util.coalesce_provided_and_default_value(ctx, 'cpe-id', cpe_id, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+        raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -3329,6 +4020,9 @@ def update_cross_connect(ctx, generate_full_command_json_input, generate_param_j
     is_active = cli_util.coalesce_provided_and_default_value(ctx, 'is-active', is_active, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3379,6 +4073,9 @@ def update_cross_connect_group(ctx, generate_full_command_json_input, generate_p
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3402,7 +4099,7 @@ def update_cross_connect_group(ctx, generate_full_command_json_input, generate_p
 Note that the `options` object you provide replaces the entire existing set of options.""")
 @click.option('--dhcp-id', help="""The OCID for the set of DHCP options. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@click.option('--options', help="""""")
+@click.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -3431,6 +4128,9 @@ def update_dhcp_options(ctx, generate_full_command_json_input, generate_param_js
     options = cli_util.coalesce_provided_and_default_value(ctx, 'options', options, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+        raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
 
     if not force:
         if options:
@@ -3486,6 +4186,9 @@ def update_drg(ctx, generate_full_command_json_input, generate_param_json_input,
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3532,6 +4235,9 @@ def update_drg_attachment(ctx, generate_full_command_json_input, generate_param_
     drg_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'drg-attachment-id', drg_attachment_id, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -3584,6 +4290,9 @@ def update_internet_gateway(ctx, generate_full_command_json_input, generate_para
     is_enabled = cli_util.coalesce_provided_and_default_value(ctx, 'is-enabled', is_enabled, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+        raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3633,6 +4342,9 @@ def update_ip_sec_connection(ctx, generate_full_command_json_input, generate_par
     ipsc_id = cli_util.coalesce_provided_and_default_value(ctx, 'ipsc-id', ipsc_id, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -3693,6 +4405,9 @@ def update_private_ip(ctx, generate_full_command_json_input, generate_param_json
     vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3722,7 +4437,7 @@ def update_private_ip(ctx, generate_full_command_json_input, generate_param_json
 Note that the `routeRules` object you provide replaces the entire existing set of rules.""")
 @click.option('--rt-id', help="""The OCID of the route table. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@click.option('--route-rules', help="""The collection of rules used for routing destination IPs to network devices.""")
+@click.option('--route-rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The collection of rules used for routing destination IPs to network devices.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -3751,6 +4466,9 @@ def update_route_table(ctx, generate_full_command_json_input, generate_param_jso
     route_rules = cli_util.coalesce_provided_and_default_value(ctx, 'route-rules', route_rules, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+        raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     if not force:
         if route_rules:
@@ -3782,8 +4500,8 @@ def update_route_table(ctx, generate_full_command_json_input, generate_param_jso
 Note that the `egressSecurityRules` or `ingressSecurityRules` objects you provide replace the entire existing objects.""")
 @click.option('--security-list-id', help="""The OCID of the security list. [required]""")
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@click.option('--egress-security-rules', help="""Rules for allowing egress IP packets.""")
-@click.option('--ingress-security-rules', help="""Rules for allowing ingress IP packets.""")
+@click.option('--egress-security-rules', type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing egress IP packets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--ingress-security-rules', type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing ingress IP packets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -3813,6 +4531,9 @@ def update_security_list(ctx, generate_full_command_json_input, generate_param_j
     ingress_security_rules = cli_util.coalesce_provided_and_default_value(ctx, 'ingress-security-rules', ingress_security_rules, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
 
     if not force:
         if egress_security_rules or ingress_security_rules:
@@ -3871,6 +4592,9 @@ def update_subnet(ctx, generate_full_command_json_input, generate_param_json_inp
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3918,6 +4642,9 @@ def update_vcn(ctx, generate_full_command_json_input, generate_param_json_input,
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+        raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3940,12 +4667,10 @@ def update_vcn(ctx, generate_full_command_json_input, generate_param_json_input,
 
 **Important:** If the virtual circuit is working and in the PROVISIONED state, updating any of the network-related properties (such as the DRG being used, the BGP ASN, and so on) will cause the virtual circuit's state to switch to PROVISIONING and the related BGP session to go down. After Oracle re-provisions the virtual circuit, its state will return to PROVISIONED. Make sure you confirm that the associated BGP session is back up. For more information about the various states and how to test connectivity, see [FastConnect Overview].""")
 @click.option('--virtual-circuit-id', help="""The OCID of the virtual circuit. [required]""")
-@click.option('--bandwidth-shape-name', help="""The provisioned data rate of the connection. To get a list of the available bandwidth levels (that is, shapes), see [ListVirtualCircuitBandwidthShapes].
+@click.option('--bandwidth-shape-name', help="""The provisioned data rate of the connection. To get a list of the available bandwidth levels (that is, shapes), see [ListVirtualCircuitBandwidthShapes]. To be updated only by the customer who owns the virtual circuit.""")
+@click.option('--cross-connect-mappings', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of mappings, each containing properties for a cross-connect or cross-connect group associated with this virtual circuit.
 
-To be updated only by the customer who owns the virtual circuit.""")
-@click.option('--cross-connect-mappings', help="""An array of mappings, each containing properties for a cross-connect or cross-connect group associated with this virtual circuit.
-
-The customer and provider can update different properties in the mapping depending on the situation. See the description of the [CrossConnectMapping].""")
+The customer and provider can update different properties in the mapping depending on the situation. See the description of the [CrossConnectMapping].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--customer-bgp-asn', type=click.INT, help="""The BGP ASN of the network at the other end of the BGP session from Oracle.
 
 If the BGP session is from the customer's edge router to Oracle, the required value is the customer's ASN, and it can be updated only by the customer.
@@ -3957,7 +4682,7 @@ To be updated only by the customer who owns the virtual circuit.""")
 @click.option('--gateway-id', help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.
 
 To be updated only by the customer who owns the virtual circuit.""")
-@click.option('--provider-state', help="""The provider's state in relation to this virtual circuit. Relevant only if the customer is using FastConnect via a provider.  ACTIVE means the provider has provisioned the virtual circuit from their end. INACTIVE means the provider has not yet provisioned the virtual circuit, or has de-provisioned it.
+@click.option('--provider-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help="""The provider's state in relation to this virtual circuit. Relevant only if the customer is using FastConnect via a provider.  ACTIVE means the provider has provisioned the virtual circuit from their end. INACTIVE means the provider has not yet provisioned the virtual circuit, or has de-provisioned it.
 
 To be updated only by the provider.""")
 @click.option('--reference-comment', help="""Provider-supplied reference information about this virtual circuit. Relevant only if the customer is using FastConnect via a provider.
@@ -3996,6 +4721,9 @@ def update_virtual_circuit(ctx, generate_full_command_json_input, generate_param
     reference_comment = cli_util.coalesce_provided_and_default_value(ctx, 'reference-comment', reference_comment, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     if not force:
         if cross_connect_mappings:
@@ -4073,6 +4801,9 @@ def update_vnic(ctx, generate_full_command_json_input, generate_param_json_input
     hostname_label = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', hostname_label, False)
     skip_source_dest_check = cli_util.coalesce_provided_and_default_value(ctx, 'skip-source-dest-check', skip_source_dest_check, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
+        raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:

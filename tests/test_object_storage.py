@@ -3,6 +3,7 @@
 
 import arrow
 import click
+import filecmp
 import json
 import math
 import os
@@ -139,6 +140,56 @@ def test_run_all_operations(runner, config_file, config_profile, debug, test_id)
     # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'], debug=debug)
     validate_response(result, includes_debug_data=debug)
+
+
+def test_archive_bucket(runner, config_file, config_profile, test_id):
+    bucket_name = 'cli_temp_archive_bucket_' + test_id + '_no_debug'
+    object_name = 'a'
+
+    # bucket create archive
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name, '--storage-tier', 'Archive'])
+    validate_response(result)
+
+    # object put
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', CONTENT_INPUT_FILE])
+    validate_response(result)
+
+    # object get not available
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
+    assert result.exit_code != 0
+
+    # object head and validate archival state
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    validate_response(result)
+    json_head = json.loads(result.output)
+    assertEquals('Archived', json_head['archival-state'])
+
+    # object restore
+    result = invoke(runner, config_file, config_profile, ['object', 'restore', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    validate_response(result, json_response_expected=False)
+
+    # object head and validate archival state
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    validate_response(result)
+    json_head = json.loads(result.output)
+    assertEquals('Restoring', json_head['archival-state'])
+
+    # object delete
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y')
+    validate_response(result, json_response_expected=False)
+
+    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
+    validate_response(result)
+
+
+def test_namespace_metadata(runner, config_file, config_profile):
+    util.set_admin_pass_phrase()
+    result = util.invoke_command_as_admin(['os', 'ns', 'get-metadata', '-ns', util.NAMESPACE])
+    util.unset_admin_pass_phrase()
+    validate_response(result)
+    response = json.loads(result.output)
+    assert response["data"]["default-s3-compartment-id"] is not None
+    assert response["data"]["default-swift-compartment-id"] is not None
 
 
 def test_set_client_request_id(runner, config_file, config_profile):
@@ -647,6 +698,16 @@ def test_preauthenticated_requests(runner, config_file, config_profile):
         result = invoke(runner, config_file, config_profile, ['preauth-request', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name])
         validate_response(result)
 
+        # list PAR variant with --all
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--all'])
+        validate_response(result)
+        assert 'opc-next-page' not in result.output
+
+        # list PAR variant with --limit
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1'])
+        validate_response(result)
+        assert 'opc-next-page' in result.output
+
         # delete PAR
         result = invoke(runner, config_file, config_profile, ['preauth-request', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id, '--force'])
         validate_response(result)
@@ -682,6 +743,42 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
             result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
 
     return result
+
+
+def test_get_object_multipart_download(runner, config_file, config_profile, test_id):
+    test_file_path = os.path.join('tests', 'temp', 'for_multipart_download_{}.bin'.format(test_id))
+    util.create_large_file(test_file_path, 400)
+
+    bucket_name = 'cli_temp_bucket_' + test_id
+    object_name = 'for_multipart_download_{}'.format(test_id)
+
+    # bucket create
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
+    validate_response(result)
+
+    # put the test object in the bucket
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', test_file_path])
+    validate_response(result)
+
+    # download the object with multipart options
+    download_file_path = os.path.join('tests', 'temp', 'result_for_multipart_download_{}.bin'.format(test_id))
+    result = invoke(
+        runner,
+        config_file,
+        config_profile,
+        ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', download_file_path, '--multipart-download-threshold', '200']
+    )
+    validate_response(result, json_response_expected=False)
+    assert filecmp.cmp(test_file_path, download_file_path)
+
+    os.remove(test_file_path)
+    os.remove(download_file_path)
+
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--force'])
+    validate_response(result, json_response_expected=False)
+
+    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
+    validate_response(result, json_response_expected=False)
 
 
 def get_file_content(filename):

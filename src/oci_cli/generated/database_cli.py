@@ -3,18 +3,22 @@
 
 from __future__ import print_function
 import click
+import six
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
+from .. import retry_utils  # noqa: F401
+from .. import custom_types  # noqa: F401
+from ..aliasing import CommandGroupWithAlias
 
 
-@cli.group(cli_util.override('db_group.command_name', 'db'), help=cli_util.override('db_group.help', """The API for the Database Service."""))
+@cli.command(cli_util.override('db_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db_group.help', """The API for the Database Service."""))
 @cli_util.help_option_group
 def db_group():
     pass
 
 
-@click.group(cli_util.override('patch_group.command_name', 'patch'), help="""A Patch for a DB System or DB Home.
+@click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""A Patch for a DB System or DB Home.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
 talk to an administrator. If you're an administrator who needs to write policies to give users access,
@@ -24,7 +28,7 @@ def patch_group():
     pass
 
 
-@click.group(cli_util.override('db_version_group.command_name', 'db-version'), help="""The Oracle database software version.
+@click.command(cli_util.override('db_version_group.command_name', 'db-version'), cls=CommandGroupWithAlias, help="""The Oracle database software version.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -32,7 +36,14 @@ def db_version_group():
     pass
 
 
-@click.group(cli_util.override('database_group.command_name', 'database'), help="""An Oracle database on a DB System. For more information, see [Managing Oracle Databases].
+@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""A database backup
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def backup_group():
+    pass
+
+
+@click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""An Oracle database on a DB System. For more information, see [Managing Oracle Databases].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -40,13 +51,13 @@ def database_group():
     pass
 
 
-@click.group(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), help="""The record of a patch action on a specified target.""")
+@click.command(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""The record of a patch action on a specified target.""")
 @cli_util.help_option_group
 def patch_history_entry_group():
     pass
 
 
-@click.group(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), help="""The shape of the DB System. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.
+@click.command(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB System. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.
 For a description of shapes, see [DB System Launch Options].
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.
 If you're an administrator who needs to write policies to give users access,
@@ -56,7 +67,7 @@ def db_system_shape_group():
     pass
 
 
-@click.group(cli_util.override('data_guard_association_group.command_name', 'data-guard-association'), help="""The properties that define a Data Guard association.
+@click.command(cli_util.override('data_guard_association_group.command_name', 'data-guard-association'), cls=CommandGroupWithAlias, help="""The properties that define a Data Guard association.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an
 administrator. If you're an administrator who needs to write policies to give users access, see
@@ -70,7 +81,7 @@ def data_guard_association_group():
     pass
 
 
-@click.group(cli_util.override('db_home_group.command_name', 'db-home'), help="""A directory where Oracle database software is installed. Each DB System can have multiple database homes,
+@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""A directory where Oracle database software is installed. Each DB System can have multiple database homes,
 and each database home can have multiple databases within it. All the databases within a single database home
 must be the same database version, but different database homes can run different versions. For more information,
 see [Managing Oracle Databases].
@@ -83,7 +94,7 @@ def db_home_group():
     pass
 
 
-@click.group(cli_util.override('db_system_group.command_name', 'db-system'), help="""The Database Service supports several types of DB Systems, ranging in size, price, and performance. For details about each type of system, see:
+@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""The Database Service supports several types of DB Systems, ranging in size, price, and performance. For details about each type of system, see:
 
 - [Exadata DB Systems]
 - [Bare Metal or VM DB Systems]
@@ -103,7 +114,7 @@ def db_system_group():
     pass
 
 
-@click.group(cli_util.override('db_node_group.command_name', 'db-node'), help="""A server where Oracle database software is running.
+@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""A server where Oracle database software is running.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -111,9 +122,50 @@ def db_node_group():
     pass
 
 
+@backup_group.command(name=cli_util.override('create_backup.command_name', 'create'), help="""Creates a new backup in the specified database based on the request parameters you provide. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
+@click.option('--database-id', help="""The OCID of the database. [required]""")
+@click.option('--display-name', help="""The user-friendly name for the backup. It does not have to be unique. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Backup'})
+@cli_util.wrap_exceptions
+def create_backup(ctx, generate_full_command_json_input, generate_param_json_input, from_json, database_id, display_name):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, True)
+
+    kwargs = {}
+
+    details = {}
+    details['databaseId'] = database_id
+    details['displayName'] = display_name
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_backup(
+        create_backup_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @data_guard_association_group.command(name=cli_util.override('create_data_guard_association.command_name', 'create'), help="""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
-All Oracle Bare Metal Cloud Services resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
+All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
 @click.option('--database-id', help="""The database [OCID]. [required]""")
 @click.option('--creation-type', help="""Specifies where to create the associated database. \"ExistingDbSystem\" is the only supported `creationType` value. [required]""")
 @click.option('--database-admin-password', help="""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
@@ -129,10 +181,10 @@ The password must contain no fewer than nine characters and include:
 * At least two special characters. Valid special characters include \"_\", \"#\", and \"-\" only.
 
 **The password MUST be the same as the primary admin password.** [required]""")
-@click.option('--protection-mode', help="""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
+@click.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE", "MAXIMUM_PROTECTION"]), help="""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
 
 **IMPORTANT** - The only protection mode currently supported by the Database Service is MAXIMUM_PERFORMANCE. [required]""")
-@click.option('--transport-type', help="""The redo transport type to use for this Data Guard association.  Valid values depend on the specified `protectionMode`:
+@click.option('--transport-type', type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help="""The redo transport type to use for this Data Guard association.  Valid values depend on the specified `protectionMode`:
 
 * MAXIMUM_AVAILABILITY - SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - ASYNC * MAXIMUM_PROTECTION - SYNC
 
@@ -166,6 +218,9 @@ def create_data_guard_association(ctx, generate_full_command_json_input, generat
     protection_mode = cli_util.coalesce_provided_and_default_value(ctx, 'protection-mode', protection_mode, True)
     transport_type = cli_util.coalesce_provided_and_default_value(ctx, 'transport-type', transport_type, True)
 
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -184,7 +239,7 @@ def create_data_guard_association(ctx, generate_full_command_json_input, generat
 
 
 @db_home_group.command(name=cli_util.override('create_db_home.command_name', 'create'), help="""Creates a new DB Home in the specified DB System based on the request parameters you provide.""")
-@click.option('--database', help=""" [required]""")
+@click.option('--database', type=custom_types.CLI_COMPLEX_TYPE, help=""" [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--db-system-id', help="""The OCID of the DB System. [required]""")
 @click.option('--db-version', help="""A valid Oracle database version. To get a list of supported versions, use the [ListDbVersions] operation. [required]""")
 @click.option('--display-name', help="""The user-provided name of the database home.""")
@@ -244,7 +299,7 @@ def create_db_home(ctx, generate_full_command_json_input, generate_param_json_in
 
 Note that the **stop** state has no effect on the resources you consume. Billing continues for DB Nodes that you stop, and related resources continue to apply against any relevant quotas. You must terminate the DB System ([TerminateDbSystem]) to remove its resources from billing and quotas.""")
 @click.option('--db-node-id', help="""The database node [OCID]. [required]""")
-@click.option('--action', help="""The action to perform on the DB Node. [required]""")
+@click.option('--action', help="""The action to perform on the DB Node. Allowed values are: STOP, START, SOFTRESET, RESET [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -271,6 +326,9 @@ def db_node_action(ctx, generate_full_command_json_input, generate_param_json_in
     action = cli_util.coalesce_provided_and_default_value(ctx, 'action', action, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -283,8 +341,8 @@ def db_node_action(ctx, generate_full_command_json_input, generate_param_json_in
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('delete_db_home.command_name', 'delete'), help="""Deletes a DB Home. The DB Home and its database data are local to the DB System and will be lost when it is deleted. Oracle recommends that you back up any data in the DB System prior to deleting it.""")
-@click.option('--db-home-id', help="""The database home [OCID]. [required]""")
+@backup_group.command(name=cli_util.override('delete_backup.command_name', 'delete'), help="""Deletes a full backup. You cannot delete automatic backups using this API.""")
+@click.option('--backup-id', help="""The backup OCID. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -298,7 +356,50 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_db_home(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_home_id, if_match):
+def delete_backup(ctx, generate_full_command_json_input, generate_param_json_input, from_json, backup_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    backup_id = cli_util.coalesce_provided_and_default_value(ctx, 'backup-id', backup_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('database', ctx)
+    result = client.delete_backup(
+        backup_id=backup_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@db_home_group.command(name=cli_util.override('delete_db_home.command_name', 'delete'), help="""Deletes a DB Home. The DB Home and its database data are local to the DB System and will be lost when it is deleted. Oracle recommends that you back up any data in the DB System prior to deleting it.""")
+@click.option('--db-home-id', help="""The database home [OCID]. [required]""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--perform-final-backup', type=click.BOOL, help="""Whether to perform a final backup of the database or not. Default is false. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
+@cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_db_home(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_home_id, if_match, perform_final_backup):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -310,10 +411,16 @@ def delete_db_home(ctx, generate_full_command_json_input, generate_param_json_in
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+    perform_final_backup = cli_util.coalesce_provided_and_default_value(ctx, 'perform-final-backup', perform_final_backup, False)
+
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if perform_final_backup is not None:
+        kwargs['perform_final_backup'] = perform_final_backup
     client = cli_util.build_client('database', ctx)
     result = client.delete_db_home(
         db_home_id=db_home_id,
@@ -355,6 +462,12 @@ def failover_data_guard_association(ctx, generate_full_command_json_input, gener
     database_admin_password = cli_util.coalesce_provided_and_default_value(ctx, 'database-admin-password', database_admin_password, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -367,6 +480,43 @@ def failover_data_guard_association(ctx, generate_full_command_json_input, gener
         database_id=database_id,
         data_guard_association_id=data_guard_association_id,
         failover_data_guard_association_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@backup_group.command(name=cli_util.override('get_backup.command_name', 'get'), help="""Gets information about the specified backup.""")
+@click.option('--backup-id', help="""The backup OCID. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Backup'})
+@cli_util.wrap_exceptions
+def get_backup(ctx, generate_full_command_json_input, generate_param_json_input, from_json, backup_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    backup_id = cli_util.coalesce_provided_and_default_value(ctx, 'backup-id', backup_id, True)
+
+    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('database', ctx)
+    result = client.get_backup(
+        backup_id=backup_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -398,6 +548,12 @@ def get_data_guard_association(ctx, generate_full_command_json_input, generate_p
     cli_util.load_context_obj_values_from_defaults(ctx)
     database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, True)
     data_guard_association_id = cli_util.coalesce_provided_and_default_value(ctx, 'data-guard-association-id', data_guard_association_id, True)
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('database', ctx)
@@ -434,6 +590,9 @@ def get_database(ctx, generate_full_command_json_input, generate_param_json_inpu
     cli_util.load_context_obj_values_from_defaults(ctx)
     database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, True)
 
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_database(
@@ -467,6 +626,9 @@ def get_db_home(ctx, generate_full_command_json_input, generate_param_json_input
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
+
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('database', ctx)
@@ -503,6 +665,12 @@ def get_db_home_patch(ctx, generate_full_command_json_input, generate_param_json
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
     patch_id = cli_util.coalesce_provided_and_default_value(ctx, 'patch-id', patch_id, True)
+
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('database', ctx)
@@ -541,6 +709,12 @@ def get_db_home_patch_history_entry(ctx, generate_full_command_json_input, gener
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
     patch_history_entry_id = cli_util.coalesce_provided_and_default_value(ctx, 'patch-history-entry-id', patch_history_entry_id, True)
 
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
+    if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_home_patch_history_entry(
@@ -576,6 +750,9 @@ def get_db_node(ctx, generate_full_command_json_input, generate_param_json_input
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_node_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-node-id', db_node_id, True)
 
+    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_node(
@@ -609,6 +786,9 @@ def get_db_system(ctx, generate_full_command_json_input, generate_param_json_inp
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('database', ctx)
@@ -645,6 +825,12 @@ def get_db_system_patch(ctx, generate_full_command_json_input, generate_param_js
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     patch_id = cli_util.coalesce_provided_and_default_value(ctx, 'patch-id', patch_id, True)
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('database', ctx)
@@ -683,6 +869,12 @@ def get_db_system_patch_history_entry(ctx, generate_full_command_json_input, gen
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     patch_history_entry_id = cli_util.coalesce_provided_and_default_value(ctx, 'patch-history-entry-id', patch_history_entry_id, True)
 
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
+    if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_system_patch_history_entry(
@@ -705,17 +897,17 @@ The DB System will include a command line interface (CLI) that you can use to cr
 - BM.DenseIO1.36 and BM.HighIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.RACLocalStorage1.72 - Specify a multiple of 4, from 4 to 72. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336.
 
 For VM DB systems, the core count is inferred from the specific VM shape chosen, so this parameter is not used. [required]""")
-@click.option('--database-edition', help="""The Oracle Database Edition that applies to all the databases on the DB System.
+@click.option('--database-edition', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_HIGH_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB System.
 
 Exadata DB Systems and 2-node RAC DB Systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE. [required]""")
-@click.option('--db-home', help=""" [required]""")
+@click.option('--db-home', type=custom_types.CLI_COMPLEX_TYPE, help=""" [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--hostname', help="""The host name for the DB System. The host name must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
 
 The maximum length of the combined hostname and domain is 63 characters.
 
 **Note:** The hostname must be unique within the subnet. If it is not unique, the DB System will fail to provision. [required]""")
 @click.option('--shape', help="""The shape of the DB System. The shape determines resources allocated to the DB System - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListDbSystemShapes] operation. [required]""")
-@click.option('--ssh-public-keys', help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters. [required]""")
+@click.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--subnet-id', help="""The OCID of the subnet the DB System is associated with.
 
 **Subnet Restrictions:** - For single node and 2-node (RAC) DB Systems, do not use a subnet that overlaps with 192.168.16.16/28 - For Exadata and VM-based RAC DB Systems, do not use a subnet that overlaps with 192.168.128.0/20
@@ -726,11 +918,11 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 **Subnet Restrictions:** See above subnetId's **Subnet Restriction**.""")
 @click.option('--cluster-name', help="""Cluster name for Exadata and 2-node RAC DB Systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @click.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. This is not applicable for VM based DB systems.""")
-@click.option('--disk-redundancy', help="""The type of redundancy configured for the DB System. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
+@click.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB System. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
 @click.option('--display-name', help="""The user-friendly name for the DB System. It does not have to be unique.""")
 @click.option('--domain', help="""A domain name used for the DB System. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (don't provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @click.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size, in GBs, of the initial data volume that will be created and attached to VM-shape based DB system. This storage can later be scaled up if needed. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
-@click.option('--license-model', help="""The Oracle license model that applies to all the databases on the DB System. The default is LICENSE_INCLUDED.""")
+@click.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB System. The default is LICENSE_INCLUDED.""")
 @click.option('--node-count', type=click.INT, help="""Number of nodes to launch for a VM-shape based RAC DB system.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -820,10 +1012,13 @@ def launch_db_system(ctx, generate_full_command_json_input, generate_param_json_
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('list_data_guard_associations.command_name', 'list'), help="""Lists all Data Guard associations for the specified database.""")
-@click.option('--database-id', help="""The database [OCID]. [required]""")
+@backup_group.command(name=cli_util.override('list_backups.command_name', 'list'), help="""Gets a list of backups based on the databaseId or compartmentId specified. Either one of the query parameters must be provided.""")
+@click.option('--database-id', help="""The OCID of the database.""")
+@click.option('--compartment-id', help="""The compartment OCID.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -833,9 +1028,77 @@ When passed the name of an option which takes complex input, this will print out
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DataGuardAssociation]'})
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[BackupSummary]'})
 @cli_util.wrap_exceptions
-def list_data_guard_associations(ctx, generate_full_command_json_input, generate_param_json_input, from_json, database_id, limit, page):
+def list_backups(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, database_id, compartment_id, limit, page):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, False)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, False)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_backups,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_backups,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_backups(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@data_guard_association_group.command(name=cli_util.override('list_data_guard_associations.command_name', 'list'), help="""Lists all Data Guard associations for the specified database.""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DataGuardAssociationSummary]'})
+@cli_util.wrap_exceptions
+def list_data_guard_associations(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, database_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -848,6 +1111,13 @@ def list_data_guard_associations(ctx, generate_full_command_json_input, generate
     database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
     if limit is not None:
@@ -855,10 +1125,28 @@ def list_data_guard_associations(ctx, generate_full_command_json_input, generate
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_data_guard_associations(
-        database_id=database_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_data_guard_associations,
+            database_id=database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_data_guard_associations,
+            limit,
+            page_size,
+            database_id=database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_guard_associations(
+            database_id=database_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -867,6 +1155,8 @@ def list_data_guard_associations(ctx, generate_full_command_json_input, generate
 @click.option('--db-home-id', help="""A database home [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -878,7 +1168,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
 @cli_util.wrap_exceptions
-def list_databases(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, db_home_id, limit, page):
+def list_databases(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, db_home_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -892,6 +1182,10 @@ def list_databases(ctx, generate_full_command_json_input, generate_param_json_in
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -899,11 +1193,31 @@ def list_databases(ctx, generate_full_command_json_input, generate_param_json_in
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_databases(
-        compartment_id=compartment_id,
-        db_home_id=db_home_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_databases,
+            compartment_id=compartment_id,
+            db_home_id=db_home_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_databases,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            db_home_id=db_home_id,
+            **kwargs
+        )
+    else:
+        result = client.list_databases(
+            compartment_id=compartment_id,
+            db_home_id=db_home_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -911,6 +1225,8 @@ def list_databases(ctx, generate_full_command_json_input, generate_param_json_in
 @click.option('--db-home-id', help="""The database home [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -922,7 +1238,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchHistoryEntrySummary]'})
 @cli_util.wrap_exceptions
-def list_db_home_patch_history_entries(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_home_id, limit, page):
+def list_db_home_patch_history_entries(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, db_home_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -935,6 +1251,13 @@ def list_db_home_patch_history_entries(ctx, generate_full_command_json_input, ge
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
     if limit is not None:
@@ -942,10 +1265,28 @@ def list_db_home_patch_history_entries(ctx, generate_full_command_json_input, ge
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_home_patch_history_entries(
-        db_home_id=db_home_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_home_patch_history_entries,
+            db_home_id=db_home_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_home_patch_history_entries,
+            limit,
+            page_size,
+            db_home_id=db_home_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_home_patch_history_entries(
+            db_home_id=db_home_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -953,6 +1294,8 @@ def list_db_home_patch_history_entries(ctx, generate_full_command_json_input, ge
 @click.option('--db-home-id', help="""The database home [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -964,7 +1307,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchSummary]'})
 @cli_util.wrap_exceptions
-def list_db_home_patches(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_home_id, limit, page):
+def list_db_home_patches(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, db_home_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -977,6 +1320,13 @@ def list_db_home_patches(ctx, generate_full_command_json_input, generate_param_j
     db_home_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-home-id', db_home_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
     if limit is not None:
@@ -984,10 +1334,28 @@ def list_db_home_patches(ctx, generate_full_command_json_input, generate_param_j
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_home_patches(
-        db_home_id=db_home_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_home_patches,
+            db_home_id=db_home_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_home_patches,
+            limit,
+            page_size,
+            db_home_id=db_home_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_home_patches(
+            db_home_id=db_home_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -996,6 +1364,8 @@ def list_db_home_patches(ctx, generate_full_command_json_input, generate_param_j
 @click.option('--db-system-id', help="""The [OCID] of the DB System. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1007,7 +1377,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbHomeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_homes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, db_system_id, limit, page):
+def list_db_homes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1021,6 +1391,10 @@ def list_db_homes(ctx, generate_full_command_json_input, generate_param_json_inp
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -1028,11 +1402,31 @@ def list_db_homes(ctx, generate_full_command_json_input, generate_param_json_inp
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_homes(
-        compartment_id=compartment_id,
-        db_system_id=db_system_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_homes,
+            compartment_id=compartment_id,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_homes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_homes(
+            compartment_id=compartment_id,
+            db_system_id=db_system_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1041,6 +1435,8 @@ def list_db_homes(ctx, generate_full_command_json_input, generate_param_json_inp
 @click.option('--db-system-id', help="""The [OCID] of the DB System. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1052,7 +1448,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbNodeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_nodes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, db_system_id, limit, page):
+def list_db_nodes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1066,6 +1462,10 @@ def list_db_nodes(ctx, generate_full_command_json_input, generate_param_json_inp
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -1073,11 +1473,31 @@ def list_db_nodes(ctx, generate_full_command_json_input, generate_param_json_inp
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_nodes(
-        compartment_id=compartment_id,
-        db_system_id=db_system_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_nodes,
+            compartment_id=compartment_id,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_nodes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_nodes(
+            compartment_id=compartment_id,
+            db_system_id=db_system_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1085,6 +1505,8 @@ def list_db_nodes(ctx, generate_full_command_json_input, generate_param_json_inp
 @click.option('--db-system-id', help="""The DB System [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1096,7 +1518,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchHistoryEntrySummary]'})
 @cli_util.wrap_exceptions
-def list_db_system_patch_history_entries(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_system_id, limit, page):
+def list_db_system_patch_history_entries(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, db_system_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1109,6 +1531,13 @@ def list_db_system_patch_history_entries(ctx, generate_full_command_json_input, 
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
     if limit is not None:
@@ -1116,10 +1545,28 @@ def list_db_system_patch_history_entries(ctx, generate_full_command_json_input, 
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_system_patch_history_entries(
-        db_system_id=db_system_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_system_patch_history_entries,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_system_patch_history_entries,
+            limit,
+            page_size,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_system_patch_history_entries(
+            db_system_id=db_system_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1127,6 +1574,8 @@ def list_db_system_patch_history_entries(ctx, generate_full_command_json_input, 
 @click.option('--db-system-id', help="""The DB System [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1138,7 +1587,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchSummary]'})
 @cli_util.wrap_exceptions
-def list_db_system_patches(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_system_id, limit, page):
+def list_db_system_patches(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, db_system_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1151,6 +1600,13 @@ def list_db_system_patches(ctx, generate_full_command_json_input, generate_param
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
     if limit is not None:
@@ -1158,10 +1614,28 @@ def list_db_system_patches(ctx, generate_full_command_json_input, generate_param
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_system_patches(
-        db_system_id=db_system_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_system_patches,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_system_patches,
+            limit,
+            page_size,
+            db_system_id=db_system_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_system_patches(
+            db_system_id=db_system_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1170,6 +1644,8 @@ def list_db_system_patches(ctx, generate_full_command_json_input, generate_param
 @click.option('--compartment-id', help="""The compartment [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1181,7 +1657,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemShapeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_system_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, availability_domain, compartment_id, limit, page):
+def list_db_system_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1195,6 +1671,10 @@ def list_db_system_shapes(ctx, generate_full_command_json_input, generate_param_
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -1202,11 +1682,31 @@ def list_db_system_shapes(ctx, generate_full_command_json_input, generate_param_
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_system_shapes(
-        availability_domain=availability_domain,
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_system_shapes,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_system_shapes,
+            limit,
+            page_size,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_system_shapes(
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1214,6 +1714,8 @@ def list_db_system_shapes(ctx, generate_full_command_json_input, generate_param_
 @click.option('--compartment-id', help="""The compartment [OCID]. [required]""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1225,7 +1727,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemSummary]'})
 @cli_util.wrap_exceptions
-def list_db_systems(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page):
+def list_db_systems(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1238,6 +1740,10 @@ def list_db_systems(ctx, generate_full_command_json_input, generate_param_json_i
     compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -1245,10 +1751,28 @@ def list_db_systems(ctx, generate_full_command_json_input, generate_param_json_i
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_systems(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_systems,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_systems,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_systems(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1257,6 +1781,8 @@ def list_db_systems(ctx, generate_full_command_json_input, generate_param_json_i
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The pagination token to continue listing from.""")
 @click.option('--db-system-shape', help="""If provided, filters the results to the set of database versions which are supported for the given shape.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1268,7 +1794,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbVersionSummary]'})
 @cli_util.wrap_exceptions
-def list_db_versions(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, limit, page, db_system_shape):
+def list_db_versions(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1282,6 +1808,10 @@ def list_db_versions(ctx, generate_full_command_json_input, generate_param_json_
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     db_system_shape = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-shape', db_system_shape, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if limit is not None:
@@ -1291,10 +1821,28 @@ def list_db_versions(ctx, generate_full_command_json_input, generate_param_json_
     if db_system_shape is not None:
         kwargs['db_system_shape'] = db_system_shape
     client = cli_util.build_client('database', ctx)
-    result = client.list_db_versions(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_db_versions,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_db_versions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_db_versions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1329,6 +1877,12 @@ def reinstate_data_guard_association(ctx, generate_full_command_json_input, gene
     database_admin_password = cli_util.coalesce_provided_and_default_value(ctx, 'database-admin-password', database_admin_password, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1341,6 +1895,66 @@ def reinstate_data_guard_association(ctx, generate_full_command_json_input, gene
         database_id=database_id,
         data_guard_association_id=data_guard_association_id,
         reinstate_data_guard_association_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('restore_database.command_name', 'restore'), help="""Restore a Database based on the request parameters you provide.""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@click.option('--database-scn', help="""Restores using the backup with the System Change Number (SCN) specified.""")
+@click.option('--latest', type=click.BOOL, help="""Restores to the last known good state with the least possible data loss.""")
+@click.option('--timestamp', type=custom_types.CLI_DATETIME, help="""Restores to the timestamp specified.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def restore_database(ctx, generate_full_command_json_input, generate_param_json_input, from_json, database_id, database_scn, latest, timestamp, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, True)
+    database_scn = cli_util.coalesce_provided_and_default_value(ctx, 'database-scn', database_scn, False)
+    latest = cli_util.coalesce_provided_and_default_value(ctx, 'latest', latest, False)
+    timestamp = cli_util.coalesce_provided_and_default_value(ctx, 'timestamp', timestamp, False)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if database_scn is not None:
+        details['databaseSCN'] = database_scn
+
+    if latest is not None:
+        details['latest'] = latest
+
+    if timestamp is not None:
+        details['timestamp'] = timestamp
+
+    client = cli_util.build_client('database', ctx)
+    result = client.restore_database(
+        database_id=database_id,
+        restore_database_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1378,6 +1992,12 @@ def switchover_data_guard_association(ctx, generate_full_command_json_input, gen
     data_guard_association_id = cli_util.coalesce_provided_and_default_value(ctx, 'data-guard-association-id', data_guard_association_id, True)
     database_admin_password = cli_util.coalesce_provided_and_default_value(ctx, 'database-admin-password', database_admin_password, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+        raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1424,6 +2044,9 @@ def terminate_db_system(ctx, generate_full_command_json_input, generate_param_js
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1435,9 +2058,65 @@ def terminate_db_system(ctx, generate_full_command_json_input, generate_param_js
     cli_util.render_response(result, ctx)
 
 
+@database_group.command(name=cli_util.override('update_database.command_name', 'update'), help="""Update a Database based on the request parameters you provide.""")
+@click.option('--database-id', help="""The database [OCID]. [required]""")
+@click.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def update_database(ctx, generate_full_command_json_input, generate_param_json_input, from_json, force, database_id, db_backup_config, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    database_id = cli_util.coalesce_provided_and_default_value(ctx, 'database-id', database_id, True)
+    db_backup_config = cli_util.coalesce_provided_and_default_value(ctx, 'db-backup-config', db_backup_config, False)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+    force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if not force:
+        if db_backup_config:
+            if not click.confirm("WARNING: Updates to db-backup-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if db_backup_config is not None:
+        details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_database(
+        database_id=database_id,
+        update_database_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_home_group.command(name=cli_util.override('update_db_home.command_name', 'update'), help="""Patches the specified dbHome.""")
 @click.option('--db-home-id', help="""The database home [OCID]. [required]""")
-@click.option('--db-version', help="""""")
+@click.option('--db-version', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -1466,6 +2145,9 @@ def update_db_home(ctx, generate_full_command_json_input, generate_param_json_in
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
 
+    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
     if not force:
         if db_version:
             if not click.confirm("WARNING: Updates to db-version will replace any existing values. Are you sure you want to continue?"):
@@ -1491,9 +2173,9 @@ def update_db_home(ctx, generate_full_command_json_input, generate_param_json_in
 @db_system_group.command(name=cli_util.override('update_db_system.command_name', 'update'), help="""Updates the properties of a DB System, such as the CPU core count.""")
 @click.option('--db-system-id', help="""The DB System [OCID]. [required]""")
 @click.option('--cpu-core-count', type=click.INT, help="""The number of CPU Cores to be set on the DB System. Applicable only for non-VM based DB systems.""")
-@click.option('--data-storage-size-in-gb', type=click.INT, help="""Size, in GBs, to which the currently attached storage needs to be scaled up to for VM based DB system. This must be greater than current storage size. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
-@click.option('--ssh-public-keys', help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""")
-@click.option('--version', help="""""")
+@click.option('--data-storage-size-in-gbs', type=click.INT, help="""Size, in GBs, to which the currently attached storage needs to be scaled up to for VM based DB system. This must be greater than current storage size. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
+@click.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--version', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -1507,7 +2189,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, generate_full_command_json_input, generate_param_json_input, from_json, force, db_system_id, cpu_core_count, data_storage_size_in_gb, ssh_public_keys, version, if_match):
+def update_db_system(ctx, generate_full_command_json_input, generate_param_json_input, from_json, force, db_system_id, cpu_core_count, data_storage_size_in_gbs, ssh_public_keys, version, if_match):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1519,11 +2201,14 @@ def update_db_system(ctx, generate_full_command_json_input, generate_param_json_
     cli_util.load_context_obj_values_from_defaults(ctx)
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
     cpu_core_count = cli_util.coalesce_provided_and_default_value(ctx, 'cpu-core-count', cpu_core_count, False)
-    data_storage_size_in_gb = cli_util.coalesce_provided_and_default_value(ctx, 'data-storage-size-in-gb', data_storage_size_in_gb, False)
+    data_storage_size_in_gbs = cli_util.coalesce_provided_and_default_value(ctx, 'data-storage-size-in-gbs', data_storage_size_in_gbs, False)
     ssh_public_keys = cli_util.coalesce_provided_and_default_value(ctx, 'ssh-public-keys', ssh_public_keys, False)
     version = cli_util.coalesce_provided_and_default_value(ctx, 'version', version, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+
+    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     if not force:
         if ssh_public_keys or version:
@@ -1538,8 +2223,8 @@ def update_db_system(ctx, generate_full_command_json_input, generate_param_json_
     if cpu_core_count is not None:
         details['cpuCoreCount'] = cpu_core_count
 
-    if data_storage_size_in_gb is not None:
-        details['dataStorageSizeInGB'] = data_storage_size_in_gb
+    if data_storage_size_in_gbs is not None:
+        details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
 
     if ssh_public_keys is not None:
         details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)

@@ -4,7 +4,7 @@
 # Bash script to install the Oracle Cloud Infrastructure CLI
 # Example invocation: curl -L "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" | bash
 #
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.4.10/scripts/install/install.py"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.4.11/scripts/install/install.py"
 _TTY=/dev/tty
 
 install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit

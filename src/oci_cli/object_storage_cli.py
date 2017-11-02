@@ -10,7 +10,7 @@ from oci import exceptions
 from oci.object_storage.transfer import constants
 from oci.object_storage import models
 from .cli_root import cli
-from .cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, confirm_delete_option, wrap_exceptions, filter_object_headers, formatted_flat_dict, load_context_obj_values_from_defaults, coalesce_provided_and_default_value, get_click_file_from_default_values_file
+from .cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, confirm_delete_option, wrap_exceptions, filter_object_headers, load_context_obj_values_from_defaults, coalesce_provided_and_default_value, get_click_file_from_default_values_file
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
@@ -18,7 +18,10 @@ from retrying import retry
 from . import retry_utils
 from .object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
 from . import json_skeleton_utils
+from . import custom_types
+from .aliasing import CommandGroupWithAlias
 from .custom_types import CliDatetime
+from .custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 
 
 OBJECT_LIST_PAGE_SIZE = 100
@@ -43,7 +46,7 @@ INCLUDE_EXCLUDE_PATTERN = """*: Matches everything
 """
 
 
-@click.group(name='os', help="""Object Storage Service""")
+@click.command(name='os', cls=CommandGroupWithAlias, help="""Object Storage Service""")
 @help_option_group
 def objectstorage():
     pass
@@ -52,7 +55,7 @@ def objectstorage():
 cli.add_command(objectstorage)
 
 
-@click.group(name='ns')
+@click.command(name='ns', cls=CommandGroupWithAlias)
 @help_option_group
 def ns():
     pass
@@ -91,11 +94,103 @@ def ns_get(ctx, generate_full_command_json_input, generate_param_json_input, fro
     render_response(client.get_namespace(opc_client_request_id=ctx.obj['request_id']), ctx)
 
 
+@click.command(name='get-metadata', help="""Get the metadata for the namespace, which contains defaultS3CompartmentId and defaultSwiftCompartmentId. Any user with the NAMESPACE_READ permission will be able to see the current metadata. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.option('-ns', '--namespace', help="""The top-level namespace used for the request. [required]""")
+@click.option('--opc-client-request-id', help="""The client request ID for tracing.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'NamespaceMetadata'})
+@wrap_exceptions
+def get_namespace_metadata(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, opc_client_request_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    load_context_obj_values_from_defaults(ctx)
+    namespace = coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
+    opc_client_request_id = coalesce_provided_and_default_value(ctx, 'opc-client-request-id', opc_client_request_id, False)
+
+    kwargs = {}
+    if opc_client_request_id is not None:
+        kwargs['opc_client_request_id'] = opc_client_request_id
+    client = build_client('os', ctx)
+    result = client.get_namespace_metadata(
+        namespace_name=namespace,
+        **kwargs
+    )
+    render_response(result, ctx)
+
+
+@click.command(name='update-metadata', help="""Change the default Swift/S3 compartmentId of user's namespace into the user-defined compartmentId. Upon doing this, all subsequent bucket creations will use the new default compartment, but no previously created buckets will be modified. A user must have the NAMESPACE_UPDATE permission to make changes to the default compartments for S3 and Swift.""")
+@click.option('-ns', '--namespace', help="""The top-level namespace used for the request. [required]""")
+@click.option('--default-s3-compartment-id', help="""The update compartment id for an S3 client if this field is set. Avoid entering confidential information.""")
+@click.option('--default-swift-compartment-id', help="""The update compartment id for a Swift client if this field is set. Avoid entering confidential information.""")
+@click.option('--opc-client-request-id', help="""The client request ID for tracing.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'NamespaceMetadata'})
+@wrap_exceptions
+def update_namespace_metadata(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, default_s3_compartment_id, default_swift_compartment_id, opc_client_request_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    load_context_obj_values_from_defaults(ctx)
+    namespace = coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
+    default_s3_compartment_id = coalesce_provided_and_default_value(ctx, 'default-s3-compartment-id', default_s3_compartment_id, False)
+    default_swift_compartment_id = coalesce_provided_and_default_value(ctx, 'default-swift-compartment-id', default_swift_compartment_id, False)
+    opc_client_request_id = coalesce_provided_and_default_value(ctx, 'opc-client-request-id', opc_client_request_id, False)
+
+    kwargs = {}
+    if opc_client_request_id is not None:
+        kwargs['opc_client_request_id'] = opc_client_request_id
+
+    details = {}
+
+    if default_s3_compartment_id is not None:
+        details['defaultS3CompartmentId'] = default_s3_compartment_id
+
+    if default_swift_compartment_id is not None:
+        details['defaultSwiftCompartmentId'] = default_swift_compartment_id
+
+    client = build_client('os', ctx)
+    result = client.update_namespace_metadata(
+        namespace_name=namespace,
+        update_namespace_metadata_details=details,
+        **kwargs
+    )
+    render_response(result, ctx)
+
+
 objectstorage.add_command(ns)
 ns.add_command(ns_get)
+ns.add_command(get_namespace_metadata)
+ns.add_command(update_namespace_metadata)
 
 
-@click.group('bucket')
+@click.command(name='bucket', cls=CommandGroupWithAlias)
 @help_option_group
 def bucket():
     pass
@@ -104,8 +199,10 @@ def bucket():
 @click.command(name='list')
 @click.option('-ns', '--namespace', help='The top-level namespace used for the request. [required]')
 @click.option('--compartment-id', help='The compartment ID to return buckets for. [required]')
-@click.option('--limit', default=100, show_default=True, help='The maximum number of items to return.')
+@click.option('--limit', type=click.INT, help='The maximum number of items to return. [default: 100]')
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -117,7 +214,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[Bucket]'})
 @wrap_exceptions
-def bucket_list(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, compartment_id, limit, page):
+def bucket_list(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, compartment_id, limit, page, all_pages, page_size):
     """
     Lists the `BucketSummary`s in a namespace. A `BucketSummary` contains only summary fields for the bucket
     and not fields such as the user-defined metadata.
@@ -138,20 +235,47 @@ def bucket_list(ctx, generate_full_command_json_input, generate_param_json_input
     compartment_id = coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
     limit = coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    elif not all_pages and not limit:
+        limit = 100
 
     client = build_client('os', ctx)
 
     kwargs = {
         'opc_client_request_id': ctx.obj['request_id'],
-        'limit': limit
     }
+    if limit is not None:
+        kwargs['limit'] = limit
 
     if page is not None:
         kwargs['page'] = page
 
-    render_response(client.list_buckets(namespace,
-                                        compartment_id,
-                                        **kwargs), ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_buckets,
+            namespace_name=namespace,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_buckets,
+            limit,
+            page_size,
+            namespace_name=namespace,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_buckets(namespace, compartment_id, **kwargs)
+
+    render_response(result, ctx)
 
 
 @click.command(name='create')
@@ -159,7 +283,8 @@ def bucket_list(ctx, generate_full_command_json_input, generate_param_json_input
 @click.option('--compartment-id', help='The ID of the compartment in which to create the bucket. [required]')
 @click.option('--name', help='The name of the bucket.')
 @click.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@click.option('--public-access-type', type=click.Choice(['NoPublicAccess', 'ObjectRead']), help='The type of public access available on this bucket. Allows authenticated caller to access the bucket or contents of this bucket. By default a bucket is set to NoPublicAccess. It is treated as NoPublicAccess when this value is not specified. When the type is NoPublicAccess the bucket does not allow any public access. When the type is ObjectRead the bucket allows public access to the GetObject operation only.')
+@click.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(['NoPublicAccess', 'ObjectRead']), help='The type of public access available on this bucket. Allows authenticated caller to access the bucket or contents of this bucket. By default a bucket is set to NoPublicAccess. It is treated as NoPublicAccess when this value is not specified. When the type is NoPublicAccess the bucket does not allow any public access. When the type is ObjectRead the bucket allows public access to the GetObject operation only.')
+@click.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(['Standard', 'Archive']), help='The type of storage tier for this bucket. A bucket is set to Standard tier by default, which means the bucket will be put in the standard storage tier. When the Archive tier type is set explicitly, the bucket is put in the Archive Storage tier. The storage-tier property is immutable after bucket is created.')
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -171,7 +296,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @wrap_exceptions
-def bucket_create(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, name, compartment_id, metadata, public_access_type):
+def bucket_create(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, name, compartment_id, metadata, public_access_type, storage_tier):
     """
     Creates a bucket in the given namespace with a bucket name and optional user-defined metadata.
 
@@ -192,6 +317,7 @@ def bucket_create(ctx, generate_full_command_json_input, generate_param_json_inp
     name = coalesce_provided_and_default_value(ctx, 'name', name, True)
     metadata = coalesce_provided_and_default_value(ctx, 'metadata', metadata, False)
     public_access_type = coalesce_provided_and_default_value(ctx, 'public-access-type', public_access_type, False)
+    storage_tier = coalesce_provided_and_default_value(ctx, 'storage-tier', storage_tier, False)
 
     bucket_details = models.CreateBucketDetails()
     bucket_details.compartment_id = compartment_id
@@ -199,6 +325,8 @@ def bucket_create(ctx, generate_full_command_json_input, generate_param_json_inp
     bucket_details.metadata = parse_json_parameter("metadata", metadata, default={})
     if public_access_type is not None:
         bucket_details.public_access_type = public_access_type
+    if storage_tier is not None:
+        bucket_details.storage_tier = storage_tier
     client = build_client('os', ctx)
     render_response(client.create_bucket(namespace, bucket_details, opc_client_request_id=ctx.obj['request_id']), ctx)
 
@@ -208,7 +336,7 @@ def bucket_create(ctx, generate_full_command_json_input, generate_param_json_inp
 @click.option('--name', help='The name of the bucket. [required]')
 @click.option('--if-match', help='The entity tag to match.')
 @click.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Values will be appended to existing metadata. To remove a key, set it to null. Example: \'{"key1":"value1","key2":null}\'')
-@click.option('--public-access-type', type=click.Choice(['NoPublicAccess', 'ObjectRead']), help='The type of public access available on this bucket. Allows authenticated caller to access the bucket or contents of this bucket. By default a bucket is set to NoPublicAccess. It is treated as NoPublicAccess when this value is not specified. When the type is NoPublicAccess the bucket does not allow any public access. When the type is ObjectRead the bucket allows public access to the GetObject operation only.')
+@click.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(['NoPublicAccess', 'ObjectRead']), help='The type of public access available on this bucket. Allows authenticated caller to access the bucket or contents of this bucket. By default a bucket is set to NoPublicAccess. It is treated as NoPublicAccess when this value is not specified. When the type is NoPublicAccess the bucket does not allow any public access. When the type is ObjectRead the bucket allows public access to the GetObject operation only.')
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -353,7 +481,7 @@ bucket.add_command(bucket_delete)
 bucket.add_command(bucket_update)
 
 
-@click.group('object')
+@click.command(name='object', cls=CommandGroupWithAlias)
 @help_option_group
 def object_group():
     pass
@@ -365,7 +493,9 @@ def object_group():
 @click.option('--prefix', help='Only object names that begin with this prefix will be returned.')
 @click.option('--start', help='Only object names greater or equal to this parameter will be returned.')
 @click.option('--end', help='Only object names less than this parameter will be returned.')
-@click.option('--limit', default=100, show_default=True, help='The maximum number of items to return.')
+@click.option('--limit', type=click.INT, help='The maximum number of items to return. [default: 100]')
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
                                   "delimiter character (after an optionally specified prefix) are returned. "
                                   "Scanned objects whose names contain the delimiter have part of their name "
@@ -387,7 +517,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[ObjectSummary]'})
 @wrap_exceptions
-def object_list(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, prefix, start, end, limit, delimiter, fields):
+def object_list(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, prefix, start, end, limit, delimiter, fields, all_pages, page_size):
     """
     Lists the objects in a bucket.
 
@@ -411,6 +541,13 @@ def object_list(ctx, generate_full_command_json_input, generate_param_json_input
     limit = coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     delimiter = coalesce_provided_and_default_value(ctx, 'delimiter', delimiter, False)
     fields = coalesce_provided_and_default_value(ctx, 'fields', fields, False)
+    all_pages = coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    elif not all_pages and not limit:
+        limit = 100
 
     client = build_client('os', ctx)
 
@@ -433,9 +570,19 @@ def object_list(ctx, generate_full_command_json_input, generate_param_json_input
     all_objects = []
     prefixes = list()
 
-    while limit > 0:
-
-        args['limit'] = min(limit, OBJECT_LIST_PAGE_SIZE)
+    remaining_item_count = limit
+    keep_paginating_for_all = True
+    while (not all_pages and remaining_item_count > 0) or (all_pages and keep_paginating_for_all):
+        if all_pages:
+            if page_size:
+                args['limit'] = page_size
+            else:
+                args['limit'] = OBJECT_LIST_PAGE_SIZE
+        else:
+            if page_size:
+                args['limit'] = min(page_size, remaining_item_count)
+            else:
+                args['limit'] = min(remaining_item_count, OBJECT_LIST_PAGE_SIZE)
 
         response = client.list_objects(
             namespace,
@@ -450,14 +597,15 @@ def object_list(ctx, generate_full_command_json_input, generate_param_json_input
 
         objects = response.data.objects
         next_start = response.data.next_start_with
-
         all_objects.extend(objects)
 
         if next_start:
-            limit -= len(objects)
+            if remaining_item_count:
+                remaining_item_count -= len(objects)
             args['start'] = next_start
         else:
-            limit = 0
+            keep_paginating_for_all = False
+            remaining_item_count = 0
 
     metadata = {'prefixes': prefixes}
 
@@ -503,6 +651,16 @@ When passed the name of an option which takes complex input, this will print out
 def object_put(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count):
     """
     Creates a new object or overwrites an existing one.
+
+    The object can be uploaded as a single part or as multiple parts. Below are the rules for whether an object will be uploaded via single or multipart upload (listed in order of precedence):
+
+        * If the object is being uploaded from STDIN, it will be uploaded as a multipart upload (if the object content is smaller than --part-size, default for STDIN is 10 MiB, the multipart upload may contain only one part, but it will still use the MultipartUpload API)
+
+        * If the --no-multipart flag is specified, the object will be uploaded as a single part regardless of size (specifying --no-multipart when uploading from STDIN will result in an error)
+
+        * If the object is larger than --part-size, it will be uploaded as multiple parts (the default part size is 128 MiB)
+
+        * If the object is empty it will be uploaded as a single part
 
     Example:
         oci os object put -ns mynamespace -bn mybucket --name myfile.txt --file /Users/me/myfile.txt --metadata '{"key1":"value1","key2":"value2"}'
@@ -682,7 +840,9 @@ def object_put(ctx, generate_full_command_json_input, generate_param_json_input,
 @click.option('--content-type', help='The content type to apply to all files being uploaded.')
 @click.option('--content-language', help='The content language to apply to all files being uploaded.')
 @click.option('--content-encoding', help='The content encoding to apply to all files being uploaded.')
-@click.option('--overwrite', is_flag=True, help='If a file being uploaded already exists in Object Storage, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object would be overwritten')
+@click.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object would be overwritten.
+
+Specifying this flag will also allow for faster uploads as the CLI will not initially check whether or not the files already exist in Object Storage.""")
 @click.option('--no-overwrite', is_flag=True, help='If a file being uploaded already exists in Object Storage, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time an object would be overwritten')
 @click.option('--no-multipart', is_flag=True,
               help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side. This applies to all files being uploaded')
@@ -713,7 +873,7 @@ When passed the name of an option which takes complex input, this will print out
 @wrap_exceptions
 def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, include, exclude):
     """
-    Uploads all objects in a given directory and all subdirectories.
+    Uploads all files in a given directory and all subdirectories.
 
 
     \b
@@ -741,7 +901,8 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
 
     \b
     If a file being uploaded already exists in Object Storage, it can be overwritten without a prompt by
-    using the --overwrite flag.
+    using the --overwrite flag. Specifying --overwrite will also allow for faster uploads as the CLI will not
+    initially check whether or not the files already exist in Object Storage.
 
     \b
     Prevent object overwrite to resolve object name collision
@@ -781,9 +942,6 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
     include = coalesce_provided_and_default_value(ctx, 'include', include, False)
     exclude = coalesce_provided_and_default_value(ctx, 'exclude', exclude, False)
 
-    if ctx.obj['output'] == 'table':
-        raise click.UsageError('Table output is not supported for this operation')
-
     expanded_directory = os.path.expandvars(os.path.expanduser(src_dir))
     if not os.path.exists(expanded_directory):
         raise click.UsageError('The specified --src-dir {} (expanded to: {}) does not exist'.format(src_dir, expanded_directory))
@@ -811,11 +969,7 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
     if part_size is not None:
         base_kwargs['part_size'] = part_size * MEBIBYTE
 
-    output = {
-        'uploaded-objects': {},
-        'upload-failures': {},
-        'skipped-objects': []
-    }
+    output = BulkPutOperationOutput()
 
     # Progress bar which we can reuse over and over again
     reusable_progress_bar = ProgressBar(0, '')
@@ -888,12 +1042,12 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
                         base_kwargs['if_none_match'] = '*'
                     else:
                         if no_overwrite:
-                            output['skipped-objects'].append(object_name)
+                            output.add_skipped(object_name)
                             continue
 
                         base_kwargs['if_match'] = head_object.headers['etag']
                         if not click.confirm('WARNING: {} already exists. Are you sure you want to overwrite it?'.format(object_name)):
-                            output['skipped-objects'].append(object_name)
+                            output.add_skipped(object_name)
                             continue
 
                 with open(full_file_path, 'rb') as file_object:
@@ -906,10 +1060,10 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
                     update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Uploaded')}
                     update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
 
-                error_callback_kwargs = {'target_dict': output['upload-failures'], 'target_dict_key': object_name}
-                success_callback_kwargs = {'target_dict': output['uploaded-objects'], 'target_dict_key': object_name}
-                add_to_uploaded_objects_callback = WorkPoolTaskSuccessCallback(_success_upload_callback_add_item_to_dict, **success_callback_kwargs)
-                add_to_upload_failures_callback = WorkPoolTaskErrorCallback(_error_callback_add_item_to_dict, **error_callback_kwargs)
+                error_callback_kwargs = {'failed_item': object_name}
+                success_callback_kwargs = {'uploaded_object': object_name}
+                add_to_uploaded_objects_callback = WorkPoolTaskSuccessCallback(output.add_uploaded, **success_callback_kwargs)
+                add_to_upload_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
 
                 callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], success_callbacks=[add_to_uploaded_objects_callback], error_callbacks=[add_to_upload_failures_callback])
 
@@ -919,7 +1073,7 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
                     reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Uploading'))
 
                 if not ctx.obj['debug']:
-                    base_kwargs['multipart_part_completion_callback'] = BulkPutMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading part for')).update
+                    base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading part for')).update
 
                 transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path, file_size, **base_kwargs)
 
@@ -930,7 +1084,7 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
             except Exception as e:
                 # Don't let one failure here (either HEADing to see if the object exists, or actaully uploading the object)
                 # fail the entire batch, but store the error for output later
-                output['upload-failures'][object_name] = str(e)
+                output.add_failure(object_name, callback_exception=e)
 
                 if ctx.obj['debug']:
                     click.echo('Failed to upload {}'.format(object_name), file=sys.stderr)
@@ -938,9 +1092,9 @@ def object_bulk_put(ctx, generate_full_command_json_input, generate_param_json_i
     transfer_manager.wait_for_completion()
     reusable_progress_bar.render_finish()
 
-    click.echo(formatted_flat_dict(output))
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
-    if len(output['upload-failures']) > 0:
+    if output.has_failures():
         sys.exit(1)
 
 
@@ -971,6 +1125,10 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @click.option('--if-none-match', help='The entity tag to avoid matching.')
 @click.option('--range',
               help='Byte range to fetch. Follows https://tools.ietf.org/html/rfc7233#section-2.1. Example: bytes=2-10')
+@click.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@click.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
+@click.option('--parallel-download-count', type=click.INT, default=10, show_default=True,
+              help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -982,7 +1140,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @wrap_exceptions
-def object_get(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, name, file, if_match, if_none_match, range):
+def object_get(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, name, file, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count):
     """
     Gets the metadata and body of an object.
 
@@ -1005,6 +1163,12 @@ def object_get(ctx, generate_full_command_json_input, generate_param_json_input,
     if_match = coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
     if_none_match = coalesce_provided_and_default_value(ctx, 'if-none-match', if_none_match, False)
     range = coalesce_provided_and_default_value(ctx, 'range', range, False)
+    multipart_download_threshold = coalesce_provided_and_default_value(ctx, 'multipart-download-threshold', multipart_download_threshold, False)
+    part_size = coalesce_provided_and_default_value(ctx, 'part-size', part_size, False)
+    parallel_download_count = coalesce_provided_and_default_value(ctx, 'parallel-download-count', parallel_download_count, False)
+
+    if range and multipart_download_threshold:
+        raise click.UsageError("Cannot specify both the --range and --multipart-download-threshold parameters")
 
     if not file:
         file_from_default_values = get_click_file_from_default_values_file(ctx, 'file', 'wb', True)
@@ -1012,27 +1176,62 @@ def object_get(ctx, generate_full_command_json_input, generate_param_json_input,
             file = file_from_default_values
 
     client = build_client('os', ctx)
-    response = client.get_object(
-        namespace,
-        bucket_name,
-        name,
-        if_match=if_match,
-        if_none_match=if_none_match,
-        range=range,
-        opc_client_request_id=ctx.obj['request_id']
-    )
+
+    head_object = _make_retrying_head_object_call(client, namespace, bucket_name, name, ctx.obj['request_id'])
+    if not head_object:
+        raise click.ClickException('The specified object does not exist')
+    object_size_bytes = int(head_object.headers['Content-Length'])
+
+    if not part_size:
+        part_size = 128 * MEBIBYTE
+    else:
+        part_size = part_size * MEBIBYTE
 
     # if outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
     bar = None
     if hasattr(file, 'name') and file.name != '<stdout>':
-        bar = ProgressBar(total_bytes=int(response.headers['Content-Length']), label='Downloading object')
+        bar = ProgressBar(total_bytes=object_size_bytes, label='Downloading object')
 
-    # Stream using the raw urllib3.HTTPResponse, since using the Requests response
-    # will automatically try to decode.
-    for chunk in response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
-        if bar:
-            bar.update(len(chunk))
-        file.write(chunk)
+    # If we aren't doing multipart, or we are doing multipart but there would only be a single part
+    if not multipart_download_threshold or (multipart_download_threshold and part_size >= object_size_bytes):
+        response = client.get_object(
+            namespace,
+            bucket_name,
+            name,
+            if_match=if_match,
+            if_none_match=if_none_match,
+            range=range,
+            opc_client_request_id=ctx.obj['request_id']
+        )
+
+        # Stream using the raw urllib3.HTTPResponse, since using the Requests response
+        # will automatically try to decode.
+        for chunk in response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    else:
+        transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_download_count, max_object_storage_multipart_requests=parallel_download_count))
+
+        get_object_multipart_kwargs = {
+            'namespace': namespace,
+            'bucket_name': bucket_name,
+            'object_name': name,
+            'if_match': if_match,
+            'if_none_match': if_none_match,
+            'request_id': ctx.obj['request_id'],
+            'part_size': part_size,
+            'multipart_download_threshold': multipart_download_threshold,
+            'total_size': object_size_bytes
+        }
+
+        if not ctx.obj['debug'] and bar:
+            get_object_multipart_kwargs['chunk_written_callback'] = bar.update
+            bar.update(1)  # Dummy update to make the bar show up (otherwise it won't until the first thread/process writes the first part to disk)
+
+        get_multipart_task = transfer_manager.get_object_multipart(WorkPoolTaskCallbacksContainer(), file, **get_object_multipart_kwargs)
+        get_multipart_task.result()  # This will throw an exception if there was an error
+        transfer_manager.wait_for_completion()
 
     if bar:
         bar.render_finish()
@@ -1053,6 +1252,8 @@ def object_get(ctx, generate_full_command_json_input, generate_param_json_input,
 @click.option('--no-overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
 @click.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
               help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the upload process will consume more system resources and network bandwidth.')
+@click.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@click.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
 @click.option('--include', multiple=True, help="""Only download objects which match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
@@ -1072,7 +1273,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
 @wrap_exceptions
-def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count):
+def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, part_size):
     """
     Downloads all objects which match the given prefix to a given directory.
 
@@ -1149,9 +1350,13 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
     include = coalesce_provided_and_default_value(ctx, 'include', include, False)
     exclude = coalesce_provided_and_default_value(ctx, 'exclude', exclude, False)
     parallel_operations_count = coalesce_provided_and_default_value(ctx, 'parallel-operations-count', parallel_operations_count, False)
+    multipart_download_threshold = coalesce_provided_and_default_value(ctx, 'multipart-download-threshold', multipart_download_threshold, False)
+    part_size = coalesce_provided_and_default_value(ctx, 'part-size', part_size, False)
 
-    if ctx.obj['output'] == 'table':
-        raise click.UsageError('Table output is not supported for this operation')
+    if not part_size:
+        part_size = 128 * MEBIBYTE
+    else:
+        part_size = part_size * MEBIBYTE
 
     client = build_client('os', ctx)
 
@@ -1176,10 +1381,7 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
     }
     keep_paginating = True
 
-    output = {
-        'skipped-objects': [],
-        'download-failures': {}
-    }
+    output = BulkGetOperationOutput()
 
     # Progress bar which we can reuse over and over again
     reusable_progress_bar = ProgressBar(0, '')
@@ -1194,6 +1396,7 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
         # Process the current batch and write to disk
         for obj in list_objects_response.data.objects:
             object_name = obj.name
+            object_size = obj.size
 
             # If the object name starts with the path separator (account for Unix and Windows paths) then remove it when we
             # do the joining to create a full file name, otherwise we could get an unexpected result
@@ -1208,12 +1411,12 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
 
             if os.path.exists(full_file_path):
                 if no_overwrite:
-                    output['skipped-objects'].append(object_name)
+                    output.add_skipped(object_name)
                     continue
 
                 if not overwrite:
                     if not click.confirm('WARNING: {} already exists. Are you sure you want to overwrite it?'.format(object_name)):
-                        output['skipped-objects'].append(object_name)
+                        output.add_skipped(object_name)
                         continue
 
             directory_for_file = os.path.dirname(full_file_path)
@@ -1225,7 +1428,8 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
                     'namespace': namespace,
                     'bucket_name': bucket_name,
                     'object_name': object_name,
-                    'full_file_path': full_file_path
+                    'full_file_path': full_file_path,
+                    'request_id': ctx.obj['request_id']
                 }
 
                 if ctx.obj['debug']:
@@ -1235,8 +1439,8 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
                     update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Downloaded')}
                     update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
 
-                error_callback_kwargs = {'target_dict': output['download-failures'], 'target_dict_key': object_name}
-                add_to_download_failures_callback = WorkPoolTaskErrorCallback(_error_callback_add_item_to_dict, **error_callback_kwargs)
+                error_callback_kwargs = {'failed_item': object_name}
+                add_to_download_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
 
                 callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], error_callbacks=[add_to_download_failures_callback])
 
@@ -1245,10 +1449,28 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
                 else:
                     reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Downloading'))
 
-                transfer_manager.get_object(callbacks_container, **get_object_kwargs)
+                # If it's not multipart, or it is but we would only have a single part then just download it, otherwise do a multipart get
+                # If the part size is somehow not known then use a multipart download by default (the multipart download will
+                # try and figure out the size via a HEAD and then take the appropriate action based on the size and threshold)
+                if not multipart_download_threshold or (multipart_download_threshold and (object_size and part_size >= object_size)):
+                    transfer_manager.get_object(callbacks_container, **get_object_kwargs)
+                else:
+                    if object_size:
+                        get_object_kwargs['total_size'] = object_size
+                        get_object_kwargs['part_completed_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, object_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+                    else:
+                        # Since we don't know the total here, give some arbitrary size and the task will update it later
+                        get_object_kwargs['part_completed_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, 5 * part_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+
+                    get_object_kwargs['part_size'] = part_size
+                    get_object_kwargs['multipart_download_threshold'] = multipart_download_threshold
+
+                    get_object_kwargs.pop('full_file_path')
+
+                    transfer_manager.get_object_multipart(callbacks_container, full_file_path, **get_object_kwargs)
             except Exception as e:
                 # Don't let one get failure fail the entire batch, but store the error for output later
-                output['download-failures'][object_name] = str(e)
+                output.add_failure(object_name, callback_exception=e)
 
                 if ctx.obj['debug']:
                     click.echo('Failed to download {}'.format(object_name), file=sys.stderr)
@@ -1260,9 +1482,9 @@ def object_bulk_get(ctx, generate_full_command_json_input, generate_param_json_i
     transfer_manager.wait_for_completion()
     reusable_progress_bar.render_finish()
 
-    click.echo(formatted_flat_dict(output))
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
-    if len(output['download-failures']) > 0:
+    if output.has_failures():
         sys.exit(1)
 
 
@@ -1480,15 +1702,9 @@ def object_bulk_delete(ctx, generate_full_command_json_input, generate_param_jso
     exclude = coalesce_provided_and_default_value(ctx, 'exclude', exclude, False)
     parallel_operations_count = coalesce_provided_and_default_value(ctx, 'parallel-operations-count', parallel_operations_count, False)
 
-    if ctx.obj['output'] == 'table':
-        raise click.UsageError('Table output is not supported for this operation')
-
     client = build_client('os', ctx)
 
-    output = {
-        'deleted-objects': [],
-        'delete-failures': {}
-    }
+    output = BulkDeleteOperationOutput()
 
     # When deleting objects, since the items (probably) don't exist on local disk there is no base directory to reference. However, here we
     # use the bucket name as a fake base directory
@@ -1515,9 +1731,9 @@ def object_bulk_delete(ctx, generate_full_command_json_input, generate_param_jso
                     pseudo_path = os.path.join(bucket_name, obj.name)
                     if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
                         continue
-                output['deleted-objects'].append(obj.name)
+                output.add_deleted(obj.name)
 
-        click.echo(formatted_flat_dict(output))
+        render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
         ctx.exit()
 
     # Based on the rules for --force:
@@ -1581,10 +1797,10 @@ def object_bulk_delete(ctx, generate_full_command_json_input, generate_param_jso
                     update_progress_kwargs = {'new_label': _get_progress_bar_label(None, obj, 'Deleted')}
                     update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
 
-                add_to_list_args = [obj]
-                error_callback_kwargs = {'target_dict': output['delete-failures'], 'target_dict_key': obj}
-                add_to_deleted_objects_callback = WorkPoolTaskCallback(output['deleted-objects'].append, *add_to_list_args)
-                add_to_delete_failures_callback = WorkPoolTaskErrorCallback(_error_callback_add_item_to_dict, **error_callback_kwargs)
+                add_to_deleted_kwargs = {'deleted': obj}
+                error_callback_kwargs = {'failed_item': obj}
+                add_to_deleted_objects_callback = WorkPoolTaskCallback(output.add_deleted, **add_to_deleted_kwargs)
+                add_to_delete_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
 
                 callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], success_callbacks=[add_to_deleted_objects_callback], error_callbacks=[add_to_delete_failures_callback])
 
@@ -1604,7 +1820,7 @@ def object_bulk_delete(ctx, generate_full_command_json_input, generate_param_jso
                 transfer_manager.delete_object(callbacks_container, **delete_kwargs)
             except Exception as e:
                 # Don't let one get failure fail the entire batch, but store the error for output later
-                output['delete-failures'][obj] = str(e)
+                output.add_failure(obj, callback_exception=e)
 
                 if ctx.obj['debug']:
                     click.echo('Failed to delete {}'.format(obj), file=sys.stderr)
@@ -1634,9 +1850,9 @@ def object_bulk_delete(ctx, generate_full_command_json_input, generate_param_jso
     transfer_manager.wait_for_completion()
     reusable_progress_bar.render_finish()
 
-    click.echo(formatted_flat_dict(output))
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
 
-    if len(output['delete-failures']) > 0:
+    if output.has_failures():
         sys.exit(1)
 
 
@@ -1732,6 +1948,121 @@ def object_resume_put(ctx, generate_full_command_json_input, generate_param_json
         render(None, display_headers, ctx, display_all_headers=True)
 
 
+@click.command(name='rename', help="""Rename an object from source key to target key in the given namespace.""")
+@click.option('-ns', '--namespace', help="""The top-level namespace used for the request. [required]""")
+@click.option('-bn', '--bucket', help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
+@click.option('--name', help="""The name of the object to rename. Avoid entering confidential information. [required]""")
+@click.option('--new-name', help="""The new name of the object. Avoid entering confidential information. [required]""")
+@click.option('--src-if-match', help="""The if-match entity tag of the source object.""")
+@click.option('--new-if-match', help="""The if-match entity tag of the new object.""")
+@click.option('--new-if-none-match', help="""The if-none-match entity tag of the new object.""")
+@click.option('--opc-client-request-id', help="""The client request ID for tracing.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@wrap_exceptions
+def rename_object(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket, name, new_name, src_if_match, new_if_match, new_if_none_match, opc_client_request_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    load_context_obj_values_from_defaults(ctx)
+    namespace = coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
+    bucket = coalesce_provided_and_default_value(ctx, 'bucket', bucket, True)
+    name = coalesce_provided_and_default_value(ctx, 'name', name, True)
+    new_name = coalesce_provided_and_default_value(ctx, 'new-name', new_name, True)
+    src_if_match = coalesce_provided_and_default_value(ctx, 'src-if-match', src_if_match, False)
+    new_if_match = coalesce_provided_and_default_value(ctx, 'new-if-match', new_if_match, False)
+    new_if_none_match = coalesce_provided_and_default_value(ctx, 'new-if-none-match', new_if_none_match, False)
+    opc_client_request_id = coalesce_provided_and_default_value(ctx, 'opc-client-request-id', opc_client_request_id, False)
+
+    kwargs = {}
+    if opc_client_request_id is not None:
+        kwargs['opc_client_request_id'] = opc_client_request_id
+
+    details = {}
+    details['sourceName'] = name
+    details['newName'] = new_name
+
+    if src_if_match is not None:
+        details['srcObjIfMatchETag'] = src_if_match
+
+    if new_if_match is not None:
+        details['newObjIfMatchETag'] = new_if_match
+
+    if new_if_none_match is not None:
+        details['newObjIfNoneMatchETag'] = new_if_none_match
+
+    client = build_client('os', ctx)
+    result = client.rename_object(
+        namespace_name=namespace,
+        bucket_name=bucket,
+        rename_object_details=details,
+        **kwargs
+    )
+    render_response(result, ctx)
+
+
+@click.command(name='restore', help="""Restore an object by specifying the name parameter.""")
+@click.option('-ns', '--namespace', help="""The top-level namespace used for the request. [required]""")
+@click.option('-bn', '--bucket', help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
+@click.option('--name', help="""A object which was in an archived state and need to be restored. [required]""")
+@click.option('--opc-client-request-id', help="""The client request ID for tracing.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@wrap_exceptions
+def restore_objects(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket, name, opc_client_request_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    load_context_obj_values_from_defaults(ctx)
+    namespace = coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
+    bucket = coalesce_provided_and_default_value(ctx, 'bucket', bucket, True)
+    name = coalesce_provided_and_default_value(ctx, 'name', name, True)
+    opc_client_request_id = coalesce_provided_and_default_value(ctx, 'opc-client-request-id', opc_client_request_id, False)
+
+    kwargs = {}
+    if opc_client_request_id is not None:
+        kwargs['opc_client_request_id'] = opc_client_request_id
+
+    details = {}
+    details['objectName'] = name
+
+    client = build_client('os', ctx)
+    result = client.restore_objects(
+        namespace_name=namespace,
+        bucket_name=bucket,
+        restore_objects_details=details,
+        **kwargs
+    )
+
+    render_response(result, ctx)
+
+
 objectstorage.add_command(object_group)
 object_group.add_command(object_list)
 object_group.add_command(object_bulk_put)
@@ -1742,9 +2073,11 @@ object_group.add_command(object_head)
 object_group.add_command(object_bulk_delete)
 object_group.add_command(object_delete)
 object_group.add_command(object_resume_put)
+object_group.add_command(rename_object)
+object_group.add_command(restore_objects)
 
 
-@click.group(name='multipart')
+@click.command(name='multipart', cls=CommandGroupWithAlias)
 @help_option_group
 def multipart():
     pass
@@ -1860,7 +2193,7 @@ multipart.add_command(multipart_list)
 multipart.add_command(multipart_abort)
 
 
-@click.group('preauth-request', short_help="""Operations on pre-authenticated requests.""", help="""Pre-authenticated requests provide a way to allow access to specified object operations for a fixed amount of time without performing authentication.
+@click.command(name='preauth-request', cls=CommandGroupWithAlias, short_help="""Operations on pre-authenticated requests.""", help="""Pre-authenticated requests provide a way to allow access to specified object operations for a fixed amount of time without performing authentication.
 
 The access-uri will only be returned from the create operation for a pre-authenticated request (not get or list).  Note the access-uri value upon creation in order to use the pre-authenticated request later.""")
 @help_option_group
@@ -1876,8 +2209,8 @@ The access-uri will only be returned from the create operation for a pre-authent
 
 Example: `my-new-bucket1` [required]""")
 @click.option('--name', help="""The user specified name for pre-authenticated request. Helpful for management purposes. [required]""")
-@click.option('--access-type', type=click.Choice(['ObjectRead', 'ObjectWrite', 'ObjectReadWrite', 'AnyObjectWrite']), help="""The operation that can be performed on this resource e.g PUT or GET. [required]""")
-@click.option('--time-expires', type=CliDatetime(), help="The expiration date after which the pre-authenticated request will no longer be valid. " + CliDatetime.VALID_DATETIME_CLI_HELP_MESSAGE.strip() + """
+@click.option('--access-type', type=custom_types.CliCaseInsensitiveChoice(['ObjectRead', 'ObjectWrite', 'ObjectReadWrite', 'AnyObjectWrite']), help="""The operation that can be performed on this resource e.g PUT or GET. [required]""")
+@click.option('--time-expires', type=custom_types.CLI_DATETIME, help="The expiration date after which the pre-authenticated request will no longer be valid. " + CliDatetime.VALID_DATETIME_CLI_HELP_MESSAGE.strip() + """
 \b
 [required]""")
 @click.option('-on', '--object-name', help="""Name of object that is being granted access to by the pre-authenticated request. This option must be specified if --access-type is ObjectRead, ObjectWrite, or ObjectReadWrite. This option cannot be specified if the --access-type is AnyObjectWrite.""")
@@ -1933,7 +2266,7 @@ def create_preauthenticated_request(ctx, generate_full_command_json_input, gener
     render_response(result, ctx)
 
 
-@preauthenticated_request_group.command(name='delete', help="""Deletes a pre-authenticateted request.""")
+@preauthenticated_request_group.command(name='delete', help="""Deletes a pre-authenticated request.""")
 @click.option('-ns', '--namespace', help="""The top-level namespace used for the request. [required]""")
 @click.option('-bn', '--bucket-name', help="""The name of the bucket.
 
@@ -2032,8 +2365,10 @@ def get_preauthenticated_request(ctx, generate_full_command_json_input, generate
 
 Example: `my-new-bucket1` [required]""")
 @click.option('--object-name-prefix', help="""Pre-authenticated requests returned by the list must have object names starting with prefix""")
-@click.option('--limit', help="""The maximum number of items to return.""")
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', help="""The page at which to start retrieving results.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--opc-client-request-id', help="""The client request ID for tracing.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -2046,7 +2381,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[PreauthenticatedRequest]'})
 @wrap_exceptions
-def list_preauthenticated_requests(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, object_name_prefix, limit, page, opc_client_request_id):
+def list_preauthenticated_requests(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, object_name_prefix, limit, page, opc_client_request_id, all_pages, page_size):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -2062,6 +2397,10 @@ def list_preauthenticated_requests(ctx, generate_full_command_json_input, genera
     limit = coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = coalesce_provided_and_default_value(ctx, 'page', page, False)
     opc_client_request_id = coalesce_provided_and_default_value(ctx, 'opc-client-request-id', opc_client_request_id, False)
+    all_pages = coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if object_name_prefix is not None:
@@ -2073,11 +2412,33 @@ def list_preauthenticated_requests(ctx, generate_full_command_json_input, genera
     if opc_client_request_id is not None:
         kwargs['opc_client_request_id'] = opc_client_request_id
     client = build_client('os', ctx)
-    result = client.list_preauthenticated_requests(
-        namespace_name=namespace,
-        bucket_name=bucket_name,
-        **kwargs
-    )
+
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_preauthenticated_requests,
+            namespace_name=namespace,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_preauthenticated_requests,
+            limit,
+            page_size,
+            namespace_name=namespace,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+    else:
+        result = client.list_preauthenticated_requests(
+            namespace_name=namespace,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+
     render_response(result, ctx)
 
 
@@ -2256,19 +2617,21 @@ class FileReadCallbackStream:
         return self.file.read(n)
 
 
-# This is a thin wrapper so that we can support updating the completion of individual parts when doing bulk uploads/puts via the
+# This is a thin wrapper so that we can support updating the completion of individual parts when doing bulk multipart options (get or put) via the
 # TransferManager. The TransferManager supports callbacks at the "task" completion level (and multipart-uploading an entire file
-# is considered a part), but the underlying MultipartObjectAssembler it uses supports callbacks at the part level. This lets
-# us hook into that
-class BulkPutMultipartUploadProgressBar:
+# is considered a part), but the underlying components it uses (MultipartObjectAssembler for multipart put and the GetObjectMultipartTask for gets)
+# supports callbacks at the part level. This lets us hook into that
+class BulkOperationMultipartUploadProgressBar:
     def __init__(self, progress_bar, total_bytes, label):
         self.label = label
         self.progress_bar = progress_bar  # This should be the below ProgressBar class, not a click.progressbar
         self.bytes_read = 0
         self.total_bytes = total_bytes
 
-    def update(self, bytes_read):
+    def update(self, bytes_read, **kwargs):
         self.bytes_read += bytes_read
+        if 'total_bytes' in kwargs:
+            self.total_bytes = kwargs['total_bytes']
 
         self.progress_bar.reset_progress(self.total_bytes, self.label)
         self.progress_bar.update(self.bytes_read)

@@ -7,6 +7,7 @@ import sys
 from .generated import identity_cli
 from . import cli_util
 from . import json_skeleton_utils
+from . import retry_utils
 
 identity_cli.identity_group.add_command(identity_cli.availability_domain_group)
 identity_cli.identity_group.add_command(identity_cli.compartment_group)
@@ -20,6 +21,8 @@ identity_cli.user_group.add_command(identity_cli.api_key_group)
 identity_cli.user_group.add_command(identity_cli.swift_password_group)
 identity_cli.user_group.add_command(identity_cli.ui_password_group)
 
+cli_util.get_param(identity_cli.create_policy, 'version_date').type = click.STRING
+
 # help for oci iam policy create --statements
 identity_policy_create_statements_example = """'["statement 1","statement 2"]'"""
 identity_policy_create_statements_help = cli_util.GENERIC_JSON_FORMAT_HELP
@@ -30,7 +33,9 @@ cli_util.update_param_help(identity_cli.create_policy, 'statements', identity_po
 @click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--user-id', help="""The OCID of the user. [required]""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -42,7 +47,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Group]'})
 @cli_util.wrap_exceptions
-def list_groups_for_user(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, user_id, page, limit):
+def list_groups_for_user(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, user_id, page, limit, all_pages, page_size):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -56,6 +61,10 @@ def list_groups_for_user(ctx, generate_full_command_json_input, generate_param_j
     user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     client = cli_util.build_client('identity', ctx)
     args = {}
@@ -68,7 +77,25 @@ def list_groups_for_user(ctx, generate_full_command_json_input, generate_param_j
     if limit is not None:
         args['limit'] = limit
 
-    result = client.list_user_group_memberships(compartment_id=compartment_id, ** args)
+    if all_pages:
+        if page_size:
+            args['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_user_group_memberships,
+            compartment_id=compartment_id,
+            **args
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_user_group_memberships,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **args
+        )
+    else:
+        result = client.list_user_group_memberships(compartment_id=compartment_id, ** args)
 
     groups = []
 
@@ -84,7 +111,9 @@ def list_groups_for_user(ctx, generate_full_command_json_input, generate_param_j
 @click.option('--group-id', help="""The OCID of the user. [required]""")
 @click.option('--page',
               help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -96,7 +125,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[User]'})
 @cli_util.wrap_exceptions
-def list_users_for_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, group_id, page, limit):
+def list_users_for_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, group_id, page, limit, all_pages, page_size):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -110,6 +139,10 @@ def list_users_for_group(ctx, generate_full_command_json_input, generate_param_j
     group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     client = cli_util.build_client('identity', ctx)
     args = {}
@@ -122,7 +155,25 @@ def list_users_for_group(ctx, generate_full_command_json_input, generate_param_j
     if limit is not None:
         args['limit'] = limit
 
-    result = client.list_user_group_memberships(compartment_id=compartment_id, **args)
+    if all_pages:
+        if page_size:
+            args['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_user_group_memberships,
+            compartment_id=compartment_id,
+            **args
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_user_group_memberships,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **args
+        )
+    else:
+        result = client.list_user_group_memberships(compartment_id=compartment_id, **args)
 
     users = []
 

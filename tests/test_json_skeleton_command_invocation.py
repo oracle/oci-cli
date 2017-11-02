@@ -237,6 +237,10 @@ def test_launch_instance(network_resources):
         '--private-ip', private_ip,
         '--from-json', launch_instance_json
     ])
+
+    if (launch_instance_result.output and 'LimitExceeded' in launch_instance_result.output) or (launch_instance_result.exception and 'LimitExceeded' in str(launch_instance_result.exception)):
+        pytest.skip('Skipping test_launch_instance as we received a limit exceeded error from the service')
+
     instance_ocid = util.find_id_in_response(launch_instance_result.output)
 
     parsed_result = json.loads(launch_instance_result.output)

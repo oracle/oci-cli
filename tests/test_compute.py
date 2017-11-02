@@ -168,6 +168,13 @@ class TestCompute(unittest.TestCase):
         util.validate_response(result)
         assert (len(result.output) == 0)
 
+        # Grab all the things
+        result = self.invoke(['compute', 'instance', 'list-vnics', '--instance-id', self.instance_ocid, '--all'])
+        util.validate_response(result)
+        json_data = json.loads(result.output)
+        assert ('data' not in json_data or len(json_data['data']) == 1)
+        assert ('opc-next-page' not in json_data)
+
     @util.log_test
     def subtest_vnic_operations(self):
         result = self.invoke(

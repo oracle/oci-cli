@@ -2,18 +2,24 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
+import arrow
 import click
 import datetime
+import dateutil.parser
 import functools
 import getpass
 import jmespath
 import json
+import math
 import oci
 import os
 import os.path
 import pytz
 import re
+import requests
 import six
+import stat
+import subprocess
 import sys
 import uuid
 from .formatting import render_config_errors
@@ -26,6 +32,7 @@ from cryptography.hazmat.primitives import serialization
 from . import cli_exceptions
 
 from oci import exceptions, config
+from oci.audit import AuditClient
 from oci.core import BlockstorageClient
 from oci.core import ComputeClient
 from oci.core import VirtualNetworkClient
@@ -53,6 +60,10 @@ DISPLAY_HEADERS = {
 
 
 OVERRIDES = {
+    "audit_group.help": "Audit Service",
+    "audit_event_group.command_name": "event",
+    "configuration_group.command_name": "config",
+    "list_events.command_name": "list",
     "blockstorage_group.command_name": "bv",
     "blockstorage_group.help": "Block Volume Service",
     "compute_group.command_name": "compute",
@@ -63,9 +74,14 @@ OVERRIDES = {
     "db_system_group.command_name": "system",
     "db_system_shape_group.command_name": "system-shape",
     "db_version_group.command_name": "version",
+    "get_db_system_patch.command_name": "by-db-system",
+    "get_db_system_patch_history_entry.command_name": "by-db-system",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
     "identity_group.command_name": "iam",
     "identity_group.help": "Identity and Access Management Service",
+    "list_db_system_patches.command_name": "by-db-system",
+    "list_db_system_patch_history_entries.command_name": "by-db-system",
+    "patch_history_entry_group.command_name": "patch-history",
     "virtual_network_group.command_name": "network",
     "virtual_network_group.help": "Networking Service",
     "get_console_history_content.command_name": "get-content",
@@ -81,6 +97,9 @@ PARAM_LOOKUP_HEIRARCHY_TOP_LEVEL = ''
 
 
 DEFAULT_FILE_CONVERT_PARAM_TRUTHY_VALUES = ['1', 'y', 't', 'yes', 'true', 'on']
+
+
+CLOCK_SKEW_WARNING_THRESHOLD_MINUTES = 5
 
 
 def override(key, default):
@@ -100,6 +119,8 @@ def build_client(service_name, ctx):
             errors=table
         ))
 
+    warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
+
     # Add to ctx for later by the operations.
     ctx.obj["config"] = client_config
 
@@ -111,6 +132,7 @@ def build_client(service_name, ctx):
     # Build the client, then fix up a few properties.
     try:
         client_class = {
+            "audit": AuditClient,
             "identity": IdentityClient,
             "os": ObjectStorageClient,
             "blockstorage": BlockstorageClient,
@@ -155,6 +177,8 @@ def build_config(command_args):
     except exceptions.ProfileNotFound as e:
         sys.exit("ERROR: " + str(e))
 
+    warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
+
     client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
 
     if command_args['region']:
@@ -182,15 +206,18 @@ def render_response(response, ctx):
     render(response.data, response.headers, ctx)
 
 
-def render(data, headers, ctx, display_all_headers=False):
+def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attribute=True):
     display_dictionary = {}
 
     if data:
-        display_dictionary["data"] = to_dict(data)
+        if nest_data_in_data_attribute:
+            display_dictionary["data"] = to_dict(data)
+        else:
+            display_dictionary = to_dict(data)
 
     expression = None
     if ctx.obj['query']:
-        search_path = ctx.obj['query']
+        search_path = resolve_jmespath_query(ctx, ctx.obj['query'])
         expression = jmespath.compile(search_path)
 
     if headers:
@@ -253,7 +280,7 @@ def print_table(data):
 
             for item in data:
                 item = to_dict(item)
-                table_data.append([item[key] for key in column_headers])
+                table_data.append([item.get(key, '') for key in column_headers])
         elif isinstance(data[0], list):
             table_data = data
 
@@ -350,6 +377,9 @@ def wrap_exceptions(func):
         try:
             func(ctx, *args, **kwargs)
         except exceptions.ServiceError as exception:
+            if exception.status == 401:
+                warn_if_clock_skew_present(ctx.obj.get('config'))
+
             if ctx.obj["debug"]:
                 raise
             tpl = "{exc}:\n{details}"
@@ -628,12 +658,14 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
 def copy_params_from_generated_command(generated_command, params_to_exclude):
     def copy_params(extended_func):
         index = 0
-        for param in generated_command.params[0:-2]:
+        for param in generated_command.params[0:-4]:
             if params_to_exclude and param.name not in params_to_exclude:
                 extended_func.params.insert(index, param)
                 index += 1
 
         # last two params params are the '--from-json' and '--help' params and we want to make sure they stay last
+        extended_func.params.append(generated_command.params[-4])
+        extended_func.params.append(generated_command.params[-3])
         extended_func.params.append(generated_command.params[-2])
         extended_func.params.append(generated_command.params[-1])
 
@@ -784,14 +816,24 @@ def get_default_value_from_defaults_file(ctx, param_name, param_type, param_take
 
     parameter_lookup_heirarchy = ctx.obj['parameter_lookup_heirarchy']
 
-    for heirarchy_entry in parameter_lookup_heirarchy:
-        if heirarchy_entry == PARAM_LOOKUP_HEIRARCHY_TOP_LEVEL:
-            target_key = param_name
-        else:
-            target_key = heirarchy_entry + "." + param_name
+    possible_param_names = [param_name]
+    key_for_alias_check = '--{}'.format(param_name)
+    if key_for_alias_check in ctx.obj['parameter_aliases']:
+        for alias in ctx.obj['parameter_aliases'][key_for_alias_check]:
+            if alias.startswith('--'):
+                possible_param_names.append(alias[2:])
+            elif alias.startswith('-'):
+                possible_param_names.append(alias[1:])
 
-        if target_key in ctx.obj['default_values_from_file']:
-            return convert_value_from_param_type(ctx.obj['default_values_from_file'][target_key], param_type, param_takes_multiple)
+    for heirarchy_entry in parameter_lookup_heirarchy:
+        for param_name_to_check in possible_param_names:
+            if heirarchy_entry == PARAM_LOOKUP_HEIRARCHY_TOP_LEVEL:
+                target_key = param_name_to_check
+            else:
+                target_key = heirarchy_entry + "." + param_name_to_check
+
+            if target_key in ctx.obj['default_values_from_file']:
+                return convert_value_from_param_type(ctx.obj['default_values_from_file'][target_key], param_type, param_takes_multiple)
 
     return None
 
@@ -916,3 +958,87 @@ def get_click_file_from_default_values_file(ctx, param_name, file_open_mode, is_
 def override_option_help(command, option_name, help_override):
     option = next(option for option in command.params if option.name == option_name)
     option.help = help_override
+
+
+# checks computer time vs server time to determine if clock skew is > 5 minute threshold
+def warn_if_clock_skew_present(config):
+    try:
+        endpoint = oci.regions.endpoint_for(
+            "compute",
+            region=config.get("region"),
+            endpoint=config.get("endpoint"))
+
+        server_date_header = requests.head(endpoint).headers['Date']
+        server_time = arrow.get(dateutil.parser.parse(server_date_header))
+        computer_time = arrow.utcnow()
+        absolute_skew_in_seconds = math.fabs((server_time - computer_time).total_seconds())
+        if absolute_skew_in_seconds > (CLOCK_SKEW_WARNING_THRESHOLD_MINUTES * 60):
+            warning = 'WARNING: Your computer time: {computer_time} differs from the server time: {server_time} by more than {threshold} minutes. This can cause authentication errors connecting to services.'.format(
+                computer_time=computer_time,
+                server_time=server_time,
+                threshold=CLOCK_SKEW_WARNING_THRESHOLD_MINUTES)
+            click.echo(click.style(warning, fg='red'), file=sys.stderr)
+    except Exception:
+        # this warning is a just a convenience so we dont want to raise an error if there is an exception
+        # fetching the server time
+        return False
+
+
+def warn_on_invalid_file_permissions(filepath):
+    suppress_warning = os.environ.get('OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING')
+    if suppress_warning == 'True':
+        return
+
+    filepath = os.path.expanduser(filepath)
+    if is_windows():
+        windows_warn_on_invalid_file_permissions(filepath)
+    else:
+        # validate that permissions are user RW only (600)
+        user_rw_perms = oct(384)  # 600
+        if not oct(stat.S_IMODE(os.lstat(filepath).st_mode)) == user_rw_perms:
+            warning = 'WARNING: Permissions on {filepath} are too open. To fix this please execute the following command: oci setup repair-file-permissions --file {filepath} '.format(filepath=filepath)
+            click.echo(click.style(warning, fg='red'), file=sys.stderr)
+
+
+# On Windows, the file is allowed to any level of permissions granted to the current user, SYSTEM, and ADMINISTRATORS.
+# If any other users or groups have permissions to the file, a warning will be printed indicating which additional groups
+# have permissions and should not.
+def windows_warn_on_invalid_file_permissions(filename):
+    username = os.environ.get('USERNAME')
+    userdomain = os.environ.get('USERDOMAIN')
+
+    current_user_identity = '{}\\{}'.format(userdomain, username)
+    identities_allowed_permissions = [current_user_identity, "NT AUTHORITY\\SYSTEM", "BUILTIN\\Administrators"]
+    identities_list_string = ','.join(['\\"{}\\"'.format(name) for name in identities_allowed_permissions])
+
+    # one line powershell command to output newline separated list of all users / groups
+    # with access to a given file that are not in 'identities_allowed_permissions'
+    try:
+        cmd = '(Get-Acl {}).Access | Where {{-not ($_.IdentityReference -in {})}} | Select-Object -ExpandProperty IdentityReference | Format-Table -HideTableHeaders'.format(filename, identities_list_string)
+        output = subprocess.check_output('powershell.exe "{}"'.format(cmd))
+    except Exception:
+        # if somehow executing this throws an exception we don't want to prevent use of the CLI so return here
+        return
+
+    # output will be empty if there are no extra permissions on the file
+    if len(output) == 0:
+        return
+
+    disallowed_identities = [line.strip() for line in output.decode().splitlines() if line]
+    warning = 'WARNING: Permissions for file {filename} are too open.  The following users  / groups have permissions to the file and should not: {identities}.  To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename, identities=', '.join(disallowed_identities))
+    click.echo(warning, file=sys.stderr)
+
+
+def is_windows():
+    return sys.platform == 'win32' or sys.platform == 'cygwin'
+
+
+def resolve_jmespath_query(ctx, query):
+    if query.startswith('query://'):
+        query_name = query[len('query://'):]
+        if query_name in ctx.obj['canned_queries']:
+            return ctx.obj['canned_queries'][query_name]
+        else:
+            raise click.UsageError('Query {} is not defined in your OCI CLI configuration file: {}'.format(query_name, ctx.obj['defaults_file']))
+    else:
+        return query

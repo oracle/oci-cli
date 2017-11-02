@@ -1,6 +1,7 @@
 import json
 import oci
 import oci_cli
+import os
 import pytest
 import random
 
@@ -10,15 +11,24 @@ ADMIN_PASSWORD = "BEstr0ng_#1"
 DB_VERSION = '12.1.0.2'
 DB_SYSTEM_CPU_CORE_COUNT = '4'
 DB_SYSTEM_DB_EDITION = 'ENTERPRISE_EDITION'
-DB_SYSTEM_SHAPE = 'BM.DenseIO1.36'
+DB_SYSTEM_SHAPE = 'BM.HighIO1.36'
 DB_SYSTEM_PROVISIONING_TIME_SEC = 14400  # 4 hours
 DB_SYSTEM_UPDATE_TIME = 1800  # 30 minutes
 
+DB_BACKUP_TIME_SEC = 7200  # 2 hours
 DB_PROVISIONING_TIME_SEC = 1800  # 30 minutes
 DB_TERMINATING_TIME_SEC = 1800  # 30 minutes
+DB_PATCH_TIME_SEC = 900  # 15 minutes
 
-DATA_GUARD_ASSOCIATION_OPERATION_TIME = 1800  # 30 minutes
+DATA_GUARD_ASSOCIATION_OPERATION_TIME = 3600  # 60 minutes
 DB_NODE_OPERATION_TIME = 1800  # 30 minutes
+
+# if there are existing db systems, use those and bypass system creation
+EXISTING_DB_SYSTEM_1 = os.environ.get('OCI_CLI_EXISTING_DB_SYSTEM_1')
+EXISTING_DB_SYSTEM_2 = os.environ.get('OCI_CLI_EXISTING_DB_SYSTEM_2')
+
+# by default clean up all resources. if OCI_CLI_SKIP_CLEAN_UP_DB_RESOURCES == '1' then do not clean up resources
+SKIP_CLEAN_UP_RESOURCES = os.environ.get('OCI_CLI_SKIP_CLEAN_UP_DB_RESOURCES') == '1'
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -29,7 +39,12 @@ def log_test(request):
 
 
 @pytest.fixture(scope='module')
-def subnets(network_client):
+def db_systems(runner, config_file, config_profile, network_client):
+    # allow running against existing DB systems instead of launching new ones to save time
+    if EXISTING_DB_SYSTEM_1 and EXISTING_DB_SYSTEM_2:
+        yield [EXISTING_DB_SYSTEM_1, EXISTING_DB_SYSTEM_2]
+        return
+
     # create VCN
     vcn_name = util.random_name('cli_db_test_vcn')
     cidr_block = "10.0.0.0/16"
@@ -92,12 +107,19 @@ def subnets(network_client):
     default_security_list = response.data[0]
 
     # add new permissive ingress security rule
-    new_allow_all_rule = oci.core.models.IngressSecurityRule()
-    new_allow_all_rule.is_stateless = False
-    new_allow_all_rule.protocol = "all"
-    new_allow_all_rule.source = "0.0.0.0/0"
+    new_allow_all_ingress_rule = oci.core.models.IngressSecurityRule()
+    new_allow_all_ingress_rule.is_stateless = False
+    new_allow_all_ingress_rule.protocol = "all"
+    new_allow_all_ingress_rule.source = "0.0.0.0/0"
 
-    default_security_list.ingress_security_rules.append(new_allow_all_rule)
+    default_security_list.ingress_security_rules.append(new_allow_all_ingress_rule)
+
+    new_allow_all_egress_rule = oci.core.models.EgressSecurityRule()
+    new_allow_all_egress_rule.destination = "0.0.0.0/0"
+    new_allow_all_egress_rule.protocol = "all"
+    new_allow_all_egress_rule.is_stateless = False
+
+    default_security_list.egress_security_rules.append(new_allow_all_egress_rule)
 
     update_security_list_details = oci.core.models.UpdateSecurityListDetails()
     update_security_list_details.egress_security_rules = default_security_list.egress_security_rules
@@ -105,29 +127,34 @@ def subnets(network_client):
 
     network_client.update_security_list(default_security_list.id, update_security_list_details)
 
-    yield [subnet_ocid_1, subnet_ocid_2]
+    # create internet gateway
+    create_ig_details = oci.core.models.CreateInternetGatewayDetails()
+    create_ig_details.compartment_id = util.COMPARTMENT_ID
+    create_ig_details.is_enabled = True
+    create_ig_details.display_name = util.random_name('cli_db_ig')
+    create_ig_details.vcn_id = vcn_ocid
 
-    network_client.delete_subnet(subnet_ocid_1)
+    response = network_client.create_internet_gateway(create_ig_details)
+    ig_ocid = response.data.id
 
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
-            util.print_latest_exception(error)
+    # add rule targeting internet gateway to default route table (first and only route table in list)
+    response = network_client.list_route_tables(util.COMPARTMENT_ID, vcn_ocid)
+    default_route_table = response.data[0]
 
-    network_client.delete_subnet(subnet_ocid_2)
+    new_route_rule = oci.core.models.RouteRule()
+    new_route_rule.cidr_block = '0.0.0.0/0'
+    new_route_rule.network_entity_id = ig_ocid
 
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
-            util.print_latest_exception(error)
+    if not default_route_table.route_rules:
+        default_route_table.route_rules = []
 
-    network_client.delete_vcn(vcn_ocid)
+    default_route_table.route_rules.append(new_route_rule)
 
+    update_route_table_details = oci.core.models.UpdateRouteTableDetails()
+    update_route_table_details.route_rules = default_route_table.route_rules
+    network_client.update_route_table(default_route_table.id, update_route_table_details)
 
-@pytest.fixture(scope='module')
-def db_systems(runner, config_file, config_profile, subnets):
+    # provision DB systems
     params = [
         'system', 'launch',
         '--admin-password', ADMIN_PASSWORD,
@@ -141,7 +168,7 @@ def db_systems(runner, config_file, config_profile, subnets):
         '--hostname', util.random_name('cli-test-hostname', insert_underscore=False),
         '--shape', DB_SYSTEM_SHAPE,
         '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
-        '--subnet-id', subnets[0],
+        '--subnet-id', subnet_ocid_1,
         '--license-model', 'LICENSE_INCLUDED'
     ]
 
@@ -165,7 +192,7 @@ def db_systems(runner, config_file, config_profile, subnets):
         '--hostname', util.random_name('cli-test-hostname', insert_underscore=False),
         '--shape', DB_SYSTEM_SHAPE,
         '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
-        '--subnet-id', subnets[1],
+        '--subnet-id', subnet_ocid_2,
         '--license-model', 'LICENSE_INCLUDED'
     ]
 
@@ -185,6 +212,10 @@ def db_systems(runner, config_file, config_profile, subnets):
     print("DB Systems provisioned successfully!")
 
     yield [db_system_id_1, db_system_id_2]
+
+    if SKIP_CLEAN_UP_RESOURCES:
+        print("Skipping clean up of DB systems and dependent resources.")
+        return
 
     success_terminating_db_systems = True
 
@@ -209,6 +240,7 @@ def db_systems(runner, config_file, config_profile, subnets):
         util.validate_response(result)
 
         assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+        util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
     except Exception as error:
         util.print_latest_exception(error)
         success_terminating_db_systems = False
@@ -234,14 +266,34 @@ def db_systems(runner, config_file, config_profile, subnets):
         util.validate_response(result)
 
         assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+        util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_2], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
     except Exception as error:
         util.print_latest_exception(error)
         success_terminating_db_systems = False
 
+    # delete VCN and subnets now that dependent DB systems are deleted
+    network_client.delete_subnet(subnet_ocid_1)
+
+    try:
+        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+    except oci.exceptions.ServiceError as error:
+        if not hasattr(error, 'status') or error.status != 404:
+            util.print_latest_exception(error)
+
+    network_client.delete_subnet(subnet_ocid_2)
+
+    try:
+        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+    except oci.exceptions.ServiceError as error:
+        if not hasattr(error, 'status') or error.status != 404:
+            util.print_latest_exception(error)
+
+    network_client.delete_vcn(vcn_ocid)
+
     assert success_terminating_db_systems
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def database(runner, config_file, config_profile, db_systems):
     """Returns the OCID of the first database listed in the db_system"""
 
@@ -255,7 +307,9 @@ def database(runner, config_file, config_profile, db_systems):
     util.validate_response(result)
 
     json_result = json.loads(result.output)
-    return json_result['data'][0]['id']
+    for db in json_result['data']:
+        if db['lifecycle-state'] != 'TERMINATING' and db['lifecycle-state'] != 'TERMINATED':
+            return db['id']
 
 
 def test_list_db_systems(runner, config_file, config_profile):
@@ -326,61 +380,6 @@ def test_update_db_system(runner, config_file, config_profile, db_systems):
     assert json_result['data']['cpu-core-count'] == 6
 
     print("Updated DB System: " + result.output)
-
-
-@util.enable_long_running
-def test_database_operations(runner, config_file, config_profile, db_systems):
-    # create database
-    params = [
-        'database', 'create',
-        '--db-system-id', db_systems[0],
-        '--db-version', DB_VERSION,
-        '--admin-password', ADMIN_PASSWORD,
-        '--db-name', random_db_name()
-    ]
-
-    result = invoke(runner, config_file, config_profile, params)
-    util.validate_response(result)
-
-    json_result = json.loads(result.output)
-    database_id = json_result['data']['id']
-
-    # get database
-    util.wait_until(['db', 'database', 'get', '--database-id', database_id], 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
-
-    # list databases
-    params = [
-        'database', 'list',
-        '--compartment-id', util.COMPARTMENT_ID,
-        '--db-system-id', db_systems[0]
-    ]
-
-    result = invoke(runner, config_file, config_profile, params)
-    util.validate_response(result)
-
-    # list databases with --limit 0
-    params = [
-        'database', 'list',
-        '--compartment-id', util.COMPARTMENT_ID,
-        '--db-system-id', db_systems[0],
-        '--limit', '0'
-    ]
-
-    result = invoke(runner, config_file, config_profile, params)
-    util.validate_response(result)
-    assert len(result.output) == 0
-
-    # delete database
-    params = [
-        'database', 'delete',
-        '--database-id', database_id,
-        '--force'
-    ]
-
-    result = invoke(runner, config_file, config_profile, params)
-    util.validate_response(result)
-    util.wait_until(['db', 'database', 'get', '--database-id', database_id], 'TERMINATED', max_wait_seconds=DB_TERMINATING_TIME_SEC, succeed_if_not_found=True)
-    util.wait_until(['db', 'system', 'get', '--db-system-id', db_systems[0]], 'AVAILABLE', max_wait_seconds=DB_TERMINATING_TIME_SEC)
 
 
 ###########################
@@ -537,6 +536,142 @@ def test_data_guard_operations(runner, config_file, config_profile, database, db
 
 
 @util.enable_long_running
+def test_database_operations(runner, config_file, config_profile, db_systems):
+    # create database
+    params = [
+        'database', 'create',
+        '--db-system-id', db_systems[0],
+        '--db-version', DB_VERSION,
+        '--admin-password', ADMIN_PASSWORD,
+        '--db-name', random_db_name()
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    json_result = json.loads(result.output)
+    database_id = json_result['data']['id']
+
+    # get database
+    util.wait_until(['db', 'database', 'get', '--database-id', database_id], 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
+
+    # list databases
+    params = [
+        'database', 'list',
+        '--compartment-id', util.COMPARTMENT_ID,
+        '--db-system-id', db_systems[0]
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    # list databases with --limit 0
+    params = [
+        'database', 'list',
+        '--compartment-id', util.COMPARTMENT_ID,
+        '--db-system-id', db_systems[0],
+        '--limit', '0'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    assert len(result.output) == 0
+
+    # update database
+    params = [
+        'database', 'update',
+        '--database-id', database_id,
+        '--auto-backup-enabled', 'true',
+        '--force'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    json_result = json.loads(result.output)
+    assert json_result['data']['db-backup-config']['auto-backup-enabled'] is True
+
+    util.wait_until(['db', 'database', 'get', '--database-id', database_id], 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
+
+    # delete database
+    params = [
+        'database', 'delete',
+        '--database-id', database_id,
+        '--force'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    util.wait_until(['db', 'database', 'get', '--database-id', database_id], 'TERMINATED', max_wait_seconds=DB_TERMINATING_TIME_SEC, succeed_if_not_found=True)
+    util.wait_until(['db', 'system', 'get', '--db-system-id', db_systems[0]], 'AVAILABLE', max_wait_seconds=DB_TERMINATING_TIME_SEC)
+
+
+@util.enable_long_running
+def test_backup_operations(runner, config_file, config_profile, database):
+    # create backup
+    params = [
+        'backup', 'create',
+        '--database-id', database,
+        '--display-name', util.random_name('CliDbBackup')
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    json_result = json.loads(result.output)
+    backup_id = json_result['data']['id']
+
+    # get backup
+    util.wait_until(['db', 'backup', 'get', '--backup-id', backup_id], 'ACTIVE', max_wait_seconds=DB_BACKUP_TIME_SEC)
+
+    # list backups by database
+    params = [
+        'backup', 'list',
+        '--database-id', database
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    print(result.output)
+    assert len(json.loads(result.output)['data']) > 0
+
+    # list backups by compartment
+    params = [
+        'backup', 'list',
+        '--compartment-id', util.COMPARTMENT_ID
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    print(result.output)
+    assert len(json.loads(result.output)['data']) > 0
+
+    # restore from backup
+    params = [
+        'database', 'restore',
+        '--database-id', database,
+        '--latest', 'true'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    util.wait_until(['db', 'database', 'get', '--database-id', database], 'AVAILABLE', max_wait_seconds=DB_BACKUP_TIME_SEC)
+
+    # delete backup
+    params = [
+        'backup', 'delete',
+        '--backup-id', backup_id,
+        '--force'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    util.wait_until(['db', 'backup', 'get', '--backup-id', backup_id], 'TERMINATED', max_wait_seconds=DB_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+
+
+@util.enable_long_running
 def test_db_node_operations(runner, config_file, config_profile, db_systems):
     # list nodes in db-system
     params = [
@@ -616,6 +751,144 @@ def test_db_node_operations(runner, config_file, config_profile, db_systems):
     assert json.loads(result.output)['data']['lifecycle-state'] == "STOPPING"
 
     util.wait_until(['db', 'system', 'get', '--db-system-id', db_systems[0]], 'AVAILABLE', max_wait_seconds=DB_NODE_OPERATION_TIME)
+
+
+###########################
+# PATCH OPERATIONS
+###########################
+@util.enable_long_running
+def test_patch_operations(runner, config_file, config_profile, database, db_systems):
+    # by db-system
+    params = [
+        'patch', 'list', 'by-db-system',
+        '--db-system-id', db_systems[0]
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    if len(result.output) > 0:
+        json_result = json.loads(result.output)
+        if len(json_result['data']) > 0:
+            patch_id = json_result['data'][0]['id']
+            print("Getting patch {} for db system {}".format(patch_id, db_systems[0]))
+
+            params = [
+                'patch', 'get', 'by-db-system',
+                '--db-system-id', db_systems[0],
+                '--patch-id', patch_id
+            ]
+
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            json_result = json.loads(result.output)
+            if 'APPLY' in json_result['data']['available-actions']:
+                print('Applying patch: {} to db system: {}'.format(patch_id, db_systems[0]))
+
+                params = [
+                    'db-system', 'patch',
+                    '--db-system-id', db_systems[0],
+                    '--patch-id', patch_id,
+                    '--patch-action', 'APPLY'
+                ]
+
+                result = invoke(runner, config_file, config_profile, params)
+                util.validate_response(result)
+
+                util.wait_until(['db', 'system', 'get', '--db-system-id', db_systems[0]], 'AVAILABLE', max_wait_seconds=DB_PATCH_TIME_SEC)
+
+    # by database
+    params = [
+        'patch', 'list', 'by-database',
+        '--database-id', database
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    if len(result.output) > 0:
+        json_result = json.loads(result.output)
+        if len(json_result['data']) > 0:
+            patch_id = json_result['data'][0]['id']
+            print("Getting patch {} for database {}".format(patch_id, database))
+
+            params = [
+                'patch', 'get', 'by-database',
+                '--database-id', database,
+                '--patch-id', patch_id
+            ]
+
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            json_result = json.loads(result.output)
+            if 'APPLY' in json_result['data']['available-actions']:
+                print('Applying patch: {} to database: {}'.format(patch_id, database))
+
+                params = [
+                    'database', 'patch',
+                    '--database-id', database,
+                    '--patch-id', patch_id,
+                    '--patch-action', 'APPLY'
+                ]
+
+                result = invoke(runner, config_file, config_profile, params)
+                util.validate_response(result)
+
+                util.wait_until(['db', 'database', 'get', '--database-id', database], 'AVAILABLE', max_wait_seconds=DB_PATCH_TIME_SEC)
+
+
+###########################
+# PATCH HISTORY OPERATIONS
+###########################
+@util.enable_long_running
+def test_patch_history_operations(runner, config_file, config_profile, database, db_systems):
+    # by db-system
+    params = [
+        'patch-history', 'list', 'by-db-system',
+        '--db-system-id', db_systems[0]
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    if len(result.output) > 0:
+        json_result = json.loads(result.output)
+        if len(json_result['data']) > 0:
+            patch_history_entry_id = json_result['data'][0]['id']
+
+            params = [
+                'patch-history', 'get', 'by-db-system',
+                '--db-system-id', db_systems[0],
+                '--patch-history-entry-id', patch_history_entry_id
+            ]
+
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+    # by database
+    params = [
+        'patch-history', 'list', 'by-database',
+        '--database-id', database
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    if len(result.output) > 0:
+        json_result = json.loads(result.output)
+        if len(json_result['data']) > 0:
+            patch_history_entry_id = json_result['data'][0]['id']
+
+            params = [
+                'patch-history', 'get', 'by-database',
+                '--database-id', database,
+                '--patch-history-entry-id', patch_history_entry_id
+            ]
+
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
 
 
 def random_db_name():

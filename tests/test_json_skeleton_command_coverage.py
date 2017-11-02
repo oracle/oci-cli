@@ -10,7 +10,9 @@ import six
 IGNORED_COMMANDS = [
     ['setup', 'autocomplete'],
     ['setup', 'config'],
-    ['setup', 'keys']
+    ['setup', 'keys'],
+    ['setup', 'repair-file-permissions'],
+    ['setup', 'oci-cli-rc']
 ]
 
 
@@ -23,7 +25,9 @@ COMMANDS_WITH_NO_PARAMS = [
 
 # Commands whose parameters are all marked as optional (though some combination of them may be needed for calls to succeed)
 COMMANDS_WITH_ALL_OPTIONAL_PARAMS = [
-    ['network', 'private-ip', 'list']
+    ['db', 'backup', 'list'],
+    ['network', 'private-ip', 'list'],
+    ['bv', 'volume', 'create']
 ]
 
 
@@ -47,7 +51,7 @@ def test_all_commands_generate_skeleton():
             parsed_output = json.loads(result.output)
             if parsed_output == {} and cmd not in COMMANDS_WITH_NO_PARAMS:
                 commands_with_bad_json.append(cmd)
-        except:
+        except Exception:
             failed_to_parse_commands.append(cmd)
 
     assert len(failed_to_parse_commands) == 0, 'The following commands failed to parse: {}'.format(failed_to_parse_commands)
@@ -67,11 +71,13 @@ def test_all_commands_can_accept_from_json_input():
 
         # If the command takes no params, then invoking it should actually work (and so we should get nothing back or valid JSON back).
         #
-        # If the command has only optional parameters, then invoking it should actuall work (but we may get an error back from the service
+        # If the command has only optional parameters, then invoking it should actually work (but we may get an error back from the service
         # as the operation may rely on some combination of parameters being provided).
         #
         # Otherwise make the assumption that at least one of them is required so we should get "Missing option" in
-        # there somewhere, but nothing mentioning that our from-json option is not needed
+        # there somewhere, but nothing mentioning that our from-json option is not needed.  If the operation requires confirmation
+        # then the output may contain 'Are you sure' but this means we have already gotten past the point where the '--from-json' is not
+        # needed error would have been thrown.
         if cmd in COMMANDS_WITH_NO_PARAMS:
             if result.output:
                 # Sanity check that there are no errors
@@ -81,14 +87,10 @@ def test_all_commands_can_accept_from_json_input():
         elif cmd in COMMANDS_WITH_ALL_OPTIONAL_PARAMS:
             if result.output:
                 assert 'from-json' not in result.output
-                assert 'Missing' in result.output
+                assert 'Missing' in result.output or 'UsageError' in result.output
         else:
-            if result.exception:
-                assert 'from-json' not in str(result.exception)
-                assert 'Missing option' in str(result.exception)
-            else:
-                assert 'from-json' not in result.output
-                assert 'Missing option' in result.output
+            assert 'from-json' not in result.output
+            assert 'Missing option' in result.output or 'Are you sure' in str(result.output)
 
 
 def teardown_module(module):

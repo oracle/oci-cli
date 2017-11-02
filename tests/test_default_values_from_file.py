@@ -263,7 +263,7 @@ def test_variable_expansion():
 
 
 def set_up_context(command=click.Command('unit-test-command')):
-    context_obj = {'default_values_from_file': {}}
+    context_obj = {'default_values_from_file': {}, 'parameter_aliases': {}}
 
     top_context = click.Context(command, parent=None, info_name='oci')
     command_group_context = click.Context(command, parent=top_context, info_name='cmdgrp')

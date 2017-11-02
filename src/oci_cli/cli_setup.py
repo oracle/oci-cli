@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import click
-from .cli_root import cli
+from .cli_root import cli, CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME
 from . import cli_util
 
 import base64
@@ -59,6 +59,58 @@ upload_public_key_instructions = """
 
     \n
 """
+
+default_canned_queries = """
+[OCI_CLI_CANNED_QUERIES]
+# For list results, this gets the ID and display-name of each item in the list. Note that when the names of attirbutes have
+# dashes in them they need to be surrounded with double quotes. This query knows to look for a list because of the
+# [*] syntax
+get_id_and_display_name_from_list=data[*].{id: id, "display-name": "display-name"}
+
+get_id_and_display_name_from_single_result=data.{id: id, "display-name": "display-name"}
+
+# Retrieves a comma separated string, for example:
+#     ocid1.instance.oc1.phx.xyz....,cli_test_instance_675195,RUNNING
+get_id_display_name_and_lifecycle_state_from_single_result_as_csv=data.[id, "display-name", "lifecycle-state"] | join(`,`, @)
+
+# Retrieves comma separated strings from a list of results
+get_id_display_name_and_lifecycle_state_from_list_as_csv=data[*].[join(`,`, [id, "display-name", "lifecycle-state"])][]
+
+# Filters where the display name contains some text
+filter_by_display_name_contains_text=data[?contains("display-name", `your_text_here`)]
+
+# Filters where the display name contains some text and pull out certain attributes(id and time-created)
+filter_by_display_name_contains_text_and_get_attributes=data[?contains("display-name", `your_text_here`)].{id: id, timeCreated: "time-created"}
+
+# Get the top 5 results from a list operation
+get_top_5_results=data[:5]
+
+# Get the last 2 results from a list operation
+get_last_2_results=data[-2:]
+"""
+
+default_command_aliases = """
+[OCI_CLI_COMMAND_ALIASES]
+# This lets you use "ls" instead of "list" for any list command in the CLI
+ls = list
+
+# This lets you do "oci os object rm" rather than "oci os object delete". This is an example of a "command sequence alias", where the alias on the left
+# hand side only applies when the command sequence on the right hand side is invoked. You can think of these as being of the form:
+#    <alias> = <dot-separated sequence of groups and sub-groups>.<command or group to alias>
+#
+# So in our example, <alias> = rm, <sequence of groups and sub-groups> = os object, <command or group to alias> = delete
+rm = os.object.delete
+"""
+
+default_param_aliases = """
+[OCI_CLI_PARAM_ALIASES]
+# Parameter aliases either need to start with a double dash (--) or be a single dash (-) followed by a single letter. For example: --foo, -f
+--ad = --availability-domain
+--dn = --display-name
+--egress-rules = --egress-security-rules
+--ingress-rules = --ingress-security-rules
+"""
+
 
 public_key_filename_suffix = '_public.pem'
 private_key_filename_suffix = '.pem'
@@ -176,6 +228,38 @@ def generate_oci_config():
     click.echo(click.wrap_text(upload_public_key_instructions, preserve_paragraphs=True))
 
 
+@setup_group.command('oci-cli-rc', help="""Generates a oci_cli_rc file that can contain parameter default values and other configuration information such as command aliases and predefined queries.
+
+This command will populate the file with some default aliases and predefined queries.
+""")
+@click.option('--file', type=click.File(mode='a+b'), required=True, help="The file into which default aliases and predefined queries will be loaded")
+@cli_util.help_option
+def setup_cli_rc(file):
+    if hasattr(file, 'name') and file.name == '<stdout>':
+        raise click.UsageError('This command does not support writing data to stdout')
+
+    file.seek(0)
+    data = file.read().decode()
+
+    if CLI_RC_CANNED_QUERIES_SECTION_NAME in data:
+        click.echo('Predefined queries will not be written as the specified file already contains a section for these queries', file=sys.stderr)
+    else:
+        file.write(('\n\n{}'.format(default_canned_queries)).encode())
+        click.echo('Predefined queries written under section {}'.format(CLI_RC_CANNED_QUERIES_SECTION_NAME))
+
+    if CLI_RC_COMMAND_ALIASES_SECTION_NAME in data:
+        click.echo('Command aliases will not be written as the specified file already contains a section for command aliases', file=sys.stderr)
+    else:
+        file.write(('\n\n{}'.format(default_command_aliases)).encode())
+        click.echo('Command aliases written under section {}'.format(CLI_RC_COMMAND_ALIASES_SECTION_NAME))
+
+    if CLI_RC_PARAM_ALIASES_SECTION_NAME in data:
+        click.echo('Parameter aliases will not be written as the specified file already contains a section for parameter aliases', file=sys.stderr)
+    else:
+        file.write(('\n\n{}'.format(default_param_aliases)).encode())
+        click.echo('Parameter aliases written under section {}'.format(CLI_RC_PARAM_ALIASES_SECTION_NAME))
+
+
 @setup_group.command('autocomplete', help="""Interactive script to set up tab completion for commands and parameters.""")
 @cli_util.help_option
 def setup_autocomplete():
@@ -220,6 +304,7 @@ def setup_autocomplete_windows():
 
             f.write('\n. {}\n'.format(completion_script_file))
             click.echo('Success!\nReload your Powershell profile or restart your shell for the changes to take effect.')
+            click.echo('In order to run the autocomplete script, you may also need to set your Powershell execution policy to allow for running local scripts (as an Administrator run Set-ExecutionPolicy RemoteSigned in a Powershell prompt)')
     else:
         click.echo('Exiting script. Tab completion not set up.')
         return
@@ -267,6 +352,21 @@ def setup_autocomplete_non_windows():
     else:
         click.echo('Exiting script. Tab completion not set up.')
         return
+
+
+@setup_group.command('repair-file-permissions', help="""Resets permissions on a given file to an appropriate access level for sensitive files. Generally this is used to fix permissions on a private key file or config file to meet the requirements of the CLI.
+On Windows, full control will be given to System, Administrators, and the current user.  On Unix, Read / Write permissions will be given to the current user.""")
+@click.option('--file', required=True, help="""The file to repair permissions on.""")
+@cli_util.help_option
+def repair_file_permissions(file):
+    file = os.path.expanduser(file)
+    if not os.path.exists(file):
+        raise click.UsageError('Could not find file: {}'.format(file))
+
+    if not os.path.isfile(file):
+        raise click.UsageError('This command is only supported for files.')
+
+    apply_user_only_access_permissions(file)
 
 
 def public_key_to_fingerprint(public_key):
@@ -331,7 +431,7 @@ def apply_user_only_access_permissions(path):
     if not os.path.exists(path):
         raise RuntimeError("Failed attempting to set permissions on path that does not exist: {}".format(path))
 
-    if is_windows():
+    if cli_util.is_windows():
         # General permissions strategy is:
         #   - if we create a new folder (e.g. C:\Users\opc\.oci), set access to allow full control for current user and no access for anyone else
         #   - if we create a new file, set access to allow full control for current user and no access for anyone else
@@ -341,14 +441,14 @@ def apply_user_only_access_permissions(path):
         try:
             if os.path.isfile(path):
                 subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
-                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F'.format(path=path, username=username), stderr=subprocess.STDOUT)
+                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F /grant Administrators:F /grant System:F'.format(path=path, username=username), stderr=subprocess.STDOUT)
             else:
                 if os.listdir(path):
                     # safety check to make sure we aren't changing permissions of existing files
                     raise RuntimeError("Failed attempting to set permissions on existing folder that is not empty.")
 
                 subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
-                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F'.format(path=path, username=username), stderr=subprocess.STDOUT)
+                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F  /grant:r Administrators:(OI)(CI)F /grant:r System:(OI)(CI)F'.format(path=path, username=username), stderr=subprocess.STDOUT)
 
         except subprocess.CalledProcessError as exc_info:
             print("Error occurred while attempting to set permissions for {path}: {exception}".format(path=path, exception=str(exc_info)))
@@ -420,7 +520,3 @@ def validate_ocid(ocid, pattern):
 def create_directory(dirname):
     os.makedirs(dirname)
     apply_user_only_access_permissions(dirname)
-
-
-def is_windows():
-    return sys.platform == 'win32' or sys.platform == 'cygwin'

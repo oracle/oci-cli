@@ -3,18 +3,22 @@
 
 from __future__ import print_function
 import click
+import six
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
+from .. import retry_utils  # noqa: F401
+from .. import custom_types  # noqa: F401
+from ..aliasing import CommandGroupWithAlias
 
 
-@cli.group(cli_util.override('compute_group.command_name', 'compute'), help=cli_util.override('compute_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('compute_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
 @cli_util.help_option_group
 def compute_group():
     pass
 
 
-@click.group(cli_util.override('volume_group.command_name', 'volume'), help="""A detachable block volume device that allows you to dynamically expand
+@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand
 the storage capacity of an instance. For more information, see
 [Overview of Cloud Volume Storage].
 
@@ -26,7 +30,7 @@ def volume_group():
     pass
 
 
-@click.group(cli_util.override('image_group.command_name', 'image'), help="""A boot disk image for launching an instance. For more information, see
+@click.command(cli_util.override('image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see
 [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
@@ -37,13 +41,13 @@ def image_group():
     pass
 
 
-@click.group(cli_util.override('instance_credentials_group.command_name', 'instance-credentials'), help="""The credentials for a particular instance.""")
+@click.command(cli_util.override('instance_credentials_group.command_name', 'instance-credentials'), cls=CommandGroupWithAlias, help="""The credentials for a particular instance.""")
 @cli_util.help_option_group
 def instance_credentials_group():
     pass
 
 
-@click.group(cli_util.override('instance_group.command_name', 'instance'), help="""A compute host. The image used to launch the instance determines its operating system and other
+@click.command(cli_util.override('instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other
 software. The shape specified during the launch process determines the number of CPUs and memory
 allocated to the instance. For more information, see
 [Overview of the Compute Service].
@@ -56,21 +60,21 @@ def instance_group():
     pass
 
 
-@click.group(cli_util.override('shape_group.command_name', 'shape'), help="""A compute instance shape that can be used in [LaunchInstance].
+@click.command(cli_util.override('shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance].
 For more information, see [Overview of the Compute Service].""")
 @cli_util.help_option_group
 def shape_group():
     pass
 
 
-@click.group(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), help="""Represents an attachment between a VNIC and an instance. For more information, see
+@click.command(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a VNIC and an instance. For more information, see
 [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.help_option_group
 def vnic_attachment_group():
     pass
 
 
-@click.group(cli_util.override('volume_attachment_group.command_name', 'volume-attachment'), help="""A base object for all types of attachments between a storage volume and an instance.
+@click.command(cli_util.override('volume_attachment_group.command_name', 'volume-attachment'), cls=CommandGroupWithAlias, help="""A base object for all types of attachments between a storage volume and an instance.
 For specific details about iSCSI attachments, see
 [IScsiVolumeAttachment Reference].
 
@@ -81,7 +85,7 @@ def volume_attachment_group():
     pass
 
 
-@click.group(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), help="""The `InstanceConsoleConnection` API provides you with serial console access to virtual machine (VM) instances,
+@click.command(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with serial console access to virtual machine (VM) instances,
 enabling you to troubleshoot malfunctioning instances remotely.
 
 For more information about serial console access, see
@@ -91,7 +95,7 @@ def instance_console_connection_group():
     pass
 
 
-@click.group(cli_util.override('console_history_group.command_name', 'console-history'), help="""An instance's serial console data. It includes configuration messages that occur when the
+@click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the
 instance boots, such as kernel and BIOS messages, and is useful for checking the status of
 the instance or diagnosing problems. The console data is minimally formatted ASCII text.""")
 @cli_util.help_option_group
@@ -100,7 +104,7 @@ def console_history_group():
 
 
 @vnic_attachment_group.command(name=cli_util.override('attach_vnic.command_name', 'attach'), help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
-@click.option('--create-vnic-details', help="""Details for creating a new VNIC. [required]""")
+@click.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating a new VNIC. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--instance-id', help="""The OCID of the instance. [required]""")
 @click.option('--display-name', help="""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -241,15 +245,15 @@ def capture_console_history(ctx, generate_full_command_json_input, generate_para
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('create_image.command_name', 'create'), help="""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Bare Metal Cloud Object Storage Service.
+@image_group.command(name=cli_util.override('create_image.command_name', 'create'), help="""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Cloud Infrastructure Object Storage service.
 
 When creating a new image, you must provide the OCID of the instance you want to use as the basis for the image, and the OCID of the compartment containing that instance. For more information about images, see [Managing Custom Images].
 
-When importing an exported image from the Object Storage Service, you specify the source information in [ImageSourceDetails].
+When importing an exported image from Object Storage, you specify the source information in [ImageSourceDetails].
 
 When importing an image based on the namespace, bucket name, and object name, use [ImageSourceViaObjectStorageTupleDetails].
 
-When importing an image based on the Object Storage Service URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+When importing an image based on the Object Storage URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
 
 For more information about importing exported images, see [Image Import/Export].
 
@@ -260,7 +264,7 @@ You may optionally specify a *display name* for the image, which is simply a fri
 You cannot use an Oracle-provided image name as a custom image name.
 
 Example: `My Oracle Linux image`""")
-@click.option('--image-source-details', help="""Details for creating an image through import""")
+@click.option('--image-source-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an image through import""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--instance-id', help="""The OCID of the instance you want to use as the basis for the image.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -383,6 +387,9 @@ def delete_console_history(ctx, generate_full_command_json_input, generate_param
     instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -422,6 +429,9 @@ def delete_image(ctx, generate_full_command_json_input, generate_param_json_inpu
     image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -460,6 +470,9 @@ def delete_instance_console_connection(ctx, generate_full_command_json_input, ge
     cli_util.load_context_obj_values_from_defaults(ctx)
     instance_console_connection_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-connection-id', instance_console_connection_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -502,6 +515,9 @@ def detach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
     vnic_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-attachment-id', vnic_attachment_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -543,6 +559,9 @@ def detach_volume(ctx, generate_full_command_json_input, generate_param_json_inp
     volume_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-attachment-id', volume_attachment_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -554,15 +573,15 @@ def detach_volume(ctx, generate_full_command_json_input, generate_param_json_inp
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('export_image.command_name', 'export'), help="""Exports the specified image to the Oracle Bare Metal Cloud Object Storage Service. You can use the Object Storage Service URL, or the namespace, bucket name, and object name when specifying the location to export to.
+@image_group.command(name=cli_util.override('export_image.command_name', 'export'), help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage service. You can use the Object Storage URL, or the namespace, bucket name, and object name when specifying the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
 
-To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
+To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
 @click.option('--image-id', help="""The OCID of the image. [required]""")
-@click.option('--destination-type', help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage Service URL. [required]""")
+@click.option('--destination-type', help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL. [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -588,6 +607,9 @@ def export_image(ctx, generate_full_command_json_input, generate_param_json_inpu
     image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
     destination_type = cli_util.coalesce_provided_and_default_value(ctx, 'destination-type', destination_type, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -630,6 +652,9 @@ def get_console_history(ctx, generate_full_command_json_input, generate_param_js
     cli_util.load_context_obj_values_from_defaults(ctx)
     instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
 
+    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_console_history(
@@ -668,6 +693,9 @@ def get_console_history_content(ctx, generate_full_command_json_input, generate_
     instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
     offset = cli_util.coalesce_provided_and_default_value(ctx, 'offset', offset, False)
     length = cli_util.coalesce_provided_and_default_value(ctx, 'length', length, False)
+
+    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
     if not file:
         file_from_default_values = cli_util.get_click_file_from_default_values_file(ctx, 'file', 'wb', True)
         if file_from_default_values:
@@ -711,6 +739,9 @@ def get_image(ctx, generate_full_command_json_input, generate_param_json_input, 
     cli_util.load_context_obj_values_from_defaults(ctx)
     image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
 
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_image(
@@ -744,6 +775,9 @@ def get_instance(ctx, generate_full_command_json_input, generate_param_json_inpu
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
@@ -779,6 +813,9 @@ def get_instance_console_connection(ctx, generate_full_command_json_input, gener
     cli_util.load_context_obj_values_from_defaults(ctx)
     instance_console_connection_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-connection-id', instance_console_connection_id, True)
 
+    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance_console_connection(
@@ -812,6 +849,9 @@ def get_vnic_attachment(ctx, generate_full_command_json_input, generate_param_js
 
     cli_util.load_context_obj_values_from_defaults(ctx)
     vnic_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-attachment-id', vnic_attachment_id, True)
+
+    if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
@@ -847,6 +887,9 @@ def get_volume_attachment(ctx, generate_full_command_json_input, generate_param_
     cli_util.load_context_obj_values_from_defaults(ctx)
     volume_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-attachment-id', volume_attachment_id, True)
 
+    if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_volume_attachment(
@@ -881,6 +924,9 @@ def get_windows_instance_initial_credentials(ctx, generate_full_command_json_inp
     cli_util.load_context_obj_values_from_defaults(ctx)
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
 
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_windows_instance_initial_credentials(
@@ -902,7 +948,7 @@ def get_windows_instance_initial_credentials(ctx, generate_full_command_json_inp
 
 Note that the **stop** state has no effect on the resources you consume. Billing continues for instances that you stop, and related resources continue to apply against any relevant quotas. You must terminate an instance ([TerminateInstance]) to remove its resources from billing and quotas.""")
 @click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--action', help="""The action to perform on the instance. [required]""")
+@click.option('--action', help="""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET [required]""")
 @click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -929,6 +975,9 @@ def instance_action(ctx, generate_full_command_json_input, generate_param_json_i
     action = cli_util.coalesce_provided_and_default_value(ctx, 'action', action, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -947,7 +996,7 @@ For information about access control and compartments, see [Overview of the IAM 
 
 For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
-All Oracle Bare Metal Cloud Services resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+All Oracle Cloud Infrastructure resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
 
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
@@ -960,28 +1009,28 @@ Example: `Uocm:PHX-AD-1` [required]""")
 @click.option('--shape', help="""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
 
 You can enumerate all available shapes by calling [ListShapes]. [required]""")
-@click.option('--create-vnic-details', help="""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""")
+@click.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@click.option('--extended-metadata', help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
+@click.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
 
 They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
 
-If you don't need nested metadata values, it is strongly advised to avoid using this object and use the Metadata object instead.""")
+If you don't need nested metadata values, it is strongly advised to avoid using this object and use the Metadata object instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--hostname-label', help="""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @click.option('--ipxe-script-file', type=click.File(mode='r'), help="""This is an advanced option.
 
-When an Oracle Bare Metal Cloud Services or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
+When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
 If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
 
 The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
 
-For more information about the Bring Your Own Image feature of Oracle Bare Metal Cloud Services, see [Bring Your Own Image].
+For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
 For more information about iPXE, see http://ipxe.org.""")
-@click.option('--metadata', help="""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
+@click.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
 
@@ -1011,7 +1060,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
      curl http://169.254.169.254/opc/v1/instance/      curl http://169.254.169.254/opc/v1/instance/metadata/      curl http://169.254.169.254/opc/v1/instance/metadata/<any-key-name>
 
- You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""")
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--subnet-id', help="""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -1097,6 +1146,11 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--instance-id', help="""The OCID of the instance.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1108,7 +1162,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ConsoleHistory]'})
 @cli_util.wrap_exceptions
-def list_console_histories(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, limit, page, instance_id):
+def list_console_histories(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, instance_id, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1123,6 +1177,15 @@ def list_console_histories(ctx, generate_full_command_json_input, generate_param
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
     kwargs = {}
     if availability_domain is not None:
@@ -1133,19 +1196,41 @@ def list_console_histories(ctx, generate_full_command_json_input, generate_param
         kwargs['page'] = page
     if instance_id is not None:
         kwargs['instance_id'] = instance_id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('compute', ctx)
-    result = client.list_console_histories(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_console_histories,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_console_histories,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_console_histories(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. For more information about images, see [Managing Custom Images].""")
 @click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My new resource`""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
 @click.option('--operating-system', help="""The image's operating system.
 
 Example: `Oracle Linux`""")
@@ -1156,6 +1241,11 @@ Example: `7.2`""")
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1167,7 +1257,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Image]'})
 @cli_util.wrap_exceptions
-def list_images(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, display_name, operating_system, operating_system_version, limit, page):
+def list_images(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, display_name, operating_system, operating_system_version, limit, page, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1183,6 +1273,13 @@ def list_images(ctx, generate_full_command_json_input, generate_param_json_input
     operating_system_version = cli_util.coalesce_provided_and_default_value(ctx, 'operating-system-version', operating_system_version, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if display_name is not None:
@@ -1195,11 +1292,35 @@ def list_images(ctx, generate_full_command_json_input, generate_param_json_input
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('compute', ctx)
-    result = client.list_images(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_images,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_images,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_images(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1212,6 +1333,8 @@ For more information about serial console access, see [Accessing the Serial Cons
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1223,7 +1346,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[InstanceConsoleConnection]'})
 @cli_util.wrap_exceptions
-def list_instance_console_connections(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, instance_id, limit, page):
+def list_instance_console_connections(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, instance_id, limit, page):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1237,6 +1360,10 @@ def list_instance_console_connections(ctx, generate_full_command_json_input, gen
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if instance_id is not None:
@@ -1246,10 +1373,28 @@ def list_instance_console_connections(ctx, generate_full_command_json_input, gen
     if page is not None:
         kwargs['page'] = page
     client = cli_util.build_client('compute', ctx)
-    result = client.list_instance_console_connections(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_instance_console_connections,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_instance_console_connections,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_instance_console_connections(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1258,13 +1403,16 @@ def list_instance_console_connections(ctx, generate_full_command_json_input, gen
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
-
-Example: `My new resource`""")
+@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1276,7 +1424,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Instance]'})
 @cli_util.wrap_exceptions
-def list_instances(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, display_name, limit, page):
+def list_instances(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, limit, page, sort_by, sort_order, lifecycle_state):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1291,6 +1439,15 @@ def list_instances(ctx, generate_full_command_json_input, generate_param_json_in
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
+    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
+    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
     kwargs = {}
     if availability_domain is not None:
@@ -1301,11 +1458,35 @@ def list_instances(ctx, generate_full_command_json_input, generate_param_json_in
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('compute', ctx)
-    result = client.list_instances(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_instances,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_instances,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_instances(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1319,6 +1500,8 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--image-id', help="""The OCID of an image.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1330,7 +1513,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Shape]'})
 @cli_util.wrap_exceptions
-def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, limit, page, image_id):
+def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, image_id):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1345,6 +1528,10 @@ def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if availability_domain is not None:
@@ -1356,10 +1543,28 @@ def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input
     if image_id is not None:
         kwargs['image_id'] = image_id
     client = cli_util.build_client('compute', ctx)
-    result = client.list_shapes(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1374,6 +1579,8 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--vnic-id', help="""The OCID of the VNIC.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1385,7 +1592,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VnicAttachment]'})
 @cli_util.wrap_exceptions
-def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, instance_id, limit, page, vnic_id):
+def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, instance_id, limit, page, vnic_id):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1401,6 +1608,10 @@ def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_
     limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if availability_domain is not None:
@@ -1414,10 +1625,28 @@ def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
     client = cli_util.build_client('compute', ctx)
-    result = client.list_vnic_attachments(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_vnic_attachments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_vnic_attachments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vnic_attachments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1434,6 +1663,8 @@ Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--instance-id', help="""The OCID of the instance.""")
 @click.option('--volume-id', help="""The OCID of the volume.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -1445,7 +1676,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeAttachment]'})
 @cli_util.wrap_exceptions
-def list_volume_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, availability_domain, limit, page, instance_id, volume_id):
+def list_volume_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, instance_id, volume_id):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -1461,6 +1692,10 @@ def list_volume_attachments(ctx, generate_full_command_json_input, generate_para
     page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
     volume_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-id', volume_id, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
     if availability_domain is not None:
@@ -1474,10 +1709,28 @@ def list_volume_attachments(ctx, generate_full_command_json_input, generate_para
     if volume_id is not None:
         kwargs['volume_id'] = volume_id
     client = cli_util.build_client('compute', ctx)
-    result = client.list_volume_attachments(
-        compartment_id=compartment_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_volume_attachments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_volume_attachments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_volume_attachments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1510,6 +1763,9 @@ def terminate_instance(ctx, generate_full_command_json_input, generate_param_jso
     cli_util.load_context_obj_values_from_defaults(ctx)
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1550,6 +1806,9 @@ def update_console_history(ctx, generate_full_command_json_input, generate_param
     instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -1600,6 +1859,9 @@ def update_image(ctx, generate_full_command_json_input, generate_param_json_inpu
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
 
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1648,6 +1910,9 @@ def update_instance(ctx, generate_full_command_json_input, generate_param_json_i
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
     if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
