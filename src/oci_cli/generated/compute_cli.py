@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import click
-import six
+import six  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
@@ -107,6 +107,7 @@ def console_history_group():
 @click.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating a new VNIC. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--instance-id', help="""The OCID of the instance. [required]""")
 @click.option('--display-name', help="""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
+@click.option('--nic-index', type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use. For more information, see [Virtual Network Interface Cards (VNICs)].""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -118,7 +119,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}}, output_type={'module': 'core', 'class': 'VnicAttachment'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, create_vnic_details, instance_id, display_name):
+def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, create_vnic_details, instance_id, display_name, nic_index):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -131,6 +132,7 @@ def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
     create_vnic_details = cli_util.coalesce_provided_and_default_value(ctx, 'create-vnic-details', create_vnic_details, True)
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    nic_index = cli_util.coalesce_provided_and_default_value(ctx, 'nic-index', nic_index, False)
 
     kwargs = {}
 
@@ -140,6 +142,9 @@ def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if nic_index is not None:
+        details['nicIndex'] = nic_index
 
     client = cli_util.build_client('compute', ctx)
     result = client.attach_vnic(
@@ -1146,8 +1151,10 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--instance-id', help="""The OCID of the instance.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1228,9 +1235,9 @@ def list_console_histories(ctx, generate_full_command_json_input, generate_param
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. For more information about images, see [Managing Custom Images].""")
+@image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. If you specify a value for the `sortBy` parameter, Oracle-provided images appear first in the list, followed by custom images. For more information about images, see [Managing Custom Images].""")
 @click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @click.option('--operating-system', help="""The image's operating system.
 
 Example: `Oracle Linux`""")
@@ -1241,8 +1248,10 @@ Example: `7.2`""")
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1403,13 +1412,15 @@ def list_instance_console_connections(ctx, generate_full_command_json_input, gen
 @click.option('--availability-domain', help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")

@@ -52,5 +52,17 @@ def test_cert_bundle_option(runner, config_file):
     assert 0 != result.exit_code
 
 
+def test_profile_option_overrides_default_setting(runner, config_file):
+    result = invoke_example_operation(runner, ['--profile', 'DEFAULT', '--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
+    assert 0 == result.exit_code
+
+
+def test_default_profile_setting_from_cli_rc_file(runner, config_file):
+    result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
+    assert "ERROR: Profile 'INAVLID_PROFILE' not found in config file" in result.output
+    assert 1 == result.exit_code
+
+
 def invoke_example_operation(runner, root_args, config_file):
-    return runner.invoke(oci_cli.cli, root_args + ['--config-file', config_file, 'os', 'ns', 'get'])
+    args = root_args + (['--config-file', config_file] if config_file else []) + ['os', 'ns', 'get']
+    return runner.invoke(oci_cli.cli, args)

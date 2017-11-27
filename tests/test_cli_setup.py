@@ -365,6 +365,7 @@ class TestSetup(unittest.TestCase):
                 Running manually on Windows with Python 2.7 works and Windows tests with Python 3 work, just this case breaks.
                 """
             )
+            self.validator.expected_not_called_count += 1
             return
 
         # fully testing the command would edit the machine's bash_profile / bash_rc

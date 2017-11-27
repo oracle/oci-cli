@@ -50,6 +50,7 @@ virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.route_ta
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cpe_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.security_list_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.private_ip_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.local_peering_gateway_group)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)
 
@@ -563,6 +564,7 @@ def launch_instance_extended(ctx, **kwargs):
 @click.option('--skip-source-dest-check', required=False, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
 @click.option('--private-ip', required=False, help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
 @click.option('--hostname-label', help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
+@click.option('--nic-index', required=False, type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
 @click.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
@@ -575,7 +577,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.pass_context
 @json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, wait):
+def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -588,6 +590,7 @@ def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
     instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
     subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, True)
     vnic_display_name = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-display-name', vnic_display_name, False)
+    nic_index = cli_util.coalesce_provided_and_default_value(ctx, 'nic-index', nic_index, False)
     assign_public_ip = cli_util.coalesce_provided_and_default_value(ctx, 'assign-public-ip', assign_public_ip, False)
     skip_source_dest_check = cli_util.coalesce_provided_and_default_value(ctx, 'skip-source-dest-check', skip_source_dest_check, False)
     private_ip = cli_util.coalesce_provided_and_default_value(ctx, 'private-ip', private_ip, False)
@@ -609,6 +612,7 @@ def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
     attachment_details = {}
     attachment_details['createVnicDetails'] = vnic_details
     attachment_details['instanceId'] = instance_id
+    attachment_details['nicIndex'] = nic_index
 
     compute_client = cli_util.build_client('compute', ctx)
     response = compute_client.attach_vnic(

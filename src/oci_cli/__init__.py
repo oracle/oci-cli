@@ -26,5 +26,6 @@ from . import object_storage_transfer_manager  # noqa: F401
 from . import retry_utils  # noqa: F401
 from . import json_skeleton_utils  # noqa: F401
 from . import string_utils  # noqa: F401
+from . import help_text_producer  # noqa: F401
 from oci import config  # noqa: F401
 from .version import __version__  # noqa: F401

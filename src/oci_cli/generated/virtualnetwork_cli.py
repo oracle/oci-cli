@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import click
-import six
+import six  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
@@ -179,6 +179,20 @@ def virtual_circuit_group():
     pass
 
 
+@click.command(cli_util.override('local_peering_gateway_group.command_name', 'local-peering-gateway'), cls=CommandGroupWithAlias, help="""A local peering gateway (LPG) is an object on a VCN that lets that VCN peer
+with another VCN in the same region. *Peering* means that the two VCNs can
+communicate using private IP addresses, but without the traffic traversing the
+internet or routing through your on-premises network. For more information,
+see [VCN Peering].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def local_peering_gateway_group():
+    pass
+
+
 @click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario
 that uses an Internet Gateway, see
 [Typical Networking Service Scenarios].
@@ -318,6 +332,52 @@ talk to an administrator. If you're an administrator who needs to write policies
 @cli_util.help_option_group
 def security_list_group():
     pass
+
+
+@local_peering_gateway_group.command(name=cli_util.override('connect_local_peering_gateways.command_name', 'connect'), help="""Connects this local peering gateway (LPG) to another one in the same region.
+
+This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to LPGs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
+@click.option('--local-peering-gateway-id', help="""The OCID of the local peering gateway. [required]""")
+@click.option('--peer-id', help="""The OCID of the LPG you want to peer with. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def connect_local_peering_gateways(ctx, generate_full_command_json_input, generate_param_json_input, from_json, local_peering_gateway_id, peer_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    local_peering_gateway_id = cli_util.coalesce_provided_and_default_value(ctx, 'local-peering-gateway-id', local_peering_gateway_id, True)
+    peer_id = cli_util.coalesce_provided_and_default_value(ctx, 'peer-id', peer_id, True)
+
+    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    details = {}
+    details['peerId'] = peer_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.connect_local_peering_gateways(
+        local_peering_gateway_id=local_peering_gateway_id,
+        connect_local_peering_gateways_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @cpe_group.command(name=cli_util.override('create_cpe.command_name', 'create'), help="""Creates a new virtual Customer-Premises Equipment (CPE) object in the specified compartment. For more information, see [IPSec VPNs].
@@ -761,6 +821,52 @@ def create_ip_sec_connection(ctx, generate_full_command_json_input, generate_par
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_ip_sec_connection(
         create_ip_sec_connection_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@local_peering_gateway_group.command(name=cli_util.override('create_local_peering_gateway.command_name', 'create'), help="""Creates a new local peering gateway (LPG) for the specified VCN.""")
+@click.option('--compartment-id', help="""The OCID of the compartment containing the local peering gateway (LPG). [required]""")
+@click.option('--vcn-id', help="""The OCID of the VCN the LPG belongs to. [required]""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
+@cli_util.wrap_exceptions
+def create_local_peering_gateway(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, vcn_id, display_name):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['vcnId'] = vcn_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_local_peering_gateway(
+        create_local_peering_gateway_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1542,6 +1648,50 @@ def delete_ip_sec_connection(ctx, generate_full_command_json_input, generate_par
     cli_util.render_response(result, ctx)
 
 
+@local_peering_gateway_group.command(name=cli_util.override('delete_local_peering_gateway.command_name', 'delete'), help="""Deletes the specified local peering gateway (LPG).
+
+This is an asynchronous operation; the local peering gateway's `lifecycleState` changes to TERMINATING temporarily until the local peering gateway is completely removed.""")
+@click.option('--local-peering-gateway-id', help="""The OCID of the local peering gateway. [required]""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_local_peering_gateway(ctx, generate_full_command_json_input, generate_param_json_input, from_json, local_peering_gateway_id, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    local_peering_gateway_id = cli_util.coalesce_provided_and_default_value(ctx, 'local-peering-gateway-id', local_peering_gateway_id, True)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_local_peering_gateway(
+        local_peering_gateway_id=local_peering_gateway_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @private_ip_group.command(name=cli_util.override('delete_private_ip.command_name', 'delete'), help="""Unassigns and deletes the specified private IP. You must specify the object's OCID. The private IP address is returned to the subnet's pool of available addresses.
 
 This operation cannot be used with primary private IPs, which are automatically unassigned and deleted when the VNIC is terminated.
@@ -2248,6 +2398,43 @@ def get_ip_sec_connection_device_status(ctx, generate_full_command_json_input, g
     cli_util.render_response(result, ctx)
 
 
+@local_peering_gateway_group.command(name=cli_util.override('get_local_peering_gateway.command_name', 'get'), help="""Gets the specified local peering gateway's information.""")
+@click.option('--local-peering-gateway-id', help="""The OCID of the local peering gateway. [required]""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
+@cli_util.wrap_exceptions
+def get_local_peering_gateway(ctx, generate_full_command_json_input, generate_param_json_input, from_json, local_peering_gateway_id):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    local_peering_gateway_id = cli_util.coalesce_provided_and_default_value(ctx, 'local-peering-gateway-id', local_peering_gateway_id, True)
+
+    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_local_peering_gateway(
+        local_peering_gateway_id=local_peering_gateway_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @private_ip_group.command(name=cli_util.override('get_private_ip.command_name', 'get'), help="""Gets the specified private IP. You must specify the object's OCID. Alternatively, you can get the object by using [ListPrivateIps] with the private IP address (for example, 10.0.3.3) and subnet OCID.""")
 @click.option('--private-ip-id', help="""The private IP's OCID. [required]""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
@@ -2581,9 +2768,11 @@ def list_cpes(ctx, generate_full_command_json_input, generate_param_json_input, 
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2734,9 +2923,11 @@ def list_cross_connect_locations(ctx, generate_full_command_json_input, generate
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2890,9 +3081,11 @@ def list_crossconnect_port_speed_shapes(ctx, generate_full_command_json_input, g
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3195,9 +3388,11 @@ def list_fast_connect_provider_services(ctx, generate_full_command_json_input, g
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3353,6 +3548,79 @@ def list_ip_sec_connections(ctx, generate_full_command_json_input, generate_para
     cli_util.render_response(result, ctx)
 
 
+@local_peering_gateway_group.command(name=cli_util.override('list_local_peering_gateways.command_name', 'list'), help="""Lists the local peering gateways (LPGs) for the specified VCN and compartment (the LPG's compartment).""")
+@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
+@click.option('--vcn-id', help="""The OCID of the VCN. [required]""")
+@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[LocalPeeringGateway]'})
+@cli_util.wrap_exceptions
+def list_local_peering_gateways(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+    vcn_id = cli_util.coalesce_provided_and_default_value(ctx, 'vcn-id', vcn_id, True)
+    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
+    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
+    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
+    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_local_peering_gateways,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_local_peering_gateways,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_local_peering_gateways(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @private_ip_group.command(name=cli_util.override('list_private_ips.command_name', 'list'), help="""Lists the [PrivateIp] objects based on one of these filters:
 
   - Subnet OCID.   - VNIC OCID.   - Both private IP address and subnet OCID: This lets   you get a `privateIP` object based on its private IP   address (for example, 10.0.3.3) and not its OCID. For comparison,   [GetPrivateIp]   requires the OCID.
@@ -3441,9 +3709,11 @@ def list_private_ips(ctx, generate_full_command_json_input, generate_param_json_
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3530,9 +3800,11 @@ def list_route_tables(ctx, generate_full_command_json_input, generate_param_json
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3619,9 +3891,11 @@ def list_security_lists(ctx, generate_full_command_json_input, generate_param_js
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3707,9 +3981,11 @@ def list_subnets(ctx, generate_full_command_json_input, generate_param_json_inpu
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3859,9 +4135,11 @@ def list_virtual_circuit_bandwidth_shapes(ctx, generate_full_command_json_input,
 
 Example: `500`""")
 @click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--display-name', help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending. Display name is default ordered as ascending.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
+@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -4359,6 +4637,56 @@ def update_ip_sec_connection(ctx, generate_full_command_json_input, generate_par
     result = client.update_ip_sec_connection(
         ipsc_id=ipsc_id,
         update_ip_sec_connection_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@local_peering_gateway_group.command(name=cli_util.override('update_local_peering_gateway.command_name', 'update'), help="""Updates the specified local peering gateway (LPG).""")
+@click.option('--local-peering-gateway-id', help="""The OCID of the local peering gateway. [required]""")
+@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
+@cli_util.wrap_exceptions
+def update_local_peering_gateway(ctx, generate_full_command_json_input, generate_param_json_input, from_json, local_peering_gateway_id, display_name, if_match):
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    local_peering_gateway_id = cli_util.coalesce_provided_and_default_value(ctx, 'local-peering-gateway-id', local_peering_gateway_id, True)
+    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+
+    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_local_peering_gateway(
+        local_peering_gateway_id=local_peering_gateway_id,
+        update_local_peering_gateway_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

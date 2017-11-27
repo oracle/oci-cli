@@ -1,6 +1,7 @@
 include LICENSE.txt
 include README.rst
-include CHANGELOG.md
+include CHANGELOG.rst
 include src/oci_cli/bin/oci_autocomplete.sh
 include src/oci_cli/bin/OciTabExpansion.ps1
+recursive-include src/oci_cli/help_text_producer/data_files *
 exclude setup.cfg

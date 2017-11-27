@@ -1,6 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
+import os.path
 import unittest
 from . import util
 
@@ -79,7 +80,7 @@ class TestOptionOrdering(unittest.TestCase):
         for help_command in help_commands:
             full_command = command
             if help_command:
-                full_command = command + [help_command]
+                full_command = command + [help_command] + ['--cli-rc-file', os.path.join('tests', 'resources', 'default_files', 'use_click_help')]
 
             result = self.invoke_operation(full_command)
             self.assertEqual(0, result.exit_code)

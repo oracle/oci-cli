@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import click
-import six
+import six  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
@@ -239,22 +239,21 @@ def create_data_guard_association(ctx, generate_full_command_json_input, generat
 
 
 @db_home_group.command(name=cli_util.override('create_db_home.command_name', 'create'), help="""Creates a new DB Home in the specified DB System based on the request parameters you provide.""")
-@click.option('--database', type=custom_types.CLI_COMPLEX_TYPE, help=""" [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--db-system-id', help="""The OCID of the DB System. [required]""")
-@click.option('--db-version', help="""A valid Oracle database version. To get a list of supported versions, use the [ListDbVersions] operation. [required]""")
 @click.option('--display-name', help="""The user-provided name of the database home.""")
+@click.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help="""Source of database:   NONE for creating a new database   DB_BACKUP for creating a new database by restoring a backup""")
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
 @click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
-@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home(ctx, generate_full_command_json_input, generate_param_json_input, from_json, database, db_system_id, db_version, display_name):
+def create_db_home(ctx, generate_full_command_json_input, generate_param_json_input, from_json, db_system_id, display_name, source):
     if generate_param_json_input and generate_full_command_json_input:
         raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
 
@@ -264,20 +263,20 @@ def create_db_home(ctx, generate_full_command_json_input, generate_param_json_in
         json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
 
     cli_util.load_context_obj_values_from_defaults(ctx)
-    database = cli_util.coalesce_provided_and_default_value(ctx, 'database', database, True)
     db_system_id = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', db_system_id, True)
-    db_version = cli_util.coalesce_provided_and_default_value(ctx, 'db-version', db_version, True)
     display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
+    source = cli_util.coalesce_provided_and_default_value(ctx, 'source', source, False)
 
     kwargs = {}
 
     details = {}
-    details['database'] = cli_util.parse_json_parameter("database", database)
     details['dbSystemId'] = db_system_id
-    details['dbVersion'] = db_version
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if source is not None:
+        details['source'] = source
 
     client = cli_util.build_client('database', ctx)
     result = client.create_db_home(

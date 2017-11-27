@@ -887,6 +887,12 @@ def verify_downloaded_folders_for_inclusion_exclusion_tests(expected_uploaded_fi
     # Download uploaded files and check they are the same
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder, '--prefix', download_prefix_no_slash + '/'])
 
+    # The strings in the expected_uploaded_files array have a "/" in them, but this doesn't match with paths on Windows. Using normpath converts these of
+    # "\" on Windows and so our matching/comparison works. For Linux/Unix/macOS this doesn't appear to have an impact
+    normalized_expected_uploaded_files = []
+    for euf in expected_uploaded_files:
+        normalized_expected_uploaded_files.append(os.path.normpath(euf))
+
     actual_download_folder = os.path.join(download_folder, download_prefix_no_slash)
     files_compared = 0
     for dir_name, subdir_list, file_list in os.walk(source_folder):
@@ -894,7 +900,7 @@ def verify_downloaded_folders_for_inclusion_exclusion_tests(expected_uploaded_fi
             source_file_path = os.path.join(dir_name, file)
             downloaded_file_path = source_file_path.replace(source_folder, actual_download_folder)
 
-            if downloaded_file_path.replace(actual_download_folder, download_prefix_no_slash) in expected_uploaded_files:
+            if downloaded_file_path.replace(actual_download_folder, download_prefix_no_slash) in normalized_expected_uploaded_files:
                 files_compared += 1
                 assert os.path.exists(downloaded_file_path)
                 assert filecmp.cmp(source_file_path, downloaded_file_path, shallow=False)

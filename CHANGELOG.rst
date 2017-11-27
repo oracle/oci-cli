@@ -7,8 +7,24 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.12 - 2017-11-27
+-------------------
+
+Added
+~~~~~~~~~~
+* Support option for using second physical NIC on X7 Bare Metal instances (--nic-index option on 'oci compute instance attach-vnic')
+* Support for Local Peering Gateway operations ('oci network local-peering-gateway')
+* Support for specifying a default for the --profile option in the oci_cli_rc file
+* Support create database from backup (oci db database create-from-backup)
+* Support for getting archived object restore status ('oci os object restore-status') more details in sample (https://github.com/oracle/oci-cli/scripts/restore_archived_object.sh)
+
+Changed
+~~~~~~~~~~
+* Help displayed via the --help/-h/-? option is now formatted like man pages found on Unix (or Unix-like) systems. To switch back to the previous way of displaying help, add `use_click_help = True` to the `OCI_CLI_SETTINGS` section of your oci_cli_rc file
+
 2.4.11 - 2017-11-02
 -------------------
+
 Added
 ~~~~~~~~~~
 * 'oci setup oci-cli-rc' command to generate an oci_cli_rc file with default aliases and pre-defined queries

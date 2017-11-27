@@ -1,5 +1,2 @@
 [OCI_CLI_SETTINGS]
 use_click_help = True
-
-[OCI_CLI_PARAM_ALIASES]
--foo=--bar

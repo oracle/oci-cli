@@ -2,16 +2,18 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import sys
-from oci.config import DEFAULT_LOCATION
+from oci.config import DEFAULT_LOCATION, DEFAULT_PROFILE
 import click
 import configparser
 import os.path
 import logging
+from oci.util import Sentinel
+import six
 
 from .version import __version__
-
 from .aliasing import parameter_alias, CommandGroupWithAlias
-
+from . import help_text_producer
+from . import cli_util
 
 # Enable WARN logging to surface important warnings attached to loading
 # defaults, automatic coercion, or fallback values/endpoints that may impact
@@ -34,6 +36,10 @@ CLI_RC_DEFAULT_LOCATION = '~/.oci/oci_cli_rc'
 CLI_RC_CANNED_QUERIES_SECTION_NAME = 'OCI_CLI_CANNED_QUERIES'
 CLI_RC_COMMAND_ALIASES_SECTION_NAME = 'OCI_CLI_COMMAND_ALIASES'
 CLI_RC_PARAM_ALIASES_SECTION_NAME = 'OCI_CLI_PARAM_ALIASES'
+CLI_RC_GENERIC_SETTINGS_SECTION_NAME = 'OCI_CLI_SETTINGS'
+
+CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY = 'default_profile'
+CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP = 'use_click_help'
 
 
 def eager_load_cli_rc_file(ctx, param, value):
@@ -45,7 +51,8 @@ def eager_load_cli_rc_file(ctx, param, value):
         'canned_queries': {},
         'global_command_alias': {},
         'command_sequence_alias': {},
-        'parameter_aliases': {}
+        'parameter_aliases': {},
+        'settings': {}
     }
 
     # Try and find the configuration file. This is checked in the following order:
@@ -59,27 +66,39 @@ def eager_load_cli_rc_file(ctx, param, value):
     parser_without_defaults = configparser.ConfigParser(interpolation=None, default_section=None)  # Don't use DEFAULT as the default section, so this doesn't bring in any extra stuff
     if os.path.exists(file_location):
         parser_without_defaults.read(file_location)
-        populate_aliases_and_canned_queries(ctx, parser_without_defaults)
+        populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults)
 
         return file_location
     elif os.path.exists(expanded_rc_default_location):
         parser_without_defaults.read(expanded_rc_default_location)
-        populate_aliases_and_canned_queries(ctx, parser_without_defaults)
+        populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults)
 
         return expanded_rc_default_location
     elif os.path.exists(expanded_rc_fallback_location):
         parser_without_defaults.read(expanded_rc_fallback_location)
-        populate_aliases_and_canned_queries(ctx, parser_without_defaults)
+        populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults)
 
         return expanded_rc_fallback_location
     else:
         return value
 
 
-def populate_aliases_and_canned_queries(ctx, parser_without_defaults):
+def populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults):
     populate_canned_queries(ctx, parser_without_defaults)
     populate_command_aliases(ctx, parser_without_defaults)
     populate_parameter_aliases(ctx, parser_without_defaults)
+    populate_settings(ctx, parser_without_defaults)
+
+
+def populate_settings(ctx, parser_without_defaults):
+    raw_settings = get_section_without_defaults(parser_without_defaults, CLI_RC_GENERIC_SETTINGS_SECTION_NAME)
+
+    settings = {}
+    if raw_settings:
+        for setting in raw_settings:
+            settings[setting[0]] = setting[1]
+
+    ctx.obj['settings'] = settings
 
 
 def populate_command_aliases(ctx, parser_without_defaults):
@@ -178,8 +197,8 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
               default=DEFAULT_LOCATION, show_default=True,
               help='The path to the config file.')
 @click.option('--profile',
-              default='DEFAULT', show_default=True,
-              help='The profile in the config file to load. This profile will also be used to locate any default parameter values which have been specified in the OCI CLI-specific configuration file')
+              default=Sentinel(DEFAULT_PROFILE), show_default=False,
+              help='The profile in the config file to load. This profile will also be used to locate any default parameter values which have been specified in the OCI CLI-specific configuration file.  [default: DEFAULT]')
 @click.option('--cli-rc-file', '--defaults-file',
               default=CLI_RC_DEFAULT_LOCATION, show_default=True,
               is_eager=True, callback=eager_load_cli_rc_file,
@@ -206,6 +225,15 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         click.echo(ctx.get_help(), color=ctx.color)
         ctx.exit()
 
+    if profile == Sentinel(DEFAULT_PROFILE):
+        # if --profile is not supplied, check if default_profile is specified in oci_cli_rc and use it if present
+        # --profile cannot be specified as a regular default because we use it to determine which
+        # section of the default file to read from
+        if 'settings' in ctx.obj and CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY in ctx.obj['settings']:
+            profile = ctx.obj['settings'][CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY]
+        else:
+            profile = DEFAULT_PROFILE
+
     initial_dict = {
         'config_file': config_file,
         'profile': profile,
@@ -228,6 +256,24 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
 
     if help:
         ctx.obj['help'] = True
+        if is_top_level_help(ctx) and not cli_util.parse_boolean(ctx.obj.get('settings', {}).get(CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+            help_text_producer.render_help_text(ctx, [sys.argv[1]])
+
+
+def is_top_level_help(ctx):
+    if len(sys.argv) != 3:
+        return False
+
+    top_level_command_tuples = []
+    for cmd_name, cmd_obj in six.iteritems(ctx.command.commands):
+        if isinstance(cmd_obj, click.Group):
+            top_level_command_tuples.append((cmd_name, cmd_obj))
+
+    for cmd_tuple in top_level_command_tuples:
+        if cmd_tuple[0] == sys.argv[1] and sys.argv[2] in ['-?', '-h', '--help']:
+            return True
+
+    return False
 
 
 def load_default_values(ctx, defaults_file, profile):
