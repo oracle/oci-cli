@@ -5,6 +5,7 @@ from __future__ import print_function
 import click
 from .cli_root import cli, CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME
 from . import cli_util
+from .cli_root import CLI_RC_DEFAULT_LOCATION
 
 import base64
 import hashlib
@@ -232,7 +233,7 @@ def generate_oci_config():
 
 This command will populate the file with some default aliases and predefined queries.
 """)
-@click.option('--file', type=click.File(mode='a+b'), required=True, help="The file into which default aliases and predefined queries will be loaded")
+@click.option('--file', default=os.path.expanduser(CLI_RC_DEFAULT_LOCATION), type=click.File(mode='a+b'), required=True, help="The file into which default aliases and predefined queries will be loaded")
 @cli_util.help_option
 def setup_cli_rc(file):
     if hasattr(file, 'name') and file.name == '<stdout>':

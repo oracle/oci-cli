@@ -32,15 +32,18 @@ class TestHelp(unittest.TestCase):
             for command in commands:
                 # Test the command with -?, -h, and --help.
                 help_command = command + ['-?']
-                result = self.invoke_example_operation(help_command)
+                result = self.invoke_example_operation(help_command + ['--cli-rc-file', 'tests/resources/default_files/use_click_help'])
+                if result.exit_code != 0:
+                    print(command)
+                    print(result.output)
                 self.validate_response(result)
 
                 help_command = command + ['-h']
-                result = self.invoke_example_operation(help_command)
+                result = self.invoke_example_operation(help_command + ['--cli-rc-file', 'tests/resources/default_files/use_click_help'])
                 self.validate_response(result)
 
                 help_command = command + ['--help']
-                result = self.invoke_example_operation(help_command)
+                result = self.invoke_example_operation(help_command + ['--cli-rc-file', 'tests/resources/default_files/use_click_help'])
                 self.validate_response(result)
 
                 f.write(help_template.format(

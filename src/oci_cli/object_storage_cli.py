@@ -1,6 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
+import arrow
 import click
 import os
 import os.path
@@ -39,9 +40,13 @@ OBJECT_PUT_DISPLAY_HEADERS = {
 }
 
 
-INCLUDE_EXCLUDE_PATTERN = """*: Matches everything
+INCLUDE_EXCLUDE_PATTERN = r"""
+*: Matches everything
+
 ?: Matches any single character
+
 [sequence]: Matches any character in sequence
+
 [!sequence]: Matches any character not in sequence
 """
 
@@ -1616,7 +1621,7 @@ When passed the name of an option which takes complex input, this will print out
 @wrap_exceptions
 def object_bulk_delete(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, prefix, delimiter, dry_run, force, include, exclude, parallel_operations_count):
     """
-    Deletes all objects in a bucket which match the provided criteria
+    Deletes all objects in a bucket which match the provided criteria.
 
 
     \b
@@ -2060,7 +2065,90 @@ def restore_objects(ctx, generate_full_command_json_input, generate_param_json_i
         **kwargs
     )
 
-    render_response(result, ctx)
+    if result.status == 200:
+        click.echo("This object will be available for download in about 4 hours. Use 'oci os object restore-status -ns {ns} -bn {bn} --name {name}' command to check the status.".format(ns=namespace, bn=bucket, name=name), file=sys.stderr)
+    else:
+        render_response(result, ctx)
+
+
+@click.command(name='restore-status')
+@click.option('-ns', '--namespace', help='The top-level namespace used for the request. [required]')
+@click.option('-bn', '--bucket-name', help='The name of the bucket. [required]')
+@click.option('--name', help='The name of the object. [required]')
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@wrap_exceptions
+def restore_status(ctx, generate_full_command_json_input, generate_param_json_input, from_json, namespace, bucket_name, name):
+    """
+    Gets the restore status for an object.
+
+    Example:
+        oci os object restore-status -ns mynamespace -bn mybucket --name myfile.txt
+    """
+    if generate_param_json_input and generate_full_command_json_input:
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if generate_full_command_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif generate_param_json_input:
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+
+    load_context_obj_values_from_defaults(ctx)
+    namespace = coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
+    bucket_name = coalesce_provided_and_default_value(ctx, 'bucket-name', bucket_name, True)
+    name = coalesce_provided_and_default_value(ctx, 'name', name, True)
+
+    client = build_client('os', ctx)
+    response = client.head_object(
+        namespace,
+        bucket_name,
+        name,
+        opc_client_request_id=ctx.obj['request_id'])
+
+    archival_state = response.headers.get('archival-state', None)
+
+    if archival_state is None:
+        msg = "Available, this object is available for download."
+    elif archival_state.lower() == 'archived':
+        msg = "Archived, this object is not available for download. Use 'oci os object restore -ns {ns} -bn {bn} --name {name}' command to start restoring the object.".format(ns=namespace, bn=bucket_name, name=name)
+    elif archival_state.lower() == 'restoring':
+        msg = "Restoring, this object is being restored and will be available for download in about 4 hours from the time you issued the restore command."
+    elif archival_state.lower() == 'restored':
+        try:
+            # expected format: Literal Z at the end for UTC with milliseconds
+            time_of_archival = response.headers['time-of-archival']
+            time_of_archival_dt = arrow.get(time_of_archival, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+            time_left = time_delta((time_of_archival_dt - arrow.utcnow()).seconds)
+            msg = "Restored, you have 24 hours to download a restored object before it is once again archived. Time remaining for download: {}.".format(time_left)
+        except arrow.parser.ParserError:
+            msg = "Restored, you have 24 hours to download a restored object before it is once again archived. The object will be re-archived at {}.".format(time_of_archival)
+    else:
+        msg = "Unknown"
+
+    click.echo(msg, file=sys.stderr)
+
+
+def time_delta(seconds):
+    seconds = abs(int(seconds))
+    hours, seconds = divmod(seconds, 3600)
+    minutes, seconds = divmod(seconds, 60)
+    if hours > 0:
+        if minutes == 0:
+            return '{} hrs'.format(hours)
+        else:
+            return '{} hrs {} mins'.format(hours, minutes)
+    elif minutes > 0:
+        return '{} mins'.format(minutes)
+    else:
+        return 'less than 1 minute'
 
 
 objectstorage.add_command(object_group)
@@ -2075,6 +2163,7 @@ object_group.add_command(object_delete)
 object_group.add_command(object_resume_put)
 object_group.add_command(rename_object)
 object_group.add_command(restore_objects)
+object_group.add_command(restore_status)
 
 
 @click.command(name='multipart', cls=CommandGroupWithAlias)

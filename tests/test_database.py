@@ -11,7 +11,7 @@ ADMIN_PASSWORD = "BEstr0ng_#1"
 DB_VERSION = '12.1.0.2'
 DB_SYSTEM_CPU_CORE_COUNT = '4'
 DB_SYSTEM_DB_EDITION = 'ENTERPRISE_EDITION'
-DB_SYSTEM_SHAPE = 'BM.HighIO1.36'
+DB_SYSTEM_SHAPE = 'BM.DenseIO1.36'
 DB_SYSTEM_PROVISIONING_TIME_SEC = 14400  # 4 hours
 DB_SYSTEM_UPDATE_TIME = 1800  # 30 minutes
 
@@ -607,7 +607,7 @@ def test_database_operations(runner, config_file, config_profile, db_systems):
 
 
 @util.enable_long_running
-def test_backup_operations(runner, config_file, config_profile, database):
+def test_backup_operations(runner, config_file, config_profile, db_systems, database):
     # create backup
     params = [
         'backup', 'create',
@@ -657,6 +657,36 @@ def test_backup_operations(runner, config_file, config_profile, database):
     util.validate_response(result)
 
     util.wait_until(['db', 'database', 'get', '--database-id', database], 'AVAILABLE', max_wait_seconds=DB_BACKUP_TIME_SEC)
+
+    # in order to create from backup we have to delete this database
+    print("Deleting database in order to create from backup...")
+    params = [
+        'database', 'delete',
+        '--database-id', database,
+        '--force'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    util.wait_until(['db', 'database', 'get', '--database-id', database], 'TERMINATED', max_wait_seconds=DB_TERMINATING_TIME_SEC, succeed_if_not_found=True)
+    util.wait_until(['db', 'system', 'get', '--db-system-id', db_systems[0]], 'AVAILABLE', max_wait_seconds=DB_TERMINATING_TIME_SEC)
+
+    # create from backup
+    params = [
+        'database', 'create-from-backup',
+        '--db-system-id', db_systems[0],
+        '--backup-id', backup_id,
+        '--admin-password', ADMIN_PASSWORD,
+        '--backup-tde-password', ADMIN_PASSWORD
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    db_created_from_backup = json.loads(result.output)['data']['id']
+
+    util.wait_until(['db', 'database', 'get', '--database-id', db_created_from_backup], 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
 
     # delete backup
     params = [

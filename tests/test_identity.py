@@ -8,6 +8,7 @@ import unittest
 from . import command_coverage_validator
 from . import util
 import oci_cli
+import os.path
 
 
 class TestIdentity(unittest.TestCase):
@@ -45,7 +46,7 @@ class TestIdentity(unittest.TestCase):
     def subtest_compartment_operations(self):
         # We don't want to call compartment create with every run, so just call help to
         # make sure the command is at least there.
-        result = self.invoke(['compartment', 'create', '--help'])
+        result = self.invoke(['compartment', 'create', '--help', '--cli-rc-file', os.path.join('tests', 'resources', 'default_files', 'use_click_help')])
         self.validate_response(result, json_response_expected=False)
 
         result = self.invoke(['compartment', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])

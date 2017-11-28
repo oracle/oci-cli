@@ -29,45 +29,40 @@ class CliDatetime(click.ParamType):
 
     VALID_DATETIME_CLI_HELP_MESSAGE = """The following datetime formats are supported:
 
-\b
 UTC with milliseconds
-----------------------
+***********************
 Format:
 YYYY-MM-DDTHH:mm:ss.sssTZD
 Example: 2017-09-15T20:30:00.123Z
 
-\b
 UTC without milliseconds
-----------------------
+**************************
 Format:
 YYYY-MM-DDTHH:mm:ssTZD
 Example: 2017-09-15T20:30:00Z
 
-\b
 Timezone with milliseconds
-----------------------
+***************************
 Format:
 YYYY-MM-DDTHH:mm:ssTZD
 Example: 2017-09-15T12:30:00.456-08:00
 
 Timezone without milliseconds
-----------------------
+*******************************
 Format:
 YYYY-MM-DDTHH:mm:ssTZD
 Example: 2017-09-15T12:30:00-08:00
 
-\b
 Date Only
----------
+*********
 This date will be taken as midnight UTC of that day
 
 Format:
 YYYY-MM-DD
 Example: 2017-09-15
 
-\b
 Epoch seconds
--------------
+**************
 Example: 1412195400
     """
 

@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import oci_cli
+import os.path
 
 
 def test_missing_user(runner, malformed_config_file):
@@ -36,7 +37,7 @@ def test_region_parameter(runner, malformed_config_file):
 
 def test_no_validation_when_using_help(runner, malformed_config_file):
     # Do not validate the config when asking for help.
-    result = invoke_example_operation(runner, malformed_config_file, 'MISSING_KEY', command_args=['-?'])
+    result = invoke_example_operation(runner, malformed_config_file, 'MISSING_KEY', command_args=['--cli-rc-file', os.path.join('tests', 'resources', 'default_files', 'use_click_help'), '-?'])
     assert 0 == result.exit_code
 
 

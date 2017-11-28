@@ -7,6 +7,7 @@ import filecmp
 import json
 import math
 import os
+import os.path
 import pytest
 import re
 import oci_cli
@@ -115,6 +116,10 @@ def test_run_all_operations(runner, config_file, config_profile, debug, test_id)
     result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
+    # object restore status - Available
+    result = invoke(runner, config_file, config_profile, ['object', 'restore-status', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    assert 'Available' in result.output
+
     # object list
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name], debug=debug)
     validate_response(result, includes_debug_data=debug)
@@ -164,6 +169,10 @@ def test_archive_bucket(runner, config_file, config_profile, test_id):
     json_head = json.loads(result.output)
     assertEquals('Archived', json_head['archival-state'])
 
+    # object restore status - Archived
+    result = invoke(runner, config_file, config_profile, ['object', 'restore-status', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    assert 'Archived' in result.output
+
     # object restore
     result = invoke(runner, config_file, config_profile, ['object', 'restore', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
     validate_response(result, json_response_expected=False)
@@ -173,6 +182,10 @@ def test_archive_bucket(runner, config_file, config_profile, test_id):
     validate_response(result)
     json_head = json.loads(result.output)
     assertEquals('Restoring', json_head['archival-state'])
+
+    # object restore status - Restoring
+    result = invoke(runner, config_file, config_profile, ['object', 'restore-status', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name])
+    assert 'Restoring' in result.output
 
     # object delete
     result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y')
@@ -766,10 +779,15 @@ def test_get_object_multipart_download(runner, config_file, config_profile, test
         runner,
         config_file,
         config_profile,
-        ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', download_file_path, '--multipart-download-threshold', '200']
+        ['object', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', download_file_path, '--multipart-download-threshold', '200', '--debug']
     )
     validate_response(result, json_response_expected=False)
-    assert filecmp.cmp(test_file_path, download_file_path)
+    if not filecmp.cmp(test_file_path, download_file_path):
+        print('Result: {}'.format(result.output))
+        print('{} size: {}'.format(test_file_path, os.path.getsize(test_file_path)))
+        print('{} size: {}'.format(download_file_path, os.path.getsize(test_file_path)))
+
+        pytest.fail('Files {} and {} are not equal'.format(test_file_path, download_file_path))
 
     os.remove(test_file_path)
     os.remove(download_file_path)

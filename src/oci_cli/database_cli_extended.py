@@ -10,6 +10,7 @@ from . import cli_util
 from . import json_skeleton_utils
 from .generated import database_cli
 from .aliasing import CommandGroupWithAlias
+from .retry_utils import call_funtion_with_default_retries
 
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
@@ -41,6 +42,9 @@ def create_database(ctx, **kwargs):
     kwargs['ncharacter_set'] = cli_util.coalesce_provided_and_default_value(ctx, 'ncharacter-set', kwargs.get('ncharacter_set'), False)
     kwargs['pdb_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'pdb-name', kwargs.get('pdb_name'), False)
     kwargs['db_version'] = cli_util.coalesce_provided_and_default_value(ctx, 'db-version', kwargs.get('db_version'), True)
+
+    kwargs['db_system_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', kwargs.get('db_system_id'), True)
+    kwargs['display_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', kwargs.get('display_name'), False)
 
     create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
 
@@ -80,9 +84,77 @@ def create_database(ctx, **kwargs):
 
     # result is now the DbHome that was created, so we need to get the
     # corresponding database and print that out for the user
-    result = client.list_databases(compartment_id, db_home_id)
+    try:
+        result = call_funtion_with_default_retries(client.list_databases, db_home_id=db_home_id, compartment_id=compartment_id)
+    except oci.exceptions.ServiceError:
+        click.echo("Successfully created database but failed to retrieve metadata. You can view the status of databases in this DB system by executing: oci db database list -c {comp_id} --db-system-id {db_sys_id} ".format(comp_id=compartment_id, db_sys_id=kwargs['db_system_id']), file=sys.stderr)
+        sys.exit(1)
 
-    # there is only one database per db-home (confirm?)
+    # there is only one database per db-home
+    # so just return the first database in this newly created db-home
+    database = result.data[0]
+
+    cli_util.render(database, None, ctx)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
+@database_cli.database_group.command(name='create-from-backup', help="""Creates a new database in the given DB System from a backup.""")
+@click.option('--admin-password', help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. [required]""")
+@click.option('--backup-id', help="""The backup OCID.  [required]""")
+@click.option('--backup-tde-password', help="""The password to open the TDE wallet.  [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@cli_util.wrap_exceptions
+def create_database_from_backup(ctx, **kwargs):
+    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
+        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+
+    if kwargs.get('generate_full_command_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
+    elif kwargs.get('generate_param_json_input'):
+        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
+
+    cli_util.load_context_obj_values_from_defaults(ctx)
+    kwargs['admin_password'] = cli_util.coalesce_provided_and_default_value(ctx, 'admin-password', kwargs.get('admin_password'), True)
+    kwargs['backup_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'backup-id', kwargs.get('backup_id'), True)
+    kwargs['backup_tde_password'] = cli_util.coalesce_provided_and_default_value(ctx, 'backup-tde-password', kwargs.get('backup_tde_password'), True)
+    kwargs['db_system_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'db-system-id', kwargs.get('db_system_id'), True)
+
+    create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromBackupDetails()
+
+    create_database_details = oci.database.models.CreateDatabaseFromBackupDetails()
+    if 'admin_password' in kwargs and kwargs['admin_password']:
+        create_database_details.admin_password = kwargs['admin_password']
+
+    if 'backup_id' in kwargs and kwargs['backup_id']:
+        create_database_details.backup_id = kwargs['backup_id']
+
+    if 'backup_tde_password' in kwargs and kwargs['backup_tde_password']:
+        create_database_details.backup_tde_password = kwargs['backup_tde_password']
+
+    create_db_home_with_system_details.database = create_database_details
+
+    if 'db_system_id' in kwargs and kwargs['db_system_id']:
+        create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
+
+    create_db_home_with_system_details.source = 'DB_BACKUP'
+
+    client = cli_util.build_client('database', ctx)
+
+    result = client.create_db_home(create_db_home_with_system_details)
+
+    db_home_id = result.data.id
+    compartment_id = result.data.compartment_id
+
+    # result is now the DbHome that was created, so we need to get the
+    # corresponding database and print that out for the user
+    try:
+        result = call_funtion_with_default_retries(client.list_databases, db_home_id=db_home_id, compartment_id=compartment_id)
+    except oci.exceptions.ServiceError:
+        click.echo("Failed retrieving database info after successfully creation.  You can view the status of databases in this DB system by executing: oci db database list -c {comp_id} --db-system-id {db_sys_id} ".format(comp_id=compartment_id, db_sys_id=kwargs['db_system_id']), file=sys.stderr)
+        sys.exit(1)
+
+    # there is only one database per db-home
     # so just return the first database in this newly created db-home
     database = result.data[0]
 
@@ -758,6 +830,7 @@ database_cli.db_group.add_command(database_cli.patch_history_entry_group)
 
 # we need to expose customized create / delete / list database commands in order to avoid exposing DbHomes
 database_cli.database_group.add_command(create_database)
+database_cli.database_group.add_command(create_database_from_backup)
 database_cli.database_group.add_command(delete_database)
 database_cli.database_group.add_command(list_databases)
 database_cli.db_system_group.add_command(launch_db_system_extended)

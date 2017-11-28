@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import click
-import six
+import six  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils

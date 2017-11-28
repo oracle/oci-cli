@@ -43,6 +43,7 @@ from oci.database import DatabaseClient
 from .version import __version__
 
 from . import string_utils
+from . import help_text_producer
 
 try:
     # PY3+
@@ -599,9 +600,31 @@ def filter_object_headers(headers, whitelist):
 
 
 def help_callback(ctx, param, value):
+    from . import cli_root
     if ctx.obj.get("help", False):
+        if not parse_boolean(ctx.obj.get('settings', {}).get(cli_root.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+            help_text_producer.render_help_text(ctx)
+
+        # We should only fall down here if the man/text-formatted help is unavailable or if the customer wanted
+        # the click help
         click.echo(ctx.get_help(), color=ctx.color)
         ctx.exit()
+
+
+def group_help_callback(ctx, param, value):
+    from . import cli_root
+    args = sys.argv[1:]
+    filtered_args = []
+    for a in args:
+        if not a.startswith('-'):
+            filtered_args.append(a)
+
+    # It is OK to not have an alternate path here (e.g. if help_text_producer did nothing and didn't exit) because
+    # we'll just fall back to click's handling of group help. Note that using ctx.get_help() directly doesn't
+    # work in this group help scenario, so we have to rely on click to do the right thing
+    if ctx.obj.get("help", False):
+        if not parse_boolean(ctx.obj.get('settings', {}).get(cli_root.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+            help_text_producer.render_help_text(ctx, filtered_args)
 
 
 '''Help option to use for commands.'''
@@ -609,7 +632,7 @@ help_option = click.option('-?', '-h', '--help', is_flag=True, help='Show this m
 
 
 '''Help option to use for groups (except for oci).'''
-help_option_group = click.help_option('-?', '-h', '--help', help='Show this message and exit.')
+help_option_group = click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.', expose_value=False, is_eager=False, callback=group_help_callback)
 
 
 def confirmation_callback(ctx, param, value):
@@ -1042,3 +1065,13 @@ def resolve_jmespath_query(ctx, query):
             raise click.UsageError('Query {} is not defined in your OCI CLI configuration file: {}'.format(query_name, ctx.obj['defaults_file']))
     else:
         return query
+
+
+def parse_boolean(obj):
+    if not str:
+        return False
+
+    if isinstance(obj, bool):
+        return obj
+
+    return str(obj).lower() in DEFAULT_FILE_CONVERT_PARAM_TRUTHY_VALUES

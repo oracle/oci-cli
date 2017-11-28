@@ -84,7 +84,7 @@ class TestCompute(unittest.TestCase):
     def subtest_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
         image_id = util.oracle_linux_image()
-        shape = 'VM.Standard1.8'
+        shape = 'VM.Standard1.2'
 
         result = self.invoke(
             ['compute', 'instance', 'launch',
@@ -197,7 +197,7 @@ class TestCompute(unittest.TestCase):
         result = self.invoke(
             ['compute', 'instance', 'attach-vnic', '--instance-id', self.instance_ocid, '--subnet-id', self.subnet_ocid,
              '--vnic-display-name', vnic_display_name, '--assign-public-ip', 'false', '--private-ip', vnic_private_ip,
-             '--hostname-label', vnic_hostname_label, '--wait'])
+             '--hostname-label', vnic_hostname_label, '--nic-index', '0', '--wait'])
         util.validate_response(result)
         second_vnic = json.loads(result.output)['data']
         second_vnic_id = second_vnic['id']
@@ -215,19 +215,13 @@ class TestCompute(unittest.TestCase):
         # Some extra time is needed after VNIC CRUD operations for state to stabilize.
         time.sleep(5)
 
-        # Attach a new vnic with minimal params and without --wait.
-        result = self.invoke(
-            ['compute', 'instance', 'attach-vnic', '--instance-id', self.instance_ocid, '--subnet-id', self.subnet_ocid])
-        util.validate_response(result)
-        self.assertEquals(0, len(result.output))
-
         # Ensure that new attachments are listed.
         result = self.invoke(
             ['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
              self.instance_ocid])
         util.validate_response(result)
         json_data = json.loads(result.output)
-        self.assertEquals(3, len(json_data['data']))
+        self.assertEquals(2, len(json_data['data']))
 
         # Update vnic
         result = self.invoke(
