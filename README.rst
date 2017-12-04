@@ -7,7 +7,7 @@ This is the command line interface for Oracle Cloud Infrastructure.
 
 The project is open source and maintained by Oracle Corp. The home page for the project is `here`__.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/cliconcepts.htm
 
 
 Installation
@@ -27,7 +27,7 @@ Windows
 
 See the `installation guide`__ for detailed installation instructions, options and troubleshooting.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#CLIInstallationOptions
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cliinstall.htm
 
 
 Usage
@@ -48,7 +48,7 @@ Examples
 ========
 Examples can be found here__ under the section 'Example Commands'.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#use
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cliusing.htm
 
 
 Documentation
@@ -56,14 +56,14 @@ Documentation
 
 Detailed documentation for CLI prerequisites, installation and configuration, and troubleshooting can be found here__.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/cliconcepts.htm
 
 
 Help
 ====
 See the “Questions or Feedback?” section here__.
 
-__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#questions
+__ https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/clitroubleshooting.htm
 
 
 Changes
