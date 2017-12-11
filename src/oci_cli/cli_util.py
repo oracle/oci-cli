@@ -36,9 +36,10 @@ from oci.audit import AuditClient
 from oci.core import BlockstorageClient
 from oci.core import ComputeClient
 from oci.core import VirtualNetworkClient
+from oci.database import DatabaseClient
 from oci.identity import IdentityClient
 from oci.object_storage import ObjectStorageClient
-from oci.database import DatabaseClient
+from oci.load_balancer import LoadBalancerClient
 
 from .version import __version__
 
@@ -56,7 +57,8 @@ missing_attr = object()
 
 DISPLAY_HEADERS = {
     "etag",
-    "opc-next-page"
+    "opc-next-page",
+    "opc-work-request-id"
 }
 
 
@@ -77,12 +79,24 @@ OVERRIDES = {
     "db_version_group.command_name": "version",
     "get_db_system_patch.command_name": "by-db-system",
     "get_db_system_patch_history_entry.command_name": "by-db-system",
+    "get_namespace_metadata.command_name": "get-metadata",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
     "identity_group.command_name": "iam",
     "identity_group.help": "Identity and Access Management Service",
     "list_db_system_patches.command_name": "by-db-system",
     "list_db_system_patch_history_entries.command_name": "by-db-system",
+    "lb_group.help": "Load Balancing Service",
+    "load_balancer_policy_group.command_name": "policy",
+    "load_balancer_protocol_group.command_name": "protocol",
+    "load_balancer_shape_group.command_name": "shape",
+    "list_protocols.command_name": "list",
+    "list_shapes.command_name": "list",
+    "list_policies.command_name": "list",
+    "namespace_group.command_name": "ns",
+    "os_group.help": "Object Storage Service",
     "patch_history_entry_group.command_name": "patch-history",
+    "preauthenticated_request_group.command_name": "preauth-request",
+    "update_namespace_metadata.command_name": "update-metadata",
     "virtual_network_group.command_name": "network",
     "virtual_network_group.help": "Networking Service",
     "get_console_history_content.command_name": "get-content",
@@ -135,10 +149,11 @@ def build_client(service_name, ctx):
         client_class = {
             "audit": AuditClient,
             "identity": IdentityClient,
-            "os": ObjectStorageClient,
+            "object_storage": ObjectStorageClient,
             "blockstorage": BlockstorageClient,
             "compute": ComputeClient,
             "database": DatabaseClient,
+            "load_balancer": LoadBalancerClient,
             "virtual_network": VirtualNetworkClient
         }[service_name]
 
@@ -153,6 +168,7 @@ def build_client(service_name, ctx):
 
         cert_bundle = ctx.obj['cert_bundle']
         if cert_bundle:
+            cert_bundle = os.path.expanduser(cert_bundle)
             if not os.path.isfile(cert_bundle):
                 raise click.BadParameter(param_hint='cert_bundle', message='Cannot find cert_bundle file: {}'.format(cert_bundle))
 
@@ -376,6 +392,11 @@ def wrap_exceptions(func):
     @functools.wraps(func)
     def wrapped_call(ctx, *args, **kwargs):
         try:
+            load_context_obj_values_from_defaults(ctx)
+
+            if 'missing_required_parameters' in ctx.obj:
+                raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option(s) --{}.'.format(', --'.join(ctx.obj['missing_required_parameters'])))
+
             func(ctx, *args, **kwargs)
         except exceptions.ServiceError as exception:
             if exception.status == 401:
@@ -440,7 +461,7 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
 #
 #    - complex_parameter_type explicitly states the type and is always honoured if present
 #    - parameter_name can be used to look up the type from the metadata of (complex) types against each command. This metadata is decorated via
-#      @json_skeleton_utils.json_skeleton_wrapper_metadata on each command
+#      @json_skeleton_utils.json_skeleton_generation_handler on each command
 def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_parameter_type=None):
     if isinstance(original_obj, six.string_types):
         return original_obj
@@ -451,7 +472,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
         return original_obj
 
     # We expect this to be a dictionary of {'module':'<module name>', 'class':'<class name>'} to match what we get from
-    # the @json_skeleton_utils.json_skeleton_wrapper_metadata decorator
+    # the @json_skeleton_utils.json_skeleton_generation_handler decorator
     if complex_parameter_type:
         complex_type_definition = complex_parameter_type
     else:
@@ -525,7 +546,7 @@ MODULE_TO_TYPE_MAPPINGS = {
 }
 
 
-# If type information has been written to metadata (e.g. the operation is decorated with @json_skeleton_utils.json_skeleton_wrapper_metadata), then retrieve it
+# If type information has been written to metadata (e.g. the operation is decorated with @json_skeleton_utils.json_skeleton_generation_handler), then retrieve it
 # so that we can use it as part of key camelization when parsing a JSON object.
 #
 # This method will return:
@@ -636,8 +657,15 @@ help_option_group = click.option('-?', '-h', '--help', is_flag=True, help='Show 
 
 
 def confirmation_callback(ctx, param, value):
-    if not value:
-        ctx.abort()
+    # only prompt the user to confirm deletion if we are NOT generating a JSON skeleton
+    if not ctx.obj['generate_full_command_json_input'] and not ctx.obj['generate_param_json_input']:
+        # if --force was supplied we don't want to prompt
+        if not value:
+            value = click.confirm("Are you sure you want to delete this resource?")
+            if not value:
+                ctx.abort()
+
+            return value
 
 
 confirm_delete_option = click.option(
@@ -645,8 +673,7 @@ confirm_delete_option = click.option(
     is_flag=True,
     callback=confirmation_callback,
     expose_value=False,
-    help="Perform deletion without prompting for confirmation.",
-    prompt="Are you sure you want to delete this resource?")
+    help="Perform deletion without prompting for confirmation.")
 
 
 def generate_key(key_size=2048):
@@ -681,14 +708,12 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
 def copy_params_from_generated_command(generated_command, params_to_exclude):
     def copy_params(extended_func):
         index = 0
-        for param in generated_command.params[0:-4]:
+        for param in generated_command.params[0:-2]:
             if params_to_exclude and param.name not in params_to_exclude:
                 extended_func.params.insert(index, param)
                 index += 1
 
         # last two params params are the '--from-json' and '--help' params and we want to make sure they stay last
-        extended_func.params.append(generated_command.params[-4])
-        extended_func.params.append(generated_command.params[-3])
         extended_func.params.append(generated_command.params[-2])
         extended_func.params.append(generated_command.params[-1])
 
@@ -743,6 +768,7 @@ def load_context_obj_values_from_defaults(ctx):
     populate_dict_key_with_default_value(ctx, 'cert_bundle', click.STRING, param_name='cert-bundle')
     populate_dict_key_with_default_value(ctx, 'output', click.STRING)
     populate_dict_key_with_default_value(ctx, 'query', click.STRING)
+    populate_dict_key_with_default_value(ctx, 'generate_param_json_input', click.STRING, param_name='generate-param-json-input')
 
     if ctx.obj['output'] is None:
         ctx.obj['output'] = 'json'
@@ -754,6 +780,14 @@ def load_context_obj_values_from_defaults(ctx):
             ctx.obj['debug'] = get_default_value_from_defaults_file(ctx, 'debug', click.BOOL, False)
     else:
         populate_dict_key_with_default_value(ctx, 'debug', click.BOOL)
+
+    if 'generate_full_command_json_input' in ctx.obj:
+        if not ctx.obj['generate_full_command_json_input']:
+            # False for generate_full_command_json_input means not provided, so just load it if there is a default value. If there's nothing there, then this'll be
+            # None, which is still false-y
+            ctx.obj['generate_full_command_json_input'] = get_default_value_from_defaults_file(ctx, 'generate-full-command-json-input', click.BOOL, False)
+    else:
+        populate_dict_key_with_default_value(ctx, 'generate_full_command_json_input', click.BOOL, param_name='generate-full-command-json-input')
 
 
 def populate_dict_key_with_default_value(ctx, key, param_type, param_name=None, param_takes_multiple=False):
@@ -847,6 +881,16 @@ def get_default_value_from_defaults_file(ctx, param_name, param_type, param_take
                 possible_param_names.append(alias[2:])
             elif alias.startswith('-'):
                 possible_param_names.append(alias[1:])
+
+    param_from_click_context = get_param_from_click_context(ctx, param_name)
+    if param_from_click_context:
+        for o in param_from_click_context.opts:
+            if o.startswith('--'):
+                if o[2:] not in possible_param_names:
+                    possible_param_names.append(o[2:])
+            elif o.startswith('-'):
+                if o[1:] not in possible_param_names:
+                    possible_param_names.append(o[1:])
 
     for heirarchy_entry in parameter_lookup_heirarchy:
         for param_name_to_check in possible_param_names:
@@ -972,6 +1016,7 @@ def get_click_file_from_default_values_file(ctx, param_name, file_open_mode, is_
     path_from_default_file = coalesce_provided_and_default_value(ctx, param_name, None, is_required)
 
     if path_from_default_file:
+        path_from_default_file = os.path.expanduser(path_from_default_file)
         click_file_type = click.File(file_open_mode)
         return click_file_type.convert(path_from_default_file, None, ctx)
 
@@ -1067,6 +1112,13 @@ def resolve_jmespath_query(ctx, query):
         return query
 
 
+def use_or_generate_request_id(request_id):
+    if request_id:
+        return request_id
+
+    return str(uuid.uuid4()).replace('-', '').upper()
+
+
 def parse_boolean(obj):
     if not str:
         return False
@@ -1075,3 +1127,25 @@ def parse_boolean(obj):
         return obj
 
     return str(obj).lower() in DEFAULT_FILE_CONVERT_PARAM_TRUTHY_VALUES
+
+
+def handle_required_param(ctx, param, value):
+    return _coalesce_param(ctx, param, value, True)
+
+
+def handle_optional_param(ctx, param, value):
+    return _coalesce_param(ctx, param, value, False)
+
+
+def _coalesce_param(ctx, param, value, required):
+    hyphenated_param_name = param.name.replace('_', '-')
+    try:
+        if isinstance(param.type, click.types.File) and value is None:
+            return get_click_file_from_default_values_file(ctx, hyphenated_param_name, param.type.mode, required)
+        else:
+            return coalesce_provided_and_default_value(ctx, hyphenated_param_name, value, required)
+    except cli_exceptions.RequiredValueNotInDefaultOrUserInputError:
+        if 'missing_required_parameters' not in ctx.obj:
+            ctx.obj['missing_required_parameters'] = []
+
+        ctx.obj['missing_required_parameters'].append(hyphenated_param_name)

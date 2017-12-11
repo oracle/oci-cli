@@ -178,7 +178,7 @@ def get_install_dir():
             create_dir(install_dir)
             if os.listdir(install_dir):
                 print_status("'{}' is not empty and may contain a previous installation.".format(install_dir))
-                ans_yes = prompt_y_n('Remove this directory?', 'y')
+                ans_yes = prompt_y_n('Remove this directory?', 'n')
                 if ans_yes:
                     try:
                         shutil.rmtree(install_dir)
@@ -194,7 +194,7 @@ def get_install_dir():
     return install_dir
 
 
-def get_exec_dir():
+def get_exec_dir(install_dir):
     exec_dir = None
     while not exec_dir:
         prompt_message = "In what directory would you like to place the '{}' executable?".format(OCI_EXECUTABLE_NAME)
@@ -203,6 +203,13 @@ def get_exec_dir():
         if ' ' in exec_dir:
             print_status("The executable directory '{}' cannot contain spaces.".format(exec_dir))
             exec_dir = None
+
+        install_dir_bin_folder = 'Scripts' if is_windows() else 'bin'
+        install_bin_dir = os.path.join(install_dir, install_dir_bin_folder)
+        if exec_dir == install_bin_dir:
+            print_status("The executable directory cannot be the same as the {} directory of the virtualenv. Adding this directory to your PATH could interfere with your system python installation.".format(install_dir_bin_folder))
+            exec_dir = None
+
     create_dir(exec_dir)
     print_status("The executable will be in '{}'.".format(exec_dir))
     return exec_dir
@@ -433,7 +440,7 @@ def main():
     verify_native_dependencies()
     tmp_dir = create_tmp_dir()
     install_dir = get_install_dir()
-    exec_dir = get_exec_dir()
+    exec_dir = get_exec_dir(install_dir)
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
     bmcs_exec_path = os.path.join(exec_dir, BMCS_EXECUTABLE_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)

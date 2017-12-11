@@ -88,6 +88,14 @@ get_top_5_results=data[:5]
 
 # Get the last 2 results from a list operation
 get_last_2_results=data[-2:]
+
+# List instance public IPs from list vnics response
+# Example: oci compute instance list-vnics --instance-id $I --query query://list_public_ips
+list_public_ips=data[?"public-ip" != null]."public-ip"
+
+# Get first public IP from list vnics response
+# Example: oci compute instance list-vnics --instance-id $I --query query://get_public_ip
+get_public_ip=data[?"public-ip" != null]."public-ip" | [0]
 """
 
 default_command_aliases = """

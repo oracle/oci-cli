@@ -15,19 +15,19 @@ def test_list_objects_retry_connection_error_exhaust_retries():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(ConnectionError):
-        oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 3
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(ConnectionError):
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 3
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(ConnectionError):
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 3
 
 
@@ -40,21 +40,21 @@ def test_list_objects_retry_internal_server_error_exhaust_retries():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == 502
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == 502
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == 502
 
@@ -68,21 +68,21 @@ def test_list_objects_retry_unknown_service_error_exhaust_retries():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == -1
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == -1
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == -1
 
@@ -96,21 +96,21 @@ def test_list_objects_retry_throttles_exhaust_retries():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == 429
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == 429
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 3
     assert exception.value.status == 429
 
@@ -120,21 +120,21 @@ def test_list_objects_does_not_retry_on_client_error():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 1
     assert exception.value.status == 400
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 1
     assert exception.value.status == 400
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(oci.exceptions.ServiceError) as exception:
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 1
     assert exception.value.status == 400
 
@@ -144,19 +144,19 @@ def test_list_objects_does_not_retry_on_random_exception():
 
     mock_client = create_mock_list_objects_client(side_effect)
     with pytest.raises(Exception):
-        oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+        oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 1
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(Exception):
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 1
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
     with pytest.raises(Exception):
-        oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+        oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 1
 
 
@@ -168,17 +168,17 @@ def test_list_objects_succeeds_after_retries():
     side_effect = [oci.exceptions.ServiceError(429, "blah", {}, "blah"), dummy_response]
 
     mock_client = create_mock_list_objects_client(side_effect)
-    oci_cli.object_storage_cli.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
+    oci_cli.objectstorage_cli_extended.retrying_list_objects_single_page(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name')
     assert mock_client.list_objects.call_count == 2
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
-    oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
+    oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', False)
     assert mock_client.list_objects.call_count == 2
 
     mock_client.list_objects.reset_mock()
     mock_client.list_objects.side_effect = side_effect
-    oci_cli.object_storage_cli.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
+    oci_cli.objectstorage_cli_extended.retrying_list_objects(mock_client, None, "namespace", "bucket_name", "prefix", None, None, 100, None, 'name', True)
     assert mock_client.list_objects.call_count == 2
 
 

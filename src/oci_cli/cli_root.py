@@ -38,6 +38,7 @@ CLI_RC_COMMAND_ALIASES_SECTION_NAME = 'OCI_CLI_COMMAND_ALIASES'
 CLI_RC_PARAM_ALIASES_SECTION_NAME = 'OCI_CLI_PARAM_ALIASES'
 CLI_RC_GENERIC_SETTINGS_SECTION_NAME = 'OCI_CLI_SETTINGS'
 
+OCI_CLI_PROFILE_ENV_VAR = 'OCI_CLI_PROFILE'
 CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY = 'default_profile'
 CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP = 'use_click_help'
 
@@ -203,7 +204,8 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
               default=CLI_RC_DEFAULT_LOCATION, show_default=True,
               is_eager=True, callback=eager_load_cli_rc_file,
               help='The path to the OCI CLI-specific configuration file, containing parameter default values and other configuration information such as command aliases and predefined queries. The --defaults-file option is deprecated and you should use the --cli-rc-file option instead.')
-@click.option('--request-id', help='The request id to use for tracking the request.')
+@click.option('--opc-request-id', '--opc-client-request-id', '--request-id', 'request_id',
+              help='The request id to use for tracking the request.')
 @click.option('--region', help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
 @click.option('--endpoint', help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
 @click.option('--cert-bundle', help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
@@ -212,10 +214,16 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
 
 Queries can be entered directly on the command line or referenced from the [OCI_CLI_COMMAND_ALIASES] section of your configuration file by using the syntax query://<query_name>, for example query://get_id_and_name
 """)
+@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
+
+This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
+@click.option('--generate-param-json-input', is_eager=True, help="""Complex input, such as arrays and objects, are passed in JSON format.
+
+When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, generate_full_command_json_input, generate_param_json_input, debug, help):
     if ctx.command_path == 'bmcs':
         click.echo(click.style(BMCS_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
 
@@ -226,10 +234,15 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         ctx.exit()
 
     if profile == Sentinel(DEFAULT_PROFILE):
-        # if --profile is not supplied, check if default_profile is specified in oci_cli_rc and use it if present
+        # if --profile is not supplied, fallback accordingly:
+        #   - if OCI_CLI_PROFILE exists, use that
+        #   - if default_profile is specified in oci_cli_rc then use that
+        #
         # --profile cannot be specified as a regular default because we use it to determine which
         # section of the default file to read from
-        if 'settings' in ctx.obj and CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY in ctx.obj['settings']:
+        if OCI_CLI_PROFILE_ENV_VAR in os.environ:
+            profile = os.environ[OCI_CLI_PROFILE_ENV_VAR]
+        elif 'settings' in ctx.obj and CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY in ctx.obj['settings']:
             profile = ctx.obj['settings'][CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY]
         else:
             profile = DEFAULT_PROFILE
@@ -244,6 +257,8 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         'cert_bundle': cert_bundle,
         'output': output,
         'query': query,
+        'generate_full_command_json_input': generate_full_command_json_input,
+        'generate_param_json_input': generate_param_json_input,
         'debug': debug
     }
 

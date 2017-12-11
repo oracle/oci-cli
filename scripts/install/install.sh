@@ -4,7 +4,7 @@
 # Bash script to install the Oracle Cloud Infrastructure CLI
 # Example invocation: curl -L "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" | bash
 #
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.4.11/scripts/install/install.py"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.4.13/scripts/install/install.py"
 _TTY=/dev/tty
 
 install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
@@ -30,7 +30,7 @@ command -v python >/dev/null 2>&1
 if [ $? -eq 0 ]; then
     # python is installed so check if the version is valid
     # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
-    python -c "import sys; v = sys.version_info; valid = v >= (2, 7, 5) if v.major == 2 else v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
+    python -c "import sys; v = sys.version_info; valid = v >= (2, 7, 5) if v[0] == 2 else v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
     if [ $? -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false

@@ -138,14 +138,24 @@ def test_generate_input_dict_complex_param_is_dictionary_with_complex_value():
     expected_dict = {
         'paramOne': {
             'string1': {
-                'description': 'string',
+                'supportedVirtualCircuitTypes': ['string', 'string'],
                 'providerServiceName': 'string',
-                'providerName': 'string'
+                'publicPeeringBgpManagement': 'string',
+                'description': 'string',
+                'type': 'string',
+                'providerName': 'string',
+                'id': 'string',
+                'privatePeeringBgpManagement': 'string'
             },
             'string2': {
-                'description': 'string',
+                'supportedVirtualCircuitTypes': ['string', 'string'],
                 'providerServiceName': 'string',
-                'providerName': 'string'
+                'publicPeeringBgpManagement': 'string',
+                'description': 'string',
+                'type': 'string',
+                'providerName': 'string',
+                'id': 'string',
+                'privatePeeringBgpManagement': 'string'
             }
         }
     }

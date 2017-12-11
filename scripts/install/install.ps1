@@ -26,7 +26,7 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12';
 }
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.4.11/scripts/install/install.py"
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.4.13/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.2"    # version of Python to install if none exists
 $MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
 $MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system

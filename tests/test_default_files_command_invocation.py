@@ -27,6 +27,7 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
 
     def test_invoke_with_default_file_command_subgroup(self):
         result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/command_subgroup_default'])
+        print(result.output)
         assert result.exit_code == 0
         assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
