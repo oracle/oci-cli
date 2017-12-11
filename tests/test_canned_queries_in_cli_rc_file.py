@@ -74,11 +74,13 @@ def test_query_when_listing_and_getting_instances(default_file_with_canned_queri
     # The display name we're matching on is junk, so should not match any result
     result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://filter_by_display_name_contains_text', '--defaults-file', default_file_with_canned_queries])
     assert result.exit_code == 0
-    assert 'Query returned empty result, no output to show' in result.output
+    if result.output != '':
+        assert 'Query returned empty result, no output to show' in result.output
 
     result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://filter_by_display_name_contains_text_and_get_attributes', '--defaults-file', default_file_with_canned_queries])
     assert result.exit_code == 0
-    assert 'Query returned empty result, no output to show' in result.output
+    if result.output != '':
+        assert 'Query returned empty result, no output to show' in result.output
 
 
 def test_query_does_not_exist(default_file_with_canned_queries):

@@ -3,7 +3,9 @@
 
 from __future__ import print_function
 import click
+import oci  # noqa: F401
 import six  # noqa: F401
+import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
@@ -228,32 +230,17 @@ def policy_group():
 @user_group_membership_group.command(name=cli_util.override('add_user_to_group.command_name', 'add'), help="""Adds the specified user to the specified group and returns a `UserGroupMembership` object with its own OCID.
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--group-id', help="""The OCID of the group. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UserGroupMembership'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UserGroupMembership'})
 @cli_util.wrap_exceptions
-def add_user_to_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, group_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
-
+def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, group_id):
     kwargs = {}
 
     details = {}
@@ -265,6 +252,22 @@ def add_user_to_group(ctx, generate_full_command_json_input, generate_param_json
         add_user_to_group_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_user_group_membership') and callable(getattr(client, 'get_user_group_membership')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user_group_membership, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -279,34 +282,18 @@ You must also specify a *name* for the compartment, which must be unique across 
 You must also specify a *description* for the compartment (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCompartment].
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
-@click.option('--compartment-id', help="""The OCID of the tenancy containing the compartment. [required]""")
-@click.option('--name', help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy. [required]""")
-@click.option('--description', help="""The description you assign to the compartment during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the compartment. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy. [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the compartment during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
 @cli_util.wrap_exceptions
-def create_compartment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, name, description):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
-
+def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description):
     kwargs = {}
 
     details = {}
@@ -319,6 +306,22 @@ def create_compartment(ctx, generate_full_command_json_input, generate_param_jso
         create_compartment_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_compartment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -327,35 +330,17 @@ def create_compartment(ctx, generate_full_command_json_input, generate_param_jso
 You must specify a *description* for the secret key (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCustomerSecretKey].
 
 Every user has permission to create a secret key for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to create a secret key for any user, including themselves.""")
-@click.option('--display-name', help="""The name you assign to the secret key during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--display-name', callback=cli_util.handle_required_param, help="""The name you assign to the secret key during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'CustomerSecretKey'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'CustomerSecretKey'})
 @cli_util.wrap_exceptions
-def create_customer_secret_key(ctx, generate_full_command_json_input, generate_param_json_input, from_json, display_name, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, True)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def create_customer_secret_key(ctx, from_json, display_name, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
 
     details = {}
@@ -381,34 +366,18 @@ You must also specify a *description* for the group (although it can be an empty
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.
 
 After creating the group, you need to put users in it and write policies for it. See [AddUserToGroup] and [CreatePolicy].""")
-@click.option('--compartment-id', help="""The OCID of the tenancy containing the group. [required]""")
-@click.option('--name', help="""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed. [required]""")
-@click.option('--description', help="""The description you assign to the group during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the group. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed. [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the group during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Group'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Group'})
 @cli_util.wrap_exceptions
-def create_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, name, description):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
-
+def create_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description):
     kwargs = {}
 
     details = {}
@@ -421,6 +390,22 @@ def create_group(ctx, generate_full_command_json_input, generate_param_json_inpu
         create_group_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_group') and callable(getattr(client, 'get_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -433,42 +418,24 @@ You must also specify a *name* for the `IdentityProvider`, which must be unique 
 You must also specify a *description* for the `IdentityProvider` (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateIdentityProvider].
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
-@click.option('--compartment-id', help="""The OCID of your tenancy. [required]""")
-@click.option('--name', help="""The name you assign to the `IdentityProvider` during creation. The name must be unique across all `IdentityProvider` objects in the tenancy and cannot be changed. [required]""")
-@click.option('--description', help="""The description you assign to the `IdentityProvider` during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--product-type', type=custom_types.CliCaseInsensitiveChoice(["IDCS", "ADFS"]), help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of your tenancy. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the `IdentityProvider` during creation. The name must be unique across all `IdentityProvider` objects in the tenancy and cannot be changed. [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the `IdentityProvider` during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--product-type', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["IDCS", "ADFS"]), help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
 
 Example: `IDCS` [required]""")
-@click.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
+@click.option('--protocol', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
 
 Example: `SAML2` [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
-def create_identity_provider(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, name, description, product_type, protocol):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
-    product_type = cli_util.coalesce_provided_and_default_value(ctx, 'product-type', product_type, True)
-    protocol = cli_util.coalesce_provided_and_default_value(ctx, 'protocol', protocol, True)
-
+def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, product_type, protocol):
     kwargs = {}
 
     details = {}
@@ -483,41 +450,41 @@ def create_identity_provider(ctx, generate_full_command_json_input, generate_par
         create_identity_provider_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @idp_group_mapping_group.command(name=cli_util.override('create_idp_group_mapping.command_name', 'create'), help="""Creates a single mapping between an IdP group and an IAM Service [group].""")
-@click.option('--idp-group-name', help="""The name of the IdP group you want to map. [required]""")
-@click.option('--group-id', help="""The OCID of the IAM Service [group] you want to map to the IdP group. [required]""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--idp-group-name', callback=cli_util.handle_required_param, help="""The name of the IdP group you want to map. [required]""")
+@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the IAM Service [group] you want to map to the IdP group. [required]""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdpGroupMapping'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdpGroupMapping'})
 @cli_util.wrap_exceptions
-def create_idp_group_mapping(ctx, generate_full_command_json_input, generate_param_json_input, from_json, idp_group_name, group_id, identity_provider_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    idp_group_name = cli_util.coalesce_provided_and_default_value(ctx, 'idp-group-name', idp_group_name, True)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
+def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, idp_group_name, group_id, identity_provider_id):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
-
     kwargs = {}
 
     details = {}
@@ -530,6 +497,22 @@ def create_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
         create_idp_group_mapping_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_idp_group_mapping') and callable(getattr(client, 'get_idp_group_mapping')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_idp_group_mapping, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -538,33 +521,16 @@ def create_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
 Use this operation after creating a new user, or if a user forgets their password. The new one-time password is returned to you in the response, and you must securely deliver it to the user. They'll be prompted to change this password the next time they sign in to the Console. If they don't change it within 7 days, the password will expire and you'll need to create a new one-time password for the user.
 
 **Note:** The user's Console login is the unique name you specified when you created the user (see [CreateUser]).""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UIPassword'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UIPassword'})
 @cli_util.wrap_exceptions
-def create_or_reset_ui_password(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def create_or_reset_ui_password(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.create_or_reset_ui_password(
@@ -585,38 +551,20 @@ You must specify one or more policy statements in the statements array. For info
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.
 
 New policies take effect typically within 10 seconds.""")
-@click.option('--compartment-id', help="""The OCID of the compartment containing the policy (either the tenancy or another compartment). [required]""")
-@click.option('--name', help="""The name you assign to the policy during creation. The name must be unique across all policies in the tenancy and cannot be changed. [required]""")
-@click.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--description', help="""The description you assign to the policy during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--version-date', type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment containing the policy (either the tenancy or another compartment). [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the policy during creation. The name must be unique across all policies in the tenancy and cannot be changed. [required]""")
+@click.option('--statements', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the policy during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--version-date', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'statements': {'module': 'identity', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'statements': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Policy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Policy'})
 @cli_util.wrap_exceptions
-def create_policy(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, name, statements, description, version_date):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-    statements = cli_util.coalesce_provided_and_default_value(ctx, 'statements', statements, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
-    version_date = cli_util.coalesce_provided_and_default_value(ctx, 'version-date', version_date, False)
-
+def create_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, statements, description, version_date):
     kwargs = {}
 
     details = {}
@@ -633,43 +581,41 @@ def create_policy(ctx, generate_full_command_json_input, generate_param_json_inp
         create_policy_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_policy') and callable(getattr(client, 'get_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @region_subscription_group.command(name=cli_util.override('create_region_subscription.command_name', 'create'), help="""Creates a subscription to a region for a tenancy.""")
-@click.option('--region-key', help="""The regions's key.
+@click.option('--region-key', callback=cli_util.handle_required_param, help="""The regions's key.
 
 Allowed values are: - `PHX` - `IAD` - `FRA`
 
 Example: `PHX` [required]""")
-@click.option('--tenancy-id', help="""The OCID of the tenancy. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--tenancy-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'RegionSubscription'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'RegionSubscription'})
 @cli_util.wrap_exceptions
-def create_region_subscription(ctx, generate_full_command_json_input, generate_param_json_input, from_json, region_key, tenancy_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    region_key = cli_util.coalesce_provided_and_default_value(ctx, 'region-key', region_key, True)
-    tenancy_id = cli_util.coalesce_provided_and_default_value(ctx, 'tenancy-id', tenancy_id, True)
+def create_region_subscription(ctx, from_json, region_key, tenancy_id):
 
     if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
-
     kwargs = {}
 
     details = {}
@@ -689,35 +635,17 @@ def create_region_subscription(ctx, generate_full_command_json_input, generate_p
 You must specify a *description* for the Swift password (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSwiftPassword].
 
 Every user has permission to create a Swift password for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to create a Swift password for any user, including themselves.""")
-@click.option('--description', help="""The description you assign to the Swift password during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the Swift password during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'SwiftPassword'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'SwiftPassword'})
 @cli_util.wrap_exceptions
-def create_swift_password(ctx, generate_full_command_json_input, generate_param_json_input, from_json, description, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def create_swift_password(ctx, from_json, description, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
 
     details = {}
@@ -745,34 +673,18 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 A new user has no permissions until you place the user in one or more groups (see [AddUserToGroup]). If the user needs to access the Console, you need to provide the user a password (see [CreateOrResetUIPassword]). If the user needs to access the Oracle Cloud Infrastructure REST API, you need to upload a public API signing key for that user (see [Required Keys and OCIDs] and also [UploadApiKey]).
 
 **Important:** Make sure to inform the new user which compartment(s) they have access to.""")
-@click.option('--compartment-id', help="""The OCID of the tenancy containing the user. [required]""")
-@click.option('--name', help="""The name you assign to the user during creation. This is the user's login for the Console. The name must be unique across all users in the tenancy and cannot be changed. [required]""")
-@click.option('--description', help="""The description you assign to the user during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the user. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the user during creation. This is the user's login for the Console. The name must be unique across all users in the tenancy and cannot be changed. [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the user during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def create_user(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, name, description):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, True)
-
+def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description):
     kwargs = {}
 
     details = {}
@@ -785,47 +697,44 @@ def create_user(ctx, generate_full_command_json_input, generate_param_json_input
         create_user_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @api_key_group.command(name=cli_util.override('delete_api_key.command_name', 'delete'), help="""Deletes the specified API signing key for the specified user.
 
 Every user has permission to use this operation to delete a key for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to delete a key for any user, including themselves.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--fingerprint', help="""The key's fingerprint. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--fingerprint', callback=cli_util.handle_required_param, help="""The key's fingerprint. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_api_key(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, fingerprint, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    fingerprint = cli_util.coalesce_provided_and_default_value(ctx, 'fingerprint', fingerprint, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_api_key(ctx, from_json, user_id, fingerprint, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     if isinstance(fingerprint, six.string_types) and len(fingerprint.strip()) == 0:
         raise click.UsageError('Parameter --fingerprint cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -839,41 +748,22 @@ def delete_api_key(ctx, generate_full_command_json_input, generate_param_json_in
 
 
 @customer_secret_key_group.command(name=cli_util.override('delete_customer_secret_key.command_name', 'delete'), help="""Deletes the specified secret key for the specified user.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--customer-secret-key-id', help="""The OCID of the secret key. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--customer-secret-key-id', callback=cli_util.handle_required_param, help="""The OCID of the secret key. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_customer_secret_key(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, customer_secret_key_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    customer_secret_key_id = cli_util.coalesce_provided_and_default_value(ctx, 'customer-secret-key-id', customer_secret_key_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -887,36 +777,21 @@ def delete_customer_secret_key(ctx, generate_full_command_json_input, generate_p
 
 
 @group_group.command(name=cli_util.override('delete_group.command_name', 'delete'), help="""Deletes the specified group. The group must be empty.""")
-@click.option('--group-id', help="""The OCID of the group. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, group_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, group_id, if_match):
 
     if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -925,40 +800,41 @@ def delete_group(ctx, generate_full_command_json_input, generate_param_json_inpu
         group_id=group_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_group') and callable(getattr(client, 'get_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @identity_provider_group.command(name=cli_util.override('delete_identity_provider.command_name', 'delete'), help="""Deletes the specified identity provider. The identity provider must not have any group mappings (see [IdpGroupMapping]).""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_identity_provider(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, identity_provider_id, if_match):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -967,45 +843,42 @@ def delete_identity_provider(ctx, generate_full_command_json_input, generate_par
         identity_provider_id=identity_provider_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, identity_provider_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @idp_group_mapping_group.command(name=cli_util.override('delete_idp_group_mapping.command_name', 'delete'), help="""Deletes the specified group mapping.""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--mapping-id', help="""The OCID of the group mapping. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--mapping-id', callback=cli_util.handle_required_param, help="""The OCID of the group mapping. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_idp_group_mapping(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id, mapping_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
-    mapping_id = cli_util.coalesce_provided_and_default_value(ctx, 'mapping-id', mapping_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id, if_match):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1019,36 +892,21 @@ def delete_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
 
 
 @policy_group.command(name=cli_util.override('delete_policy.command_name', 'delete'), help="""Deletes the specified policy. The deletion takes effect typically within 10 seconds.""")
-@click.option('--policy-id', help="""The OCID of the policy. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--policy-id', callback=cli_util.handle_required_param, help="""The OCID of the policy. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_policy(ctx, generate_full_command_json_input, generate_param_json_input, from_json, policy_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    policy_id = cli_util.coalesce_provided_and_default_value(ctx, 'policy-id', policy_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, policy_id, if_match):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1057,45 +915,42 @@ def delete_policy(ctx, generate_full_command_json_input, generate_param_json_inp
         policy_id=policy_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_policy') and callable(getattr(client, 'get_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @swift_password_group.command(name=cli_util.override('delete_swift_password.command_name', 'delete'), help="""Deletes the specified Swift password for the specified user.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--swift-password-id', help="""The OCID of the Swift password. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--swift-password-id', callback=cli_util.handle_required_param, help="""The OCID of the Swift password. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_swift_password(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, swift_password_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    swift_password_id = cli_util.coalesce_provided_and_default_value(ctx, 'swift-password-id', swift_password_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     if isinstance(swift_password_id, six.string_types) and len(swift_password_id.strip()) == 0:
         raise click.UsageError('Parameter --swift-password-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1109,36 +964,21 @@ def delete_swift_password(ctx, generate_full_command_json_input, generate_param_
 
 
 @user_group.command(name=cli_util.override('delete_user.command_name', 'delete'), help="""Deletes the specified user. The user must not be in any groups.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_user(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1147,39 +987,38 @@ def delete_user(ctx, generate_full_command_json_input, generate_param_json_input
         user_id=user_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, user_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @compartment_group.command(name=cli_util.override('get_compartment.command_name', 'get'), help="""Gets the specified compartment's information.
 
 This operation does not return a list of all the resources inside the compartment. There is no single API operation that does that. Compartments can contain multiple types of resources (instances, block storage volumes, etc.). To find out what's in a compartment, you must call the \"List\" operation for each resource type and specify the compartment's OCID as a query parameter in the request. For example, call the [ListInstances] operation in the Cloud Compute Service or the [ListVolumes] operation in Cloud Block Storage.""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
 @cli_util.wrap_exceptions
-def get_compartment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
+def get_compartment(ctx, from_json, compartment_id):
 
     if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_compartment(
@@ -1192,33 +1031,16 @@ def get_compartment(ctx, generate_full_command_json_input, generate_param_json_i
 @group_group.command(name=cli_util.override('get_group.command_name', 'get'), help="""Gets the specified group's information.
 
 This operation does not return a list of all the users in the group. To do that, use [ListUserGroupMemberships] and provide the group's OCID as a query parameter in the request.""")
-@click.option('--group-id', help="""The OCID of the group. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Group'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Group'})
 @cli_util.wrap_exceptions
-def get_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, group_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
+def get_group(ctx, from_json, group_id):
 
     if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_group(
@@ -1229,33 +1051,16 @@ def get_group(ctx, generate_full_command_json_input, generate_param_json_input, 
 
 
 @identity_provider_group.command(name=cli_util.override('get_identity_provider.command_name', 'get'), help="""Gets the specified identity provider's information.""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
-def get_identity_provider(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
+def get_identity_provider(ctx, from_json, identity_provider_id):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_identity_provider(
@@ -1266,38 +1071,20 @@ def get_identity_provider(ctx, generate_full_command_json_input, generate_param_
 
 
 @idp_group_mapping_group.command(name=cli_util.override('get_idp_group_mapping.command_name', 'get'), help="""Gets the specified group mapping.""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--mapping-id', help="""The OCID of the group mapping. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--mapping-id', callback=cli_util.handle_required_param, help="""The OCID of the group mapping. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdpGroupMapping'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdpGroupMapping'})
 @cli_util.wrap_exceptions
-def get_idp_group_mapping(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id, mapping_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
-    mapping_id = cli_util.coalesce_provided_and_default_value(ctx, 'mapping-id', mapping_id, True)
+def get_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_idp_group_mapping(
@@ -1309,33 +1096,16 @@ def get_idp_group_mapping(ctx, generate_full_command_json_input, generate_param_
 
 
 @policy_group.command(name=cli_util.override('get_policy.command_name', 'get'), help="""Gets the specified policy's information.""")
-@click.option('--policy-id', help="""The OCID of the policy. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--policy-id', callback=cli_util.handle_required_param, help="""The OCID of the policy. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Policy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Policy'})
 @cli_util.wrap_exceptions
-def get_policy(ctx, generate_full_command_json_input, generate_param_json_input, from_json, policy_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    policy_id = cli_util.coalesce_provided_and_default_value(ctx, 'policy-id', policy_id, True)
+def get_policy(ctx, from_json, policy_id):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_policy(
@@ -1346,33 +1116,16 @@ def get_policy(ctx, generate_full_command_json_input, generate_param_json_input,
 
 
 @tenancy_group.command(name=cli_util.override('get_tenancy.command_name', 'get'), help="""Get the specified tenancy's information.""")
-@click.option('--tenancy-id', help="""The OCID of the tenancy. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--tenancy-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Tenancy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Tenancy'})
 @cli_util.wrap_exceptions
-def get_tenancy(ctx, generate_full_command_json_input, generate_param_json_input, from_json, tenancy_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    tenancy_id = cli_util.coalesce_provided_and_default_value(ctx, 'tenancy-id', tenancy_id, True)
+def get_tenancy(ctx, from_json, tenancy_id):
 
     if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_tenancy(
@@ -1383,33 +1136,16 @@ def get_tenancy(ctx, generate_full_command_json_input, generate_param_json_input
 
 
 @user_group.command(name=cli_util.override('get_user.command_name', 'get'), help="""Gets the specified user's information.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def get_user(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def get_user(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_user(
@@ -1420,33 +1156,16 @@ def get_user(ctx, generate_full_command_json_input, generate_param_json_input, f
 
 
 @user_group_membership_group.command(name=cli_util.override('get_user_group_membership.command_name', 'get'), help="""Gets the specified UserGroupMembership's information.""")
-@click.option('--user-group-membership-id', help="""The OCID of the userGroupMembership. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-group-membership-id', callback=cli_util.handle_required_param, help="""The OCID of the userGroupMembership. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UserGroupMembership'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UserGroupMembership'})
 @cli_util.wrap_exceptions
-def get_user_group_membership(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_group_membership_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_group_membership_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-group-membership-id', user_group_membership_id, True)
+def get_user_group_membership(ctx, from_json, user_group_membership_id):
 
     if isinstance(user_group_membership_id, six.string_types) and len(user_group_membership_id.strip()) == 0:
         raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_user_group_membership(
@@ -1459,33 +1178,16 @@ def get_user_group_membership(ctx, generate_full_command_json_input, generate_pa
 @api_key_group.command(name=cli_util.override('list_api_keys.command_name', 'list'), help="""Lists the API signing keys for the specified user. A user can have a maximum of three keys.
 
 Every user has permission to use this API call for *their own user ID*.  An administrator in your organization does not need to write a policy to give users this ability.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[ApiKey]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[ApiKey]'})
 @cli_util.wrap_exceptions
-def list_api_keys(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def list_api_keys(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_api_keys(
@@ -1496,30 +1198,13 @@ def list_api_keys(ctx, generate_full_command_json_input, generate_param_json_inp
 
 
 @availability_domain_group.command(name=cli_util.override('list_availability_domains.command_name', 'list'), help="""Lists the Availability Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[AvailabilityDomain]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[AvailabilityDomain]'})
 @cli_util.wrap_exceptions
-def list_availability_domains(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-
+def list_availability_domains(ctx, from_json, compartment_id):
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_availability_domains(
@@ -1530,40 +1215,20 @@ def list_availability_domains(ctx, generate_full_command_json_input, generate_pa
 
 
 @compartment_group.command(name=cli_util.override('list_compartments.command_name', 'list'), help="""Lists the compartments in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
 @cli_util.wrap_exceptions
-def list_compartments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1596,33 +1261,16 @@ def list_compartments(ctx, generate_full_command_json_input, generate_param_json
 
 
 @customer_secret_key_group.command(name=cli_util.override('list_customer_secret_keys.command_name', 'list'), help="""Lists the secret keys for the specified user. The returned object contains the secret key's OCID, but not the secret key itself. The actual secret key is returned only upon creation.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[CustomerSecretKeySummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[CustomerSecretKeySummary]'})
 @cli_util.wrap_exceptions
-def list_customer_secret_keys(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def list_customer_secret_keys(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_customer_secret_keys(
@@ -1633,40 +1281,20 @@ def list_customer_secret_keys(ctx, generate_full_command_json_input, generate_pa
 
 
 @group_group.command(name=cli_util.override('list_groups.command_name', 'list'), help="""Lists the groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Group]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Group]'})
 @cli_util.wrap_exceptions
-def list_groups(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1699,42 +1327,21 @@ def list_groups(ctx, generate_full_command_json_input, generate_param_json_input
 
 
 @identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help="""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--protocol', help="""The protocol used for federation. Allowed values are: SAML2 [required]""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--protocol', callback=cli_util.handle_required_param, help="""The protocol used for federation. Allowed values are: SAML2 [required]""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdentityProvider]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdentityProvider]'})
 @cli_util.wrap_exceptions
-def list_identity_providers(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, protocol, compartment_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, compartment_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    protocol = cli_util.coalesce_provided_and_default_value(ctx, 'protocol', protocol, True)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1770,43 +1377,23 @@ def list_identity_providers(ctx, generate_full_command_json_input, generate_para
 
 
 @idp_group_mapping_group.command(name=cli_util.override('list_idp_group_mappings.command_name', 'list'), help="""Lists the group mappings for the specified identity provider.""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdpGroupMapping]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdpGroupMapping]'})
 @cli_util.wrap_exceptions
-def list_idp_group_mappings(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, identity_provider_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provider_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
-
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1841,40 +1428,20 @@ def list_idp_group_mappings(ctx, generate_full_command_json_input, generate_para
 @policy_group.command(name=cli_util.override('list_policies.command_name', 'list'), help="""Lists the policies in the specified compartment (either the tenancy or another of your compartments). See [Where to Get the Tenancy's OCID and User's OCID].
 
 To determine which policies apply to a particular group or compartment, you must view the individual statements inside all your policies. There isn't a way to automatically obtain that information via the API.""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Policy]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Policy]'})
 @cli_util.wrap_exceptions
-def list_policies(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1907,33 +1474,16 @@ def list_policies(ctx, generate_full_command_json_input, generate_param_json_inp
 
 
 @region_subscription_group.command(name=cli_util.override('list_region_subscriptions.command_name', 'list'), help="""Lists the region subscriptions for the specified tenancy.""")
-@click.option('--tenancy-id', help="""The OCID of the tenancy. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--tenancy-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[RegionSubscription]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[RegionSubscription]'})
 @cli_util.wrap_exceptions
-def list_region_subscriptions(ctx, generate_full_command_json_input, generate_param_json_input, from_json, tenancy_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    tenancy_id = cli_util.coalesce_provided_and_default_value(ctx, 'tenancy-id', tenancy_id, True)
+def list_region_subscriptions(ctx, from_json, tenancy_id):
 
     if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_region_subscriptions(
@@ -1944,28 +1494,12 @@ def list_region_subscriptions(ctx, generate_full_command_json_input, generate_pa
 
 
 @region_group.command(name=cli_util.override('list_regions.command_name', 'list'), help="""Lists all the regions offered by Oracle Cloud Infrastructure.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Region]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Region]'})
 @cli_util.wrap_exceptions
-def list_regions(ctx, generate_full_command_json_input, generate_param_json_input, from_json, ):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-
+def list_regions(ctx, from_json, ):
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_regions(
@@ -1975,33 +1509,16 @@ def list_regions(ctx, generate_full_command_json_input, generate_param_json_inpu
 
 
 @swift_password_group.command(name=cli_util.override('list_swift_passwords.command_name', 'list'), help="""Lists the Swift passwords for the specified user. The returned object contains the password's OCID, but not the password itself. The actual password is returned only upon creation.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[SwiftPassword]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[SwiftPassword]'})
 @cli_util.wrap_exceptions
-def list_swift_passwords(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
+def list_swift_passwords(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_swift_passwords(
@@ -2014,44 +1531,22 @@ def list_swift_passwords(ctx, generate_full_command_json_input, generate_param_j
 @user_group_membership_group.command(name=cli_util.override('list_user_group_memberships.command_name', 'list'), help="""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
 
 - You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list.""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--user-id', help="""The OCID of the user.""")
-@click.option('--group-id', help="""The OCID of the group.""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--user-id', callback=cli_util.handle_optional_param, help="""The OCID of the user.""")
+@click.option('--group-id', callback=cli_util.handle_optional_param, help="""The OCID of the group.""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[UserGroupMembership]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[UserGroupMembership]'})
 @cli_util.wrap_exceptions
-def list_user_group_memberships(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, user_id, group_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartment_id, user_id, group_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, False)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if user_id is not None:
         kwargs['user_id'] = user_id
@@ -2088,40 +1583,20 @@ def list_user_group_memberships(ctx, generate_full_command_json_input, generate_
 
 
 @user_group.command(name=cli_util.override('list_users.command_name', 'list'), help="""Lists the users in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[User]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[User]'})
 @cli_util.wrap_exceptions
-def list_users(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, page, limit):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2154,36 +1629,18 @@ def list_users(ctx, generate_full_command_json_input, generate_param_json_input,
 
 
 @user_group_membership_group.command(name=cli_util.override('remove_user_from_group.command_name', 'remove'), help="""Removes a user from a group by deleting the corresponding `UserGroupMembership`.""")
-@click.option('--user-group-membership-id', help="""The OCID of the userGroupMembership. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--user-group-membership-id', callback=cli_util.handle_required_param, help="""The OCID of the userGroupMembership. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def remove_user_from_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_group_membership_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_group_membership_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-group-membership-id', user_group_membership_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
 
     if isinstance(user_group_membership_id, six.string_types) and len(user_group_membership_id.strip()) == 0:
         raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2196,39 +1653,22 @@ def remove_user_from_group(ctx, generate_full_command_json_input, generate_param
 
 
 @compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help="""Updates the specified compartment's description or name. You can't update the root compartment.""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--description', help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
-@click.option('--name', help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
+@click.option('--name', callback=cli_util.handle_optional_param, help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
 @cli_util.wrap_exceptions
-def update_compartment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, description, name, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, description, name, if_match):
 
     if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2247,46 +1687,42 @@ def update_compartment(ctx, generate_full_command_json_input, generate_param_jso
         update_compartment_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_compartment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @customer_secret_key_group.command(name=cli_util.override('update_customer_secret_key.command_name', 'update'), help="""Updates the specified secret key's description.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--customer-secret-key-id', help="""The OCID of the secret key. [required]""")
-@click.option('--display-name', help="""The description you assign to the secret key. Does not have to be unique, and it's changeable.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--customer-secret-key-id', callback=cli_util.handle_required_param, help="""The OCID of the secret key. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""The description you assign to the secret key. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'CustomerSecretKeySummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'CustomerSecretKeySummary'})
 @cli_util.wrap_exceptions
-def update_customer_secret_key(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, customer_secret_key_id, display_name, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    customer_secret_key_id = cli_util.coalesce_provided_and_default_value(ctx, 'customer-secret-key-id', customer_secret_key_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, display_name, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2307,37 +1743,21 @@ def update_customer_secret_key(ctx, generate_full_command_json_input, generate_p
 
 
 @group_group.command(name=cli_util.override('update_group.command_name', 'update'), help="""Updates the specified group.""")
-@click.option('--group-id', help="""The OCID of the group. [required]""")
-@click.option('--description', help="""The description you assign to the group. Does not have to be unique, and it's changeable.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the group. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Group'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Group'})
 @cli_util.wrap_exceptions
-def update_group(ctx, generate_full_command_json_input, generate_param_json_input, from_json, group_id, description, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, group_id, description, if_match):
 
     if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2353,45 +1773,44 @@ def update_group(ctx, generate_full_command_json_input, generate_param_json_inpu
         update_group_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_group') and callable(getattr(client, 'get_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @identity_provider_group.command(name=cli_util.override('update_identity_provider.command_name', 'update'), help="""Updates the specified identity provider.""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--protocol', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
 
 Example: `SAML2` [required]""")
-@click.option('--description', help="""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
-def update_identity_provider(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id, protocol, description, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
-    protocol = cli_util.coalesce_provided_and_default_value(ctx, 'protocol', protocol, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, identity_provider_id, protocol, description, if_match):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2408,48 +1827,46 @@ def update_identity_provider(ctx, generate_full_command_json_input, generate_par
         update_identity_provider_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @idp_group_mapping_group.command(name=cli_util.override('update_idp_group_mapping.command_name', 'update'), help="""Updates the specified group mapping.""")
-@click.option('--identity-provider-id', help="""The OCID of the identity provider. [required]""")
-@click.option('--mapping-id', help="""The OCID of the group mapping. [required]""")
-@click.option('--idp-group-name', help="""The idp group name.""")
-@click.option('--group-id', help="""The OCID of the group.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--identity-provider-id', callback=cli_util.handle_required_param, help="""The OCID of the identity provider. [required]""")
+@click.option('--mapping-id', callback=cli_util.handle_required_param, help="""The OCID of the group mapping. [required]""")
+@click.option('--idp-group-name', callback=cli_util.handle_optional_param, help="""The idp group name.""")
+@click.option('--group-id', callback=cli_util.handle_optional_param, help="""The OCID of the group.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdpGroupMapping'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'IdpGroupMapping'})
 @cli_util.wrap_exceptions
-def update_idp_group_mapping(ctx, generate_full_command_json_input, generate_param_json_input, from_json, identity_provider_id, mapping_id, idp_group_name, group_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    identity_provider_id = cli_util.coalesce_provided_and_default_value(ctx, 'identity-provider-id', identity_provider_id, True)
-    mapping_id = cli_util.coalesce_provided_and_default_value(ctx, 'mapping-id', mapping_id, True)
-    idp_group_name = cli_util.coalesce_provided_and_default_value(ctx, 'idp-group-name', idp_group_name, False)
-    group_id = cli_util.coalesce_provided_and_default_value(ctx, 'group-id', group_id, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, identity_provider_id, mapping_id, idp_group_name, group_id, if_match):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2469,49 +1886,46 @@ def update_idp_group_mapping(ctx, generate_full_command_json_input, generate_par
         update_idp_group_mapping_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_idp_group_mapping') and callable(getattr(client, 'get_idp_group_mapping')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_idp_group_mapping, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @policy_group.command(name=cli_util.override('update_policy.command_name', 'update'), help="""Updates the specified policy. You can update the description or the policy statements themselves.
 
 Policy changes take effect typically within 10 seconds.""")
-@click.option('--policy-id', help="""The OCID of the policy. [required]""")
-@click.option('--description', help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
-@click.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--version-date', type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--policy-id', callback=cli_util.handle_required_param, help="""The OCID of the policy. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
+@click.option('--statements', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--version-date', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'statements': {'module': 'identity', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'statements': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Policy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Policy'})
 @cli_util.wrap_exceptions
-def update_policy(ctx, generate_full_command_json_input, generate_param_json_input, from_json, force, policy_id, description, statements, version_date, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    policy_id = cli_util.coalesce_provided_and_default_value(ctx, 'policy-id', policy_id, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
-    statements = cli_util.coalesce_provided_and_default_value(ctx, 'statements', statements, False)
-    version_date = cli_util.coalesce_provided_and_default_value(ctx, 'version-date', version_date, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
-    force = cli_util.coalesce_provided_and_default_value(ctx, 'force', force, False)
+def update_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy_id, description, statements, version_date, if_match):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
-
     if not force:
         if statements:
             if not click.confirm("WARNING: Updates to statements will replace any existing values. Are you sure you want to continue?"):
@@ -2537,46 +1951,42 @@ def update_policy(ctx, generate_full_command_json_input, generate_param_json_inp
         update_policy_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_policy') and callable(getattr(client, 'get_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @swift_password_group.command(name=cli_util.override('update_swift_password.command_name', 'update'), help="""Updates the specified Swift password's description.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--swift-password-id', help="""The OCID of the Swift password. [required]""")
-@click.option('--description', help="""The description you assign to the Swift password. Does not have to be unique, and it's changeable.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--swift-password-id', callback=cli_util.handle_required_param, help="""The OCID of the Swift password. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the Swift password. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'SwiftPassword'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'SwiftPassword'})
 @cli_util.wrap_exceptions
-def update_swift_password(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, swift_password_id, description, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    swift_password_id = cli_util.coalesce_provided_and_default_value(ctx, 'swift-password-id', swift_password_id, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_swift_password(ctx, from_json, user_id, swift_password_id, description, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     if isinstance(swift_password_id, six.string_types) and len(swift_password_id.strip()) == 0:
         raise click.UsageError('Parameter --swift-password-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2597,37 +2007,21 @@ def update_swift_password(ctx, generate_full_command_json_input, generate_param_
 
 
 @user_group.command(name=cli_util.override('update_user.command_name', 'update'), help="""Updates the description of the specified user.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--description', help="""The description you assign to the user. Does not have to be unique, and it's changeable.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the user. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def update_user(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, description, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    description = cli_util.coalesce_provided_and_default_value(ctx, 'description', description, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, description, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2643,41 +2037,38 @@ def update_user(ctx, generate_full_command_json_input, generate_param_json_input
         update_user_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @user_group.command(name=cli_util.override('update_user_state.command_name', 'update-user-state'), help="""Updates the state of the specified user.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--blocked', type=click.BOOL, help="""Update state to blocked or unblocked. Only \"false\" is supported (for changing the state to unblocked).""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--blocked', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Update state to blocked or unblocked. Only \"false\" is supported (for changing the state to unblocked).""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def update_user_state(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, blocked, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    blocked = cli_util.coalesce_provided_and_default_value(ctx, 'blocked', blocked, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_user_state(ctx, from_json, user_id, blocked, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2703,35 +2094,17 @@ Every user has permission to use this operation to upload a key for *their own u
 **Important:** Even though you have permission to upload an API key, you might not yet have permission to do much else. If you try calling an operation unrelated to your own credential management (e.g., `ListUsers`, `LaunchInstance`) and receive an \"unauthorized\" error, check with an administrator to confirm which IAM Service group(s) you're in and what access you have. Also confirm you're working in the correct compartment.
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
-@click.option('--user-id', help="""The OCID of the user. [required]""")
-@click.option('--key', help="""The public key.  Must be an RSA key in PEM format. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--key', callback=cli_util.handle_required_param, help="""The public key.  Must be an RSA key in PEM format. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'ApiKey'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'ApiKey'})
 @cli_util.wrap_exceptions
-def upload_api_key(ctx, generate_full_command_json_input, generate_param_json_input, from_json, user_id, key):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    user_id = cli_util.coalesce_provided_and_default_value(ctx, 'user-id', user_id, True)
-    key = cli_util.coalesce_provided_and_default_value(ctx, 'key', key, True)
+def upload_api_key(ctx, from_json, user_id, key):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
-
     kwargs = {}
 
     details = {}

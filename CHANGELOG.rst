@@ -7,6 +7,22 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.13 - 2017-12-11
+--------------------
+Added
+~~~~~~~~~~
+* Support for Load Balancing Service operations ('oci lb')
+
+  * An example of creating a load balancer can be found a https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh
+
+* Support for user managed boot volumes: 'oci bv boot-volume', 'oci compute instance launch --source-details', 'oci compute instance terminate --preserve-boot-volume'
+* Operations which create, update or delete resources with a lifecycle-state now support a --wait-for-state option which allows you to perform the action and then wait until the resource reaches a given state
+* Support for specifying --profile option through OCI_CLI_PROFILE environment variable
+
+Changed
+~~~~~~~~~~
+* When listing audit events ('oci audit event list'), audit events can now have a 'response-payload' attribute which contains metadata of interest. For example, the OCID of a resource
+
 2.4.12 - 2017-11-27
 -------------------
 

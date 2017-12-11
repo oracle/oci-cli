@@ -550,8 +550,7 @@ def subtest_bucket_list(runner, config_file, config_profile):
     result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '1000'])
     validate_response(result)
     assert result.output.count('"namespace"') > 100
-    assert result.output.count('"namespace"') < 1000
-    assert 'opc-next-page' not in result.output
+    assert result.output.count('"namespace"') <= 1000
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '100'])
     validate_response(result)

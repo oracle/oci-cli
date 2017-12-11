@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import oci_cli
+import os
 
 
 def test_control_case(runner, config_file):
@@ -54,6 +55,20 @@ def test_cert_bundle_option(runner, config_file):
 
 def test_profile_option_overrides_default_setting(runner, config_file):
     result = invoke_example_operation(runner, ['--profile', 'DEFAULT', '--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
+    assert 0 == result.exit_code
+
+
+def test_profile_option_overrides_environment_variable(runner, config_file):
+    os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR] = 'INVALID_PROFILE'
+    result = invoke_example_operation(runner, ['--profile', 'DEFAULT'], config_file)
+    del os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR]
+    assert 0 == result.exit_code
+
+
+def test_profile_env_var_overrides_default_setting(runner, config_file):
+    os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR] = 'DEFAULT'
+    result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
+    del os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR]
     assert 0 == result.exit_code
 
 

@@ -12,7 +12,7 @@ import oci_cli
 class TestBlockStorage(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group, expected_not_called_count=4)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""
         self.validator = validator
@@ -25,7 +25,7 @@ class TestBlockStorage(unittest.TestCase):
             self.subtest_delete()
 
     def test_volume_create_validations(self):
-        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test'])
+        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test', '--availability-domain', 'unit-test', '--compartment-id', 'unit-test'])
         assert 'You cannot specify both the --volume-backup-id and --source-volume-id options' in result.output
 
         result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--size-in-gbs', '50'])

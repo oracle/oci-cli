@@ -50,12 +50,24 @@ PRIMITIVE_TYPES_TO_EXAMPLE_KEY_VALUES = {
 }
 
 
-def json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type=None):
+def json_skeleton_generation_handler(input_params_to_complex_types={}, output_type=None):
     def inner_decorator(func):
         @functools.wraps(func)
         def wrapped_call(ctx, *args, **kwargs):
+            cli_util.load_context_obj_values_from_defaults(ctx)
+
             ctx.obj['input_params_to_complex_types'] = input_params_to_complex_types
             ctx.obj['output_type'] = output_type
+
+            if ctx.obj['generate_full_command_json_input'] and ctx.obj['generate_param_json_input']:
+                raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+            elif ctx.obj['generate_full_command_json_input']:
+                generate_json_skeleton_for_full_command(ctx)
+                sys.exit(0)
+            elif ctx.obj['generate_param_json_input']:
+                generate_json_skeleton_for_option(ctx, ctx.obj['generate_param_json_input'])
+                sys.exit(0)
+
             func(ctx, *args, **kwargs)
         return wrapped_call
 
@@ -67,7 +79,7 @@ def json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type
 # to non-required. This will let us pass into the command method body and actually do the JSON rendering
 #
 # This path is a bit strange (e.g. why don't we just process JSON in the callback), but it's done like this because at the time the
-# callback gets invoked the @json_skeleton_utils.json_skeleton_wrapper_metadata decorator hasn't been processed and so we don't have
+# callback gets invoked the @json_skeleton_utils.json_skeleton_generation_handler decorator hasn't been processed and so we don't have
 # enough of the metadata mapping to generate the JSON (this will be available once we pass into the method body)
 def generate_json_skeleton_click_callback(ctx, param, value):
     if value:
@@ -90,7 +102,11 @@ def generate_json_skeleton_for_option(ctx, option_name):
     if option_name is None:
         return None
 
-    print(json.dumps(generate_input_dict_for_skeleton(ctx, option_name), indent=2, sort_keys=True))
+    if option_name not in ctx.obj['input_params_to_complex_types']:
+        click.echo(message='Option {} is not a recognized complex type, so no example JSON can be produced. Invoke help for this command (--help/-h/-?) to see available documentation on this option'.format(option_name), file=sys.stderr)
+    else:
+        print(json.dumps(generate_input_dict_for_skeleton(ctx, option_name), indent=2, sort_keys=True))
+
     ctx.exit(0)
 
 
@@ -241,7 +257,6 @@ def cli_json_input_callback(ctx, param, value):
         ctx.obj['input_params_to_complex_types'] = param.type.json_input_metadata
 
     parsed_json = cli_util.parse_json_parameter('from-json', value)
-
     if parsed_json:
         # We need to have some sort of key-value mapping at the top level in order to work propery.
         # If someone passes us an array of JSON objects, that's valid JSON and will parse successfully but
@@ -249,9 +264,17 @@ def cli_json_input_callback(ctx, param, value):
         if not isinstance(parsed_json, abc.Mapping):
             sys.exit('We expect a JSON object to be provided to --from-json')
 
+        option_name_to_cannonical_name = {}
+        for param in ctx.command.params:
+            for o in param.opts:
+                if o.startswith('--'):
+                    option_name_to_cannonical_name[o[2:]] = param.name
+                elif o.startswith('-'):
+                    option_name_to_cannonical_name[o[1:]] = param.name
+
         if ctx.default_map is None:
             ctx.default_map = {}
-        for key, value in six.iteritems(parsed_json):
+        for key, val in six.iteritems(parsed_json):
             # Even if parsed_json[key] represents a JSON object or an array of JSON objects, we will leave their keys as-is without
             # converting them to underscores. The reason for this is that the top-level keys correspond to named parameters we pass
             # to each command method and so we underscore their names to help map the key to the named parameter.
@@ -259,7 +282,11 @@ def cli_json_input_callback(ctx, param, value):
             # Deeper than that we're dealing with a complex object which a customer would usually pass as a command line argument
             # as a JSON string or a reference to a JSON file, in which case it's just going to get shuttled along to the underlying
             # Python SDK functionality anyway, so we leave it untouched
-            ctx.default_map[underscore(key)] = value
+            underscored_key = underscore(key)
+            ctx.default_map[underscored_key] = val
+
+            if underscored_key in option_name_to_cannonical_name:
+                ctx.default_map[option_name_to_cannonical_name[underscored_key]] = val
 
     return value
 

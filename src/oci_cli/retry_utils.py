@@ -99,18 +99,18 @@ def list_call_get_all_results(list_func_ref, retry_strategy_name, **func_kwargs)
     return final_response
 
 
-def call_funtion_with_default_retries(func_ref, **func_kwargs):
-    return call_function_with_retries(func_ref, DEFAULT_RETRY_STRATEGY_NAME, **func_kwargs)
+def call_funtion_with_default_retries(func_ref, *func_args, **func_kwargs):
+    return call_function_with_retries(func_ref, DEFAULT_RETRY_STRATEGY_NAME, *func_args, **func_kwargs)
 
 
 # Generic wrapper which can be used to call with retries the function referenced by func_ref
 # with the keyword arguments defined in the func_kwargs dict.
-def call_function_with_retries(func_ref, retry_strategy_name, **func_kwargs):
+def call_function_with_retries(func_ref, retry_strategy_name, *func_args, **func_kwargs):
     retry_strategy = RetryStrategies().get_retry_strategy(retry_strategy_name)
     if retry_strategy is None:
         raise RuntimeError('No retry strategy with name {} is defined'.format(retry_strategy_name))
 
-    return retry_strategy.call(func_ref, **func_kwargs)
+    return retry_strategy.call(func_ref, *func_args, **func_kwargs)
 
 
 # A singleton which serves as a repository of retry strategies which are available to the application.

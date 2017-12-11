@@ -181,7 +181,13 @@ def invoke_command_as_admin(command, ** args):
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:
         command_output = CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
-        if should_retry(command_output.output):
+
+        if command_output.exception:
+            output_to_test = str(command_output.exception)
+        else:
+            output_to_test = command_output.output
+
+        if should_retry(output_to_test):
             num_tries += 1
             if num_tries >= NUM_INVOKE_COMMAND_RETRIES:
                 return command_output
@@ -202,7 +208,13 @@ def invoke_command(command, ** args):
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:
         command_output = CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
-        if should_retry(command_output.output):
+
+        if command_output.exception:
+            output_to_test = str(command_output.exception)
+        else:
+            output_to_test = command_output.output
+
+        if should_retry(output_to_test):
             num_tries += 1
             if num_tries >= NUM_INVOKE_COMMAND_RETRIES:
                 return command_output
@@ -324,7 +336,7 @@ def check_json_key_format(json_data):
         pass
     elif isinstance(json_data, abc.Mapping):
         for key, value in six.iteritems(json_data):
-            if key != "metadata" and key != "extended-metadata":
+            if key != "metadata" and key != "extended-metadata" and key != "backend-sets" and key != "certificates" and key != "default-backend-set-name":
                 assert "_" not in key
                 assert key.islower()
                 check_json_key_format(value)
@@ -522,3 +534,15 @@ def should_retry(command_output):
             return False
     else:
         return False
+
+
+def get_json_from_mixed_string(source_string):
+    lines = source_string.split('\n')
+    json_str = ''
+    object_begun = False
+    for line in lines:
+        if object_begun or line.startswith('{'):
+            object_begun = True
+            json_str += line
+
+    return json.loads(json_str)

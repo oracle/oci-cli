@@ -3,7 +3,9 @@
 
 from __future__ import print_function
 import click
+import oci  # noqa: F401
 import six  # noqa: F401
+import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
@@ -60,6 +62,17 @@ def instance_group():
     pass
 
 
+@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot an Compute instance. For more information, see
+[Overview of Boot Volumes].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def boot_volume_group():
+    pass
+
+
 @click.command(cli_util.override('shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance].
 For more information, see [Overview of the Compute Service].""")
 @cli_util.help_option_group
@@ -85,11 +98,17 @@ def volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with serial console access to virtual machine (VM) instances,
+@click.command(cli_util.override('boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.""")
+@cli_util.help_option_group
+def boot_volume_attachment_group():
+    pass
+
+
+@click.command(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to virtual machine (VM) instances,
 enabling you to troubleshoot malfunctioning instances remotely.
 
-For more information about serial console access, see
-[Accessing the Serial Console].""")
+For more information about console access, see
+[Accessing the Console].""")
 @cli_util.help_option_group
 def instance_console_connection_group():
     pass
@@ -103,37 +122,66 @@ def console_history_group():
     pass
 
 
+@boot_volume_attachment_group.command(name=cli_util.override('attach_boot_volume.command_name', 'attach'), help="""Attaches the specified boot volume to the specified instance.""")
+@click.option('--boot-volume-id', callback=cli_util.handle_required_param, help="""The OCID of the  boot volume. [required]""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeAttachment'})
+@cli_util.wrap_exceptions
+def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, instance_id, display_name):
+    kwargs = {}
+
+    details = {}
+    details['bootVolumeId'] = boot_volume_id
+    details['instanceId'] = instance_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.attach_boot_volume(
+        attach_boot_volume_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume_attachment') and callable(getattr(client, 'get_boot_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vnic_attachment_group.command(name=cli_util.override('attach_vnic.command_name', 'attach'), help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
-@click.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating a new VNIC. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--display-name', help="""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
-@click.option('--nic-index', type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use. For more information, see [Virtual Network Interface Cards (VNICs)].""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--create-vnic-details', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating a new VNIC. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
+@click.option('--nic-index', callback=cli_util.handle_optional_param, type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}}, output_type={'module': 'core', 'class': 'VnicAttachment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}}, output_type={'module': 'core', 'class': 'VnicAttachment'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, create_vnic_details, instance_id, display_name, nic_index):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    create_vnic_details = cli_util.coalesce_provided_and_default_value(ctx, 'create-vnic-details', create_vnic_details, True)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    nic_index = cli_util.coalesce_provided_and_default_value(ctx, 'nic-index', nic_index, False)
-
+def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, create_vnic_details, instance_id, display_name, nic_index):
     kwargs = {}
 
     details = {}
@@ -151,40 +199,39 @@ def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
         attach_vnic_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_vnic_attachment') and callable(getattr(client, 'get_vnic_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vnic_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @volume_attachment_group.command(name=cli_util.override('attach_volume.command_name', 'attach'), help="""Attaches the specified storage volume to the specified instance.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--type', help="""The type of volume. The only supported value is \"iscsi\". [required]""")
-@click.option('--volume-id', help="""The OCID of the volume. [required]""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--type', callback=cli_util.handle_required_param, help="""The type of volume. The only supported value is \"iscsi\". [required]""")
+@click.option('--volume-id', callback=cli_util.handle_required_param, help="""The OCID of the volume. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, type, volume_id, display_name):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    type = cli_util.coalesce_provided_and_default_value(ctx, 'type', type, True)
-    volume_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-id', volume_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-
+def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, display_name):
     kwargs = {}
 
     details = {}
@@ -200,6 +247,22 @@ def attach_volume(ctx, generate_full_command_json_input, generate_param_json_inp
         attach_volume_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -208,32 +271,17 @@ def attach_volume(ctx, generate_full_command_json_input, generate_param_json_inp
 The `CaptureConsoleHistory` operation works with the other console history operations as described below.
 
 1. Use `CaptureConsoleHistory` to request the capture of up to a megabyte of the most recent console history. This call returns a `ConsoleHistory` object. The object will have a state of REQUESTED. 2. Wait for the capture operation to succeed by polling `GetConsoleHistory` with the identifier of the console history metadata. The state of the `ConsoleHistory` object will go from REQUESTED to GETTING-HISTORY and then SUCCEEDED (or FAILED). 3. Use `GetConsoleHistoryContent` to get the actual console history data (not the metadata). 4. Optionally, use `DeleteConsoleHistory` to delete the console history metadata and the console history data.""")
-@click.option('--instance-id', help="""The OCID of the instance to get the console history from. [required]""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance to get the console history from. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
 @cli_util.wrap_exceptions
-def capture_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, display_name):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-
+def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, display_name):
     kwargs = {}
 
     details = {}
@@ -247,6 +295,22 @@ def capture_console_history(ctx, generate_full_command_json_input, generate_para
         capture_console_history_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -263,40 +327,23 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
-@click.option('--compartment-id', help="""The OCID of the compartment containing the instance you want to use as the basis for the image. [required]""")
-@click.option('--display-name', help="""A user-friendly name for the image. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment containing the instance you want to use as the basis for the image. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the image. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 You cannot use an Oracle-provided image name as a custom image name.
 
 Example: `My Oracle Linux image`""")
-@click.option('--image-source-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an image through import""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--instance-id', help="""The OCID of the instance you want to use as the basis for the image.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--image-source-details', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an image through import""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--instance-id', callback=cli_util.handle_optional_param, help="""The OCID of the instance you want to use as the basis for the image.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def create_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, display_name, image_source_details, instance_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    image_source_details = cli_util.coalesce_provided_and_default_value(ctx, 'image-source-details', image_source_details, False)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
-
+def create_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, image_source_details, instance_id):
     kwargs = {}
 
     details = {}
@@ -316,40 +363,39 @@ def create_image(ctx, generate_full_command_json_input, generate_param_json_inpu
         create_image_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('create_instance_console_connection.command_name', 'create'), help="""Creates a new serial console connection to the specified instance. Once the serial console connection has been created and is available, you connect to the serial console using an SSH client.
+@instance_console_connection_group.command(name=cli_util.override('create_instance_console_connection.command_name', 'create'), help="""Creates a new console connection to the specified instance. Once the console connection has been created and is available, you connect to the console using SSH.
 
-The default number of enabled serial console connections per tenancy is 10.
-
-For more information about serial console access, see [Accessing the Serial Console].""")
-@click.option('--instance-id', help="""The OCID of the instance to create the serial console connection to. [required]""")
-@click.option('--public-key', help="""The SSH public key used to authenticate the serial console connection. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+For more information about console access, see [Accessing the Console].""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance to create the console connection to. [required]""")
+@click.option('--public-key', callback=cli_util.handle_required_param, help="""The SSH public key used to authenticate the console connection. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
-def create_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, public_key):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    public_key = cli_util.coalesce_provided_and_default_value(ctx, 'public-key', public_key, True)
-
+def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, public_key):
     kwargs = {}
 
     details = {}
@@ -361,40 +407,41 @@ def create_instance_console_connection(ctx, generate_full_command_json_input, ge
         create_instance_console_connection_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_instance_console_connection') and callable(getattr(client, 'get_instance_console_connection')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance_console_connection, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('delete_console_history.command_name', 'delete'), help="""Deletes the specified console history metadata and the console history data.""")
-@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--instance-console-history-id', callback=cli_util.handle_required_param, help="""The OCID of the console history. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_history_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_history_id, if_match):
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -403,40 +450,41 @@ def delete_console_history(ctx, generate_full_command_json_input, generate_param
         instance_console_history_id=instance_console_history_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, instance_console_history_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('delete_image.command_name', 'delete'), help="""Deletes an image.""")
-@click.option('--image-id', help="""The OCID of the image. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--image-id', callback=cli_util.handle_required_param, help="""The OCID of the image. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, if_match):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -445,40 +493,41 @@ def delete_image(ctx, generate_full_command_json_input, generate_param_json_inpu
         image_id=image_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, image_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('delete_instance_console_connection.command_name', 'delete'), help="""Deletes the specified serial console connection.""")
-@click.option('--instance-console-connection-id', help="""The OCID of the intance console connection [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_console_connection_group.command(name=cli_util.override('delete_instance_console_connection.command_name', 'delete'), help="""Deletes the specified instance console connection.""")
+@click.option('--instance-console-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the intance console connection [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_connection_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_console_connection_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-connection-id', instance_console_connection_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_connection_id, if_match):
 
     if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -487,42 +536,66 @@ def delete_instance_console_connection(ctx, generate_full_command_json_input, ge
         instance_console_connection_id=instance_console_connection_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_instance_console_connection') and callable(getattr(client, 'get_instance_console_connection')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance_console_connection, instance_console_connection_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_group.command(name=cli_util.override('detach_boot_volume.command_name', 'detach'), help="""Detaches a boot volume from an instance. You must specify the OCID of the boot volume attachment.
+
+This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
+@click.option('--boot-volume-attachment-id', callback=cli_util.handle_required_param, help="""The OCID of the boot volume attachment. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def detach_boot_volume(ctx, from_json, boot_volume_attachment_id, if_match):
+
+    if isinstance(boot_volume_attachment_id, six.string_types) and len(boot_volume_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('compute', ctx)
+    result = client.detach_boot_volume(
+        boot_volume_attachment_id=boot_volume_attachment_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
 @vnic_attachment_group.command(name=cli_util.override('detach_vnic.command_name', 'detach'), help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.
 
 **Important:** If the VNIC has a [private IP] that is the [target of a route rule], deleting the VNIC causes that route rule to blackhole and the traffic will be dropped.""")
-@click.option('--vnic-attachment-id', help="""The OCID of the VNIC attachment. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--vnic-attachment-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC attachment. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def detach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_attachment_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    vnic_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-attachment-id', vnic_attachment_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def detach_vnic(ctx, from_json, vnic_attachment_id, if_match):
 
     if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -537,36 +610,18 @@ def detach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
 @volume_group.command(name=cli_util.override('detach_volume.command_name', 'detach'), help="""Detaches a storage volume from an instance. You must specify the OCID of the volume attachment.
 
 This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
-@click.option('--volume-attachment-id', help="""The OCID of the volume attachment. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--volume-attachment-id', callback=cli_util.handle_required_param, help="""The OCID of the volume attachment. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def detach_volume(ctx, generate_full_command_json_input, generate_param_json_input, from_json, volume_attachment_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    volume_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-attachment-id', volume_attachment_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def detach_volume(ctx, from_json, volume_attachment_id, if_match):
 
     if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -585,37 +640,18 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
-@click.option('--image-id', help="""The OCID of the image. [required]""")
-@click.option('--destination-type', help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--image-id', callback=cli_util.handle_required_param, help="""The OCID of the image. [required]""")
+@click.option('--destination-type', callback=cli_util.handle_required_param, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, destination_type, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
-    destination_type = cli_util.coalesce_provided_and_default_value(ctx, 'destination-type', destination_type, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def export_image(ctx, from_json, image_id, destination_type, if_match):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -632,34 +668,37 @@ def export_image(ctx, generate_full_command_json_input, generate_param_json_inpu
     cli_util.render_response(result, ctx)
 
 
-@console_history_group.command(name=cli_util.override('get_console_history.command_name', 'get'), help="""Shows the metadata for the specified console history. See [CaptureConsoleHistory] for details about using the console history operations.""")
-@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@boot_volume_attachment_group.command(name=cli_util.override('get_boot_volume_attachment.command_name', 'get'), help="""Gets information about the specified boot volume attachment.""")
+@click.option('--boot-volume-attachment-id', callback=cli_util.handle_required_param, help="""The OCID of the boot volume attachment. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeAttachment'})
 @cli_util.wrap_exceptions
-def get_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_history_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
+    if isinstance(boot_volume_attachment_id, six.string_types) and len(boot_volume_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_boot_volume_attachment(
+        boot_volume_attachment_id=boot_volume_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
+
+@console_history_group.command(name=cli_util.override('get_console_history.command_name', 'get'), help="""Shows the metadata for the specified console history. See [CaptureConsoleHistory] for details about using the console history operations.""")
+@click.option('--instance-console-history-id', callback=cli_util.handle_required_param, help="""The OCID of the console history. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
+@cli_util.wrap_exceptions
+def get_console_history(ctx, from_json, instance_console_history_id):
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_console_history(
@@ -670,42 +709,19 @@ def get_console_history(ctx, generate_full_command_json_input, generate_param_js
 
 
 @console_history_group.command(name=cli_util.override('get_console_history_content.command_name', 'get-console-history-content'), help="""Gets the actual console history data (not the metadata). See [CaptureConsoleHistory] for details about using the console history operations.""")
-@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
-@click.option('--file', type=click.File(mode='wb'), help="The name of the file that will receive the response data, or '-' to write to STDOUT. [required]")
-@click.option('--offset', type=click.INT, help="""Offset of the snapshot data to retrieve.""")
-@click.option('--length', type=click.INT, help="""Length of the snapshot data to retrieve.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-console-history-id', callback=cli_util.handle_required_param, help="""The OCID of the console history. [required]""")
+@click.option('--file', type=click.File(mode='wb'), callback=cli_util.handle_required_param, help="The name of the file that will receive the response data, or '-' to write to STDOUT. [required]")
+@click.option('--offset', callback=cli_util.handle_optional_param, type=click.INT, help="""Offset of the snapshot data to retrieve.""")
+@click.option('--length', callback=cli_util.handle_optional_param, type=click.INT, help="""Length of the snapshot data to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def get_console_history_content(ctx, generate_full_command_json_input, generate_param_json_input, from_json, file, instance_console_history_id, offset, length):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
-    offset = cli_util.coalesce_provided_and_default_value(ctx, 'offset', offset, False)
-    length = cli_util.coalesce_provided_and_default_value(ctx, 'length', length, False)
+def get_console_history_content(ctx, from_json, file, instance_console_history_id, offset, length):
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
-    if not file:
-        file_from_default_values = cli_util.get_click_file_from_default_values_file(ctx, 'file', 'wb', True)
-        if file_from_default_values:
-            file = file_from_default_values
-
     kwargs = {}
     if offset is not None:
         kwargs['offset'] = offset
@@ -720,33 +736,16 @@ def get_console_history_content(ctx, generate_full_command_json_input, generate_
 
 
 @image_group.command(name=cli_util.override('get_image.command_name', 'get'), help="""Gets the specified image.""")
-@click.option('--image-id', help="""The OCID of the image. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--image-id', callback=cli_util.handle_required_param, help="""The OCID of the image. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def get_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
+def get_image(ctx, from_json, image_id):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_image(
@@ -757,33 +756,16 @@ def get_image(ctx, generate_full_command_json_input, generate_param_json_input, 
 
 
 @instance_group.command(name=cli_util.override('get_instance.command_name', 'get'), help="""Gets information about the specified instance.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def get_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+def get_instance(ctx, from_json, instance_id):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance(
@@ -793,34 +775,17 @@ def get_instance(ctx, generate_full_command_json_input, generate_param_json_inpu
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('get_instance_console_connection.command_name', 'get'), help="""Gets the specified serial console connection's information.""")
-@click.option('--instance-console-connection-id', help="""The OCID of the intance console connection [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@instance_console_connection_group.command(name=cli_util.override('get_instance_console_connection.command_name', 'get'), help="""Gets the specified instance console connection's information.""")
+@click.option('--instance-console-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the intance console connection [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
-def get_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_connection_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_console_connection_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-connection-id', instance_console_connection_id, True)
+def get_instance_console_connection(ctx, from_json, instance_console_connection_id):
 
     if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance_console_connection(
@@ -831,33 +796,16 @@ def get_instance_console_connection(ctx, generate_full_command_json_input, gener
 
 
 @vnic_attachment_group.command(name=cli_util.override('get_vnic_attachment.command_name', 'get'), help="""Gets the information for the specified VNIC attachment.""")
-@click.option('--vnic-attachment-id', help="""The OCID of the VNIC attachment. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--vnic-attachment-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC attachment. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VnicAttachment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VnicAttachment'})
 @cli_util.wrap_exceptions
-def get_vnic_attachment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_attachment_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    vnic_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-attachment-id', vnic_attachment_id, True)
+def get_vnic_attachment(ctx, from_json, vnic_attachment_id):
 
     if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_vnic_attachment(
@@ -868,33 +816,16 @@ def get_vnic_attachment(ctx, generate_full_command_json_input, generate_param_js
 
 
 @volume_attachment_group.command(name=cli_util.override('get_volume_attachment.command_name', 'get'), help="""Gets information about the specified volume attachment.""")
-@click.option('--volume-attachment-id', help="""The OCID of the volume attachment. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--volume-attachment-id', callback=cli_util.handle_required_param, help="""The OCID of the volume attachment. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def get_volume_attachment(ctx, generate_full_command_json_input, generate_param_json_input, from_json, volume_attachment_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    volume_attachment_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-attachment-id', volume_attachment_id, True)
+def get_volume_attachment(ctx, from_json, volume_attachment_id):
 
     if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_volume_attachment(
@@ -905,33 +836,16 @@ def get_volume_attachment(ctx, generate_full_command_json_input, generate_param_
 
 
 @instance_credentials_group.command(name=cli_util.override('get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help="""Gets the generated credentials for the instance. Only works for Windows instances. The returned credentials are only valid for the initial login.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceCredentials'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceCredentials'})
 @cli_util.wrap_exceptions
-def get_windows_instance_initial_credentials(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
+def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
-
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_windows_instance_initial_credentials(
@@ -952,37 +866,21 @@ def get_windows_instance_initial_credentials(ctx, generate_full_command_json_inp
 **reset** - power off and power on
 
 Note that the **stop** state has no effect on the resources you consume. Billing continues for instances that you stop, and related resources continue to apply against any relevant quotas. You must terminate an instance ([TerminateInstance]) to remove its resources from billing and quotas.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--action', help="""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--action', callback=cli_util.handle_required_param, help="""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def instance_action(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, action, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    action = cli_util.coalesce_provided_and_default_value(ctx, 'action', action, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -992,6 +890,22 @@ def instance_action(ctx, generate_full_command_json_input, generate_param_json_i
         action=action,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1006,25 +920,25 @@ All Oracle Cloud Infrastructure resources, including instances, get an Oracle-as
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
-@click.option('--availability-domain', help="""The Availability Domain of the instance.
+@click.option('--availability-domain', callback=cli_util.handle_required_param, help="""The Availability Domain of the instance.
 
 Example: `Uocm:PHX-AD-1` [required]""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--image-id', help="""The OCID of the image used to boot the instance. [required]""")
-@click.option('--shape', help="""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--shape', callback=cli_util.handle_required_param, help="""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
 
 You can enumerate all available shapes by calling [ListShapes]. [required]""")
-@click.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+@click.option('--create-vnic-details', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@click.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
+@click.option('--extended-metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
 
 They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
 
 If you don't need nested metadata values, it is strongly advised to avoid using this object and use the Metadata object instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--hostname-label', help="""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
-@click.option('--ipxe-script-file', type=click.File(mode='r'), help="""This is an advanced option.
+@click.option('--hostname-label', callback=cli_util.handle_optional_param, help="""Deprecated. Instead Use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
+@click.option('--image-id', callback=cli_util.handle_optional_param, help="""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@click.option('--ipxe-script-file', callback=cli_util.handle_optional_param, type=click.File(mode='r'), help="""This is an advanced option.
 
 When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
 
@@ -1035,7 +949,7 @@ The default iPXE script connects to the instance's local boot volume over iSCSI 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
 For more information about iPXE, see http://ipxe.org.""")
-@click.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
+@click.option('--metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
 
@@ -1066,50 +980,22 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
      curl http://169.254.169.254/opc/v1/instance/      curl http://169.254.169.254/opc/v1/instance/metadata/      curl http://169.254.169.254/opc/v1/instance/metadata/<any-key-name>
 
  You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--subnet-id', help="""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}})
+@click.option('--source-details', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--subnet-id', callback=cli_util.handle_optional_param, help="""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, availability_domain, compartment_id, image_id, shape, create_vnic_details, display_name, extended_metadata, hostname_label, ipxe_script_file, metadata, subnet_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, True)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
-    shape = cli_util.coalesce_provided_and_default_value(ctx, 'shape', shape, True)
-    create_vnic_details = cli_util.coalesce_provided_and_default_value(ctx, 'create-vnic-details', create_vnic_details, False)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    extended_metadata = cli_util.coalesce_provided_and_default_value(ctx, 'extended-metadata', extended_metadata, False)
-    hostname_label = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', hostname_label, False)
-    metadata = cli_util.coalesce_provided_and_default_value(ctx, 'metadata', metadata, False)
-    subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, False)
-
-    if not ipxe_script_file:
-        file_from_default_values = cli_util.get_click_file_from_default_values_file(ctx, 'ipxe-script-file', 'r', False)
-        if file_from_default_values:
-            ipxe_script_file = file_from_default_values
-
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, display_name, extended_metadata, hostname_label, image_id, ipxe_script_file, metadata, source_details, subnet_id):
     kwargs = {}
 
     details = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
-    details['imageId'] = image_id
     details['shape'] = shape
 
     if create_vnic_details is not None:
@@ -1124,11 +1010,17 @@ def launch_instance(ctx, generate_full_command_json_input, generate_param_json_i
     if hostname_label is not None:
         details['hostnameLabel'] = hostname_label
 
+    if image_id is not None:
+        details['imageId'] = image_id
+
     if ipxe_script_file is not None:
         details['ipxeScript'] = ipxe_script_file.read()
 
     if metadata is not None:
         details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if source_details is not None:
+        details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if subnet_id is not None:
         details['subnetId'] = subnet_id
@@ -1138,62 +1030,113 @@ def launch_instance(ctx, generate_full_command_json_input, generate_param_json_i
         launch_instance_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_attachment_group.command(name=cli_util.override('list_boot_volume_attachments.command_name', 'list'), help="""Lists the boot volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, boot volume OCID, or both.""")
+@click.option('--availability-domain', callback=cli_util.handle_required_param, help="""The name of the Availability Domain.
+
+Example: `Uocm:PHX-AD-1` [required]""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--instance-id', callback=cli_util.handle_optional_param, help="""The OCID of the instance.""")
+@click.option('--boot-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of the boot volume.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BootVolumeAttachment]'})
+@cli_util.wrap_exceptions
+def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page, instance_id, boot_volume_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if instance_id is not None:
+        kwargs['instance_id'] = instance_id
+    if boot_volume_id is not None:
+        kwargs['boot_volume_id'] = boot_volume_id
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_boot_volume_attachments,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_boot_volume_attachments,
+            limit,
+            page_size,
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_boot_volume_attachments(
+            availability_domain=availability_domain,
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('list_console_histories.command_name', 'list'), help="""Lists the console history metadata for the specified compartment or instance.""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--availability-domain', help="""The name of the Availability Domain.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--instance-id', help="""The OCID of the instance.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--instance-id', callback=cli_util.handle_optional_param, help="""The OCID of the instance.""")
+@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ConsoleHistory]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ConsoleHistory]'})
 @cli_util.wrap_exceptions
-def list_console_histories(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, instance_id, sort_by, sort_order, lifecycle_state):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, instance_id, sort_by, sort_order, lifecycle_state):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
-    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
-    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
-    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
-
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1236,60 +1179,34 @@ def list_console_histories(ctx, generate_full_command_json_input, generate_param
 
 
 @image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. If you specify a value for the `sortBy` parameter, Oracle-provided images appear first in the list, followed by custom images. For more information about images, see [Managing Custom Images].""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@click.option('--operating-system', help="""The image's operating system.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--operating-system', callback=cli_util.handle_optional_param, help="""The image's operating system.
 
 Example: `Oracle Linux`""")
-@click.option('--operating-system-version', help="""The image's operating system version.
+@click.option('--operating-system-version', callback=cli_util.handle_optional_param, help="""The image's operating system version.
 
 Example: `7.2`""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Image]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Image]'})
 @cli_util.wrap_exceptions
-def list_images(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, display_name, operating_system, operating_system_version, limit, page, sort_by, sort_order, lifecycle_state):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_name, operating_system, operating_system_version, limit, page, sort_by, sort_order, lifecycle_state):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    operating_system = cli_util.coalesce_provided_and_default_value(ctx, 'operating-system', operating_system, False)
-    operating_system_version = cli_util.coalesce_provided_and_default_value(ctx, 'operating-system-version', operating_system_version, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
-    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
-    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
@@ -1333,47 +1250,26 @@ def list_images(ctx, generate_full_command_json_input, generate_param_json_input
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('list_instance_console_connections.command_name', 'list'), help="""Lists the serial console connections for the specified compartment or instance.
+@instance_console_connection_group.command(name=cli_util.override('list_instance_console_connections.command_name', 'list'), help="""Lists the console connections for the specified compartment or instance.
 
-For more information about serial console access, see [Accessing the Serial Console].""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--instance-id', help="""The OCID of the instance.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+For more information about console access, see [Accessing the Instance Console].""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--instance-id', callback=cli_util.handle_optional_param, help="""The OCID of the instance.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[InstanceConsoleConnection]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[InstanceConsoleConnection]'})
 @cli_util.wrap_exceptions
-def list_instance_console_connections(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, instance_id, limit, page):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_instance_console_connections(ctx, from_json, all_pages, page_size, compartment_id, instance_id, limit, page):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if instance_id is not None:
         kwargs['instance_id'] = instance_id
@@ -1408,58 +1304,33 @@ def list_instance_console_connections(ctx, generate_full_command_json_input, gen
 
 
 @instance_group.command(name=cli_util.override('list_instances.command_name', 'list'), help="""Lists the instances in the specified compartment and the specified Availability Domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--availability-domain', help="""The name of the Availability Domain.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
-@click.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@click.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Instance]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Instance]'})
 @cli_util.wrap_exceptions
-def list_instances(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, limit, page, sort_by, sort_order, lifecycle_state):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, limit, page, sort_by, sort_order, lifecycle_state):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    sort_by = cli_util.coalesce_provided_and_default_value(ctx, 'sort-by', sort_by, False)
-    sort_order = cli_util.coalesce_provided_and_default_value(ctx, 'sort-order', sort_order, False)
-    lifecycle_state = cli_util.coalesce_provided_and_default_value(ctx, 'lifecycle-state', lifecycle_state, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
-
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1502,48 +1373,26 @@ def list_instances(ctx, generate_full_command_json_input, generate_param_json_in
 
 
 @shape_group.command(name=cli_util.override('list_shapes.command_name', 'list'), help="""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image.""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--availability-domain', help="""The name of the Availability Domain.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--image-id', help="""The OCID of an image.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--image-id', callback=cli_util.handle_optional_param, help="""The OCID of an image.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Shape]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Shape]'})
 @cli_util.wrap_exceptions
-def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, image_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, image_id):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1580,50 +1429,27 @@ def list_shapes(ctx, generate_full_command_json_input, generate_param_json_input
 
 
 @vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help="""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or Availability Domain.""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--availability-domain', help="""The name of the Availability Domain.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--instance-id', help="""The OCID of the instance.""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--instance-id', callback=cli_util.handle_optional_param, help="""The OCID of the instance.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--vnic-id', help="""The OCID of the VNIC.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--vnic-id', callback=cli_util.handle_optional_param, help="""The OCID of the VNIC.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VnicAttachment]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VnicAttachment]'})
 @cli_util.wrap_exceptions
-def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, instance_id, limit, page, vnic_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, instance_id, limit, page, vnic_id):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1664,50 +1490,27 @@ def list_vnic_attachments(ctx, generate_full_command_json_input, generate_param_
 @volume_attachment_group.command(name=cli_util.override('list_volume_attachments.command_name', 'list'), help="""Lists the volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, volume OCID, or both.
 
 Currently, the only supported volume attachment type is [IScsiVolumeAttachment].""")
-@click.option('--compartment-id', help="""The OCID of the compartment. [required]""")
-@click.option('--availability-domain', help="""The name of the Availability Domain.
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--instance-id', help="""The OCID of the instance.""")
-@click.option('--volume-id', help="""The OCID of the volume.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--instance-id', callback=cli_util.handle_optional_param, help="""The OCID of the instance.""")
+@click.option('--volume-id', callback=cli_util.handle_optional_param, help="""The OCID of the volume.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeAttachment]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeAttachment]'})
 @cli_util.wrap_exceptions
-def list_volume_attachments(ctx, generate_full_command_json_input, generate_param_json_input, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, instance_id, volume_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page, instance_id, volume_id):
 
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    availability_domain = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', availability_domain, False)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, False)
-    volume_id = cli_util.coalesce_provided_and_default_value(ctx, 'volume-id', volume_id, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1747,80 +1550,70 @@ def list_volume_attachments(ctx, generate_full_command_json_input, generate_para
 
 @instance_group.command(name=cli_util.override('terminate_instance.command_name', 'terminate'), help="""Terminates the specified instance. Any attached VNICs and volumes are automatically detached when the instance terminates.
 
+To preserve the boot volume associated with the instance, specify `true` for `PreserveBootVolumeQueryParam`. To delete the boot volume when the instance is deleted, specify `false` or do not specify a value for `PreserveBootVolumeQueryParam`.
+
 This is an asynchronous operation. The instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--preserve-boot-volume', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Specifies whether to delete or preserve the boot volume when terminating an instance.""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def terminate_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, if_match, preserve_boot_volume):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if preserve_boot_volume is not None:
+        kwargs['preserve_boot_volume'] = preserve_boot_volume
     client = cli_util.build_client('compute', ctx)
     result = client.terminate_instance(
         instance_id=instance_id,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, instance_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @console_history_group.command(name=cli_util.override('update_console_history.command_name', 'update'), help="""Updates the specified console history metadata.""")
-@click.option('--instance-console-history-id', help="""The OCID of the console history. [required]""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-console-history-id', callback=cli_util.handle_required_param, help="""The OCID of the console history. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
 @cli_util.wrap_exceptions
-def update_console_history(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_console_history_id, display_name, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_console_history_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-console-history-id', instance_console_history_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_history_id, display_name, if_match):
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1836,43 +1629,43 @@ def update_console_history(ctx, generate_full_command_json_input, generate_param
         update_console_history_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @image_group.command(name=cli_util.override('update_image.command_name', 'update'), help="""Updates the display name of the image. Avoid entering confidential information.""")
-@click.option('--image-id', help="""The OCID of the image. [required]""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+@click.option('--image-id', callback=cli_util.handle_required_param, help="""The OCID of the image. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My custom Oracle Linux image`""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def update_image(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, display_name, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, display_name, if_match):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1888,43 +1681,43 @@ def update_image(ctx, generate_full_command_json_input, generate_param_json_inpu
         update_image_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
 @instance_group.command(name=cli_util.override('update_instance.command_name', 'update'), help="""Updates the display name of the specified instance. Avoid entering confidential information. The OCID of the instance remains the same.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@click.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, display_name, if_match):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
+def update_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, display_name, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
-
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1940,4 +1733,20 @@ def update_instance(ctx, generate_full_command_json_input, generate_param_json_i
         update_instance_details=details,
         **kwargs
     )
+    if wait_for_state:
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

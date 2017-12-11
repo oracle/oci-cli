@@ -14,12 +14,14 @@ from oci import wait_until
 from oci.exceptions import ServiceError
 from oci.exceptions import MaximumWaitTimeExceeded
 from . import cli_util
+from . import custom_types
 from . import json_skeleton_utils
 from . import retry_utils
 from .aliasing import CommandGroupWithAlias
 
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_group)
+blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.boot_volume_group)
 
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 
@@ -72,7 +74,8 @@ For more information, see [DNS in Your Virtual Cloud Network]."""
 cli_util.update_param_help(compute_cli.launch_instance, 'metadata', compute_instance_launch_metadata_help, append=False, example=compute_instance_launch_metadata_example)
 cli_util.update_param_help(compute_cli.launch_instance, 'subnet_id', compute_instance_launch_subnet_id_help)
 cli_util.update_param_help(compute_cli.launch_instance, 'hostname_label', compute_instance_launch_hostname_label_help, example='`bminstance-1`')
-
+cli_util.update_param_help(compute_cli.launch_instance, 'source_details', """Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+cli_util.update_param_help(compute_cli.terminate_instance, 'preserve_boot_volume', """Defaults to true.""", append=True)
 
 image_source_details_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "sourceType": "objectStorageTuple" }'
 
@@ -176,35 +179,20 @@ def import_image_group():
     pass
 
 
-@cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type'])
+@cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
 @export_image_group.command(name='to-object', help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage Service using the namespace, bucket name, and object name to identify the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 """)
-@click.option('-ns', '--namespace', help='The Object Storage Service namespace to export the image to. [required]')
-@click.option('-bn', '--bucket-name', help='The name of the bucket to export the image to. [required]')
-@click.option('--name', help='The name which will be given to the exported image object. [required]')
+@click.option('-ns', '--namespace', callback=cli_util.handle_required_param, help='The Object Storage Service namespace to export the image to. [required]')
+@click.option('-bn', '--bucket-name', callback=cli_util.handle_required_param, help='The name of the bucket to export the image to. [required]')
+@click.option('--name', callback=cli_util.handle_required_param, help='The name which will be given to the exported image object. [required]')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image_to_object(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, if_match, namespace, bucket_name, name):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
-    namespace = cli_util.coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
-    bucket_name = cli_util.coalesce_provided_and_default_value(ctx, 'bucket-name', bucket_name, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
-
+def export_image_to_object(ctx, from_json, image_id, if_match, namespace, bucket_name, name):
     export_image_details = {}
     export_image_details['destinationType'] = 'objectStorageTuple'
     export_image_details['namespaceName'] = namespace
@@ -214,31 +202,18 @@ def export_image_to_object(ctx, generate_full_command_json_input, generate_param
     export_image_internal(ctx, image_id, export_image_details, if_match)
 
 
-@cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type'])
+@cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
 @export_image_group.command(name='to-object-uri', help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage Service using the Object Storage Service URL to identify the location to export to.
 
 For more information about exporting images, see [Image Import/Export].
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
 """)
-@click.option('--uri', required=True, help='The Object Storage URL to export the image to.')
+@click.option('--uri', callback=cli_util.handle_required_param, help='The Object Storage URL to export the image to.')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image_to_uri(ctx, generate_full_command_json_input, generate_param_json_input, from_json, image_id, if_match, uri):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    image_id = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', image_id, True)
-    uri = cli_util.coalesce_provided_and_default_value(ctx, 'uri', uri, True)
-    if_match = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', if_match, False)
-
+def export_image_to_uri(ctx, from_json, image_id, if_match, uri):
     export_image_details = {}
     export_image_details['destinationType'] = 'objectStorageUri'
     export_image_details['destinationUri'] = uri
@@ -261,7 +236,7 @@ def export_image_internal(ctx, image_id, export_image_details, if_match):
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id'])
+@cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
 @import_image_group.command(name='from-object', help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service using the namespace, bucket name, and object name to identify the location to import from.
 
 For more information about importing exported images, see [Image Import/Export].
@@ -269,28 +244,13 @@ For more information about importing exported images, see [Image Import/Export].
 You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].
 Avoid entering confidential information.
 """)
-@click.option('-ns', '--namespace', help='The Object Storage Service namespace to import the image from. [required]')
-@click.option('-bn', '--bucket-name', help='The name of the bucket to import the image from. [required]')
-@click.option('--name', help='The name of the object identifying the image to import. [required]')
+@click.option('-ns', '--namespace', callback=cli_util.handle_required_param, help='The Object Storage Service namespace to import the image from. [required]')
+@click.option('-bn', '--bucket-name', callback=cli_util.handle_required_param, help='The name of the bucket to import the image from. [required]')
+@click.option('--name', callback=cli_util.handle_required_param, help='The name of the object identifying the image to import. [required]')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def import_image_from_object(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, display_name, namespace, bucket_name, name):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    namespace = cli_util.coalesce_provided_and_default_value(ctx, 'namespace', namespace, True)
-    bucket_name = cli_util.coalesce_provided_and_default_value(ctx, 'bucket-name', bucket_name, True)
-    name = cli_util.coalesce_provided_and_default_value(ctx, 'name', name, True)
-
+def import_image_from_object(ctx, from_json, compartment_id, display_name, namespace, bucket_name, name):
     import_image_details = {}
     import_image_details['sourceType'] = 'objectStorageTuple'
     import_image_details['namespaceName'] = namespace
@@ -300,7 +260,7 @@ def import_image_from_object(ctx, generate_full_command_json_input, generate_par
     import_image_internal(ctx, compartment_id, display_name, import_image_details)
 
 
-@cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id'])
+@cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
 @import_image_group.command(name='from-object-uri', help="""Imports an exported image from the Oracle Cloud Infrastructure Object Storage Service using the Object Storage Service URL to identify the location to import from.
 
 For more information about importing exported images, see [Image Import/Export].
@@ -310,24 +270,11 @@ See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs
 You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].
 Avoid entering confidential information.
 """)
-@click.option('--uri', help='The Object Storage URL to import the image from. [required]')
+@click.option('--uri', callback=cli_util.handle_required_param, help='The Object Storage URL to import the image from. [required]')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def import_image_from_uri(ctx, generate_full_command_json_input, generate_param_json_input, from_json, compartment_id, display_name, uri):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    uri = cli_util.coalesce_provided_and_default_value(ctx, 'uri', uri, True)
-
+def import_image_from_uri(ctx, from_json, compartment_id, display_name, uri):
     import_image_details = {}
     import_image_details['sourceType'] = 'objectStorageUri'
     import_image_details['sourceUri'] = uri
@@ -355,39 +302,19 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
 
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', callback=cli_util.handle_optional_param, is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', callback=cli_util.handle_optional_param, type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vnic]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vnic]'})
 @cli_util.wrap_exceptions
-def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, limit, page, all_pages, page_size):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    limit = cli_util.coalesce_provided_and_default_value(ctx, 'limit', limit, False)
-    page = cli_util.coalesce_provided_and_default_value(ctx, 'page', page, False)
-    all_pages = cli_util.coalesce_provided_and_default_value(ctx, 'all', all_pages, False)
-    page_size = cli_util.coalesce_provided_and_default_value(ctx, 'page-size', page_size, False)
+def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
@@ -444,59 +371,19 @@ def list_vnics(ctx, generate_full_command_json_input, generate_param_json_input,
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.launch_instance, params_to_exclude=['create_vnic_details'])
-@compute_cli.instance_group.command(name='launch', help=compute_cli.launch_instance.help)
-@click.option('--vnic-display-name', required=False, help="""A user-friendly name for the default VNIC attached to this instance. Does not have to be unique.""")
-@click.option('--assign-public-ip', required=False, type=click.BOOL, help="""Whether the default VNIC attached to this instance should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
-@click.option('--private-ip', required=False, help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
-@click.option('--skip-source-dest-check', required=False, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
-@click.option('--user-data-file', required=False, type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
-@click.option('--ssh-authorized-keys-file', required=False, type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
+@compute_cli.instance_group.command(name='launch', help=compute_cli.launch_instance.help + """
+
+To launch an instance using an image or a boot volume use the `sourceDetails` parameter in [LaunchInstanceDetails].""")
+@click.option('--vnic-display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the default VNIC attached to this instance. Does not have to be unique.""")
+@click.option('--assign-public-ip', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the default VNIC attached to this instance should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
+@click.option('--private-ip', callback=cli_util.handle_optional_param, help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
+@click.option('--skip-source-dest-check', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
+@click.option('--user-data-file', callback=cli_util.handle_optional_param, type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
+@click.option('--ssh-authorized-keys-file', callback=cli_util.handle_optional_param, type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
 def launch_instance_extended(ctx, **kwargs):
-    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if kwargs.get('generate_full_command_json_input'):
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif kwargs.get('generate_param_json_input'):
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
-
-    # Because these are kwargs, we have to get and set dictionary values rather than direct parameter assignment. Specifying the file path in the default
-    # file is supported and we will handle it.
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    kwargs['availability_domain'] = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', kwargs.get('availability_domain'), True)
-    kwargs['compartment_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', kwargs.get('compartment_id'), True)
-    kwargs['image_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'image-id', kwargs.get('image_id'), True)
-    kwargs['shape'] = cli_util.coalesce_provided_and_default_value(ctx, 'shape', kwargs.get('shape'), True)
-    kwargs['display_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', kwargs.get('display_name'), False)
-    kwargs['extended_metadata'] = cli_util.coalesce_provided_and_default_value(ctx, 'extended-metadata', kwargs.get('extended_metadata'), False)
-    kwargs['hostname_label'] = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', kwargs.get('hostname_label'), False)
-    kwargs['metadata'] = cli_util.coalesce_provided_and_default_value(ctx, 'metadata', kwargs.get('metadata'), False)
-    kwargs['subnet_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', kwargs.get('subnet_id'), False)
-    kwargs['vnic_display_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-display-name', kwargs.get('vnic_display_name'), False)
-    kwargs['assign_public_ip'] = cli_util.coalesce_provided_and_default_value(ctx, 'assign-public-ip', kwargs.get('assign_public_ip'), False)
-    kwargs['private_ip'] = cli_util.coalesce_provided_and_default_value(ctx, 'private-ip', kwargs.get('private_ip'), False)
-    kwargs['skip_source_dest_check'] = cli_util.coalesce_provided_and_default_value(ctx, 'skip-source-dest-check', kwargs.get('skip_source_dest_check'), False)
-
-    # If the caller did not specify a file on the command line then see if there is something in the default file and, if so, open it like click would
-    # then shove it into kwargs
-    if not kwargs.get('user_data_file'):
-        file = cli_util.get_click_file_from_default_values_file(ctx, 'user-data-file', 'rb', False)
-        if file:
-            kwargs['user_data_file'] = file
-
-    if not kwargs.get('ipxe_script_file'):
-        file = cli_util.get_click_file_from_default_values_file(ctx, 'ipxe-script-file', 'r', False)
-        if file:
-            kwargs['ipxe_script_file'] = file
-
-    if not kwargs.get('ssh_authorized_keys_file'):
-        file = cli_util.get_click_file_from_default_values_file(ctx, 'ssh-authorized-keys-file', 'r', False)
-        if file:
-            kwargs['ssh_authorized_keys_file'] = file
-
     metadata = {}
     if kwargs['metadata']:
         metadata = cli_util.parse_json_parameter("metadata", kwargs['metadata'])
@@ -557,46 +444,21 @@ def launch_instance_extended(ctx, **kwargs):
 
 
 @compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Managing Virtual Network Interface Cards (VNICs)].""")
-@click.option('--instance-id', help="""The OCID of the instance. [required]""")
-@click.option('--subnet-id', help="""The OCID of the subnet to create the VNIC in. [required]""")
-@click.option('--vnic-display-name', required=False, help="""A user-friendly name for the VNIC. Does not have to be unique.""")
-@click.option('--assign-public-ip', required=False, type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
-@click.option('--skip-source-dest-check', required=False, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
-@click.option('--private-ip', required=False, help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
-@click.option('--hostname-label', help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
-@click.option('--nic-index', required=False, type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
-@click.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
+@click.option('--subnet-id', callback=cli_util.handle_required_param, help="""The OCID of the subnet to create the VNIC in. [required]""")
+@click.option('--vnic-display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the VNIC. Does not have to be unique.""")
+@click.option('--assign-public-ip', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
+@click.option('--skip-source-dest-check', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
+@click.option('--private-ip', callback=cli_util.handle_optional_param, help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
+@click.option('--hostname-label', callback=cli_util.handle_optional_param, help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
+@click.option('--nic-index', callback=cli_util.handle_optional_param, type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
+@click.option('--wait', is_flag=True, default=False, callback=cli_util.handle_optional_param, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vnic'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-    subnet_id = cli_util.coalesce_provided_and_default_value(ctx, 'subnet-id', subnet_id, True)
-    vnic_display_name = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-display-name', vnic_display_name, False)
-    nic_index = cli_util.coalesce_provided_and_default_value(ctx, 'nic-index', nic_index, False)
-    assign_public_ip = cli_util.coalesce_provided_and_default_value(ctx, 'assign-public-ip', assign_public_ip, False)
-    skip_source_dest_check = cli_util.coalesce_provided_and_default_value(ctx, 'skip-source-dest-check', skip_source_dest_check, False)
-    private_ip = cli_util.coalesce_provided_and_default_value(ctx, 'private-ip', private_ip, False)
-    hostname_label = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', hostname_label, False)
-    wait = cli_util.coalesce_provided_and_default_value(ctx, 'wait', wait, False)
-
+def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait):
     kwargs = {}
 
     vnic_details = {}
@@ -639,33 +501,15 @@ def attach_vnic(ctx, generate_full_command_json_input, generate_param_json_input
 
 
 @compute_cli.instance_group.command(name='detach-vnic', help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
-@click.option('--vnic-id', help="""The OCID of the VNIC. [required]""")
-@click.option('--compartment-id', help="""The OCID of the instance's compartment. [required]""")
+@click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC. [required]""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the instance's compartment. [required]""")
 @cli_util.confirm_delete_option
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def detach_vnic(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_id, compartment_id):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, True)
-    compartment_id = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', compartment_id, True)
-
+def detach_vnic(ctx, from_json, vnic_id, compartment_id):
     compute_client = cli_util.build_client('compute', ctx)
     result = compute_client.list_vnic_attachments(compartment_id=compartment_id, vnic_id=vnic_id)
 
@@ -684,26 +528,11 @@ This command can also be used to move an existing secondary private IP to the sp
 
 For more information about secondary private IPs, see [Managing IP Addresses]
 """)
-@click.option('--unassign-if-already-assigned', is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
+@click.option('--unassign-if-already-assigned', callback=cli_util.handle_optional_param, is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_private_ip(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, True)
-    display_name = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', display_name, False)
-    hostname_label = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', hostname_label, False)
-    ip_address = cli_util.coalesce_provided_and_default_value(ctx, 'ip-address', ip_address, False)
-    unassign_if_already_assigned = cli_util.coalesce_provided_and_default_value(ctx, 'unassign-if-already-assigned', unassign_if_already_assigned, False)
-
+def assign_private_ip(ctx, from_json, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned):
     networking_client = cli_util.build_client('virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListPrivateIps call
@@ -775,32 +604,14 @@ terminated.
 
 For more information about secondary private IPs, see [Managing IP Addresses]
 """)
-@click.option('--vnic-id', help="""The OCID of the VNIC to unassign the private IP from. [required]""")
-@click.option('--ip-address', help="""The secondary private IP to unassign from the VNIC. [required]""")
-@click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
-
-This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
-@click.option('--generate-param-json-input', is_eager=True, callback=json_skeleton_utils.generate_json_skeleton_click_callback, help="""Complex input, such as arrays and objects, are passed in JSON format.
-
-When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC to unassign the private IP from. [required]""")
+@click.option('--ip-address', callback=cli_util.handle_required_param, help="""The secondary private IP to unassign from the VNIC. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def unassign_private_ip(ctx, generate_full_command_json_input, generate_param_json_input, from_json, vnic_id, ip_address):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    vnic_id = cli_util.coalesce_provided_and_default_value(ctx, 'vnic-id', vnic_id, True)
-    ip_address = cli_util.coalesce_provided_and_default_value(ctx, 'ip-address', ip_address, True)
-
+def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
     networking_client = cli_util.build_client('virtual_network', ctx)
 
     list_private_ips_response = networking_client.list_private_ips(vnic_id=vnic_id)
@@ -850,25 +661,9 @@ To move a secondary private IP to another VNIC, use the `bcms network vnic assig
 
 This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
 def update_private_ip_extended(ctx, **kwargs):
-    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if kwargs.get('generate_full_command_json_input'):
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif kwargs.get('generate_param_json_input'):
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    kwargs['private_ip_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'private-ip-id', kwargs.get('private_ip_id'), True)
-    kwargs['display_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', kwargs.get('display_name'), False)
-    kwargs['hostname_label'] = cli_util.coalesce_provided_and_default_value(ctx, 'hostname-label', kwargs.get('hostname_label'), False)
-    kwargs['if_match'] = cli_util.coalesce_provided_and_default_value(ctx, 'if-match', kwargs.get('if_match'), False)
-
-    json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
-
     ctx.invoke(virtualnetwork_cli.update_private_ip, **kwargs)
 
 
@@ -878,32 +673,19 @@ def update_private_ip_extended(ctx, **kwargs):
 The default number of enabled serial console connections per tenancy is 10.
 
 For more information about serial console access, see [Accessing the Serial Console].""")
-@click.option('--ssh-public-key-file', type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection [required]""")
+@click.option('--ssh-public-key-file', callback=cli_util.handle_required_param, type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection [required]""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
-def create_instance_console_connection(ctx, generate_full_command_json_input, generate_param_json_input, from_json, instance_id, ssh_public_key_file):
-    if generate_param_json_input and generate_full_command_json_input:
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if generate_full_command_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif generate_param_json_input:
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, generate_param_json_input)
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-    instance_id = cli_util.coalesce_provided_and_default_value(ctx, 'instance-id', instance_id, True)
-
-    if not ssh_public_key_file:
-        file = cli_util.get_click_file_from_default_values_file(ctx, 'ssh-public-key-file', 'r', True)
-        if file:
-            ssh_public_key_file = file
-
+def create_instance_console_connection(ctx, from_json, instance_id, ssh_public_key_file, wait_for_state, max_wait_seconds, wait_interval_seconds):
     # Empirically, if the public key file contains multiple entires this is accepted but the serial console
     # will use the first key in the file
     kwargs = {
         'instance_id': instance_id,
-        'public_key': ssh_public_key_file.read()
+        'public_key': ssh_public_key_file.read(),
+        'wait_for_state': wait_for_state,
+        'max_wait_seconds': max_wait_seconds,
+        'wait_interval_seconds': wait_interval_seconds
     }
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
@@ -919,36 +701,22 @@ cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_gbs', """Thi
 cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_mbs', """[DEPRECATED] The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use --size-in-gbs instead. This option cannot be supplied when cloning a volume or restoring a volume from a backup""", append=False)
 
 
-@cli_util.copy_params_from_generated_command(blockstorage_cli.create_volume, params_to_exclude=['source_details', 'volume_backup_id'])
+@cli_util.copy_params_from_generated_command(blockstorage_cli.create_volume, params_to_exclude=['source_details', 'volume_backup_id', 'availability_domain', 'compartment_id'])
 @blockstorage_cli.volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 16 TB (16777216 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 
 A volume and instance can be in separate compartments but must be in the same Availability Domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
-@click.option('--source-volume-id', help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
-@click.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The Availability Domain of the volume.
+
+Example: `Uocm:PHX-AD-1`""")
+@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment that contains the volume. [required]""")
+@click.option('--source-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
+@click.option('--volume-backup-id', callback=cli_util.handle_optional_param, help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_wrapper_metadata(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
 def create_volume_extended(ctx, **kwargs):
-    if kwargs.get('generate_param_json_input') and kwargs.get('generate_full_command_json_input'):
-        raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-
-    if kwargs.get('generate_full_command_json_input'):
-        json_skeleton_utils.generate_json_skeleton_for_full_command(ctx)
-    elif kwargs.get('generate_param_json_input'):
-        json_skeleton_utils.generate_json_skeleton_for_option(ctx, kwargs.get('generate_param_json_input'))
-
-    cli_util.load_context_obj_values_from_defaults(ctx)
-
-    kwargs['availability_domain'] = cli_util.coalesce_provided_and_default_value(ctx, 'availability-domain', kwargs.get('availability_domain'), False)
-    kwargs['compartment_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'compartment-id', kwargs.get('compartment_id'), False)
-    kwargs['display_name'] = cli_util.coalesce_provided_and_default_value(ctx, 'display-name', kwargs.get('display_name'), False)
-    kwargs['size_in_gbs'] = cli_util.coalesce_provided_and_default_value(ctx, 'size-in-gbs', kwargs.get('size_in_gbs'), False)
-    kwargs['size_in_mbs'] = cli_util.coalesce_provided_and_default_value(ctx, 'size-in-mbs', kwargs.get('size_in_mbs'), False)
-    kwargs['volume_backup_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'volume-backup-id', kwargs.get('volume_backup_id'), False)
-    kwargs['source_volume_id'] = cli_util.coalesce_provided_and_default_value(ctx, 'source-volume-id', kwargs.get('source_volume_id'), False)
-
     if kwargs['source_volume_id'] and kwargs['volume_backup_id']:
         raise click.UsageError('You cannot specify both the --volume-backup-id and --source-volume-id options')
 

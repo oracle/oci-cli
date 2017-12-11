@@ -11,9 +11,9 @@ import click
 # parsing data (either a command line string or input from a file) given by a caller.
 #
 # We need to decorate against the type because when the --from-json parameter is evaluated the metadata information from
-# @json_skeleton_utils.json_skeleton_wrapper_metadata is not yet available. The --from-json
+# @json_skeleton_utils.json_skeleton_generation_handler is not yet available. The --from-json
 # parameter is eager evaluated and is also evaluated before the actual Python function for the click command is called,
-# and the information from @json_skeleton_utils.json_skeleton_wrapper_metadata is only available once the command is called
+# and the information from @json_skeleton_utils.json_skeleton_generation_handler is only available once the command is called
 class CliFromJson(click.ParamType):
     name = 'text'
 

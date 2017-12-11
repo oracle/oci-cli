@@ -73,7 +73,6 @@ def test_param_alias_no_collision():
     assert '-dn' in result.output
     assert '--egress' in result.output
     assert '--ingress' in result.output
-    assert '--gen-full-json' in result.output
 
 
 def test_param_alias_with_bad_name():

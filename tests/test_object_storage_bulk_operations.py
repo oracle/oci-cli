@@ -124,14 +124,14 @@ def generate_test_data(object_storage_client):
 
 
 def test_normalize_object_name_path():
-    assert '/this/is/a/path' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('/this/is/a/path')
-    assert '/this/is/a/path' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('/this/is/a/path', '/')
-    assert '/this/is/a/path' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('\\this\\is\\a\\path', '\\')
-    assert '/this/is/a/path' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('\\this/is/a\\path', '\\')
+    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path')
+    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path', '/')
+    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this\\is\\a\\path', '\\')
+    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this/is/a\\path', '\\')
 
-    assert 'thisisapath' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('thisisapath')
-    assert 'thisisapath' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('thisisapath', '/')
-    assert 'thisisapath' == oci_cli.object_storage_cli.normalize_object_name_path_for_object_storage('thisisapath', '\\')
+    assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath')
+    assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '/')
+    assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '\\')
 
 
 def test_get_all_objects_in_bucket():
@@ -543,7 +543,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
     assert parsed_result['delete-failures'] == {}
     assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
 
-    list_objects_responses = oci_cli.object_storage_cli.retrying_list_objects(
+    list_objects_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
@@ -684,7 +684,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     assert parsed_result['delete-failures'] == {}
     assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
 
-    list_objects_responses = oci_cli.object_storage_cli.retrying_list_objects(
+    list_objects_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
@@ -843,7 +843,7 @@ def get_object_name_from_path(path_root, full_path):
 
 
 def delete_bucket_and_all_items(object_storage_client, bucket_name):
-    list_object_responses = oci_cli.object_storage_cli.retrying_list_objects(
+    list_object_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
@@ -863,7 +863,7 @@ def delete_bucket_and_all_items(object_storage_client, bucket_name):
 
 
 def get_number_of_objects_in_bucket(object_storage_client, bucket_name):
-    list_object_responses = oci_cli.object_storage_cli.retrying_list_objects(
+    list_object_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
