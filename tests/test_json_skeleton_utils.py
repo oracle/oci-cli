@@ -281,7 +281,33 @@ def test_generate_input_dict_complex_param_is_model():
             'routeRules': [
                 {'cidrBlock': 'string', 'networkEntityId': 'string'},
                 {'cidrBlock': 'string', 'networkEntityId': 'string'}
-            ]
+            ],
+            'freeformTags': {
+                'string1': 'string',
+                'string2': 'string'
+            },
+            'definedTags': {
+                'string1': {
+                    'string1': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    },
+                    'string2': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    }
+                },
+                'string2': {
+                    'string1': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    },
+                    'string2': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    }
+                }
+            }
         }
     }
 
@@ -307,11 +333,13 @@ def test_generate_input_dict_complex_param_is_model_with_subclasses():
                 'bucketName': 'string',
                 'namespaceName': 'string',
                 'objectName': 'string',
-                'sourceType': 'objectStorageTuple'
+                'sourceType': 'objectStorageTuple',
+                'sourceImageType': 'string'
             },
             {
                 'sourceType': 'objectStorageUri',
-                'sourceUri': 'string'
+                'sourceUri': 'string',
+                'sourceImageType': 'string'
             }
         ]
     }
@@ -340,7 +368,33 @@ def test_generate_input_dict_complex_and_non_complex_params_strip_duplicates():
             'routeRules': [
                 {'cidrBlock': 'string', 'networkEntityId': 'string'},
                 {'cidrBlock': 'string', 'networkEntityId': 'string'}
-            ]
+            ],
+            'freeformTags': {
+                'string1': 'string',
+                'string2': 'string'
+            },
+            'definedTags': {
+                'string1': {
+                    'string1': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    },
+                    'string2': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    }
+                },
+                'string2': {
+                    'string1': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    },
+                    'string2': {
+                        'string1': 'string',
+                        'string2': 'string'
+                    }
+                }
+            }
         }
     }
 
@@ -366,7 +420,33 @@ def test_generate_input_dict_complex_and_non_complex_params_request_only_complex
         'routeRules': [
             {'cidrBlock': 'string', 'networkEntityId': 'string'},
             {'cidrBlock': 'string', 'networkEntityId': 'string'}
-        ]
+        ],
+        'freeformTags': {
+            'string1': 'string',
+            'string2': 'string'
+        },
+        'definedTags': {
+            'string1': {
+                'string1': {
+                    'string1': 'string',
+                    'string2': 'string'
+                },
+                'string2': {
+                    'string1': 'string',
+                    'string2': 'string'
+                }
+            },
+            'string2': {
+                'string1': {
+                    'string1': 'string',
+                    'string2': 'string'
+                },
+                'string2': {
+                    'string1': 'string',
+                    'string2': 'string'
+                }
+            }
+        }
     }
 
     assert expected_dict == generated_dict

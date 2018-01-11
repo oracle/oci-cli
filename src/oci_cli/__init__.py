@@ -5,6 +5,7 @@
 from .cli_root import cli  # noqa: F401
 from .custom_types import cli_datetime  # noqa: F401
 from .custom_types import cli_from_json  # noqa: F401
+
 from .generated import audit_cli  # noqa: F401
 from .generated import blockstorage_cli  # noqa: F401
 from .generated import compute_cli  # noqa: F401

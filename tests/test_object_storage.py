@@ -19,6 +19,7 @@ GENERATED_CONTENT_INPUT_FILE = 'tests/temp/generated_content_input.txt'
 CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 5
 DEFAULT_TEST_PART_SIZE = 2
+MOVE_BUCKET_TO_COMPARTMENT_ID = os.environ.get('OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
 
 
 @pytest.fixture
@@ -191,6 +192,54 @@ def test_archive_bucket(runner, config_file, config_profile, test_id):
     result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y')
     validate_response(result, json_response_expected=False)
 
+    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
+    validate_response(result)
+
+
+def test_move_bucket_to_another_compartment(object_storage_client, runner, config_file, config_profile, test_id):
+    if not MOVE_BUCKET_TO_COMPARTMENT_ID:
+        pytest.skip('Skipping as no value was provided for the environment variable OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
+
+    bucket_name = 'cli_move_bucket_compartment_{}'.format(test_id)
+
+    # Create a bucket in the first compartment (given by util.COMPARTMENT_ID)
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
+    validate_response(result)
+
+    # Make sure that the bucket appears in the first compartment
+    all_buckets_response = oci_cli.retry_utils.list_call_get_all_results_with_default_retries(
+        object_storage_client.list_buckets,
+        namespace_name=util.NAMESPACE,
+        compartment_id=util.COMPARTMENT_ID
+    )
+    assert_bucket_in_list(bucket_name, all_buckets_response.data)
+
+    # Move the bucket to the other compartment
+    result = invoke(runner, config_file, config_profile, ['bucket', 'update', '-ns', util.NAMESPACE, '--name', bucket_name, '--compartment-id', MOVE_BUCKET_TO_COMPARTMENT_ID])
+    validate_response(result)
+
+    # The bucket should report itself as being moved to another compartment
+    result = invoke(runner, config_file, config_profile, ['bucket', 'get', '-ns', util.NAMESPACE, '--name', bucket_name])
+    parsed_result = json.loads(result.output)
+    assert MOVE_BUCKET_TO_COMPARTMENT_ID == parsed_result['data']['compartment-id']
+
+    # Listing the bucket in the old compartment does not show our moved bucket
+    all_buckets_response = oci_cli.retry_utils.list_call_get_all_results_with_default_retries(
+        object_storage_client.list_buckets,
+        namespace_name=util.NAMESPACE,
+        compartment_id=util.COMPARTMENT_ID
+    )
+    assert_bucket_in_list(bucket_name, all_buckets_response.data, invert=True)
+
+    # The moved bucket appears in the target compartment
+    all_buckets_response = oci_cli.retry_utils.list_call_get_all_results_with_default_retries(
+        object_storage_client.list_buckets,
+        namespace_name=util.NAMESPACE,
+        compartment_id=MOVE_BUCKET_TO_COMPARTMENT_ID
+    )
+    assert_bucket_in_list(bucket_name, all_buckets_response.data)
+
+    # bucket delete
     result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', bucket_name, '--force'])
     validate_response(result)
 
@@ -835,6 +884,21 @@ def create_and_validate_bucket_level_par(runner, config_file, config_profile, pr
     par_id = response['data']['id']
 
     return par_id
+
+
+def assert_bucket_in_list(bucket_name, bucket_list, invert=False):
+    found_bucket = False
+    for bucket in bucket_list:
+        if bucket.name == bucket_name:
+            found_bucket = True
+            break
+
+    # We can invert the logic by passing the invert parameter as True to this method. The default behaviour is to
+    # check that the bucket is in the list, so the inverse is to make sure that it isn't in the list
+    if not invert:
+        assert found_bucket
+    else:
+        assert not found_bucket
 
 
 # TODO: clean up and remove all of these which are drop in replacements for unittest validations

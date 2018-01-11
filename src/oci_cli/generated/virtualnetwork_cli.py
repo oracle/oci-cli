@@ -20,17 +20,6 @@ def virtual_network_group():
     pass
 
 
-@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A Virtual Cloud Network (VCN). For more information, see
-[Overview of the Networking Service].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
-@cli_util.help_option_group
-def vcn_group():
-    pass
-
-
 @click.command(cli_util.override('subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single Availability Domain and
 consists of a contiguous range of IP addresses that do not overlap with
 other subnets in the VCN. Example: 172.16.1.0/24. For more information, see
@@ -42,12 +31,6 @@ talk to an administrator. If you're an administrator who needs to write policies
 [Getting Started with Policies].""")
 @cli_util.help_option_group
 def subnet_group():
-    pass
-
-
-@click.command(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Status of the IPSec connection.""")
-@cli_util.help_option_group
-def ip_sec_connection_device_status_group():
     pass
 
 
@@ -64,46 +47,6 @@ def ip_sec_connection_device_config_group():
     pass
 
 
-@click.command(cli_util.override('vnic_group.command_name', 'vnic'), cls=CommandGroupWithAlias, help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN.
-An instance attaches to a VNIC to obtain a network connection into the VCN
-through that subnet. Each instance has a *primary VNIC* that is automatically
-created and attached during launch. You can add *secondary VNICs* to an
-instance after it's launched. For more information, see
-[Virtual Network Interface Cards (VNICs)].
-
-Each VNIC has a *primary private IP* that is automatically assigned during launch.
-You can add *secondary private IPs* to a VNIC after it's created. For more
-information, see [CreatePrivateIp] and
-[IP Addresses].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
-@cli_util.help_option_group
-def vnic_group():
-    pass
-
-
-@click.command(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), cls=CommandGroupWithAlias, help="""A set of DHCP options. Used by the VCN to automatically provide configuration
-information to the instances when they boot up. There are two options you can set:
-
-- [DhcpDnsOption]: Lets you specify how DNS (hostname resolution) is
-handled in the subnets in your VCN.
-
-- [DhcpSearchDomainOption]: Lets you specify
-a search domain name to use for DNS queries.
-
-For more information, see  [DNS in Your Virtual Cloud Network]
-and [DHCP Options].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
-@cli_util.help_option_group
-def dhcp_options_group():
-    pass
-
-
 @click.command(cli_util.override('fast_connect_provider_service_group.command_name', 'fast-connect-provider-service'), cls=CommandGroupWithAlias, help="""A service offering from a supported provider. For more information,
 see [FastConnect Overview].""")
 @cli_util.help_option_group
@@ -111,15 +54,17 @@ def fast_connect_provider_service_group():
     pass
 
 
-@click.command(cli_util.override('virtual_circuit_bandwidth_shape_group.command_name', 'virtual-circuit-bandwidth-shape'), cls=CommandGroupWithAlias, help="""An individual bandwidth level for virtual circuits.""")
-@cli_util.help_option_group
-def virtual_circuit_bandwidth_shape_group():
-    pass
-
-
 @click.command(cli_util.override('cross_connect_location_group.command_name', 'cross-connect-location'), cls=CommandGroupWithAlias, help="""An individual FastConnect location.""")
 @cli_util.help_option_group
 def cross_connect_location_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_circuit_public_prefix_group.command_name', 'virtual-circuit-public-prefix'), cls=CommandGroupWithAlias, help="""A public IP prefix and its details. With a public virtual circuit, the customer
+specifies the customer-owned public IP prefixes to advertise across the connection.
+For more information, see [FastConnect Overview].""")
+@cli_util.help_option_group
+def virtual_circuit_public_prefix_group():
     pass
 
 
@@ -159,9 +104,9 @@ def private_ip_group():
 
 A virtual circuit is an isolated network path that runs over one or more physical
 network connections to provide a single, logical connection between the edge router
-on the customer's existing network and a DRG. A customer could have multiple virtual
-circuits, for example, to isolate traffic from different parts of their organization
-(one virtual circuit for 10.0.1.0/24, another for 172.16.0.0/16), or to provide redundancy.
+on the customer's existing network and Oracle Cloud Infrastructure. *Private*
+virtual circuits support private peering, and *public* virtual circuits support
+public peering. For more information, see [FastConnect Overview].
 
 Each virtual circuit is made up of information shared between a customer, Oracle,
 and a provider (if the customer is using FastConnect via a provider). Who fills in
@@ -170,8 +115,6 @@ that virtual circuit goes from the customer's edge router to Oracle, or from the
 edge router to Oracle. Also, in the case where the customer is using a provider, values
 for some of the properties may not be present immediately, but may get filled in as the
 provider and Oracle each do their part to provision the virtual circuit.
-
-For more information, see [FastConnect Overview].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
 talk to an administrator. If you're an administrator who needs to write policies to give users access, see
@@ -192,31 +135,6 @@ talk to an administrator. If you're an administrator who needs to write policies
 [Getting Started with Policies].""")
 @cli_util.help_option_group
 def local_peering_gateway_group():
-    pass
-
-
-@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario
-that uses an Internet Gateway, see
-[Typical Networking Service Scenarios].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
-@cli_util.help_option_group
-def internet_gateway_group():
-    pass
-
-
-@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec
-tunnels. Creating this connection is one of the steps required when setting up
-an IPSec VPN. For more information, see
-[Overview of the Networking Service].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
-@cli_util.help_option_group
-def ip_sec_connection_group():
     pass
 
 
@@ -266,24 +184,6 @@ def cpe_group():
     pass
 
 
-@click.command(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect group
-is a link aggregation group (LAG), which can contain one or more
-[CrossConnects]. Customers who are colocated with
-Oracle in a FastConnect location create and use cross-connect groups. For more
-information, see [FastConnect Overview].
-
-**Note:** If you're a provider who is setting up a physical connection to Oracle so customers
-can use FastConnect over the connection, be aware that your connection is modeled the
-same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
-@cli_util.help_option_group
-def cross_connect_group_group():
-    pass
-
-
 @click.command(cli_util.override('cross_connect_group.command_name', 'cross-connect'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect represents a
 physical connection between an existing network and Oracle. Customers who are colocated
 with Oracle in a FastConnect location create and use cross-connects. For more
@@ -318,6 +218,112 @@ def cross_connect_status_group():
     pass
 
 
+@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A Virtual Cloud Network (VCN). For more information, see
+[Overview of the Networking Service].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def vcn_group():
+    pass
+
+
+@click.command(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Status of the IPSec connection.""")
+@cli_util.help_option_group
+def ip_sec_connection_device_status_group():
+    pass
+
+
+@click.command(cli_util.override('vnic_group.command_name', 'vnic'), cls=CommandGroupWithAlias, help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN.
+An instance attaches to a VNIC to obtain a network connection into the VCN
+through that subnet. Each instance has a *primary VNIC* that is automatically
+created and attached during launch. You can add *secondary VNICs* to an
+instance after it's launched. For more information, see
+[Virtual Network Interface Cards (VNICs)].
+
+Each VNIC has a *primary private IP* that is automatically assigned during launch.
+You can add *secondary private IPs* to a VNIC after it's created. For more
+information, see [CreatePrivateIp] and
+[IP Addresses].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def vnic_group():
+    pass
+
+
+@click.command(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), cls=CommandGroupWithAlias, help="""A set of DHCP options. Used by the VCN to automatically provide configuration
+information to the instances when they boot up. There are two options you can set:
+
+- [DhcpDnsOption]: Lets you specify how DNS (hostname resolution) is
+handled in the subnets in your VCN.
+
+- [DhcpSearchDomainOption]: Lets you specify
+a search domain name to use for DNS queries.
+
+For more information, see  [DNS in Your Virtual Cloud Network]
+and [DHCP Options].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def dhcp_options_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_circuit_bandwidth_shape_group.command_name', 'virtual-circuit-bandwidth-shape'), cls=CommandGroupWithAlias, help="""An individual bandwidth level for virtual circuits.""")
+@cli_util.help_option_group
+def virtual_circuit_bandwidth_shape_group():
+    pass
+
+
+@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario
+that uses an Internet Gateway, see
+[Typical Networking Service Scenarios].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def internet_gateway_group():
+    pass
+
+
+@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec
+tunnels. Creating this connection is one of the steps required when setting up
+an IPSec VPN. For more information, see
+[Overview of the Networking Service].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def ip_sec_connection_group():
+    pass
+
+
+@click.command(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect group
+is a link aggregation group (LAG), which can contain one or more
+[CrossConnects]. Customers who are colocated with
+Oracle in a FastConnect location create and use cross-connect groups. For more
+information, see [FastConnect Overview].
+
+**Note:** If you're a provider who is setting up a physical connection to Oracle so customers
+can use FastConnect over the connection, be aware that your connection is modeled the
+same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
+talk to an administrator. If you're an administrator who needs to write policies to give users access, see
+[Getting Started with Policies].""")
+@cli_util.help_option_group
+def cross_connect_group_group():
+    pass
+
+
 @click.command(cli_util.override('security_list_group.command_name', 'security-list'), cls=CommandGroupWithAlias, help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet
 level, but the rules are applied to the ingress and egress traffic for the individual instances
 in the subnet. The rules can be stateful or stateless. For more information, see
@@ -334,6 +340,58 @@ talk to an administrator. If you're an administrator who needs to write policies
 @cli_util.help_option_group
 def security_list_group():
     pass
+
+
+@virtual_circuit_public_prefix_group.command(name=cli_util.override('bulk_add_virtual_circuit_public_prefixes.command_name', 'bulk-add'), help="""Adds one or more customer public IP prefixes to the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to add prefixes to the virtual circuit. Oracle must verify the customer's ownership of each prefix before traffic for that prefix will flow across the virtual circuit.""")
+@click.option('--virtual-circuit-id', callback=cli_util.handle_required_param, help="""The OCID of the virtual circuit. [required]""")
+@click.option('--public-prefixes', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""The public IP prefixes (CIDRs) to add to the public virtual circuit. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}})
+@cli_util.wrap_exceptions
+def bulk_add_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id, public_prefixes):
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+    kwargs = {}
+
+    details = {}
+    details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.bulk_add_virtual_circuit_public_prefixes(
+        virtual_circuit_id=virtual_circuit_id,
+        bulk_add_virtual_circuit_public_prefixes_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@virtual_circuit_public_prefix_group.command(name=cli_util.override('bulk_delete_virtual_circuit_public_prefixes.command_name', 'bulk-delete'), help="""Removes one or more customer public IP prefixes from the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to remove prefixes from the virtual circuit. When the virtual circuit's state switches back to PROVISIONED, Oracle stops advertising the specified prefixes across the connection.""")
+@click.option('--virtual-circuit-id', callback=cli_util.handle_required_param, help="""The OCID of the virtual circuit. [required]""")
+@click.option('--public-prefixes', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""The public IP prefixes (CIDRs) to remove from the public virtual circuit. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'public-prefixes': {'module': 'core', 'class': 'list[DeleteVirtualCircuitPublicPrefixDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'public-prefixes': {'module': 'core', 'class': 'list[DeleteVirtualCircuitPublicPrefixDetails]'}})
+@cli_util.wrap_exceptions
+def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id, public_prefixes):
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+    kwargs = {}
+
+    details = {}
+    details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.bulk_delete_virtual_circuit_public_prefixes(
+        virtual_circuit_id=virtual_circuit_id,
+        bulk_delete_virtual_circuit_public_prefixes_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @local_peering_gateway_group.command(name=cli_util.override('connect_local_peering_gateways.command_name', 'connect'), help="""Connects this local peering gateway (LPG) to another one in the same region.
@@ -525,16 +583,22 @@ You may optionally specify a *display name* for the set of DHCP options, otherwi
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the set of DHCP options. [required]""")
 @click.option('--options', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""A set of DHCP options. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--vcn-id', callback=cli_util.handle_required_param, help="""The OCID of the VCN the set of DHCP options belongs to. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'core', 'class': 'list[DhcpOption]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'options': {'module': 'core', 'class': 'list[DhcpOption]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'core', 'class': 'list[DhcpOption]'}}, output_type={'module': 'core', 'class': 'DhcpOptions'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'options': {'module': 'core', 'class': 'list[DhcpOption]'}}, output_type={'module': 'core', 'class': 'DhcpOptions'})
 @cli_util.wrap_exceptions
-def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, options, vcn_id, display_name):
+def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, options, vcn_id, defined_tags, display_name, freeform_tags):
     kwargs = {}
 
     details = {}
@@ -542,8 +606,14 @@ def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     details['options'] = cli_util.parse_json_parameter("options", options)
     details['vcnId'] = vcn_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_dhcp_options(
@@ -833,7 +903,13 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
 @private_ip_group.command(name=cli_util.override('create_private_ip.command_name', 'create'), help="""Creates a secondary private IP for the specified VNIC. For more information about secondary private IPs, see [IP Addresses].""")
 @click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC to assign the private IP to. The VNIC and private IP must be in the same subnet. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--hostname-label', callback=cli_util.handle_optional_param, help="""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
 For more information, see [DNS in Your Virtual Cloud Network].
@@ -842,19 +918,25 @@ Example: `bminstance-1`""")
 @click.option('--ip-address', callback=cli_util.handle_optional_param, help="""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def create_private_ip(ctx, from_json, vnic_id, display_name, hostname_label, ip_address):
+def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, hostname_label, ip_address):
     kwargs = {}
 
     details = {}
     details['vnicId'] = vnic_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
         details['hostnameLabel'] = hostname_label
@@ -878,16 +960,22 @@ You may optionally specify a *display name* for the route table, otherwise a def
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the route table. [required]""")
 @click.option('--route-rules', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""The collection of rules used for routing destination IPs to network devices. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--vcn-id', callback=cli_util.handle_required_param, help="""The OCID of the VCN the route table belongs to. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}}, output_type={'module': 'core', 'class': 'RouteTable'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}}, output_type={'module': 'core', 'class': 'RouteTable'})
 @cli_util.wrap_exceptions
-def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, route_rules, vcn_id, display_name):
+def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, route_rules, vcn_id, defined_tags, display_name, freeform_tags):
     kwargs = {}
 
     details = {}
@@ -895,8 +983,14 @@ def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     details['routeRules'] = cli_util.parse_json_parameter("route_rules", route_rules)
     details['vcnId'] = vcn_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_route_table(
@@ -931,16 +1025,22 @@ You may optionally specify a *display name* for the security list, otherwise a d
 @click.option('--egress-security-rules', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing egress IP packets. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--ingress-security-rules', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing ingress IP packets. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--vcn-id', callback=cli_util.handle_required_param, help="""The OCID of the VCN the security list belongs to. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}}, output_type={'module': 'core', 'class': 'SecurityList'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}}, output_type={'module': 'core', 'class': 'SecurityList'})
 @cli_util.wrap_exceptions
-def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, egress_security_rules, ingress_security_rules, vcn_id, display_name):
+def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, egress_security_rules, ingress_security_rules, vcn_id, defined_tags, display_name, freeform_tags):
     kwargs = {}
 
     details = {}
@@ -949,8 +1049,14 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     details['ingressSecurityRules'] = cli_util.parse_json_parameter("ingress_security_rules", ingress_security_rules)
     details['vcnId'] = vcn_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_security_list(
@@ -997,6 +1103,9 @@ Example: `Uocm:PHX-AD-1` [required]""")
 Example: `172.16.1.0/24` [required]""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the subnet. [required]""")
 @click.option('--vcn-id', callback=cli_util.handle_required_param, help="""The OCID of the VCN to contain the subnet. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--dhcp-options-id', callback=cli_util.handle_optional_param, help="""The OCID of the set of DHCP options the subnet will use. If you don't provide a value, the subnet will use the VCN's default set of DHCP options.""")
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--dns-label', callback=cli_util.handle_optional_param, help="""A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be an alphanumeric string that begins with a letter and is unique within the VCN. The value cannot be changed.
@@ -1006,6 +1115,9 @@ This value must be set if you want to use the Internet and VCN Resolver to resol
 For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `subnet123`""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--prohibit-public-ip-on-vnic', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch or VNIC creation (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (that is, it's a private subnet).
 
 Example: `true`""")
@@ -1014,12 +1126,12 @@ Example: `true`""")
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'security-list-ids': {'module': 'core', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-list-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Subnet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Subnet'})
 @cli_util.wrap_exceptions
-def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, cidr_block, compartment_id, vcn_id, dhcp_options_id, display_name, dns_label, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
+def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, cidr_block, compartment_id, vcn_id, defined_tags, dhcp_options_id, display_name, dns_label, freeform_tags, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
     kwargs = {}
 
     details = {}
@@ -1027,6 +1139,9 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     details['cidrBlock'] = cidr_block
     details['compartmentId'] = compartment_id
     details['vcnId'] = vcn_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if dhcp_options_id is not None:
         details['dhcpOptionsId'] = dhcp_options_id
@@ -1036,6 +1151,9 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if dns_label is not None:
         details['dnsLabel'] = dns_label
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if prohibit_public_ip_on_vnic is not None:
         details['prohibitPublicIpOnVnic'] = prohibit_public_ip_on_vnic
@@ -1087,6 +1205,9 @@ The VCN and subnets you create are not accessible until you attach an Internet G
 
 Example: `172.16.0.0/16` [required]""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the VCN. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--dns-label', callback=cli_util.handle_optional_param, help="""A DNS label for the VCN, used in conjunction with the VNIC's hostname and subnet's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance-1.subnet123.vcn1.oraclevcn.com`). Not required to be unique, but it's a best practice to set unique DNS labels for VCNs in your tenancy. Must be an alphanumeric string that begins with a letter. The value cannot be changed.
 
@@ -1095,26 +1216,35 @@ You must set this value if you want instances to be able to use hostnames to res
 For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `vcn1`""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vcn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, display_name, dns_label):
+def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, defined_tags, display_name, dns_label, freeform_tags):
     kwargs = {}
 
     details = {}
     details['cidrBlock'] = cidr_block
     details['compartmentId'] = compartment_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
 
     if dns_label is not None:
         details['dnsLabel'] = dns_label
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_vcn(
@@ -1149,7 +1279,7 @@ You may optionally specify a *display name* for the virtual circuit. It does not
 **Important:** When creating a virtual circuit, you specify a DRG for the traffic to flow through. Make sure you attach the DRG to your VCN and confirm the VCN's routing sends traffic to the DRG. Otherwise traffic will not flow. For more information, see [Route Tables].""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the virtual circuit. [required]""")
 @click.option('--type', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help="""The type of IP addresses used in this virtual circuit. PRIVATE means [RFC 1918] addresses (10.0.0.0/8, 172.16/12, and 192.168/16). Only PRIVATE is supported. [required]""")
-@click.option('--bandwidth-shape-name', callback=cli_util.handle_optional_param, help="""The provisioned data rate of the connection.  To get a list of the available bandwidth levels (that is, shapes), see [ListVirtualCircuitBandwidthShapes].
+@click.option('--bandwidth-shape-name', callback=cli_util.handle_optional_param, help="""The provisioned data rate of the connection.  To get a list of the available bandwidth levels (that is, shapes), see [ListFastConnectProviderServiceVirtualCircuitBandwidthShapes].
 
 Example: `10 Gbps`""")
 @click.option('--cross-connect-mappings', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Create a `CrossConnectMapping` for each cross-connect or cross-connect group this virtual circuit will run on.
@@ -1157,19 +1287,23 @@ Example: `10 Gbps`""")
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--customer-bgp-asn', callback=cli_util.handle_optional_param, type=click.INT, help="""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null.""")
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@click.option('--gateway-id', callback=cli_util.handle_optional_param, help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.""")
-@click.option('--provider-name', callback=cli_util.handle_optional_param, help="""The name of the provider (if you're connecting via a provider). To get a list of the provider names, see [ListFastConnectProviderServices].""")
-@click.option('--provider-service-name', callback=cli_util.handle_optional_param, help="""The name of the provider (if you're connecting via a provider). To get a list of the provider names, see [ListFastConnectProviderServices].""")
+@click.option('--gateway-id', callback=cli_util.handle_optional_param, help="""For private virtual circuits only. The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.""")
+@click.option('--provider-name', callback=cli_util.handle_optional_param, help="""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
+@click.option('--provider-service-id', callback=cli_util.handle_optional_param, help="""The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
+@click.option('--provider-service-name', callback=cli_util.handle_optional_param, help="""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
+@click.option('--public-prefixes', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""For a public virtual circuit. The public IP prefixes (CIDRs) the customer wants to advertise across the connection.
+
+This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDetails.  For documentation on CreateVirtualCircuitPublicPrefixDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--region', callback=cli_util.handle_optional_param, help="""The Oracle Cloud Infrastructure region where this virtual circuit is located. Example: `phx`""")
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}})
+@json_skeleton_utils.get_cli_json_input_option({'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_name, region):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_id, provider_service_name, public_prefixes, region):
     kwargs = {}
 
     details = {}
@@ -1194,8 +1328,14 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if provider_name is not None:
         details['providerName'] = provider_name
 
+    if provider_service_id is not None:
+        details['providerServiceId'] = provider_service_id
+
     if provider_service_name is not None:
         details['providerServiceName'] = provider_service_name
+
+    if public_prefixes is not None:
+        details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
 
     if region is not None:
         details['region'] = region
@@ -2009,6 +2149,26 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
     cli_util.render_response(result, ctx)
 
 
+@fast_connect_provider_service_group.command(name=cli_util.override('get_fast_connect_provider_service.command_name', 'get'), help="""Gets the specified provider service. For more information, see [FastConnect Overview].""")
+@click.option('--provider-service-id', callback=cli_util.handle_required_param, help="""The OCID of the provider service. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'FastConnectProviderService'})
+@cli_util.wrap_exceptions
+def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
+
+    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+        raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_fast_connect_provider_service(
+        provider_service_id=provider_service_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @internet_gateway_group.command(name=cli_util.override('get_internet_gateway.command_name', 'get'), help="""Gets the specified Internet Gateway's information.""")
 @click.option('--ig-id', callback=cli_util.handle_required_param, help="""The OCID of the Internet Gateway. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2740,6 +2900,59 @@ def list_fast_connect_provider_services(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
+@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_fast_connect_provider_virtual_circuit_bandwidth_shapes.command_name', 'list-fast-connect-provider'), help="""Gets the list of available virtual circuit bandwidth levels for a provider. You need this information so you can specify your desired bandwidth level (shape) when you create a virtual circuit.
+
+For more information about virtual circuits, see [FastConnect Overview].""")
+@click.option('--provider-service-id', callback=cli_util.handle_required_param, help="""The OCID of the provider service. [required]""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VirtualCircuitBandwidthShape]'})
+@cli_util.wrap_exceptions
+def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, all_pages, page_size, provider_service_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+        raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_fast_connect_provider_virtual_circuit_bandwidth_shapes,
+            provider_service_id=provider_service_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_fast_connect_provider_virtual_circuit_bandwidth_shapes,
+            limit,
+            page_size,
+            provider_service_id=provider_service_id,
+            **kwargs
+        )
+    else:
+        result = client.list_fast_connect_provider_virtual_circuit_bandwidth_shapes(
+            provider_service_id=provider_service_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @internet_gateway_group.command(name=cli_util.override('list_internet_gateways.command_name', 'list'), help="""Lists the Internet Gateways in the specified VCN and the specified compartment.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @click.option('--vcn-id', callback=cli_util.handle_required_param, help="""The OCID of the VCN. [required]""")
@@ -3231,7 +3444,7 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help="""Lists the available bandwidth levels for virtual circuits. You need this information so you can specify your desired bandwidth level (that is, shape) when you create a virtual circuit. For the compartment ID, provide the OCID of your tenancy (the root compartment).""")
+@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help="""The deprecated operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the OCID of your tenancy (the root compartment).""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
@@ -3276,6 +3489,29 @@ def list_virtual_circuit_bandwidth_shapes(ctx, from_json, all_pages, page_size, 
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@virtual_circuit_public_prefix_group.command(name=cli_util.override('list_virtual_circuit_public_prefixes.command_name', 'list'), help="""Lists the public IP prefixes and their details for the specified public virtual circuit.""")
+@click.option('--virtual-circuit-id', callback=cli_util.handle_required_param, help="""The OCID of the virtual circuit. [required]""")
+@click.option('--verification-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "COMPLETED", "FAILED"]), help="""A filter to only return resources that match the given verification state. The state value is case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VirtualCircuitPublicPrefix]'})
+@cli_util.wrap_exceptions
+def list_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id, verification_state):
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+    kwargs = {}
+    if verification_state is not None:
+        kwargs['verification_state'] = verification_state
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.list_virtual_circuit_public_prefixes(
+        virtual_circuit_id=virtual_circuit_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -3482,7 +3718,13 @@ def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
 Note that the `options` object you provide replaces the entire existing set of options.""")
 @click.option('--dhcp-id', callback=cli_util.handle_required_param, help="""The OCID for the set of DHCP options. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--options', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type DhcpOption.  For documentation on DhcpOption please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3491,18 +3733,18 @@ This option is a JSON list with items of type DhcpOption.  For documentation on 
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'options': {'module': 'core', 'class': 'list[DhcpOption]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'options': {'module': 'core', 'class': 'list[DhcpOption]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'core', 'class': 'list[DhcpOption]'}}, output_type={'module': 'core', 'class': 'DhcpOptions'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'options': {'module': 'core', 'class': 'list[DhcpOption]'}}, output_type={'module': 'core', 'class': 'DhcpOptions'})
 @cli_util.wrap_exceptions
-def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dhcp_id, display_name, options, if_match):
+def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dhcp_id, defined_tags, display_name, freeform_tags, options, if_match):
 
     if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
     if not force:
-        if options:
-            if not click.confirm("WARNING: Updates to options will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or options:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and options will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3510,8 +3752,14 @@ def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if options is not None:
         details['options'] = cli_util.parse_json_parameter("options", options)
@@ -3803,7 +4051,13 @@ def update_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
 This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
 @click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The private IP's OCID. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--hostname-label', callback=cli_util.handle_optional_param, help="""The hostname for the private IP. Used for DNS. The value is the hostname portion of the private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
 For more information, see [DNS in Your Virtual Cloud Network].
@@ -3811,23 +4065,34 @@ For more information, see [DNS in Your Virtual Cloud Network].
 Example: `bminstance-1`""")
 @click.option('--vnic-id', callback=cli_util.handle_optional_param, help="""The OCID of the VNIC to reassign the private IP to. The VNIC must be in the same subnet as the current VNIC.""")
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def update_private_ip(ctx, from_json, private_ip_id, display_name, hostname_label, vnic_id, if_match):
+def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, display_name, freeform_tags, hostname_label, vnic_id, if_match):
 
     if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
         details['hostnameLabel'] = hostname_label
@@ -3848,7 +4113,13 @@ def update_private_ip(ctx, from_json, private_ip_id, display_name, hostname_labe
 
 Note that the `routeRules` object you provide replaces the entire existing set of rules.""")
 @click.option('--rt-id', callback=cli_util.handle_required_param, help="""The OCID of the route table. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--route-rules', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""The collection of rules used for routing destination IPs to network devices.
 
 This option is a JSON list with items of type RouteRule.  For documentation on RouteRule please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3857,18 +4128,18 @@ This option is a JSON list with items of type RouteRule.  For documentation on R
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}}, output_type={'module': 'core', 'class': 'RouteTable'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}}, output_type={'module': 'core', 'class': 'RouteTable'})
 @cli_util.wrap_exceptions
-def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rt_id, display_name, route_rules, if_match):
+def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rt_id, defined_tags, display_name, freeform_tags, route_rules, if_match):
 
     if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
     if not force:
-        if route_rules:
-            if not click.confirm("WARNING: Updates to route-rules will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or route_rules:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and route-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3876,8 +4147,14 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_rules is not None:
         details['routeRules'] = cli_util.parse_json_parameter("route_rules", route_rules)
@@ -3911,10 +4188,16 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 Note that the `egressSecurityRules` or `ingressSecurityRules` objects you provide replace the entire existing objects.""")
 @click.option('--security-list-id', callback=cli_util.handle_required_param, help="""The OCID of the security list. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @click.option('--egress-security-rules', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing egress IP packets.
 
 This option is a JSON list with items of type EgressSecurityRule.  For documentation on EgressSecurityRule please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--ingress-security-rules', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Rules for allowing ingress IP packets.
 
 This option is a JSON list with items of type IngressSecurityRule.  For documentation on IngressSecurityRule please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3923,18 +4206,18 @@ This option is a JSON list with items of type IngressSecurityRule.  For document
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}}, output_type={'module': 'core', 'class': 'SecurityList'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}}, output_type={'module': 'core', 'class': 'SecurityList'})
 @cli_util.wrap_exceptions
-def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_list_id, display_name, egress_security_rules, ingress_security_rules, if_match):
+def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_list_id, defined_tags, display_name, egress_security_rules, freeform_tags, ingress_security_rules, if_match):
 
     if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
     if not force:
-        if egress_security_rules or ingress_security_rules:
-            if not click.confirm("WARNING: Updates to egress-security-rules and ingress-security-rules will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or egress_security_rules or freeform_tags or ingress_security_rules:
+            if not click.confirm("WARNING: Updates to defined-tags and egress-security-rules and freeform-tags and ingress-security-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3942,11 +4225,17 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
 
     if egress_security_rules is not None:
         details['egressSecurityRules'] = cli_util.parse_json_parameter("egress_security_rules", egress_security_rules)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if ingress_security_rules is not None:
         details['ingressSecurityRules'] = cli_util.parse_json_parameter("ingress_security_rules", ingress_security_rules)
@@ -3978,28 +4267,45 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 @subnet_group.command(name=cli_util.override('update_subnet.command_name', 'update'), help="""Updates the specified subnet's display name. Avoid entering confidential information.""")
 @click.option('--subnet-id', callback=cli_util.handle_required_param, help="""The OCID of the subnet. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Subnet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Subnet'})
 @cli_util.wrap_exceptions
-def update_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, display_name, if_match):
+def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, defined_tags, display_name, freeform_tags, if_match):
 
     if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_subnet(
@@ -4028,28 +4334,45 @@ def update_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 @vcn_group.command(name=cli_util.override('update_vcn.command_name', 'update'), help="""Updates the specified VCN's display name. Avoid entering confidential information.""")
 @click.option('--vcn-id', callback=cli_util.handle_required_param, help="""The OCID of the VCN. [required]""")
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vcn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def update_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, display_name, if_match):
+def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, defined_tags, display_name, freeform_tags, if_match):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_vcn(
@@ -4078,9 +4401,11 @@ def update_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @virtual_circuit_group.command(name=cli_util.override('update_virtual_circuit.command_name', 'update'), help="""Updates the specified virtual circuit. This can be called by either the customer who owns the virtual circuit, or the provider (when provisioning or de-provisioning the virtual circuit from their end). The documentation for [UpdateVirtualCircuitDetails] indicates who can update each property of the virtual circuit.
 
-**Important:** If the virtual circuit is working and in the PROVISIONED state, updating any of the network-related properties (such as the DRG being used, the BGP ASN, and so on) will cause the virtual circuit's state to switch to PROVISIONING and the related BGP session to go down. After Oracle re-provisions the virtual circuit, its state will return to PROVISIONED. Make sure you confirm that the associated BGP session is back up. For more information about the various states and how to test connectivity, see [FastConnect Overview].""")
+**Important:** If the virtual circuit is working and in the PROVISIONED state, updating any of the network-related properties (such as the DRG being used, the BGP ASN, and so on) will cause the virtual circuit's state to switch to PROVISIONING and the related BGP session to go down. After Oracle re-provisions the virtual circuit, its state will return to PROVISIONED. Make sure you confirm that the associated BGP session is back up. For more information about the various states and how to test connectivity, see [FastConnect Overview].
+
+To change the list of public IP prefixes for a public virtual circuit, use [BulkAddVirtualCircuitPublicPrefixes] and [BulkDeleteVirtualCircuitPublicPrefixes]. Updating the list of prefixes does NOT cause the BGP session to go down. However, Oracle must verify the customer's ownership of each added prefix before traffic for that prefix will flow across the virtual circuit.""")
 @click.option('--virtual-circuit-id', callback=cli_util.handle_required_param, help="""The OCID of the virtual circuit. [required]""")
-@click.option('--bandwidth-shape-name', callback=cli_util.handle_optional_param, help="""The provisioned data rate of the connection. To get a list of the available bandwidth levels (that is, shapes), see [ListVirtualCircuitBandwidthShapes]. To be updated only by the customer who owns the virtual circuit.""")
+@click.option('--bandwidth-shape-name', callback=cli_util.handle_optional_param, help="""The provisioned data rate of the connection. To get a list of the available bandwidth levels (that is, shapes), see [ListFastConnectProviderVirtualCircuitBandwidthShapes]. To be updated only by the customer who owns the virtual circuit.""")
 @click.option('--cross-connect-mappings', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of mappings, each containing properties for a cross-connect or cross-connect group associated with this virtual circuit.
 
 The customer and provider can update different properties in the mapping depending on the situation. See the description of the [CrossConnectMapping].
@@ -4094,7 +4419,7 @@ If the BGP session is from the provider's edge router to Oracle, the required va
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique. Avoid entering confidential information.
 
 To be updated only by the customer who owns the virtual circuit.""")
-@click.option('--gateway-id', callback=cli_util.handle_optional_param, help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.
+@click.option('--gateway-id', callback=cli_util.handle_optional_param, help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this private virtual circuit uses.
 
 To be updated only by the customer who owns the virtual circuit.""")
 @click.option('--provider-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help="""The provider's state in relation to this virtual circuit. Relevant only if the customer is using FastConnect via a provider.  ACTIVE means the provider has provisioned the virtual circuit from their end. INACTIVE means the provider has not yet provisioned the virtual circuit, or has de-provisioned it.

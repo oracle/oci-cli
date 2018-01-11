@@ -95,6 +95,7 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
 
         shutil.rmtree(test_folder)
 
+    @util.slow
     def test_invoke_with_file_paths_and_json_in_default_file(self):
         self.create_network_resources()
 

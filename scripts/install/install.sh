@@ -2,10 +2,19 @@
 
 #
 # Bash script to install the Oracle Cloud Infrastructure CLI
-# Example invocation: curl -L "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" | bash
+# Example invocation: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
 #
+SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" 
 INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.4.13/scripts/install/install.py"
 _TTY=/dev/tty
+
+# detect if the script is able to prompt for user input from stdin
+# if it is being run by piping the script content into bash (cat install.sh | bash) prompts will fail
+# (-t fd True if file descriptor fd is open and refers to a terminal)
+if ! [ -t 0 ]; then
+    echo "WARNING: Some interactive prompts may not function correctly if this script is piped into bash (e.g. 'curl \"$SHELL_INSTALL_SCRIPT_URL\" | bash)'"
+    echo "WARNING: Script should either be downloaded and invoked directly, or be run with the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
+fi
 
 install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
 echo "Downloading Oracle Cloud Infrastructure CLI install script from $INSTALL_SCRIPT_URL to $install_script."
@@ -48,6 +57,10 @@ if [ "$need_to_install_python" = true ]; then
         echo "Attempting to install Python."
         sudo yum $yum_opts check-update
         sudo yum $yum_opts install gcc libffi-devel python-devel openssl-devel
+        if [ $? -ne 0 ]; then
+            echo "ERROR: Required native dependencies were not installed, exiting install script. If you did not recieve a prompt to install native dependencies please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
+            exit 1
+        fi
         curl -O https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
         tar -xvzf Python-3.6.0.tgz
         cd Python-3.6.0
@@ -61,9 +74,13 @@ if [ "$need_to_install_python" = true ]; then
         echo "Attempting to install Python."
         sudo apt-get $apt_get_opts update
         sudo apt-get $apt_get_opts install python3-pip
+        if [ $? -ne 0 ]; then
+            echo "ERROR: Python was not installed, exiting install script. If you did not recieve a prompt to install python please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
+            exit 1
+        fi
         python_exe=python3
     else
-        echo "Could not install Python based on operating system. Please install Python manually and re-run this script."
+        echo "ERROR: Could not install Python based on operating system. Please install Python manually and re-run this script."
         exit 1
     fi
 fi

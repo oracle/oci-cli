@@ -2,21 +2,26 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import json
+import os.path
+import pytest
 import socket
 import string
 import struct
+import time
 import unittest
 from . import util
+from . import tag_data_container
 
 
+@pytest.mark.usefixtures("tag_namespace_and_tags")
 class TestSecondaryPrivateIp(unittest.TestCase):
     @util.slow
-    @util.log_test
     def test_secondary_ip_operations(self):
         # We delegate to an internal method and have a try-catch so that we have
         # an opportunity to clean up resources after the meat of the test is over
         try:
             self.subtest_secondary_ip_operations()
+            self.subtest_tagging_secondary_ip()
         finally:
             self.clean_up_resources()
 
@@ -271,6 +276,101 @@ class TestSecondaryPrivateIp(unittest.TestCase):
         self.assertEqual(2, len(private_ips))
         self.assertTrue(private_ips[0]['is-primary'])
         self.assertTrue(private_ips[1]['is-primary'])
+
+    def subtest_tagging_secondary_ip(self):
+        vnics_on_instance_result = self.invoke(
+            ['compute', 'instance', 'list-vnics',
+             '--instance-id', self.second_instance_id])
+        vnics = json.loads(vnics_on_instance_result.output)
+        vnic_id = vnics['data'][0]['id']
+
+        tag_names_to_values = {}
+        for t in tag_data_container.tags:
+            tag_names_to_values[t.name] = 'somevalue {}'.format(int(time.time()))
+        tag_data_container.write_defined_tags_to_file(
+            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            tag_data_container.tag_namespace,
+            tag_names_to_values
+        )
+
+        # We can set tags on assignment
+        result = self.invoke([
+            'network', 'vnic', 'assign-private-ip',
+            '--vnic-id', vnic_id,
+            '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_1.json'
+        ])
+        private_ip_data = json.loads(result.output)['data']
+        expected_freeform = {'tagOne': 'value1', 'tag_Two': 'value two'}
+        expected_defined = {tag_data_container.tag_namespace.name: tag_names_to_values}
+        self.assertEqual(expected_freeform, private_ip_data['freeform-tags'])
+        self.assertEqual(expected_defined, private_ip_data['defined-tags'])
+
+        result = self.invoke([
+            'network', 'private-ip', 'get',
+            '--private-ip-id', private_ip_data['id']
+        ])
+        private_ip_info_from_get = json.loads(result.output)['data']
+        self.assertEqual(expected_freeform, private_ip_info_from_get['freeform-tags'])
+        self.assertEqual(expected_defined, private_ip_info_from_get['defined-tags'])
+
+        tag_names_to_values = {}
+        for t in tag_data_container.tags:
+            tag_names_to_values[t.name] = 'somevalue2 {}'.format(int(time.time()))
+        tag_data_container.write_defined_tags_to_file(
+            os.path.join('tests', 'temp', 'defined_tags_2.json'),
+            tag_data_container.tag_namespace,
+            tag_names_to_values
+        )
+
+        # We can overwrite tags on update
+        result = self.invoke([
+            'network', 'private-ip', 'update',
+            '--private-ip-id', private_ip_data['id'],
+            '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_2.json',
+            '--force'
+        ])
+        private_ip_data = json.loads(result.output)['data']
+        expected_freeform = {'tagOne': 'value three'}
+        expected_defined = {tag_data_container.tag_namespace.name: tag_names_to_values}
+        self.assertEqual(expected_freeform, private_ip_data['freeform-tags'])
+        self.assertEqual(expected_defined, private_ip_data['defined-tags'])
+
+        result = self.invoke([
+            'network', 'private-ip', 'get',
+            '--private-ip-id', private_ip_data['id']
+        ])
+        private_ip_info_from_get = json.loads(result.output)['data']
+        self.assertEqual(expected_freeform, private_ip_info_from_get['freeform-tags'])
+        self.assertEqual(expected_defined, private_ip_info_from_get['defined-tags'])
+
+        # We can nuke tags by providing an empty JSON object
+        result = self.invoke([
+            'network', 'private-ip', 'update',
+            '--private-ip-id', private_ip_data['id'],
+            '--freeform-tags', '{}',
+            '--defined-tags', '{}',
+            '--force'
+        ])
+        private_ip_data = json.loads(result.output)['data']
+        self.assertEqual({}, private_ip_data['freeform-tags'])
+        self.assertEqual({}, private_ip_data['defined-tags'])
+
+        result = self.invoke([
+            'network', 'private-ip', 'get',
+            '--private-ip-id', private_ip_data['id']
+        ])
+        private_ip_info_from_get = json.loads(result.output)['data']
+        self.assertEqual({}, private_ip_info_from_get['freeform-tags'])
+        self.assertEqual({}, private_ip_info_from_get['defined-tags'])
+
+        result = self.invoke([
+            'network', 'private-ip', 'delete',
+            '--private-ip-id', private_ip_data['id'],
+            '--force'
+        ])
+        self.assertEqual(0, result.exit_code)
 
     def clean_up_resources(self):
         error_count = 0
