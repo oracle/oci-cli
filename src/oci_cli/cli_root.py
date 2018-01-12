@@ -184,7 +184,7 @@ def get_section_without_defaults(parser_without_defaults, section_name):
     return parser_without_defaults.items(section_name)
 
 
-@click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True, context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True), help="""Oracle Cloud Infrastructure command line interface, with support for Block Volume, Compute, Database, IAM, Networking, and Object Storage Services.
+@click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True, context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True), help="""Oracle Cloud Infrastructure command line interface, with support for Block Volume, Compute, Database, IAM, Load Balancing, Networking, and Object Storage Services.
 
 Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where $T contains the OCID of the current tenant):
 
@@ -214,6 +214,7 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
 
 Queries can be entered directly on the command line or referenced from the [OCI_CLI_COMMAND_ALIASES] section of your configuration file by using the syntax query://<query_name>, for example query://get_id_and_name
 """)
+@click.option('--raw-output', is_flag=True, help='If the output of a given query is a single string value, this will return the string without surrounding quotes')
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -223,7 +224,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, generate_full_command_json_input, generate_param_json_input, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, generate_full_command_json_input, generate_param_json_input, debug, help):
     if ctx.command_path == 'bmcs':
         click.echo(click.style(BMCS_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
 
@@ -257,6 +258,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         'cert_bundle': cert_bundle,
         'output': output,
         'query': query,
+        'raw_output': raw_output,
         'generate_full_command_json_input': generate_full_command_json_input,
         'generate_param_json_input': generate_param_json_input,
         'debug': debug

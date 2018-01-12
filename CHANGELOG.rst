@@ -7,6 +7,32 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.14 - 2018-01-11
+--------------------
+Added
+~~~~~~~~~~
+* Support for tagging
+
+  * Tags and tag namespaces can be managed via the 'oci iam tag-namespace' and 'oci iam tag' commands
+  * Operations which support applying tags will have --defined-tags and --freeform-tags options. Check the help dump (https://github.com/oracle/oci-cli/blob/master/tests/output/inline_help_dump.txt) for resources which support tags. A general list of taggable resources can also be found in: https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/taggingoverview.htm#Taggable
+  * An example of using tagging can be found at https://github.com/oracle/oci-cli/blob/master/scripts/tagging_example.sh
+
+* Support for bringing your own custom image for emulation mode virtual machines in Compute Service (--launch-mode parameter on create image)
+* Support for returning unquoted strings when the result of a JMESPath --query is a single string value (using --raw-output option)
+* Support for launching an instance from an image or boot volume using the --image-id or --source-boot-volume-id parameters (these are alternatives to specifying --source-details)
+* Support for boot volume attachment operations (oci compute boot-volume-attachment)
+* Support wait for state on detach operations (e.g. oci compute volume-attachment detach --wait-for-state)
+
+Changed
+~~~~~~~~~~
+* Upgraded cryptography dependency to 2.1.3
+
+  * Changed dependency on pyOpenSSL <= 17.4.0 as the minimum cryptography version for pyOpenSSL 17.5.0 is 2.1.4
+
+* Upgraded six dependency to 1.11.0
+* Ugraded requests dependency to 2.18.4
+
+
 2.4.13 - 2017-12-11
 --------------------
 Added

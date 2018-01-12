@@ -1,20 +1,11 @@
 # coding: utf-8
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
-import datetime
 import json
-import oci
 import oci_cli
-from oci_cli import cli_util
 import os
 import pytest
 from . import util
-
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from cryptography import x509
-from cryptography.x509.oid import NameOID
-from cryptography.hazmat.primitives import hashes
 
 LB_PROVISIONING_TIME_SEC = 300  # 5 minutes
 LB_PRIVATE_KEY_PASSPHRASE = 'secret!'
@@ -22,138 +13,6 @@ LB_PRIVATE_KEY_PASSPHRASE = 'secret!'
 DEFAULT_WAIT_TIME = 120  # 1 minute
 
 TEMP_DIR = os.path.join('tests', 'temp')
-
-
-@pytest.fixture(scope='module')
-def key_pair_files():
-    private_key = cli_util.generate_key()
-    public_key = private_key.public_key()
-
-    public_key_filename = os.path.join(TEMP_DIR, 'key_public.pem')
-    private_key_filename = os.path.join(TEMP_DIR, 'key.pem')
-    certificate_filename = os.path.join(TEMP_DIR, 'certificate.pem')
-
-    with open(public_key_filename, "wb") as f:
-        f.write(cli_util.serialize_key(public_key=public_key))
-
-    with open(private_key_filename, "wb") as f:
-        f.write(cli_util.serialize_key(private_key=private_key, passphrase=LB_PRIVATE_KEY_PASSPHRASE))
-
-    # Various details about who we are. For a self-signed certificate the
-    # subject and issuer are always the same.
-    subject = issuer = x509.Name([
-        x509.NameAttribute(NameOID.COUNTRY_NAME, u"US"),
-        x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, u"WA"),
-        x509.NameAttribute(NameOID.LOCALITY_NAME, u"Seattle"),
-        x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"Oracle"),
-        x509.NameAttribute(NameOID.COMMON_NAME, u"company.com"),
-    ])
-
-    cert = x509.CertificateBuilder().subject_name(
-        subject
-    ).issuer_name(
-        issuer
-    ).public_key(
-        public_key
-    ).serial_number(
-        x509.random_serial_number()
-    ).not_valid_before(
-        datetime.datetime.utcnow()
-    ).not_valid_after(
-        # Our certificate will be valid for 10 days
-        datetime.datetime.utcnow() + datetime.timedelta(days=10)
-    ).add_extension(
-        x509.SubjectAlternativeName([x509.DNSName(u"localhost")]), critical=False).sign(private_key, hashes.SHA256(), default_backend())
-
-    # Write our certificate out to disk.
-    with open(certificate_filename, "wb") as f:
-        f.write(cert.public_bytes(serialization.Encoding.PEM))
-
-    result = [public_key_filename, private_key_filename, certificate_filename]
-    yield result
-
-    for filename in result:
-        if os.path.isfile(filename):
-            os.remove(filename)
-
-
-@pytest.fixture(scope='module')
-def vcn_and_subnets(network_client):
-    # create VCN
-    vcn_name = util.random_name('cli_lb_test_vcn')
-    cidr_block = "10.0.0.0/16"
-    vcn_dns_label = util.random_name('vcn', insert_underscore=False)
-
-    create_vcn_details = oci.core.models.CreateVcnDetails()
-    create_vcn_details.cidr_block = cidr_block
-    create_vcn_details.display_name = vcn_name
-    create_vcn_details.compartment_id = util.COMPARTMENT_ID
-    create_vcn_details.dns_label = vcn_dns_label
-
-    result = network_client.create_vcn(create_vcn_details)
-    vcn_ocid = result.data.id
-    assert result.status == 200
-
-    oci.wait_until(network_client, network_client.get_vcn(vcn_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
-
-    # create subnet in first AD
-    subnet_name = util.random_name('cli_lb_test_subnet')
-    cidr_block = "10.0.1.0/24"
-    subnet_dns_label = util.random_name('subnet', insert_underscore=False)
-
-    create_subnet_details = oci.core.models.CreateSubnetDetails()
-    create_subnet_details.compartment_id = util.COMPARTMENT_ID
-    create_subnet_details.availability_domain = util.availability_domain()
-    create_subnet_details.display_name = subnet_name
-    create_subnet_details.vcn_id = vcn_ocid
-    create_subnet_details.cidr_block = cidr_block
-    create_subnet_details.dns_label = subnet_dns_label
-
-    result = network_client.create_subnet(create_subnet_details)
-    subnet_ocid_1 = result.data.id
-    assert result.status == 200
-
-    oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
-
-    # create subnet in second AD
-    subnet_name = util.random_name('cli_lb_test_subnet')
-    cidr_block = "10.0.0.0/24"
-    subnet_dns_label = util.random_name('subnet', insert_underscore=False)
-
-    create_subnet_details = oci.core.models.CreateSubnetDetails()
-    create_subnet_details.compartment_id = util.COMPARTMENT_ID
-    create_subnet_details.availability_domain = util.second_availability_domain()
-    create_subnet_details.display_name = subnet_name
-    create_subnet_details.vcn_id = vcn_ocid
-    create_subnet_details.cidr_block = cidr_block
-    create_subnet_details.dns_label = subnet_dns_label
-
-    result = network_client.create_subnet(create_subnet_details)
-    subnet_ocid_2 = result.data.id
-    assert result.status == 200
-
-    oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
-
-    yield [vcn_ocid, subnet_ocid_1, subnet_ocid_2]
-
-    # delete VCN and subnets
-    network_client.delete_subnet(subnet_ocid_1)
-
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
-            util.print_latest_exception(error)
-
-    network_client.delete_subnet(subnet_ocid_2)
-
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
-            util.print_latest_exception(error)
-
-    network_client.delete_vcn(vcn_ocid)
 
 
 @pytest.fixture(scope='module')

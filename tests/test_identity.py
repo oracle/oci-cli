@@ -2,15 +2,18 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import json
+import pytest
 import random
 import time
 import unittest
 from . import command_coverage_validator
+from . import tag_data_container
 from . import util
 import oci_cli
 import os.path
 
 
+@pytest.mark.usefixtures("tag_namespace_and_tags")
 class TestIdentity(unittest.TestCase):
 
     RENAME_COMPARTMENT_PREFIX = "PythonCliCompartmentRenameTest-"
@@ -21,7 +24,10 @@ class TestIdentity(unittest.TestCase):
     def setUp(self):
         util.set_admin_pass_phrase()
 
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=3)
+    # The operations not called are:
+    #   - region list, region-subscription create/list
+    #   - tag and tag-namespace operations (x12). These are handled via test_tagging and test_tag_management
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=15)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
         self.validator = validator
@@ -360,6 +366,8 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         self.validate_response(result)
         assert len(json.loads(result.output)['data']) == 1
 
+        self.update_policy_with_tags(policy_ocid)
+
         # Delete policy
         result = self.invoke(['policy', 'delete', '--policy-id', policy_ocid, '--force'])
         self.validate_response(result)
@@ -519,6 +527,99 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         assert dict_one['time-created'] == dict_two['time-created']
         assert dict_one['time-expires'] == dict_two['time-expires']
         assert dict_one['lifecycle-state'] == dict_two['lifecycle-state']
+
+    def update_policy_with_tags(self, policy_ocid):
+        tag_names_to_values = {}
+        for t in tag_data_container.tags:
+            tag_names_to_values[t.name] = 'update_policy {}'.format(int(time.time()))
+        tag_data_container.write_defined_tags_to_file(
+            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            tag_data_container.tag_namespace,
+            tag_names_to_values
+        )
+
+        result = self.invoke([
+            'policy', 'update',
+            '--policy-id', policy_ocid,
+            '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+            '--force'
+        ])
+        self.validate_response(result)
+        parsed_result = json.loads(result.output)
+        expected_freeform = {'tagOne': 'value1', 'tag_Two': 'value two'}
+        expected_defined = {tag_data_container.tag_namespace.name: tag_names_to_values}
+        assert expected_freeform == parsed_result['data']['freeform-tags']
+        assert expected_defined == parsed_result['data']['defined-tags']
+
+        result = self.invoke(['policy', 'get', '--policy-id', policy_ocid])
+        parsed_result = json.loads(result.output)
+        assert expected_freeform == parsed_result['data']['freeform-tags']
+        assert expected_defined == parsed_result['data']['defined-tags']
+
+        result = self.invoke(['policy', 'list', '-c', util.TENANT_ID, '--all'])
+        parsed_result = json.loads(result.output)
+        found_policy = False
+        for pr in parsed_result['data']:
+            if pr['id'] == policy_ocid:
+                assert expected_freeform == pr['freeform-tags']
+                assert expected_defined == pr['defined-tags']
+                found_policy = True
+                break
+        assert found_policy
+
+        tag_names_to_values.pop(tag_data_container.tags[1].name)
+        tag_data_container.write_defined_tags_to_file(
+            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            tag_data_container.tag_namespace,
+            tag_names_to_values
+        )
+        result = self.invoke([
+            'policy', 'update',
+            '--policy-id', policy_ocid,
+            '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+            '--force'
+        ])
+        self.validate_response(result)
+        parsed_result = json.loads(result.output)
+        expected_freeform = {'tagOne': 'value three'}
+        expected_defined = {tag_data_container.tag_namespace.name: tag_names_to_values}
+        assert expected_freeform == parsed_result['data']['freeform-tags']
+        assert expected_defined == parsed_result['data']['defined-tags']
+
+        result = self.invoke(['policy', 'get', '--policy-id', policy_ocid])
+        parsed_result = json.loads(result.output)
+        assert expected_freeform == parsed_result['data']['freeform-tags']
+        assert expected_defined == parsed_result['data']['defined-tags']
+
+        result = self.invoke([
+            'policy', 'update',
+            '--policy-id', policy_ocid,
+            '--freeform-tags', '{}',
+            '--defined-tags', '{}',
+            '--force'
+        ])
+        self.validate_response(result)
+        parsed_result = json.loads(result.output)
+        assert {} == parsed_result['data']['freeform-tags']
+        assert {} == parsed_result['data']['defined-tags']
+
+        result = self.invoke(['policy', 'get', '--policy-id', policy_ocid])
+        parsed_result = json.loads(result.output)
+        assert {} == parsed_result['data']['freeform-tags']
+        assert {} == parsed_result['data']['defined-tags']
+
+        result = self.invoke(['policy', 'list', '-c', util.TENANT_ID, '--all'])
+        parsed_result = json.loads(result.output)
+        found_policy = False
+        for pr in parsed_result['data']:
+            if pr['id'] == policy_ocid:
+                assert {} == pr['freeform-tags']
+                assert {} == pr['defined-tags']
+                found_policy = True
+                break
+        assert found_policy
 
 
 if __name__ == '__main__':

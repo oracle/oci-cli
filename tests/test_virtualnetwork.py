@@ -352,7 +352,7 @@ class TestVirtualNetwork(unittest.TestCase):
              ])
 
         # If we have hit a limit, skip the test
-        if 'Limit vcn-tenant-drg' in result.output:
+        if 'Limit vcn-tenant-drg' in result.output or 'Limit tenant-drg' in result.output:
             self.drg_capacity_issue = True
             print('Unable to execute subtest_drg_operations as a DRG is not available')
             return
@@ -419,6 +419,10 @@ class TestVirtualNetwork(unittest.TestCase):
              '--drg-id', self.drg_ocid,
              '--static-routes', routes
              ])
+        if 'Limit tenant-ipsec-vpn-connection' in result.output:
+            print('Unable to execute subtest_ip_sec_connection_operations as a DRG is not available')
+            return
+
         self.ipsc_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
 

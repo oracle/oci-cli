@@ -219,6 +219,7 @@ def test_create_with_complex_param_in_json(network_resources):
     util.wait_until(['network', 'security-list', 'get', '--security-list-id', security_list_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
 
 
+@util.slow
 def test_launch_instance(network_resources):
     launch_instance_json = 'file://{}'.format(os.path.join('tests', 'resources', 'json_input', 'launch_instance.json'))
     image_id = util.oracle_linux_image()

@@ -56,6 +56,20 @@ PROFILE_TO_REGION = {
     'IAD': 'us-ashburn-1'
 }
 
+# The check_json_key_format method validates that keys are snake-cased and all in lower case
+# (e.g. this-is-a-valid-key, ButThisIsNot, And_neither_is_this). However, there are exceptions such
+# as where the key is sourced directly from user input (e.g. metadata, tagging) and we should
+# preserve these as-is rather than imposing our rules
+SKIP_JSON_KEY_FORMAT_CHECK = set([
+    "metadata",
+    "extended-metadata",
+    "backend-sets",
+    "certificates",
+    "default-backend-set-name",
+    "defined-tags",
+    "freeform-tags"
+])
+
 # This global can be changed to influence what configuration data this module vends.
 target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
 
@@ -298,6 +312,35 @@ def collect_commands(command, prefix=None, leaf_commands_only=False):
         yield prefix
 
 
+def collect_commands_with_given_args(command, include_args=[], match_mode='any', prefix=None):
+    prefix = prefix or []
+    subcommands = getattr(command, "commands", {})
+
+    if subcommands:
+        for name, command in six.iteritems(subcommands):
+            for path in collect_commands_with_given_args(command, include_args=include_args, match_mode=match_mode, prefix=prefix + [name]):
+                yield path
+    else:
+        match_args = (match_mode == 'all')
+        command_opts = []
+
+        for p in command.params:
+            command_opts.extend(p.opts)
+
+        for a in include_args:
+            if match_mode == 'any':
+                if a in command_opts:
+                    match_args = True
+                    break
+            else:
+                if a not in command_opts:
+                    match_args = False
+                    break
+
+        if match_args:
+            yield prefix
+
+
 def build_config_decorator(method):
     """Get the pass phrase from an environment variable and inject it into the config."""
 
@@ -330,13 +373,13 @@ def validate_json_response(data):
 
 def check_json_key_format(json_data):
     """Ensure that all keys in the json data are in the correct format.
-    The one exception is metadata dictionaries, which must reflect user
+    The exceptions include metadata dictionaries and tags, which must reflect user
     input"""
     if isinstance(json_data, six.string_types):
         pass
     elif isinstance(json_data, abc.Mapping):
         for key, value in six.iteritems(json_data):
-            if key != "metadata" and key != "extended-metadata" and key != "backend-sets" and key != "certificates" and key != "default-backend-set-name":
+            if key not in SKIP_JSON_KEY_FORMAT_CHECK:
                 assert "_" not in key
                 assert key.islower()
                 check_json_key_format(value)

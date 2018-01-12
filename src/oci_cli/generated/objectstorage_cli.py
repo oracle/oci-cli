@@ -1009,9 +1009,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name):
 @bucket_group.command(name=cli_util.override('update_bucket.command_name', 'update'), help="""Performs a partial or full update of a bucket's user-defined metadata.""")
 @click.option('--namespace-name', callback=cli_util.handle_required_param, help="""The top-level namespace used for the request. [required]""")
 @click.option('--bucket-name', callback=cli_util.handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
-@click.option('--namespace', callback=cli_util.handle_optional_param, help="""The namespace in which the bucket lives.""")
 @click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The compartmentId for the compartment to which the bucket is targeted to move to.""")
-@click.option('--name', callback=cli_util.handle_optional_param, help="""The name of the bucket. Avoid entering confidential information. Example: my-new-bucket1""")
 @click.option('--metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations.""")
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""The entity tag to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
@@ -1020,7 +1018,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, namespace, compartment_id, name, metadata, public_access_type, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1034,14 +1032,11 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, namespace, compar
 
     details = {}
 
-    if namespace is not None:
-        details['namespace'] = namespace
-
     if compartment_id is not None:
         details['compartmentId'] = compartment_id
 
-    if name is not None:
-        details['name'] = name
+    if bucket_name is not None:
+        details['name'] = bucket_name
 
     if metadata is not None:
         details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)

@@ -30,16 +30,9 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 
 from . import cli_exceptions
+from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
 from oci import exceptions, config
-from oci.audit import AuditClient
-from oci.core import BlockstorageClient
-from oci.core import ComputeClient
-from oci.core import VirtualNetworkClient
-from oci.database import DatabaseClient
-from oci.identity import IdentityClient
-from oci.object_storage import ObjectStorageClient
-from oci.load_balancer import LoadBalancerClient
 
 from .version import __version__
 
@@ -117,6 +110,9 @@ DEFAULT_FILE_CONVERT_PARAM_TRUTHY_VALUES = ['1', 'y', 't', 'yes', 'true', 'on']
 CLOCK_SKEW_WARNING_THRESHOLD_MINUTES = 5
 
 
+MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
+
+
 def override(key, default):
     return OVERRIDES.get(key, default)
 
@@ -146,16 +142,7 @@ def build_client(service_name, ctx):
 
     # Build the client, then fix up a few properties.
     try:
-        client_class = {
-            "audit": AuditClient,
-            "identity": IdentityClient,
-            "object_storage": ObjectStorageClient,
-            "blockstorage": BlockstorageClient,
-            "compute": ComputeClient,
-            "database": DatabaseClient,
-            "load_balancer": LoadBalancerClient,
-            "virtual_network": VirtualNetworkClient
-        }[service_name]
+        client_class = CLIENT_MAP[service_name]
 
         try:
             client = client_class(client_config)
@@ -252,7 +239,10 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                 return
 
         if ctx.obj['output'] == "json":
-            print(pretty_print_format(display_data))
+            if ctx.obj['raw_output'] and isinstance(display_data, six.string_types):
+                print(display_data)
+            else:
+                print(pretty_print_format(display_data))
         elif ctx.obj['output'] == 'table':
             table_data = display_data
 
@@ -537,15 +527,6 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
         return new_list
 
 
-MODULE_TO_TYPE_MAPPINGS = {
-    'core': oci.core.models.core_type_mapping,
-    'database': oci.database.models.database_type_mapping,
-    'identity': oci.identity.models.identity_type_mapping,
-    'load_balancer': oci.load_balancer.models.load_balancer_type_mapping,
-    'object_storage': oci.object_storage.models.object_storage_type_mapping
-}
-
-
 # If type information has been written to metadata (e.g. the operation is decorated with @json_skeleton_utils.json_skeleton_generation_handler), then retrieve it
 # so that we can use it as part of key camelization when parsing a JSON object.
 #
@@ -780,6 +761,14 @@ def load_context_obj_values_from_defaults(ctx):
             ctx.obj['debug'] = get_default_value_from_defaults_file(ctx, 'debug', click.BOOL, False)
     else:
         populate_dict_key_with_default_value(ctx, 'debug', click.BOOL)
+
+    if 'raw_output' in ctx.obj:
+        if not ctx.obj['raw_output']:
+            # False for raw_output means not provided, so just load it if there is a default value. If there's nothing there, then this'll be
+            # None, which is still false-y
+            ctx.obj['raw_output'] = get_default_value_from_defaults_file(ctx, 'raw_output', click.BOOL, False)
+    else:
+        populate_dict_key_with_default_value(ctx, 'raw_output', click.BOOL)
 
     if 'generate_full_command_json_input' in ctx.obj:
         if not ctx.obj['generate_full_command_json_input']:

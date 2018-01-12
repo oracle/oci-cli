@@ -31,6 +31,7 @@ compute_cli.image_group.commands.pop(compute_cli.export_image.name)
 compute_cli.compute_group.add_command(compute_cli.instance_group)
 compute_cli.compute_group.add_command(compute_cli.shape_group)
 compute_cli.compute_group.add_command(compute_cli.vnic_attachment_group)
+compute_cli.compute_group.add_command(compute_cli.boot_volume_attachment_group)
 compute_cli.compute_group.add_command(compute_cli.volume_attachment_group)
 compute_cli.compute_group.add_command(compute_cli.console_history_group)
 compute_cli.compute_group.add_command(compute_cli.instance_console_connection_group)
@@ -39,6 +40,7 @@ compute_cli.volume_attachment_group.add_command(compute_cli.detach_volume)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.attach_vnic.name)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.detach_vnic.name)
 compute_cli.instance_console_connection_group.commands.pop(compute_cli.create_instance_console_connection.name)
+compute_cli.boot_volume_attachment_group.add_command(compute_cli.detach_boot_volume)
 
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.vcn_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.subnet_group)
@@ -75,6 +77,7 @@ cli_util.update_param_help(compute_cli.launch_instance, 'metadata', compute_inst
 cli_util.update_param_help(compute_cli.launch_instance, 'subnet_id', compute_instance_launch_subnet_id_help)
 cli_util.update_param_help(compute_cli.launch_instance, 'hostname_label', compute_instance_launch_hostname_label_help, example='`bminstance-1`')
 cli_util.update_param_help(compute_cli.launch_instance, 'source_details', """Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+cli_util.update_param_help(compute_cli.launch_instance, 'image_id', """The OCID of the image used to boot the instance. This is a shortcut for specifying an image source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""", append=False)
 cli_util.update_param_help(compute_cli.terminate_instance, 'preserve_boot_volume', """Defaults to true.""", append=True)
 
 image_source_details_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "sourceType": "objectStorageTuple" }'
@@ -247,17 +250,21 @@ Avoid entering confidential information.
 @click.option('-ns', '--namespace', callback=cli_util.handle_required_param, help='The Object Storage Service namespace to import the image from. [required]')
 @click.option('-bn', '--bucket-name', callback=cli_util.handle_required_param, help='The name of the bucket to import the image from. [required]')
 @click.option('--name', callback=cli_util.handle_required_param, help='The name of the object identifying the image to import. [required]')
+@click.option('--source-image-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def import_image_from_object(ctx, from_json, compartment_id, display_name, namespace, bucket_name, name):
+def import_image_from_object(ctx, from_json, compartment_id, display_name, namespace, bucket_name, name, source_image_type, launch_mode, defined_tags, freeform_tags):
     import_image_details = {}
     import_image_details['sourceType'] = 'objectStorageTuple'
     import_image_details['namespaceName'] = namespace
     import_image_details['bucketName'] = bucket_name
     import_image_details['objectName'] = name
 
-    import_image_internal(ctx, compartment_id, display_name, import_image_details)
+    if source_image_type is not None:
+        import_image_details['sourceImageType'] = source_image_type
+
+    import_image_internal(ctx, compartment_id, display_name, launch_mode, import_image_details, defined_tags, freeform_tags)
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.create_image, params_to_exclude=['image_source_details', 'instance_id', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
@@ -271,18 +278,22 @@ You may optionally specify a display name for the image, which is simply a frien
 Avoid entering confidential information.
 """)
 @click.option('--uri', callback=cli_util.handle_required_param, help='The Object Storage URL to import the image from. [required]')
+@click.option('--source-image-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def import_image_from_uri(ctx, from_json, compartment_id, display_name, uri):
+def import_image_from_uri(ctx, from_json, compartment_id, display_name, uri, source_image_type, launch_mode, defined_tags, freeform_tags):
     import_image_details = {}
     import_image_details['sourceType'] = 'objectStorageUri'
     import_image_details['sourceUri'] = uri
 
-    import_image_internal(ctx, compartment_id, display_name, import_image_details)
+    if source_image_type is not None:
+        import_image_details['sourceImageType'] = source_image_type
+
+    import_image_internal(ctx, compartment_id, display_name, launch_mode, import_image_details, defined_tags, freeform_tags)
 
 
-def import_image_internal(ctx, compartment_id, display_name, import_image_details):
+def import_image_internal(ctx, compartment_id, display_name, launch_mode, import_image_details, defined_tags, freeform_tags):
     kwargs = {}
 
     details = {}
@@ -291,6 +302,13 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+    if launch_mode is not None:
+        details['launchMode'] = launch_mode
 
     client = cli_util.build_client('compute', ctx)
     result = client.create_image(
@@ -371,17 +389,16 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.launch_instance, params_to_exclude=['create_vnic_details'])
-@compute_cli.instance_group.command(name='launch', help=compute_cli.launch_instance.help + """
-
-To launch an instance using an image or a boot volume use the `sourceDetails` parameter in [LaunchInstanceDetails].""")
+@compute_cli.instance_group.command(name='launch', help=compute_cli.launch_instance.help)
 @click.option('--vnic-display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the default VNIC attached to this instance. Does not have to be unique.""")
 @click.option('--assign-public-ip', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the default VNIC attached to this instance should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
 @click.option('--private-ip', callback=cli_util.handle_optional_param, help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
 @click.option('--skip-source-dest-check', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
 @click.option('--user-data-file', callback=cli_util.handle_optional_param, type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
 @click.option('--ssh-authorized-keys-file', callback=cli_util.handle_optional_param, type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
+@click.option('--source-boot-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
 def launch_instance_extended(ctx, **kwargs):
     metadata = {}
@@ -403,6 +420,15 @@ def launch_instance_extended(ctx, **kwargs):
                 'Cannot specify ssh-authorized-keys as part of both --ssh-authorized-keys-file and --metadata.')
         else:
             metadata['ssh_authorized_keys'] = ssh_authorized_keys_file.read()
+
+    if kwargs.get('source_details') and (kwargs.get('image_id') or kwargs.get('source_boot_volume_id')):
+        raise click.UsageError(
+            'Cannot specify --source-details and either --image-id or --source-boot-volume-id'
+        )
+    if kwargs.get('image_id') and kwargs.get('source_boot_volume_id'):
+        raise click.UsageError(
+            'Cannot specify both an --image-id and a --source-boot-volume-id to be used to boot the instance'
+        )
 
     kwargs['metadata'] = json.dumps(metadata)
 
@@ -428,6 +454,11 @@ def launch_instance_extended(ctx, **kwargs):
     if len(create_vnic_details) > 0:
         kwargs['create_vnic_details'] = json.dumps(create_vnic_details)
 
+    if kwargs.get('image_id'):
+        kwargs['source_details'] = json.dumps({'sourceType': 'image', 'imageId': kwargs['image_id']})
+    if kwargs.get('source_boot_volume_id'):
+        kwargs['source_details'] = json.dumps({'sourceType': 'bootVolume', 'bootVolumeId': kwargs['source_boot_volume_id']})
+
     # delete additional kwargs because launch_instance will not recognize them
     del kwargs['assign_public_ip']
     del kwargs['hostname_label']
@@ -437,6 +468,10 @@ def launch_instance_extended(ctx, **kwargs):
     del kwargs['user_data_file']
     del kwargs['vnic_display_name']
     del kwargs['skip_source_dest_check']
+
+    # Only remove the source_boot_volume_id parameter. image_id is an existing parameter so the underlying
+    # CLI operation will accept it
+    kwargs.pop('source_boot_volume_id', None)
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
 
@@ -503,13 +538,16 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assig
 @compute_cli.instance_group.command(name='detach-vnic', help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
 @click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC. [required]""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the instance's compartment. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def detach_vnic(ctx, from_json, vnic_id, compartment_id):
+def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, compartment_id):
     compute_client = cli_util.build_client('compute', ctx)
     result = compute_client.list_vnic_attachments(compartment_id=compartment_id, vnic_id=vnic_id)
 
@@ -518,6 +556,22 @@ def detach_vnic(ctx, from_json, vnic_id, compartment_id):
 
     vnic_attachment_id = result.data[0].id
     result = compute_client.detach_vnic(vnic_attachment_id=vnic_attachment_id)
+    if wait_for_state:
+        if hasattr(compute_client, 'get_vnic_attachment') and callable(getattr(compute_client, 'get_vnic_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                wait_until(compute_client, retry_utils.call_funtion_with_default_retries(compute_client.get_vnic_attachment, vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
 
     cli_util.render_response(result, ctx)
 
@@ -530,9 +584,9 @@ For more information about secondary private IPs, see [Managing IP Addresses]
 """)
 @click.option('--unassign-if-already-assigned', callback=cli_util.handle_optional_param, is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_private_ip(ctx, from_json, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned):
+def assign_private_ip(ctx, from_json, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags):
     networking_client = cli_util.build_client('virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListPrivateIps call
@@ -580,6 +634,10 @@ def assign_private_ip(ctx, from_json, vnic_id, ip_address, display_name, hostnam
         assign_private_ip_request_body['displayName'] = display_name
     if hostname_label is not None:
         assign_private_ip_request_body['hostnameLabel'] = hostname_label
+    if defined_tags is not None:
+        assign_private_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+    if freeform_tags is not None:
+        assign_private_ip_request_body['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     # If we are here then either the IP address does not exist or it is a candidate to be moved
     if not is_ip_reassignment:
@@ -661,7 +719,7 @@ To move a secondary private IP to another VNIC, use the `bcms network vnic assig
 
 This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
 def update_private_ip_extended(ctx, **kwargs):
     ctx.invoke(virtualnetwork_cli.update_private_ip, **kwargs)
@@ -675,9 +733,9 @@ The default number of enabled serial console connections per tenancy is 10.
 For more information about serial console access, see [Accessing the Serial Console].""")
 @click.option('--ssh-public-key-file', callback=cli_util.handle_required_param, type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection [required]""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
-def create_instance_console_connection(ctx, from_json, instance_id, ssh_public_key_file, wait_for_state, max_wait_seconds, wait_interval_seconds):
+def create_instance_console_connection(ctx, from_json, instance_id, ssh_public_key_file, wait_for_state, max_wait_seconds, wait_interval_seconds, defined_tags, freeform_tags):
     # Empirically, if the public key file contains multiple entires this is accepted but the serial console
     # will use the first key in the file
     kwargs = {
@@ -685,7 +743,9 @@ def create_instance_console_connection(ctx, from_json, instance_id, ssh_public_k
         'public_key': ssh_public_key_file.read(),
         'wait_for_state': wait_for_state,
         'max_wait_seconds': max_wait_seconds,
-        'wait_interval_seconds': wait_interval_seconds
+        'wait_interval_seconds': wait_interval_seconds,
+        'defined_tags': defined_tags,
+        'freeform_tags': freeform_tags
     }
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
@@ -714,7 +774,7 @@ Example: `Uocm:PHX-AD-1`""")
 @click.option('--source-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
 @click.option('--volume-backup-id', callback=cli_util.handle_optional_param, help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Volume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
 def create_volume_extended(ctx, **kwargs):
     if kwargs['source_volume_id'] and kwargs['volume_backup_id']:

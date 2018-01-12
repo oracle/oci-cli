@@ -3,9 +3,11 @@
 
 import json
 import os
+import pytest
 import time
 import unittest
 from . import command_coverage_validator
+from . import tag_data_container
 from . import util
 import oci_cli
 
@@ -13,10 +15,11 @@ import oci_cli
 CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
 
 
+@pytest.mark.usefixtures("tag_namespace_and_tags")
 class TestCompute(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_group, expected_not_called_count=4)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_group, expected_not_called_count=8)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  The exceptions are the image import and export
         commands as they are handled by test_image_import_export.py
@@ -34,6 +37,7 @@ class TestCompute(unittest.TestCase):
             self.subtest_console_history_operations()
             self.subtest_instance_action_operations()
             self.subtest_instance_console_connections()
+            self.subtest_instance_console_connections_tagging()
             self.subtest_image_operations()
         finally:
             self.subtest_delete()
@@ -84,7 +88,7 @@ class TestCompute(unittest.TestCase):
     def subtest_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
         image_id = util.oracle_linux_image()
-        shape = 'VM.Standard1.2'
+        shape = 'VM.Standard1.1'
 
         result = self.invoke(
             ['compute', 'instance', 'launch',
@@ -119,7 +123,7 @@ class TestCompute(unittest.TestCase):
     def subtest_windows_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
         image_id = util.windows_vm_image()
-        shape = 'VM.Standard1.2'
+        shape = 'VM.Standard1.1'
 
         result = self.invoke(
             ['compute', 'instance', 'launch',
@@ -273,6 +277,24 @@ class TestCompute(unittest.TestCase):
         util.wait_until(['compute', 'volume-attachment', 'get', '--volume-attachment-id', self.va_ocid],
                         'DETACHED', max_wait_seconds=300)
 
+        result = self.invoke(
+            ['compute', 'volume-attachment', 'attach',
+             '--display-name', va_name,
+             '--type', 'iscsi',
+             '--instance-id', self.instance_ocid,
+             '--volume-id', self.volume_ocid,
+             '--wait-for-state', 'ATTACHED'])
+        util.validate_response(result, expect_etag=True, json_response_expected=False)
+        self.va_ocid = util.get_json_from_mixed_string(result.output)['data']['id']
+
+        result = self.invoke([
+            'compute', 'volume-attachment', 'detach',
+            '--volume-attachment-id', self.va_ocid,
+            '--force',
+            '--wait-for-state', 'DETACHED'
+        ])
+        util.validate_response(result, json_response_expected=False)
+
     @util.log_test
     def subtest_shape_operations(self):
         result = self.invoke(
@@ -365,6 +387,8 @@ class TestCompute(unittest.TestCase):
         self.assertEquals(instance_console_connection_details['data']['fingerprint'], parsed_result['data']['fingerprint'])
         self.assertEquals(instance_console_connection_details['data']['compartment-id'], parsed_result['data']['compartment-id'])
         self.assertEquals(instance_console_connection_details['data']['connection-string'], parsed_result['data']['connection-string'])
+        self.assertEquals({}, instance_console_connection_details['data']['freeform-tags'])
+        self.assertEquals({}, instance_console_connection_details['data']['defined-tags'])
         self.assertIsNotNone(parsed_result['data']['lifecycle-state'])
 
         keep_paginating = True
@@ -402,6 +426,36 @@ class TestCompute(unittest.TestCase):
 
         self.invoke(['compute', 'instance-console-connection', 'delete', '--instance-console-connection-id', instance_console_connection_details['data']['id'], '--force'])
 
+        result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
+        parsed_result = json.loads(result.output)
+        self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')
+
+    @util.log_test
+    def subtest_instance_console_connections_tagging(self):
+        tag_names_to_values = {}
+        for t in tag_data_container.tags:
+            tag_names_to_values[t.name] = 'somevalue {}'.format(int(time.time()))
+        tag_data_container.write_defined_tags_to_file(
+            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            tag_data_container.tag_namespace,
+            tag_names_to_values
+        )
+
+        result = self.invoke([
+            'compute', 'instance-console-connection', 'create',
+            '--instance-id', self.instance_ocid,
+            '--ssh-public-key-file', util.SSH_AUTHORIZED_KEYS_FILE,
+            '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_1.json'
+        ])
+        util.validate_response(result)
+        instance_console_connection_details = json.loads(result.output)
+        expected_freeform = {'tagOne': 'value1', 'tag_Two': 'value two'}
+        expected_defined = {tag_data_container.tag_namespace.name: tag_names_to_values}
+        self.assertEquals(expected_freeform, instance_console_connection_details['data']['freeform-tags'])
+        self.assertEquals(expected_defined, instance_console_connection_details['data']['defined-tags'])
+
+        self.invoke(['compute', 'instance-console-connection', 'delete', '--instance-console-connection-id', instance_console_connection_details['data']['id'], '--force'])
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
         parsed_result = json.loads(result.output)
         self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')

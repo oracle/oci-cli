@@ -9,7 +9,6 @@ import stat
 import sys
 from oci import exceptions
 from oci.object_storage.transfer import constants
-from oci.object_storage import models
 from .cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, handle_optional_param, handle_required_param, get_param
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
@@ -18,7 +17,6 @@ from retrying import retry
 from . import retry_utils
 from .object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
 from . import json_skeleton_utils
-from . import custom_types
 from .aliasing import CommandGroupWithAlias
 from .custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 from .generated import objectstorage_cli
@@ -62,6 +60,8 @@ get_param(objectstorage_cli.delete_bucket, 'namespace_name').opts.extend(['--nam
 get_param(objectstorage_cli.get_bucket, 'bucket_name').opts.extend(['--name'])
 get_param(objectstorage_cli.get_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.list_buckets, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.update_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.update_bucket, 'bucket_name').opts.extend(['--name'])
 
 objectstorage_cli.os_group.add_command(objectstorage_cli.object_group)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.abort_multipart_upload.name)
@@ -94,40 +94,6 @@ get_param(objectstorage_cli.get_preauthenticated_request, 'bucket_name').opts.ex
 get_param(objectstorage_cli.get_preauthenticated_request, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.list_preauthenticated_requests, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.list_preauthenticated_requests, 'namespace_name').opts.extend(['--namespace', '-ns'])
-
-
-@objectstorage_cli.bucket_group.command(name='update')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('--name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--if-match', callback=handle_optional_param, help='The entity tag to match.')
-@click.option('--metadata', callback=handle_optional_param, help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Values will be appended to existing metadata. To remove a key, set it to null. Example: \'{"key1":"value1","key2":null}\'')
-@click.option('--public-access-type', callback=handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(['NoPublicAccess', 'ObjectRead']), help='The type of public access available on this bucket. Allows authenticated caller to access the bucket or contents of this bucket. By default a bucket is set to NoPublicAccess. It is treated as NoPublicAccess when this value is not specified. When the type is NoPublicAccess the bucket does not allow any public access. When the type is ObjectRead the bucket allows public access to the GetObject operation only.')
-@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
-@help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
-@wrap_exceptions
-def bucket_update(ctx, from_json, namespace, name, if_match, metadata, public_access_type):
-    """
-    Updates a bucket's user-defined metadata.
-
-    Example:
-        oci os bucket update -ns mynamespace --name mybucket --metadata '{"key1":"value1","key2":"value2"}'
-    """
-    bucket_details = models.UpdateBucketDetails()
-    bucket_details.name = name
-    bucket_details.metadata = parse_json_parameter("metadata", metadata, default={})
-    if public_access_type is not None:
-        bucket_details.public_access_type = public_access_type
-
-    client = build_client('object_storage', ctx)
-    render_response(client.update_bucket(
-        namespace,
-        name,
-        bucket_details,
-        if_match=if_match,
-        opc_client_request_id=ctx.obj['request_id']
-    ), ctx)
 
 
 @objectstorage_cli.object_group.command(name='list')

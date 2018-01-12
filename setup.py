@@ -30,20 +30,20 @@ with open_relative("README.rst") as f:
 
 
 requires = [
-    'oci==1.3.11',
+    'oci==1.3.12',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
     'configparser==3.5.0',
-    'cryptography==1.9',
-    'pyOpenSSL<=17.0.0',
+    'cryptography==2.1.3',
+    'pyOpenSSL<=17.4.0',
     'httpsig_cffi==15.0.0',
     'jmespath==0.9.3',
     'python-dateutil==2.5.3',
     'pytz==2016.10',
     'retrying==1.3.3',
-    'requests[security]==2.11.1',
-    'six==1.10.0',
+    'requests[security]==2.18.4',
+    'six==1.11.0',
     'terminaltables==3.1.0'
 ]
 
