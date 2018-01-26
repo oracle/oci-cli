@@ -20,7 +20,8 @@ def identity_group():
     pass
 
 
-@click.command(cli_util.override('tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A bag of tags that is attached to a compartment and has unique existence in tenancy.""")
+@click.command(cli_util.override('tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A managed container for defined tags. A tag namespace is unique in a tenancy. A tag namespace can't be deleted.
+For more information, see [Managing Tags and Tag Namespaces].""")
 @cli_util.help_option_group
 def tag_namespace_group():
     pass
@@ -152,9 +153,24 @@ def compartment_group():
     pass
 
 
-@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tagNamespace.""")
+@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  "Defined tags" must be set up in your tenancy before
+you can apply them to resources.
+For more information, see [Managing Tags and Tag Namespaces].""")
 @cli_util.help_option_group
 def tag_group():
+    pass
+
+
+@click.command(cli_util.override('dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""An dynamic group defines a matching rule. Every bare metal/vm instance is deployed with an instance certificate.
+The certificate contains metadata about the instance. It contains the instance OCID and the compartment OCID, along
+with a few other optional properties. When an API call is made using this instance certificate as the authenticator,
+the certificate may be matched to one or multiple dynamic groups. Depending on policies written against these
+dynamic groups, the instance will get access to that API.
+
+This works like regular user/group memebership. But in that case the membership is a static relationship, whereas
+in dynamic group, the membership of an instance certificate to dynamic groups are determined during runtime.""")
+@cli_util.help_option_group
+def dynamic_group_group():
     pass
 
 
@@ -297,8 +313,8 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the compartment. [required]""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy. [required]""")
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the compartment during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -375,6 +391,60 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
     cli_util.render_response(result, ctx)
 
 
+@dynamic_group_group.command(name=cli_util.override('create_dynamic_group.command_name', 'create'), help="""Creates a new dynamic group in your tenancy.
+
+You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
+
+You must also specify a *name* for the dynamic group, which must be unique across all dynamic groups in your tenancy, and cannot be changed. Note that this name has to be also unique accross all groups in your tenancy. You can use this name or the OCID when writing policies that apply to the dynamic group. For more information about policies, see [How Policies Work].
+
+You must also specify a *description* for the dynamic group (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateDynamicGroup].
+
+After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the group. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed. [required]""")
+@click.option('--matching-rule', callback=cli_util.handle_required_param, help="""The matching rule to dynamically match an instance certificate to this dynamic group [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the group during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
+@cli_util.wrap_exceptions
+def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, matching_rule, description):
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['name'] = name
+    details['matchingRule'] = matching_rule
+    details['description'] = description
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_dynamic_group(
+        create_dynamic_group_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_dynamic_group') and callable(getattr(client, 'get_dynamic_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @group_group.command(name=cli_util.override('create_group.command_name', 'create'), help="""Creates a new group in your tenancy.
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
@@ -389,8 +459,8 @@ After creating the group, you need to put users in it and write policies for it.
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the group. [required]""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed. [required]""")
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the group during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -455,8 +525,8 @@ Example: `IDCS` [required]""")
 @click.option('--protocol', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
 
 Example: `SAML2` [required]""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -591,9 +661,9 @@ New policies take effect typically within 10 seconds.""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the policy during creation. The name must be unique across all policies in the tenancy and cannot be changed. [required]""")
 @click.option('--statements', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the policy during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--version-date', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--version-date', callback=cli_util.handle_optional_param, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -704,18 +774,18 @@ def create_swift_password(ctx, from_json, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('create_tag.command_name', 'create'), help="""Creates a new tag in a given tagNamespace.
+@tag_group.command(name=cli_util.override('create_tag.command_name', 'create'), help="""Creates a new tag in the specified tag namespace.
 
-You have to specify either the id or the name of the tagNamespace that will contain this tag definition.
+You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
 
-You must also specify a *name* for the tag, which must be unique across all tags in the tagNamespace and cannot be changed. All ascii characters are allowed except spaces and dots. Note that names are case insenstive, that means you can not have two different tags with same name but with different casing in one tagNamespace. If you specify a name that's already in use in the tagNamespace, you'll get a 409 error.
+You must also specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
 
-You must also specify a *description* for the tag. It does not have to be unique, and you can change it anytime with [UpdateTag].""")
-@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tagNamespace [required]""")
-@click.option('--name', callback=cli_util.handle_required_param, help="""The name of the tag which must be unique across all tags in the tagNamespace and cannot be changed. [required]""")
-@click.option('--description', callback=cli_util.handle_required_param, help="""The description of the tag. [required]""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+You must also specify a *description* for the tag. It does not have to be unique, and you can change it with [UpdateTag].""")
+@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tag namespace. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the tag during creation. The name must be unique within the tag namespace and cannot be changed. [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the tag during creation. [required]""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
@@ -746,18 +816,20 @@ def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tag
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('create_tag_namespace.command_name', 'create'), help="""Creates a new tagNamespace in a given compartment.
+@tag_namespace_group.command(name=cli_util.override('create_tag_namespace.command_name', 'create'), help="""Creates a new tag namespace in the specified compartment.
 
 You must specify the compartment ID in the request object (remember that the tenancy is simply the root compartment).
 
-You must also specify a *name* for the namespace, which must be unique across all namespaces in your tenancy and cannot be changed. All ascii characters are allowed except spaces and dots. Note that names are case insenstive, that means you can not have two different namespaces with same name but with different casing in one tenancy. Once you created a namespace, you can not change the name If you specify a name that's already in use in the tennacy, you'll get a 409 error.
+You must also specify a *name* for the namespace, which must be unique across all namespaces in your tenancy and cannot be changed. The name can contain any ASCII character except the space (_) or period (.). Names are case insensitive. That means, for example, \"myNamespace\" and \"mynamespace\" are not allowed in the same tenancy. Once you created a namespace, you cannot change the name. If you specify a name that's already in use in the tenancy, a 409 error is returned.
 
-You must also specify a *description* for the namespace. It does not have to be unique, and you can change it anytime with [UpdateTagNamespace].""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the user. [required]""")
-@click.option('--name', callback=cli_util.handle_required_param, help="""The name of the tagNamespace. It must be unique across all tagNamespaces in the tenancy and cannot be changed. [required]""")
-@click.option('--description', callback=cli_util.handle_required_param, help="""The description of the tagNamespace. [required]""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+You must also specify a *description* for the namespace. It does not have to be unique, and you can change it with [UpdateTagNamespace].
+
+Tag namespaces cannot be deleted, but they can be retired. See [Retiring Key Definitions and Namespace Definitions] for more information.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the tag namespace. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the tag namespace during creation. It must be unique across all tag namespaces in the tenancy and cannot be changed. [required]""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the tag namespace during creation. [required]""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
@@ -801,8 +873,8 @@ A new user has no permissions until you place the user in one or more groups (se
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the user. [required]""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the user during creation. This is the user's login for the Console. The name must be unique across all users in the tenancy and cannot be changed. [required]""")
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the user during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -906,6 +978,49 @@ def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
         customer_secret_key_id=customer_secret_key_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@dynamic_group_group.command(name=cli_util.override('delete_dynamic_group.command_name', 'delete'), help="""Deletes the specified dynamic group.""")
+@click.option('--dynamic-group-id', callback=cli_util.handle_required_param, help="""The OCID of the dynamic group. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_group_id, if_match):
+
+    if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_dynamic_group(
+        dynamic_group_id=dynamic_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_dynamic_group') and callable(getattr(client, 'get_dynamic_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, dynamic_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1161,6 +1276,26 @@ def get_compartment(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
+@dynamic_group_group.command(name=cli_util.override('get_dynamic_group.command_name', 'get'), help="""Gets the specified dynamic group's information.""")
+@click.option('--dynamic-group-id', callback=cli_util.handle_required_param, help="""The OCID of the dynamic group. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
+@cli_util.wrap_exceptions
+def get_dynamic_group(ctx, from_json, dynamic_group_id):
+
+    if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_dynamic_group(
+        dynamic_group_id=dynamic_group_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @group_group.command(name=cli_util.override('get_group.command_name', 'get'), help="""Gets the specified group's information.
 
 This operation does not return a list of all the users in the group. To do that, use [ListUserGroupMemberships] and provide the group's OCID as a query parameter in the request.""")
@@ -1249,8 +1384,8 @@ def get_policy(ctx, from_json, policy_id):
 
 
 @tag_group.command(name=cli_util.override('get_tag.command_name', 'get'), help="""Gets the specified tag's information.""")
-@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tagNamespace [required]""")
-@click.option('--tag-name', callback=cli_util.handle_required_param, help="""The name of the tag [required]""")
+@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tag namespace. [required]""")
+@click.option('--tag-name', callback=cli_util.handle_required_param, help="""The name of the tag. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1273,8 +1408,8 @@ def get_tag(ctx, from_json, tag_namespace_id, tag_name):
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('get_tag_namespace.command_name', 'get'), help="""Gets the specified tagNamespace's information.""")
-@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tagNamespace [required]""")
+@tag_namespace_group.command(name=cli_util.override('get_tag_namespace.command_name', 'get'), help="""Gets the specified tag namespace's information.""")
+@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tag namespace. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1455,6 +1590,52 @@ def list_customer_secret_keys(ctx, from_json, user_id):
         user_id=user_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@dynamic_group_group.command(name=cli_util.override('list_dynamic_groups.command_name', 'list'), help="""Lists the dynamic groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[DynamicGroup]'})
+@cli_util.wrap_exceptions
+def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_dynamic_groups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_dynamic_groups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dynamic_groups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1706,11 +1887,11 @@ def list_swift_passwords(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('list_tag_namespaces.command_name', 'list'), help="""List the tagNamespaces in a given compartment.""")
+@tag_namespace_group.command(name=cli_util.override('list_tag_namespaces.command_name', 'list'), help="""Lists the tag namespaces in the specified compartment.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--include-subcompartments', callback=cli_util.handle_optional_param, type=click.BOOL, help="""An optional boolean parameter for whether or not to retrieve all tagNamespaces in sub compartments. In case of absence of this parameter, only tagNamespaces that exist directly in this compartment will be retrieved.""")
+@click.option('--include-subcompartments', callback=cli_util.handle_optional_param, type=click.BOOL, help="""An optional boolean parameter indicating whether to retrieve all tag namespaces in subcompartments. If this parameter is not specified, only the tag namespaces defined in the specified compartment are retrieved.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1755,8 +1936,8 @@ def list_tag_namespaces(ctx, from_json, all_pages, page_size, compartment_id, pa
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('list_tags.command_name', 'list'), help="""List the tags that are defined in a given tagNamespace.""")
-@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tagNamespace [required]""")
+@tag_group.command(name=cli_util.override('list_tags.command_name', 'list'), help="""Lists the tag definitions in the specified tag namespace.""")
+@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tag namespace. [required]""")
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1932,8 +2113,8 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
 @click.option('--name', callback=cli_util.handle_optional_param, help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy.""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -2031,11 +2212,65 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     cli_util.render_response(result, ctx)
 
 
+@dynamic_group_group.command(name=cli_util.override('update_dynamic_group.command_name', 'update'), help="""Updates the specified dynamic group.""")
+@click.option('--dynamic-group-id', callback=cli_util.handle_required_param, help="""The OCID of the dynamic group. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.""")
+@click.option('--matching-rule', callback=cli_util.handle_optional_param, help="""The matching rule to dynamically match an instance certificate to this dynamic group""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
+@cli_util.wrap_exceptions
+def update_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_group_id, description, matching_rule, if_match):
+
+    if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if description is not None:
+        details['description'] = description
+
+    if matching_rule is not None:
+        details['matchingRule'] = matching_rule
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_dynamic_group(
+        dynamic_group_id=dynamic_group_id,
+        update_dynamic_group_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_dynamic_group') and callable(getattr(client, 'get_dynamic_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @group_group.command(name=cli_util.override('update_group.command_name', 'update'), help="""Updates the specified group.""")
 @click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the group. Does not have to be unique, and it's changeable.""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -2100,8 +2335,8 @@ def update_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
 Example: `SAML2` [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -2226,9 +2461,9 @@ Policy changes take effect typically within 10 seconds.""")
 @click.option('--policy-id', callback=cli_util.handle_required_param, help="""The OCID of the policy. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
 @click.option('--statements', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--version-date', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--version-date', callback=cli_util.handle_optional_param, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -2329,13 +2564,13 @@ def update_swift_password(ctx, from_json, user_id, swift_password_id, descriptio
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('update_tag.command_name', 'update'), help="""Updates the the specified tag. Only description and isRetired can be updated. Retiring a tag will also retire the related rules. You can not a tag with the same name as a retired tag. Tags must be unique within their tag namespace but can be repeated across namespaces. You cannot add a tag with the same name as a retired tag in the same tag namespace.""")
-@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tagNamespace [required]""")
-@click.option('--tag-name', callback=cli_util.handle_required_param, help="""The name of the tag [required]""")
-@click.option('--description', callback=cli_util.handle_optional_param, help="""The description of the tag.""")
-@click.option('--is-retired', callback=cli_util.handle_optional_param, type=click.BOOL, help="""whether or not the tag is retired""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@tag_group.command(name=cli_util.override('update_tag.command_name', 'update'), help="""Updates the the specified tag definition. You can update `description`, and `isRetired`.""")
+@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tag namespace. [required]""")
+@click.option('--tag-name', callback=cli_util.handle_required_param, help="""The name of the tag. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the tag during creation.""")
+@click.option('--is-retired', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the tag is retired. See [Retiring Key Definitions and Namespace Definitions].""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
@@ -2379,12 +2614,16 @@ def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, i
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('update_tag_namespace.command_name', 'update'), help="""Updates the the specified tagNamespace. Only description, isRetired and assigned tags can be updated. Updating isRetired to be true will retire the namespace, all the contained tags and the related rules. Reactivating a namespace  will not reactivate any tag definition that was retired when the namespace was retired. They will have to be individually reactivated *after* the namespace is reactivated. You can't add a namespace with the same name as a retired namespace in the same tenant.""")
-@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tagNamespace [required]""")
-@click.option('--description', callback=cli_util.handle_optional_param, help="""The description of the tagNamespace.""")
-@click.option('--is-retired', callback=cli_util.handle_optional_param, type=click.BOOL, help="""whether or not the tagNamespace is retired""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@tag_namespace_group.command(name=cli_util.override('update_tag_namespace.command_name', 'update'), help="""Updates the the specified tag namespace. You can't update the namespace name.
+
+Updating `isRetired` to 'true' retires the namespace and all the tag definitions in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate tag definitions. To reactivate the tag definitions, you must reactivate each one indvidually *after* you reactivate the namespace, using [UpdateTag]. For more information about retiring tag namespaces, see [Retiring Key Definitions and Namespace Definitions].
+
+You can't add a namespace with the same name as a retired namespace in the same tenancy.""")
+@click.option('--tag-namespace-id', callback=cli_util.handle_required_param, help="""The OCID of the tag namespace. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the tag namespace.""")
+@click.option('--is-retired', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the tag namespace is retired. See [Retiring Key Definitions and Namespace Definitions].""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
@@ -2427,8 +2666,8 @@ def update_tag_namespace(ctx, from_json, force, tag_namespace_id, description, i
 @user_group.command(name=cli_util.override('update_user.command_name', 'update'), help="""Updates the description of the specified user.""")
 @click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the user. Does not have to be unique, and it's changeable.""")
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")

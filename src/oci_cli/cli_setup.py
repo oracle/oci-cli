@@ -3,9 +3,9 @@
 
 from __future__ import print_function
 import click
-from .cli_root import cli, CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME
+from .cli_root import cli
+from .cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION
 from . import cli_util
-from .cli_root import CLI_RC_DEFAULT_LOCATION
 
 import base64
 import hashlib

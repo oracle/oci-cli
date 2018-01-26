@@ -39,6 +39,8 @@ from .version import __version__
 from . import string_utils
 from . import help_text_producer
 
+from . import cli_constants
+
 try:
     # PY3+
     import collections.abc as abc
@@ -100,15 +102,11 @@ OVERRIDES = {
 
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
 
-
 PARAM_LOOKUP_HEIRARCHY_TOP_LEVEL = ''
-
 
 DEFAULT_FILE_CONVERT_PARAM_TRUTHY_VALUES = ['1', 'y', 't', 'yes', 'true', 'on']
 
-
 CLOCK_SKEW_WARNING_THRESHOLD_MINUTES = 5
-
 
 MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
 
@@ -118,10 +116,28 @@ def override(key, default):
 
 
 def build_client(service_name, ctx):
-    client_config = build_config(ctx.obj)
+    instance_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL
+
+    signer = None
+    kwargs = {}
+    client_config = {}
 
     try:
-        config.validate_config(client_config)
+        client_config = build_config(ctx.obj)
+    except exceptions.ConfigFileNotFound as e:
+        # config file is not required to be present for instance principal auth
+        if not instance_principal_auth:
+            sys.exit("ERROR: " + str(e))
+
+    if instance_principal_auth:
+        try:
+            signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
+        except Exception as e:
+            sys.exit("ERROR: Failed retrieving certificates from localhost. Instance principal auth is only possible from OCI compute instances. \nException: {}".format(str(e)))
+        kwargs['signer'] = signer
+
+    try:
+        config.validate_config(client_config, **kwargs)
     except exceptions.InvalidConfig as bad_config:
         table = render_config_errors(bad_config)
         template = "ERROR: The config file at {config_file} is invalid:\n\n{errors}"
@@ -130,7 +146,8 @@ def build_client(service_name, ctx):
             errors=table
         ))
 
-    warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
+    if 'key_file' in client_config:
+        warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
 
     # Add to ctx for later by the operations.
     ctx.obj["config"] = client_config
@@ -145,10 +162,10 @@ def build_client(service_name, ctx):
         client_class = CLIENT_MAP[service_name]
 
         try:
-            client = client_class(client_config)
+            client = client_class(client_config, **kwargs)
         except exceptions.MissingPrivateKeyPassphrase:
             client_config['pass_phrase'] = prompt_for_passphrase()
-            client = client_class(client_config)
+            client = client_class(client_config, **kwargs)
 
         if ctx.obj['endpoint']:
             client.base_client.endpoint = ctx.obj['endpoint']
@@ -176,8 +193,6 @@ def build_config(command_args):
 
     try:
         client_config = config.from_file(file_location=command_args['config_file'], profile_name=command_args['profile'])
-    except exceptions.ConfigFileNotFound as e:
-        sys.exit("ERROR: " + str(e))
     except exceptions.ProfileNotFound as e:
         sys.exit("ERROR: " + str(e))
 
@@ -602,9 +617,8 @@ def filter_object_headers(headers, whitelist):
 
 
 def help_callback(ctx, param, value):
-    from . import cli_root
     if ctx.obj.get("help", False):
-        if not parse_boolean(ctx.obj.get('settings', {}).get(cli_root.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+        if not parse_boolean(ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
             help_text_producer.render_help_text(ctx)
 
         # We should only fall down here if the man/text-formatted help is unavailable or if the customer wanted
@@ -614,7 +628,6 @@ def help_callback(ctx, param, value):
 
 
 def group_help_callback(ctx, param, value):
-    from . import cli_root
     args = sys.argv[1:]
     filtered_args = []
     for a in args:
@@ -625,7 +638,7 @@ def group_help_callback(ctx, param, value):
     # we'll just fall back to click's handling of group help. Note that using ctx.get_help() directly doesn't
     # work in this group help scenario, so we have to rely on click to do the right thing
     if ctx.obj.get("help", False):
-        if not parse_boolean(ctx.obj.get('settings', {}).get(cli_root.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+        if not parse_boolean(ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
             help_text_producer.render_help_text(ctx, filtered_args)
 
 
@@ -750,9 +763,13 @@ def load_context_obj_values_from_defaults(ctx):
     populate_dict_key_with_default_value(ctx, 'output', click.STRING)
     populate_dict_key_with_default_value(ctx, 'query', click.STRING)
     populate_dict_key_with_default_value(ctx, 'generate_param_json_input', click.STRING, param_name='generate-param-json-input')
+    populate_dict_key_with_default_value(ctx, 'auth', click.STRING)
 
-    if ctx.obj['output'] is None:
+    if 'output' not in ctx.obj or ctx.obj['output'] is None:
         ctx.obj['output'] = 'json'
+
+    if 'auth' not in ctx.obj or ctx.obj['auth'] is None:
+        ctx.obj['auth'] = cli_constants.OCI_CLI_AUTH_API_KEY
 
     if 'debug' in ctx.obj:
         if not ctx.obj['debug']:
@@ -1081,8 +1098,13 @@ def windows_warn_on_invalid_file_permissions(filename):
     if len(output) == 0:
         return
 
-    disallowed_identities = [line.strip() for line in output.decode().splitlines() if line]
-    warning = 'WARNING: Permissions for file {filename} are too open.  The following users  / groups have permissions to the file and should not: {identities}.  To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename, identities=', '.join(disallowed_identities))
+    try:
+        disallowed_identities = [line.strip() for line in output.decode(sys.stdout.encoding).splitlines() if line]
+        warning = 'WARNING: Permissions for file {filename} are too open.  The following users  / groups have permissions to the file and should not: {identities}.  To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename, identities=', '.join(disallowed_identities))
+    except ValueError:
+        # ValueError is the superclass exception of the various decoding errors we can receive. If we receive an error,
+        # still try and show a message
+        warning = 'WARNING: Permissions for file {filename} are too open. To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename)
     click.echo(warning, file=sys.stderr)
 
 

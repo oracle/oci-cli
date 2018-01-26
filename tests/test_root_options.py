@@ -2,7 +2,9 @@
 # Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
 
 import oci_cli
+import oci
 import os
+from mock import patch
 
 
 def test_control_case(runner, config_file):
@@ -59,16 +61,16 @@ def test_profile_option_overrides_default_setting(runner, config_file):
 
 
 def test_profile_option_overrides_environment_variable(runner, config_file):
-    os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR] = 'INVALID_PROFILE'
+    os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR] = 'INVALID_PROFILE'
     result = invoke_example_operation(runner, ['--profile', 'DEFAULT'], config_file)
-    del os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR]
+    del os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR]
     assert 0 == result.exit_code
 
 
 def test_profile_env_var_overrides_default_setting(runner, config_file):
-    os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR] = 'DEFAULT'
+    os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR] = 'DEFAULT'
     result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
-    del os.environ[oci_cli.cli_root.OCI_CLI_PROFILE_ENV_VAR]
+    del os.environ[oci_cli.cli_constants.OCI_CLI_PROFILE_ENV_VAR]
     assert 0 == result.exit_code
 
 
@@ -76,6 +78,30 @@ def test_default_profile_setting_from_cli_rc_file(runner, config_file):
     result = invoke_example_operation(runner, ['--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile'], config_file)
     assert "ERROR: Profile 'INAVLID_PROFILE' not found in config file" in result.output
     assert 1 == result.exit_code
+
+
+def test_auth_instance_principal_param(runner, config_file):
+    with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
+        result = invoke_example_operation(runner, ['--auth', 'instance_principal'], 'non-existent-config')
+    assert mock_init.called
+
+
+def test_auth_instance_principal_env_var(runner, config_file):
+    os.environ[oci_cli.cli_constants.OCI_CLI_AUTH_ENV_VAR] = 'instance_principal'
+    with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
+        result = invoke_example_operation(runner, [], 'non-existent-config')
+    del os.environ[oci_cli.cli_constants.OCI_CLI_AUTH_ENV_VAR]
+    assert mock_init.called
+
+
+def test_auth_instance_principal_env_var_invalid(runner, config_file):
+    os.environ[oci_cli.cli_constants.OCI_CLI_AUTH_ENV_VAR] = 'instance_pri'
+    with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
+        result = invoke_example_operation(runner, [], 'non-existent-config')
+    del os.environ[oci_cli.cli_constants.OCI_CLI_AUTH_ENV_VAR]
+
+    assert result.exit_code != 1
+    assert 'Invalid value for OCI_CLI_AUTH' in result.output
 
 
 def invoke_example_operation(runner, root_args, config_file):

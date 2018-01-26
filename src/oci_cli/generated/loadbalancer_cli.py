@@ -377,7 +377,9 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @listener_group.command(name=cli_util.override('create_listener.command_name', 'create'), help="""Adds a listener to a load balancer.""")
-@click.option('--default-backend-set-name', callback=cli_util.handle_required_param, help="""The name of the associated backend set. [required]""")
+@click.option('--default-backend-set-name', callback=cli_util.handle_required_param, help="""The name of the associated backend set.
+
+Example: `My_backend_set` [required]""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `My listener` [required]""")
@@ -388,16 +390,17 @@ Example: `80` [required]""")
 
 Example: `HTTP` [required]""")
 @click.option('--load-balancer-id', callback=cli_util.handle_required_param, help="""The [OCID] of the load balancer on which to add a listener. [required]""")
+@click.option('--connection-configuration', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--ssl-configuration', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), callback=cli_util.handle_optional_param, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, name, port, protocol, load_balancer_id, ssl_configuration):
+def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, name, port, protocol, load_balancer_id, connection_configuration, ssl_configuration):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -409,6 +412,9 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     details['name'] = name
     details['port'] = port
     details['protocol'] = protocol
+
+    if connection_configuration is not None:
+        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
 
     if ssl_configuration is not None:
         details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
@@ -1124,10 +1130,10 @@ Example: `3`""")
 @click.option('--detail', callback=cli_util.handle_optional_param, help="""The level of detail to return for each result. Can be `full` or `simple`.
 
 Example: `full`""")
-@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  Only one sort order may be provided.  Time created is default ordered as descending.  Display name is default ordered as ascending.""")
-@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'""")
-@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A filter to only return resources that match the given display name exactly.""")
-@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["CREATING", "FAILED", "ACTIVE", "DELETING", "DELETED"]), help="""A filter to only return resources that match the given lifecycle state.""")
+@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A filter to return only resources that match the given display name exactly.""")
+@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["CREATING", "FAILED", "ACTIVE", "DELETING", "DELETED"]), help="""A filter to return only resources that match the given lifecycle state.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1620,7 +1626,9 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @listener_group.command(name=cli_util.override('update_listener.command_name', 'update'), help="""Updates a listener for a given load balancer.""")
-@click.option('--default-backend-set-name', callback=cli_util.handle_required_param, help="""The name of the associated backend set. [required]""")
+@click.option('--default-backend-set-name', callback=cli_util.handle_required_param, help="""The name of the associated backend set.
+
+Example: `My_backend_set` [required]""")
 @click.option('--port', callback=cli_util.handle_required_param, type=click.INT, help="""The communication port for the listener.
 
 Example: `80` [required]""")
@@ -1631,17 +1639,18 @@ Example: `HTTP` [required]""")
 @click.option('--listener-name', callback=cli_util.handle_required_param, help="""The name of the listener to update.
 
 Example: `My listener` [required]""")
+@click.option('--connection-configuration', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--ssl-configuration', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), callback=cli_util.handle_optional_param, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, ssl_configuration):
+def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, connection_configuration, ssl_configuration):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1649,8 +1658,8 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
     if not force:
-        if ssl_configuration:
-            if not click.confirm("WARNING: Updates to ssl-configuration will replace any existing values. Are you sure you want to continue?"):
+        if connection_configuration or ssl_configuration:
+            if not click.confirm("WARNING: Updates to connection-configuration and ssl-configuration will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1659,6 +1668,9 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     details['defaultBackendSetName'] = default_backend_set_name
     details['port'] = port
     details['protocol'] = protocol
+
+    if connection_configuration is not None:
+        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
 
     if ssl_configuration is not None:
         details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)

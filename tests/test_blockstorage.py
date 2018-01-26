@@ -4,6 +4,7 @@
 import json
 import unittest
 from . import command_coverage_validator
+from . import test_config_container
 from . import util
 from .test_list_filter import retrieve_list_and_ensure_sorted
 import oci_cli
@@ -13,6 +14,7 @@ class TestBlockStorage(unittest.TestCase):
 
     @util.slow
     @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group, expected_not_called_count=4)
+    @test_config_container.RecordReplay('blockstorage')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""
         self.validator = validator

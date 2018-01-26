@@ -41,6 +41,14 @@ def process_ssl_configuration_kwargs(kwargs):
     kwargs.pop('ssl_verify_peer_certificate')
 
 
+def process_connection_configuration_kwargs(kwargs):
+    if 'connection_configuration_idle_timeout' in kwargs and kwargs['connection_configuration_idle_timeout'] is not None:
+        connection_configuration = {'idleTimeout': kwargs['connection_configuration_idle_timeout']}
+        kwargs['connection_configuration'] = json.dumps(connection_configuration)
+
+    kwargs.pop('connection_configuration_idle_timeout', None)
+
+
 def process_session_persistence_configuration_kwargs(kwargs):
     session_persistence_configuration = {}
     if kwargs['session_persistence_cookie_name'] is not None:
@@ -192,11 +200,12 @@ def update_backend_set(ctx, **kwargs):
     ctx.invoke(loadbalancer_cli.update_backend_set, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(loadbalancer_cli.create_listener, params_to_exclude=['ssl_configuration'])
+@cli_util.copy_params_from_generated_command(loadbalancer_cli.create_listener, params_to_exclude=['ssl_configuration', 'connection_configuration'])
 @loadbalancer_cli.listener_group.command(name='create', help="""Adds a listener to a load balancer.""")
 @click.option('--ssl-certificate-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
 @click.option('--ssl-verify-depth', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum depth for peer certificate chain verification.""")
 @click.option('--ssl-verify-peer-certificate', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer listener should verify peer certificates.""")
+@click.option('--connection-configuration-idle-timeout', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -204,15 +213,17 @@ def update_backend_set(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def create_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)
+    process_connection_configuration_kwargs(kwargs)
 
     ctx.invoke(loadbalancer_cli.create_listener, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(loadbalancer_cli.update_listener, params_to_exclude=['ssl_configuration'])
+@cli_util.copy_params_from_generated_command(loadbalancer_cli.update_listener, params_to_exclude=['ssl_configuration', 'connection_configuration'])
 @loadbalancer_cli.listener_group.command(name='update', help="""Updates a listener for a given load balancer.""")
 @click.option('--ssl-certificate-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
 @click.option('--ssl-verify-depth', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum depth for peer certificate chain verification.""")
 @click.option('--ssl-verify-peer-certificate', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer listener should verify peer certificates.""")
+@click.option('--connection-configuration-idle-timeout', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -220,5 +231,6 @@ def create_listener(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def update_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)
+    process_connection_configuration_kwargs(kwargs)
 
     ctx.invoke(loadbalancer_cli.update_listener, **kwargs)

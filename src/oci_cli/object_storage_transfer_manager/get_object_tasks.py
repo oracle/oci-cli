@@ -187,6 +187,9 @@ class GetObjectMultipartTask(WorkPoolTask):
             # This blocks until something makes the PendingWrites object releases the lock
             self.all_done_lock.acquire()
 
+            # Make sure that the IO pool has no pending tasks (it probably shouldn't because we've released the lock by this point)
+            self.io_writer_pool.wait_for_completion()
+
             self._handle_errors(errors)
 
         if self.auto_close_destination_file:
@@ -293,6 +296,7 @@ class GetObjectRangeIOWriterTask(WorkPoolTask):
             if self.part_completed_callback:
                 self.part_completed_callback(part[1].tell() / 2)
             part[1].close()
+            self.pending_writes.increment_written_parts()
 
         if self.part_completed_callback:
             self.part_completed_callback(total_size)
@@ -308,8 +312,10 @@ class PendingWrites(object):
     def __init__(self, all_done_lock):
         self.pending = []
         self.next_part = 0  # Always start at zero
+        self._written_parts = 0
         self._total_parts = 0
         self.all_done_lock = all_done_lock
+        self.written_parts_lock = threading.Lock()
 
         self.all_done_lock.acquire()
 
@@ -320,6 +326,10 @@ class PendingWrites(object):
     @total_parts.setter
     def total_parts(self, value):
         self._total_parts = value
+
+    def increment_written_parts(self):
+        with self.written_parts_lock:
+            self._written_parts += 1
 
     def process_pending_write(self, tuple_counter, data):
         heapq.heappush(self.pending, (tuple_counter, data))
@@ -332,7 +342,7 @@ class PendingWrites(object):
         return able_to_write
 
     def check_if_all_parts_written(self):
-        if not self.pending and self.next_part == self._total_parts:
+        if not self.pending and self._written_parts == self._total_parts:
             self.all_done_lock.release()
 
     def release_lock_on_error(self, **kwargs):

@@ -17,6 +17,7 @@ from six import StringIO
 import oci_cli.cli_util
 import oci
 from oci.object_storage.transfer.constants import MEBIBYTE
+from . import test_config_container
 
 try:
     # PY3+
@@ -108,9 +109,14 @@ def init_availability_domain_variables():
             first_ad = availability_domains[0]['name']
             second_ad = availability_domains[1]['name']
         else:
-            chosen_domains = random.sample(availability_domains, 2)
-            first_ad = chosen_domains[0]['name']
-            second_ad = chosen_domains[1]['name']
+            # We need consistency in the vended availability domains if we're mocking, so don't randomize
+            if test_config_container.using_vcr_with_mock_responses():
+                first_ad = availability_domains[0]['name']
+                second_ad = availability_domains[1]['name']
+            else:
+                chosen_domains = random.sample(availability_domains, 2)
+                first_ad = chosen_domains[0]['name']
+                second_ad = chosen_domains[1]['name']
 
 
 enable_long_running = pytest.mark.skipif(
@@ -120,7 +126,17 @@ enable_long_running = pytest.mark.skipif(
 
 
 def random_name(prefix, insert_underscore=True):
-    return prefix + ('_' if insert_underscore else '') + str(random.randint(0, 1000000))
+    if test_config_container.using_vcr_with_mock_responses():
+        return prefix + ('_' if insert_underscore else '') + 'vcr'
+    else:
+        return prefix + ('_' if insert_underscore else '') + str(random.randint(0, 1000000))
+
+
+def random_number_string():
+    if test_config_container.using_vcr_with_mock_responses():
+        return '10000'
+    else:
+        return str(random.randint(0, 10000))
 
 
 def bucket_regional_prefix():
@@ -265,7 +281,8 @@ def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15,
             elif json.loads(result.output)['data'][state_property_name] == state:
                 break
 
-        time.sleep(sleep_interval_seconds)
+        if test_config_container.vcr_mode != 'none':
+            time.sleep(sleep_interval_seconds)
 
         # Double the sleep each time up to the maximum.
         sleep_interval_seconds = min(sleep_interval_seconds * 2, max_interval_seconds)

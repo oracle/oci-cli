@@ -1,4 +1,5 @@
 from . import util
+from . import test_config_container
 
 import json
 import os
@@ -21,66 +22,67 @@ def default_file_with_canned_queries():
 
 
 def test_query_when_listing_and_getting_instances(default_file_with_canned_queries):
-    result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_id_and_display_name_from_list', '--defaults-file', default_file_with_canned_queries])
-    assert result.exit_code == 0
+    with test_config_container.create_vcr().use_cassette('test_canned_queries_listing_getting_instances.yml'):
+        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_id_and_display_name_from_list', '--defaults-file', default_file_with_canned_queries])
+        assert result.exit_code == 0
 
-    if result.output != '':
-        parsed_result = json.loads(result.output)
-        for d in parsed_result:
-            keys = d.keys()
-            assert len(keys) == 2
-            assert 'id' in d.keys()
-            assert 'display-name' in d.keys()
+        if result.output != '':
+            parsed_result = json.loads(result.output)
+            for d in parsed_result:
+                keys = d.keys()
+                assert len(keys) == 2
+                assert 'id' in d.keys()
+                assert 'display-name' in d.keys()
 
-        if len(parsed_result) > 0:
-            instance_id = parsed_result[0]['id']
+            if len(parsed_result) > 0:
+                instance_id = parsed_result[0]['id']
 
-            result = invoke(['compute', 'instance', 'get', '--instance-id', instance_id, '--query', 'query://get_id_and_display_name_from_single_result', '--defaults-file', default_file_with_canned_queries])
+                result = invoke(['compute', 'instance', 'get', '--instance-id', instance_id, '--query', 'query://get_id_and_display_name_from_single_result', '--defaults-file', default_file_with_canned_queries])
+                assert result.exit_code == 0
+
+                parsed_result = json.loads(result.output)
+                assert len(parsed_result.keys()) == 2
+                assert 'id' in parsed_result.keys()
+                assert 'display-name' in parsed_result.keys()
+
+                result = invoke(['compute', 'instance', 'get', '--instance-id', instance_id])
+                parsed_result = json.loads(result.output)
+                expected_string = '"{},{}'.format(parsed_result['data']['id'], parsed_result['data']['display-name'])
+
+                result = invoke(['compute', 'instance', 'get', '--instance-id', instance_id, '--query', 'query://get_id_display_name_and_lifecycle_state_from_single_result_as_csv', '--defaults-file', default_file_with_canned_queries])
+                assert result.exit_code == 0
+                assert expected_string in result.output
+
+            result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID])
+            parsed_result = json.loads(result.output)
+
+            expected_result = []
+            for d in parsed_result['data']:
+                expected_result.append('"{},{}'.format(d['id'], d['display-name']))
+
+            result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_id_display_name_and_lifecycle_state_from_list_as_csv', '--defaults-file', default_file_with_canned_queries])
             assert result.exit_code == 0
 
-            parsed_result = json.loads(result.output)
-            assert len(parsed_result.keys()) == 2
-            assert 'id' in parsed_result.keys()
-            assert 'display-name' in parsed_result.keys()
-
-            result = invoke(['compute', 'instance', 'get', '--instance-id', instance_id])
-            parsed_result = json.loads(result.output)
-            expected_string = '"{},{}'.format(parsed_result['data']['id'], parsed_result['data']['display-name'])
-
-            result = invoke(['compute', 'instance', 'get', '--instance-id', instance_id, '--query', 'query://get_id_display_name_and_lifecycle_state_from_single_result_as_csv', '--defaults-file', default_file_with_canned_queries])
+            result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_top_5_results', '--defaults-file', default_file_with_canned_queries])
             assert result.exit_code == 0
-            assert expected_string in result.output
+            parsed_result = json.loads(result.output)
+            assert len(parsed_result) <= 5  # no guarantee of the exact number of results, but our JMESPath query shouldn't return any more than 5
 
-        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID])
-        parsed_result = json.loads(result.output)
+            result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_last_2_results', '--defaults-file', default_file_with_canned_queries])
+            assert result.exit_code == 0
+            parsed_result = json.loads(result.output)
+            assert len(parsed_result) <= 2  # no guarantee of the exact number of results, but our JMESPath query shouldn't return any more than 2
 
-        expected_result = []
-        for d in parsed_result['data']:
-            expected_result.append('"{},{}'.format(d['id'], d['display-name']))
-
-        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_id_display_name_and_lifecycle_state_from_list_as_csv', '--defaults-file', default_file_with_canned_queries])
+        # The display name we're matching on is junk, so should not match any result
+        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://filter_by_display_name_contains_text', '--defaults-file', default_file_with_canned_queries])
         assert result.exit_code == 0
+        if result.output != '':
+            assert 'Query returned empty result, no output to show' in result.output
 
-        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_top_5_results', '--defaults-file', default_file_with_canned_queries])
+        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://filter_by_display_name_contains_text_and_get_attributes', '--defaults-file', default_file_with_canned_queries])
         assert result.exit_code == 0
-        parsed_result = json.loads(result.output)
-        assert len(parsed_result) <= 5  # no guarantee of the exact number of results, but our JMESPath query shouldn't return any more than 5
-
-        result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://get_last_2_results', '--defaults-file', default_file_with_canned_queries])
-        assert result.exit_code == 0
-        parsed_result = json.loads(result.output)
-        assert len(parsed_result) <= 2  # no guarantee of the exact number of results, but our JMESPath query shouldn't return any more than 2
-
-    # The display name we're matching on is junk, so should not match any result
-    result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://filter_by_display_name_contains_text', '--defaults-file', default_file_with_canned_queries])
-    assert result.exit_code == 0
-    if result.output != '':
-        assert 'Query returned empty result, no output to show' in result.output
-
-    result = invoke(['compute', 'instance', 'list', '-c', util.COMPARTMENT_ID, '--query', 'query://filter_by_display_name_contains_text_and_get_attributes', '--defaults-file', default_file_with_canned_queries])
-    assert result.exit_code == 0
-    if result.output != '':
-        assert 'Query returned empty result, no output to show' in result.output
+        if result.output != '':
+            assert 'Query returned empty result, no output to show' in result.output
 
 
 def test_query_does_not_exist(default_file_with_canned_queries):

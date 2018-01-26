@@ -442,9 +442,9 @@ class TestSetup(unittest.TestCase):
     @util.log_test
     def subtest_oci_cli_rc_file(self):
         result = self.invoke(['setup', 'oci-cli-rc', '--file', CONFIG_FILENAME])
-        assert 'Predefined queries written under section {}'.format(oci_cli.cli_root.CLI_RC_CANNED_QUERIES_SECTION_NAME) in result.output
-        assert 'Command aliases written under section {}'.format(oci_cli.cli_root.CLI_RC_COMMAND_ALIASES_SECTION_NAME) in result.output
-        assert 'Parameter aliases written under section {}'.format(oci_cli.cli_root.CLI_RC_PARAM_ALIASES_SECTION_NAME) in result.output
+        assert 'Predefined queries written under section {}'.format(oci_cli.cli_constants.CLI_RC_CANNED_QUERIES_SECTION_NAME) in result.output
+        assert 'Command aliases written under section {}'.format(oci_cli.cli_constants.CLI_RC_COMMAND_ALIASES_SECTION_NAME) in result.output
+        assert 'Parameter aliases written under section {}'.format(oci_cli.cli_constants.CLI_RC_PARAM_ALIASES_SECTION_NAME) in result.output
 
         with open(CONFIG_FILENAME, 'rb') as f:
             contents = f.read().decode()

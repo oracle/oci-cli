@@ -7,8 +7,8 @@ import pytest
 import socket
 import string
 import struct
-import time
 import unittest
+from . import test_config_container
 from . import util
 from . import tag_data_container
 
@@ -17,13 +17,14 @@ from . import tag_data_container
 class TestSecondaryPrivateIp(unittest.TestCase):
     @util.slow
     def test_secondary_ip_operations(self):
-        # We delegate to an internal method and have a try-catch so that we have
-        # an opportunity to clean up resources after the meat of the test is over
-        try:
-            self.subtest_secondary_ip_operations()
-            self.subtest_tagging_secondary_ip()
-        finally:
-            self.clean_up_resources()
+        with test_config_container.create_vcr().use_cassette('secondary_ip_operations.yml'):
+            # We delegate to an internal method and have a try-catch so that we have
+            # an opportunity to clean up resources after the meat of the test is over
+            try:
+                self.subtest_secondary_ip_operations()
+                self.subtest_tagging_secondary_ip()
+            finally:
+                self.clean_up_resources()
 
     def subtest_secondary_ip_operations(self):
         self.set_up_vcn_and_subnet("10.0.0.0/16")
@@ -286,7 +287,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
 
         tag_names_to_values = {}
         for t in tag_data_container.tags:
-            tag_names_to_values[t.name] = 'somevalue {}'.format(int(time.time()))
+            tag_names_to_values[t.name] = 'somevalue {}'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
             os.path.join('tests', 'temp', 'defined_tags_1.json'),
             tag_data_container.tag_namespace,
@@ -316,7 +317,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
 
         tag_names_to_values = {}
         for t in tag_data_container.tags:
-            tag_names_to_values[t.name] = 'somevalue2 {}'.format(int(time.time()))
+            tag_names_to_values[t.name] = 'somevalue2 {}'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
             os.path.join('tests', 'temp', 'defined_tags_2.json'),
             tag_data_container.tag_namespace,
@@ -479,7 +480,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
 
     # Fudges an OCID by flipping its last character to something different than what it currently is
     def fudge_ocid(self, ocid):
-        available_characters = set(list(string.ascii_lowercase) + list(string.digits))
+        available_characters = list(string.ascii_lowercase) + list(string.digits)
         available_characters.remove('0')
         available_characters.remove('1')
         available_characters.remove('8')
@@ -507,7 +508,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
         for i in range(start, end):
             ip_addresses.add(socket.inet_ntoa(struct.pack('>I', i)))
 
-        return ip_addresses
+        return sorted(list(ip_addresses))
 
     def invoke(self, commands, debug=False, ** args):
         if debug is True:

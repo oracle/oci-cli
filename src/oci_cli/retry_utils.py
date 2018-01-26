@@ -3,7 +3,7 @@ from oci import Response
 from requests.exceptions import Timeout
 from requests.exceptions import ConnectionError
 
-
+import datetime
 import retrying
 
 
@@ -85,18 +85,34 @@ def list_call_get_all_results(list_func_ref, retry_strategy_name, **func_kwargs)
             if 'sort_order' in func_kwargs:
                 sort_direction = func_kwargs['sort_order'].upper()
 
-            post_processed_results = sorted(aggregated_results, key=lambda r: getattr(r, 'display_name'), reverse=(sort_direction == 'DESC'))
+            post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'display_name'), reverse=(sort_direction == 'DESC'))
         elif func_kwargs['sort_by'].upper() == 'TIMECREATED':
             sort_direction = 'DESC'
             if 'sort_order' in func_kwargs:
                 sort_direction = func_kwargs['sort_order'].upper()
 
-                post_processed_results = sorted(aggregated_results, key=lambda r: getattr(r, 'time_created'), reverse=(sort_direction == 'DESC'))
+                post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'time_created'), reverse=(sort_direction == 'DESC'))
 
     # Most of this is just dummy since we're discarding the intermediate requests
     final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
 
     return final_response
+
+
+# Retrieves an attribute and returns a default value if it doesn't exist. This default be specified as a keyword argument, but if none is given
+# then the method can vend a default value (the min datetime for the time_created field and an empty string otherwise)
+def retrieve_attribute_for_sort(target_obj, attribute_name, **kwargs):
+    getattr_result = getattr(target_obj, attribute_name)
+    if getattr_result is not None:
+        return getattr_result
+
+    if 'default' in kwargs:
+        return kwargs['default']
+
+    if attribute_name == 'time_created':
+        return datetime.datetime.min
+    else:
+        return ''
 
 
 def call_funtion_with_default_retries(func_ref, *func_args, **func_kwargs):

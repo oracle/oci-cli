@@ -15,6 +15,8 @@ from .aliasing import parameter_alias, CommandGroupWithAlias
 from . import help_text_producer
 from . import cli_util
 
+from . import cli_constants
+
 # Enable WARN logging to surface important warnings attached to loading
 # defaults, automatic coercion, or fallback values/endpoints that may impact
 # the user's security.
@@ -31,21 +33,12 @@ logging.basicConfig(level=logging.WARN)
 
 BMCS_DEPRECATION_NOTICE = """WARNING: Invoking the CLI using 'bmcs' is deprecated and will be removed in future versions, starting in March 2018. To avoid interruption at that time, please move to invoking the CLI using 'oci' instead."""
 
-CLI_RC_FALLBACK_LOCATION = '~/.oci/cli-defaults'
-CLI_RC_DEFAULT_LOCATION = '~/.oci/oci_cli_rc'
-CLI_RC_CANNED_QUERIES_SECTION_NAME = 'OCI_CLI_CANNED_QUERIES'
-CLI_RC_COMMAND_ALIASES_SECTION_NAME = 'OCI_CLI_COMMAND_ALIASES'
-CLI_RC_PARAM_ALIASES_SECTION_NAME = 'OCI_CLI_PARAM_ALIASES'
-CLI_RC_GENERIC_SETTINGS_SECTION_NAME = 'OCI_CLI_SETTINGS'
-
-OCI_CLI_PROFILE_ENV_VAR = 'OCI_CLI_PROFILE'
-CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY = 'default_profile'
-CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP = 'use_click_help'
+OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL]
 
 
 def eager_load_cli_rc_file(ctx, param, value):
-    expanded_rc_default_location = os.path.expandvars(os.path.expanduser(CLI_RC_DEFAULT_LOCATION))
-    expanded_rc_fallback_location = os.path.expandvars(os.path.expanduser(CLI_RC_FALLBACK_LOCATION))
+    expanded_rc_default_location = os.path.expandvars(os.path.expanduser(cli_constants.CLI_RC_DEFAULT_LOCATION))
+    expanded_rc_fallback_location = os.path.expandvars(os.path.expanduser(cli_constants.CLI_RC_FALLBACK_LOCATION))
 
     file_location = os.path.expandvars(os.path.expanduser(value))
     ctx.obj = {
@@ -92,7 +85,7 @@ def populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults):
 
 
 def populate_settings(ctx, parser_without_defaults):
-    raw_settings = get_section_without_defaults(parser_without_defaults, CLI_RC_GENERIC_SETTINGS_SECTION_NAME)
+    raw_settings = get_section_without_defaults(parser_without_defaults, cli_constants.CLI_RC_GENERIC_SETTINGS_SECTION_NAME)
 
     settings = {}
     if raw_settings:
@@ -103,7 +96,7 @@ def populate_settings(ctx, parser_without_defaults):
 
 
 def populate_command_aliases(ctx, parser_without_defaults):
-    raw_command_aliases = get_section_without_defaults(parser_without_defaults, CLI_RC_COMMAND_ALIASES_SECTION_NAME)
+    raw_command_aliases = get_section_without_defaults(parser_without_defaults, cli_constants.CLI_RC_COMMAND_ALIASES_SECTION_NAME)
 
     # Global aliases, e.g. a "ls=list" mapping would mean someone could do "compute image ls" or "os bucket ls" or "network subnet ls". These aliases
     # must be a single word only
@@ -130,7 +123,7 @@ def populate_command_aliases(ctx, parser_without_defaults):
 
 
 def populate_parameter_aliases(ctx, parser_without_defaults):
-    raw_parameter_aliases = get_section_without_defaults(parser_without_defaults, CLI_RC_PARAM_ALIASES_SECTION_NAME)
+    raw_parameter_aliases = get_section_without_defaults(parser_without_defaults, cli_constants.CLI_RC_PARAM_ALIASES_SECTION_NAME)
 
     canonical_param_to_alias = {}
 
@@ -169,7 +162,7 @@ def populate_parameter_aliases(ctx, parser_without_defaults):
 
 
 def populate_canned_queries(ctx, parser_without_defaults):
-    raw_canned_queries = get_section_without_defaults(parser_without_defaults, CLI_RC_CANNED_QUERIES_SECTION_NAME)
+    raw_canned_queries = get_section_without_defaults(parser_without_defaults, cli_constants.CLI_RC_CANNED_QUERIES_SECTION_NAME)
 
     if raw_canned_queries:
         ctx.obj['canned_queries'] = dict(raw_canned_queries)
@@ -201,7 +194,7 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
               default=Sentinel(DEFAULT_PROFILE), show_default=False,
               help='The profile in the config file to load. This profile will also be used to locate any default parameter values which have been specified in the OCI CLI-specific configuration file.  [default: DEFAULT]')
 @click.option('--cli-rc-file', '--defaults-file',
-              default=CLI_RC_DEFAULT_LOCATION, show_default=True,
+              default=cli_constants.CLI_RC_DEFAULT_LOCATION, show_default=True,
               is_eager=True, callback=eager_load_cli_rc_file,
               help='The path to the OCI CLI-specific configuration file, containing parameter default values and other configuration information such as command aliases and predefined queries. The --defaults-file option is deprecated and you should use the --cli-rc-file option instead.')
 @click.option('--opc-request-id', '--opc-client-request-id', '--request-id', 'request_id',
@@ -215,6 +208,7 @@ For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/
 Queries can be entered directly on the command line or referenced from the [OCI_CLI_COMMAND_ALIASES] section of your configuration file by using the syntax query://<query_name>, for example query://get_id_and_name
 """)
 @click.option('--raw-output', is_flag=True, help='If the output of a given query is a single string value, this will return the string without surrounding quotes')
+@click.option('--auth', type=click.Choice(choices=OCI_CLI_AUTH_CHOICES), help='The type of auth to use for the API request. By default the API key in your config file will be used.  This value can also be provided in the {auth_env_var} environment variable.'.format(auth_env_var=cli_constants.OCI_CLI_AUTH_ENV_VAR))
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -224,7 +218,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, generate_full_command_json_input, generate_param_json_input, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, generate_full_command_json_input, generate_param_json_input, debug, help):
     if ctx.command_path == 'bmcs':
         click.echo(click.style(BMCS_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
 
@@ -241,12 +235,21 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         #
         # --profile cannot be specified as a regular default because we use it to determine which
         # section of the default file to read from
-        if OCI_CLI_PROFILE_ENV_VAR in os.environ:
-            profile = os.environ[OCI_CLI_PROFILE_ENV_VAR]
-        elif 'settings' in ctx.obj and CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY in ctx.obj['settings']:
-            profile = ctx.obj['settings'][CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY]
+        if cli_constants.OCI_CLI_PROFILE_ENV_VAR in os.environ:
+            profile = os.environ[cli_constants.OCI_CLI_PROFILE_ENV_VAR]
+        elif 'settings' in ctx.obj and cli_constants.CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY in ctx.obj['settings']:
+            profile = ctx.obj['settings'][cli_constants.CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY]
         else:
             profile = DEFAULT_PROFILE
+
+    if auth is None:
+        # if --auth is not supplied, fallback accordingly:
+        #   - if OCI_CLI_AUTH exists, use that
+        if cli_constants.OCI_CLI_AUTH_ENV_VAR in os.environ:
+            if os.environ[cli_constants.OCI_CLI_AUTH_ENV_VAR] in OCI_CLI_AUTH_CHOICES:
+                auth = os.environ[cli_constants.OCI_CLI_AUTH_ENV_VAR]
+            else:
+                raise click.BadParameter('invalid choice: {arg_value}. (choose from {choices})'.format(arg_value=os.environ[cli_constants.OCI_CLI_AUTH_ENV_VAR], choices=', '.join(OCI_CLI_AUTH_CHOICES)), param_hint='OCI_CLI_AUTH')
 
     initial_dict = {
         'config_file': config_file,
@@ -261,7 +264,8 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         'raw_output': raw_output,
         'generate_full_command_json_input': generate_full_command_json_input,
         'generate_param_json_input': generate_param_json_input,
-        'debug': debug
+        'debug': debug,
+        'auth': auth
     }
 
     if not ctx.obj:
@@ -273,7 +277,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
 
     if help:
         ctx.obj['help'] = True
-        if is_top_level_help(ctx) and not cli_util.parse_boolean(ctx.obj.get('settings', {}).get(CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
+        if is_top_level_help(ctx) and not cli_util.parse_boolean(ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
             help_text_producer.render_help_text(ctx, [sys.argv[1]])
 
 

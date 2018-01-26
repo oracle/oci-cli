@@ -8,6 +8,7 @@ import six
 import string
 import time
 import unittest
+from . import test_config_container
 from . import util
 
 IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'
@@ -97,52 +98,54 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
 
     @util.slow
     def test_invoke_with_file_paths_and_json_in_default_file(self):
-        self.create_network_resources()
+        with test_config_container.create_vcr().use_cassette('default_files_command_invoke_with_file_paths.yml'):
+            self.create_network_resources()
 
-        try:
-            instance_name = util.random_name('cli_test_instance_options')
-            image_id = util.oracle_linux_image()
-            shape = 'VM.Standard1.2'
-            hostname_label = util.random_name('bminstance', insert_underscore=False)
-            vnic_display_name = 'vnic_display_name'
-            private_ip = '10.0.0.15'
-            assign_public_ip = 'true'
+            try:
+                instance_name = util.random_name('cli_test_instance_options')
+                image_id = util.oracle_linux_image()
+                shape = 'VM.Standard1.2'
+                hostname_label = util.random_name('bminstance', insert_underscore=False)
+                vnic_display_name = 'vnic_display_name'
+                private_ip = '10.0.0.15'
+                assign_public_ip = 'true'
 
-            launch_instance_result = util.invoke_command(
-                ['compute', 'instance', 'launch',
-                 '--compartment-id', util.COMPARTMENT_ID,
-                 '--availability-domain', util.availability_domain(),
-                 '--display-name', instance_name,
-                 '--subnet-id', self.subnet_ocid,
-                 '--image-id', image_id,
-                 '--shape', shape,
-                 '--hostname-label', hostname_label,
-                 '--private-ip', private_ip,
-                 '--assign-public-ip', assign_public_ip,
-                 '--vnic-display-name', vnic_display_name,
-                 '--defaults-file', 'tests/resources/default_files/launch_instance_default'])
+                launch_instance_result = util.invoke_command([
+                    'compute', 'instance', 'launch',
+                    '--compartment-id', util.COMPARTMENT_ID,
+                    '--availability-domain', util.availability_domain(),
+                    '--display-name', instance_name,
+                    '--subnet-id', self.subnet_ocid,
+                    '--image-id', image_id,
+                    '--shape', shape,
+                    '--hostname-label', hostname_label,
+                    '--private-ip', private_ip,
+                    '--assign-public-ip', assign_public_ip,
+                    '--vnic-display-name', vnic_display_name,
+                    '--defaults-file', 'tests/resources/default_files/launch_instance_default'
+                ])
 
-            if (launch_instance_result.output and 'LimitExceeded' in launch_instance_result.output) or (launch_instance_result.exception and 'LimitExceeded' in str(launch_instance_result.exception)):
-                pytest.skip('Skipping test_launch_instance as we received a limit exceeded error from the service')
+                if (launch_instance_result.output and 'LimitExceeded' in launch_instance_result.output) or (launch_instance_result.exception and 'LimitExceeded' in str(launch_instance_result.exception)):
+                    pytest.skip('Skipping test_launch_instance as we received a limit exceeded error from the service')
 
-            temp_instance_ocid = util.find_id_in_response(launch_instance_result.output)
-            util.validate_response(launch_instance_result, expect_etag=True)
+                temp_instance_ocid = util.find_id_in_response(launch_instance_result.output)
+                util.validate_response(launch_instance_result, expect_etag=True)
 
-            extended_metadata_result = json.loads(launch_instance_result.output)['data']['extended-metadata']
-            assert extended_metadata_result['a'] == '1'
-            assert extended_metadata_result['b']['c'] == '3'
+                extended_metadata_result = json.loads(launch_instance_result.output)['data']['extended-metadata']
+                assert extended_metadata_result['a'] == '1'
+                assert extended_metadata_result['b']['c'] == '3'
 
-            content = None
-            with open(IPXE_SCRIPT_FILE, mode='r') as file:
-                content = file.read()
+                content = None
+                with open(IPXE_SCRIPT_FILE, mode='r') as file:
+                    content = file.read()
 
-            assert 'ipxe-script' in launch_instance_result.output
-            # Just look at the first few characters. Once we hit a line break the formatting will differ.
-            assert content[:5] in launch_instance_result.output
+                assert 'ipxe-script' in launch_instance_result.output
+                # Just look at the first few characters. Once we hit a line break the formatting will differ.
+                assert content[:5] in launch_instance_result.output
 
-            self.delete_instance(temp_instance_ocid)
-        finally:
-            self.clean_up_network_resources()
+                self.delete_instance(temp_instance_ocid)
+            finally:
+                self.clean_up_network_resources()
 
     def create_network_resources(self):
         vcn_name = util.random_name('cli_test_default_file')

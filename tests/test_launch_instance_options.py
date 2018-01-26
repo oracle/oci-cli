@@ -3,6 +3,7 @@
 
 import json
 import unittest
+from . import test_config_container
 from . import util
 import oci_cli
 
@@ -14,6 +15,7 @@ USER_DATA_FILE = 'tests/resources/user_data.sh'
 class TestLaunchInstanceOptions(unittest.TestCase):
 
     @util.slow
+    @test_config_container.RecordReplayWithNoClickContext('launch_instance_options')
     def test_main(self):
         self.instance_ocids = []
 

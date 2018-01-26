@@ -5,6 +5,7 @@ import json
 import pytest
 import unittest
 from . import command_coverage_validator
+from . import test_config_container
 from . import util
 from .test_list_filter import retrieve_list_by_field_and_check, retrieve_list_and_ensure_sorted
 import oci_cli
@@ -23,24 +24,25 @@ class TestVirtualNetwork(unittest.TestCase):
         these are handlde in test_secondary_private_ip.py"""
         self.validator = validator
 
-        try:
-            self.subtest_vcn_operations()
-            self.subtest_security_list_operations()
-            self.subtest_security_list_stateless_rules()
-            self.subtest_subnet_operations()
-            self.subtest_internet_gateway_operations()
-            self.subtest_cpe_operations()
-            self.subtest_dhcp_option_operations()
-            self.subtest_drg_operations()
-            self.subtest_drg_attachment_operations()
-            self.subtest_ip_sec_connection_operations()
-            self.subtest_route_table_operations()
+        with test_config_container.create_vcr().use_cassette('virtual_network.yml'):
+            try:
+                self.subtest_vcn_operations()
+                self.subtest_security_list_operations()
+                self.subtest_security_list_stateless_rules()
+                self.subtest_subnet_operations()
+                self.subtest_internet_gateway_operations()
+                self.subtest_cpe_operations()
+                self.subtest_dhcp_option_operations()
+                self.subtest_drg_operations()
+                self.subtest_drg_attachment_operations()
+                self.subtest_ip_sec_connection_operations()
+                self.subtest_route_table_operations()
 
-            if hasattr(self, 'drg_capacity_issue'):
-                pytest.skip('Skipped DRG tests due to capacity issues')
-        finally:
-            time.sleep(20)
-            self.subtest_delete()
+                if hasattr(self, 'drg_capacity_issue'):
+                    pytest.skip('Skipped DRG tests due to capacity issues')
+            finally:
+                time.sleep(20)
+                self.subtest_delete()
 
     @util.log_test
     def subtest_vcn_operations(self):

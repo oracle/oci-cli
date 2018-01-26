@@ -14,6 +14,7 @@ from . import retry_utils
 identity_cli.identity_group.add_command(identity_cli.availability_domain_group)
 identity_cli.identity_group.add_command(identity_cli.compartment_group)
 identity_cli.identity_group.add_command(identity_cli.customer_secret_key_group)
+identity_cli.identity_group.add_command(identity_cli.dynamic_group_group)
 identity_cli.identity_group.add_command(identity_cli.group_group)
 identity_cli.identity_group.add_command(identity_cli.policy_group)
 identity_cli.identity_group.add_command(identity_cli.region_group)

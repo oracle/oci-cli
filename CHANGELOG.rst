@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.15 - 2018-01-25
+---------------------
+Added
+~~~~~~~~~~
+* Support for using the ``ObjectReadWithoutList`` public access type when creating and updating buckets
+* Support for managing dynamic groups (oci iam dynamic-group)
+* Support for instance principal auth (using --auth instance_principal option)
+
 2.4.14 - 2018-01-11
 --------------------
 Added
