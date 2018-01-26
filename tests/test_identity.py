@@ -3,11 +3,10 @@
 
 import json
 import pytest
-import random
-import time
 import unittest
 from . import command_coverage_validator
 from . import tag_data_container
+from . import test_config_container
 from . import util
 import oci_cli
 import os.path
@@ -27,23 +26,26 @@ class TestIdentity(unittest.TestCase):
     # The operations not called are:
     #   - region list, region-subscription create/list
     #   - tag and tag-namespace operations (x12). These are handled via test_tagging and test_tag_management
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=15)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=20)
+    @test_config_container.RecordReplay('identity')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
         self.validator = validator
 
-        self.subtest_availability_domain_operations()
-        self.subtest_compartment_operations()
-        self.subtest_compartment_rename()
-        self.subtest_user_operations()
-        self.subtest_group_operations()
-        self.subtest_user_group_membership_operations()
-        self.subtest_api_key_operations()
-        self.subtest_ui_password_operations()
-        self.subtest_swift_password_operations()
-        self.subtest_policy_operations()
-        self.subtest_customer_secret_key_operations()
-        self.subtest_cleanup()
+        try:
+            self.subtest_availability_domain_operations()
+            self.subtest_compartment_operations()
+            self.subtest_compartment_rename()
+            self.subtest_user_operations()
+            self.subtest_group_operations()
+            self.subtest_user_group_membership_operations()
+            self.subtest_api_key_operations()
+            self.subtest_ui_password_operations()
+            self.subtest_swift_password_operations()
+            self.subtest_policy_operations()
+            self.subtest_customer_secret_key_operations()
+        finally:
+            self.subtest_cleanup()
 
     def subtest_availability_domain_operations(self):
         result = self.invoke(['availability-domain', 'list', '--compartment-id', util.TENANT_ID])
@@ -61,7 +63,7 @@ class TestIdentity(unittest.TestCase):
         result = self.invoke(['compartment', 'get', '--compartment-id', util.COMPARTMENT_ID])
         self.validate_response(result, expect_etag=True)
 
-        update_description = 'Compartment used by CLI integration tests. ' + str(random.randint(0, 1000000))
+        update_description = 'Compartment used by CLI integration tests. {}'.format(util.random_number_string())
         result = self.invoke(
             ['compartment', 'update', '--compartment-id', util.COMPARTMENT_ID, '--description', update_description])
         self.validate_response(result, expect_etag=True)
@@ -70,7 +72,7 @@ class TestIdentity(unittest.TestCase):
     def subtest_compartment_rename(self):
         compartment_to_rename = self.get_compartment_to_rename()
 
-        updated_name = '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, int(time.time()))
+        updated_name = '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, util.random_number_string())
         updated_description = 'Updated {}'.format(updated_name)
         result = self.invoke(['compartment', 'update', '--compartment-id', compartment_to_rename['id'], '--name', updated_name, '--description', updated_description])
         self.validate_response(result, expect_etag=True)
@@ -90,10 +92,6 @@ class TestIdentity(unittest.TestCase):
 
         result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
         self.validate_response(result, extra_validation=self.validate_user)
-
-        # Call again with debug data for extra validation.
-        result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'], debug=True)
-        self.validate_response(result, extra_validation=self.validate_user, includes_debug_data=True)
 
         self.user_description = 'UPDATED ' + self.user_description
         result = self.invoke(['user', 'update', '--user-id', self.user_ocid, '--description', self.user_description])
@@ -427,18 +425,20 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
                     assert item['lifecycle-state'] in self.VALID_DELETED_CUSTOMER_SECRET_KEY_STATES
 
     def subtest_cleanup(self):
-        result = self.invoke(['user', 'delete', '--user-id', self.user_ocid], input='n')
-        assert result.exit_code != 0
+        if hasattr(self, 'user_ocid'):
+            result = self.invoke(['user', 'delete', '--user-id', self.user_ocid], input='n')
+            assert result.exit_code != 0
 
-        result = self.invoke(['user', 'delete', '--user-id', self.user_ocid], input='y')
-        self.validate_response(result, json_response_expected=False)
+            result = self.invoke(['user', 'delete', '--user-id', self.user_ocid], input='y')
+            self.validate_response(result, json_response_expected=False)
 
-        result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
-        self.validate_response(result)
-        assert self.user_ocid not in result.output
+            result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
+            self.validate_response(result)
+            assert self.user_ocid not in result.output
 
-        result = self.invoke(['group', 'delete', '--group-id', self.group_ocid, '--force'])
-        self.validate_response(result)
+        if hasattr(self, 'group_ocid'):
+            result = self.invoke(['group', 'delete', '--group-id', self.group_ocid, '--force'])
+            self.validate_response(result)
 
     def validate_group(self, result):
         assert self.group_ocid in result.output
@@ -462,7 +462,8 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
 
     def invoke(self, params, debug=False, ** args):
         commands = ['iam'] + params
-        self.validator.register_call(commands)
+        if hasattr(self, 'validator'):
+            self.validator.register_call(commands)
 
         if debug is True:
             commands = ['--debug'] + commands
@@ -497,7 +498,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         result = self.invoke([
             'compartment', 'create',
             '--compartment-id', util.TENANT_ID,
-            '--name', '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, int(time.time())),
+            '--name', '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, util.random_number_string()),
             '--description', 'Compartment for CLI compartment rename testing'
         ])
         parsed_result = json.loads(result.output)
@@ -531,7 +532,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
     def update_policy_with_tags(self, policy_ocid):
         tag_names_to_values = {}
         for t in tag_data_container.tags:
-            tag_names_to_values[t.name] = 'update_policy {}'.format(int(time.time()))
+            tag_names_to_values[t.name] = 'update_policy {} 1'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
             os.path.join('tests', 'temp', 'defined_tags_1.json'),
             tag_data_container.tag_namespace,

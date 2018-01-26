@@ -12,34 +12,34 @@ except ImportError:
     import mock
 
 
-@mock.patch('oci_cli.cli_util.arrow')
-@mock.patch('oci_cli.cli_util.requests')
-def test_get_clock_skew_with_no_skew(mock_requests, mock_arrow):
-    response = requests.Response()
-    response.headers['Date'] = 'Wed, 01 Jan 2014 00:00:30 GMT'
-    mock_requests.head = mock.Mock(return_value=response)
+def test_get_clock_skew_with_no_skew():
+    with mock.patch('oci_cli.cli_util.arrow') as mock_arrow:
+        with mock.patch('oci_cli.cli_util.requests') as mock_requests:
+            response = requests.Response()
+            response.headers['Date'] = 'Wed, 01 Jan 2014 00:00:30 GMT'
+            mock_requests.head = mock.Mock(return_value=response)
 
-    mock_arrow.get = arrow.get
-    mock_arrow.utcnow = mock.Mock(return_value=arrow.get(2014, 1, 1))
+            mock_arrow.get = arrow.get
+            mock_arrow.utcnow = mock.Mock(return_value=arrow.get(2014, 1, 1))
 
-    config = {
-        'region': 'us-phoenix-1'
-    }
+            config = {
+                'region': 'us-phoenix-1'
+            }
 
-    with util.capture() as out:
-        warn_if_clock_skew_present(config)
-        assert 'WARNING' not in out[1].getvalue()
+            with util.capture() as out:
+                warn_if_clock_skew_present(config)
+                assert 'WARNING' not in out[1].getvalue()
 
 
-@mock.patch('oci_cli.cli_util.arrow')
-def test_get_clock_skew_detects_skew(mock_arrow):
-    mock_arrow.get = arrow.get
-    mock_arrow.utcnow = mock.Mock(return_value=arrow.get(2014, 1, 1))
+def test_get_clock_skew_detects_skew():
+    with mock.patch('oci_cli.cli_util.arrow') as mock_arrow:
+        mock_arrow.get = arrow.get
+        mock_arrow.utcnow = mock.Mock(return_value=arrow.get(2014, 1, 1))
 
-    config = {
-        'region': 'us-phoenix-1'
-    }
+        config = {
+            'region': 'us-phoenix-1'
+        }
 
-    with util.capture() as out:
-        warn_if_clock_skew_present(config)
-        assert 'WARNING' in out[1].getvalue()
+        with util.capture() as out:
+            warn_if_clock_skew_present(config)
+            assert 'WARNING' in out[1].getvalue()

@@ -47,12 +47,13 @@ INCLUDE_EXCLUDE_PATTERN = r"""
 [!sequence]: Matches any character not in sequence
 """
 
+objectstorage_cli.get_namespace.short_help = 'Gets the name of the namespace for the user'
+
 objectstorage_cli.os_group.add_command(objectstorage_cli.namespace_group)
 get_param(objectstorage_cli.get_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
 objectstorage_cli.os_group.add_command(objectstorage_cli.bucket_group)
-objectstorage_cli.bucket_group.commands.pop(objectstorage_cli.restore_objects.name)
 objectstorage_cli.bucket_group.commands.pop(objectstorage_cli.head_bucket.name)
 get_param(objectstorage_cli.create_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.delete_bucket, 'bucket_name').opts.extend(['--name'])
@@ -73,6 +74,7 @@ objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_objects.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_multipart_upload_parts.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_multipart_uploads.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.put_object.name)
+objectstorage_cli.object_group.commands.pop(objectstorage_cli.restore_objects.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.upload_part.name)
 get_param(objectstorage_cli.delete_object, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.delete_object, 'namespace_name').opts.extend(['--namespace', '-ns'])

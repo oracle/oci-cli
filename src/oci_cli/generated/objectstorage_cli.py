@@ -145,7 +145,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name of the bucket. Valid characters are uppercase or lowercase letters, numbers, and dashes. Bucket names must be unique within the namespace. Avoid entering confidential information. example: Example: my-new-bucket1 [required]""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The ID of the compartment in which to create the bucket. [required]""")
 @click.option('--metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations.""")
+@click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @click.option('--storage-tier', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["Standard", "Archive"]), help="""The type of storage tier of this bucket. A bucket is set to 'Standard' tier by default, which means the bucket will be put in the standard storage tier. When 'Archive' tier type is set explicitly, the bucket is put in the Archive Storage tier. The 'storageTier' property is immutable after bucket is created.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.help_option
@@ -404,7 +404,7 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
     cli_util.render_response(result, ctx)
 
 
-@namespace_group.command(name=cli_util.override('get_namespace.command_name', 'get'), help="""Gets the name of the namespace for the user making the request. An account name must be unique, must start with a letter, and can have up to 15 lowercase letters and numbers. You cannot use spaces or special characters.""")
+@namespace_group.command(name=cli_util.override('get_namespace.command_name', 'get'), help="""Namespaces are unique. Namespaces are either the tenancy name or a random string automatically generated during account creation. You cannot edit a namespace.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -585,7 +585,7 @@ def head_object(ctx, from_json, namespace_name, bucket_name, object_name, if_mat
 
 To use this and other API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @click.option('--namespace-name', callback=cli_util.handle_required_param, help="""The top-level namespace used for the request. [required]""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The ID of the compartment in which to create the bucket. [required]""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The ID of the compartment in which to list buckets. [required]""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The page at which to start retrieving results.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -771,7 +771,7 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @click.option('--start', callback=cli_util.handle_optional_param, help="""Object names returned by a list query must be greater or equal to this parameter.""")
 @click.option('--end', callback=cli_util.handle_optional_param, help="""Object names returned by a list query must be strictly less than this parameter.""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return.""")
-@click.option('--delimiter', callback=cli_util.handle_optional_param, help="""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned. Scanned objects whose names contain the delimiter have part of their name up to the last occurrence of the delimiter (after the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
+@click.option('--delimiter', callback=cli_util.handle_optional_param, help="""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
 @click.option('--fields', callback=cli_util.handle_optional_param, help="""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'md5', and 'timeCreated' (object creation date and time) fields. Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,timeCreated,md5'. Allowed values are: name, size, timeCreated, md5""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -974,7 +974,7 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('restore_objects.command_name', 'restore-objects'), help="""Restore one or more objects specified by objectName parameter.""")
+@object_group.command(name=cli_util.override('restore_objects.command_name', 'restore'), help="""Restore one or more objects specified by objectName parameter.""")
 @click.option('--namespace-name', callback=cli_util.handle_required_param, help="""The top-level namespace used for the request. [required]""")
 @click.option('--bucket-name', callback=cli_util.handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
 @click.option('--object-name', callback=cli_util.handle_required_param, help="""A object which was in an archived state and need to be restored. [required]""")
@@ -1011,7 +1011,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name):
 @click.option('--bucket-name', callback=cli_util.handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
 @click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The compartmentId for the compartment to which the bucket is targeted to move to.""")
 @click.option('--metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations.""")
+@click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""The entity tag to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.help_option

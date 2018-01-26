@@ -6,6 +6,7 @@ import unittest
 import json
 import oci_cli
 from . import command_coverage_validator
+from . import test_config_container
 from . import util
 
 
@@ -14,7 +15,10 @@ DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 class TestAudit(unittest.TestCase):
 
+    # For recording, don't match on the query string because that includes the date range for the query
+    # (and that will change between runs)
     @command_coverage_validator.CommandCoverageValidator(oci_cli.audit_cli.audit_group, expected_not_called_count=2)
+    @test_config_container.RecordReplay('audit', match_on=['method', 'scheme', 'host', 'port', 'path'])
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""
         self.validator = validator

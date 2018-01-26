@@ -8,46 +8,50 @@ import time
 import random
 
 from . import tag_data_container
+from . import test_config_container
 from . import util
 
 
 @util.slow
 def test_update_retire_reactivate_namespace_and_tag(identity_client, tag_namespace_and_tags):
-    if os.environ.get('OCI_CLI_TAG_MGMT_USE_EXISTING_TAG_AND_NAMESPACE'):
-        tag_namespace_id = tag_data_container.tag_namespace.id
-        tag_name = tag_data_container.tags[0].name
-        print('Reusing existing tag namespace {} and tag {}'.format(tag_namespace_id, tag_name))
-    else:
-        suffix = str(random.randint(1, int(time.time())))
-        namespace_name = ('cliTagNamespace_{}'.format(suffix)).lower()
-        tag_name = ('cliTag_{}'.format(suffix)).lower()
+    with test_config_container.create_vcr().use_cassette('tag_management.yml'):
+        if os.environ.get('OCI_CLI_TAG_MGMT_USE_EXISTING_TAG_AND_NAMESPACE'):
+            tag_namespace_id = tag_data_container.tag_namespace.id
+            tag_name = tag_data_container.tags[0].name
+            print('Reusing existing tag namespace {} and tag {}'.format(tag_namespace_id, tag_name))
 
-        result = invoke(['iam', 'tag-namespace', 'create', '-c', util.COMPARTMENT_ID, '--name', namespace_name, '--description', 'initial description'])
-        util.validate_response(result)
-        parsed_result = json.loads(result.output)
-        tag_namespace_id = parsed_result['data']['id']
-        assert namespace_name == parsed_result['data']['name']
-        assert 'initial description' == parsed_result['data']['description']
-        assert not parsed_result['data']['is-retired']
+            tag_data_container.ensure_namespace_and_tags_active(invoke)
+        else:
+            suffix = str(random.randint(1, int(time.time())))
+            namespace_name = ('cliTagNamespace_{}'.format(suffix)).lower()
+            tag_name = ('cliTag_{}'.format(suffix)).lower()
 
-        result = invoke(['iam', 'tag', 'create', '--tag-namespace-id', tag_namespace_id, '--name', tag_name, '--description', 'tag description'])
-        util.validate_response(result)
-        parsed_result = json.loads(result.output)
-        assert tag_name == parsed_result['data']['name']
-        assert 'tag description' == parsed_result['data']['description']
-        assert not parsed_result['data']['is-retired']
+            result = invoke(['iam', 'tag-namespace', 'create', '-c', util.COMPARTMENT_ID, '--name', namespace_name, '--description', 'initial description'])
+            util.validate_response(result)
+            parsed_result = json.loads(result.output)
+            tag_namespace_id = parsed_result['data']['id']
+            assert namespace_name == parsed_result['data']['name']
+            assert 'initial description' == parsed_result['data']['description']
+            assert not parsed_result['data']['is-retired']
 
-    apply_tags_to_tag_namespace(tag_namespace_id)
-    apply_tags_to_tag(tag_namespace_id, tag_name)
-    update_retire_reactivate_operations(tag_namespace_id, tag_name)
-    get_and_list_operations(identity_client, tag_namespace_id, tag_name)
+            result = invoke(['iam', 'tag', 'create', '--tag-namespace-id', tag_namespace_id, '--name', tag_name, '--description', 'tag description'])
+            util.validate_response(result)
+            parsed_result = json.loads(result.output)
+            assert tag_name == parsed_result['data']['name']
+            assert 'tag description' == parsed_result['data']['description']
+            assert not parsed_result['data']['is-retired']
+
+        apply_tags_to_tag_namespace(tag_namespace_id)
+        apply_tags_to_tag(tag_namespace_id, tag_name)
+        update_retire_reactivate_operations(tag_namespace_id, tag_name)
+        get_and_list_operations(identity_client, tag_namespace_id, tag_name)
 
 
 def apply_tags_to_tag_namespace(tag_namespace_id):
     tag_data_container.ensure_namespace_and_tags_active(invoke)
 
     tag_names_to_values = {
-        tag_data_container.tags[0].name: 'tag_ns_mgmt {}'.format(int(time.time()))
+        tag_data_container.tags[0].name: 'tag_ns_mgmt {}'.format(util.random_number_string())
     }
     tag_data_container.write_defined_tags_to_file(
         os.path.join('tests', 'temp', 'defined_tags_1.json'),
@@ -89,7 +93,7 @@ def apply_tags_to_tag_namespace(tag_namespace_id):
 
     # Overwrite with different tags
     tag_names_to_values = {
-        tag_data_container.tags[1].name: 'tag_ns_mgmt {}'.format(int(time.time()))
+        tag_data_container.tags[1].name: 'tag_ns_mgmt update {}'.format(util.random_number_string())
     }
     tag_data_container.write_defined_tags_to_file(
         os.path.join('tests', 'temp', 'defined_tags_1.json'),
@@ -152,7 +156,7 @@ def apply_tags_to_tag(tag_namespace_id, tag_name):
 
     tag_names_to_values = {}
     for t in tag_data_container.tags:
-        tag_names_to_values[t.name] = 'tag_mgmt {}'.format(int(time.time()))
+        tag_names_to_values[t.name] = 'tag_mgmt {}'.format(util.random_number_string())
     tag_data_container.write_defined_tags_to_file(
         os.path.join('tests', 'temp', 'defined_tags_1.json'),
         tag_data_container.tag_namespace,

@@ -9,6 +9,7 @@ from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from oci_cli import cli_util
 from . import tag_data_container
+from . import test_config_container
 
 import datetime
 import oci
@@ -23,6 +24,11 @@ def pytest_addoption(parser):
     parser.addoption("--fast", action="store_true", default=False, help="Skip slow tests, as marked with the @slow annotation.")
     parser.addoption("--enable-long-running", action="store_true", default=False, help="Enables tests marked with the @enable_long_running annotation")
     parser.addoption("--config-profile", action="store", help="profile to use from the config file", default=oci.config.DEFAULT_PROFILE)
+    parser.addoption("--vcr-record-mode", action="store", default='once', help="Record mode option for VCRpy library.")
+
+
+def pytest_configure(config):
+    test_config_container.vcr_mode = config.getoption("--vcr-record-mode")
 
 
 @pytest.fixture(scope='session')
@@ -164,155 +170,160 @@ def key_pair_files():
 def vcn_and_subnets(network_client):
     from . import util
 
-    # create VCN
-    vcn_name = util.random_name('cli_lb_test_vcn')
-    cidr_block = "10.0.0.0/16"
-    vcn_dns_label = util.random_name('vcn', insert_underscore=False)
+    with test_config_container.create_vcr().use_cassette('_conftest_fixture_vcn_and_subnets.yml'):
+        # create VCN
+        vcn_name = util.random_name('cli_lb_test_vcn')
+        cidr_block = "10.0.0.0/16"
+        vcn_dns_label = util.random_name('vcn', insert_underscore=False)
 
-    create_vcn_details = oci.core.models.CreateVcnDetails()
-    create_vcn_details.cidr_block = cidr_block
-    create_vcn_details.display_name = vcn_name
-    create_vcn_details.compartment_id = os.environ['OCI_CLI_COMPARTMENT_ID']
-    create_vcn_details.dns_label = vcn_dns_label
+        create_vcn_details = oci.core.models.CreateVcnDetails()
+        create_vcn_details.cidr_block = cidr_block
+        create_vcn_details.display_name = vcn_name
+        create_vcn_details.compartment_id = os.environ['OCI_CLI_COMPARTMENT_ID']
+        create_vcn_details.dns_label = vcn_dns_label
 
-    result = network_client.create_vcn(create_vcn_details)
-    vcn_ocid = result.data.id
-    assert result.status == 200
+        result = network_client.create_vcn(create_vcn_details)
+        vcn_ocid = result.data.id
+        assert result.status == 200
 
-    oci.wait_until(network_client, network_client.get_vcn(vcn_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+        oci.wait_until(network_client, network_client.get_vcn(vcn_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
 
-    # create subnet in first AD
-    subnet_name = util.random_name('cli_lb_test_subnet')
-    cidr_block = "10.0.1.0/24"
-    subnet_dns_label = util.random_name('subnet', insert_underscore=False)
+        # create subnet in first AD
+        subnet_name = util.random_name('cli_lb_test_subnet')
+        cidr_block = "10.0.1.0/24"
+        subnet_dns_label = util.random_name('subnet', insert_underscore=False)
 
-    create_subnet_details = oci.core.models.CreateSubnetDetails()
-    create_subnet_details.compartment_id = os.environ['OCI_CLI_COMPARTMENT_ID']
-    create_subnet_details.availability_domain = util.availability_domain()
-    create_subnet_details.display_name = subnet_name
-    create_subnet_details.vcn_id = vcn_ocid
-    create_subnet_details.cidr_block = cidr_block
-    create_subnet_details.dns_label = subnet_dns_label
+        create_subnet_details = oci.core.models.CreateSubnetDetails()
+        create_subnet_details.compartment_id = os.environ['OCI_CLI_COMPARTMENT_ID']
+        create_subnet_details.availability_domain = util.availability_domain()
+        create_subnet_details.display_name = subnet_name
+        create_subnet_details.vcn_id = vcn_ocid
+        create_subnet_details.cidr_block = cidr_block
+        create_subnet_details.dns_label = subnet_dns_label
 
-    result = network_client.create_subnet(create_subnet_details)
-    subnet_ocid_1 = result.data.id
-    assert result.status == 200
+        result = network_client.create_subnet(create_subnet_details)
+        subnet_ocid_1 = result.data.id
+        assert result.status == 200
 
-    oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
 
-    # create subnet in second AD
-    subnet_name = util.random_name('cli_lb_test_subnet')
-    cidr_block = "10.0.0.0/24"
-    subnet_dns_label = util.random_name('subnet', insert_underscore=False)
+        # create subnet in second AD
+        subnet_name = util.random_name('cli_lb_test_subnet')
+        cidr_block = "10.0.0.0/24"
+        subnet_dns_label = util.random_name('subnet2', insert_underscore=False)
 
-    create_subnet_details = oci.core.models.CreateSubnetDetails()
-    create_subnet_details.compartment_id = os.environ['OCI_CLI_COMPARTMENT_ID']
-    create_subnet_details.availability_domain = util.second_availability_domain()
-    create_subnet_details.display_name = subnet_name
-    create_subnet_details.vcn_id = vcn_ocid
-    create_subnet_details.cidr_block = cidr_block
-    create_subnet_details.dns_label = subnet_dns_label
+        create_subnet_details = oci.core.models.CreateSubnetDetails()
+        create_subnet_details.compartment_id = os.environ['OCI_CLI_COMPARTMENT_ID']
+        create_subnet_details.availability_domain = util.second_availability_domain()
+        create_subnet_details.display_name = subnet_name
+        create_subnet_details.vcn_id = vcn_ocid
+        create_subnet_details.cidr_block = cidr_block
+        create_subnet_details.dns_label = subnet_dns_label
 
-    result = network_client.create_subnet(create_subnet_details)
-    subnet_ocid_2 = result.data.id
-    assert result.status == 200
+        result = network_client.create_subnet(create_subnet_details)
+        subnet_ocid_2 = result.data.id
+        assert result.status == 200
 
-    oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
 
     yield [vcn_ocid, subnet_ocid_1, subnet_ocid_2]
 
-    # delete VCN and subnets
-    network_client.delete_subnet(subnet_ocid_1)
+    # For some reason VCR doesn't like that the post-yield stuff here is all in one cassette. Splitting into different cassettes seems to work
+    with test_config_container.create_vcr().use_cassette('_conftest_fixture_vcn_and_subnets_delete.yml'):
+        # delete VCN and subnets
+        network_client.delete_subnet(subnet_ocid_1)
 
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
-            util.print_latest_exception(error)
+        try:
+            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+        except oci.exceptions.ServiceError as error:
+            if not hasattr(error, 'status') or error.status != 404:
+                util.print_latest_exception(error)
 
-    network_client.delete_subnet(subnet_ocid_2)
+        network_client.delete_subnet(subnet_ocid_2)
 
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
-            util.print_latest_exception(error)
+        try:
+            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+        except oci.exceptions.ServiceError as error:
+            if not hasattr(error, 'status') or error.status != 404:
+                util.print_latest_exception(error)
 
-    network_client.delete_vcn(vcn_ocid)
+        network_client.delete_vcn(vcn_ocid)
 
 
 @pytest.fixture(scope='session')
 def tag_namespace_and_tags(identity_client, test_id):
-    if not os.environ.get('OCI_CLI_TAG_NAMESPACE_ID'):
-        tag_namespace_name = 'cli_tag_ns_{}'.format(test_id)
-        create_tag_namespace_response = identity_client.create_tag_namespace(
-            oci.identity.models.CreateTagNamespaceDetails(
-                compartment_id=os.environ['OCI_CLI_COMPARTMENT_ID'],
-                name=tag_namespace_name,
-                description='Python SDK integ test namespace'
+    with test_config_container.create_vcr().use_cassette('_conftest_fixture_tag_namespace_and_tags.yml'):
+        if not os.environ.get('OCI_CLI_TAG_NAMESPACE_ID'):
+            tag_namespace_name = 'cli_tag_ns_{}'.format(test_id)
+            create_tag_namespace_response = identity_client.create_tag_namespace(
+                oci.identity.models.CreateTagNamespaceDetails(
+                    compartment_id=os.environ['OCI_CLI_COMPARTMENT_ID'],
+                    name=tag_namespace_name,
+                    description='Python SDK integ test namespace'
+                )
             )
-        )
 
-        tag_namespace = create_tag_namespace_response.data
-    else:
-        print('Reusing tag namespace: {}'.format(os.environ.get('OCI_CLI_TAG_NAMESPACE_ID')))
-        get_tag_namespace_response = identity_client.get_tag_namespace(os.environ.get('OCI_CLI_TAG_NAMESPACE_ID'))
-
-        if get_tag_namespace_response.data.is_retired:
-            update_tag_namespace_response = identity_client.update_tag_namespace(
-                get_tag_namespace_response.data.id,
-                oci.identity.models.UpdateTagNamespaceDetails(is_retired=False)
-            )
-            tag_namespace = update_tag_namespace_response.data
+            tag_namespace = create_tag_namespace_response.data
         else:
-            tag_namespace = get_tag_namespace_response.data
+            print('Reusing tag namespace: {}'.format(os.environ.get('OCI_CLI_TAG_NAMESPACE_ID')))
+            get_tag_namespace_response = identity_client.get_tag_namespace(os.environ.get('OCI_CLI_TAG_NAMESPACE_ID'))
 
-    tags = []
-    if not os.environ.get('OCI_CLI_TAG_ONE_NAME'):
-        tag_one_name = 'cli_tag_{}'.format(test_id)
-        create_tag_response = identity_client.create_tag(
-            tag_namespace.id,
-            oci.identity.models.CreateTagDetails(name=tag_one_name, description='CLI integration test tag')
-        )
-        tags.append(create_tag_response.data)
-    else:
-        print('Reusing tag: {}'.format(os.environ.get('OCI_CLI_TAG_ONE_NAME')))
-        tags.append(get_and_reactivate_tag(identity_client, tag_namespace, os.environ.get('OCI_CLI_TAG_ONE_NAME')))
+            if get_tag_namespace_response.data.is_retired:
+                update_tag_namespace_response = identity_client.update_tag_namespace(
+                    get_tag_namespace_response.data.id,
+                    oci.identity.models.UpdateTagNamespaceDetails(is_retired=False)
+                )
+                tag_namespace = update_tag_namespace_response.data
+            else:
+                tag_namespace = get_tag_namespace_response.data
 
-    if not os.environ.get('OCI_CLI_TAG_TWO_NAME'):
-        tag_two_name = 'cli_tag2_{}'.format(test_id)
-        create_tag_response = identity_client.create_tag(
-            tag_namespace.id,
-            oci.identity.models.CreateTagDetails(name=tag_two_name, description='CLI integration test tag')
-        )
-        tags.append(create_tag_response.data)
-    else:
-        print('Reusing tag: {}'.format(os.environ.get('OCI_CLI_TAG_TWO_NAME')))
-        tags.append(get_and_reactivate_tag(identity_client, tag_namespace, os.environ.get('OCI_CLI_TAG_TWO_NAME')))
+        tags = []
+        if not os.environ.get('OCI_CLI_TAG_ONE_NAME'):
+            tag_one_name = 'cli_tag_{}'.format(test_id)
+            create_tag_response = identity_client.create_tag(
+                tag_namespace.id,
+                oci.identity.models.CreateTagDetails(name=tag_one_name, description='CLI integration test tag')
+            )
+            tags.append(create_tag_response.data)
+        else:
+            print('Reusing tag: {}'.format(os.environ.get('OCI_CLI_TAG_ONE_NAME')))
+            tags.append(get_and_reactivate_tag(identity_client, tag_namespace, os.environ.get('OCI_CLI_TAG_ONE_NAME')))
 
-    # Avoid eventual consistency issue where we try and use tags we just created and get a 404 (though it
-    # would succeed on retry)
-    time.sleep(10)
+        if not os.environ.get('OCI_CLI_TAG_TWO_NAME'):
+            tag_two_name = 'cli_tag2_{}'.format(test_id)
+            create_tag_response = identity_client.create_tag(
+                tag_namespace.id,
+                oci.identity.models.CreateTagDetails(name=tag_two_name, description='CLI integration test tag')
+            )
+            tags.append(create_tag_response.data)
+        else:
+            print('Reusing tag: {}'.format(os.environ.get('OCI_CLI_TAG_TWO_NAME')))
+            tags.append(get_and_reactivate_tag(identity_client, tag_namespace, os.environ.get('OCI_CLI_TAG_TWO_NAME')))
 
-    tag_data_container.tag_namespace = tag_namespace
-    tag_data_container.tags = tags
+        # Avoid eventual consistency issue where we try and use tags we just created and get a 404 (though it
+        # would succeed on retry)
+        time.sleep(10)
+
+        tag_data_container.tag_namespace = tag_namespace
+        tag_data_container.tags = tags
 
     yield {'namespace': tag_namespace, 'tags': tags}
 
-    # Only retire if we're not reusing a namespace or tags, otherwise on parallel runs we can get conflicts since one run retires a tag that
-    # another run expects to not be retired
-    if not os.environ.get('OCI_CLI_TAG_NAMESPACE_ID') and not os.environ.get('OCI_CLI_TAG_ONE_NAME') and not os.environ.get('OCI_CLI_TAG_TWO_NAME'):
-        for tag in tags:
-            identity_client.update_tag(
-                tag.tag_namespace_id,
-                tag.name,
-                oci.identity.models.UpdateTagDetails(is_retired=True)
-            )
+    with test_config_container.create_vcr().use_cassette('_conftest_fixture_tag_namespace_and_tags_retire.yml'):
+        # Only retire if we're not reusing a namespace or tags, otherwise on parallel runs we can get conflicts since one run retires a tag that
+        # another run expects to not be retired
+        if not os.environ.get('OCI_CLI_TAG_NAMESPACE_ID') and not os.environ.get('OCI_CLI_TAG_ONE_NAME') and not os.environ.get('OCI_CLI_TAG_TWO_NAME'):
+            for tag in tags:
+                identity_client.update_tag(
+                    tag.tag_namespace_id,
+                    tag.name,
+                    oci.identity.models.UpdateTagDetails(is_retired=True)
+                )
 
-        update_tag_namespace_response = identity_client.update_tag_namespace(
-            tag_namespace.id,
-            oci.identity.models.UpdateTagNamespaceDetails(is_retired=True)
-        )
+            update_tag_namespace_response = identity_client.update_tag_namespace(
+                tag_namespace.id,
+                oci.identity.models.UpdateTagNamespaceDetails(is_retired=True)
+            )
 
 
 def get_and_reactivate_tag(identity_client, tag_namespace, tag_name):

@@ -8,6 +8,7 @@ import time
 import unittest
 from . import command_coverage_validator
 from . import tag_data_container
+from . import test_config_container
 from . import util
 import oci_cli
 
@@ -20,6 +21,7 @@ class TestCompute(unittest.TestCase):
 
     @util.slow
     @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_group, expected_not_called_count=8)
+    @test_config_container.RecordReplay('compute')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  The exceptions are the image import and export
         commands as they are handled by test_image_import_export.py
@@ -377,7 +379,7 @@ class TestCompute(unittest.TestCase):
         self.assertIsNotNone(instance_console_connection_details['data']['id'])
         self.assertIsNotNone(instance_console_connection_details['data']['lifecycle-state'])
         self.assertEquals(self.instance_ocid, instance_console_connection_details['data']['instance-id'])
-        self.assertEquals(util.SSH_AUTHORISED_KEY_FINGERPRINT, instance_console_connection_details['data']['fingerprint'])
+        self.assertIsNotNone(instance_console_connection_details['data']['fingerprint'])
         self.assertEquals(util.COMPARTMENT_ID, instance_console_connection_details['data']['compartment-id'])
 
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
@@ -434,7 +436,7 @@ class TestCompute(unittest.TestCase):
     def subtest_instance_console_connections_tagging(self):
         tag_names_to_values = {}
         for t in tag_data_container.tags:
-            tag_names_to_values[t.name] = 'somevalue {}'.format(int(time.time()))
+            tag_names_to_values[t.name] = 'somevalue {}'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
             os.path.join('tests', 'temp', 'defined_tags_1.json'),
             tag_data_container.tag_namespace,
