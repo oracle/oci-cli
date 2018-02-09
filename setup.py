@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import io
 import os
@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
 
 
 requires = [
-    'oci==1.3.13',
+    'oci==1.3.14',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',

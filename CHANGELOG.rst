@@ -7,6 +7,18 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.16 - 2018-02-08
+---------------------
+Added
+~~~~~~~~~~
+* Support for Domain Name System Service (oci dns)
+    * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`_.
+* Support for Reserved Public IPs in Virtual Networking Service (oci network public-ip)
+* Support for the following features in Block Storage Service
+    * Automated and policy-based scheduled backups (oci bv volume-backup-policy | volume-backup-policy-assignment)
+    * Read-only volume attachments (--is-read-only option while attaching volume)
+    * Incremental backups (--type option while creating a volume backup)
+
 2.4.15 - 2018-01-25
 ---------------------
 Added

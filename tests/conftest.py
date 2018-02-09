@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from click.testing import CliRunner
 from cryptography.hazmat.backends import default_backend
@@ -110,6 +110,11 @@ def compute_client(config):
 @pytest.fixture(scope='session')
 def identity_client(config):
     return oci.identity.IdentityClient(config)
+
+
+@pytest.fixture(scope='session')
+def dns_client(config):
+    return oci.dns.DnsClient(config)
 
 
 @pytest.fixture(scope='module')
