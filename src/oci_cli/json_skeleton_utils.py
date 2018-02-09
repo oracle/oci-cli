@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 import click
 import functools
 import json
@@ -155,6 +158,8 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
                         input_as_dict[attribute_name] = CLICK_TYPES_TO_EXAMPLE_VALUES[option_type]
                     elif isinstance(option_type, click.Choice):
                         input_as_dict[attribute_name] = '|'.join(option_type.choices)
+                    elif isinstance(option_type, click.File):
+                        input_as_dict[attribute_name] = '/path/to/file'
 
     if targeted_complex_param is not None:
         example_obj = translate_complex_param_to_example_object(input_params_to_complex_types[targeted_complex_param])

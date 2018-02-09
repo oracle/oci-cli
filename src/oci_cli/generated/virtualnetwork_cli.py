@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -38,6 +38,20 @@ def subnet_group():
 [Overview of the Networking Service].""")
 @cli_util.help_option_group
 def drg_attachment_group():
+    pass
+
+
+@click.command(cli_util.override('public_ip_group.command_name', 'public-ip'), cls=CommandGroupWithAlias, help="""A *public IP* is a conceptual term that refers to a public IP address and related properties.
+The `publicIp` object is the API representation of a public IP.
+
+There are two types of public IPs:
+1. Ephemeral
+2. Reserved
+
+For more information and comparison of the two types,
+see [Public IP Addresses].""")
+@cli_util.help_option_group
+def public_ip_group():
     pass
 
 
@@ -952,6 +966,68 @@ def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freef
     cli_util.render_response(result, ctx)
 
 
+@public_ip_group.command(name=cli_util.override('create_public_ip.command_name', 'create'), help="""Creates a public IP. Use the `lifetime` property to specify whether it's an ephemeral or reserved public IP. For information about limits on how many you can create, see [Public IP Addresses].
+
+* **For an ephemeral public IP:** You must also specify a `privateIpId` with the OCID of the primary private IP you want to assign the public IP to. The public IP is created in the same Availability Domain as the private IP. An ephemeral public IP must always be assigned to a private IP, and only to the *primary* private IP on a VNIC, not a secondary private IP.
+
+* **For a reserved public IP:** You may also optionally assign the public IP to a private IP by specifying `privateIpId`. Or you can later assign the public IP with [UpdatePublicIp].
+
+**Note:** When assigning a public IP to a private IP, the private IP must not already have a public IP with `lifecycleState` = ASSIGNING or ASSIGNED. If it does, an error is returned.
+
+Also, for reserved public IPs, the optional assignment part of this operation is asynchronous. Poll the public IP's `lifecycleState` to determine if the assignment succeeded.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the public IP. For ephemeral public IPs, you must set this to the private IP's compartment OCID. [required]""")
+@click.option('--lifetime', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help="""Defines when the public IP is deleted and released back to the Oracle Cloud Infrastructure public IP pool. For more information, see [Public IP Addresses]. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--private-ip-id', callback=cli_util.handle_optional_param, help="""The OCID of the private IP to assign the public IP to.
+
+Required for an ephemeral public IP because it must always be assigned to a private IP (specifically a *primary* private IP).
+
+Optional for a reserved public IP. If you don't provide it, the public IP is created but not assigned to a private IP. You can later assign the public IP with [UpdatePublicIp].""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ASSIGNING", "ASSIGNED", "UNASSIGNING", "UNASSIGNED", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
+@cli_util.wrap_exceptions
+def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, lifetime, display_name, private_ip_id):
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['lifetime'] = lifetime
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if private_ip_id is not None:
+        details['privateIpId'] = private_ip_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_public_ip(
+        create_public_ip_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @route_table_group.command(name=cli_util.override('create_route_table.command_name', 'create'), help="""Creates a new route table for the specified VCN. In the request you must also include at least one route rule for the new route table. For information on the number of rules you can have in a route table, see [Service Limits]. For general information about route tables in your VCN and the types of targets you can use in route rules, see [Route Tables].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the route table to reside. Notice that the route table doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the route table in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
@@ -1745,7 +1821,7 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 This operation cannot be used with primary private IPs, which are automatically unassigned and deleted when the VNIC is terminated.
 
 **Important:** If a secondary private IP is the [target of a route rule], unassigning it from the VNIC causes that route rule to blackhole and the traffic will be dropped.""")
-@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The private IP's OCID. [required]""")
+@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The OCID of the private IP. [required]""")
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1765,6 +1841,53 @@ def delete_private_ip(ctx, from_json, private_ip_id, if_match):
         private_ip_id=private_ip_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('delete_public_ip.command_name', 'delete'), help="""Unassigns and deletes the specified public IP (either ephemeral or reserved). You must specify the object's OCID. The public IP address is returned to the Oracle Cloud Infrastructure public IP pool.
+
+For an assigned reserved public IP, the initial unassignment portion of this operation is asynchronous. Poll the public IP's `lifecycleState` to determine if the operation succeeded.
+
+If you want to simply unassign a reserved public IP and return it to your pool of reserved public IPs, instead use [UpdatePublicIp].""")
+@click.option('--public-ip-id', callback=cli_util.handle_required_param, help="""The OCID of the public IP. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ASSIGNING", "ASSIGNED", "UNASSIGNING", "UNASSIGNED", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_id, if_match):
+
+    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_public_ip(
+        public_ip_id=public_ip_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, public_ip_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2270,7 +2393,7 @@ def get_local_peering_gateway(ctx, from_json, local_peering_gateway_id):
 
 
 @private_ip_group.command(name=cli_util.override('get_private_ip.command_name', 'get'), help="""Gets the specified private IP. You must specify the object's OCID. Alternatively, you can get the object by using [ListPrivateIps] with the private IP address (for example, 10.0.3.3) and subnet OCID.""")
-@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The private IP's OCID. [required]""")
+@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The OCID of the private IP. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2284,6 +2407,78 @@ def get_private_ip(ctx, from_json, private_ip_id):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_private_ip(
         private_ip_id=private_ip_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('get_public_ip.command_name', 'get'), help="""Gets the specified public IP. You must specify the object's OCID.
+
+Alternatively, you can get the object by using [GetPublicIpByIpAddress] with the public IP address (for example, 129.146.2.1).
+
+Or you can use [GetPublicIpByPrivateIpId] with the OCID of the private IP that the public IP is assigned to.
+
+**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `privateIpId` = OCID of the target private IP.""")
+@click.option('--public-ip-id', callback=cli_util.handle_required_param, help="""The OCID of the public IP. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
+@cli_util.wrap_exceptions
+def get_public_ip(ctx, from_json, public_ip_id):
+
+    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_public_ip(
+        public_ip_id=public_ip_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('get_public_ip_by_ip_address.command_name', 'get-public-ip-by-ip-address'), help="""Gets the public IP based on the public IP address (for example, 129.146.2.1).
+
+**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `privateIpId` = OCID of the target private IP.""")
+@click.option('--ip-address', callback=cli_util.handle_required_param, help="""The public IP address. Example: 129.146.2.1 [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
+@cli_util.wrap_exceptions
+def get_public_ip_by_ip_address(ctx, from_json, ip_address):
+    kwargs = {}
+
+    details = {}
+    details['ipAddress'] = ip_address
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_public_ip_by_ip_address(
+        get_public_ip_by_ip_address_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('get_public_ip_by_private_ip_id.command_name', 'get-public-ip-by-private-ip-id'), help="""Gets the public IP assigned to the specified private IP. You must specify the OCID of the private IP. If no public IP is assigned, a 404 is returned.
+
+**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, and you provide the OCID of the original private IP, this operation returns a 404. If you instead provide the OCID of the target private IP, or if you instead call [GetPublicIp] or [GetPublicIpByIpAddress], the service returns the public IP object with `lifecycleState` = ASSIGNING and `privateIpId` = OCID of the target private IP.""")
+@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""OCID of the private IP. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
+@cli_util.wrap_exceptions
+def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
+    kwargs = {}
+
+    details = {}
+    details['privateIpId'] = private_ip_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_public_ip_by_private_ip_id(
+        get_public_ip_by_private_ip_id_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2900,7 +3095,7 @@ def list_fast_connect_provider_services(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_fast_connect_provider_virtual_circuit_bandwidth_shapes.command_name', 'list-fast-connect-provider'), help="""Gets the list of available virtual circuit bandwidth levels for a provider. You need this information so you can specify your desired bandwidth level (shape) when you create a virtual circuit.
+@fast_connect_provider_service_group.command(name=cli_util.override('list_fast_connect_provider_virtual_circuit_bandwidth_shapes.command_name', 'list-fast-connect-provider-virtual-circuit-bandwidth-shapes'), help="""Gets the list of available virtual circuit bandwidth levels for a provider. You need this information so you can specify your desired bandwidth level (shape) when you create a virtual circuit.
 
 For more information about virtual circuits, see [FastConnect Overview].""")
 @click.option('--provider-service-id', callback=cli_util.handle_required_param, help="""The OCID of the provider service. [required]""")
@@ -3134,7 +3329,7 @@ If you're listing all the private IPs associated with a given subnet or VNIC, th
 
 Example: `500`""")
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--ip-address', callback=cli_util.handle_optional_param, help="""The private IP address of the `privateIp` object.
+@click.option('--ip-address', callback=cli_util.handle_optional_param, help="""An IP address.
 
 Example: `10.0.3.3`""")
 @click.option('--subnet-id', callback=cli_util.handle_optional_param, help="""The OCID of the subnet.""")
@@ -3179,6 +3374,71 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
         )
     else:
         result = client.list_private_ips(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('list_public_ips.command_name', 'list'), help="""Lists either the ephemeral or reserved [PublicIp] objects in the specified compartment.
+
+To list your reserved public IPs, set `scope` = `REGION`, and leave the `availabilityDomain` parameter empty.
+
+To list your ephemeral public IPs, set `scope` = `AVAILABILITY_DOMAIN`, and set the `availabilityDomain` parameter to the desired Availability Domain. An ephemeral public IP is always in the same Availability Domain and compartment as the private IP it's assigned to.""")
+@click.option('--scope', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["REGION", "AVAILABILITY_DOMAIN"]), help="""Whether the public IP is regional or specific to a particular Availability Domain.
+
+* `REGION`: The public IP exists within a region and can be assigned to a private IP in any Availability Domain in the region. Reserved public IPs have `scope` = `REGION`.
+
+* `AVAILABILITY_DOMAIN`: The public IP exists within the Availability Domain of the private IP it's assigned to, which is specified by the `availabilityDomain` property of the public IP object. Ephemeral public IPs have `scope` = `AVAILABILITY_DOMAIN`. [required]""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[PublicIp]'})
+@cli_util.wrap_exceptions
+def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id, limit, page, availability_domain):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.list_public_ips,
+            scope=scope,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.list_public_ips,
+            limit,
+            page_size,
+            scope=scope,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_public_ips(
+            scope=scope,
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -4050,7 +4310,7 @@ def update_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
   - Move a secondary private IP to a different VNIC in the same subnet.   - Change the display name for a secondary private IP.   - Change the hostname for a secondary private IP.
 
 This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
-@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The private IP's OCID. [required]""")
+@click.option('--private-ip-id', callback=cli_util.handle_required_param, help="""The OCID of the private IP. [required]""")
 @click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4106,6 +4366,74 @@ def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, displa
         update_private_ip_details=details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('update_public_ip.command_name', 'update'), help="""Updates the specified public IP. You must specify the object's OCID. Use this operation if you want to:
+
+* Assign a reserved public IP in your pool to a private IP. * Move a reserved public IP to a different private IP. * Unassign a reserved public IP from a private IP (which returns it to your pool of reserved public IPs). * Change the display name for a public IP (either ephemeral or reserved).
+
+Assigning, moving, and unassigning a reserved public IP are asynchronous operations. Poll the public IP's `lifecycleState` to determine if the operation succeeded.
+
+**Note:** When moving a reserved public IP, the target private IP must not already have a public IP with `lifecycleState` = ASSIGNING or ASSIGNED. If it does, an error is returned. Also, the initial unassignment from the original private IP always succeeds, but the assignment to the target private IP is asynchronous and could fail silently (for example, if the target private IP is deleted or has a different public IP assigned to it in the interim). If that occurs, the public IP remains unassigned and its `lifecycleState` switches to AVAILABLE (it is not reassigned to its original private IP). You must poll the public IP's `lifecycleState` to determine if the move succeeded.
+
+Regarding ephemeral public IPs:
+
+* If you want to assign an ephemeral public IP to a primary private IP, use [CreatePublicIp]. * You can't move an ephemeral public IP to a different private IP. * If you want to unassign an ephemeral public IP from its private IP, use [DeletePublicIp], which unassigns and deletes the ephemeral public IP.
+
+**Note:** If a public IP (either ephemeral or reserved) is assigned to a secondary private IP (see [PrivateIp]), and you move that secondary private IP to another VNIC, the public IP moves with it.
+
+**Note:** There's a limit to the number of [public IPs] a VNIC or instance can have. If you try to move a reserved public IP to a VNIC or instance that has already reached its public IP limit, an error is returned. For information about the public IP limits, see [Public IP Addresses].""")
+@click.option('--public-ip-id', callback=cli_util.handle_required_param, help="""The OCID of the public IP. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--private-ip-id', callback=cli_util.handle_optional_param, help="""The OCID of the private IP to assign the public IP to. * If the public IP is already assigned to a different private IP, it will be unassigned and then reassigned to the specified private IP. * If you set this field to an empty string, the public IP will be unassigned from the private IP it is currently assigned to.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "ASSIGNING", "ASSIGNED", "UNASSIGNING", "UNASSIGNED", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
+@cli_util.wrap_exceptions
+def update_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_id, display_name, private_ip_id, if_match):
+
+    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if private_ip_id is not None:
+        details['privateIpId'] = private_ip_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_public_ip(
+        public_ip_id=public_ip_id,
+        update_public_ip_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

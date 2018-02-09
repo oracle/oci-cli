@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import json
 import pytest
@@ -15,7 +15,7 @@ import time
 class TestVirtualNetwork(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.virtualnetwork_cli.virtual_network_group, expected_not_called_count=14)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.virtualnetwork_cli.virtual_network_group, expected_not_called_count=25)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options. The exceptions are 'vnic get' and 'vnic update', which are tested
         in test_compute.py since they require an instance.

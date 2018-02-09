@@ -1,0 +1,9 @@
+[
+  {
+    "domain": "__DNS_ZONE_NAME__",
+    "operation": "REMOVE",
+    "rdata": "\"Patch\" \"test\" \"data\"",
+    "rtype": "TXT",
+    "ttl": 300
+  }
+]
