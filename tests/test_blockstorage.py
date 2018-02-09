@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import json
 import unittest
@@ -13,7 +13,7 @@ import oci_cli
 class TestBlockStorage(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group, expected_not_called_count=4)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group, expected_not_called_count=10)
     @test_config_container.RecordReplay('blockstorage')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""

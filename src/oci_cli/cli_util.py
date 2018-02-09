@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import arrow
@@ -98,6 +98,23 @@ OVERRIDES = {
     "instance_action.command_name": "action",
     "volume_backup_group.command_name": "backup"
 }
+
+
+DNS_OVERRIDES = {
+    "get_domain_records.command_name": "get",
+    "delete_domain_records.command_name": "delete",
+    "get_zone_records.command_name": "get",
+    "patch_domain_records.command_name": "patch",
+    "patch_rr_set.command_name": "patch",
+    "patch_zone_records.command_name": "patch",
+    "rr_set_group.command_name": "rrset",
+    "update_rr_set.command_name": "update",
+    "update_domain_records.command_name": "update",
+    "update_zone_records.command_name": "update"
+}
+
+
+OVERRIDES.update(DNS_OVERRIDES)
 
 
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
@@ -1099,7 +1116,7 @@ def windows_warn_on_invalid_file_permissions(filename):
         return
 
     try:
-        disallowed_identities = [line.strip() for line in output.decode(sys.stdout.encoding).splitlines() if line]
+        disallowed_identities = [line.strip() for line in _try_decode_using_stdout(output).splitlines() if line]
         warning = 'WARNING: Permissions for file {filename} are too open.  The following users  / groups have permissions to the file and should not: {identities}.  To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename, identities=', '.join(disallowed_identities))
     except ValueError:
         # ValueError is the superclass exception of the various decoding errors we can receive. If we receive an error,
@@ -1160,3 +1177,11 @@ def _coalesce_param(ctx, param, value, required):
             ctx.obj['missing_required_parameters'] = []
 
         ctx.obj['missing_required_parameters'].append(hyphenated_param_name)
+
+
+# Decodes a byte string using stdout's encoding if we can get it, otherwise decode using the Python default
+def _try_decode_using_stdout(output):
+    if hasattr(sys.stdout, 'encoding'):
+        return output.decode(sys.stdout.encoding)
+    else:
+        return output.decode(sys.getdefaultencoding())

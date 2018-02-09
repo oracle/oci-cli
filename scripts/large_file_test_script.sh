@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 # Creates an object of the given size in MB, uploads it to Object Storage Service,
 # downloads it again, then cleans up. The time for each operation is recorded in seconds.
 # Example run: ./scripts/large_file_test_script.sh 300

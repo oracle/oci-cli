@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 import click
 import pytest
 import oci_cli
@@ -21,6 +24,23 @@ def test_generate_input_dict_simple_types_only():
         'someFloatParam': 0.0,
         'boolparam': True,
         'datetimeparam': '2017-01-01T00:00:00.000000+00:00'
+    }
+
+    assert expected_dict == generated_dict
+
+
+def test_generate_input_dict_choice_file_types():
+    params = [
+        click.Option(['--param-one'], type=click.Choice(['one', 'two', 'three'])),
+        click.Option(['--param2'], type=click.File('r'))
+    ]
+
+    ctx = set_up_command_and_context(params)
+
+    generated_dict = oci_cli.json_skeleton_utils.generate_input_dict_for_skeleton(ctx)
+    expected_dict = {
+        'paramOne': 'one|two|three',
+        'param2': '/path/to/file'
     }
 
     assert expected_dict == generated_dict
