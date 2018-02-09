@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import json
 import os
@@ -34,6 +34,7 @@ class TestCompute(unittest.TestCase):
             self.subtest_windows_instance_operations()
             self.subtest_list_vnics()
             self.subtest_vnic_operations()
+            self.subtest_public_ip_operations()
             self.subtest_volume_attachment_operations()
             self.subtest_shape_operations()
             self.subtest_console_history_operations()
@@ -245,6 +246,80 @@ class TestCompute(unittest.TestCase):
         util.validate_response(result)
 
         time.sleep(10)
+
+        # Detach vnic
+        result = self.invoke(
+            ['compute', 'instance', 'detach-vnic', '--vnic-id', second_vnic_id, '--compartment-id', util.COMPARTMENT_ID, '--force'])
+        util.validate_response(result)
+        util.wait_until(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id], 'DETACHED', max_wait_seconds=300, succeed_if_not_found=True)
+
+        time.sleep(10)
+
+    @util.log_test
+    def subtest_public_ip_operations(self):
+
+        # Attach a new vnic
+        vnic_display_name = 'myfloatingipvnic'
+        vnic_private_ip = '10.0.0.200'
+        result = self.invoke(
+            ['compute', 'instance', 'attach-vnic', '--instance-id', self.instance_ocid, '--subnet-id', self.subnet_ocid,
+             '--vnic-display-name', vnic_display_name, '--assign-public-ip', 'true', '--private-ip', vnic_private_ip,
+             '--wait'])
+        util.validate_response(result)
+        second_vnic = json.loads(result.output)['data']
+        second_vnic_id = second_vnic['id']
+
+        # Extract the properties of the new secondary vnic.
+        result = self.invoke(
+            ['network', 'vnic', 'get', '--vnic-id', second_vnic_id])
+        util.validate_response(result)
+        second_vnic = json.loads(result.output)['data']
+        vnic_resp_private_ip = second_vnic['private-ip']
+        vnic_resp_public_ip = second_vnic['public-ip']
+        self.assertEquals(vnic_private_ip, vnic_resp_private_ip)
+        self.assertNotEquals(None, vnic_resp_public_ip)
+
+        # Some extra time is needed after VNIC operations for state to stabilize.
+        time.sleep(5)
+
+        # Verify the public IP operations. Verify that each get below returns the same values for
+        # public-ip-address, public-ip-id and private-ip-id since it is for the same public IP object
+        # 1. get --public-ip-address
+        result = self.invoke(['network', 'public-ip', 'get',
+                              '--public-ip-address', vnic_resp_public_ip])
+        util.validate_response(result)
+        public_ip_obj = json.loads(result.output)['data']
+        resp_public_ip_id = public_ip_obj['id']
+        resp_private_ip_id = public_ip_obj['private-ip-id']
+        resp_public_ip_addr = public_ip_obj['ip-address']
+        self.assertEquals(vnic_resp_public_ip, resp_public_ip_addr)
+
+        # 2. get --public-ip-id
+        result = self.invoke(['network', 'public-ip', 'get',
+                              '--public-ip-id', resp_public_ip_id])
+        util.validate_response(result)
+        public_ip_obj = json.loads(result.output)['data']
+        resp_private_ip_id_2 = public_ip_obj['private-ip-id']
+        resp_public_ip_addr_2 = public_ip_obj['ip-address']
+        self.assertEquals(resp_private_ip_id, resp_private_ip_id_2)
+        self.assertEquals(resp_public_ip_addr, resp_public_ip_addr_2)
+
+        # 3. get --private-ip-id
+        result = self.invoke(['network', 'public-ip', 'get',
+                              '--private-ip-id', resp_private_ip_id])
+        util.validate_response(result)
+        public_ip_obj = json.loads(result.output)['data']
+        resp_public_ip_id_3 = public_ip_obj['id']
+        resp_public_ip_addr_3 = public_ip_obj['ip-address']
+        self.assertEquals(resp_public_ip_id, resp_public_ip_id_3)
+        self.assertEquals(resp_public_ip_addr, resp_public_ip_addr_3)
+
+        # Get the secondary attachment ID
+        result = self.invoke(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vnic-id', second_vnic_id])
+        util.validate_response(result)
+        json_data = json.loads(result.output)
+        self.assertEquals(1, len(json_data['data']))
+        second_vnic_attachment_id = json_data['data'][0]['id']
 
         # Detach vnic
         result = self.invoke(

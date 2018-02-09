@@ -1,19 +1,24 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 import json
 from . import util
 import oci
+from . import test_config_container
 
 
 class TestImageImportExport(object):
 
-    @util.enable_long_running
+    @util.long_running
     def test_image_import_export(self, config):
-        try:
-            self.set_up_resources()
-            self.subtest_image_import_export_via_tuple()
-            self.subtest_image_import_export_via_uri(config)
-            # self.subtest_image_import_export_via_preauthenticated_url(config)
-        finally:
-            self.clean_up_resources()
+        with test_config_container.create_vcr().use_cassette('compute_test_image_import_export.yml'):
+            try:
+                self.set_up_resources()
+                self.subtest_image_import_export_via_tuple()
+                self.subtest_image_import_export_via_uri(config)
+                # self.subtest_image_import_export_via_preauthenticated_url(config)
+            finally:
+                self.clean_up_resources()
 
     def subtest_image_import_export_via_tuple(self):
         self.export_via_tuple_object_name = 'export-via-tuple'
