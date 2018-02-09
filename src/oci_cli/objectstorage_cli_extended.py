@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import arrow
 import click
@@ -48,6 +48,12 @@ INCLUDE_EXCLUDE_PATTERN = r"""
 """
 
 objectstorage_cli.get_namespace.short_help = 'Gets the name of the namespace for the user'
+objectstorage_cli.namespace_group.help = """
+A namespace is a logical entity that serves as a top-level container for all buckets and objects, allowing you to control bucket naming within your tenancy. Each tenancy is provided one unique and uneditable namespace that is global, spanning all regions and compartments. While bucket names must be unique within your namespace, bucket names within your namespace can duplicate bucket names used in the namespaces of other tenants.
+
+
+Namespace metadata stores the compartment assignments for resources created by the Amazon S3 Compatibility API and the Swift API. By default, resources created by the Amazon S3 Compatibility and Swift APIs are stored in the root compartment of the tenancy.
+"""
 
 objectstorage_cli.os_group.add_command(objectstorage_cli.namespace_group)
 get_param(objectstorage_cli.get_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])

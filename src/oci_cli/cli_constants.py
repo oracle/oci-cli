@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 CLI_RC_FALLBACK_LOCATION = '~/.oci/cli-defaults'
 CLI_RC_DEFAULT_LOCATION = '~/.oci/oci_cli_rc'
