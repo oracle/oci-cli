@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import contextlib
@@ -97,32 +97,42 @@ def second_availability_domain():
 
 def init_availability_domain_variables():
     global first_ad, second_ad
+    with test_config_container.create_vcr().use_cassette('initialize_availability_domains.yml'):
+        if first_ad is None or second_ad is None:
+            response = invoke_command(['iam', 'availability-domain', 'list', '--compartment-id', TENANT_ID])
+            availability_domains = json.loads(response.output)['data']
 
-    if first_ad is None or second_ad is None:
-        response = invoke_command(['iam', 'availability-domain', 'list', '--compartment-id', TENANT_ID])
-        availability_domains = json.loads(response.output)['data']
-
-        if len(availability_domains) == 1:
-            first_ad = availability_domains[0]['name']
-            second_ad = availability_domains[0]['name']
-        elif len(availability_domains) == 2:
-            first_ad = availability_domains[0]['name']
-            second_ad = availability_domains[1]['name']
-        else:
-            # We need consistency in the vended availability domains if we're mocking, so don't randomize
-            if test_config_container.using_vcr_with_mock_responses():
+            if len(availability_domains) == 1:
+                first_ad = availability_domains[0]['name']
+                second_ad = availability_domains[0]['name']
+            elif len(availability_domains) == 2:
                 first_ad = availability_domains[0]['name']
                 second_ad = availability_domains[1]['name']
             else:
-                chosen_domains = random.sample(availability_domains, 2)
-                first_ad = chosen_domains[0]['name']
-                second_ad = chosen_domains[1]['name']
+                # We need consistency in the vended availability domains if we're mocking, so don't randomize
+                if test_config_container.using_vcr_with_mock_responses():
+                    first_ad = availability_domains[0]['name']
+                    second_ad = availability_domains[1]['name']
+                else:
+                    chosen_domains = random.sample(availability_domains, 2)
+                    first_ad = chosen_domains[0]['name']
+                    second_ad = chosen_domains[1]['name']
 
 
-enable_long_running = pytest.mark.skipif(
-    not pytest.config.getoption("--enable-long-running"),
-    reason="Long running tests are only run when specifically asked for"
-)
+# long running tests are marked with @util.long_running
+# using --enable-long-running will run all of the tests *including* long_running ones
+# using -m long_running will *only* run long running tests
+def long_running(func):
+    def internal(function):
+        return pytest.mark.skipif(
+            not pytest.config.getoption("--enable-long-running"),
+            reason="Long running tests are only run when specifically asked for"
+        )(function)
+
+    if pytest.config.getoption('-m') == 'long_running':
+        return pytest.mark.long_running(func)
+    else:
+        return pytest.mark.long_running(internal(func))
 
 
 def random_name(prefix, insert_underscore=True):

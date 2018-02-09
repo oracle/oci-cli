@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 # A module which is intended to hold information on tag namespaces and tags
 # so that they can be shared across test cases. This is primarily here because the CLI
 # tests mix up unittest and pytest test suites so using fixtures (apart from autouse fixtures

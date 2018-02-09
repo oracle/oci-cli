@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 set -e
 
 # Runs a few commands. If you don't see Success at the end, then something's wrong.
