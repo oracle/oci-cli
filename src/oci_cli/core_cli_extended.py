@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 from base64 import b64encode
@@ -22,6 +22,8 @@ from .aliasing import CommandGroupWithAlias
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.boot_volume_group)
+blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_policy_assignment_group)
+blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_policy_group)
 
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 
@@ -54,9 +56,12 @@ virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.route_ta
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cpe_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.security_list_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.private_ip_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.public_ip_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.local_peering_gateway_group)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)
+virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_ip_address.name)
+virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_private_ip_id.name)
 
 virtualnetwork_cli.get_ip_sec_connection_device_config.name = 'get-config'
 virtualnetwork_cli.get_ip_sec_connection_device_status.name = 'get-status'
@@ -825,3 +830,42 @@ def create_volume_extended(ctx, **kwargs):
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
 
     ctx.invoke(blockstorage_cli.create_volume, **kwargs)
+
+
+@virtualnetwork_cli.public_ip_group.command(name='get', help="""Gets the specified public IP object.
+The command needs at least one of the options to be used to be able to get the public IP object successfully.""")
+@click.option('--public-ip-address', callback=cli_util.handle_optional_param, help="""A public IP address. Example: 129.146.2.1""")
+@click.option('--public-ip-id', callback=cli_util.handle_optional_param, help="""The public IP's OCID.""")
+@click.option('--private-ip-id', callback=cli_util.handle_optional_param, help="""The private IP's OCID.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
+@cli_util.wrap_exceptions
+def get_public_ip_extended(ctx, **kwargs):
+    command_args = dict([(k, v) for k, v in kwargs.items() if v is not None])
+    # Remove from_json key since the parsing is done
+    command_args.pop('from_json', None)
+    # Check at least one of the command options is specified
+    if len(command_args) == 0:
+        raise click.UsageError('At least one of the options (--public-ip-id or '
+                               '--public-ip-address or --private-ip-id) MUST be '
+                               'specified')
+
+    # Check ONLY one command option is specified
+    if len(command_args) > 1:
+        raise click.UsageError('This command accepts ONLY one option : EITHER '
+                               '--public-ip-id OR --public-ip_address OR '
+                               '--private-ip-id')
+
+    func_call_dict = {
+        'public_ip_id'      : virtualnetwork_cli.get_public_ip,  # noqa: E203
+        'public_ip_address' : virtualnetwork_cli.get_public_ip_by_ip_address,  # noqa: E203
+        'private_ip_id'     : virtualnetwork_cli.get_public_ip_by_private_ip_id  # noqa: E203
+    }
+
+    func_call_key = list(command_args.keys())[0]
+    if 'public_ip_address' in command_args:
+        command_args['ip_address'] = command_args.pop('public_ip_address')
+
+    ctx.invoke(func_call_dict[func_call_key], **command_args)

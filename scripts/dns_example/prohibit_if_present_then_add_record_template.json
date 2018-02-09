@@ -1,0 +1,16 @@
+[
+  {
+    "domain": "__DNS_ZONE_NAME__",
+    "operation": "PROHIBIT",
+    "rtype": "A",
+    "ttl": 300
+  },
+  {
+    "domain": "__DNS_ZONE_NAME__",
+    "isProtected": true,
+    "operation": "ADD",
+    "rdata": "127.0.0.1",
+    "rtype": "A",
+    "ttl": 300
+  }
+]

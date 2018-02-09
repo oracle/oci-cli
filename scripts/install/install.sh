@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 #
 # Bash script to install the Oracle Cloud Infrastructure CLI
 # Example invocation: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
