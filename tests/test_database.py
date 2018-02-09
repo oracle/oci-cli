@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 import json
 import oci
 import oci_cli
@@ -6,6 +9,7 @@ import pytest
 import random
 
 from . import util
+from . import test_config_container
 
 ADMIN_PASSWORD = "BEstr0ng_#1"
 DB_VERSION = '12.1.0.2'
@@ -29,6 +33,12 @@ EXISTING_DB_SYSTEM_2 = os.environ.get('OCI_CLI_EXISTING_DB_SYSTEM_2')
 
 # by default clean up all resources. if OCI_CLI_SKIP_CLEAN_UP_DB_RESOURCES == '1' then do not clean up resources
 SKIP_CLEAN_UP_RESOURCES = os.environ.get('OCI_CLI_SKIP_CLEAN_UP_DB_RESOURCES') == '1'
+
+
+@pytest.fixture(autouse=True, scope='function')
+def vcr_fixture(request):
+    with test_config_container.create_vcr().use_cassette('database_{name}.yml'.format(name=request.function.__name__)):
+        yield
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -65,7 +75,7 @@ def db_systems(runner, config_file, config_profile, network_client):
     # create subnet in first AD
     subnet_name = util.random_name('python_sdk_test_subnet')
     cidr_block = "10.0.1.0/24"
-    subnet_dns_label = util.random_name('subnet', insert_underscore=False)
+    subnet_dns_label = util.random_name('subnet', insert_underscore=False) + '1'
 
     create_subnet_details = oci.core.models.CreateSubnetDetails()
     create_subnet_details.compartment_id = util.COMPARTMENT_ID
@@ -84,7 +94,7 @@ def db_systems(runner, config_file, config_profile, network_client):
     # create subnet in second AD
     subnet_name = util.random_name('python_sdk_test_subnet')
     cidr_block = "10.0.0.0/24"
-    subnet_dns_label = util.random_name('subnet', insert_underscore=False)
+    subnet_dns_label = util.random_name('subnet', insert_underscore=False) + '2'
 
     create_subnet_details = oci.core.models.CreateSubnetDetails()
     create_subnet_details.compartment_id = util.COMPARTMENT_ID
@@ -213,84 +223,87 @@ def db_systems(runner, config_file, config_profile, network_client):
 
     yield [db_system_id_1, db_system_id_2]
 
-    if SKIP_CLEAN_UP_RESOURCES:
-        print("Skipping clean up of DB systems and dependent resources.")
-        return
+    # this code does not run inside the vcr_fixture because it is outside any test function
+    # thus we are explicitly creating a separate cassette for it here
+    with test_config_container.create_vcr().use_cassette('database_test_cleanup.yml'):
+        if SKIP_CLEAN_UP_RESOURCES:
+            print("Skipping clean up of DB systems and dependent resources.")
+            return
 
-    success_terminating_db_systems = True
+        success_terminating_db_systems = True
 
-    try:
-        # terminate db system 1
-        params = [
-            'system', 'terminate',
-            '--db-system-id', db_system_id_1,
-            '--force'
-        ]
+        try:
+            # terminate db system 1
+            params = [
+                'system', 'terminate',
+                '--db-system-id', db_system_id_1,
+                '--force'
+            ]
 
-        result = invoke(runner, config_file, config_profile, params)
-        util.validate_response(result)
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
 
-        # validate that it goes into terminating state
-        params = [
-            'system', 'get',
-            '--db-system-id', db_system_id_1
-        ]
+            # validate that it goes into terminating state
+            params = [
+                'system', 'get',
+                '--db-system-id', db_system_id_1
+            ]
 
-        result = invoke(runner, config_file, config_profile, params)
-        util.validate_response(result)
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
 
-        assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
-        util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
-    except Exception as error:
-        util.print_latest_exception(error)
-        success_terminating_db_systems = False
-
-    # terminate db system 2
-    try:
-        params = [
-            'system', 'terminate',
-            '--db-system-id', db_system_id_2,
-            '--force'
-        ]
-
-        result = invoke(runner, config_file, config_profile, params)
-        util.validate_response(result)
-
-        # validate that it goes into terminating state
-        params = [
-            'system', 'get',
-            '--db-system-id', db_system_id_2
-        ]
-
-        result = invoke(runner, config_file, config_profile, params)
-        util.validate_response(result)
-
-        assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
-        util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_2], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
-    except Exception as error:
-        util.print_latest_exception(error)
-        success_terminating_db_systems = False
-
-    # delete VCN and subnets now that dependent DB systems are deleted
-    network_client.delete_subnet(subnet_ocid_1)
-
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
+            assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+            util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+        except Exception as error:
             util.print_latest_exception(error)
+            success_terminating_db_systems = False
 
-    network_client.delete_subnet(subnet_ocid_2)
+        # terminate db system 2
+        try:
+            params = [
+                'system', 'terminate',
+                '--db-system-id', db_system_id_2,
+                '--force'
+            ]
 
-    try:
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
-    except oci.exceptions.ServiceError as error:
-        if not hasattr(error, 'status') or error.status != 404:
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            # validate that it goes into terminating state
+            params = [
+                'system', 'get',
+                '--db-system-id', db_system_id_2
+            ]
+
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+            util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_2], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+        except Exception as error:
             util.print_latest_exception(error)
+            success_terminating_db_systems = False
 
-    network_client.delete_vcn(vcn_ocid)
+        # delete VCN and subnets now that dependent DB systems are deleted
+        network_client.delete_subnet(subnet_ocid_1)
 
-    assert success_terminating_db_systems
+        try:
+            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+        except oci.exceptions.ServiceError as error:
+            if not hasattr(error, 'status') or error.status != 404:
+                util.print_latest_exception(error)
+
+        network_client.delete_subnet(subnet_ocid_2)
+
+        try:
+            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+        except oci.exceptions.ServiceError as error:
+            if not hasattr(error, 'status') or error.status != 404:
+                util.print_latest_exception(error)
+
+        network_client.delete_vcn(vcn_ocid)
+
+        assert success_terminating_db_systems
 
 
 @pytest.fixture(scope='function')
@@ -351,7 +364,7 @@ def test_list_db_versions(runner, config_file, config_profile):
     assert len(json.loads(result.output)['data']) > 0
 
 
-@util.enable_long_running
+@util.long_running
 def test_update_db_system(runner, config_file, config_profile, db_systems):
 
     params = [
@@ -385,7 +398,7 @@ def test_update_db_system(runner, config_file, config_profile, db_systems):
 ###########################
 # DATA GUARD OPERATIONS
 ###########################
-@util.enable_long_running
+@util.long_running
 def test_data_guard_operations(runner, config_file, config_profile, database, db_systems):
     # verify db system 1 is available
     params = [
@@ -535,7 +548,7 @@ def test_data_guard_operations(runner, config_file, config_profile, database, db
     util.wait_until(['db', 'database', 'get', '--database-id', peer_database_id], 'TERMINATED', max_wait_seconds=DATA_GUARD_ASSOCIATION_OPERATION_TIME, succeed_if_not_found=True)
 
 
-@util.enable_long_running
+@util.long_running
 def test_database_operations(runner, config_file, config_profile, db_systems):
     # create database
     params = [
@@ -606,7 +619,7 @@ def test_database_operations(runner, config_file, config_profile, db_systems):
     util.wait_until(['db', 'system', 'get', '--db-system-id', db_systems[0]], 'AVAILABLE', max_wait_seconds=DB_TERMINATING_TIME_SEC)
 
 
-@util.enable_long_running
+@util.long_running
 def test_backup_operations(runner, config_file, config_profile, db_systems, database):
     # create backup
     params = [
@@ -701,7 +714,7 @@ def test_backup_operations(runner, config_file, config_profile, db_systems, data
     util.wait_until(['db', 'backup', 'get', '--backup-id', backup_id], 'TERMINATED', max_wait_seconds=DB_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
 
 
-@util.enable_long_running
+@util.long_running
 def test_db_node_operations(runner, config_file, config_profile, db_systems):
     # list nodes in db-system
     params = [
@@ -786,7 +799,7 @@ def test_db_node_operations(runner, config_file, config_profile, db_systems):
 ###########################
 # PATCH OPERATIONS
 ###########################
-@util.enable_long_running
+@util.long_running
 def test_patch_operations(runner, config_file, config_profile, database, db_systems):
     # by db-system
     params = [
@@ -872,7 +885,7 @@ def test_patch_operations(runner, config_file, config_profile, database, db_syst
 ###########################
 # PATCH HISTORY OPERATIONS
 ###########################
-@util.enable_long_running
+@util.long_running
 def test_patch_history_operations(runner, config_file, config_profile, database, db_systems):
     # by db-system
     params = [

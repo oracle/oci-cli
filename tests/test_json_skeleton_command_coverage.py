@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 from . import util
 
 import click
@@ -27,7 +30,8 @@ COMMANDS_WITH_NO_PARAMS = [
 COMMANDS_WITH_ALL_OPTIONAL_PARAMS = [
     ['db', 'backup', 'list'],
     ['network', 'private-ip', 'list'],
-    ['bv', 'volume', 'create']
+    ['bv', 'volume', 'create'],
+    ['bv', 'volume-backup-policy', 'list']
 ]
 
 
@@ -87,10 +91,14 @@ def test_all_commands_can_accept_from_json_input():
         elif cmd in COMMANDS_WITH_ALL_OPTIONAL_PARAMS:
             if result.output:
                 assert 'from-json' not in result.output
-                assert 'Missing' in result.output or 'UsageError' in result.output
+                assert 'Missing' in result.output or 'UsageError' in result.output or 'ServiceError' in result.output
         else:
             assert 'from-json' not in result.output
-            assert 'Missing option' in result.output or 'Are you sure' in str(result.output)
+            if cmd == ['network', 'public-ip', 'get']:
+                # This command displays a different message
+                assert 'At least one of the options' in str(result.output)
+            else:
+                assert 'Missing option' in result.output or 'Are you sure' in str(result.output)
 
 
 def teardown_module(module):

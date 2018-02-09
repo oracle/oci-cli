@@ -1,0 +1,18 @@
+[
+  {
+    "domain": "__DNS_ZONE_NAME__",
+    "isProtected": true,
+    "operation": "ADD",
+    "rdata": "Patch test data",
+    "rtype": "TXT",
+    "ttl": 300
+  },
+  {
+    "domain": "__DNS_ZONE_NAME__",
+    "isProtected": true,
+    "operation": "ADD",
+    "rdata": "Some more test patch data",
+    "rtype": "TXT",
+    "ttl": 300
+  }
+]

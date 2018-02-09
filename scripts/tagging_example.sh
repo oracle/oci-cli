@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 # This script provides an example of how use tags in the CLI in terms of:
 #
 #   - Managing tag namespaces and tags by performing create, read (get/list) and update operations on them

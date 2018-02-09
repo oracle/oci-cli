@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 from .transfer_manager_config import TransferManagerConfig
 from .work_pool import WorkPool, WorkPoolFuture
 from .work_pool_task import WorkPoolTask, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer

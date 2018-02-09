@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -223,6 +223,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.option('--type', callback=cli_util.handle_required_param, help="""The type of volume. The only supported value is \"iscsi\". [required]""")
 @click.option('--volume-id', callback=cli_util.handle_required_param, help="""The OCID of the volume. [required]""")
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@click.option('--is-read-only', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -231,7 +232,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, display_name):
+def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, display_name, is_read_only):
     kwargs = {}
 
     details = {}
@@ -241,6 +242,9 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if is_read_only is not None:
+        details['isReadOnly'] = is_read_only
 
     client = cli_util.build_client('compute', ctx)
     result = client.attach_volume(
@@ -1298,6 +1302,7 @@ Example: `Oracle Linux`""")
 @click.option('--operating-system-version', callback=cli_util.handle_optional_param, help="""The image's operating system version.
 
 Example: `7.2`""")
+@click.option('--shape', callback=cli_util.handle_optional_param, help="""Shape name.""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
@@ -1314,7 +1319,7 @@ Example: `500`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Image]'})
 @cli_util.wrap_exceptions
-def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_name, operating_system, operating_system_version, limit, page, sort_by, sort_order, lifecycle_state):
+def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_name, operating_system, operating_system_version, shape, limit, page, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1325,6 +1330,8 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
         kwargs['operating_system'] = operating_system
     if operating_system_version is not None:
         kwargs['operating_system_version'] = operating_system_version
+    if shape is not None:
+        kwargs['shape'] = shape
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
