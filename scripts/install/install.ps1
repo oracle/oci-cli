@@ -101,15 +101,16 @@ function FindLatestPythonExecutableInRegistry {
     $PythonCoreRegistryLocation = "${RootRegistryLocation}:\Software\Python\PythonCore"
     if (Test-Path $PythonCoreRegistryLocation) {
         LogOutput "Python found in registry: $PythonCoreRegistryLocation"
-
         $PythonInstallations = (Get-ChildItem -recurse $PythonCoreRegistryLocation) | Sort-Object -Descending
-        ForEach ($Installation in $PythonInstallations) {
-            # we are sorting by descending so this will grab the greatest installed version of python
-            If ($installation.Name.EndsWith("\InstallPath")) {
-                $PythonInstallLocation = (Get-ItemProperty -LiteralPath $Installation.PSPath).'(default)'
-                return Join-Path $PythonInstallLocation "python.exe"
-            }
-        }
+        if ($PythonInstallations) {
+           ForEach ($Installation in $PythonInstallations) {
+               # we are sorting by descending so this will grab the greatest installed version of python
+               If ($installation.Name.EndsWith("\InstallPath")) {
+                   $PythonInstallLocation = (Get-ItemProperty -LiteralPath $Installation.PSPath).'(default)'
+                   return Join-Path $PythonInstallLocation "python.exe"
+               }
+           }
+        }  
     }
 
     return $PythonExecutable
