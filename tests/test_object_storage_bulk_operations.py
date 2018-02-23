@@ -11,7 +11,6 @@ import random
 import shutil
 import six
 import string
-import time
 from . import util
 
 
@@ -50,7 +49,7 @@ def generate_test_data(object_storage_client):
 
     # Create a test bucket
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -81,12 +80,12 @@ def generate_test_data(object_storage_client):
         bulk_get_object_to_content[object_name] = object_content
 
     # makedirs creates all subfolders recursively
-    root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(int(time.time()))
+    root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(random.randint(0, 1000000))
     bulk_put_folder_leaf = '{}/subfolder1/subfolder2/subfolder3'.format(root_bulk_put_folder)
     os.makedirs(bulk_put_folder_leaf)
 
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -237,7 +236,7 @@ def test_get_no_objects():
 
 def test_get_multipart(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -356,7 +355,7 @@ def test_bulk_put_default_options():
 #   - Try to upload with multipart disabled
 def test_bulk_put_with_multipart_params(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -710,7 +709,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
 
 def test_delete_when_no_objects_in_bucket(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -740,7 +739,7 @@ def test_delete_dry_run():
 
 def test_delete(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -770,7 +769,7 @@ def test_delete(object_storage_client):
 
 def test_bulk_operation_table_output_query(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(int(time.time()))
+    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 

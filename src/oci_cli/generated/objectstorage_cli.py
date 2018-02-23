@@ -20,32 +20,23 @@ def os_group():
     pass
 
 
-@click.command(cli_util.override('bucket_group.command_name', 'bucket'), cls=CommandGroupWithAlias, help="""A bucket is a container for storing objects in a compartment within a namespace. A bucket is associated with a single compartment.
-The compartment has policies that indicate what actions a user can perform on a bucket and all the objects in the bucket. For more
-information, see [Managing Buckets].
+@click.command(cli_util.override('bucket_group.command_name', 'bucket'), cls=CommandGroupWithAlias, help="""A bucket is a container for storing objects in a compartment within a namespace. A bucket is associated with a single compartment. The compartment has policies that indicate what actions a user can perform on a bucket and all the objects in the bucket. For more information, see [Managing Buckets].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def bucket_group():
     pass
 
 
-@click.command(cli_util.override('preauthenticated_request_group.command_name', 'preauthenticated-request'), cls=CommandGroupWithAlias, help="""Pre-authenticated requests provide a way to let users access a bucket or an object without having their own credentials.
-When you create a pre-authenticated request, a unique URL is generated. Users in your organization, partners, or third
-parties can use this URL to access the targets identified in the pre-authenticated request. See [Managing Access to Buckets and Objects].
+@click.command(cli_util.override('preauthenticated_request_group.command_name', 'preauthenticated-request'), cls=CommandGroupWithAlias, help="""Pre-authenticated requests provide a way to let users access a bucket or an object without having their own credentials. When you create a pre-authenticated request, a unique URL is generated. Users in your organization, partners, or third parties can use this URL to access the targets identified in the pre-authenticated request. See [Managing Access to Buckets and Objects].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.
-If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def preauthenticated_request_group():
     pass
 
 
-@click.command(cli_util.override('object_group.command_name', 'object'), cls=CommandGroupWithAlias, help="""To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+@click.command(cli_util.override('object_group.command_name', 'object'), cls=CommandGroupWithAlias, help="""To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def object_group():
     pass
@@ -147,12 +138,14 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @click.option('--metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @click.option('--storage-tier', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["Standard", "Archive"]), help="""The type of storage tier of this bucket. A bucket is set to 'Standard' tier by default, which means the bucket will be put in the standard storage tier. When 'Archive' tier type is set explicitly, the bucket is put in the Archive Storage tier. The 'storageTier' property is immutable after bucket is created.""")
-@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier):
+def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, freeform_tags, defined_tags):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -171,6 +164,12 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 
     if storage_tier is not None:
         details['storageTier'] = storage_tier
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.create_bucket(
@@ -588,6 +587,7 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The ID of the compartment in which to list buckets. [required]""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The page at which to start retrieving results.""")
+@click.option('--fields', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["tags"]), multiple=True, help="""Bucket summary in list of buckets includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'tags' (freeformTags and definedTags). The only supported value of this parameter is 'tags' for now. Example 'tags'.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -595,7 +595,7 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[BucketSummary]'})
 @cli_util.wrap_exceptions
-def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, limit, page):
+def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, limit, page, fields):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -607,6 +607,8 @@ def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartme
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
     if all_pages:
@@ -974,16 +976,17 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('restore_objects.command_name', 'restore'), help="""Restore one or more objects specified by objectName parameter.""")
+@object_group.command(name=cli_util.override('restore_objects.command_name', 'restore'), help="""Restore one or more objects specified by objectName parameter. By default object will be restored for 24 hours.Duration can be configured using hours parameter.""")
 @click.option('--namespace-name', callback=cli_util.handle_required_param, help="""The top-level namespace used for the request. [required]""")
 @click.option('--bucket-name', callback=cli_util.handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
 @click.option('--object-name', callback=cli_util.handle_required_param, help="""A object which was in an archived state and need to be restored. [required]""")
+@click.option('--hours', callback=cli_util.handle_optional_param, type=click.INT, help="""The number of hours for which this object will be restored. By default object will be restored for 24 hours.It can be configured using hours parameter.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name):
+def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, hours):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -995,6 +998,9 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name):
 
     details = {}
     details['objectName'] = object_name
+
+    if hours is not None:
+        details['hours'] = hours
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.restore_objects(
@@ -1012,13 +1018,15 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name):
 @click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The compartmentId for the compartment to which the bucket is targeted to move to.""")
 @click.option('--metadata', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--public-access-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
+@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""The entity tag to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
-@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, freeform_tags, defined_tags, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1043,6 +1051,12 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
     if public_access_type is not None:
         details['publicAccessType'] = public_access_type
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.update_bucket(

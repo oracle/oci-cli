@@ -3,7 +3,7 @@
 #
 #   - Creating a load balancer by providing all options at create time (e.g. certificates, listeners, backend sets)
 #       - We also show two sub-variants: providing each option as an individual parameter (e.g. --certificiates, --listeners) and how to provide a consolidated
-#         set of options using --from-json 
+#         set of options using --from-json
 #   - Creating a load balancer by providing the minimum options at create time and then adding related resources (e.g. certificates, listeners, backend sets)
 #     post-creation
 #
@@ -43,7 +43,7 @@ echo "Load Balancer Shape: $LB_SHAPE"
 # This also provides each complex type as an individual option (e.g. --certificates, --listeners). It is also possible to provide these in a consolidated format, which is demonstrated
 # by the function create_lb_with_all_options_using_from_json
 function create_lb_with_all_options_as_individual_options() {
-    # certificates_with_comments.json contains a description of the parameter. Since valid JSON cannot contain comments, we use jsonlint (which was installed 
+    # certificates_with_comments.json contains a description of the parameter. Since valid JSON cannot contain comments, we use jsonlint (which was installed
     # via our demjson dependency) to remove the comments and allow the CLI to use it.
     #
     # You should replace the values in certificates_with_comments.json with those appropriate for your use case (e.g. your own PEM-formatted strings)
@@ -51,6 +51,10 @@ function create_lb_with_all_options_as_individual_options() {
 
     jsonlint -Sf scripts/create_load_balancer_example/backend_sets_with_comments.json > scripts/create_load_balancer_example/backend_sets.json
     jsonlint -Sf scripts/create_load_balancer_example/listeners_with_comments.json > scripts/create_load_balancer_example/listeners.json
+    # Path Route Sets are not mandatory parameter to load balancer. They enhance
+    # load balancer feature set by providing traffic routing flexibility.
+    # More info about the feature can be found in scripts/create_load_balancer_example/path_route_sets_with_comments.json
+    jsonlint -Sf scripts/create_load_balancer_example/path_route_sets_with_comments.json > scripts/create_load_balancer_example/path_route_sets.json
 
     # Subnets are passed as a JSON array where each entry is a subnet OCID. For example:
     #
@@ -60,14 +64,14 @@ function create_lb_with_all_options_as_individual_options() {
     echo "[\"${FIRST_SUBNET_ID}\", \"${SECOND_SUBNET_ID}\"]" > scripts/create_load_balancer_example/subnets.json
 
     # Note here in our create we use --certificates, --listeners etc. to pass in each complex type
-    # 
+    #
     # There is some implicit sequencing in that:
     #   - The backend set information (--backend-sets) may need the name of the certificate bundle specified in --certificates
     #   - The listener information (--listeners) needs the name of one of the backend sets in --backend-sets
     #   - The listener information (--listeners) may need the name of the certificate bundle specified in --certificates
     #
     # So you need to take that into account when preparing your files for input
-    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json --certificates file://scripts/create_load_balancer_example/certificates.json --backend-sets file://scripts/create_load_balancer_example/backend_sets.json --listeners file://scripts/create_load_balancer_example/listeners.json)
+    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json --certificates file://scripts/create_load_balancer_example/certificates.json --backend-sets file://scripts/create_load_balancer_example/backend_sets.json --listeners file://scripts/create_load_balancer_example/listeners.json --path-route-sets file://scripts/create_load_balancer_example/path_route_sets.json)
     WORK_REQUEST_ID=$(jq -r '."opc-work-request-id"' <<< "$CREATED_LB")
     echo "Create Load Balancer Work Request ID: $WORK_REQUEST_ID"
 
@@ -96,7 +100,7 @@ function create_lb_with_all_options_as_individual_options() {
     sleep 120
 }
 
-# We've seen in the create_lb_with_all_options_as_individual_options function that we can create a load balancer and provide complex parameters, such as --backend-sets, 
+# We've seen in the create_lb_with_all_options_as_individual_options function that we can create a load balancer and provide complex parameters, such as --backend-sets,
 # as separate options. However, rather than specifying complex parameters individually, we can supply them in a consolidated format - in this case by passing it in
 # as a single file to the --from-json option.
 #
@@ -189,7 +193,19 @@ function create_lb_with_minimum_then_add_related_resources() {
     oci lb backend create --load-balancer-id $LB_ID --backend-set-name backendSetName --ip-address 10.10.10.4 --port 80 --weight 3
     oci lb backend create --load-balancer-id $LB_ID --backend-set-name backendSetName --ip-address 10.10.10.5 --port 80 --weight 3
 
-    # Now that we have our certificates and backend set, we can add a listener. We need to specify a backend set which exists (e.g. the one we made)
+    # We can create Path Route Sets now since we have our backend set created.
+    # Path Route Sets require backend sets to be mentioned as part of path route
+    # rules. A path route set includes all path route strings and matching rules
+    # that define the data routing for a particular listener. Path Route rules
+    # enable routing of traffic to correct backend set eliminating the need to
+    # create multiple listeners or load balancers to achieve the same.
+    oci lb path-route-set create --load-balancer-id $LB_ID \
+        --name PathRouteSetName \
+        --path-routes '[{"backendSetName":"backendSetName", "path":"/video", "pathMatchType":{"matchType":"EXACT_MATCH"}}]' \
+        --wait-for-state SUCCEEDED \
+        --max-wait-seconds 300
+
+    # Now that we have our certificates, backend set and path route set, we can add a listener. We need to specify a backend set which exists (e.g. the one we made)
     #
     # The valid values for --protocol can be found via "oci lb protocol list"
     #
@@ -201,7 +217,8 @@ function create_lb_with_minimum_then_add_related_resources() {
         --protocol HTTP \
         --ssl-certificate-name my_cert_bundle \
         --ssl-verify-depth 3 \
-        --ssl-verify-peer-certificate false
+        --ssl-verify-peer-certificate false \
+        --path-route-set-name PathRouteSetName
 
     # Print out information about the load balancer
     oci lb load-balancer get --load-balancer-id $LB_ID

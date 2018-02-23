@@ -20,7 +20,7 @@ from . import json_skeleton_utils
 from .aliasing import CommandGroupWithAlias
 from .custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 from .generated import objectstorage_cli
-
+from . import cli_util
 
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
@@ -1298,18 +1298,20 @@ def object_resume_put(ctx, from_json, namespace, bucket_name, name, file, upload
         render(None, display_headers, ctx, display_all_headers=True)
 
 
-@objectstorage_cli.object_group.command(name='restore', help="""Restore an object by specifying the name parameter.""")
+@cli_util.copy_params_from_generated_command(objectstorage_cli.restore_objects, params_to_exclude=['namespace_name', 'bucket_name', 'object_name'])
+@objectstorage_cli.object_group.command(name='restore', help=objectstorage_cli.restore_objects.help)
 @click.option('-ns', '--namespace', callback=handle_required_param, help="""The top-level namespace used for the request. [required]""")
 @click.option('-bn', '--bucket', callback=handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
 @click.option('--name', callback=handle_required_param, help="""A object which was in an archived state and need to be restored. [required]""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def restore_objects(ctx, from_json, namespace, bucket, name):
+def restore_objects(ctx, from_json, namespace, bucket, name, hours):
     details = {}
     details['objectName'] = name
+
+    if hours is not None:
+        details['hours'] = hours
 
     client = build_client('object_storage', ctx)
     kwargs = {'opc_client_request_id': ctx.obj['request_id']}
@@ -1363,9 +1365,9 @@ def restore_status(ctx, from_json, namespace, bucket_name, name):
             time_of_archival = response.headers['time-of-archival']
             time_of_archival_dt = arrow.get(time_of_archival, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]')
             time_left = time_delta((time_of_archival_dt - arrow.utcnow()).seconds)
-            msg = "Restored, you have 24 hours to download a restored object before it is once again archived. Time remaining for download: {}.".format(time_left)
+            msg = "Restored. You have {} to download the restored object before it is once again archived.".format(time_left)
         except arrow.parser.ParserError:
-            msg = "Restored, you have 24 hours to download a restored object before it is once again archived. The object will be re-archived at {}.".format(time_of_archival)
+            msg = "Restored. The object will be re-archived at {}.".format(time_of_archival)
     else:
         msg = "Unknown"
 

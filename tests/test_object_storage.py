@@ -590,6 +590,22 @@ def test_list_options(runner, config_file, config_profile, object_storage_client
     subtest_object_list_paging(runner, config_file, config_profile)
 
 
+def test_bucket_list_with_tags(runner, config_file, config_profile):
+    result_tags_not_requested = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID])
+    parsed_data = json.loads(result_tags_not_requested.output)
+
+    for bucket_summary in parsed_data['data']:
+        assert bucket_summary['defined-tags'] is None
+        assert bucket_summary['freeform-tags'] is None
+
+    result_tags_requested = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--fields', 'tags'])
+    parsed_data = json.loads(result_tags_requested.output)
+
+    for bucket_summary in parsed_data['data']:
+        assert bucket_summary['defined-tags'] is not None
+        assert bucket_summary['freeform-tags'] is not None
+
+
 def subtest_bucket_list(runner, config_file, config_profile):
     """Tests all optional parameters for oci bucket list."""
     result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '1'])
