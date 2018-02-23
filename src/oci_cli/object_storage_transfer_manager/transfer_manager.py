@@ -34,7 +34,14 @@ class TransferManager():
         # See: https://laike9m.com/blog/requests-secret-pool_connections-and-pool_maxsize,89/
         requests_pool_size = self.REQUESTS_POOL_SIZE_FACTOR * self._config.max_object_storage_requests
         adapter = requests.adapters.HTTPAdapter(pool_maxsize=requests_pool_size)
-        self._client.base_client.session.mount('https://', adapter)
+
+        endpoint = object_storage_client.base_client.endpoint.lower()
+        if endpoint.startswith('https://'):
+            self._client.base_client.session.mount('https://', adapter)
+        elif endpoint.startswith('http://'):
+            self._client.base_client.session.mount('http://', adapter)
+        else:
+            raise RuntimeError('Unknown endpoint protocol. Expected HTTP or HTTPS')
 
     def upload_object(self, callbacks_container, namespace_name, bucket_name, object_name, file_path, file_size, **kwargs):
         if not self._config.use_multipart_uploads:

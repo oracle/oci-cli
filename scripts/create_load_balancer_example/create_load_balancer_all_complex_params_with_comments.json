@@ -55,6 +55,20 @@
             "defaultBackendSetName": "backendSetName",
             "port": 8080,
             "protocol": "HTTP"
+            "pathRouteSetName": "PathRouteSetName"
+        }
+    },
+    "pathRouteSets": {
+        "PathRouteSetName": {
+            "pathRoutes": [
+                {
+                    "backendSetName": "backendSetName",
+                    "path": "/video",
+                    "pathMatchType": {
+                        "matchType": "EXACT_MATCH"
+                    }
+                }
+           ]
         }
     }
 }

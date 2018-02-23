@@ -20,24 +20,19 @@ def identity_group():
     pass
 
 
-@click.command(cli_util.override('tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A managed container for defined tags. A tag namespace is unique in a tenancy. A tag namespace can't be deleted.
-For more information, see [Managing Tags and Tag Namespaces].""")
+@click.command(cli_util.override('tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A managed container for defined tags. A tag namespace is unique in a tenancy. A tag namespace can't be deleted. For more information, see [Managing Tags and Tag Namespaces].""")
 @cli_util.help_option_group
 def tag_namespace_group():
     pass
 
 
-@click.command(cli_util.override('availability_domain_group.command_name', 'availability-domain'), cls=CommandGroupWithAlias, help="""One or more isolated, fault-tolerant Oracle data centers that host cloud resources such as instances, volumes,
-and subnets. A region contains several Availability Domains. For more information, see
-[Regions and Availability Domains].""")
+@click.command(cli_util.override('availability_domain_group.command_name', 'availability-domain'), cls=CommandGroupWithAlias, help="""One or more isolated, fault-tolerant Oracle data centers that host cloud resources such as instances, volumes, and subnets. A region contains several Availability Domains. For more information, see [Regions and Availability Domains].""")
 @cli_util.help_option_group
 def availability_domain_group():
     pass
 
 
-@click.command(cli_util.override('customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's
-[Amazon S3 compatible API].
-A user can have up to two secret keys at a time.
+@click.command(cli_util.override('customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's [Amazon S3 compatible API]. A user can have up to two secret keys at a time.
 
 **Note:** The secret key is always an Oracle-generated string; you can't change it to a string of your choice.
 
@@ -47,58 +42,39 @@ def customer_secret_key_group():
     pass
 
 
-@click.command(cli_util.override('idp_group_mapping_group.command_name', 'idp-group-mapping'), cls=CommandGroupWithAlias, help="""A mapping between a single group defined by the identity provider (IdP) you're federating with
-and a single IAM Service [group] in Oracle Cloud Infrastructure.
-For more information about group mappings and what they're for, see
-[Identity Providers and Federation].
+@click.command(cli_util.override('idp_group_mapping_group.command_name', 'idp-group-mapping'), cls=CommandGroupWithAlias, help="""A mapping between a single group defined by the identity provider (IdP) you're federating with and a single IAM Service [group] in Oracle Cloud Infrastructure. For more information about group mappings and what they're for, see [Identity Providers and Federation].
 
-A given IdP group can be mapped to zero, one, or multiple IAM Service groups, and vice versa.
-But each `IdPGroupMapping` object is between only a single IdP group and IAM Service group.
-Each `IdPGroupMapping` object has its own OCID.
+A given IdP group can be mapped to zero, one, or multiple IAM Service groups, and vice versa. But each `IdPGroupMapping` object is between only a single IdP group and IAM Service group. Each `IdPGroupMapping` object has its own OCID.
 
-**Note:** Any users who are in more than 50 IdP groups cannot be authenticated to use the Oracle
-Cloud Infrastructure Console.""")
+**Note:** Any users who are in more than 50 IdP groups cannot be authenticated to use the Oracle Cloud Infrastructure Console.""")
 @cli_util.help_option_group
 def idp_group_mapping_group():
     pass
 
 
-@click.command(cli_util.override('tenancy_group.command_name', 'tenancy'), cls=CommandGroupWithAlias, help="""The root compartment that contains all of your organization's compartments and other
-Oracle Cloud Infrastructure cloud resources. When you sign up for Oracle Cloud Infrastructure,
-Oracle creates a tenancy for your company, which is a secure and isolated partition
-where you can create, organize, and administer your cloud resources.
+@click.command(cli_util.override('tenancy_group.command_name', 'tenancy'), cls=CommandGroupWithAlias, help="""The root compartment that contains all of your organization's compartments and other Oracle Cloud Infrastructure cloud resources. When you sign up for Oracle Cloud Infrastructure, Oracle creates a tenancy for your company, which is a secure and isolated partition where you can create, organize, and administer your cloud resources.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def tenancy_group():
     pass
 
 
-@click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a
-`UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
+@click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
 @cli_util.help_option_group
 def user_group_membership_group():
     pass
 
 
-@click.command(cli_util.override('identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A
-[Saml2IdentityProvider]
-is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each
-`IdentityProvider` object has its own OCID. For more information, see
-[Identity Providers and Federation].
+@click.command(cli_util.override('identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A [Saml2IdentityProvider] is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each `IdentityProvider` object has its own OCID. For more information, see [Identity Providers and Federation].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def identity_provider_group():
     pass
 
 
-@click.command(cli_util.override('ui_password_group.command_name', 'ui-password'), cls=CommandGroupWithAlias, help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle
-Cloud Infrastructure.
+@click.command(cli_util.override('ui_password_group.command_name', 'ui-password'), cls=CommandGroupWithAlias, help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
 
 For more information about user credentials, see [User Credentials].""")
 @cli_util.help_option_group
@@ -106,10 +82,7 @@ def ui_password_group():
     pass
 
 
-@click.command(cli_util.override('api_key_group.command_name', 'api-key'), cls=CommandGroupWithAlias, help="""A PEM-format RSA credential for securing requests to the Oracle Cloud Infrastructure REST API. Also known
-as an *API signing key*. Specifically, this is the public key from the key pair. The private key remains with
-the user calling the API. For information about generating a key pair
-in the required PEM format, see [Required Keys and OCIDs].
+@click.command(cli_util.override('api_key_group.command_name', 'api-key'), cls=CommandGroupWithAlias, help="""A PEM-format RSA credential for securing requests to the Oracle Cloud Infrastructure REST API. Also known as an *API signing key*. Specifically, this is the public key from the key pair. The private key remains with the user calling the API. For information about generating a key pair in the required PEM format, see [Required Keys and OCIDs].
 
 **Important:** This is **not** the SSH key for accessing compute instances.
 
@@ -121,74 +94,47 @@ def api_key_group():
     pass
 
 
-@click.command(cli_util.override('region_subscription_group.command_name', 'region-subscription'), cls=CommandGroupWithAlias, help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that
-access, and whether that region is the home region. For more information, see [Managing Regions].
+@click.command(cli_util.override('region_subscription_group.command_name', 'region-subscription'), cls=CommandGroupWithAlias, help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that access, and whether that region is the home region. For more information, see [Managing Regions].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def region_subscription_group():
     pass
 
 
-@click.command(cli_util.override('compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure
-for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes
-of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the
-resources for one project or business unit from another). A common approach is to create a compartment for each
-major part of your organization. For more information, see
-[Overview of the IAM Service] and also
-[Setting Up Your Tenancy].
+@click.command(cli_util.override('compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of the IAM Service] and also [Setting Up Your Tenancy].
 
-To place a resource in a compartment, simply specify the compartment ID in the "Create" request object when
-initially creating the resource. For example, to launch an instance into a particular compartment, specify
-that compartment's OCID in the `LaunchInstance` request. You can't move an existing resource from one
-compartment to another.
+To place a resource in a compartment, simply specify the compartment ID in the \"Create\" request object when initially creating the resource. For example, to launch an instance into a particular compartment, specify that compartment's OCID in the `LaunchInstance` request. You can't move an existing resource from one compartment to another.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def compartment_group():
     pass
 
 
-@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  "Defined tags" must be set up in your tenancy before
-you can apply them to resources.
-For more information, see [Managing Tags and Tag Namespaces].""")
+@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  \"Defined tags\" must be set up in your tenancy before you can apply them to resources. For more information, see [Managing Tags and Tag Namespaces].""")
 @cli_util.help_option_group
 def tag_group():
     pass
 
 
-@click.command(cli_util.override('dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""An dynamic group defines a matching rule. Every bare metal/vm instance is deployed with an instance certificate.
-The certificate contains metadata about the instance. It contains the instance OCID and the compartment OCID, along
-with a few other optional properties. When an API call is made using this instance certificate as the authenticator,
-the certificate may be matched to one or multiple dynamic groups. Depending on policies written against these
-dynamic groups, the instance will get access to that API.
+@click.command(cli_util.override('dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""An dynamic group defines a matching rule. Every bare metal/vm instance is deployed with an instance certificate. The certificate contains metadata about the instance. It contains the instance OCID and the compartment OCID, along with a few other optional properties. When an API call is made using this instance certificate as the authenticator, the certificate may be matched to one or multiple dynamic groups. Depending on policies written against these dynamic groups, the instance will get access to that API.
 
-This works like regular user/group memebership. But in that case the membership is a static relationship, whereas
-in dynamic group, the membership of an instance certificate to dynamic groups are determined during runtime.""")
+This works like regular user/group memebership. But in that case the membership is a static relationship, whereas in dynamic group, the membership of an instance certificate to dynamic groups are determined during runtime.""")
 @cli_util.help_option_group
 def dynamic_group_group():
     pass
 
 
-@click.command(cli_util.override('region_group.command_name', 'region'), cls=CommandGroupWithAlias, help="""A localized geographic area, such as Phoenix, AZ. Oracle Cloud Infrastructure is hosted in regions and Availability
-Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers
-located within a region. For more information, see [Regions and Availability Domains].
+@click.command(cli_util.override('region_group.command_name', 'region'), cls=CommandGroupWithAlias, help="""A localized geographic area, such as Phoenix, AZ. Oracle Cloud Infrastructure is hosted in regions and Availability Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers located within a region. For more information, see [Regions and Availability Domains].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def region_group():
     pass
 
 
-@click.command(cli_util.override('swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a
-Swift client with the Oracle Cloud Infrastructure Object Storage Service. This password is associated with
-the user's Console login. Swift passwords never expire. A user can have up to two Swift passwords at a time.
+@click.command(cli_util.override('swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a Swift client with the Oracle Cloud Infrastructure Object Storage Service. This password is associated with the user's Console login. Swift passwords never expire. A user can have up to two Swift passwords at a time.
 
 **Note:** The password is always an Oracle-generated string; you can't change it to a string of your choice.
 
@@ -198,58 +144,33 @@ def swift_password_group():
     pass
 
 
-@click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure
-resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users
-have one or more IAM Service credentials ([ApiKey],
-[UIPassword], and [SwiftPassword]).
-For more information, see [User Credentials]). End users of your
-application are not typically IAM Service users. For conceptual information about users and other IAM Service
-components, see [Overview of the IAM Service].
+@click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], and [SwiftPassword]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
 
-These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service.
-They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure
-Console via an identity provider. For more information, see
-[Identity Providers and Federation].
+These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service. They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure Console via an identity provider. For more information, see [Identity Providers and Federation].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def user_group():
     pass
 
 
-@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment.
-For conceptual information about groups and other IAM Service components, see
-[Overview of the IAM Service].
+@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of the IAM Service].
 
-If you're federating with an identity provider (IdP), you need to create mappings between the groups
-defined in the IdP and groups you define in the IAM service. For more information, see
-[Identity Providers and Federation]. Also see
-[IdentityProvider] and
-[IdpGroupMapping].
+If you're federating with an identity provider (IdP), you need to create mappings between the groups defined in the IdP and groups you define in the IAM service. For more information, see [Identity Providers and Federation]. Also see [IdentityProvider] and [IdpGroupMapping].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def group_group():
     pass
 
 
-@click.command(cli_util.override('policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about
-policies and other IAM Service components, see
-[Overview of the IAM Service]. If you're new to policies, see
-[Getting Started with Policies].
+@click.command(cli_util.override('policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of the IAM Service]. If you're new to policies, see [Getting Started with Policies].
 
-The word "policy" is used by people in different ways:
+The word \"policy\" is used by people in different ways:
 
-  * An individual statement written in the policy language
-  * A collection of statements in a single, named "policy" document (which has an Oracle Cloud ID (OCID) assigned to it)
-  * The overall body of policies your organization uses to control access to resources
+  * An individual statement written in the policy language   * A collection of statements in a single, named \"policy\" document (which has an Oracle Cloud ID (OCID) assigned to it)   * The overall body of policies your organization uses to control access to resources
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator.""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.""")
 @cli_util.help_option_group
 def policy_group():
     pass
@@ -1016,6 +937,18 @@ def delete_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, dynamic_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1059,6 +992,18 @@ def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1102,6 +1047,18 @@ def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, identity_provider_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1174,6 +1131,18 @@ def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1246,6 +1215,18 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, user_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)

@@ -96,7 +96,9 @@ OVERRIDES = {
     "virtual_network_group.help": "Networking Service",
     "get_console_history_content.command_name": "get-content",
     "instance_action.command_name": "action",
-    "volume_backup_group.command_name": "backup"
+    "volume_backup_group.command_name": "backup",
+    "file_storage_group.help": "File Storage Service",
+    "file_storage_group.command_name": "fs"
 }
 
 
@@ -716,11 +718,11 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
             format=serialization.PublicFormat.SubjectPublicKeyInfo)
 
 
-def copy_params_from_generated_command(generated_command, params_to_exclude):
+def copy_params_from_generated_command(generated_command, params_to_exclude=[]):
     def copy_params(extended_func):
         index = 0
         for param in generated_command.params[0:-2]:
-            if params_to_exclude and param.name not in params_to_exclude:
+            if params_to_exclude is not None and param.name not in params_to_exclude:
                 extended_func.params.insert(index, param)
                 index += 1
 
@@ -1181,7 +1183,7 @@ def _coalesce_param(ctx, param, value, required):
 
 # Decodes a byte string using stdout's encoding if we can get it, otherwise decode using the Python default
 def _try_decode_using_stdout(output):
-    if hasattr(sys.stdout, 'encoding'):
+    if hasattr(sys.stdout, 'encoding') and sys.stdout.encoding is not None:
         return output.decode(sys.stdout.encoding)
     else:
         return output.decode(sys.getdefaultencoding())

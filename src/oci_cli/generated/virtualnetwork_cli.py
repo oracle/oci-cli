@@ -20,36 +20,25 @@ def virtual_network_group():
     pass
 
 
-@click.command(cli_util.override('subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single Availability Domain and
-consists of a contiguous range of IP addresses that do not overlap with
-other subnets in the VCN. Example: 172.16.1.0/24. For more information, see
-[Overview of the Networking Service] and
-[VCNs and Subnets].
+@click.command(cli_util.override('subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single Availability Domain and consists of a contiguous range of IP addresses that do not overlap with other subnets in the VCN. Example: 172.16.1.0/24. For more information, see [Overview of the Networking Service] and [VCNs and Subnets].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def subnet_group():
     pass
 
 
-@click.command(cli_util.override('drg_attachment_group.command_name', 'drg-attachment'), cls=CommandGroupWithAlias, help="""A link between a DRG and VCN. For more information, see
-[Overview of the Networking Service].""")
+@click.command(cli_util.override('drg_attachment_group.command_name', 'drg-attachment'), cls=CommandGroupWithAlias, help="""A link between a DRG and VCN. For more information, see [Overview of the Networking Service].""")
 @cli_util.help_option_group
 def drg_attachment_group():
     pass
 
 
-@click.command(cli_util.override('public_ip_group.command_name', 'public-ip'), cls=CommandGroupWithAlias, help="""A *public IP* is a conceptual term that refers to a public IP address and related properties.
-The `publicIp` object is the API representation of a public IP.
+@click.command(cli_util.override('public_ip_group.command_name', 'public-ip'), cls=CommandGroupWithAlias, help="""A *public IP* is a conceptual term that refers to a public IP address and related properties. The `publicIp` object is the API representation of a public IP.
 
-There are two types of public IPs:
-1. Ephemeral
-2. Reserved
+There are two types of public IPs: 1. Ephemeral 2. Reserved
 
-For more information and comparison of the two types,
-see [Public IP Addresses].""")
+For more information and comparison of the two types, see [Public IP Addresses].""")
 @cli_util.help_option_group
 def public_ip_group():
     pass
@@ -61,8 +50,7 @@ def ip_sec_connection_device_config_group():
     pass
 
 
-@click.command(cli_util.override('fast_connect_provider_service_group.command_name', 'fast-connect-provider-service'), cls=CommandGroupWithAlias, help="""A service offering from a supported provider. For more information,
-see [FastConnect Overview].""")
+@click.command(cli_util.override('fast_connect_provider_service_group.command_name', 'fast-connect-provider-service'), cls=CommandGroupWithAlias, help="""A service offering from a supported provider. For more information, see [FastConnect Overview].""")
 @cli_util.help_option_group
 def fast_connect_provider_service_group():
     pass
@@ -74,41 +62,21 @@ def cross_connect_location_group():
     pass
 
 
-@click.command(cli_util.override('virtual_circuit_public_prefix_group.command_name', 'virtual-circuit-public-prefix'), cls=CommandGroupWithAlias, help="""A public IP prefix and its details. With a public virtual circuit, the customer
-specifies the customer-owned public IP prefixes to advertise across the connection.
-For more information, see [FastConnect Overview].""")
+@click.command(cli_util.override('virtual_circuit_public_prefix_group.command_name', 'virtual-circuit-public-prefix'), cls=CommandGroupWithAlias, help="""A public IP prefix and its details. With a public virtual circuit, the customer specifies the customer-owned public IP prefixes to advertise across the connection. For more information, see [FastConnect Overview].""")
 @cli_util.help_option_group
 def virtual_circuit_public_prefix_group():
     pass
 
 
-@click.command(cli_util.override('private_ip_group.command_name', 'private-ip'), cls=CommandGroupWithAlias, help="""A *private IP* is a conceptual term that refers to a private IP address and related properties.
-The `privateIp` object is the API representation of a private IP.
+@click.command(cli_util.override('private_ip_group.command_name', 'private-ip'), cls=CommandGroupWithAlias, help="""A *private IP* is a conceptual term that refers to a private IP address and related properties. The `privateIp` object is the API representation of a private IP.
 
-Each instance has a *primary private IP* that is automatically created and
-assigned to the primary VNIC during instance launch. If you add a secondary
-VNIC to the instance, it also automatically gets a primary private IP. You
-can't remove a primary private IP from its VNIC. The primary private IP is
-automatically deleted when the VNIC is terminated.
+Each instance has a *primary private IP* that is automatically created and assigned to the primary VNIC during instance launch. If you add a secondary VNIC to the instance, it also automatically gets a primary private IP. You can't remove a primary private IP from its VNIC. The primary private IP is automatically deleted when the VNIC is terminated.
 
-You can add *secondary private IPs* to a VNIC after it's created. For more
-information, see the `privateIp` operations and also
-[IP Addresses].
+You can add *secondary private IPs* to a VNIC after it's created. For more information, see the `privateIp` operations and also [IP Addresses].
 
-**Note:** Only
-[ListPrivateIps] and
-[GetPrivateIp] work with
-*primary* private IPs. To create and update primary private IPs, you instead
-work with instance and VNIC operations. For example, a primary private IP's
-properties come from the values you specify in
-[CreateVnicDetails] when calling either
-[LaunchInstance] or
-[AttachVnic]. To update the hostname
-for a primary private IP, you use [UpdateVnic].
+**Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use [UpdateVnic].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def private_ip_group():
     pass
@@ -116,37 +84,19 @@ def private_ip_group():
 
 @click.command(cli_util.override('virtual_circuit_group.command_name', 'virtual-circuit'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect.
 
-A virtual circuit is an isolated network path that runs over one or more physical
-network connections to provide a single, logical connection between the edge router
-on the customer's existing network and Oracle Cloud Infrastructure. *Private*
-virtual circuits support private peering, and *public* virtual circuits support
-public peering. For more information, see [FastConnect Overview].
+A virtual circuit is an isolated network path that runs over one or more physical network connections to provide a single, logical connection between the edge router on the customer's existing network and Oracle Cloud Infrastructure. *Private* virtual circuits support private peering, and *public* virtual circuits support public peering. For more information, see [FastConnect Overview].
 
-Each virtual circuit is made up of information shared between a customer, Oracle,
-and a provider (if the customer is using FastConnect via a provider). Who fills in
-a given property of a virtual circuit depends on whether the BGP session related to
-that virtual circuit goes from the customer's edge router to Oracle, or from the provider's
-edge router to Oracle. Also, in the case where the customer is using a provider, values
-for some of the properties may not be present immediately, but may get filled in as the
-provider and Oracle each do their part to provision the virtual circuit.
+Each virtual circuit is made up of information shared between a customer, Oracle, and a provider (if the customer is using FastConnect via a provider). Who fills in a given property of a virtual circuit depends on whether the BGP session related to that virtual circuit goes from the customer's edge router to Oracle, or from the provider's edge router to Oracle. Also, in the case where the customer is using a provider, values for some of the properties may not be present immediately, but may get filled in as the provider and Oracle each do their part to provision the virtual circuit.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def virtual_circuit_group():
     pass
 
 
-@click.command(cli_util.override('local_peering_gateway_group.command_name', 'local-peering-gateway'), cls=CommandGroupWithAlias, help="""A local peering gateway (LPG) is an object on a VCN that lets that VCN peer
-with another VCN in the same region. *Peering* means that the two VCNs can
-communicate using private IP addresses, but without the traffic traversing the
-internet or routing through your on-premises network. For more information,
-see [VCN Peering].
+@click.command(cli_util.override('local_peering_gateway_group.command_name', 'local-peering-gateway'), cls=CommandGroupWithAlias, help="""A local peering gateway (LPG) is an object on a VCN that lets that VCN peer with another VCN in the same region. *Peering* means that the two VCNs can communicate using private IP addresses, but without the traffic traversing the internet or routing through your on-premises network. For more information, see [VCN Peering].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def local_peering_gateway_group():
     pass
@@ -158,69 +108,43 @@ def cross_connect_port_speed_shape_group():
     pass
 
 
-@click.command(cli_util.override('drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A Dynamic Routing Gateway (DRG), which is a virtual router that provides a path for private
-network traffic between your VCN and your existing network. You use it with other Networking
-Service components to create an IPSec VPN or a connection that uses
-Oracle Cloud Infrastructure FastConnect. For more information, see
-[Overview of the Networking Service].
+@click.command(cli_util.override('drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A Dynamic Routing Gateway (DRG), which is a virtual router that provides a path for private network traffic between your VCN and your existing network. You use it with other Networking Service components to create an IPSec VPN or a connection that uses Oracle Cloud Infrastructure FastConnect. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def drg_group():
     pass
 
 
-@click.command(cli_util.override('route_table_group.command_name', 'route-table'), cls=CommandGroupWithAlias, help="""A collection of `RouteRule` objects, which are used to route packets
-based on destination IP to a particular network entity. For more information, see
-[Overview of the Networking Service].
+@click.command(cli_util.override('route_table_group.command_name', 'route-table'), cls=CommandGroupWithAlias, help="""A collection of `RouteRule` objects, which are used to route packets based on destination IP to a particular network entity. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def route_table_group():
     pass
 
 
-@click.command(cli_util.override('cpe_group.command_name', 'cpe'), cls=CommandGroupWithAlias, help="""An object you create when setting up an IPSec VPN between your on-premises network
-and VCN. The `Cpe` is a virtual representation of your Customer-Premises Equipment,
-which is the actual router on-premises at your site at your end of the IPSec VPN connection.
-For more information,
-see [Overview of the Networking Service].
+@click.command(cli_util.override('cpe_group.command_name', 'cpe'), cls=CommandGroupWithAlias, help="""An object you create when setting up an IPSec VPN between your on-premises network and VCN. The `Cpe` is a virtual representation of your Customer-Premises Equipment, which is the actual router on-premises at your site at your end of the IPSec VPN connection. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def cpe_group():
     pass
 
 
-@click.command(cli_util.override('cross_connect_group.command_name', 'cross-connect'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect represents a
-physical connection between an existing network and Oracle. Customers who are colocated
-with Oracle in a FastConnect location create and use cross-connects. For more
-information, see [FastConnect Overview].
+@click.command(cli_util.override('cross_connect_group.command_name', 'cross-connect'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect represents a physical connection between an existing network and Oracle. Customers who are colocated with Oracle in a FastConnect location create and use cross-connects. For more information, see [FastConnect Overview].
 
-Oracle recommends you create each cross-connect in a
-[CrossConnectGroup] so you can use link aggregation
-with the connection.
+Oracle recommends you create each cross-connect in a [CrossConnectGroup] so you can use link aggregation with the connection.
 
-**Note:** If you're a provider who is setting up a physical connection to Oracle so customers
-can use FastConnect over the connection, be aware that your connection is modeled the
-same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
+**Note:** If you're a provider who is setting up a physical connection to Oracle so customers can use FastConnect over the connection, be aware that your connection is modeled the same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def cross_connect_group():
     pass
 
 
-@click.command(cli_util.override('letter_of_authority_group.command_name', 'letter-of-authority'), cls=CommandGroupWithAlias, help="""The Letter of Authority for the cross-connect. You must submit this letter when
-requesting cabling for the cross-connect at the FastConnect location.""")
+@click.command(cli_util.override('letter_of_authority_group.command_name', 'letter-of-authority'), cls=CommandGroupWithAlias, help="""The Letter of Authority for the cross-connect. You must submit this letter when requesting cabling for the cross-connect at the FastConnect location.""")
 @cli_util.help_option_group
 def letter_of_authority_group():
     pass
@@ -232,12 +156,9 @@ def cross_connect_status_group():
     pass
 
 
-@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A Virtual Cloud Network (VCN). For more information, see
-[Overview of the Networking Service].
+@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A Virtual Cloud Network (VCN). For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def vcn_group():
     pass
@@ -249,41 +170,25 @@ def ip_sec_connection_device_status_group():
     pass
 
 
-@click.command(cli_util.override('vnic_group.command_name', 'vnic'), cls=CommandGroupWithAlias, help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN.
-An instance attaches to a VNIC to obtain a network connection into the VCN
-through that subnet. Each instance has a *primary VNIC* that is automatically
-created and attached during launch. You can add *secondary VNICs* to an
-instance after it's launched. For more information, see
-[Virtual Network Interface Cards (VNICs)].
+@click.command(cli_util.override('vnic_group.command_name', 'vnic'), cls=CommandGroupWithAlias, help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN. An instance attaches to a VNIC to obtain a network connection into the VCN through that subnet. Each instance has a *primary VNIC* that is automatically created and attached during launch. You can add *secondary VNICs* to an instance after it's launched. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-Each VNIC has a *primary private IP* that is automatically assigned during launch.
-You can add *secondary private IPs* to a VNIC after it's created. For more
-information, see [CreatePrivateIp] and
-[IP Addresses].
+Each VNIC has a *primary private IP* that is automatically assigned during launch. You can add *secondary private IPs* to a VNIC after it's created. For more information, see [CreatePrivateIp] and [IP Addresses].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def vnic_group():
     pass
 
 
-@click.command(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), cls=CommandGroupWithAlias, help="""A set of DHCP options. Used by the VCN to automatically provide configuration
-information to the instances when they boot up. There are two options you can set:
+@click.command(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), cls=CommandGroupWithAlias, help="""A set of DHCP options. Used by the VCN to automatically provide configuration information to the instances when they boot up. There are two options you can set:
 
-- [DhcpDnsOption]: Lets you specify how DNS (hostname resolution) is
-handled in the subnets in your VCN.
+- [DhcpDnsOption]: Lets you specify how DNS (hostname resolution) is handled in the subnets in your VCN.
 
-- [DhcpSearchDomainOption]: Lets you specify
-a search domain name to use for DNS queries.
+- [DhcpSearchDomainOption]: Lets you specify a search domain name to use for DNS queries.
 
-For more information, see  [DNS in Your Virtual Cloud Network]
-and [DHCP Options].
+For more information, see  [DNS in Your Virtual Cloud Network] and [DHCP Options].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def dhcp_options_group():
     pass
@@ -295,62 +200,37 @@ def virtual_circuit_bandwidth_shape_group():
     pass
 
 
-@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario
-that uses an Internet Gateway, see
-[Typical Networking Service Scenarios].
+@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario that uses an Internet Gateway, see [Typical Networking Service Scenarios].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def internet_gateway_group():
     pass
 
 
-@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec
-tunnels. Creating this connection is one of the steps required when setting up
-an IPSec VPN. For more information, see
-[Overview of the Networking Service].
+@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec tunnels. Creating this connection is one of the steps required when setting up an IPSec VPN. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def ip_sec_connection_group():
     pass
 
 
-@click.command(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect group
-is a link aggregation group (LAG), which can contain one or more
-[CrossConnects]. Customers who are colocated with
-Oracle in a FastConnect location create and use cross-connect groups. For more
-information, see [FastConnect Overview].
+@click.command(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect group is a link aggregation group (LAG), which can contain one or more [CrossConnects]. Customers who are colocated with Oracle in a FastConnect location create and use cross-connect groups. For more information, see [FastConnect Overview].
 
-**Note:** If you're a provider who is setting up a physical connection to Oracle so customers
-can use FastConnect over the connection, be aware that your connection is modeled the
-same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
+**Note:** If you're a provider who is setting up a physical connection to Oracle so customers can use FastConnect over the connection, be aware that your connection is modeled the same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def cross_connect_group_group():
     pass
 
 
-@click.command(cli_util.override('security_list_group.command_name', 'security-list'), cls=CommandGroupWithAlias, help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet
-level, but the rules are applied to the ingress and egress traffic for the individual instances
-in the subnet. The rules can be stateful or stateless. For more information, see
-[Security Lists].
+@click.command(cli_util.override('security_list_group.command_name', 'security-list'), cls=CommandGroupWithAlias, help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet level, but the rules are applied to the ingress and egress traffic for the individual instances in the subnet. The rules can be stateful or stateless. For more information, see [Security Lists].
 
-**Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example,
-Linux iptables, Windows firewall). If there are issues with some type of access to an instance,
-make sure both the security lists associated with the instance's subnet and the instance's
-firewall rules are set correctly.
+**Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure both the security lists associated with the instance's subnet and the instance's firewall rules are set correctly.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def security_list_group():
     pass
@@ -1499,6 +1379,18 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect, cross_connect_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1542,6 +1434,18 @@ def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect_group, cross_connect_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1587,6 +1491,18 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dhcp_options, dhcp_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1630,6 +1546,18 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg, drg_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1673,6 +1601,18 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg_attachment, drg_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1718,6 +1658,18 @@ def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_internet_gateway, ig_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1763,6 +1715,18 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_ip_sec_connection, ipsc_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1808,6 +1772,18 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_local_peering_gateway, local_peering_gateway_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1883,6 +1859,18 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, public_ip_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1928,6 +1916,18 @@ def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_route_table, rt_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1973,6 +1973,18 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_security_list, security_list_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -2016,6 +2028,18 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_subnet, subnet_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -2059,6 +2083,18 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vcn, vcn_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -2104,6 +2140,18 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_virtual_circuit, virtual_circuit_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)

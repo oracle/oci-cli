@@ -7,6 +7,20 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.17 - 2018-02-22
+---------------------
+Added
+~~~~~~~~~~
+* Added support for the File Storage Service. (``oci fs``)
+* Added support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb path-route-set``)
+* Added tagging support for *Bucket* resources in the Object Storage Service
+    * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
+    * Update a bucket with tags: ``oci os bucket update --defined-tags --freeform-tags``
+    * List buckets and display defined and freeform tags in the results: ``oci os bucket list --fields tags``
+* Added support for specifying a restore period for archived objects in the *RestoreObjects* operation of the Object Storage service. (``oci os object restore --hours``)
+* Added support for filtering by *backupId* in *ListDbSystems* operation in the Database Service (``oci db system list --backup-id``)
+* Added support for getting plink (the `PuTTY <https://www.putty.org/>`_ command line interface) compatible instance console connection string for Windows users (``oci compute instance-console-connection get-plink-connection-string``)
+
 2.4.16 - 2018-02-08
 ---------------------
 Added

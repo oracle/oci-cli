@@ -5,6 +5,8 @@ from __future__ import print_function
 from base64 import b64encode
 import click
 import json
+import re
+import six
 import sys
 from .generated import blockstorage_cli
 from .generated import compute_cli
@@ -18,6 +20,10 @@ from . import custom_types
 from . import json_skeleton_utils
 from . import retry_utils
 from .aliasing import CommandGroupWithAlias
+
+INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"
+DEFAULT_LOCAL_VNC_PORT = 5900
+DEFAULT_SSH_PROXY_PORT = 5905
 
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_group)
@@ -75,7 +81,7 @@ compute_instance_launch_metadata_help = """Custom metadata key/value pairs that 
 Note: user_data and ssh_authorized_keys can instead be specified using the parameters --user-data-file and --ssh-authorized-keys-file."""
 
 compute_instance_launch_subnet_id_help = """The OCID of the subnet where the VNIC attached to this instance will be created."""
-compute_instance_launch_hostname_label_help = """The hostname for the VNIC that is created during instance launch. Used for DNS. The value is the hostname portion of the instance's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value cannot be changed, and it can be retrieved from the [Vnic object].
+compute_instance_launch_hostname_label_help = """The hostname for the VNIC that is created during instance launch. Used for DNS. The value is the hostname portion of the instance's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value cannot be changed, and it can be retrieved from the [Vnic].
 
 For more information, see [DNS in Your Virtual Cloud Network]."""
 cli_util.update_param_help(compute_cli.launch_instance, 'metadata', compute_instance_launch_metadata_help, append=False, example=compute_instance_launch_metadata_example)
@@ -83,7 +89,6 @@ cli_util.update_param_help(compute_cli.launch_instance, 'subnet_id', compute_ins
 cli_util.update_param_help(compute_cli.launch_instance, 'hostname_label', compute_instance_launch_hostname_label_help, example='`bminstance-1`')
 cli_util.update_param_help(compute_cli.launch_instance, 'source_details', """Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 cli_util.update_param_help(compute_cli.launch_instance, 'image_id', """The OCID of the image used to boot the instance. This is a shortcut for specifying an image source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""", append=False)
-cli_util.update_param_help(compute_cli.terminate_instance, 'preserve_boot_volume', """Defaults to true.""", append=True)
 
 image_source_details_example = """'{ "objectName": "image-to-import.qcow2", "bucketName": "MyBucket", "namespaceName": "MyNamespace", "sourceType": "objectStorageTuple" }'
 
@@ -156,6 +161,12 @@ Please use the `oci compute image import` command instead.
 
 # update the type of the --skip-source-dest-check switch on update_vnic to be a boolean
 cli_util.get_param(virtualnetwork_cli.update_vnic, 'skip_source_dest_check').type = click.BOOL
+
+# update help for instance console connections on windows
+instance_console_connection_windows_help = """If you are attempting to start a VNC connection to an instance from a Windows machine without SSH installed, you can consider using plink instead.
+The 'oci compute instance-console-connection get-plink-connection-string' command returns a PowerShell command which uses plink to launch the SSH tunnel necessary to start a VNC connection to the instance."""
+compute_cli.instance_console_connection_group.help = compute_cli.instance_console_connection_group.help + '\n\n' + instance_console_connection_windows_help
+compute_cli.get_instance_console_connection.help = compute_cli.get_instance_console_connection.help + '\n\n' + instance_console_connection_windows_help
 
 
 @compute_cli.image_group.command(cli_util.override('export_image_group.command_name', 'export'), cls=CommandGroupWithAlias, help="""Exports an image to the Oracle Cloud Infrastructure Object Storage Service. You can use the
@@ -483,7 +494,7 @@ def launch_instance_extended(ctx, **kwargs):
     ctx.invoke(compute_cli.launch_instance, **kwargs)
 
 
-@compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Managing Virtual Network Interface Cards (VNICs)].""")
+@compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
 @click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
 @click.option('--subnet-id', callback=cli_util.handle_required_param, help="""The OCID of the subnet to create the VNIC in. [required]""")
 @click.option('--vnic-display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the VNIC. Does not have to be unique.""")
@@ -572,6 +583,18 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 wait_until(compute_client, retry_utils.call_funtion_with_default_retries(compute_client.get_vnic_attachment, vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -585,7 +608,7 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @virtualnetwork_cli.vnic_group.command(name='assign-private-ip', help="""Assigns a secondary private IP address to the specified VNIC. The secondary private IP must be in the same subnet as the VNIC.
 This command can also be used to move an existing secondary private IP to the specified VNIC.
 
-For more information about secondary private IPs, see [Managing IP Addresses]
+For more information about secondary private IPs, see [IP Addresses]
 """)
 @click.option('--unassign-if-already-assigned', callback=cli_util.handle_optional_param, is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
 @click.pass_context
@@ -665,7 +688,7 @@ can assign to another VNIC in the subnet.
 This operation cannot be used with primary private IPs, which are automatically unassigned, and then deleted when the VNIC is
 terminated.
 
-For more information about secondary private IPs, see [Managing IP Addresses]
+For more information about secondary private IPs, see [IP Addresses]
 """)
 @click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC to unassign the private IP from. [required]""")
 @click.option('--ip-address', callback=cli_util.handle_required_param, help="""The secondary private IP to unassign from the VNIC. [required]""")
@@ -735,7 +758,7 @@ def update_private_ip_extended(ctx, **kwargs):
 
 The default number of enabled serial console connections per tenancy is 10.
 
-For more information about serial console access, see [Accessing the Serial Console].""")
+For more information about serial console access, see [Accessing the Instance Console].""")
 @click.option('--ssh-public-key-file', callback=cli_util.handle_required_param, type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
@@ -869,3 +892,57 @@ def get_public_ip_extended(ctx, **kwargs):
         command_args['ip_address'] = command_args.pop('public_ip_address')
 
     ctx.invoke(func_call_dict[func_call_key], **command_args)
+
+
+@compute_cli.instance_console_connection_group.command(name='get-plink-connection-string', help="""Gets the plink command for starting an SSH tunnel on Windows which will allow VNC connections to the instance. Once you have started the tunnel, you can point your VNC client to localhost:{{--local-vnc-port}} to connect to the instance (default --local-vnc-port is {}).""".format(DEFAULT_LOCAL_VNC_PORT))
+@click.option('--instance-console-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the intance console connection [required]""")
+@click.option('--private-key-file', callback=cli_util.handle_required_param, help="""The path to the private key to be used for authentication. This is inserted into the generated connection string.""")
+@click.option('--local-vnc-port', callback=cli_util.handle_optional_param, help="""This is the local port that you will point your VNC client at. This will be forwarded to the SSH tunnel created by executing the PowerShell command in the output. Default is {}.""".format(DEFAULT_LOCAL_VNC_PORT))
+@click.option('--ssh-proxy-port', callback=cli_util.handle_optional_param, help="""This is the local and remote port for the SSH tunnel.  This may be any open port on your local machine.  Default is {}.""".format(DEFAULT_SSH_PROXY_PORT))
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@cli_util.wrap_exceptions
+def get_plink_connection_string(ctx, from_json, instance_console_connection_id, private_key_file, local_vnc_port, ssh_proxy_port):
+    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_instance_console_connection(
+        instance_console_connection_id=instance_console_connection_id,
+        **kwargs
+    )
+
+    instance_console_connection = result.data
+
+    if local_vnc_port is None:
+        local_vnc_port = DEFAULT_LOCAL_VNC_PORT
+
+    if ssh_proxy_port is None:
+        ssh_proxy_port = DEFAULT_SSH_PROXY_PORT
+
+    # extract the intermediate host from the SSH connection string (this is the same regex used by the console)
+    m = re.search(INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX, instance_console_connection.connection_string)
+    intermediate_host = m.group(0)
+
+    # There are two calls to plink
+    # plink -ssh -N -i {KEY} -P 443 -l  {ICC_OCID} {ICC_HOST_SERVER} -L 5905:{INSTANCE_OCID}:5905
+    # plink -L 5900:localhost:5900 localhost -P 5905 -N -i {KEY} -l {ICC_OCID}
+    connection_template = (
+        'Start-Job {{echo N | '
+        'plink -ssh -N -i "{private_key_file}" -P 443 -l {instance_console_connection_id} {intermediate_host} -L {ssh_proxy_port}:{instance_id}:{ssh_proxy_port}}}; sleep 5 ; '
+        'plink -L {local_vnc_port}:localhost:5900 localhost -P {ssh_proxy_port} -N -i "{private_key_file}" -l {instance_console_connection_id}'
+    )
+
+    connection_string = connection_template.format(
+        instance_id=instance_console_connection.instance_id,
+        instance_console_connection_id=instance_console_connection.id,
+        intermediate_host=intermediate_host,
+        private_key_file=private_key_file,
+        local_vnc_port=local_vnc_port,
+        ssh_proxy_port=ssh_proxy_port
+    )
+
+    # print directly to avoid escaping double quotes
+    click.echo(connection_string)

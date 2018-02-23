@@ -22,9 +22,7 @@ def db_group():
 
 @click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""A Patch for a DB System or DB Home.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def patch_group():
     pass
@@ -38,8 +36,7 @@ def db_version_group():
     pass
 
 
-@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""A database backup
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""A database backup To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def backup_group():
     pass
@@ -59,11 +56,7 @@ def patch_history_entry_group():
     pass
 
 
-@click.command(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB System. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.
-For a description of shapes, see [DB System Launch Options].
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.
-If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+@click.command(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB System. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. For a description of shapes, see [DB System Launch Options]. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def db_system_shape_group():
     pass
@@ -71,26 +64,17 @@ def db_system_shape_group():
 
 @click.command(cli_util.override('data_guard_association_group.command_name', 'data-guard-association'), cls=CommandGroupWithAlias, help="""The properties that define a Data Guard association.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an
-administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
-For information about endpoints and signing API requests, see
-[About the API]. For information about available SDKs and tools, see
-[SDKS and Other Tools].""")
+For information about endpoints and signing API requests, see [About the API]. For information about available SDKs and tools, see [SDKS and Other Tools].""")
 @cli_util.help_option_group
 def data_guard_association_group():
     pass
 
 
-@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""A directory where Oracle database software is installed. Each DB System can have multiple database homes,
-and each database home can have multiple databases within it. All the databases within a single database home
-must be the same database version, but different database homes can run different versions. For more information,
-see [Managing Oracle Databases].
+@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""A directory where Oracle database software is installed. Each DB System can have multiple database homes, and each database home can have multiple databases within it. All the databases within a single database home must be the same database version, but different database homes can run different versions. For more information, see [Managing Oracle Databases].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an
-administrator. If you're an administrator who needs to write policies to give users access,
-see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def db_home_group():
     pass
@@ -98,19 +82,15 @@ def db_home_group():
 
 @click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""The Database Service supports several types of DB Systems, ranging in size, price, and performance. For details about each type of system, see:
 
-- [Exadata DB Systems]
-- [Bare Metal or VM DB Systems]
+- [Exadata DB Systems] - [Bare Metal or VM DB Systems]
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
-For information about access control and compartments, see
-[Overview of the Identity Service].
+For information about access control and compartments, see [Overview of the Identity Service].
 
-For information about Availability Domains, see
-[Regions and Availability Domains].
+For information about Availability Domains, see [Regions and Availability Domains].
 
-To get a list of Availability Domains, use the `ListAvailabilityDomains` operation
-in the Identity Service API.""")
+To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity Service API.""")
 @cli_util.help_option_group
 def db_system_group():
     pass
@@ -376,6 +356,18 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_backup, backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -422,6 +414,18 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_home, db_home_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1296,10 +1300,11 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('list_db_systems.command_name', 'list'), help="""Gets a list of the DB Systems in the specified compartment.""")
+@db_system_group.command(name=cli_util.override('list_db_systems.command_name', 'list'), help="""Gets a list of the DB Systems in the specified compartment. You can specify a backupId to list only the DB Systems that support creating a database using this backup in this compartment.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The compartment [OCID]. [required]""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return.""")
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The pagination token to continue listing from.""")
+@click.option('--backup-id', callback=cli_util.handle_optional_param, help="""The OCID of the backup. Specify a backupId to list only the DB Systems that support creating a database using this backup in this compartment.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1307,7 +1312,7 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemSummary]'})
 @cli_util.wrap_exceptions
-def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit, page):
+def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit, page, backup_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1316,6 +1321,8 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if backup_id is not None:
+        kwargs['backup_id'] = backup_id
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -1535,6 +1542,18 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_system, db_system_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)

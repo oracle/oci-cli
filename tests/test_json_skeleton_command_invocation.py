@@ -5,6 +5,7 @@ import json
 import os
 import os.path
 import pytest
+import random
 import shutil
 from . import test_config_container
 from . import util
@@ -142,7 +143,7 @@ def test_list_buckets_with_override():
 # This test cannot be mocked because VCR doesn't play nicely with the FileReadCallbackStream implementation in the Python SDK
 def test_create_update_bucket_and_put_object():
     base_path = os.path.join('tests', 'resources', 'json_input')
-    bucket_name = 'json_skeleton_bucket_{}'.format(util.random_number_string())
+    bucket_name = 'json_skeleton_bucket_{}'.format(random.randint(0, 10000))
 
     result = invoke(['os', 'bucket', 'create', '--compartment-id', util.COMPARTMENT_ID, '--namespace', util.NAMESPACE, '--name', bucket_name, '--from-json', 'file://{}'.format(os.path.join(base_path, 'bucket_create.json'))])
     parsed_result = json.loads(result.output)
@@ -162,7 +163,6 @@ def test_create_update_bucket_and_put_object():
         '--file', os.path.join(base_path, 'bucket_create.json'),
         '--from-json', 'file://{}'.format(os.path.join(base_path, 'object_put.json'))
     ])
-    print(result.output)
 
     result = invoke([
         'os', 'object', 'head',

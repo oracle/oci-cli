@@ -4,6 +4,7 @@
 import json
 import os
 import pytest
+import re
 import time
 import unittest
 from . import command_coverage_validator
@@ -467,6 +468,34 @@ class TestCompute(unittest.TestCase):
         self.assertEquals({}, instance_console_connection_details['data']['freeform-tags'])
         self.assertEquals({}, instance_console_connection_details['data']['defined-tags'])
         self.assertIsNotNone(parsed_result['data']['lifecycle-state'])
+
+        private_key_file = 'C:\\Users\\oci\console.ppk'
+        params = [
+            'compute', 'instance-console-connection', 'get-plink-connection-string',
+            '--instance-console-connection-id', instance_console_connection_details['data']['id'],
+            '--private-key-file', private_key_file
+        ]
+
+        result = self.invoke(params)
+
+        util.validate_response(result, json_response_expected=False)
+
+        m = re.search(oci_cli.core_cli_extended.INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX, instance_console_connection_details['data']['connection-string'])
+        intermediate_host = m.group(0)
+
+        connection_template = 'Start-Job {{echo N | plink -ssh -N -i "{3}" -P 443 -l {1} {2} -L 5905:{0}:5905}}; sleep 5 ; plink -L 5900:localhost:5900 localhost -P 5905 -N -i "{3}" -l {1}'
+        expected_plink_connection_string = connection_template.format(instance_console_connection_details['data']['instance-id'], instance_console_connection_details['data']['id'], intermediate_host, private_key_file)
+        assert expected_plink_connection_string == result.output.strip()
+
+        # confirm that error from internal call to GetConsoleConnection returns service error and non-zero status code
+        params = [
+            'compute', 'instance-console-connection', 'get-plink-connection-string',
+            '--instance-console-connection-id', 'fake-instance-console-connection-id',
+            '--private-key-file', private_key_file
+        ]
+
+        result = self.invoke(params)
+        util.validate_service_error(result, error_message='ServiceError')
 
         keep_paginating = True
         next_page = None

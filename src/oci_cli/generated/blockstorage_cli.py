@@ -20,36 +20,25 @@ def blockstorage_group():
     pass
 
 
-@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand
-the storage capacity of an instance. For more information, see
-[Overview of Cloud Volume Storage].
+@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def volume_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot an Compute instance. For more information, see
-[Overview of Boot Volumes].
+@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot an Compute instance. For more information, see [Overview of Boot Volumes].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def boot_volume_group():
     pass
 
 
-@click.command(cli_util.override('volume_backup_group.command_name', 'volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume that can then be used to create a new block volume
-or recover a block volume. For more information, see
-[Overview of Cloud Volume Storage].
+@click.command(cli_util.override('volume_backup_group.command_name', 'volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Cloud Volume Storage].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def volume_backup_group():
     pass
@@ -271,6 +260,18 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume, boot_volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -314,6 +315,18 @@ def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume, volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -357,6 +370,18 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_backup, volume_backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)

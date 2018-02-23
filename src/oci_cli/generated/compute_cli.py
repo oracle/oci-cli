@@ -20,24 +20,17 @@ def compute_group():
     pass
 
 
-@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand
-the storage capacity of an instance. For more information, see
-[Overview of Cloud Volume Storage].
+@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def volume_group():
     pass
 
 
-@click.command(cli_util.override('image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see
-[Overview of the Compute Service].
+@click.command(cli_util.override('image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see [Overview of the Compute Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def image_group():
     pass
@@ -49,50 +42,37 @@ def instance_credentials_group():
     pass
 
 
-@click.command(cli_util.override('instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other
-software. The shape specified during the launch process determines the number of CPUs and memory
-allocated to the instance. For more information, see
-[Overview of the Compute Service].
+@click.command(cli_util.override('instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance. For more information, see [Overview of the Compute Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def instance_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot an Compute instance. For more information, see
-[Overview of Boot Volumes].
+@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot an Compute instance. For more information, see [Overview of Boot Volumes].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def boot_volume_group():
     pass
 
 
-@click.command(cli_util.override('shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance].
-For more information, see [Overview of the Compute Service].""")
+@click.command(cli_util.override('shape_group.command_name', 'shape'), cls=CommandGroupWithAlias, help="""A compute instance shape that can be used in [LaunchInstance]. For more information, see [Overview of the Compute Service].""")
 @cli_util.help_option_group
 def shape_group():
     pass
 
 
-@click.command(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a VNIC and an instance. For more information, see
-[Virtual Network Interface Cards (VNICs)].""")
+@click.command(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a VNIC and an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.help_option_group
 def vnic_attachment_group():
     pass
 
 
-@click.command(cli_util.override('volume_attachment_group.command_name', 'volume-attachment'), cls=CommandGroupWithAlias, help="""A base object for all types of attachments between a storage volume and an instance.
-For specific details about iSCSI attachments, see
-[IScsiVolumeAttachment Reference].
+@click.command(cli_util.override('volume_attachment_group.command_name', 'volume-attachment'), cls=CommandGroupWithAlias, help="""A base object for all types of attachments between a storage volume and an instance. For specific details about iSCSI attachments, see [IScsiVolumeAttachment Reference].
 
-For general information about volume attachments, see
-[Overview of Block Volume Storage].""")
+For general information about volume attachments, see [Overview of Block Volume Storage].""")
 @cli_util.help_option_group
 def volume_attachment_group():
     pass
@@ -104,19 +84,15 @@ def boot_volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to virtual machine (VM) instances,
-enabling you to troubleshoot malfunctioning instances remotely.
+@click.command(cli_util.override('instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to virtual machine (VM) instances, enabling you to troubleshoot malfunctioning instances remotely.
 
-For more information about console access, see
-[Accessing the Console].""")
+For more information about console access, see [Accessing the Console].""")
 @cli_util.help_option_group
 def instance_console_connection_group():
     pass
 
 
-@click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the
-instance boots, such as kernel and BIOS messages, and is useful for checking the status of
-the instance or diagnosing problems. The console data is minimally formatted ASCII text.""")
+@click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the instance boots, such as kernel and BIOS messages, and is useful for checking the status of the instance or diagnosing problems. The console data is minimally formatted ASCII text.""")
 @cli_util.help_option_group
 def console_history_group():
     pass
@@ -505,6 +481,18 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, instance_console_history_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -548,6 +536,18 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, image_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -591,6 +591,18 @@ def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance_console_connection, instance_console_connection_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -636,6 +648,18 @@ def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume_attachment, boot_volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -681,6 +705,18 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vnic_attachment, vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -726,6 +762,18 @@ def detach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_attachment, volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
@@ -1708,6 +1756,18 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, instance_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)

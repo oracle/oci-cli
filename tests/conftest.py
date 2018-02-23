@@ -108,6 +108,11 @@ def compute_client(config):
 
 
 @pytest.fixture(scope='session')
+def filestorage_client(config):
+    return oci.file_storage.FileStorageClient(config)
+
+
+@pytest.fixture(scope='session')
 def identity_client(config):
     return oci.identity.IdentityClient(config)
 

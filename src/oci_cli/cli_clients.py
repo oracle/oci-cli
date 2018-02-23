@@ -8,6 +8,7 @@ from oci.core import ComputeClient
 from oci.core import VirtualNetworkClient
 from oci.database import DatabaseClient
 from oci.dns import DnsClient
+from oci.file_storage import FileStorageClient
 from oci.identity import IdentityClient
 from oci.load_balancer import LoadBalancerClient
 from oci.object_storage import ObjectStorageClient
@@ -18,6 +19,7 @@ CLIENT_MAP = {
     "compute": ComputeClient,
     "database": DatabaseClient,
     "dns": DnsClient,
+    "file_storage": FileStorageClient,
     "identity": IdentityClient,
     "load_balancer": LoadBalancerClient,
     "object_storage": ObjectStorageClient,
@@ -29,6 +31,7 @@ MODULE_TO_TYPE_MAPPINGS = {
     "core": oci.core.models.core_type_mapping,
     "database": oci.database.models.database_type_mapping,
     "dns": oci.dns.models.dns_type_mapping,
+    "file_storage": oci.file_storage.models.file_storage_type_mapping,
     "identity": oci.identity.models.identity_type_mapping,
     "load_balancer": oci.load_balancer.models.load_balancer_type_mapping,
     "object_storage": oci.object_storage.models.object_storage_type_mapping
