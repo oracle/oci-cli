@@ -26,10 +26,16 @@ def test_list_images_by_display_name_without_results():
 
 @test_config_container.RecordReplayWithNoClickContext('list_filter')
 def test_list_images_by_display_name_with_results():
+    result = invoke(['compute', 'image', 'list', '-c', util.COMPARTMENT_ID, '--all'])
+    images = json.loads(result.output)
+
+    windows_image_display_name = next(image['display-name'] for image in images['data'] if 'Windows' in image['display-name'])
+    print(str(windows_image_display_name))
+
     retrieve_list_by_field_and_check(
-        ['compute', 'image', 'list', '-c', util.COMPARTMENT_ID, '--display-name', 'Windows-Server-2012-R2-Standard-Edition-VM-2017.07.25-0'],
+        ['compute', 'image', 'list', '-c', util.COMPARTMENT_ID, '--display-name', windows_image_display_name],
         'display-name',
-        'Windows-Server-2012-R2-Standard-Edition-VM-2017.07.25-0',
+        windows_image_display_name,
         1
     )
 

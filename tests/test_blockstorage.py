@@ -203,7 +203,7 @@ class TestBlockStorage(unittest.TestCase):
         assert 50 == int(parsed_result['data']['size-in-gbs'])  # We initially created a 50GB volume
 
         volume_id = util.find_id_in_response(result.output)
-        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], 'AVAILABLE', max_wait_seconds=180)
+        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], 'AVAILABLE', max_wait_seconds=600)
 
         result = self.invoke(['volume', 'delete', '--volume-id', volume_id, '--force'])
         util.validate_response(result)

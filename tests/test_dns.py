@@ -27,11 +27,11 @@ def zone(dns_client, runner, config_file, config_profile):
 
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
-
-    zone_id = json.loads(result.output)['data']['id']
     zone_name = json.loads(result.output)['data']['name']
 
     oci.wait_until(dns_client, dns_client.get_zone(zone_name), evaluate_response=lambda r: r.data.id != '', max_wait_seconds=300)
+
+    zone_id = dns_client.get_zone(zone_name).data.id
 
     yield zone_id, zone_name
 
@@ -118,6 +118,30 @@ def test_get_zone_records(zone, runner, config_file, config_profile):
 
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
+
+    params = [
+        'record', 'zone', 'get',
+        '--zone-name-or-id', zone_name,
+        '--all'
+    ]
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']['items']) > 0
+    assert int(parsed_result['opc-total-items']) == len(parsed_result['data']['items'])
+    assert_all_records_in_list_have_not_none_fields(parsed_result['data']['items'])
+
+    params = [
+        'record', 'zone', 'get',
+        '--zone-name-or-id', zone_name,
+        '--limit', '2',
+        '--page-size', '1'
+    ]
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']['items']) == 2
+    assert_all_records_in_list_have_not_none_fields(parsed_result['data']['items'])
 
 
 def test_patch_zone_records(zone, runner, config_file, config_profile):
@@ -324,6 +348,32 @@ def test_get_domain_records(zone, runner, config_file, config_profile):
 
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
+
+    params = [
+        'record', 'domain', 'get',
+        '--zone-name-or-id', zone_name,
+        '--domain', zone_name,
+        '--all'
+    ]
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']['items']) > 0
+    assert int(parsed_result['opc-total-items']) == len(parsed_result['data']['items'])
+    assert_all_records_in_list_have_not_none_fields(parsed_result['data']['items'])
+
+    params = [
+        'record', 'zone', 'get',
+        '--zone-name-or-id', zone_name,
+        '--domain', zone_name,
+        '--limit', '2',
+        '--page-size', '1'
+    ]
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']['items']) == 2
+    assert_all_records_in_list_have_not_none_fields(parsed_result['data']['items'])
 
 
 def test_patch_domain_records(zone, runner, config_file, config_profile):
@@ -532,6 +582,38 @@ def test_get_rrset_records(zone, runner, config_file, config_profile):
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
 
+    params = [
+        'record', 'rrset', 'get',
+        '--zone-name-or-id', zone_name,
+        '--domain', zone_name,
+        '--rtype', 'NS',
+        '--all'
+    ]
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']['items']) > 0
+    assert int(parsed_result['opc-total-items']) == len(parsed_result['data']['items'])
+    for item in parsed_result['data']['items']:
+        assert_record_fields_not_none(item)
+        assert item['rtype'] == 'NS'
+
+    params = [
+        'record', 'rrset', 'get',
+        '--zone-name-or-id', zone_name,
+        '--domain', zone_name,
+        '--rtype', 'NS',
+        '--limit', '2',
+        '--page-size', '1'
+    ]
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    parsed_result = json.loads(result.output)
+    assert len(parsed_result['data']['items']) == 2
+    for item in parsed_result['data']['items']:
+        assert_record_fields_not_none(item)
+        assert item['rtype'] == 'NS'
+
 
 def test_patch_rrset_records(zone, runner, config_file, config_profile):
     zone_id = zone[0]
@@ -724,3 +806,18 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
         result = runner.invoke(oci_cli.cli, root_params + ['--config-file', config_file, '--profile', config_profile, 'dns'] + params, ** args)
 
     return result
+
+
+def assert_all_records_in_list_have_not_none_fields(record_list):
+    for record in record_list:
+        assert_record_fields_not_none(record)
+
+
+def assert_record_fields_not_none(record):
+    assert record['domain'] is not None
+    assert record['record-hash'] is not None
+    assert record['is-protected'] is not None
+    assert record['rdata'] is not None
+    assert record['rrset-version'] is not None
+    assert record['rtype'] is not None
+    assert record['ttl'] is not None

@@ -53,7 +53,8 @@ missing_attr = object()
 DISPLAY_HEADERS = {
     "etag",
     "opc-next-page",
-    "opc-work-request-id"
+    "opc-work-request-id",
+    "opc-total-items"
 }
 
 
@@ -98,7 +99,9 @@ OVERRIDES = {
     "instance_action.command_name": "action",
     "volume_backup_group.command_name": "backup",
     "file_storage_group.help": "File Storage Service",
-    "file_storage_group.command_name": "fs"
+    "file_storage_group.command_name": "fs",
+    "email_group.help": "Email Delivery Service",
+    "dns_group.help": "DNS Zone Management Service"
 }
 
 
@@ -931,6 +934,9 @@ def get_default_value_from_defaults_file(ctx, param_name, param_type, param_take
 
 
 def convert_value_from_param_type(value, param_type, param_takes_multiple):
+    # Inline import to avoid a circular dependency
+    from .custom_types import CLI_DATETIME
+
     if value is None:
         return value
 
@@ -954,11 +960,16 @@ def convert_value_from_param_type(value, param_type, param_takes_multiple):
         return float(expanded_value)
     elif param_type == click.INT:
         return int(expanded_value)
+    elif param_type == CLI_DATETIME:
+        return CLI_DATETIME.convert(expanded_value, None, None)
     else:
         return expanded_value
 
 
 def convert_value_from_param_type_accepting_multiple(value, param_type):
+    # Inline import to avoid a circular dependency
+    from .custom_types import CLI_DATETIME
+
     # Since our splitting into multiples relies on a string split, we can't do anything if it's
     # not a string
     if not isinstance(value, six.string_types):
@@ -983,6 +994,8 @@ def convert_value_from_param_type_accepting_multiple(value, param_type):
                 converted_values.append(float(stripped_val))
             elif param_type == click.INT:
                 converted_values.append(int(stripped_val))
+            elif param_type == CLI_DATETIME:
+                converted_values.append(CLI_DATETIME.convert(stripped_val, None, None))
             else:
                 converted_values.append(stripped_val)
 
@@ -1097,18 +1110,20 @@ def warn_on_invalid_file_permissions(filepath):
 # If any other users or groups have permissions to the file, a warning will be printed indicating which additional groups
 # have permissions and should not.
 def windows_warn_on_invalid_file_permissions(filename):
-    username = os.environ.get('USERNAME')
-    userdomain = os.environ.get('USERDOMAIN')
-
-    current_user_identity = '{}\\{}'.format(userdomain, username)
-    identities_allowed_permissions = [current_user_identity, "NT AUTHORITY\\SYSTEM", "BUILTIN\\Administrators"]
-    identities_list_string = ','.join(['\\"{}\\"'.format(name) for name in identities_allowed_permissions])
-
     # one line powershell command to output newline separated list of all users / groups
-    # with access to a given file that are not in 'identities_allowed_permissions'
+    # with access to a given file that are not in BUILTIN\Administrators, NT Authority\System or current user
     try:
-        cmd = '(Get-Acl {}).Access | Where {{-not ($_.IdentityReference -in {})}} | Select-Object -ExpandProperty IdentityReference | Format-Table -HideTableHeaders'.format(filename, identities_list_string)
-        output = subprocess.check_output('powershell.exe "{}"'.format(cmd))
+        cmd = (
+            '$ex_perms=@();'
+            '$defaults=@();'
+            '$macls=(Get-Acl {filename}).Access.IdentityReference;'
+            '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-32-544\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
+            '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-18\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
+            '$defaults+=\"$env:USERDOMAIN\" + \"\\\" + \"$env:USERNAME\";'
+            'foreach ($i in $macls){{foreach ($m in $defaults){{if($i -eq $m){{$found=$true;}}}};if(!$found){{$ex_perms+=$i}};$found=$false;}};'
+            '"$ex_perms";'.format(filename=filename)
+        )
+        output = subprocess.check_output(["powershell.exe", '{}'.format(cmd)], shell=True).strip()
     except Exception:
         # if somehow executing this throws an exception we don't want to prevent use of the CLI so return here
         return

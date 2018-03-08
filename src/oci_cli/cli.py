@@ -9,6 +9,7 @@ from .generated import blockstorage_cli  # noqa: F401
 from .generated import compute_cli  # noqa: F401
 from .generated import database_cli  # noqa: F401
 from .generated import dns_cli  # noqa: F401
+from .generated import email_cli  # noqa: F401
 from .generated import filestorage_cli  # noqa: F401
 from .generated import identity_cli  # noqa: F401
 from .generated import loadbalancer_cli  # noqa: F401
@@ -19,6 +20,7 @@ from . import audit_cli_extended  # noqa: F401
 from . import core_cli_extended  # noqa: F401
 from . import database_cli_extended  # noqa: F401
 from . import dns_cli_extended  # noqa: F401
+from . import email_cli_extended  # noqa: F401
 from . import filestorage_cli_extended  # noqa: F401
 from . import identity_cli_extended  # noqa: F401
 from . import lb_cli_extended  # noqa: F401

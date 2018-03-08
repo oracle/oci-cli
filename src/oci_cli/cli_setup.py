@@ -447,17 +447,18 @@ def apply_user_only_access_permissions(path):
         #   - thus if the user elects to place a new file (config or key) in an existing directory, we will not change the
         #     permissions of that directory but will explicitly set the permissions on that file
         username = os.environ['USERNAME']
+        admin_grp = '*S-1-5-32-544'
+        system_usr = '*S-1-5-18'
         try:
             if os.path.isfile(path):
                 subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
-                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F /grant Administrators:F /grant System:F'.format(path=path, username=username), stderr=subprocess.STDOUT)
+                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
             else:
                 if os.listdir(path):
                     # safety check to make sure we aren't changing permissions of existing files
                     raise RuntimeError("Failed attempting to set permissions on existing folder that is not empty.")
-
                 subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
-                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F  /grant:r Administrators:(OI)(CI)F /grant:r System:(OI)(CI)F'.format(path=path, username=username), stderr=subprocess.STDOUT)
+                subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
 
         except subprocess.CalledProcessError as exc_info:
             print("Error occurred while attempting to set permissions for {path}: {exception}".format(path=path, exception=str(exc_info)))

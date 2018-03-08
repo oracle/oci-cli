@@ -1,7 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
-from oci import exceptions
+from oci import dns, exceptions
 from oci import Response
 from requests.exceptions import Timeout
 from requests.exceptions import ConnectionError
@@ -43,6 +43,8 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, retry_stra
     remaining_items_to_fetch = record_limit
     call_result = None
     aggregated_results = []
+    is_dns_record_collection = False
+    dns_record_collection_class = None
     while keep_paginating and remaining_items_to_fetch > 0:
         if page_size:
             func_kwargs['limit'] = min(page_size, remaining_items_to_fetch)
@@ -50,8 +52,15 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, retry_stra
             func_kwargs['limit'] = min(func_kwargs['limit'], remaining_items_to_fetch)
 
         call_result = call_function_with_retries(list_func_ref, retry_strategy_name, **func_kwargs)
-        aggregated_results.extend(call_result.data)
-        remaining_items_to_fetch -= len(call_result.data)
+
+        if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
+            is_dns_record_collection = True
+            dns_record_collection_class = call_result.data.__class__
+            aggregated_results.extend(call_result.data.items)
+            remaining_items_to_fetch -= len(call_result.data.items)
+        else:
+            aggregated_results.extend(call_result.data)
+            remaining_items_to_fetch -= len(call_result.data)
 
         if call_result.next_page is not None:
             func_kwargs['page'] = call_result.next_page
@@ -59,7 +68,16 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, retry_stra
         keep_paginating = call_result.has_next_page
 
     # Truncate the list to the first limit items, as potentially we could have gotten more than what the caller asked for
-    final_response = Response(call_result.status, call_result.headers, aggregated_results[:record_limit], call_result.request)
+    if is_dns_record_collection:
+        final_response = Response(
+            call_result.status,
+            call_result.headers,
+            dns_record_collection_class(items=aggregated_results[:record_limit]),
+            call_result.request
+        )
+    else:
+        final_response = Response(call_result.status, call_result.headers, aggregated_results[:record_limit], call_result.request)
+
     return final_response
 
 
@@ -71,10 +89,17 @@ def list_call_get_all_results(list_func_ref, retry_strategy_name, **func_kwargs)
     keep_paginating = True
     call_result = None
     aggregated_results = []
+    is_dns_record_collection = False
+    dns_record_collection_class = None
 
     while keep_paginating:
         call_result = call_function_with_retries(list_func_ref, retry_strategy_name, **func_kwargs)
-        aggregated_results.extend(call_result.data)
+        if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
+            is_dns_record_collection = True
+            dns_record_collection_class = call_result.data.__class__
+            aggregated_results.extend(call_result.data.items)
+        else:
+            aggregated_results.extend(call_result.data)
 
         if call_result.next_page is not None:
             func_kwargs['page'] = call_result.next_page
@@ -97,7 +122,15 @@ def list_call_get_all_results(list_func_ref, retry_strategy_name, **func_kwargs)
                 post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'time_created'), reverse=(sort_direction == 'DESC'))
 
     # Most of this is just dummy since we're discarding the intermediate requests
-    final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
+    if is_dns_record_collection:
+        final_response = Response(
+            call_result.status,
+            call_result.headers,
+            dns_record_collection_class(items=post_processed_results),
+            call_result.request
+        )
+    else:
+        final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
 
     return final_response
 

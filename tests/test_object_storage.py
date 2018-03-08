@@ -328,6 +328,14 @@ def test_object_put_confirmation_prompt(runner, config_file, config_profile, con
     assertEquals(content_input_file_size, int(json_head['content-length']))
     assertEquals(etag, json_head['etag'])
 
+    # Test no-overwrite
+    result = invoke(runner, config_file, config_profile, put_required_args + ['--no-overwrite'])
+    assert result.exit_code == 0
+    json_head = json.loads(invoke(runner, config_file, config_profile, head_required_args).output)
+    # Make sure that etag and content length haven't changed.
+    assertEquals(content_input_file_size, int(json_head['content-length']))
+    assertEquals(etag, json_head['etag'])
+
     # Test force
     result = invoke(runner, config_file, config_profile, put_required_args + ['--force'])
     validate_response(result)
