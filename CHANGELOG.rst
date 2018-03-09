@@ -13,12 +13,13 @@ Added
 ~~~~~~~~~~
 * Support for the Email Service. (``oci email``)
 
-    * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_email.py>`_
+  * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_email.py>`_
+  * This release does not include support for managing SMTP credentials.  Please use the web console or any OCI SDK to manage SMTP credentials.
 
 * Support for the following features in the Core Services:
 
-    * paravirtualized volume attachments (--type option for ``oci compute volume-attachment attach``)
-    * variable size boot volumes (--boot-volume-size-in-gbs option for ``oci compute instance launch``)
+  * paravirtualized volume attachments (--type option for ``oci compute volume-attachment attach``)
+  * variable size boot volumes (--boot-volume-size-in-gbs option for ``oci compute instance launch``)
 
 * Support for auto-pagination for the Domain Name System Service. (--all, --page-size options for ``oci dns record domain get``, ``oci dns record rrset get``, ``oci dns record zone get``)
 * Support for no-overwrite flag for the object put operation for the Object Service (--no-overwrite for ``oci os object put``).
@@ -37,9 +38,9 @@ Added
 * Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb path-route-set``)
 * Tagging support for *Bucket* resources in the Object Storage Service
 
-    * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
-    * Update a bucket with tags: ``oci os bucket update --defined-tags --freeform-tags``
-    * List buckets and display defined and freeform tags in the results: ``oci os bucket list --fields tags``
+  * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
+  * Update a bucket with tags: ``oci os bucket update --defined-tags --freeform-tags``
+  * List buckets and display defined and freeform tags in the results: ``oci os bucket list --fields tags``
 
 * Support for specifying a restore period for archived objects in the *RestoreObjects* operation of the Object Storage service. (``oci os object restore --hours``)
 * Support for filtering by *backupId* in *ListDbSystems* operation in the Database Service (``oci db system list --backup-id``)
@@ -51,14 +52,14 @@ Added
 ~~~~~~~~~~
 * Support for Domain Name System Service (oci dns)
 
-    * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`_.
+  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`_.
 
 * Support for Reserved Public IPs in Virtual Networking Service (oci network public-ip)
 * Support for the following features in Block Storage Service
 
-    * Automated and policy-based scheduled backups (oci bv volume-backup-policy | volume-backup-policy-assignment)
-    * Read-only volume attachments (--is-read-only option while attaching volume)
-    * Incremental backups (--type option while creating a volume backup)
+  * Automated and policy-based scheduled backups (oci bv volume-backup-policy | volume-backup-policy-assignment)
+  * Read-only volume attachments (--is-read-only option while attaching volume)
+  * Incremental backups (--type option while creating a volume backup)
 
 2.4.15 - 2018-01-25
 ---------------------
