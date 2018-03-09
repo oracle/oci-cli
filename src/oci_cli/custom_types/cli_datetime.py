@@ -96,12 +96,11 @@ Example: 1412195400
         if parsed_value is None:
             raise click.BadParameter('Value {} is not in a supported datetime format. {}'.format(value, self.VALID_DATETIME_MESSAGE))
 
-        # Return a valid RFC3339 datetime string. No timezone conversion happens here since the time we have at this point is either:
+        # Return a valid RFC3339 datetime string with a Z-offset. This is for consistency with how other SDKs behave, and also
+        # for compatibility with services.
         #
-        #   - In UTC already because we were provided epoch seconds or YYY-MM-DD (where we assume midnight UTC)
-        #   - Our other supported formats have an explicit timezone specifier. In that case we send it through to the service
-        #     as-is rather than converting the type for the caller and potentially mangling their input
-        return parsed_value.format('YYYY-MM-DDTHH:mm:ss.SSSZZ')
+        # Applying the UTC conversion is a no-op if the timezone is already UTC
+        return '{}Z'.format(parsed_value.to('utc').format('YYYY-MM-DDTHH:mm:ss.SSS'))
 
     def get_matching_datetime_string_format(self, value):
         for datetime_format in self.VALID_DATETIME_FORMATS:

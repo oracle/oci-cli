@@ -220,6 +220,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @click.option('--content-language', callback=handle_optional_param, help='The content language of the object.')
 @click.option('--content-encoding', callback=handle_optional_param, help='The content encoding of the object.')
 @click.option('--force', is_flag=True, callback=handle_optional_param, help='If the object already exists, overwrite the existing object without a confirmation prompt.')
+@click.option('--no-overwrite', is_flag=True, callback=handle_optional_param, help='If the object already exists, do not overwrite the existing object.')
 @click.option('--no-multipart', is_flag=True, callback=handle_optional_param,
               help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side.')
 @click.option('--part-size', type=click.INT, callback=handle_optional_param,
@@ -233,7 +234,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count):
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count):
     """
     Creates a new object or overwrites an existing one.
 
@@ -279,6 +280,9 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
             kwargs['if_none_match'] = '*'
         else:
             kwargs['if_match'] = etag
+            if no_overwrite:
+                click.echo('The object already exists and was not overwritten', file=sys.stderr)
+                ctx.exit(0)
             if not click.confirm("WARNING: This object already exists. Are you sure you want to overwrite it?"):
                 ctx.abort()
 
@@ -1306,12 +1310,17 @@ def object_resume_put(ctx, from_json, namespace, bucket_name, name, file, upload
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def restore_objects(ctx, from_json, namespace, bucket, name, hours):
+def restore_objects(ctx, **kwargs):
     details = {}
+
+    namespace = kwargs['namespace']
+    bucket = kwargs['bucket']
+    name = kwargs['name']
+
     details['objectName'] = name
 
-    if hours is not None:
-        details['hours'] = hours
+    if kwargs['hours'] is not None:
+        details['hours'] = kwargs['hours']
 
     client = build_client('object_storage', ctx)
     kwargs = {'opc_client_request_id': ctx.obj['request_id']}

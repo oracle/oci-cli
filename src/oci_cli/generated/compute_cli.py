@@ -196,7 +196,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @volume_attachment_group.command(name=cli_util.override('attach_volume.command_name', 'attach'), help="""Attaches the specified storage volume to the specified instance.""")
 @click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
-@click.option('--type', callback=cli_util.handle_required_param, help="""The type of volume. The only supported value is \"iscsi\". [required]""")
+@click.option('--type', callback=cli_util.handle_required_param, help="""The type of volume. The only supported value are \"iscsi\" and \"paravirtualized\". [required]""")
 @click.option('--volume-id', callback=cli_util.handle_required_param, help="""The OCID of the volume. [required]""")
 @click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @click.option('--is-read-only', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
@@ -1655,7 +1655,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @volume_attachment_group.command(name=cli_util.override('list_volume_attachments.command_name', 'list'), help="""Lists the volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, volume OCID, or both.
 
-Currently, the only supported volume attachment type is [IScsiVolumeAttachment].""")
+Currently, the only supported volume attachment type are [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment].""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The name of the Availability Domain.
 

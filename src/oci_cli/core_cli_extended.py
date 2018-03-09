@@ -139,6 +139,8 @@ network_create_security_list_ingress_security_rules_example = """'[{"source": "1
 cli_util.update_param_help(virtualnetwork_cli.create_security_list, 'ingress_security_rules', '', append=True, example=network_create_security_list_ingress_security_rules_example)
 cli_util.update_param_help(virtualnetwork_cli.update_security_list, 'ingress_security_rules', '', append=True, example=network_create_security_list_ingress_security_rules_example)
 
+cli_util.get_param(compute_cli.attach_volume, 'type').type = custom_types.CliCaseInsensitiveChoice(['iscsi', 'paravirtualized'])
+
 # Formatting of the help for the bcms network private-ip list command
 virtualnetwork_cli.list_private_ips.help = """Lists the [PrivateIp] objects based on one of these filters:
 
@@ -413,6 +415,7 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
 @click.option('--user-data-file', callback=cli_util.handle_optional_param, type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
 @click.option('--ssh-authorized-keys-file', callback=cli_util.handle_optional_param, type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
 @click.option('--source-boot-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
+@click.option('--boot-volume-size-in-gbs', callback=cli_util.handle_optional_param, type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
@@ -437,13 +440,17 @@ def launch_instance_extended(ctx, **kwargs):
         else:
             metadata['ssh_authorized_keys'] = ssh_authorized_keys_file.read()
 
-    if kwargs.get('source_details') and (kwargs.get('image_id') or kwargs.get('source_boot_volume_id')):
+    if kwargs.get('source_details') and (kwargs.get('image_id') or kwargs.get('source_boot_volume_id') or kwargs.get('boot_volume_size_in_gbs')):
         raise click.UsageError(
-            'Cannot specify --source-details and either --image-id or --source-boot-volume-id'
+            'Cannot specify --source-details with any of: --image-id, --source-boot-volume-id, or --boot-volume-size-in-gbs'
         )
     if kwargs.get('image_id') and kwargs.get('source_boot_volume_id'):
         raise click.UsageError(
             'Cannot specify both an --image-id and a --source-boot-volume-id to be used to boot the instance'
+        )
+    if kwargs.get('boot_volume_size_in_gbs') and kwargs.get('source_boot_volume_id'):
+        raise click.UsageError(
+            'Cannot specify both a --source-boot-volume-id and a --boot-volume-size-in-gbs to be used to boot the instance'
         )
 
     kwargs['metadata'] = json.dumps(metadata)
@@ -471,7 +478,11 @@ def launch_instance_extended(ctx, **kwargs):
         kwargs['create_vnic_details'] = json.dumps(create_vnic_details)
 
     if kwargs.get('image_id'):
-        kwargs['source_details'] = json.dumps({'sourceType': 'image', 'imageId': kwargs['image_id']})
+        source_details = {'sourceType': 'image', 'imageId': kwargs['image_id']}
+        if kwargs.get('boot_volume_size_in_gbs'):
+            source_details['bootVolumeSizeInGBs'] = kwargs.get('boot_volume_size_in_gbs')
+
+        kwargs['source_details'] = json.dumps(source_details)
     if kwargs.get('source_boot_volume_id'):
         kwargs['source_details'] = json.dumps({'sourceType': 'bootVolume', 'bootVolumeId': kwargs['source_boot_volume_id']})
 
@@ -485,8 +496,9 @@ def launch_instance_extended(ctx, **kwargs):
     del kwargs['vnic_display_name']
     del kwargs['skip_source_dest_check']
 
-    # Only remove the source_boot_volume_id parameter. image_id is an existing parameter so the underlying
+    # Remove the source_boot_volume_id and boot_volume_size_in_gbs parameters. image_id is an existing parameter so the underlying
     # CLI operation will accept it
+    kwargs.pop('boot_volume_size_in_gbs', None)
     kwargs.pop('source_boot_volume_id', None)
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)

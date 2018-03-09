@@ -5,6 +5,8 @@ import datetime
 import unittest
 import json
 import oci_cli
+import pytz
+from dateutil.parser import parse
 from . import command_coverage_validator
 from . import test_config_container
 from . import util
@@ -24,7 +26,8 @@ class TestAudit(unittest.TestCase):
         self.validator = validator
 
         self.subtest_event_list()
-        self.subtest_config_get()
+        # Not present in the preview spec
+        # self.subtest_config_get()
 
     def subtest_config_get(self):
         util.set_admin_pass_phrase()
@@ -37,12 +40,23 @@ class TestAudit(unittest.TestCase):
     def subtest_event_list(self):
         end_time = datetime.datetime.utcnow()
         start_time = end_time + datetime.timedelta(days=-1)
+
         result = self.invoke(['audit', 'event', 'list', '--compartment-id', util.COMPARTMENT_ID, '--start-time', start_time.strftime(DATETIME_FORMAT), '--end-time', end_time.strftime(DATETIME_FORMAT)])
         assert result.exit_code == 0
         if result.output:
             response = json.loads(result.output)
+
+            # Some jitter because audit needs a RFC3339 date but only works with minute precision
+            end_time_with_zone = pytz.utc.localize(end_time) + datetime.timedelta(minutes=5)
+            start_time_with_zone = pytz.utc.localize(start_time) + datetime.timedelta(minutes=-5)
+
             for event in response["data"]:
                 assert util.COMPARTMENT_ID == event["compartment-id"]
+
+                if not test_config_container.using_vcr_with_mock_responses():
+                    parsed_date = parse(event["event-time"])
+                    assert parsed_date >= start_time_with_zone
+                    assert parsed_date <= end_time_with_zone
 
     def invoke(self, commands, debug=False, ** args):
         self.validator.register_call(commands)

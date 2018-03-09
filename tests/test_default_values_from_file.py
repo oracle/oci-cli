@@ -265,6 +265,45 @@ def test_variable_expansion():
     assert coalesced_value == 'You should substitute me'
 
 
+def test_datetime_conversions_in_default_file():
+    command_with_different_datetime_formats = click.Command(
+        'unit-test-command',
+        params=[
+            click.Option(['--param1'], type=oci_cli.custom_types.CLI_DATETIME),
+            click.Option(['--param2'], type=oci_cli.custom_types.CLI_DATETIME),
+            click.Option(['--param3'], type=oci_cli.custom_types.CLI_DATETIME),
+            click.Option(['--param4'], type=oci_cli.custom_types.CLI_DATETIME),
+            click.Option(['--param5'], type=oci_cli.custom_types.CLI_DATETIME),
+            click.Option(['--param6'], type=oci_cli.custom_types.CLI_DATETIME)
+        ]
+    )
+    context = set_up_context(command_with_different_datetime_formats)
+    context.obj['default_values_from_file']['param1'] = '2001-03-01'
+    context.obj['default_values_from_file']['param2'] = '2017-05-31T17:15:15.123+08:00'
+    context.obj['default_values_from_file']['param3'] = '2017-06-01T06:15:15-07:00'
+    context.obj['default_values_from_file']['param4'] = '2017-12-31T00:15:15.444Z'
+    context.obj['default_values_from_file']['param5'] = '2017-11-30T06:15:15Z'
+    context.obj['default_values_from_file']['param6'] = '1519862400'  # 1 March 2018 00:00:00 UTC
+
+    coalesced_value = oci_cli.cli_util.coalesce_provided_and_default_value(context, 'param1', None, False)
+    assert oci_cli.custom_types.CLI_DATETIME.convert('2001-03-01', None, None) == coalesced_value
+
+    coalesced_value = oci_cli.cli_util.coalesce_provided_and_default_value(context, 'param2', None, False)
+    assert oci_cli.custom_types.CLI_DATETIME.convert('2017-05-31T17:15:15.123+08:00', None, None) == coalesced_value
+
+    coalesced_value = oci_cli.cli_util.coalesce_provided_and_default_value(context, 'param3', None, False)
+    assert oci_cli.custom_types.CLI_DATETIME.convert('2017-06-01T06:15:15-07:00', None, None) == coalesced_value
+
+    coalesced_value = oci_cli.cli_util.coalesce_provided_and_default_value(context, 'param4', None, False)
+    assert oci_cli.custom_types.CLI_DATETIME.convert('2017-12-31T00:15:15.444Z', None, None) == coalesced_value
+
+    coalesced_value = oci_cli.cli_util.coalesce_provided_and_default_value(context, 'param5', None, False)
+    assert oci_cli.custom_types.CLI_DATETIME.convert('2017-11-30T06:15:15Z', None, None) == coalesced_value
+
+    coalesced_value = oci_cli.cli_util.coalesce_provided_and_default_value(context, 'param6', None, False)
+    assert oci_cli.custom_types.CLI_DATETIME.convert('1519862400', None, None) == coalesced_value
+
+
 def set_up_context(command=click.Command('unit-test-command')):
     context_obj = {'default_values_from_file': {}, 'parameter_aliases': {}}
 

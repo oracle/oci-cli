@@ -250,12 +250,17 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help="""The field by which to sort records.""")
 @click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
 @click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def get_domain_records(ctx, from_json, zone_name_or_id, domain, if_none_match, if_modified_since, limit, page, zone_version, rtype, sort_by, sort_order, compartment_id):
+def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, if_none_match, if_modified_since, limit, page, zone_version, rtype, sort_by, sort_order, compartment_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -282,11 +287,31 @@ def get_domain_records(ctx, from_json, zone_name_or_id, domain, if_none_match, i
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     client = cli_util.build_client('dns', ctx)
-    result = client.get_domain_records(
-        zone_name_or_id=zone_name_or_id,
-        domain=domain,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.get_domain_records,
+            zone_name_or_id=zone_name_or_id,
+            domain=domain,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.get_domain_records,
+            limit,
+            page_size,
+            zone_name_or_id=zone_name_or_id,
+            domain=domain,
+            **kwargs
+        )
+    else:
+        result = client.get_domain_records(
+            zone_name_or_id=zone_name_or_id,
+            domain=domain,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -300,12 +325,17 @@ def get_domain_records(ctx, from_json, zone_name_or_id, domain, if_none_match, i
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @click.option('--zone-version', callback=cli_util.handle_optional_param, help="""The version of the zone for which data is requested.""")
 @click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'RRSet'})
 @cli_util.wrap_exceptions
-def get_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_none_match, if_modified_since, limit, page, zone_version, compartment_id):
+def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rtype, if_none_match, if_modified_since, limit, page, zone_version, compartment_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -329,12 +359,34 @@ def get_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_none_match, if
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     client = cli_util.build_client('dns', ctx)
-    result = client.get_rr_set(
-        zone_name_or_id=zone_name_or_id,
-        domain=domain,
-        rtype=rtype,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.get_rr_set,
+            zone_name_or_id=zone_name_or_id,
+            domain=domain,
+            rtype=rtype,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.get_rr_set,
+            limit,
+            page_size,
+            zone_name_or_id=zone_name_or_id,
+            domain=domain,
+            rtype=rtype,
+            **kwargs
+        )
+    else:
+        result = client.get_rr_set(
+            zone_name_or_id=zone_name_or_id,
+            domain=domain,
+            rtype=rtype,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -380,12 +432,17 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 @click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["domain", "rtype", "ttl"]), help="""The field by which to sort records.""")
 @click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
 @click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def get_zone_records(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, limit, page, zone_version, domain, domain_contains, rtype, sort_by, sort_order, compartment_id):
+def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_none_match, if_modified_since, limit, page, zone_version, domain, domain_contains, rtype, sort_by, sort_order, compartment_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -413,10 +470,28 @@ def get_zone_records(ctx, from_json, zone_name_or_id, if_none_match, if_modified
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     client = cli_util.build_client('dns', ctx)
-    result = client.get_zone_records(
-        zone_name_or_id=zone_name_or_id,
-        **kwargs
-    )
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = retry_utils.list_call_get_all_results_with_default_retries(
+            client.get_zone_records,
+            zone_name_or_id=zone_name_or_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+            client.get_zone_records,
+            limit,
+            page_size,
+            zone_name_or_id=zone_name_or_id,
+            **kwargs
+        )
+    else:
+        result = client.get_zone_records(
+            zone_name_or_id=zone_name_or_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 

@@ -7,28 +7,55 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.18 - 2018-03-08
+---------------------
+Added
+~~~~~~~~~~
+* Support for the Email Service. (``oci email``)
+
+    * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_email.py>`_
+
+* Support for the following features in the Core Services:
+
+    * paravirtualized volume attachments (--type option for ``oci compute volume-attachment attach``)
+    * variable size boot volumes (--boot-volume-size-in-gbs option for ``oci compute instance launch``)
+
+* Support for auto-pagination for the Domain Name System Service. (--all, --page-size options for ``oci dns record domain get``, ``oci dns record rrset get``, ``oci dns record zone get``)
+* Support for no-overwrite flag for the object put operation for the Object Service (--no-overwrite for ``oci os object put``).
+
+Fixed
+~~~~~~~~~~
+* Updated config / key file permissions logic on Windows to depend on well known SIDs instead of account / group name to
+  fix localization issues. This affects ``oci setup config``, ``oci setup repair-file-permissions``, and the general
+  config / key file permissions check performed by other commands.
+
 2.4.17 - 2018-02-22
 ---------------------
 Added
 ~~~~~~~~~~
-* Added support for the File Storage Service. (``oci fs``)
-* Added support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb path-route-set``)
-* Added tagging support for *Bucket* resources in the Object Storage Service
+* Support for the File Storage Service. (``oci fs``)
+* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb path-route-set``)
+* Tagging support for *Bucket* resources in the Object Storage Service
+
     * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
     * Update a bucket with tags: ``oci os bucket update --defined-tags --freeform-tags``
     * List buckets and display defined and freeform tags in the results: ``oci os bucket list --fields tags``
-* Added support for specifying a restore period for archived objects in the *RestoreObjects* operation of the Object Storage service. (``oci os object restore --hours``)
-* Added support for filtering by *backupId* in *ListDbSystems* operation in the Database Service (``oci db system list --backup-id``)
-* Added support for getting plink (the `PuTTY <https://www.putty.org/>`_ command line interface) compatible instance console connection string for Windows users (``oci compute instance-console-connection get-plink-connection-string``)
+
+* Support for specifying a restore period for archived objects in the *RestoreObjects* operation of the Object Storage service. (``oci os object restore --hours``)
+* Support for filtering by *backupId* in *ListDbSystems* operation in the Database Service (``oci db system list --backup-id``)
+* Support for getting plink (the `PuTTY <https://www.putty.org/>`_ command line interface) compatible instance console connection string for Windows users (``oci compute instance-console-connection get-plink-connection-string``)
 
 2.4.16 - 2018-02-08
 ---------------------
 Added
 ~~~~~~~~~~
 * Support for Domain Name System Service (oci dns)
+
     * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`_.
+
 * Support for Reserved Public IPs in Virtual Networking Service (oci network public-ip)
 * Support for the following features in Block Storage Service
+
     * Automated and policy-based scheduled backups (oci bv volume-backup-policy | volume-backup-policy-assignment)
     * Read-only volume attachments (--is-read-only option while attaching volume)
     * Incremental backups (--type option while creating a volume backup)
