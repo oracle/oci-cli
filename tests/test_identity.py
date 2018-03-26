@@ -3,6 +3,7 @@
 
 import json
 import pytest
+import tempfile
 import unittest
 from . import command_coverage_validator
 from . import tag_data_container
@@ -26,7 +27,9 @@ class TestIdentity(unittest.TestCase):
     # The operations not called are:
     #   - region list, region-subscription create/list
     #   - tag and tag-namespace operations (x12). These are handled via test_tagging and test_tag_management
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=20)
+    #   - dynamic group operations (create, get, update, delete, list)
+    #   - smtp credential operations (create, update, delete, list) covered in test_email.py
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=24)
     @test_config_container.RecordReplay('identity')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
@@ -178,6 +181,30 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         result = self.invoke(
             ['user', 'api-key', 'delete', '--user-id', self.user_ocid, '--fingerprint', fingerprint, '--force'])
         self.validate_response(result)
+
+        # upload via --key-file
+        f = tempfile.NamedTemporaryFile(delete=False)
+        try:
+            f.write(public_key.encode('UTF-8'))
+            f.close()
+
+            result = self.invoke(
+                ['user', 'api-key', 'upload', '--user-id', self.user_ocid, '--key-file', f.name])
+            self.validate_response(result)
+
+            result = self.invoke(
+                ['user', 'api-key', 'list', '--user-id', self.user_ocid])
+            self.validate_response(result)
+            json_response = json.loads(result.output)
+            assert len(json_response['data']) == 1
+            fingerprint = json_response['data'][0]['fingerprint']
+
+            result = self.invoke(
+                ['user', 'api-key', 'delete', '--user-id', self.user_ocid, '--fingerprint', fingerprint, '--force'])
+            self.validate_response(result)
+        finally:
+            if f:
+                f.close()
 
     def subtest_ui_password_operations(self):
         result = self.invoke(

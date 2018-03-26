@@ -7,9 +7,9 @@ import six
 import sys
 from .generated import identity_cli
 from . import cli_util
+from . import cli_exceptions
 from . import custom_types
 from . import json_skeleton_utils
-from . import retry_utils
 
 identity_cli.identity_group.add_command(identity_cli.availability_domain_group)
 identity_cli.identity_group.add_command(identity_cli.compartment_group)
@@ -19,6 +19,7 @@ identity_cli.identity_group.add_command(identity_cli.group_group)
 identity_cli.identity_group.add_command(identity_cli.policy_group)
 identity_cli.identity_group.add_command(identity_cli.region_group)
 identity_cli.identity_group.add_command(identity_cli.region_subscription_group)
+identity_cli.identity_group.add_command(identity_cli.smtp_credential_group)
 identity_cli.identity_group.add_command(identity_cli.user_group)
 identity_cli.user_group.add_command(identity_cli.api_key_group)
 identity_cli.user_group.add_command(identity_cli.swift_password_group)
@@ -29,6 +30,8 @@ identity_cli.tag_group.commands.pop(identity_cli.update_tag.name)
 
 identity_cli.identity_group.add_command(identity_cli.tag_namespace_group)
 identity_cli.tag_namespace_group.commands.pop(identity_cli.update_tag_namespace.name)
+
+identity_cli.api_key_group.commands.pop(identity_cli.upload_api_key.name)
 
 cli_util.get_param(identity_cli.create_policy, 'version_date').type = click.STRING
 
@@ -78,13 +81,13 @@ def list_groups_for_user(ctx, from_json, compartment_id, user_id, page, limit, a
         if page_size:
             args['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_user_group_memberships,
             compartment_id=compartment_id,
             **args
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_user_group_memberships,
             limit,
             page_size,
@@ -136,13 +139,13 @@ def list_users_for_group(ctx, from_json, compartment_id, group_id, page, limit, 
         if page_size:
             args['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_user_group_memberships,
             compartment_id=compartment_id,
             **args
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_user_group_memberships,
             limit,
             page_size,
@@ -446,3 +449,27 @@ def reactivate_tag_namespace(ctx, **kwargs):
         **service_kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(identity_cli.upload_api_key, params_to_exclude=['key'])
+@identity_cli.api_key_group.command(name='upload', help=identity_cli.upload_api_key.help)
+@click.option('--key', callback=cli_util.handle_optional_param, help="""The public key.  Must be an RSA key in PEM format. Either this option or --key-file must be specified""")
+@click.option('--key-file', type=click.File('r'), callback=cli_util.handle_optional_param, help="""A file containing the public key.  Must be an RSA key in PEM format. Either this option or --key must be specified""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'ApiKey'})
+@cli_util.wrap_exceptions
+def upload_api_key(ctx, **kwargs):
+    if not kwargs.get('key') and not kwargs.get('key_file'):
+        raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Must specify either --key or --key-file.')
+
+    if kwargs.get('key') and kwargs.get('key_file'):
+        raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Cannot specify both --key and --key-file.')
+
+    key_file = kwargs.get('key_file')
+    if key_file:
+        kwargs['key'] = key_file.read()
+
+    # remove this since it wont be recognized by identity_cli.upload_api_key
+    kwargs.pop('key_file')
+
+    ctx.invoke(identity_cli.upload_api_key, **kwargs)

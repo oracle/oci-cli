@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -112,15 +111,25 @@ def compartment_group():
     pass
 
 
+@click.command(cli_util.override('smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""Simple Mail Transfer Protocol (SMTP) credentials are needed to send email through Email Delivery. The SMTP credentials are used for SMTP authentication with the service. The credentials never expire. A user can have up to 2 SMTP credentials at a time.
+
+**Note:** The credential set is always an Oracle-generated SMTP user name and password pair; you cannot designate the SMTP user name or the SMTP password.
+
+For more information, see [Managing User Credentials].""")
+@cli_util.help_option_group
+def smtp_credential_group():
+    pass
+
+
 @click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  \"Defined tags\" must be set up in your tenancy before you can apply them to resources. For more information, see [Managing Tags and Tag Namespaces].""")
 @cli_util.help_option_group
 def tag_group():
     pass
 
 
-@click.command(cli_util.override('dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""An dynamic group defines a matching rule. Every bare metal/vm instance is deployed with an instance certificate. The certificate contains metadata about the instance. It contains the instance OCID and the compartment OCID, along with a few other optional properties. When an API call is made using this instance certificate as the authenticator, the certificate may be matched to one or multiple dynamic groups. Depending on policies written against these dynamic groups, the instance will get access to that API.
+@click.command(cli_util.override('dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""A dynamic group defines a matching rule. Every bare metal or virtual machine instance is deployed with an instance certificate. The certificate contains metadata about the instance. This includes the instance OCID and the compartment OCID, along with a few other optional properties. When an API call is made using this instance certificate as the authenticator, the certificate can be matched to one or multiple dynamic groups. The instance can then get access to the API based on the permissions granted in policies written for the dynamic groups.
 
-This works like regular user/group memebership. But in that case the membership is a static relationship, whereas in dynamic group, the membership of an instance certificate to dynamic groups are determined during runtime.""")
+This works like regular user/group membership. But in that case, the membership is a static relationship, whereas in a dynamic group, the membership of an instance certificate to a dynamic group is determined during runtime. For more information, see [Managing Dynamic Groups].""")
 @cli_util.help_option_group
 def dynamic_group_group():
     pass
@@ -211,7 +220,7 @@ def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user_group_membership, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_user_group_membership(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -232,7 +241,7 @@ You must also specify a *description* for the compartment (although it can be an
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the compartment. [required]""")
-@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy. [required]""")
+@click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy. Avoid entering confidential information. [required]""")
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the compartment during creation. Does not have to be unique, and it's changeable. [required]""")
 @click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -273,7 +282,7 @@ def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_compartment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_compartment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -323,7 +332,7 @@ You must also specify a *description* for the dynamic group (although it can be 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy containing the group. [required]""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed. [required]""")
-@click.option('--matching-rule', callback=cli_util.handle_required_param, help="""The matching rule to dynamically match an instance certificate to this dynamic group [required]""")
+@click.option('--matching-rule', callback=cli_util.handle_required_param, help="""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups]. [required]""")
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the group during creation. Does not have to be unique, and it's changeable. [required]""")
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -357,7 +366,7 @@ def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_dynamic_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -419,7 +428,7 @@ def create_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -487,7 +496,7 @@ def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_identity_provider(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -534,7 +543,7 @@ def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_idp_group_mapping, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_idp_group_mapping(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -582,7 +591,7 @@ New policies take effect typically within 10 seconds.""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""The name you assign to the policy during creation. The name must be unique across all policies in the tenancy and cannot be changed. [required]""")
 @click.option('--statements', callback=cli_util.handle_required_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. [required]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the policy during creation. Does not have to be unique, and it's changeable. [required]""")
-@click.option('--version-date', callback=cli_util.handle_optional_param, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--version-date', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -626,7 +635,7 @@ def create_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -638,7 +647,7 @@ def create_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @region_subscription_group.command(name=cli_util.override('create_region_subscription.command_name', 'create'), help="""Creates a subscription to a region for a tenancy.""")
 @click.option('--region-key', callback=cli_util.handle_required_param, help="""The regions's key.
 
-Allowed values are: - `PHX` - `IAD` - `FRA`
+Allowed values are: - `PHX` - `IAD` - `FRA` - `LHR`
 
 Example: `PHX` [required]""")
 @click.option('--tenancy-id', callback=cli_util.handle_required_param, help="""The OCID of the tenancy. [required]""")
@@ -660,6 +669,32 @@ def create_region_subscription(ctx, from_json, region_key, tenancy_id):
     result = client.create_region_subscription(
         tenancy_id=tenancy_id,
         create_region_subscription_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@smtp_credential_group.command(name=cli_util.override('create_smtp_credential.command_name', 'create'), help="""Creates a new SMTP credential for the specified user. An SMTP credential has an SMTP user name and an SMTP password. You must specify a *description* for the SMTP credential (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSmtpCredential].""")
+@click.option('--description', callback=cli_util.handle_required_param, help="""The description you assign to the SMTP credentials during creation. Does not have to be unique, and it's changeable. [required]""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'SmtpCredential'})
+@cli_util.wrap_exceptions
+def create_smtp_credential(ctx, from_json, description, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+    kwargs = {}
+
+    details = {}
+    details['description'] = description
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_smtp_credential(
+        user_id=user_id,
+        create_smtp_credential_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -833,7 +868,7 @@ def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_user(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -936,7 +971,7 @@ def delete_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, dynamic_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_dynamic_group(dynamic_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -991,7 +1026,7 @@ def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_group(group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1046,7 +1081,7 @@ def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, identity_provider_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_identity_provider(identity_provider_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1130,7 +1165,7 @@ def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_policy(policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1148,6 +1183,35 @@ def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@smtp_credential_group.command(name=cli_util.override('delete_smtp_credential.command_name', 'delete'), help="""Deletes the specified SMTP credential for the specified user.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--smtp-credential-id', callback=cli_util.handle_required_param, help="""The OCID of the SMTP credential. [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_smtp_credential(ctx, from_json, user_id, smtp_credential_id, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_smtp_credential(
+        user_id=user_id,
+        smtp_credential_id=smtp_credential_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1214,7 +1278,7 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, user_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_user(user_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1533,13 +1597,13 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_compartments,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_compartments,
             limit,
             page_size,
@@ -1599,13 +1663,13 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_dynamic_groups,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_dynamic_groups,
             limit,
             page_size,
@@ -1645,13 +1709,13 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_groups,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_groups,
             limit,
             page_size,
@@ -1692,14 +1756,14 @@ def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, comp
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_identity_providers,
             protocol=protocol,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_identity_providers,
             limit,
             page_size,
@@ -1744,13 +1808,13 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_idp_group_mappings,
             identity_provider_id=identity_provider_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_idp_group_mappings,
             limit,
             page_size,
@@ -1792,13 +1856,13 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, li
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_policies,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_policies,
             limit,
             page_size,
@@ -1843,6 +1907,26 @@ def list_regions(ctx, from_json, ):
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_regions(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@smtp_credential_group.command(name=cli_util.override('list_smtp_credentials.command_name', 'list'), help="""Lists the SMTP credentials for the specified user. The returned object contains the credential's OCID, the SMTP user name but not the SMTP password. The SMTP password is returned only upon creation.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[SmtpCredentialSummary]'})
+@cli_util.wrap_exceptions
+def list_smtp_credentials(ctx, from_json, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.list_smtp_credentials(
+        user_id=user_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1896,13 +1980,13 @@ def list_tag_namespaces(ctx, from_json, all_pages, page_size, compartment_id, pa
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_tag_namespaces,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_tag_namespaces,
             limit,
             page_size,
@@ -1945,13 +2029,13 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_tags,
             tag_namespace_id=tag_namespace_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_tags,
             limit,
             page_size,
@@ -1968,7 +2052,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
 
 @user_group_membership_group.command(name=cli_util.override('list_user_group_memberships.command_name', 'list'), help="""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
 
-- You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list.""")
+- You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list. - Although`userId` and `groupId` are not indvidually required, you must set one of them.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
 @click.option('--user-id', callback=cli_util.handle_optional_param, help="""The OCID of the user.""")
 @click.option('--group-id', callback=cli_util.handle_optional_param, help="""The OCID of the group.""")
@@ -1999,13 +2083,13 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_user_group_memberships,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_user_group_memberships,
             limit,
             page_size,
@@ -2045,13 +2129,13 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_users,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_users,
             limit,
             page_size,
@@ -2093,7 +2177,7 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
 @compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help="""Updates the specified compartment's description or name. You can't update the root compartment.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
-@click.option('--name', callback=cli_util.handle_optional_param, help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy.""")
+@click.option('--name', callback=cli_util.handle_optional_param, help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy. Avoid entering confidential information.""")
 @click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2148,7 +2232,7 @@ def update_compartment(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_compartment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_compartment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2196,7 +2280,7 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
 @dynamic_group_group.command(name=cli_util.override('update_dynamic_group.command_name', 'update'), help="""Updates the specified dynamic group.""")
 @click.option('--dynamic-group-id', callback=cli_util.handle_required_param, help="""The OCID of the dynamic group. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.""")
-@click.option('--matching-rule', callback=cli_util.handle_optional_param, help="""The matching rule to dynamically match an instance certificate to this dynamic group""")
+@click.option('--matching-rule', callback=cli_util.handle_optional_param, help="""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups].""")
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2238,7 +2322,7 @@ def update_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dynamic_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_dynamic_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2301,7 +2385,7 @@ def update_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2368,7 +2452,7 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_identity_provider, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_identity_provider(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2427,7 +2511,7 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_idp_group_mapping, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_idp_group_mapping(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2442,7 +2526,7 @@ Policy changes take effect typically within 10 seconds.""")
 @click.option('--policy-id', callback=cli_util.handle_required_param, help="""The OCID of the policy. [required]""")
 @click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
 @click.option('--statements', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of policy statements written in the policy language. See [How Policies Work] and [Common Policies].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--version-date', callback=cli_util.handle_optional_param, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@click.option('--version-date', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""The version of the policy. If null or set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2500,12 +2584,48 @@ def update_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_policy, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@smtp_credential_group.command(name=cli_util.override('update_smtp_credential.command_name', 'update'), help="""Updates the specified SMTP credential's description.""")
+@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
+@click.option('--smtp-credential-id', callback=cli_util.handle_required_param, help="""The OCID of the SMTP credential. [required]""")
+@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the SMTP credential. Does not have to be unique, and it's changeable.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'SmtpCredentialSummary'})
+@cli_util.wrap_exceptions
+def update_smtp_credential(ctx, from_json, user_id, smtp_credential_id, description, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if description is not None:
+        details['description'] = description
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_smtp_credential(
+        user_id=user_id,
+        smtp_credential_id=smtp_credential_id,
+        update_smtp_credential_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2698,7 +2818,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_user, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_user(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

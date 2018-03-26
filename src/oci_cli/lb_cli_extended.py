@@ -7,7 +7,6 @@ import json
 import six  # noqa: F401
 from . import cli_util
 from . import json_skeleton_utils
-from . import retry_utils  # noqa: F401
 from . import custom_types  # noqa: F401
 from .generated import loadbalancer_cli
 
