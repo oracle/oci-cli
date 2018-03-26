@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
-2.4.19 - 2018-03-25
+2.4.19 - 2018-03-26
 ---------------------
 Added
 ~~~~~~~~
