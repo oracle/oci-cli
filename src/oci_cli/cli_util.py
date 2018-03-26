@@ -32,7 +32,7 @@ from cryptography.hazmat.primitives import serialization
 from . import cli_exceptions
 from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
-from oci import exceptions, config
+from oci import exceptions, config, dns, Response
 
 from .version import __version__
 
@@ -178,6 +178,10 @@ def build_client(service_name, ctx):
     # This value is used later by some commands.
     if not ctx.obj['request_id']:
         ctx.obj['request_id'] = str(uuid.uuid4()).replace('-', '').upper()
+
+    # unless the user has explicitly turned off retries using the --no-retry flag, use the default retry strategy
+    if not ctx.obj['no_retry']:
+        kwargs['retry_strategy'] = oci.retry.DEFAULT_RETRY_STRATEGY
 
     # Build the client, then fix up a few properties.
     try:
@@ -817,6 +821,14 @@ def load_context_obj_values_from_defaults(ctx):
     else:
         populate_dict_key_with_default_value(ctx, 'generate_full_command_json_input', click.BOOL, param_name='generate-full-command-json-input')
 
+    if 'no_retry' in ctx.obj:
+        if not ctx.obj['no_retry']:
+            # False for no_retry means not provided, so just load it if there is a default value. If there's nothing there, then this'll be
+            # None, which is still false-y
+            ctx.obj['no_retry'] = get_default_value_from_defaults_file(ctx, 'no_retry', click.BOOL, False)
+    else:
+        populate_dict_key_with_default_value(ctx, 'no_retry', click.BOOL)
+
 
 def populate_dict_key_with_default_value(ctx, key, param_type, param_name=None, param_takes_multiple=False):
     if param_name:
@@ -1202,3 +1214,122 @@ def _try_decode_using_stdout(output):
         return output.decode(sys.stdout.encoding)
     else:
         return output.decode(sys.getdefaultencoding())
+
+
+def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwargs):
+    # If no limit was provided, make a single call
+    if record_limit is None:
+        return list_func_ref(**func_kwargs)
+
+    # If we have a limit, make calls until we get that amount of data
+    keep_paginating = True
+    remaining_items_to_fetch = record_limit
+    call_result = None
+    aggregated_results = []
+    is_dns_record_collection = False
+    dns_record_collection_class = None
+
+    # if the user explicitly sets limit to 0 we will still call the service once with limit=0
+    fetched_at_least_once = False
+    while keep_paginating and (remaining_items_to_fetch > 0 or not fetched_at_least_once):
+        fetched_at_least_once = True
+
+        if page_size:
+            func_kwargs['limit'] = min(page_size, remaining_items_to_fetch)
+        elif 'limit' in func_kwargs:
+            func_kwargs['limit'] = min(func_kwargs['limit'], remaining_items_to_fetch)
+
+        call_result = list_func_ref(**func_kwargs)
+
+        if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
+            is_dns_record_collection = True
+            dns_record_collection_class = call_result.data.__class__
+            aggregated_results.extend(call_result.data.items)
+            remaining_items_to_fetch -= len(call_result.data.items)
+        else:
+            aggregated_results.extend(call_result.data)
+            remaining_items_to_fetch -= len(call_result.data)
+
+        if call_result.next_page is not None:
+            func_kwargs['page'] = call_result.next_page
+
+        keep_paginating = call_result.has_next_page
+
+    # Truncate the list to the first limit items, as potentially we could have gotten more than what the caller asked for
+    if is_dns_record_collection:
+        final_response = Response(
+            call_result.status,
+            call_result.headers,
+            dns_record_collection_class(items=aggregated_results[:record_limit]),
+            call_result.request
+        )
+    else:
+        final_response = Response(call_result.status, call_result.headers, aggregated_results[:record_limit], call_result.request)
+
+    return final_response
+
+
+def list_call_get_all_results(list_func_ref, **func_kwargs):
+    keep_paginating = True
+    call_result = None
+    aggregated_results = []
+    is_dns_record_collection = False
+    dns_record_collection_class = None
+
+    while keep_paginating:
+        call_result = list_func_ref(**func_kwargs)
+        if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
+            is_dns_record_collection = True
+            dns_record_collection_class = call_result.data.__class__
+            aggregated_results.extend(call_result.data.items)
+        else:
+            aggregated_results.extend(call_result.data)
+
+        if call_result.next_page is not None:
+            func_kwargs['page'] = call_result.next_page
+
+        keep_paginating = call_result.has_next_page
+
+    post_processed_results = aggregated_results
+    if 'sort_by' in func_kwargs:
+        if func_kwargs['sort_by'].upper() == 'DISPLAYNAME':
+            sort_direction = 'ASC'
+            if 'sort_order' in func_kwargs:
+                sort_direction = func_kwargs['sort_order'].upper()
+
+            post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'display_name'), reverse=(sort_direction == 'DESC'))
+        elif func_kwargs['sort_by'].upper() == 'TIMECREATED':
+            sort_direction = 'DESC'
+            if 'sort_order' in func_kwargs:
+                sort_direction = func_kwargs['sort_order'].upper()
+
+                post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'time_created'), reverse=(sort_direction == 'DESC'))
+
+    # Most of this is just dummy since we're discarding the intermediate requests
+    if is_dns_record_collection:
+        final_response = Response(
+            call_result.status,
+            call_result.headers,
+            dns_record_collection_class(items=post_processed_results),
+            call_result.request
+        )
+    else:
+        final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
+
+    return final_response
+
+
+# Retrieves an attribute and returns a default value if it doesn't exist. This default be specified as a keyword argument, but if none is given
+# then the method can vend a default value (the min datetime for the time_created field and an empty string otherwise)
+def retrieve_attribute_for_sort(target_obj, attribute_name, **kwargs):
+    getattr_result = getattr(target_obj, attribute_name)
+    if getattr_result is not None:
+        return getattr_result
+
+    if 'default' in kwargs:
+        return kwargs['default']
+
+    if attribute_name == 'time_created':
+        return datetime.datetime.min
+    else:
+        return ''

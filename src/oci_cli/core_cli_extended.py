@@ -18,7 +18,6 @@ from oci.exceptions import MaximumWaitTimeExceeded
 from . import cli_util
 from . import custom_types
 from . import json_skeleton_utils
-from . import retry_utils
 from .aliasing import CommandGroupWithAlias
 
 INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"
@@ -64,6 +63,7 @@ virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.security
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.private_ip_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.public_ip_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.local_peering_gateway_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.remote_peering_connection_group)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)
 virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_ip_address.name)
@@ -367,14 +367,14 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
         if page_size:
             kwargs['limit'] = page_size
 
-        vnic_attachments_result = retry_utils.list_call_get_all_results_with_default_retries(
+        vnic_attachments_result = cli_util.list_call_get_all_results(
             client.list_vnic_attachments,
             compartment_id=compartment_id,
             instance_id=instance_id,
             **kwargs
         )
     elif limit is not None:
-        vnic_attachments_result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        vnic_attachments_result = cli_util.list_call_get_up_to_limit(
             client.list_vnic_attachments,
             limit,
             page_size,
@@ -594,7 +594,7 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                wait_until(compute_client, retry_utils.call_funtion_with_default_retries(compute_client.get_vnic_attachment, vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                wait_until(compute_client, compute_client.get_vnic_attachment(vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -958,3 +958,37 @@ def get_plink_connection_string(ctx, from_json, instance_console_connection_id, 
 
     # print directly to avoid escaping double quotes
     click.echo(connection_string)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.connect_remote_peering_connections, params_to_exclude=['peer_region_name'])
+@virtualnetwork_cli.remote_peering_connection_group.command(name='connect', help="""Connects this RPC to another one in a different region.
+
+This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to RPCs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
+# Below param is not enforced as an enum to allow backward compatibility for old CLIs to support newer regions.
+@click.option('--peer-region-name', callback=cli_util.handle_required_param, help="""The name of the region that contains the RPC you want to peer with.
+
+The region names that could be used are listed here: https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm
+Example: `us-ashburn-1` [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def connect_remote_peering_connections_extended(ctx, **kwargs):
+    try:
+        # Get the valid region list by querying IAM service
+        client = cli_util.build_client('identity', ctx)
+        result = client.list_regions()
+    except Exception:
+        # If the IAM region list call fails, still go ahead with the remote peering connection with the user provided input
+        pass
+    else:
+        # Check if user used the correct region name
+        region_names = [elem.name for elem in result.data]
+        if kwargs['peer_region_name'] not in region_names:
+            click.echo('Please select one of the following Region names and reissue the command:')
+            # Print region names in more legible way with each region on new line
+            for elem in region_names:
+                click.echo('{}'.format(elem))
+            raise click.UsageError('Incorrect Peer Region Name given')
+    ctx.invoke(virtualnetwork_cli.connect_remote_peering_connections, **kwargs)

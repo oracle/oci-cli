@@ -323,7 +323,7 @@ def get_and_list_operations(identity_client, tag_namespace_id, tag_name):
     assert 'updated description' == parsed_result['data']['description']
     assert parsed_result['data']['is-retired']
 
-    result = oci_cli.retry_utils.list_call_get_all_results(identity_client.list_tag_namespaces, 'default', compartment_id=util.COMPARTMENT_ID)
+    result = oci_cli.cli_util.list_call_get_all_results(identity_client.list_tag_namespaces, compartment_id=util.COMPARTMENT_ID)
     filtered_results = list(filter(lambda d: d.id == tag_namespace_id, result.data))
     assert len(filtered_results) == 1
     assert 'updated description' == filtered_results[0].description
@@ -346,7 +346,7 @@ def get_and_list_operations(identity_client, tag_namespace_id, tag_name):
     assert 'updated tag desc' == parsed_result['data']['description']
     assert parsed_result['data']['is-retired']
 
-    result = oci_cli.retry_utils.list_call_get_all_results(identity_client.list_tags, 'default', tag_namespace_id=tag_namespace_id)
+    result = oci_cli.cli_util.list_call_get_all_results(identity_client.list_tags, tag_namespace_id=tag_namespace_id)
     filtered_results = list(filter(lambda d: d.name == tag_name, result.data))
     assert len(filtered_results) == 1
     assert 'updated tag desc' == filtered_results[0].description

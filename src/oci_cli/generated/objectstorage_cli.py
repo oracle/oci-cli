@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -239,7 +238,7 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
 @click.option('--bucket-name', callback=cli_util.handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
 @click.option('--name', callback=cli_util.handle_required_param, help="""A user-specified name for the pre-authenticated request. Helpful for management purposes. [required]""")
 @click.option('--access-type', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["ObjectRead", "ObjectWrite", "ObjectReadWrite", "AnyObjectWrite"]), help="""The operation that can be performed on this resource. [required]""")
-@click.option('--time-expires', callback=cli_util.handle_required_param, type=custom_types.CLI_DATETIME, help="""The expiration date for the pre-authenticated request as per [RFC 3339]. After this date the pre-authenticated request will no longer be valid. [required]""")
+@click.option('--time-expires', callback=cli_util.handle_required_param, type=custom_types.CLI_DATETIME, help="""The expiration date for the pre-authenticated request as per [RFC 3339]. After this date the pre-authenticated request will no longer be valid. [required]""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @click.option('--object-name', callback=cli_util.handle_optional_param, help="""The name of object that is being granted access to by the pre-authenticated request. This can be null and if it is, the pre-authenticated request grants access to the entire bucket.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -615,14 +614,14 @@ def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartme
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_buckets,
             namespace_name=namespace_name,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_buckets,
             limit,
             page_size,
@@ -677,7 +676,7 @@ def list_multipart_upload_parts(ctx, from_json, all_pages, page_size, namespace_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_multipart_upload_parts,
             namespace_name=namespace_name,
             bucket_name=bucket_name,
@@ -686,7 +685,7 @@ def list_multipart_upload_parts(ctx, from_json, all_pages, page_size, namespace_
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_multipart_upload_parts,
             limit,
             page_size,
@@ -740,14 +739,14 @@ def list_multipart_uploads(ctx, from_json, all_pages, page_size, namespace_name,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_multipart_uploads,
             namespace_name=namespace_name,
             bucket_name=bucket_name,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_multipart_uploads,
             limit,
             page_size,
@@ -846,14 +845,14 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_preauthenticated_requests,
             namespace_name=namespace_name,
             bucket_name=bucket_name,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_preauthenticated_requests,
             limit,
             page_size,
@@ -919,6 +918,10 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
     if opc_meta_ is not None:
         kwargs['opc_meta_'] = opc_meta_
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
     client = cli_util.build_client('object_storage', ctx)
     result = client.put_object(
         namespace_name=namespace_name,
@@ -1140,6 +1143,10 @@ def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload
     if content_md5 is not None:
         kwargs['content_md5'] = content_md5
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
     client = cli_util.build_client('object_storage', ctx)
     result = client.upload_part(
         namespace_name=namespace_name,

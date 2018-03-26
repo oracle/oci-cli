@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -17,6 +16,14 @@ from ..aliasing import CommandGroupWithAlias
 @cli.command(cli_util.override('virtual_network_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
 @cli_util.help_option_group
 def virtual_network_group():
+    pass
+
+
+@click.command(cli_util.override('remote_peering_connection_group.command_name', 'remote-peering-connection'), cls=CommandGroupWithAlias, help="""A remote peering connection (RPC) is an object on a DRG that lets the VCN that is attached to the DRG peer with a VCN in a different region. *Peering* means that the two VCNs can communicate using private IP addresses, but without the traffic traversing the internet or routing through your on-premises network. For more information, see [VCN Peering].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def remote_peering_connection_group():
     pass
 
 
@@ -200,6 +207,12 @@ def virtual_circuit_bandwidth_shape_group():
     pass
 
 
+@click.command(cli_util.override('peer_region_for_remote_peering_group.command_name', 'peer-region-for-remote-peering'), cls=CommandGroupWithAlias, help="""Details about a region that supports remote VCN peering. For more information, see [VCN Peering].""")
+@cli_util.help_option_group
+def peer_region_for_remote_peering_group():
+    pass
+
+
 @click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario that uses an Internet Gateway, see [Typical Networking Service Scenarios].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -316,6 +329,38 @@ def connect_local_peering_gateways(ctx, from_json, local_peering_gateway_id, pee
     cli_util.render_response(result, ctx)
 
 
+@remote_peering_connection_group.command(name=cli_util.override('connect_remote_peering_connections.command_name', 'connect'), help="""Connects this RPC to another one in a different region.
+
+This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to RPCs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
+@click.option('--remote-peering-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the remote peering connection (RPC). [required]""")
+@click.option('--peer-id', callback=cli_util.handle_required_param, help="""The OCID of the RPC you want to peer with. [required]""")
+@click.option('--peer-region-name', callback=cli_util.handle_required_param, help="""The name of the region that contains the RPC you want to peer with.
+
+Example: `us-ashburn-1` [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def connect_remote_peering_connections(ctx, from_json, remote_peering_connection_id, peer_id, peer_region_name):
+
+    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+    kwargs = {}
+
+    details = {}
+    details['peerId'] = peer_id
+    details['peerRegionName'] = peer_region_name
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.connect_remote_peering_connections(
+        remote_peering_connection_id=remote_peering_connection_id,
+        connect_remote_peering_connections_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cpe_group.command(name=cli_util.override('create_cpe.command_name', 'create'), help="""Creates a new virtual Customer-Premises Equipment (CPE) object in the specified compartment. For more information, see [IPSec VPNs].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the CPE to reside. Notice that the CPE doesn't have to be in the same compartment as the IPSec connection or other Networking Service components. If you're not sure which compartment to use, put the CPE in the same compartment as the DRG. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
@@ -412,7 +457,7 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_cross_connect(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -460,7 +505,7 @@ def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_cross_connect_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -524,7 +569,7 @@ def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dhcp_options, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_dhcp_options(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -572,7 +617,7 @@ def create_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_drg(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -622,7 +667,7 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_drg_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -678,7 +723,7 @@ def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_internet_gateway, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_internet_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -740,7 +785,7 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_ip_sec_connection, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_ip_sec_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -786,7 +831,7 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_local_peering_gateway, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_local_peering_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -899,7 +944,53 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_public_ip(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remote_peering_connection_group.command(name=cli_util.override('create_remote_peering_connection.command_name', 'create'), help="""Creates a new remote peering connection (RPC) for the specified DRG.""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment to contain the RPC. [required]""")
+@click.option('--drg-id', callback=cli_util.handle_required_param, help="""The OCID of the DRG the RPC belongs to. [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "PROVISIONING", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
+@cli_util.wrap_exceptions
+def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, drg_id, display_name):
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['drgId'] = drg_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_remote_peering_connection(
+        create_remote_peering_connection_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_remote_peering_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -963,7 +1054,7 @@ def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_route_table, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_route_table(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1029,7 +1120,7 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_security_list, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_security_list(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1135,7 +1226,7 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_subnet, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_subnet(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1217,7 +1308,7 @@ def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vcn, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_vcn(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1311,7 +1402,7 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_virtual_circuit, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_virtual_circuit(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1378,7 +1469,7 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect, cross_connect_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_cross_connect(cross_connect_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1433,7 +1524,7 @@ def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect_group, cross_connect_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_cross_connect_group(cross_connect_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1490,7 +1581,7 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dhcp_options, dhcp_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_dhcp_options(dhcp_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1545,7 +1636,7 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg, drg_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_drg(drg_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1600,7 +1691,7 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg_attachment, drg_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_drg_attachment(drg_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1657,7 +1748,7 @@ def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_internet_gateway, ig_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_internet_gateway(ig_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1714,7 +1805,7 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_ip_sec_connection, ipsc_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_ip_sec_connection(ipsc_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1771,7 +1862,7 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_local_peering_gateway, local_peering_gateway_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_local_peering_gateway(local_peering_gateway_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1858,7 +1949,64 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, public_ip_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_public_ip(public_ip_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remote_peering_connection_group.command(name=cli_util.override('delete_remote_peering_connection.command_name', 'delete'), help="""Deletes the remote peering connection (RPC).
+
+This is an asynchronous operation; the RPC's `lifecycleState` changes to TERMINATING temporarily until the RPC is completely removed.""")
+@click.option('--remote-peering-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the remote peering connection (RPC). [required]""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "PROVISIONING", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remote_peering_connection_id, if_match):
+
+    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_remote_peering_connection(
+        remote_peering_connection_id=remote_peering_connection_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_remote_peering_connection(remote_peering_connection_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1915,7 +2063,7 @@ def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_route_table, rt_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_route_table(rt_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1972,7 +2120,7 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_security_list, security_list_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_security_list(security_list_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -2027,7 +2175,7 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_subnet, subnet_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_subnet(subnet_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -2082,7 +2230,7 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vcn, vcn_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_vcn(vcn_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -2139,7 +2287,7 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_virtual_circuit, virtual_circuit_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_virtual_circuit(virtual_circuit_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -2532,6 +2680,26 @@ def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
     cli_util.render_response(result, ctx)
 
 
+@remote_peering_connection_group.command(name=cli_util.override('get_remote_peering_connection.command_name', 'get'), help="""Get the specified remote peering connection's information.""")
+@click.option('--remote-peering-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the remote peering connection (RPC). [required]""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
+@cli_util.wrap_exceptions
+def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
+
+    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_remote_peering_connection(
+        remote_peering_connection_id=remote_peering_connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @route_table_group.command(name=cli_util.override('get_route_table.command_name', 'get'), help="""Gets the specified route table's information.""")
 @click.option('--rt-id', callback=cli_util.handle_required_param, help="""The OCID of the route table. [required]""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2652,6 +2820,21 @@ def get_vnic(ctx, from_json, vnic_id):
     cli_util.render_response(result, ctx)
 
 
+@peer_region_for_remote_peering_group.command(name=cli_util.override('list_allowed_peer_regions_for_remote_peering.command_name', 'list-allowed-peer-regions-for-remote-peering'), help="""Lists the regions that support remote VCN peering (which is peering across regions). For more information, see [VCN Peering].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[PeerRegionForRemotePeering]'})
+@cli_util.wrap_exceptions
+def list_allowed_peer_regions_for_remote_peering(ctx, from_json, ):
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.list_allowed_peer_regions_for_remote_peering(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cpe_group.command(name=cli_util.override('list_cpes.command_name', 'list'), help="""Lists the Customer-Premises Equipment objects (CPEs) in the specified compartment.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
 @click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
@@ -2679,13 +2862,13 @@ def list_cpes(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_cpes,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_cpes,
             limit,
             page_size,
@@ -2741,13 +2924,13 @@ def list_cross_connect_groups(ctx, from_json, all_pages, page_size, compartment_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_cross_connect_groups,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_cross_connect_groups,
             limit,
             page_size,
@@ -2789,13 +2972,13 @@ def list_cross_connect_locations(ctx, from_json, all_pages, page_size, compartme
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_cross_connect_locations,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_cross_connect_locations,
             limit,
             page_size,
@@ -2854,13 +3037,13 @@ def list_cross_connects(ctx, from_json, all_pages, page_size, compartment_id, cr
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_cross_connects,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_cross_connects,
             limit,
             page_size,
@@ -2902,13 +3085,13 @@ def list_crossconnect_port_speed_shapes(ctx, from_json, all_pages, page_size, co
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_crossconnect_port_speed_shapes,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_crossconnect_port_speed_shapes,
             limit,
             page_size,
@@ -2965,14 +3148,14 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_dhcp_options,
             compartment_id=compartment_id,
             vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_dhcp_options,
             limit,
             page_size,
@@ -3022,13 +3205,13 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_drg_attachments,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_drg_attachments,
             limit,
             page_size,
@@ -3070,13 +3253,13 @@ def list_drgs(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_drgs,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_drgs,
             limit,
             page_size,
@@ -3122,13 +3305,13 @@ def list_fast_connect_provider_services(ctx, from_json, all_pages, page_size, co
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_fast_connect_provider_services,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_fast_connect_provider_services,
             limit,
             page_size,
@@ -3175,13 +3358,13 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_fast_connect_provider_virtual_circuit_bandwidth_shapes,
             provider_service_id=provider_service_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_fast_connect_provider_virtual_circuit_bandwidth_shapes,
             limit,
             page_size,
@@ -3238,14 +3421,14 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_internet_gateways,
             compartment_id=compartment_id,
             vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_internet_gateways,
             limit,
             page_size,
@@ -3295,13 +3478,13 @@ def list_ip_sec_connections(ctx, from_json, all_pages, page_size, compartment_id
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_ip_sec_connections,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_ip_sec_connections,
             limit,
             page_size,
@@ -3344,14 +3527,14 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_local_peering_gateways,
             compartment_id=compartment_id,
             vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_local_peering_gateways,
             limit,
             page_size,
@@ -3409,12 +3592,12 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_private_ips,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_private_ips,
             limit,
             page_size,
@@ -3468,14 +3651,14 @@ def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_public_ips,
             scope=scope,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_public_ips,
             limit,
             page_size,
@@ -3486,6 +3669,57 @@ def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id,
     else:
         result = client.list_public_ips(
             scope=scope,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@remote_peering_connection_group.command(name=cli_util.override('list_remote_peering_connections.command_name', 'list'), help="""Lists the remote peering connections (RPCs) for the specified DRG and compartment (the RPC's compartment).""")
+@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
+@click.option('--drg-id', callback=cli_util.handle_optional_param, help="""The OCID of the DRG.""")
+@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[RemotePeeringConnection]'})
+@cli_util.wrap_exceptions
+def list_remote_peering_connections(ctx, from_json, all_pages, page_size, compartment_id, drg_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if drg_id is not None:
+        kwargs['drg_id'] = drg_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_remote_peering_connections,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_remote_peering_connections,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_remote_peering_connections(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -3534,14 +3768,14 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_route_tables,
             compartment_id=compartment_id,
             vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_route_tables,
             limit,
             page_size,
@@ -3600,14 +3834,14 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_security_lists,
             compartment_id=compartment_id,
             vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_security_lists,
             limit,
             page_size,
@@ -3666,14 +3900,14 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_subnets,
             compartment_id=compartment_id,
             vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_subnets,
             limit,
             page_size,
@@ -3731,13 +3965,13 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_vcns,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_vcns,
             limit,
             page_size,
@@ -3779,13 +4013,13 @@ def list_virtual_circuit_bandwidth_shapes(ctx, from_json, all_pages, page_size, 
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_virtual_circuit_bandwidth_shapes,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_virtual_circuit_bandwidth_shapes,
             limit,
             page_size,
@@ -3864,13 +4098,13 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_virtual_circuits,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_virtual_circuits,
             limit,
             page_size,
@@ -3963,7 +4197,7 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_cross_connect(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4013,7 +4247,7 @@ def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_cross_connect_group, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_cross_connect_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4088,7 +4322,7 @@ def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds,
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_dhcp_options, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_dhcp_options(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4138,7 +4372,7 @@ def update_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_drg(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4188,7 +4422,7 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_drg_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_drg_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4244,7 +4478,7 @@ def update_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_internet_gateway, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_internet_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4294,7 +4528,7 @@ def update_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_ip_sec_connection, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_ip_sec_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4344,7 +4578,7 @@ def update_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_local_peering_gateway, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_local_peering_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4476,7 +4710,57 @@ def update_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_public_ip, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_public_ip(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@remote_peering_connection_group.command(name=cli_util.override('update_remote_peering_connection.command_name', 'update'), help="""Updates the specified remote peering connection (RPC).""")
+@click.option('--remote-peering-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the remote peering connection (RPC). [required]""")
+@click.option('--display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "PROVISIONING", "TERMINATING", "TERMINATED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
+@cli_util.wrap_exceptions
+def update_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remote_peering_connection_id, display_name, if_match):
+
+    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_remote_peering_connection(
+        remote_peering_connection_id=remote_peering_connection_id,
+        update_remote_peering_connection_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_remote_peering_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4551,7 +4835,7 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_route_table, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_route_table(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4632,7 +4916,7 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_security_list, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_security_list(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4699,7 +4983,7 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_subnet, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_subnet(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4766,7 +5050,7 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vcn, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_vcn(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4865,7 +5149,7 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_virtual_circuit, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_virtual_circuit(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4927,7 +5211,7 @@ def update_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vnic, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_vnic(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

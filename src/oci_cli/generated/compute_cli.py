@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -135,7 +134,7 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_boot_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -185,7 +184,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vnic_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_vnic_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -237,7 +236,7 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_attachment, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -297,7 +296,7 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_console_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -381,7 +380,7 @@ def create_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_image(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -437,7 +436,7 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance_console_connection, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_instance_console_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -480,7 +479,7 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, instance_console_history_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_console_history(instance_console_history_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -535,7 +534,7 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, image_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_image(image_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -590,7 +589,7 @@ def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance_console_connection, instance_console_connection_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_instance_console_connection(instance_console_connection_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -647,7 +646,7 @@ def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume_attachment, boot_volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_boot_volume_attachment(boot_volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -704,7 +703,7 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_vnic_attachment, vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_vnic_attachment(vnic_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -761,7 +760,7 @@ def detach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_attachment, volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_volume_attachment(volume_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1049,7 +1048,7 @@ def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1203,7 +1202,7 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1248,14 +1247,14 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_boot_volume_attachments,
             availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_boot_volume_attachments,
             limit,
             page_size,
@@ -1320,13 +1319,13 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_console_histories,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_console_histories,
             limit,
             page_size,
@@ -1395,13 +1394,13 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_images,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_images,
             limit,
             page_size,
@@ -1448,13 +1447,13 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_instance_console_connections,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_instance_console_connections,
             limit,
             page_size,
@@ -1517,13 +1516,13 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_instances,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_instances,
             limit,
             page_size,
@@ -1573,13 +1572,13 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_shapes,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_shapes,
             limit,
             page_size,
@@ -1632,13 +1631,13 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_vnic_attachments,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_vnic_attachments,
             limit,
             page_size,
@@ -1693,13 +1692,13 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_volume_attachments,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_volume_attachments,
             limit,
             page_size,
@@ -1755,7 +1754,7 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, instance_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_instance(instance_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1834,7 +1833,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_console_history, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_console_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1903,7 +1902,7 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_image, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_image(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1972,7 +1971,7 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_instance, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

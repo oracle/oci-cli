@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -51,8 +50,8 @@ def get_configuration(ctx, from_json, compartment_id):
 
 @audit_event_group.command(name=cli_util.override('list_events.command_name', 'list-events'), help="""Returns all audit events for the specified compartment that were processed within the specified time range.""")
 @click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment. [required]""")
-@click.option('--start-time', callback=cli_util.handle_required_param, type=custom_types.CLI_DATETIME, help="""Returns events that were processed at or after this start date and time, expressed in [RFC 3339] timestamp format. For example, a start value of `2017-01-15T11:30:00Z` will retrieve a list of all events processed since 30 minutes after the 11th hour of January 15, 2017, in Coordinated Universal Time (UTC). You can specify a value with granularity to the minute. Seconds (and milliseconds, if included) must be set to `0`. [required]""")
-@click.option('--end-time', callback=cli_util.handle_required_param, type=custom_types.CLI_DATETIME, help="""Returns events that were processed before this end date and time, expressed in [RFC 3339] timestamp format. For example, a start value of `2017-01-01T00:00:00Z` and an end value of `2017-01-02T00:00:00Z` will retrieve a list of all events processed on January 1, 2017. Similarly, a start value of `2017-01-01T00:00:00Z` and an end value of `2017-02-01T00:00:00Z` will result in a list of all events processed between January 1, 2017 and January 31, 2017. You can specify a value with granularity to the minute. Seconds (and milliseconds, if included) must be set to `0`. [required]""")
+@click.option('--start-time', callback=cli_util.handle_required_param, type=custom_types.CLI_DATETIME, help="""Returns events that were processed at or after this start date and time, expressed in [RFC 3339] timestamp format. For example, a start value of `2017-01-15T11:30:00Z` will retrieve a list of all events processed since 30 minutes after the 11th hour of January 15, 2017, in Coordinated Universal Time (UTC). You can specify a value with granularity to the minute. Seconds (and milliseconds, if included) must be set to `0`. [required]""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@click.option('--end-time', callback=cli_util.handle_required_param, type=custom_types.CLI_DATETIME, help="""Returns events that were processed before this end date and time, expressed in [RFC 3339] timestamp format. For example, a start value of `2017-01-01T00:00:00Z` and an end value of `2017-01-02T00:00:00Z` will retrieve a list of all events processed on January 1, 2017. Similarly, a start value of `2017-01-01T00:00:00Z` and an end value of `2017-02-01T00:00:00Z` will result in a list of all events processed between January 1, 2017 and January 31, 2017. You can specify a value with granularity to the minute. Seconds (and milliseconds, if included) must be set to `0`. [required]""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous list query.""")
 @click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -68,7 +67,7 @@ def list_events(ctx, from_json, all_pages, compartment_id, start_time, end_time,
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('audit', ctx)
     if all_pages:
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_events,
             compartment_id=compartment_id,
             start_time=start_time,
@@ -120,7 +119,7 @@ def update_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_work_request, result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)

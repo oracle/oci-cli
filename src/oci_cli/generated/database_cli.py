@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -82,7 +81,7 @@ def db_home_group():
 
 @click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""The Database Service supports several types of DB Systems, ranging in size, price, and performance. For details about each type of system, see:
 
-- [Exadata DB Systems] - [Bare Metal or VM DB Systems]
+- [Exadata DB Systems] - [Bare Metal and Virtual Machine DB Systems]
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -137,7 +136,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_backup, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -148,7 +147,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 @data_guard_association_group.command(name=cli_util.override('create_data_guard_association.command_name', 'create'), help="""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
-All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
+All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @click.option('--database-id', callback=cli_util.handle_required_param, help="""The database [OCID]. [required]""")
 @click.option('--creation-type', callback=cli_util.handle_required_param, help="""Specifies where to create the associated database. \"ExistingDbSystem\" is the only supported `creationType` value. [required]""")
 @click.option('--database-admin-password', callback=cli_util.handle_required_param, help="""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
@@ -210,7 +209,7 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_data_guard_association, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_data_guard_association(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -258,7 +257,7 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_home, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -312,7 +311,7 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_node, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_db_node(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -355,7 +354,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_backup, backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_backup(backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -413,7 +412,7 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_home, db_home_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_db_home(db_home_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -798,7 +797,7 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_system, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_db_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -837,12 +836,12 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_backups,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_backups,
             limit,
             page_size,
@@ -883,13 +882,13 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_data_guard_associations,
             database_id=database_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_data_guard_associations,
             limit,
             page_size,
@@ -930,14 +929,14 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_databases,
             compartment_id=compartment_id,
             db_home_id=db_home_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_databases,
             limit,
             page_size,
@@ -982,13 +981,13 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_home_patch_history_entries,
             db_home_id=db_home_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_home_patch_history_entries,
             limit,
             page_size,
@@ -1031,13 +1030,13 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_home_patches,
             db_home_id=db_home_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_home_patches,
             limit,
             page_size,
@@ -1078,14 +1077,14 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_homes,
             compartment_id=compartment_id,
             db_system_id=db_system_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_homes,
             limit,
             page_size,
@@ -1128,14 +1127,14 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_nodes,
             compartment_id=compartment_id,
             db_system_id=db_system_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_nodes,
             limit,
             page_size,
@@ -1180,13 +1179,13 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_system_patch_history_entries,
             db_system_id=db_system_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_system_patch_history_entries,
             limit,
             page_size,
@@ -1229,13 +1228,13 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_system_patches,
             db_system_id=db_system_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_system_patches,
             limit,
             page_size,
@@ -1276,14 +1275,14 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_system_shapes,
             availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_system_shapes,
             limit,
             page_size,
@@ -1328,13 +1327,13 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_systems,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_systems,
             limit,
             page_size,
@@ -1377,13 +1376,13 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_db_versions,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_db_versions,
             limit,
             page_size,
@@ -1436,7 +1435,7 @@ def reinstate_data_guard_association(ctx, from_json, database_id, data_guard_ass
 @click.option('--database-id', callback=cli_util.handle_required_param, help="""The database [OCID]. [required]""")
 @click.option('--database-scn', callback=cli_util.handle_optional_param, help="""Restores using the backup with the System Change Number (SCN) specified.""")
 @click.option('--latest', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Restores to the last known good state with the least possible data loss.""")
-@click.option('--timestamp', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""Restores to the timestamp specified.""")
+@click.option('--timestamp', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""Restores to the timestamp specified.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1541,7 +1540,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_system, db_system_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_db_system(db_system_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1608,7 +1607,7 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_database, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1663,7 +1662,7 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_home, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1730,7 +1729,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_db_system, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_db_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

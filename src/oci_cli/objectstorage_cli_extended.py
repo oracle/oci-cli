@@ -135,9 +135,9 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
     Example:
         oci os object list -ns mynamespace -bn mybucket --fields name,size,timeCreated
     """
-    if all_pages and limit:
+    if all_pages and limit is not None:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
-    elif not all_pages and not limit:
+    elif not all_pages and limit is None:
         limit = 100
 
     client = build_client('object_storage', ctx)
@@ -163,7 +163,12 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 
     remaining_item_count = limit
     keep_paginating_for_all = True
-    while (not all_pages and remaining_item_count > 0) or (all_pages and keep_paginating_for_all):
+
+    # if the user explicitly sets limit to 0 we will still call the service once with limit=0
+    fetched_at_least_once = False
+    while (not all_pages and (remaining_item_count > 0 or not fetched_at_least_once)) or (all_pages and keep_paginating_for_all):
+        fetched_at_least_once = True
+
         if all_pages:
             if page_size:
                 args['limit'] = page_size
@@ -251,6 +256,9 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
     Example:
         oci os object put -ns mynamespace -bn mybucket --name myfile.txt --file /Users/me/myfile.txt --metadata '{"key1":"value1","key2":"value2"}'
     """
+    # explicitly disallow retries for object put because we may not be able to re-read the input source
+    ctx.obj['no_retry'] = True
+
     client = build_client('object_storage', ctx)
 
     client_request_id = ctx.obj['request_id']
@@ -467,6 +475,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     If a file being uploaded already exists in Object Storage, it can be preserved (not overwritten) without a
     prompt by using the --no-overwrite flag.
     """
+    # there is existing retry logic for bulk_put so we don't want the Python SDK level retries to interfere / overlap with that
+    ctx.obj['no_retry'] = True
+
     if include and exclude:
         raise click.UsageError('The --include and --exclude parameters cannot both be provided')
 
@@ -675,7 +686,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
 
     client = build_client('object_storage', ctx)
 
-    head_object = _make_retrying_head_object_call(client, namespace, bucket_name, name, ctx.obj['request_id'])
+    head_object = client.head_object(namespace, bucket_name, name, opc_client_request_id=ctx.obj['request_id'])
     if not head_object:
         raise click.ClickException('The specified object does not exist')
     object_size_bytes = int(head_object.headers['Content-Length'])

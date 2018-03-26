@@ -4,6 +4,8 @@
 import oci_cli
 import oci
 import os
+import six.moves
+import traceback
 from mock import patch
 
 
@@ -102,6 +104,40 @@ def test_auth_instance_principal_env_var_invalid(runner, config_file):
 
     assert result.exit_code != 1
     assert 'Invalid value for OCI_CLI_AUTH' in result.output
+
+
+def test_no_retry_disables_retries(runner, config_file):
+    fake_endpoint = 'https://fakenamenotexist.netcom'
+    result = invoke_example_operation(runner, ['--debug', '--no-retry', '--endpoint', fake_endpoint], config_file)
+    stack_trace = traceback.format_tb(result.exc_info[2])
+    found_make_retrying_call = False
+    for trace in stack_trace:
+        if 'make_retrying_call' in trace:
+            found_make_retrying_call = True
+
+    assert not found_make_retrying_call
+
+
+def test_operation_retries_if_no_retry_not_supplied(runner, config_file):
+    fake_endpoint = 'https://fakenamenotexist.netcom'
+    result = invoke_example_operation(runner, ['--debug', '--endpoint', fake_endpoint], config_file)
+    stack_trace = traceback.format_tb(result.exc_info[2])
+    found_make_retrying_call = False
+    for trace in stack_trace:
+        if 'make_retrying_call' in trace:
+            found_make_retrying_call = True
+
+    assert found_make_retrying_call
+
+
+# This test module interferes when run other modules and we're not mocking. What appears to be happening is that
+# when a test module that contains a @pytest.mark.usefixtures class (this is needed for unittest-based tests as
+# they don't otherwise support py.test fixture injection) is run BEFORE this module and another is run
+# AFTER this module the debug level on HTTP clients is not appropriately reset.
+#
+# This teardown explicitly does this so that we don't get debug output in other tests (which can cause failures)
+def teardown_module(module):
+    six.moves.http_client.HTTPConnection.debuglevel = 0
 
 
 def invoke_example_operation(runner, root_args, config_file):

@@ -215,10 +215,11 @@ This JSON document can be saved to a file, modified with the appropriate option 
 @click.option('--generate-param-json-input', is_eager=True, help="""Complex input, such as arrays and objects, are passed in JSON format.
 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
+@click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, generate_full_command_json_input, generate_param_json_input, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, generate_full_command_json_input, generate_param_json_input, no_retry, debug, help):
     if ctx.command_path == 'bmcs':
         click.echo(click.style(BMCS_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
 
@@ -265,6 +266,7 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         'generate_full_command_json_input': generate_full_command_json_input,
         'generate_param_json_input': generate_param_json_input,
         'debug': debug,
+        'no_retry': no_retry,
         'auth': auth
     }
 

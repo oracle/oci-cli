@@ -207,7 +207,7 @@ def test_move_bucket_to_another_compartment(object_storage_client, runner, confi
     validate_response(result)
 
     # Make sure that the bucket appears in the first compartment
-    all_buckets_response = oci_cli.retry_utils.list_call_get_all_results_with_default_retries(
+    all_buckets_response = oci_cli.cli_util.list_call_get_all_results(
         object_storage_client.list_buckets,
         namespace_name=util.NAMESPACE,
         compartment_id=util.COMPARTMENT_ID
@@ -224,7 +224,7 @@ def test_move_bucket_to_another_compartment(object_storage_client, runner, confi
     assert MOVE_BUCKET_TO_COMPARTMENT_ID == parsed_result['data']['compartment-id']
 
     # Listing the bucket in the old compartment does not show our moved bucket
-    all_buckets_response = oci_cli.retry_utils.list_call_get_all_results_with_default_retries(
+    all_buckets_response = oci_cli.cli_util.list_call_get_all_results(
         object_storage_client.list_buckets,
         namespace_name=util.NAMESPACE,
         compartment_id=util.COMPARTMENT_ID
@@ -232,7 +232,7 @@ def test_move_bucket_to_another_compartment(object_storage_client, runner, confi
     assert_bucket_in_list(bucket_name, all_buckets_response.data, invert=True)
 
     # The moved bucket appears in the target compartment
-    all_buckets_response = oci_cli.retry_utils.list_call_get_all_results_with_default_retries(
+    all_buckets_response = oci_cli.cli_util.list_call_get_all_results(
         object_storage_client.list_buckets,
         namespace_name=util.NAMESPACE,
         compartment_id=MOVE_BUCKET_TO_COMPARTMENT_ID

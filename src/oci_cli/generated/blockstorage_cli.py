@@ -9,7 +9,6 @@ import sys  # noqa: F401
 from ..cli_root import cli
 from .. import cli_util
 from .. import json_skeleton_utils
-from .. import retry_utils  # noqa: F401
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
@@ -131,7 +130,7 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -193,7 +192,7 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_backup, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_volume_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -259,7 +258,7 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume, boot_volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_boot_volume(boot_volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -314,7 +313,7 @@ def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume, volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_volume(volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -369,7 +368,7 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_backup, volume_backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+                oci.wait_until(client, client.get_volume_backup(volume_backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -569,14 +568,14 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_boot_volumes,
             availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_boot_volumes,
             limit,
             page_size,
@@ -619,12 +618,12 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_volume_backup_policies,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_volume_backup_policies,
             limit,
             page_size,
@@ -681,13 +680,13 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_volume_backups,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_volume_backups,
             limit,
             page_size,
@@ -750,13 +749,13 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
         if page_size:
             kwargs['limit'] = page_size
 
-        result = retry_utils.list_call_get_all_results_with_default_retries(
+        result = cli_util.list_call_get_all_results(
             client.list_volumes,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
-        result = retry_utils.list_call_get_up_to_limit_with_default_retries(
+        result = cli_util.list_call_get_up_to_limit(
             client.list_volumes,
             limit,
             page_size,
@@ -812,7 +811,7 @@ def update_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_boot_volume, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_boot_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -879,7 +878,7 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -946,7 +945,7 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, retry_utils.call_funtion_with_default_retries(client.get_volume_backup, result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_volume_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

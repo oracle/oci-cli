@@ -22,7 +22,7 @@ def test_sender_crud(runner, config_file, config_profile):
     sender_id = None
     try:
         params = [
-            'sender', 'create',
+            'email', 'sender', 'create',
             '--email-address', util.random_name('clisender', insert_underscore=False) + '@oracle.com',
             '--compartment-id', util.COMPARTMENT_ID
         ]
@@ -34,7 +34,7 @@ def test_sender_crud(runner, config_file, config_profile):
         util.wait_until(['email', 'sender', 'get', '--sender-id', sender_id], 'ACTIVE', max_wait_seconds=600)
 
         params = [
-            'sender', 'list',
+            'email', 'sender', 'list',
             '-c', util.COMPARTMENT_ID
         ]
 
@@ -44,7 +44,7 @@ def test_sender_crud(runner, config_file, config_profile):
     finally:
         if sender_id:
             params = [
-                'sender', 'delete',
+                'email', 'sender', 'delete',
                 '--sender-id', sender_id,
                 '--force'
             ]
@@ -58,7 +58,7 @@ def test_suppression_crud(runner, config_file):
     suppression_id = None
     try:
         params = [
-            'suppression', 'create',
+            'email', 'suppression', 'create',
             '--email-address', util.random_name('cli_suppression_email', insert_underscore=False) + '@oracle.com',
             '--compartment-id', util.TENANT_ID
         ]
@@ -68,7 +68,7 @@ def test_suppression_crud(runner, config_file):
         suppression_id = json.loads(result.output)['data']['id']
 
         params = [
-            'suppression', 'get',
+            'email', 'suppression', 'get',
             '--suppression-id', suppression_id
         ]
 
@@ -76,7 +76,7 @@ def test_suppression_crud(runner, config_file):
         util.validate_response(result)
 
         params = [
-            'suppression', 'list',
+            'email', 'suppression', 'list',
             '-c', util.TENANT_ID
         ]
 
@@ -86,8 +86,53 @@ def test_suppression_crud(runner, config_file):
     finally:
         if suppression_id:
             params = [
-                'suppression', 'delete',
+                'email', 'suppression', 'delete',
                 '--suppression-id', suppression_id,
+                '--force'
+            ]
+
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+
+def test_smtp_credential(runner, config_file, config_profile):
+    smtp_credential_id = None
+    try:
+        params = [
+            'iam', 'smtp-credential', 'create',
+            '--user-id', util.USER_ID,
+            '--description', 'Test SMTP credentials for CLI user'
+        ]
+
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+        smtp_credential_id = json.loads(result.output)['data']['id']
+
+        params = [
+            'iam', 'smtp-credential', 'update',
+            '--smtp-credential-id', smtp_credential_id,
+            '--user-id', util.USER_ID,
+            '--description', 'Updated Test SMTP credentials for CLI user'
+        ]
+
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+        assert 'Updated' in json.loads(result.output)['data']['description']
+
+        params = [
+            'iam', 'smtp-credential', 'list',
+            '--user-id', util.USER_ID
+        ]
+
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+        assert len(json.loads(result.output)['data']) > 0
+    finally:
+        if smtp_credential_id:
+            params = [
+                'iam', 'smtp-credential', 'delete',
+                '--smtp-credential-id', smtp_credential_id,
+                '--user-id', util.USER_ID,
                 '--force'
             ]
 
@@ -98,8 +143,8 @@ def test_suppression_crud(runner, config_file):
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
     root_params = root_params or []
     if debug is True:
-        result = runner.invoke(oci_cli.cli, root_params + ['--debug', '--config-file', config_file, '--profile', config_profile, 'email'] + params, ** args)
+        result = runner.invoke(oci_cli.cli, root_params + ['--debug', '--config-file', config_file, '--profile', config_profile] + params, ** args)
     else:
-        result = runner.invoke(oci_cli.cli, root_params + ['--config-file', config_file, '--profile', config_profile, 'email'] + params, ** args)
+        result = runner.invoke(oci_cli.cli, root_params + ['--config-file', config_file, '--profile', config_profile] + params, ** args)
 
     return result
