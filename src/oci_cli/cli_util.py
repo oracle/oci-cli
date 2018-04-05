@@ -132,6 +132,8 @@ CLOCK_SKEW_WARNING_THRESHOLD_MINUTES = 5
 
 MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
 
+LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports pagination and not all resources were returned.  Re-run using the --all option to auto paginate and list all resources."
+
 
 def override(key, default):
     return OVERRIDES.get(key, default)
@@ -304,6 +306,19 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                     if key is not 'data':
                         click.echo('{}: {}'.format(key, display_dictionary[key]), file=sys.stderr)
 
+    # print out a notice if not all results were returned, and the operation supports the --all parameter
+    if headers and headers.get('opc-next-page'):
+        has_all_param = False
+        if ctx.command.params:
+            for param in ctx.command.params:
+                if param.name == 'all_pages':
+                    has_all_param = True
+                    break
+
+        if has_all_param:
+            notice = LIST_NOT_ALL_ITEMS_RETURNED_WARNING
+            click.echo(click.style(notice, fg='red'), file=sys.stderr)
+
 
 def print_table(data):
     table_data = []
@@ -427,6 +442,13 @@ def wrap_exceptions(func):
 
             if 'missing_required_parameters' in ctx.obj:
                 raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option(s) --{}.'.format(', --'.join(ctx.obj['missing_required_parameters'])))
+
+            # check this AFTER checking for required params
+            # if there are missing required params we want to show that notice, not prompt the user for deletion confirmation
+            if 'prompt_for_deletion' in ctx.obj and ctx.obj['prompt_for_deletion']:
+                value = click.confirm("Are you sure you want to delete this resource?")
+                if not value:
+                    ctx.abort()
 
             func(ctx, *args, **kwargs)
         except exceptions.ServiceError as exception:
@@ -681,11 +703,8 @@ def confirmation_callback(ctx, param, value):
     if not ctx.obj['generate_full_command_json_input'] and not ctx.obj['generate_param_json_input']:
         # if --force was supplied we don't want to prompt
         if not value:
-            value = click.confirm("Are you sure you want to delete this resource?")
-            if not value:
-                ctx.abort()
-
-            return value
+            # propmt for deletion after reading ALL params, because it is unnecessary if we are missing required params
+            ctx.obj['prompt_for_deletion'] = True
 
 
 confirm_delete_option = click.option(
@@ -1111,9 +1130,9 @@ def warn_on_invalid_file_permissions(filepath):
     if is_windows():
         windows_warn_on_invalid_file_permissions(filepath)
     else:
-        # validate that permissions are user RW only (600)
-        user_rw_perms = oct(384)  # 600
-        if not oct(stat.S_IMODE(os.lstat(filepath).st_mode)) == user_rw_perms:
+        # validate that permissions are user R or RW only (400 or 600)
+        unwanted_perms = 127  # octal 177
+        if (stat.S_IMODE(os.lstat(filepath).st_mode) & unwanted_perms):
             warning = 'WARNING: Permissions on {filepath} are too open. To fix this please execute the following command: oci setup repair-file-permissions --file {filepath} '.format(filepath=filepath)
             click.echo(click.style(warning, fg='red'), file=sys.stderr)
 
@@ -1194,18 +1213,83 @@ def handle_optional_param(ctx, param, value):
     return _coalesce_param(ctx, param, value, False)
 
 
-def _coalesce_param(ctx, param, value, required):
+def handle_param_with_default(required, default):
+    def internal_handle_param(ctx, param, value):
+        return _coalesce_param(ctx, param, value, required, explicit_default=default)
+
+    return internal_handle_param
+
+
+def _coalesce_param(ctx, param, value, required, explicit_default=None):
+    # if value is populated (from an explicit argument), use that
+    # options with multiple=True with no value explicitly given will be passed as '()' so in that case we want to check defaults file
+    if value is not None and value != ():
+        return value
+
     hyphenated_param_name = param.name.replace('_', '-')
     try:
+        value = None
         if isinstance(param.type, click.types.File) and value is None:
-            return get_click_file_from_default_values_file(ctx, hyphenated_param_name, param.type.mode, required)
+            value = get_click_file_from_default_values_file(ctx, hyphenated_param_name, param.type.mode, required)
         else:
-            return coalesce_provided_and_default_value(ctx, hyphenated_param_name, value, required)
+            value = coalesce_provided_and_default_value(ctx, hyphenated_param_name, value, required)
+
+        if value is None and explicit_default is not None:
+            value = explicit_default
+
+        return value
     except cli_exceptions.RequiredValueNotInDefaultOrUserInputError:
+        # if there is an explicit default then its not missing so just return explicit_default
+        if explicit_default is not None:
+            return explicit_default
+
         if 'missing_required_parameters' not in ctx.obj:
             ctx.obj['missing_required_parameters'] = []
 
         ctx.obj['missing_required_parameters'].append(hyphenated_param_name)
+
+
+def option(*param_decls, **attrs):
+    """Attaches an option to the command.  All positional arguments are
+    passed as parameter declarations to :class:`Option`; all keyword
+    arguments are forwarded unchanged (except ``cls``).
+    This is equivalent to creating an :class:`Option` instance manually
+    and attaching it to the :attr:`Command.params` list.
+
+    :param cls: the option class to instantiate.  This defaults to
+                :class:`Option`.
+    """
+    def decorator(f):
+        default = None
+        # remove default from option declaration because it will override defaults file
+        if 'default' in attrs:
+            default = attrs['default']
+            del attrs['default']
+
+            # add default value to help text
+            if 'help' in attrs and 'show_default' in attrs and attrs['show_default']:
+                spacer = '' if attrs['help'].endswith(' ') else ' '
+                attrs['help'] = '{}{}{}'.format(attrs['help'], spacer, '[default: {}]'.format(str(default)))
+
+        required = False
+        if 'required' in attrs and attrs['required'] and 'help' in attrs:
+            required = True
+            # add [required] to help text for this param
+            if 'help' in attrs:
+                spacer = '' if attrs['help'].endswith(' ') else ' '
+                attrs['help'] = '{}{}{}'.format(attrs['help'], spacer, '[required]')
+
+            # for click purposes mark everything as optional so our default file lookup logic still has a chance to run
+            del attrs['required']
+
+        # don't allow 'callback' because it will conflict with the required / optional param callback we add
+        if 'callback' in attrs:
+            raise ValueError('Cannot specify callback function for option, conflicts with default callback.')
+
+        attrs.setdefault('callback', handle_param_with_default(required, default))
+
+        return click.option(*param_decls, **attrs)(f)
+    return decorator
 
 
 # Decodes a byte string using stdout's encoding if we can get it, otherwise decode using the Python default

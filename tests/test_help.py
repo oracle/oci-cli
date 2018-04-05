@@ -3,9 +3,9 @@
 
 import io
 import unittest
-from click.testing import CliRunner
 from . import util
 import oci_cli
+from .conftest import runner
 
 help_template = u"""
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -17,7 +17,7 @@ $ oci {cmd}
 class TestHelp(unittest.TestCase):
 
     def setUp(self):
-        self.runner = CliRunner()
+        self.runner = runner()
         self.output_file = 'tests/output/inline_help_dump.txt'
 
     def test_help_on_all_commands(self):

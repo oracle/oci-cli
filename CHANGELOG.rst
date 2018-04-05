@@ -7,6 +7,22 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a
 Changelog <http://keepachangelog.com/>`__.
 
+2.4.20 - 2018-04-05
+---------------------
+Added
+~~~~~~~~
+* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/scale_vm_example.sh>`_
+* A warning message informing use of ``--all`` flag to get all items during list operations.
+
+Fixed
+~~~~~~~~
+* Multipart bulk download to correctly enable downloads as per size thresholds set by the user.
+* Check all required parameters are present before prompting for deleting resource
+
+Changed
+~~~~~~~~
+* Use root compartment OCID (tenancy OCID) as default value for --compartment-id  in ``oci iam compartment list`` command.
+
 2.4.19 - 2018-03-26
 ---------------------
 Added

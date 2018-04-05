@@ -50,12 +50,12 @@ identity_cli.list_tag_namespaces.short_help = 'List the tagNamespaces in a compa
 
 
 @identity_cli.user_group.command(name='list-groups', help="""Lists the groups for which the specified user is a member. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -106,14 +106,14 @@ def list_groups_for_user(ctx, from_json, compartment_id, user_id, page, limit, a
 
 
 @identity_cli.group_group.command(name='list-users', help="""Lists the users in the specified group. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param,
-              help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
-@click.option('--page', callback=cli_util.handle_optional_param,
-              help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--limit', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--compartment-id', required=True,
+                 help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--group-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--page',
+                 help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -164,8 +164,8 @@ def list_users_for_group(ctx, from_json, compartment_id, group_id, page, limit, 
 
 
 @identity_cli.group_group.command(name='add-user', help="""Adds the specified user to the specified group.""")
-@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
-@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--group-id', required=True, help="""The OCID of the group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -179,10 +179,10 @@ def add_user_to_group(ctx, from_json, user_id, group_id):
 
 
 @identity_cli.group_group.command(name='remove-user', help="""Removes a user from a group.""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment). [required]""")
-@click.option('--user-id', callback=cli_util.handle_required_param, help="""The OCID of the user. [required]""")
-@click.option('--group-id', callback=cli_util.handle_required_param, help="""The OCID of the group. [required]""")
-@click.option("--force", callback=cli_util.handle_optional_param, is_flag=True, help="Perform removal without prompting for confirmation.")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--group-id', required=True, help="""The OCID of the group.""")
+@cli_util.option("--force", is_flag=True, help="Perform removal without prompting for confirmation.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -207,14 +207,14 @@ def remove_user_from_group(ctx, from_json, compartment_id, user_id, group_id, fo
 @identity_cli.policy_group.command(name='update', help="""Updates the specified policy. You can update the description or the policy statements themselves.
 
 Policy changes take effect typically within 10 seconds.""")
-@click.option('--policy-id', callback=cli_util.handle_required_param, help="""The OCID of the policy. [required]""")
-@click.option('--description', callback=cli_util.handle_optional_param, help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
-@click.option('--statements', callback=cli_util.handle_optional_param, help="""A JSON array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. Example: '["statement 1","statement 2"]' (The single quotes are required.)""")
-@click.option('--version-date', callback=cli_util.handle_optional_param, help="""The version of the policy. If set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
-@click.option('--freeform-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--defined-tags', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--policy-id', required=True, help="""The OCID of the policy.""")
+@cli_util.option('--description', help="""The description you assign to the policy. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--statements', help="""A JSON array of policy statements written in the policy language. See [How Policies Work] and [Common Policies]. Example: '["statement 1","statement 2"]' (The single quotes are required.)""")
+@cli_util.option('--version-date', help="""The version of the policy. If set to an empty string, when a request comes in for authorization, the policy will be evaluated according to the current behavior of the services at that moment. If set to a particular date (YYYY-MM-DD), the policy will be evaluated according to the behavior of the services on that date.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'statements': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
@@ -453,8 +453,8 @@ def reactivate_tag_namespace(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(identity_cli.upload_api_key, params_to_exclude=['key'])
 @identity_cli.api_key_group.command(name='upload', help=identity_cli.upload_api_key.help)
-@click.option('--key', callback=cli_util.handle_optional_param, help="""The public key.  Must be an RSA key in PEM format. Either this option or --key-file must be specified""")
-@click.option('--key-file', type=click.File('r'), callback=cli_util.handle_optional_param, help="""A file containing the public key.  Must be an RSA key in PEM format. Either this option or --key must be specified""")
+@cli_util.option('--key', help="""The public key.  Must be an RSA key in PEM format. Either this option or --key-file must be specified""")
+@cli_util.option('--key-file', type=click.File('r'), help="""A file containing the public key.  Must be an RSA key in PEM format. Either this option or --key must be specified""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'ApiKey'})
 @cli_util.wrap_exceptions
@@ -473,3 +473,27 @@ def upload_api_key(ctx, **kwargs):
     kwargs.pop('key_file')
 
     ctx.invoke(identity_cli.upload_api_key, **kwargs)
+
+
+# Below change assumes the default compartment ID for 'oci iam compartment list' is tenancy OCID.
+# It is ONLY done for the case where the user does not have a default compartment OCID in
+# the config file and does not mention any compartment ID as part of the command param. In this case,
+# it is safe to assume that the user wants a list of all compartments in his tenancy i.e. root compartment.
+# If the user sets the compartment ID in any other way, that will take priority over this default used.
+@cli_util.copy_params_from_generated_command(identity_cli.list_compartments, params_to_exclude=['compartment_id'])
+@identity_cli.compartment_group.command(name='list', help="""Lists the compartments in your tenancy if no compartment is specified. If a compartment OCID is specified, it lists the compartments within that compartment.
+Since there is no compartment nesting supported currently, the only current choice for compartment OCID parameter is to mention tenancy OCID i.e. root compartment. See [Where to Get the Tenancy's OCID and User's OCID].""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
+@cli_util.wrap_exceptions
+def list_compartments_extended(ctx, **kwargs):
+    if 'compartment_id' not in kwargs or kwargs['compartment_id'] is None:
+        # If config file is not found, allow the command to be invoked
+        try:
+            client_config = cli_util.build_config(ctx.obj)
+            kwargs['compartment_id'] = client_config['tenancy']
+        except Exception:
+            pass
+
+    ctx.invoke(identity_cli.list_compartments, **kwargs)

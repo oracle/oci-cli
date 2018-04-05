@@ -247,6 +247,7 @@ def test_get_multipart(object_storage_client):
     util.create_large_file(os.path.join(large_file_root_dir, '3.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '4.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '5.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
+    util.create_large_file(os.path.join(large_file_root_dir, '6.bin'), 1)  # Creates a 1 MiB file for variety
 
     invoke([
         'os', 'object', 'bulk-upload',
@@ -259,12 +260,13 @@ def test_get_multipart(object_storage_client):
 
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--download-dir', large_file_verify_dir, '--multipart-download-threshold', '128'])
 
-    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 5
+    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 6
     assert filecmp.cmp(os.path.join(large_file_root_dir, '1.bin'), os.path.join(large_file_verify_dir, '1.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '2.bin'), os.path.join(large_file_verify_dir, '2.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '3.bin'), os.path.join(large_file_verify_dir, '3.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '4.bin'), os.path.join(large_file_verify_dir, '4.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '5.bin'), os.path.join(large_file_verify_dir, '5.bin'))
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '6.bin'), os.path.join(large_file_verify_dir, '6.bin'))
 
     shutil.rmtree(large_file_root_dir)
     shutil.rmtree(large_file_verify_dir)

@@ -14,13 +14,13 @@ from .aliasing import CommandGroupWithAlias
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
 @database_cli.database_group.command(name='create', help="""Creates a new database in the given DB System.""")
-@click.option('--admin-password', callback=cli_util.handle_required_param, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. [required]""")
-@click.option('--character-set', callback=cli_util.handle_optional_param, help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
-@click.option('--db-name', callback=cli_util.handle_required_param, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. [required]""")
-@click.option('--db-workload', callback=cli_util.handle_optional_param, help="""Database workload type. Allowed values are: OLTP, DSS""")
-@click.option('--ncharacter-set', callback=cli_util.handle_optional_param, help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
-@click.option('--pdb-name', callback=cli_util.handle_optional_param, help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
-@click.option('--db-version', callback=cli_util.handle_required_param, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'. [required]""")
+@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
+@cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
+@cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
+@cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -78,9 +78,9 @@ def create_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
 @database_cli.database_group.command(name='create-from-backup', help="""Creates a new database in the given DB System from a backup.""")
-@click.option('--admin-password', callback=cli_util.handle_required_param, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. [required]""")
-@click.option('--backup-id', callback=cli_util.handle_required_param, help="""The backup OCID.  [required]""")
-@click.option('--backup-tde-password', callback=cli_util.handle_required_param, help="""The password to open the TDE wallet.  [required]""")
+@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
+@cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -127,7 +127,7 @@ def create_database_from_backup(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config'])
 @database_cli.database_group.command(name='update', help="""Update a Database based on the request parameters you provide.""")
-@click.option('--auto-backup-enabled', callback=cli_util.handle_optional_param, type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
+@cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
@@ -144,9 +144,9 @@ def update_database_extended(ctx, **kwargs):
 
 
 @database_cli.database_group.command(name='patch', help="""Perform a patch action for a given patch and database.""")
-@click.option('--database-id', callback=cli_util.handle_required_param, help="""The OCID of the database.""")
-@click.option('--patch-action', callback=cli_util.handle_required_param, help="""The action to perform on the patch.""")
-@click.option('--patch-id', callback=cli_util.handle_required_param, help="""The OCID of the patch.""")
+@cli_util.option('--database-id', required=True, help="""The OCID of the database.""")
+@cli_util.option('--patch-action', required=True, help="""The action to perform on the patch.""")
+@cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
 @click.pass_context
 @json_skeleton_utils.get_cli_json_input_option({})
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
@@ -176,7 +176,7 @@ def patch_database(ctx, **kwargs):
 
 
 @database_cli.database_group.command(name='delete', help="""Deletes a database.""")
-@click.option('--database-id', callback=cli_util.handle_required_param, help="""The OCID of the database to delete.""")
+@cli_util.option('--database-id', required=True, help="""The OCID of the database to delete.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -283,14 +283,14 @@ def db_node_reset(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system, params_to_exclude=['db_home', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system.help)
-@click.option('--admin-password', callback=cli_util.handle_required_param, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. [required]""")
-@click.option('--character-set', callback=cli_util.handle_optional_param, help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
-@click.option('--db-name', callback=cli_util.handle_required_param, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. [required]""")
-@click.option('--db-version', callback=cli_util.handle_required_param, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'. [required]""")
-@click.option('--db-workload', callback=cli_util.handle_optional_param, help="""Database workload type. Allowed values are: OLTP, DSS""")
-@click.option('--ncharacter-set', callback=cli_util.handle_optional_param, help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
-@click.option('--pdb-name', callback=cli_util.handle_optional_param, help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
-@click.option('--ssh-authorized-keys-file', callback=cli_util.handle_optional_param, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters. [required]""")
+@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
+@cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
+@cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
+@cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
+@cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -341,9 +341,9 @@ def launch_db_system_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version'])
 @database_cli.db_system_group.command(name='update', help=database_cli.update_db_system.help)
-@click.option('--patch-action', callback=cli_util.handle_optional_param, help="""The action to perform on the patch.""")
-@click.option('--patch-id', callback=cli_util.handle_optional_param, help="""The OCID of the patch.""")
-@click.option('--ssh-authorized-keys-file', callback=cli_util.handle_optional_param, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--patch-action', help="""The action to perform on the patch.""")
+@cli_util.option('--patch-id', help="""The OCID of the patch.""")
+@cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -373,9 +373,9 @@ def update_db_system_extended(ctx, **kwargs):
 
 
 @database_cli.db_system_group.command(name='patch', help="""Perform an action on a Patch for a DB System.""")
-@click.option('--db-system-id', callback=cli_util.handle_required_param, help="""The OCID of the DB System.""")
-@click.option('--patch-action', callback=cli_util.handle_required_param, help="""The action to perform on the patch.""")
-@click.option('--patch-id', callback=cli_util.handle_required_param, help="""The OCID of the patch.""")
+@cli_util.option('--db-system-id', required=True, help="""The OCID of the DB System.""")
+@cli_util.option('--patch-action', required=True, help="""The action to perform on the patch.""")
+@cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
 @click.pass_context
 @cli_util.help_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -409,7 +409,7 @@ def create_data_guard_association_group():
 @create_data_guard_association_group.command('from-existing-db-system', help="""Creates a new Data Guard association using an existing DB System.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructue resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
-@click.option('--peer-db-system-id', callback=cli_util.handle_required_param, help="""The OCID of the DB System to create the standby database on. [required]""")
+@cli_util.option('--peer-db-system-id', required=True, help="""The OCID of the DB System to create the standby database on.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
@@ -458,7 +458,7 @@ def patch_history_list_group():
 
 @cli_util.copy_params_from_generated_command(database_cli.get_db_home_patch, params_to_exclude=['db_home_id'])
 @patch_get_group.command('by-database', help="""Get patch for a given database""")
-@click.option('--database-id', callback=cli_util.handle_required_param, help="""The database [OCID]. [required]""")
+@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Patch'})
 @cli_util.wrap_exceptions
@@ -476,7 +476,7 @@ def get_patch_by_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.list_db_home_patches, params_to_exclude=['db_home_id'])
 @patch_list_group.command('by-database', help="""List patches for a given database""")
-@click.option('--database-id', callback=cli_util.handle_required_param, help="""The database [OCID]. [required]""")
+@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchSummary]'})
@@ -495,7 +495,7 @@ def list_patch_by_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.get_db_home_patch_history_entry, params_to_exclude=['db_home_id'])
 @patch_history_get_group.command('by-database', help="""Get patch history for a given database""")
-@click.option('--database-id', callback=cli_util.handle_required_param, help="""The database [OCID]. [required]""")
+@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PatchHistoryEntry'})
 @cli_util.wrap_exceptions
@@ -513,7 +513,7 @@ def get_patch_history_entry_by_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.list_db_home_patch_history_entries, params_to_exclude=['db_home_id'])
 @patch_history_list_group.command('by-database', help="""List patch history entries for a given database""")
-@click.option('--database-id', callback=cli_util.handle_required_param, help="""The database [OCID]. [required]""")
+@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchHistoryEntrySummary]'})

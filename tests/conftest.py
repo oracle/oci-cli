@@ -11,6 +11,7 @@ from oci_cli import cli_util
 from . import tag_data_container
 from . import test_config_container
 
+import click
 import datetime
 import oci
 import os
@@ -84,7 +85,26 @@ def config(config_file, config_profile):
 
 @pytest.fixture(scope="session")
 def runner():
-    return CliRunner()
+    # click does not distinguish between stdout and stderr in Result.output so we are wrapping invoke to strip out common stderr warnings
+    # this allows the output to be json parseable which many tests expect
+    cli_runner = CliRunner()
+    old_invoke = cli_runner.invoke
+
+    def invoke(*args, **kwargs):
+        result = old_invoke(*args, **kwargs)
+        if result.output and cli_util.LIST_NOT_ALL_ITEMS_RETURNED_WARNING in result.output:
+            cleaned_output = result.output.replace(cli_util.LIST_NOT_ALL_ITEMS_RETURNED_WARNING, '')
+            try:
+                new_output_bytes = bytes(cleaned_output, result.runner.charset)
+            except TypeError:
+                new_output_bytes = cleaned_output
+            finally:
+                result = click.testing.Result(result.runner, new_output_bytes, result.exit_code, result.exception, result.exc_info)
+
+        return result
+
+    cli_runner.invoke = invoke
+    return cli_runner
 
 
 @pytest.fixture(scope='session')

@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import unittest
-from click.testing import CliRunner
+from .conftest import runner
 import oci_cli
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -46,7 +46,7 @@ class TestPassphrase(unittest.TestCase):
 
     def setUp(self):
         util.unset_admin_pass_phrase()
-        self.runner = CliRunner()
+        self.runner = runner()
 
     def tearDown(self):
         if os.path.exists(TEMP_PRIVATE_KEY_FILE):

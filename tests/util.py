@@ -12,12 +12,12 @@ import six
 import sys
 import time
 import traceback
-from click.testing import CliRunner
 from six import StringIO
 import oci_cli.cli_util
 import oci
 from oci.object_storage.transfer.constants import MEBIBYTE
 from . import test_config_container
+from .conftest import runner
 
 try:
     # PY3+
@@ -220,7 +220,7 @@ def invoke_command_as_admin(command, ** args):
     num_tries = 0
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:
-        command_output = CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
+        command_output = runner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', 'ADMIN'] + command, ** args)
 
         if command_output.exception:
             output_to_test = str(command_output.exception)
@@ -247,7 +247,7 @@ def invoke_command(command, ** args):
     num_tries = 0
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:
-        command_output = CliRunner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
+        command_output = runner().invoke(oci_cli.cli, ['--config-file', os.environ['OCI_CLI_CONFIG_FILE'], '--profile', pytest.config.getoption("--config-profile")] + command, ** args)
 
         if command_output.exception:
             output_to_test = str(command_output.exception)

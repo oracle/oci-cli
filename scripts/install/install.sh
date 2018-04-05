@@ -50,6 +50,24 @@ else
     echo "Python not found on system PATH"
 fi
 
+# some OSes have python3 as a command but not 'python' (example: Ubuntu 16.04)
+# if both python and python3 exist and are a sufficiently recent version, we will prefer python3
+command -v python3 >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    # python is installed so check if the version is valid
+    # this python command returns an exit code of 0 if the system version is sufficient, and 1 if it is not
+    python3 -c "import sys; v = sys.version_info; valid = v >= (2, 7, 5) if v[0] == 2 else v >= (3, 5, 0); sys.exit(0) if valid else sys.exit(1)"
+    if [ $? -eq 0 ]; then
+        python_exe=python3
+        # if python is installed and meets the version requirements then we dont need to install it
+        need_to_install_python=false
+    else
+        echo "System version of Python must be either a Python 2 version >= 2.7.5 or a Python 3 version >= 3.5.0."
+    fi
+else
+    echo "Python3 not found on system PATH"
+fi
+
 
 if [ "$need_to_install_python" = true ]; then
     if command -v yum
