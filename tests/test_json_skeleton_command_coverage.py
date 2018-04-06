@@ -31,7 +31,8 @@ COMMANDS_WITH_ALL_OPTIONAL_PARAMS = [
     ['db', 'backup', 'list'],
     ['network', 'private-ip', 'list'],
     ['bv', 'volume', 'create'],
-    ['bv', 'volume-backup-policy', 'list']
+    ['bv', 'volume-backup-policy', 'list'],
+    ['iam', 'compartment', 'list']
 ]
 
 
@@ -91,7 +92,13 @@ def test_all_commands_can_accept_from_json_input():
         elif cmd in COMMANDS_WITH_ALL_OPTIONAL_PARAMS:
             if result.output:
                 assert 'from-json' not in result.output
-                assert 'Missing' in result.output or 'UsageError' in result.output or 'ServiceError' in result.output
+                if cmd == ['iam', 'compartment', 'list']:
+                    # This command works with only optional parameters, so check that there are no errors and that\
+                    # a response was received
+                    assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
+                    assert 'compartment-id' in result.output
+                else:
+                    assert 'Missing' in result.output or 'UsageError' in result.output or 'ServiceError' in result.output
         else:
             assert 'from-json' not in result.output
             if cmd == ['network', 'public-ip', 'get']:

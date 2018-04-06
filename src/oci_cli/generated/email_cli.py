@@ -7,6 +7,7 @@ import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
 from ..cli_root import cli
+from .. import cli_constants  # noqa: F401
 from .. import cli_util
 from .. import json_skeleton_utils
 from .. import custom_types  # noqa: F401
@@ -36,11 +37,11 @@ email_group.add_command(suppression_group)
 
 
 @sender_group.command(name=cli_util.override('create_sender.command_name', 'create'), help="""Creates a sender for a tenancy in a given compartment.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment that contains the sender.""")
-@click.option('--email-address', callback=cli_util.handle_optional_param, help="""The email address of the sender.""")
-@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
-@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment that contains the sender.""")
+@cli_util.option('--email-address', help="""The email address of the sender.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -82,8 +83,8 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @suppression_group.command(name=cli_util.override('create_suppression.command_name', 'create'), help="""Adds recipient email addresses to the suppression list for a tenancy.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment to contain the suppression. Since suppressions are at the customer level, this must be the tenancy OCID.""")
-@click.option('--email-address', callback=cli_util.handle_optional_param, help="""The recipient email address of the suppression.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment to contain the suppression. Since suppressions are at the customer level, this must be the tenancy OCID.""")
+@cli_util.option('--email-address', help="""The recipient email address of the suppression.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -109,11 +110,11 @@ def create_suppression(ctx, from_json, compartment_id, email_address):
 
 
 @sender_group.command(name=cli_util.override('delete_sender.command_name', 'delete'), help="""Deletes an approved sender for a tenancy in a given compartment for a provided `senderId`.""")
-@click.option('--sender-id', callback=cli_util.handle_required_param, help="""The unique OCID of the sender. [required]""")
+@cli_util.option('--sender-id', required=True, help="""The unique OCID of the sender.""")
 @cli_util.confirm_delete_option
-@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
-@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -161,7 +162,7 @@ def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @suppression_group.command(name=cli_util.override('delete_suppression.command_name', 'delete'), help="""Removes a suppressed recipient email address from the suppression list for a tenancy in a given compartment for a provided `suppressionId`.""")
-@click.option('--suppression-id', callback=cli_util.handle_required_param, help="""The unique OCID of the suppression. [required]""")
+@cli_util.option('--suppression-id', required=True, help="""The unique OCID of the suppression.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -182,7 +183,7 @@ def delete_suppression(ctx, from_json, suppression_id):
 
 
 @sender_group.command(name=cli_util.override('get_sender.command_name', 'get'), help="""Gets an approved sender for a given `senderId`.""")
-@click.option('--sender-id', callback=cli_util.handle_required_param, help="""The unique OCID of the sender. [required]""")
+@cli_util.option('--sender-id', required=True, help="""The unique OCID of the sender.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -202,7 +203,7 @@ def get_sender(ctx, from_json, sender_id):
 
 
 @suppression_group.command(name=cli_util.override('get_suppression.command_name', 'get'), help="""Gets the details of a suppressed recipient email address for a given `suppressionId`. Each suppression is given a unique OCID.""")
-@click.option('--suppression-id', callback=cli_util.handle_required_param, help="""The unique OCID of the suppression. [required]""")
+@cli_util.option('--suppression-id', required=True, help="""The unique OCID of the suppression.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -222,15 +223,15 @@ def get_suppression(ctx, from_json, suppression_id):
 
 
 @sender_group.command(name=cli_util.override('list_senders.command_name', 'list'), help="""Gets a collection of approved sender email addresses and sender IDs.""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID for the compartment. [required]""")
-@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""The current state of a sender.""")
-@click.option('--email-address', callback=cli_util.handle_optional_param, help="""The email address of the approved sender.""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous GET request.""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated GET request.""")
-@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "EMAILADDRESS"]), help="""The field to sort by. The `TIMECREATED` value returns the list in in descending order by default. The `EMAILADDRESS` value returns the list in ascending order by default. Use the `SortOrderQueryParam` to change the direction of the returned list of items.""")
-@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending or descending order.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID for the compartment.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""The current state of a sender.""")
+@cli_util.option('--email-address', help="""The email address of the approved sender.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous GET request.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated GET request.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "EMAILADDRESS"]), help="""The field to sort by. The `TIMECREATED` value returns the list in in descending order by default. The `EMAILADDRESS` value returns the list in ascending order by default. Use the `SortOrderQueryParam` to change the direction of the returned list of items.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending or descending order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -280,20 +281,20 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
 
 
 @suppression_group.command(name=cli_util.override('list_suppressions.command_name', 'list'), help="""Gets a list of suppressed recipient email addresses for a user. The `compartmentId` for suppressions must be a tenancy OCID. The returned list is sorted by creation time in descending order.""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID for the compartment. [required]""")
-@click.option('--email-address', callback=cli_util.handle_optional_param, help="""The email address of the suppression.""")
-@click.option('--time-created-greater-than-or-equal-to', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""Search for suppressions that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve suppressions created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+@cli_util.option('--compartment-id', required=True, help="""The OCID for the compartment.""")
+@cli_util.option('--email-address', help="""The email address of the suppression.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""Search for suppressions that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve suppressions created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@click.option('--time-created-less-than', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""Search for suppressions that were created within a specific date range, using this parameter to specify the latest creation date for the returned list (exclusive). Specifying this parameter without the corresponding `timeCreatedGreaterThanOrEqualTo` parameter will retrieve all suppressions created before the specified end date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""Search for suppressions that were created within a specific date range, using this parameter to specify the latest creation date for the returned list (exclusive). Specifying this parameter without the corresponding `timeCreatedGreaterThanOrEqualTo` parameter will retrieve all suppressions created before the specified end date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous GET request.""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated GET request.""")
-@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "EMAILADDRESS"]), help="""The field to sort by. The `TIMECREATED` value returns the list in in descending order by default. The `EMAILADDRESS` value returns the list in ascending order by default. Use the `SortOrderQueryParam` to change the direction of the returned list of items.""")
-@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending or descending order.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous GET request.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated GET request.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "EMAILADDRESS"]), help="""The field to sort by. The `TIMECREATED` value returns the list in in descending order by default. The `EMAILADDRESS` value returns the list in ascending order by default. Use the `SortOrderQueryParam` to change the direction of the returned list of items.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending or descending order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

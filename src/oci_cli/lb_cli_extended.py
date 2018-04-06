@@ -103,17 +103,17 @@ def process_health_checker_kwargs(kwargs):
 
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.create_certificate, params_to_exclude=['ca_certificate', 'private_key', 'public_certificate'])
 @loadbalancer_cli.certificate_group.command(name=cli_util.override('create_certificate.command_name', 'create'), help="""Creates an asynchronous request to add an SSL certificate.""")
-@click.option('--ca-certificate-file', type=click.File('r'), callback=cli_util.handle_optional_param, help="""The Certificate Authority certificate, or any interim certificate, that you received from your SSL certificate provider.
+@cli_util.option('--ca-certificate-file', type=click.File('r'), help="""The Certificate Authority certificate, or any interim certificate, that you received from your SSL certificate provider.
 
 Example:
 
     -----BEGIN CERTIFICATE-----     MIIEczCCA1ugAwIBAgIBADANBgkqhkiG9w0BAQQFAD..AkGA1UEBhMCR0Ix     EzARBgNVBAgTClNvbWUtU3RhdGUxFDASBgNVBAoTC0..0EgTHRkMTcwNQYD     VQQLEy5DbGFzcyAxIFB1YmxpYyBQcmltYXJ5IENlcn..XRpb24gQXV0aG9y     aXR5MRQwEgYDVQQDEwtCZXN0IENBIEx0ZDAeFw0wMD..TUwMTZaFw0wMTAy     ...     -----END CERTIFICATE-----""")
-@click.option('--private-key-file', type=click.File('r'), callback=cli_util.handle_optional_param, help="""The SSL private key for your certificate, in PEM format.
+@cli_util.option('--private-key-file', type=click.File('r'), help="""The SSL private key for your certificate, in PEM format.
 
 Example:
 
     -----BEGIN RSA PRIVATE KEY-----     jO1O1v2ftXMsawM90tnXwc6xhOAT1gDBC9S8DKeca..JZNUgYYwNS0dP2UK     tmyN+XqVcAKw4HqVmChXy5b5msu8eIq3uc2NqNVtR..2ksSLukP8pxXcHyb     +sEwvM4uf8qbnHAqwnOnP9+KV9vds6BaH1eRA4CHz..n+NVZlzBsTxTlS16     /Umr7wJzVrMqK5sDiSu4WuaaBdqMGfL5hLsTjcBFD..Da2iyQmSKuVD4lIZ     ...     -----END RSA PRIVATE KEY-----""")
-@click.option('--public-certificate-file', type=click.File('r'), callback=cli_util.handle_optional_param, help="""The public certificate, in PEM format, that you received from your SSL certificate provider.
+@cli_util.option('--public-certificate-file', type=click.File('r'), help="""The public certificate, in PEM format, that you received from your SSL certificate provider.
 
 Example:
 
@@ -145,19 +145,19 @@ def create_certificate(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.create_backend_set, params_to_exclude=['health_checker', 'ssl_configuration', 'session_persistence_configuration'])
 @loadbalancer_cli.backend_set_group.command(name=cli_util.override('create_backend_set.command_name', 'create'), help="""Adds a backend set to a load balancer.""")
-@click.option('--health-checker-interval-in-ms', type=click.INT, callback=cli_util.handle_optional_param, help="""The interval between health checks, in milliseconds.""")
-@click.option('--health-checker-port', type=click.INT, callback=cli_util.handle_optional_param, help="""The backend server port against which to run the health check. If the port is not specified, the load balancer uses the port information from the Backend object.""")
-@click.option('--health-checker-protocol', type=click.STRING, callback=cli_util.handle_required_param, help="""The protocol the health check must use; either HTTP or TCP.  [required]""")
-@click.option('--health-checker-response-body-regex', type=click.STRING, callback=cli_util.handle_optional_param, help="""A regular expression for parsing the response body from the backend server.""")
-@click.option('--health-checker-retries', type=click.INT, callback=cli_util.handle_optional_param, help="""The number of retries to attempt before a backend server is considered "unhealthy".""")
-@click.option('--health-checker-return-code', type=click.INT, callback=cli_util.handle_optional_param, help="""The status code a healthy backend server should return.""")
-@click.option('--health-checker-timeout-in-ms', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.""")
-@click.option('--health-checker-url-path', type=click.STRING, callback=cli_util.handle_optional_param, help="""The path against which to run the health check.""")
-@click.option('--session-persistence-cookie-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""The name of the cookie used to detect a session initiated by the backend server. Use '*' to specify that any cookie set by the backend causes the session to persist.""")
-@click.option('--session-persistence-disable-fallback', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer is prevented from directing traffic from a persistent session client to a different backend server if the original server is unavailable. Defaults to false.""")
-@click.option('--ssl-certificate-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
-@click.option('--ssl-verify-depth', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum depth for peer certificate chain verification.""")
-@click.option('--ssl-verify-peer-certificate', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--health-checker-interval-in-ms', type=click.INT, help="""The interval between health checks, in milliseconds.""")
+@cli_util.option('--health-checker-port', type=click.INT, help="""The backend server port against which to run the health check. If the port is not specified, the load balancer uses the port information from the Backend object.""")
+@cli_util.option('--health-checker-protocol', type=click.STRING, required=True, help="""The protocol the health check must use; either HTTP or TCP.""")
+@cli_util.option('--health-checker-response-body-regex', type=click.STRING, help="""A regular expression for parsing the response body from the backend server.""")
+@cli_util.option('--health-checker-retries', type=click.INT, help="""The number of retries to attempt before a backend server is considered "unhealthy".""")
+@cli_util.option('--health-checker-return-code', type=click.INT, help="""The status code a healthy backend server should return.""")
+@cli_util.option('--health-checker-timeout-in-ms', type=click.INT, help="""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.""")
+@cli_util.option('--health-checker-url-path', type=click.STRING, help="""The path against which to run the health check.""")
+@cli_util.option('--session-persistence-cookie-name', type=click.STRING, help="""The name of the cookie used to detect a session initiated by the backend server. Use '*' to specify that any cookie set by the backend causes the session to persist.""")
+@cli_util.option('--session-persistence-disable-fallback', type=click.BOOL, help="""Whether the load balancer is prevented from directing traffic from a persistent session client to a different backend server if the original server is unavailable. Defaults to false.""")
+@cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
+@cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -173,19 +173,19 @@ def create_backend_set(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.update_backend_set, params_to_exclude=['health_checker', 'ssl_configuration', 'session_persistence_configuration'])
 @loadbalancer_cli.backend_set_group.command(name='update', help="""Updates a backend set.""")
-@click.option('--health-checker-interval-in-ms', type=click.INT, callback=cli_util.handle_optional_param, help="""The interval between health checks, in milliseconds.""")
-@click.option('--health-checker-port', type=click.INT, callback=cli_util.handle_optional_param, help="""The backend server port against which to run the health check. If the port is not specified, the load balancer uses the port information from the Backend object.""")
-@click.option('--health-checker-protocol', type=click.STRING, callback=cli_util.handle_required_param, help="""The protocol the health check must use; either HTTP or TCP.  [required]""")
-@click.option('--health-checker-response-body-regex', type=click.STRING, callback=cli_util.handle_optional_param, help="""A regular expression for parsing the response body from the backend server.""")
-@click.option('--health-checker-retries', type=click.INT, callback=cli_util.handle_optional_param, help="""The number of retries to attempt before a backend server is considered "unhealthy".""")
-@click.option('--health-checker-return-code', type=click.INT, callback=cli_util.handle_optional_param, help="""The status code a healthy backend server should return.""")
-@click.option('--health-checker-timeout-in-ms', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.""")
-@click.option('--health-checker-url-path', type=click.STRING, callback=cli_util.handle_optional_param, help="""The path against which to run the health check.""")
-@click.option('--session-persistence-cookie-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""The name of the cookie used to detect a session initiated by the backend server. Use '*' to specify that any cookie set by the backend causes the session to persist.""")
-@click.option('--session-persistence-disable-fallback', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer is prevented from directing traffic from a persistent session client to a different backend server if the original server is unavailable. Defaults to false.""")
-@click.option('--ssl-certificate-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
-@click.option('--ssl-verify-depth', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum depth for peer certificate chain verification.""")
-@click.option('--ssl-verify-peer-certificate', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--health-checker-interval-in-ms', type=click.INT, help="""The interval between health checks, in milliseconds.""")
+@cli_util.option('--health-checker-port', type=click.INT, help="""The backend server port against which to run the health check. If the port is not specified, the load balancer uses the port information from the Backend object.""")
+@cli_util.option('--health-checker-protocol', type=click.STRING, required=True, help="""The protocol the health check must use; either HTTP or TCP.""")
+@cli_util.option('--health-checker-response-body-regex', type=click.STRING, help="""A regular expression for parsing the response body from the backend server.""")
+@cli_util.option('--health-checker-retries', type=click.INT, help="""The number of retries to attempt before a backend server is considered "unhealthy".""")
+@cli_util.option('--health-checker-return-code', type=click.INT, help="""The status code a healthy backend server should return.""")
+@cli_util.option('--health-checker-timeout-in-ms', type=click.INT, help="""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.""")
+@cli_util.option('--health-checker-url-path', type=click.STRING, help="""The path against which to run the health check.""")
+@cli_util.option('--session-persistence-cookie-name', type=click.STRING, help="""The name of the cookie used to detect a session initiated by the backend server. Use '*' to specify that any cookie set by the backend causes the session to persist.""")
+@cli_util.option('--session-persistence-disable-fallback', type=click.BOOL, help="""Whether the load balancer is prevented from directing traffic from a persistent session client to a different backend server if the original server is unavailable. Defaults to false.""")
+@cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
+@cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -201,10 +201,10 @@ def update_backend_set(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.create_listener, params_to_exclude=['ssl_configuration', 'connection_configuration'])
 @loadbalancer_cli.listener_group.command(name='create', help="""Adds a listener to a load balancer.""")
-@click.option('--ssl-certificate-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
-@click.option('--ssl-verify-depth', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum depth for peer certificate chain verification.""")
-@click.option('--ssl-verify-peer-certificate', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer listener should verify peer certificates.""")
-@click.option('--connection-configuration-idle-timeout', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
+@cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
+@cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
@@ -219,10 +219,10 @@ def create_listener(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.update_listener, params_to_exclude=['ssl_configuration', 'connection_configuration'])
 @loadbalancer_cli.listener_group.command(name='update', help="""Updates a listener for a given load balancer.""")
-@click.option('--ssl-certificate-name', type=click.STRING, callback=cli_util.handle_optional_param, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
-@click.option('--ssl-verify-depth', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum depth for peer certificate chain verification.""")
-@click.option('--ssl-verify-peer-certificate', type=click.BOOL, callback=cli_util.handle_optional_param, help="""Whether the load balancer listener should verify peer certificates.""")
-@click.option('--connection-configuration-idle-timeout', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
+@cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
+@cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
+@cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context

@@ -136,11 +136,11 @@ def setup_group():
 
 
 @setup_group.command('keys', help="""Generates an RSA key pair. A passphrase for the private key can be provided using either the 'passphrase' or 'passphrase-file' option. If neither option is provided, the user will be prompted for a passphrase via stdin.""")
-@click.option('--key-name', default='oci_api_key', help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
-@click.option('--output-dir', default=default_directory, help="""An optional directory to output the generated keys.""", type=click.Path())
-@click.option('--passphrase', help="""An optional passphrase to encrypt the private key.""")
-@click.option('--passphrase-file', help="""An optional file with the first line specifying a passphrase to encrypt the private key (or '-' to read from stdin).""", type=click.File(mode='r'))
-@click.option('--overwrite', default=False, help="""An option to overwrite existing files without a confirmation prompt.""", is_flag=True)
+@cli_util.option('--key-name', default='oci_api_key', help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
+@cli_util.option('--output-dir', default=default_directory, help="""An optional directory to output the generated keys.""", type=click.Path())
+@cli_util.option('--passphrase', help="""An optional passphrase to encrypt the private key.""")
+@cli_util.option('--passphrase-file', help="""An optional file with the first line specifying a passphrase to encrypt the private key (or '-' to read from stdin).""", type=click.File(mode='r'))
+@cli_util.option('--overwrite', default=False, help="""An option to overwrite existing files without a confirmation prompt.""", is_flag=True)
 @cli_util.help_option
 def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwrite):
     if passphrase and passphrase_file:
@@ -241,7 +241,7 @@ def generate_oci_config():
 
 This command will populate the file with some default aliases and predefined queries.
 """)
-@click.option('--file', default=os.path.expanduser(CLI_RC_DEFAULT_LOCATION), type=click.File(mode='a+b'), required=True, help="The file into which default aliases and predefined queries will be loaded")
+@cli_util.option('--file', default=os.path.expanduser(CLI_RC_DEFAULT_LOCATION), type=click.File(mode='a+b'), required=True, help="The file into which default aliases and predefined queries will be loaded")
 @cli_util.help_option
 def setup_cli_rc(file):
     if hasattr(file, 'name') and file.name == '<stdout>':
@@ -365,7 +365,7 @@ def setup_autocomplete_non_windows():
 
 @setup_group.command('repair-file-permissions', help="""Resets permissions on a given file to an appropriate access level for sensitive files. Generally this is used to fix permissions on a private key file or config file to meet the requirements of the CLI.
 On Windows, full control will be given to System, Administrators, and the current user.  On Unix, Read / Write permissions will be given to the current user.""")
-@click.option('--file', required=True, help="""The file to repair permissions on.""")
+@cli_util.option('--file', required=True, help="""The file to repair permissions on.""")
 @cli_util.help_option
 def repair_file_permissions(file):
     file = os.path.expanduser(file)

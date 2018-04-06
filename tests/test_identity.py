@@ -63,6 +63,9 @@ class TestIdentity(unittest.TestCase):
         result = self.invoke(['compartment', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
         self.validate_response(result)
 
+        result = self.invoke(['compartment', 'list', '--limit', '1000'])
+        self.validate_response(result)
+
         result = self.invoke(['compartment', 'get', '--compartment-id', util.COMPARTMENT_ID])
         self.validate_response(result, expect_etag=True)
 

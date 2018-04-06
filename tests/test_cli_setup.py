@@ -389,8 +389,8 @@ class TestSetup(unittest.TestCase):
             os.environ['OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING'] = 'False'
 
             # capture stdout / stderr so we can validate warnings
-            with util.capture() as out:
-                if oci_cli.cli_util.is_windows():
+            if oci_cli.cli_util.is_windows():
+                with util.capture() as out:
                     # create a temporary file and set some unnecessary permissions
                     tmp = tempfile.NamedTemporaryFile()
                     subprocess.check_output('icacls "{path}" /grant Everyone:F'.format(path=tmp.name), stderr=subprocess.STDOUT)
@@ -411,10 +411,11 @@ class TestSetup(unittest.TestCase):
                     # no warning should be emitted because we repaired the permissions
                     oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' not in out[1].getvalue()
-                else:
+            else:
+                with util.capture() as out:
                     # create a temporary file and set some unnecessary permissions
                     tmp = tempfile.NamedTemporaryFile()
-                    os.chmod(tmp.name, 755)
+                    os.chmod(tmp.name, 509)  # octal 775
 
                     # warning should be emitted because permissions are too loose
                     oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
@@ -431,6 +432,12 @@ class TestSetup(unittest.TestCase):
                     assert oct(stat.S_IMODE(os.lstat(tmp.name).st_mode)) == oct(384)  # 600
 
                     # no warning should be emitted because we repaired the permissions
+                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    assert 'WARNING' not in out[1].getvalue()
+
+                with util.capture() as out:
+                    # validate that 400 file permissions are accepted as well
+                    os.chmod(tmp.name, 256)  # octal 400
                     oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' not in out[1].getvalue()
         finally:

@@ -19,6 +19,7 @@ from . import cli_util
 from . import custom_types
 from . import json_skeleton_utils
 from .aliasing import CommandGroupWithAlias
+from .cli_util import option
 
 INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"
 DEFAULT_LOCAL_VNC_PORT = 5900
@@ -207,9 +208,9 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage Service bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 """)
-@click.option('-ns', '--namespace', callback=cli_util.handle_required_param, help='The Object Storage Service namespace to export the image to. [required]')
-@click.option('-bn', '--bucket-name', callback=cli_util.handle_required_param, help='The name of the bucket to export the image to. [required]')
-@click.option('--name', callback=cli_util.handle_required_param, help='The name which will be given to the exported image object. [required]')
+@cli_util.option('-ns', '--namespace', required=True, help='The Object Storage Service namespace to export the image to.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket to export the image to.')
+@cli_util.option('--name', required=True, help='The name which will be given to the exported image object.')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
@@ -230,7 +231,7 @@ For more information about exporting images, see [Image Import/Export].
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
 """)
-@click.option('--uri', callback=cli_util.handle_required_param, help='The Object Storage URL to export the image to.')
+@cli_util.option('--uri', required=True, help='The Object Storage URL to export the image to.')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
@@ -265,10 +266,10 @@ For more information about importing exported images, see [Image Import/Export].
 You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].
 Avoid entering confidential information.
 """)
-@click.option('-ns', '--namespace', callback=cli_util.handle_required_param, help='The Object Storage Service namespace to import the image from. [required]')
-@click.option('-bn', '--bucket-name', callback=cli_util.handle_required_param, help='The name of the bucket to import the image from. [required]')
-@click.option('--name', callback=cli_util.handle_required_param, help='The name of the object identifying the image to import. [required]')
-@click.option('--source-image-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
+@cli_util.option('-ns', '--namespace', required=True, help='The Object Storage Service namespace to import the image from.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket to import the image from.')
+@cli_util.option('--name', required=True, help='The name of the object identifying the image to import.')
+@cli_util.option('--source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
@@ -295,8 +296,8 @@ See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs
 You may optionally specify a display name for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage].
 Avoid entering confidential information.
 """)
-@click.option('--uri', callback=cli_util.handle_required_param, help='The Object Storage URL to import the image from. [required]')
-@click.option('--source-image-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
+@cli_util.option('--uri', required=True, help='The Object Storage URL to import the image from.')
+@cli_util.option('--source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
@@ -338,13 +339,13 @@ def import_image_internal(ctx, compartment_id, display_name, launch_mode, import
 
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
-@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--all', 'all_pages', callback=cli_util.handle_optional_param, is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', callback=cli_util.handle_optional_param, type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -408,14 +409,14 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
 
 @cli_util.copy_params_from_generated_command(compute_cli.launch_instance, params_to_exclude=['create_vnic_details'])
 @compute_cli.instance_group.command(name='launch', help=compute_cli.launch_instance.help)
-@click.option('--vnic-display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the default VNIC attached to this instance. Does not have to be unique.""")
-@click.option('--assign-public-ip', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the default VNIC attached to this instance should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
-@click.option('--private-ip', callback=cli_util.handle_optional_param, help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
-@click.option('--skip-source-dest-check', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
-@click.option('--user-data-file', callback=cli_util.handle_optional_param, type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
-@click.option('--ssh-authorized-keys-file', callback=cli_util.handle_optional_param, type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
-@click.option('--source-boot-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
-@click.option('--boot-volume-size-in-gbs', callback=cli_util.handle_optional_param, type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
+@cli_util.option('--vnic-display-name', help="""A user-friendly name for the default VNIC attached to this instance. Does not have to be unique.""")
+@cli_util.option('--assign-public-ip', type=click.BOOL, help="""Whether the default VNIC attached to this instance should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
+@cli_util.option('--private-ip', help="""A private IP address of your choice to assign to the default VNIC attached to this instance. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
+@cli_util.option('--skip-source-dest-check', type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
+@cli_util.option('--user-data-file', type=click.File('rb'), help="""A file containing data that Cloud-Init can use to run custom scripts or provide custom Cloud-Init configuration. This parameter is a convenience wrapper around the 'user_data' field of the --metadata parameter.  Populating both values in the same call will result in an error. For more info see Cloud-Init documentation: https://cloudinit.readthedocs.org/en/latest/topics/format.html.""")
+@cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
+@cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
+@cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
@@ -507,15 +508,15 @@ def launch_instance_extended(ctx, **kwargs):
 
 
 @compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
-@click.option('--instance-id', callback=cli_util.handle_required_param, help="""The OCID of the instance. [required]""")
-@click.option('--subnet-id', callback=cli_util.handle_required_param, help="""The OCID of the subnet to create the VNIC in. [required]""")
-@click.option('--vnic-display-name', callback=cli_util.handle_optional_param, help="""A user-friendly name for the VNIC. Does not have to be unique.""")
-@click.option('--assign-public-ip', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
-@click.option('--skip-source-dest-check', callback=cli_util.handle_optional_param, type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
-@click.option('--private-ip', callback=cli_util.handle_optional_param, help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
-@click.option('--hostname-label', callback=cli_util.handle_optional_param, help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
-@click.option('--nic-index', callback=cli_util.handle_optional_param, type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
-@click.option('--wait', is_flag=True, default=False, callback=cli_util.handle_optional_param, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
+@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet to create the VNIC in.""")
+@cli_util.option('--vnic-display-name', help="""A user-friendly name for the VNIC. Does not have to be unique.""")
+@cli_util.option('--assign-public-ip', type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
+@cli_util.option('--skip-source-dest-check', type=click.BOOL, help="""Indicates whether Source/Destination check is disabled on the VNIC. Defaults to `false`, in which case we enable Source/Destination check on the VNIC.""")
+@cli_util.option('--private-ip', help="""A private IP address of your choice to assign to the VNIC. Must be an available IP address within the subnet's CIDR. If no value is specified, a private IP address from the subnet will be automatically assigned.""")
+@cli_util.option('--hostname-label', help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
+@cli_util.option('--nic-index', type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
+@cli_util.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -564,11 +565,11 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assig
 
 
 @compute_cli.instance_group.command(name='detach-vnic', help="""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.""")
-@click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC. [required]""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the instance's compartment. [required]""")
-@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
-@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--vnic-id', required=True, help="""The OCID of the VNIC.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the instance's compartment.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -622,7 +623,7 @@ This command can also be used to move an existing secondary private IP to the sp
 
 For more information about secondary private IPs, see [IP Addresses]
 """)
-@click.option('--unassign-if-already-assigned', callback=cli_util.handle_optional_param, is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
+@cli_util.option('--unassign-if-already-assigned', is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
@@ -702,8 +703,8 @@ terminated.
 
 For more information about secondary private IPs, see [IP Addresses]
 """)
-@click.option('--vnic-id', callback=cli_util.handle_required_param, help="""The OCID of the VNIC to unassign the private IP from. [required]""")
-@click.option('--ip-address', callback=cli_util.handle_required_param, help="""The secondary private IP to unassign from the VNIC. [required]""")
+@cli_util.option('--vnic-id', required=True, help="""The OCID of the VNIC to unassign the private IP from.""")
+@cli_util.option('--ip-address', required=True, help="""The secondary private IP to unassign from the VNIC.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -771,7 +772,7 @@ def update_private_ip_extended(ctx, **kwargs):
 The default number of enabled serial console connections per tenancy is 10.
 
 For more information about serial console access, see [Accessing the Instance Console].""")
-@click.option('--ssh-public-key-file', callback=cli_util.handle_required_param, type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection [required]""")
+@cli_util.option('--ssh-public-key-file', required=True, type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
@@ -807,12 +808,12 @@ cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_mbs', """[DE
 A volume and instance can be in separate compartments but must be in the same Availability Domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
-@click.option('--availability-domain', callback=cli_util.handle_optional_param, help="""The Availability Domain of the volume.
+@cli_util.option('--availability-domain', help="""The Availability Domain of the volume.
 
 Example: `Uocm:PHX-AD-1`""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment that contains the volume. [required]""")
-@click.option('--source-volume-id', callback=cli_util.handle_optional_param, help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
-@click.option('--volume-backup-id', callback=cli_util.handle_optional_param, help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--source-volume-id', help="""The OCID of a Block volume in the same Availability Domain from which the data should be cloned to the newly created volume. You can specify either this or --volume-backup-id but not both. If neither is specified then the new Block volume will be empty.""")
+@cli_util.option('--volume-backup-id', help="""The OCID of the volume backup from which the data should be restored on the newly created volume. You can specify either this or --source-volume-id but not both. If neither is specified then the new Block volume will be empty.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
@@ -869,9 +870,9 @@ def create_volume_extended(ctx, **kwargs):
 
 @virtualnetwork_cli.public_ip_group.command(name='get', help="""Gets the specified public IP object.
 The command needs at least one of the options to be used to be able to get the public IP object successfully.""")
-@click.option('--public-ip-address', callback=cli_util.handle_optional_param, help="""A public IP address. Example: 129.146.2.1""")
-@click.option('--public-ip-id', callback=cli_util.handle_optional_param, help="""The public IP's OCID.""")
-@click.option('--private-ip-id', callback=cli_util.handle_optional_param, help="""The private IP's OCID.""")
+@option('--public-ip-address', help="""A public IP address. Example: 129.146.2.1""")
+@option('--public-ip-id', help="""The public IP's OCID.""")
+@option('--private-ip-id', help="""The private IP's OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -907,10 +908,10 @@ def get_public_ip_extended(ctx, **kwargs):
 
 
 @compute_cli.instance_console_connection_group.command(name='get-plink-connection-string', help="""Gets the plink command for starting an SSH tunnel on Windows which will allow VNC connections to the instance. Once you have started the tunnel, you can point your VNC client to localhost:{{--local-vnc-port}} to connect to the instance (default --local-vnc-port is {}).""".format(DEFAULT_LOCAL_VNC_PORT))
-@click.option('--instance-console-connection-id', callback=cli_util.handle_required_param, help="""The OCID of the intance console connection [required]""")
-@click.option('--private-key-file', callback=cli_util.handle_required_param, help="""The path to the private key to be used for authentication. This is inserted into the generated connection string.""")
-@click.option('--local-vnc-port', callback=cli_util.handle_optional_param, help="""This is the local port that you will point your VNC client at. This will be forwarded to the SSH tunnel created by executing the PowerShell command in the output. Default is {}.""".format(DEFAULT_LOCAL_VNC_PORT))
-@click.option('--ssh-proxy-port', callback=cli_util.handle_optional_param, help="""This is the local and remote port for the SSH tunnel.  This may be any open port on your local machine.  Default is {}.""".format(DEFAULT_SSH_PROXY_PORT))
+@cli_util.option('--instance-console-connection-id', required=True, help="""The OCID of the intance console connection""")
+@cli_util.option('--private-key-file', required=True, help="""The path to the private key to be used for authentication. This is inserted into the generated connection string.""")
+@cli_util.option('--local-vnc-port', help="""This is the local port that you will point your VNC client at. This will be forwarded to the SSH tunnel created by executing the PowerShell command in the output. Default is {}.""".format(DEFAULT_LOCAL_VNC_PORT))
+@cli_util.option('--ssh-proxy-port', help="""This is the local and remote port for the SSH tunnel.  This may be any open port on your local machine.  Default is {}.""".format(DEFAULT_SSH_PROXY_PORT))
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -965,12 +966,10 @@ def get_plink_connection_string(ctx, from_json, instance_console_connection_id, 
 
 This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to RPCs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
 # Below param is not enforced as an enum to allow backward compatibility for old CLIs to support newer regions.
-@click.option('--peer-region-name', callback=cli_util.handle_required_param, help="""The name of the region that contains the RPC you want to peer with.
+@cli_util.option('--peer-region-name', required=True, help="""The name of the region that contains the RPC you want to peer with.
 
 The region names that could be used are listed here: https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm
-Example: `us-ashburn-1` [required]""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
+Example: `us-ashburn-1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions

@@ -68,6 +68,12 @@ class TestOptionOrdering(unittest.TestCase):
         self.assertNotEqual(0, result.exit_code)
         assert "UsageError: Parameter --user-id cannot be whitespace or empty string" in result.output
 
+    def test_delete_confirmation_missing_required_params_does_not_prompt(self):
+        # missing required parameter --instance-id
+        result = self.invoke_operation(['compute', 'instance', 'terminate'])
+        assert result.exit_code != 0
+        assert 'Error: Missing option(s) --instance-id' in result.output
+
     def invoke_operation(self, command):
         return util.invoke_command_as_admin(command)
 

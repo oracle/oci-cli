@@ -9,7 +9,7 @@ import stat
 import sys
 from oci import exceptions
 from oci.object_storage.transfer import constants
-from .cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, handle_optional_param, handle_required_param, get_param
+from .cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
@@ -105,24 +105,23 @@ get_param(objectstorage_cli.list_preauthenticated_requests, 'namespace_name').op
 
 
 @objectstorage_cli.object_group.command(name='list')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--prefix', callback=handle_optional_param, help='Only object names that begin with this prefix will be returned.')
-@click.option('--start', callback=handle_optional_param, help='Only object names greater or equal to this parameter will be returned.')
-@click.option('--end', callback=handle_optional_param, help='Only object names less than this parameter will be returned.')
-@click.option('--limit', type=click.INT, callback=handle_optional_param, help='The maximum number of items to return. [default: 100]')
-@click.option('--page-size', type=click.INT, callback=handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--delimiter', callback=handle_optional_param, help="When this parameter is set, only objects whose names do not contain the "
-              "delimiter character (after an optionally specified prefix) are returned. "
-              "Scanned objects whose names contain the delimiter have part of their name "
-              "up to the last occurrence of the delimiter (after the optional prefix) "
-              "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
-              "character at this time.")
-@click.option('--fields', default='name,size,timeCreated,md5', show_default=True, callback=handle_optional_param,
-              help="Object summary in list of objects includes the 'name' field. This parameter may also include "
-                   "'size' (object size in bytes), 'md5', and 'timeCreated' (object creation date and time) fields. "
-                   "Value of this parameter should be a comma separated, case-insensitive list of those field names.")
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--prefix', help='Only object names that begin with this prefix will be returned.')
+@cli_util.option('--start', help='Only object names greater or equal to this parameter will be returned.')
+@cli_util.option('--end', help='Only object names less than this parameter will be returned.')
+@cli_util.option('--limit', type=click.INT, help='The maximum number of items to return. [default: 100]')
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
+                 "delimiter character (after an optionally specified prefix) are returned. "
+                 "Scanned objects whose names contain the delimiter have part of their name "
+                 "up to the last occurrence of the delimiter (after the optional prefix) "
+                 "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
+                 "character at this time.")
+@cli_util.option('--fields', default='name,size,timeCreated,md5', show_default=True, help="Object summary in list of objects includes the 'name' field. This parameter may also include "
+                 "'size' (object size in bytes), 'md5', and 'timeCreated' (object creation date and time) fields. "
+                 "Value of this parameter should be a comma separated, case-insensitive list of those field names.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -212,28 +211,28 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 
 
 @objectstorage_cli.object_group.command(name='put')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--file', type=click.File(mode='rb'), callback=handle_optional_param,
-              help="The file to load as the content of the object, or '-' to read from STDIN. [required]")
-@click.option('--name', callback=handle_optional_param,
-              help='The name of the object. Default value is the filename excluding the path. Required if reading object from STDIN.')
-@click.option('--if-match', callback=handle_optional_param, help='The entity tag to match.')
-@click.option('--content-md5', callback=handle_optional_param, help='The base-64 encoded MD5 hash of the body.')
-@click.option('--metadata', callback=handle_optional_param, help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@click.option('--content-type', callback=handle_optional_param, help='The content type of the object.')
-@click.option('--content-language', callback=handle_optional_param, help='The content language of the object.')
-@click.option('--content-encoding', callback=handle_optional_param, help='The content encoding of the object.')
-@click.option('--force', is_flag=True, callback=handle_optional_param, help='If the object already exists, overwrite the existing object without a confirmation prompt.')
-@click.option('--no-overwrite', is_flag=True, callback=handle_optional_param, help='If the object already exists, do not overwrite the existing object.')
-@click.option('--no-multipart', is_flag=True, callback=handle_optional_param,
-              help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side.')
-@click.option('--part-size', type=click.INT, callback=handle_optional_param,
-              help='Part size (in MiB) to use if uploading via multipart upload operations')
-@click.option('--disable-parallel-uploads', is_flag=True, callback=handle_optional_param,
-              help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
-@click.option('--parallel-upload-count', type=click.INT, default=None, callback=handle_optional_param,
-              help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3.')
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--file', type=click.File(mode='rb'), required=True,
+                 help="The file to load as the content of the object, or '-' to read from STDIN.")
+@cli_util.option('--name',
+                 help='The name of the object. Default value is the filename excluding the path. Required if reading object from STDIN.')
+@cli_util.option('--if-match', help='The entity tag to match.')
+@cli_util.option('--content-md5', help='The base-64 encoded MD5 hash of the body.')
+@cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
+@cli_util.option('--content-type', help='The content type of the object.')
+@cli_util.option('--content-language', help='The content language of the object.')
+@cli_util.option('--content-encoding', help='The content encoding of the object.')
+@cli_util.option('--force', is_flag=True, help='If the object already exists, overwrite the existing object without a confirmation prompt.')
+@cli_util.option('--no-overwrite', is_flag=True, help='If the object already exists, do not overwrite the existing object.')
+@cli_util.option('--no-multipart', is_flag=True,
+                 help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side.')
+@cli_util.option('--part-size', type=click.INT,
+                 help='Part size (in MiB) to use if uploading via multipart upload operations')
+@cli_util.option('--disable-parallel-uploads', is_flag=True,
+                 help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
+@cli_util.option('--parallel-upload-count', type=click.INT, default=None,
+                 help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3.')
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
@@ -400,31 +399,31 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
 
 @objectstorage_cli.object_group.command(name='bulk-upload')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='Object Storage namespace. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--src-dir', callback=handle_required_param, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded. [required]')
-@click.option('--object-prefix', callback=handle_optional_param, help='A prefix to apply to the names of all files being uploaded')
-@click.option('--metadata', callback=handle_optional_param, help='Arbitrary string keys and values for user-defined metadata. This will be applied to all files being uploaded. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@click.option('--content-type', callback=handle_optional_param, help='The content type to apply to all files being uploaded.')
-@click.option('--content-language', callback=handle_optional_param, help='The content language to apply to all files being uploaded.')
-@click.option('--content-encoding', callback=handle_optional_param, help='The content encoding to apply to all files being uploaded.')
-@click.option('--overwrite', is_flag=True, callback=handle_optional_param, help="""If a file being uploaded already exists in Object Storage, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object would be overwritten.
+@cli_util.option('-ns', '--namespace', required=True, help='Object Storage namespace.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--src-dir', required=True, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.')
+@cli_util.option('--object-prefix', help='A prefix to apply to the names of all files being uploaded')
+@cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. This will be applied to all files being uploaded. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
+@cli_util.option('--content-type', help='The content type to apply to all files being uploaded.')
+@cli_util.option('--content-language', help='The content language to apply to all files being uploaded.')
+@cli_util.option('--content-encoding', help='The content encoding to apply to all files being uploaded.')
+@cli_util.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object would be overwritten.
 
 Specifying this flag will also allow for faster uploads as the CLI will not initially check whether or not the files already exist in Object Storage.""")
-@click.option('--no-overwrite', is_flag=True, callback=handle_optional_param, help='If a file being uploaded already exists in Object Storage, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time an object would be overwritten')
-@click.option('--no-multipart', is_flag=True, callback=handle_optional_param,
-              help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side. This applies to all files being uploaded')
-@click.option('--part-size', type=click.INT, callback=handle_optional_param,
-              help='Part size (in MiB) to use if uploading via multipart upload operations. This applies to all files which will be uploaded in multiple parts. Part size must be greater than 10 MiB')
-@click.option('--disable-parallel-uploads', is_flag=True, callback=handle_optional_param,
-              help='[DEPRECATED] This option is no longer used. If a file in the directory will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel. This applies to all files being uploaded in multiple parts')
-@click.option('--parallel-upload-count', type=click.INT, default=10, show_default=True, callback=handle_optional_param,
-              help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth.')
-@click.option('--include', multiple=True, callback=handle_optional_param, help="""Only upload files which match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+@cli_util.option('--no-overwrite', is_flag=True, help='If a file being uploaded already exists in Object Storage, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time an object would be overwritten')
+@cli_util.option('--no-multipart', is_flag=True,
+                 help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side. This applies to all files being uploaded')
+@cli_util.option('--part-size', type=click.INT,
+                 help='Part size (in MiB) to use if uploading via multipart upload operations. This applies to all files which will be uploaded in multiple parts. Part size must be greater than 10 MiB')
+@cli_util.option('--disable-parallel-uploads', is_flag=True,
+                 help='[DEPRECATED] This option is no longer used. If a file in the directory will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel. This applies to all files being uploaded in multiple parts')
+@cli_util.option('--parallel-upload-count', type=click.INT, default=10, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth.')
+@cli_util.option('--include', multiple=True, help="""Only upload files which match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
-@click.option('--exclude', multiple=True, callback=handle_optional_param, help="""Only upload files which do not match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+@cli_util.option('--exclude', multiple=True, help="""Only upload files which do not match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
@@ -655,19 +654,19 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 
 
 @objectstorage_cli.object_group.command(name='get')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--name', callback=handle_required_param, help='The name of the object. [required]')
-@click.option('--file', type=click.File(mode='wb'), callback=handle_required_param,
-              help="The name of the file that will receive the object content, or '-' to write to STDOUT. [required]")
-@click.option('--if-match', callback=handle_optional_param, help='The entity tag to match.')
-@click.option('--if-none-match', callback=handle_optional_param, help='The entity tag to avoid matching.')
-@click.option('--range', callback=handle_optional_param,
-              help='Byte range to fetch. Follows https://tools.ietf.org/html/rfc7233#section-2.1. Example: bytes=2-10')
-@click.option('--multipart-download-threshold', type=click.IntRange(128, None), callback=handle_optional_param, help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
-@click.option('--part-size', type=click.IntRange(128, None), callback=handle_optional_param, help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
-@click.option('--parallel-download-count', type=click.INT, default=10, show_default=True, callback=handle_optional_param,
-              help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--name', required=True, help='The name of the object.')
+@cli_util.option('--file', type=click.File(mode='wb'), required=True,
+                 help="The name of the file that will receive the object content, or '-' to write to STDOUT.")
+@cli_util.option('--if-match', help='The entity tag to match.')
+@cli_util.option('--if-none-match', help='The entity tag to avoid matching.')
+@cli_util.option('--range',
+                 help='Byte range to fetch. Follows https://tools.ietf.org/html/rfc7233#section-2.1. Example: bytes=2-10')
+@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
+@cli_util.option('--parallel-download-count', type=click.INT, default=10, show_default=True,
+                 help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -747,27 +746,27 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
 
 
 @objectstorage_cli.object_group.command(name='bulk-download')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--prefix', callback=handle_optional_param, help='Retrieve all objects with the given prefix. Omit this parameter to get all objects in the bucket')
-@click.option('--delimiter', callback=handle_optional_param, help="When this parameter is set, only objects whose names do not contain the "
-              "delimiter character (after an optionally specified prefix) are returned. "
-              "Scanned objects whose names contain the delimiter have part of their name "
-              "up to the last occurrence of the delimiter (after the optional prefix) "
-              "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
-              "character at this time.")
-@click.option('--download-dir', callback=handle_required_param, help='The directory where retrieved objects will be placed as files. This directory will be created if it does not exist. [required]')
-@click.option('--overwrite', is_flag=True, callback=handle_optional_param, help='If a file with the same name as an object already exists in the download directory, overwrite it. If neither this flag nor --no-overwrite is specified, you will be prompted each time a file would be overwritten.')
-@click.option('--no-overwrite', is_flag=True, callback=handle_optional_param, help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
-@click.option('--parallel-operations-count', type=click.INT, default=10, show_default=True, callback=handle_optional_param,
-              help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the upload process will consume more system resources and network bandwidth.')
-@click.option('--multipart-download-threshold', type=click.IntRange(128, None), callback=handle_optional_param, help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
-@click.option('--part-size', type=click.IntRange(128, None), callback=handle_optional_param, help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
-@click.option('--include', multiple=True, callback=handle_optional_param, help="""Only download objects which match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--prefix', help='Retrieve all objects with the given prefix. Omit this parameter to get all objects in the bucket')
+@cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
+                 "delimiter character (after an optionally specified prefix) are returned. "
+                 "Scanned objects whose names contain the delimiter have part of their name "
+                 "up to the last occurrence of the delimiter (after the optional prefix) "
+                 "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
+                 "character at this time.")
+@cli_util.option('--download-dir', required=True, help='The directory where retrieved objects will be placed as files. This directory will be created if it does not exist.')
+@cli_util.option('--overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, overwrite it. If neither this flag nor --no-overwrite is specified, you will be prompted each time a file would be overwritten.')
+@cli_util.option('--no-overwrite', is_flag=True, help='If a file with the same name as an object already exists in the download directory, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time a file would be overwritten')
+@cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk downloads less resource intensive but they may take longer. Increasing this value may improve bulk download times, but the upload process will consume more system resources and network bandwidth.')
+@cli_util.option('--multipart-download-threshold', type=click.IntRange(128, None), help='Objects larger than this size (in MiB) will be downloaded in multiple parts. The minimum allowable threshold is 128 MiB.')
+@cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
+@cli_util.option('--include', multiple=True, help="""Only download objects which match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
-@click.option('--exclude', multiple=True, callback=handle_optional_param, help="""Only download objects which do not match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+@cli_util.option('--exclude', multiple=True, help="""Only download objects which do not match the provided pattern. Patterns are taken relative to the DOWNLOAD directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
@@ -858,7 +857,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
         'end': None,
         'limit': OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
         'delimiter': delimiter,
-        'fields': 'name'
+        'fields': 'name,size'
     }
     keep_paginating = True
 
@@ -937,11 +936,19 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                     transfer_manager.get_object(callbacks_container, **get_object_kwargs)
                 else:
                     if object_size:
+                        multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, object_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+
                         get_object_kwargs['total_size'] = object_size
-                        get_object_kwargs['part_completed_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, object_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+                        if not ctx.obj['debug']:
+                            get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
+                            get_object_kwargs['part_completed_callback'] = multipart_callback_reference
                     else:
+                        multipart_callback_reference = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, 5 * part_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+
                         # Since we don't know the total here, give some arbitrary size and the task will update it later
-                        get_object_kwargs['part_completed_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, 5 * part_size, _get_progress_bar_label(None, object_name, 'Downloading part for')).update
+                        if not ctx.obj['debug']:
+                            get_object_kwargs['chunk_written_callback'] = multipart_callback_reference
+                            get_object_kwargs['part_completed_callback'] = multipart_callback_reference
 
                     get_object_kwargs['part_size'] = part_size
                     get_object_kwargs['multipart_download_threshold'] = multipart_download_threshold
@@ -970,11 +977,11 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
 
 
 @objectstorage_cli.object_group.command(name='head')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--name', callback=handle_required_param, help='The name of the object. [required]')
-@click.option('--if-match', callback=handle_optional_param, help='The entity tag to match.')
-@click.option('--if-none-match', callback=handle_optional_param, help='The entity tag to avoid matching.')
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--name', required=True, help='The name of the object.')
+@cli_util.option('--if-match', help='The entity tag to match.')
+@cli_util.option('--if-none-match', help='The entity tag to avoid matching.')
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -1000,24 +1007,24 @@ def object_head(ctx, from_json, namespace, bucket_name, name, if_match, if_none_
 
 
 @objectstorage_cli.object_group.command(name='bulk-delete')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--prefix', callback=handle_optional_param, help='Delete all objects with the given prefix. Omit this parameter to delete all objects in the bucket.')
-@click.option('--delimiter', callback=handle_optional_param, help="When this parameter is set, only objects whose names do not contain the "
-              "delimiter character (after an optionally specified prefix) are deleted. "
-              "Scanned objects whose names contain the delimiter have part of their name "
-              "up to the last occurrence of the delimiter (after the optional prefix) "
-              "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
-              "character at this time.")
-@click.option('--dry-run', is_flag=True, callback=handle_optional_param, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
-@click.option('--force', is_flag=True, callback=handle_optional_param, help='Do not ask for confirmation prior to performing the bulk delete.')
-@click.option('--parallel-operations-count', type=click.INT, default=10, show_default=True, callback=handle_optional_param,
-              help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the upload process will consume more system resources and network bandwidth.')
-@click.option('--include', multiple=True, callback=handle_optional_param, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--prefix', help='Delete all objects with the given prefix. Omit this parameter to delete all objects in the bucket.')
+@cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
+                 "delimiter character (after an optionally specified prefix) are deleted. "
+                 "Scanned objects whose names contain the delimiter have part of their name "
+                 "up to the last occurrence of the delimiter (after the optional prefix) "
+                 "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
+                 "character at this time.")
+@cli_util.option('--dry-run', is_flag=True, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
+@cli_util.option('--force', is_flag=True, help='Do not ask for confirmation prior to performing the bulk delete.')
+@cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the upload process will consume more system resources and network bandwidth.')
+@cli_util.option('--include', multiple=True, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
-@click.option('--exclude', multiple=True, callback=handle_optional_param, help="""Only download objects which do not match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+@cli_util.option('--exclude', multiple=True, help="""Only download objects which do not match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
@@ -1250,18 +1257,18 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
 
 
 @objectstorage_cli.object_group.command(name='resume-put')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--file', type=click.File(mode='rb'), callback=handle_required_param, help="The file to load as the content of the object. [required]")
-@click.option('--name', callback=handle_optional_param,
-              help='The name of the object. Default value is the filename excluding the path.')
-@click.option('--upload-id', callback=handle_required_param, help='Upload ID to resume. [required]')
-@click.option('--part-size', type=click.INT, callback=handle_optional_param,
-              help='Part size in MiB')
-@click.option('--disable-parallel-uploads', is_flag=True, callback=handle_optional_param,
-              help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
-@click.option('--parallel-upload-count', type=click.INT, default=None, callback=handle_optional_param,
-              help='This option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads. Defaults to 3.')
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--file', type=click.File(mode='rb'), required=True, help="The file to load as the content of the object.")
+@cli_util.option('--name',
+                 help='The name of the object. Default value is the filename excluding the path.')
+@cli_util.option('--upload-id', required=True, help='Upload ID to resume.')
+@cli_util.option('--part-size', type=click.INT,
+                 help='Part size in MiB')
+@cli_util.option('--disable-parallel-uploads', is_flag=True,
+                 help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
+@cli_util.option('--parallel-upload-count', type=click.INT, default=None,
+                 help='This option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads. Defaults to 3.')
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -1315,9 +1322,9 @@ def object_resume_put(ctx, from_json, namespace, bucket_name, name, file, upload
 
 @cli_util.copy_params_from_generated_command(objectstorage_cli.restore_objects, params_to_exclude=['namespace_name', 'bucket_name', 'object_name'])
 @objectstorage_cli.object_group.command(name='restore', help=objectstorage_cli.restore_objects.help)
-@click.option('-ns', '--namespace', callback=handle_required_param, help="""The top-level namespace used for the request. [required]""")
-@click.option('-bn', '--bucket', callback=handle_required_param, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` [required]""")
-@click.option('--name', callback=handle_required_param, help="""A object which was in an archived state and need to be restored. [required]""")
+@cli_util.option('-ns', '--namespace', required=True, help="""The top-level namespace used for the request.""")
+@cli_util.option('-bn', '--bucket', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--name', required=True, help="""A object which was in an archived state and need to be restored.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
@@ -1349,9 +1356,9 @@ def restore_objects(ctx, **kwargs):
 
 
 @objectstorage_cli.object_group.command(name='restore-status')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('--name', callback=handle_required_param, help='The name of the object. [required]')
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--name', required=True, help='The name of the object.')
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -1416,11 +1423,11 @@ def multipart():
 
 
 @click.command(name='abort')
-@click.option('-ns', '--namespace', callback=handle_required_param, help='The top-level namespace used for the request. [required]')
-@click.option('-bn', '--bucket-name', callback=handle_required_param, help='The name of the bucket. [required]')
-@click.option('-on', '--object-name', callback=handle_required_param, help='The name of the object. [required]')
-@click.option('--upload-id', callback=handle_required_param, help='Upload ID to abort. [required]')
-@click.option('--force', callback=handle_optional_param, is_flag=True, help='Abort the existing multipart upload without a confirmation prompt.')
+@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('-on', '--object-name', required=True, help='The name of the object.')
+@cli_util.option('--upload-id', required=True, help='Upload ID to abort.')
+@cli_util.option('--force', is_flag=True, help='Abort the existing multipart upload without a confirmation prompt.')
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context

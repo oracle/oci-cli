@@ -7,6 +7,7 @@ import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
 from ..cli_root import cli
+from .. import cli_constants  # noqa: F401
 from .. import cli_util
 from .. import json_skeleton_utils
 from .. import custom_types  # noqa: F401
@@ -50,15 +51,15 @@ def zones_group():
 
 
 @zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
-@click.option('--name', callback=cli_util.handle_required_param, help="""The name of the zone. [required]""")
-@click.option('--zone-type', callback=cli_util.handle_required_param, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""The type of the zone. Must be either `PRIMARY` or `SECONDARY`. [required]""")
-@click.option('--external-masters', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
+@cli_util.option('--name', required=True, help="""The name of the zone.""")
+@cli_util.option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
+@cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
-@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
 @cli_util.help_option
 @click.pass_context
@@ -102,11 +103,11 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @records_group.command(name=cli_util.override('delete_domain_records.command_name', 'delete-domain'), help="""Deletes all records at the specified zone and domain.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -137,12 +138,12 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
 
 
 @rr_set_group.command(name=cli_util.override('delete_rr_set.command_name', 'delete'), help="""Deletes all records in the specified RRSet.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--rtype', callback=cli_util.handle_required_param, help="""The type of the target RRSet within the target zone. [required]""")
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--rtype', required=True, help="""The type of the target RRSet within the target zone.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -177,14 +178,14 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
 
 
 @zone_group.command(name=cli_util.override('delete_zone.command_name', 'delete'), help="""Deletes the specified zone. A `204` response indicates that zone has been successfully deleted.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @cli_util.confirm_delete_option
-@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
-@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -238,19 +239,19 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 
 @records_group.command(name=cli_util.override('get_domain_records.command_name', 'get-domain'), help="""Gets a list of all records at the specified zone and domain. The results are sorted by `rtype` in alphabetical order by default. You can optionally filter and/or sort the results using the listed parameters.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--if-none-match', callback=cli_util.handle_optional_param, help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
-@click.option('--if-modified-since', callback=cli_util.handle_optional_param, help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--zone-version', callback=cli_util.handle_optional_param, help="""The version of the zone for which data is requested.""")
-@click.option('--rtype', callback=cli_util.handle_optional_param, help="""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
-@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help="""The field by which to sort records.""")
-@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--zone-version', help="""The version of the zone for which data is requested.""")
+@cli_util.option('--rtype', help="""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help="""The field by which to sort records.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -315,17 +316,17 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
 
 
 @rr_set_group.command(name=cli_util.override('get_rr_set.command_name', 'get'), help="""Gets a list of all records in the specified RRSet. The results are sorted by `recordHash` by default.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--rtype', callback=cli_util.handle_required_param, help="""The type of the target RRSet within the target zone. [required]""")
-@click.option('--if-none-match', callback=cli_util.handle_optional_param, help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
-@click.option('--if-modified-since', callback=cli_util.handle_optional_param, help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--zone-version', callback=cli_util.handle_optional_param, help="""The version of the zone for which data is requested.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--rtype', required=True, help="""The type of the target RRSet within the target zone.""")
+@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--zone-version', help="""The version of the zone for which data is requested.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -390,10 +391,10 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
 
 
 @zones_group.command(name=cli_util.override('get_zone.command_name', 'get'), help="""Gets information about the specified zone, including its creation date, zone type, and serial.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--if-none-match', callback=cli_util.handle_optional_param, help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
-@click.option('--if-modified-since', callback=cli_util.handle_optional_param, help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -419,20 +420,20 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 
 
 @records_group.command(name=cli_util.override('get_zone_records.command_name', 'get-zone'), help="""Gets all records in the specified zone. The results are sorted by `domain` in alphabetical order by default. For more information about records, please see [Resource Record (RR) TYPEs].""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--if-none-match', callback=cli_util.handle_optional_param, help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
-@click.option('--if-modified-since', callback=cli_util.handle_optional_param, help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--zone-version', callback=cli_util.handle_optional_param, help="""The version of the zone for which data is requested.""")
-@click.option('--domain', callback=cli_util.handle_optional_param, help="""Search by domain. Will match any record whose domain (case-insensitive) equals the provided value.""")
-@click.option('--domain-contains', callback=cli_util.handle_optional_param, help="""Search by domain. Will match any record whose domain (case-insensitive) contains the provided value.""")
-@click.option('--rtype', callback=cli_util.handle_optional_param, help="""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
-@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["domain", "rtype", "ttl"]), help="""The field by which to sort records.""")
-@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--zone-version', help="""The version of the zone for which data is requested.""")
+@cli_util.option('--domain', help="""Search by domain. Will match any record whose domain (case-insensitive) equals the provided value.""")
+@cli_util.option('--domain-contains', help="""Search by domain. Will match any record whose domain (case-insensitive) contains the provided value.""")
+@cli_util.option('--rtype', help="""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["domain", "rtype", "ttl"]), help="""The field by which to sort records.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -495,19 +496,19 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 
 
 @zones_group.command(name=cli_util.override('list_zones.command_name', 'list'), help="""Gets a list of all zones in the specified compartment. The collection can be filtered by name, time created, and zone type.""")
-@click.option('--compartment-id', callback=cli_util.handle_required_param, help="""The OCID of the compartment the resource belongs to. [required]""")
-@click.option('--limit', callback=cli_util.handle_optional_param, type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
-@click.option('--page', callback=cli_util.handle_optional_param, help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@click.option('--name', callback=cli_util.handle_optional_param, help="""A case-sensitive filter for zone names. Will match any zone with a name that equals the provided value.""")
-@click.option('--name-contains', callback=cli_util.handle_optional_param, help="""Search by zone name. Will match any zone whose name (case-insensitive) contains the provided value.""")
-@click.option('--zone-type', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""Search by zone type, `PRIMARY` or `SECONDARY`. Will match any zone whose type equals the provided value.""")
-@click.option('--time-created-greater-than-or-equal-to', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@click.option('--time-created-less-than', callback=cli_util.handle_optional_param, type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@click.option('--sort-by', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["name", "zoneType", "timeCreated"]), help="""The field by which to sort zones.""")
-@click.option('--sort-order', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
-@click.option('--lifecycle-state', callback=cli_util.handle_optional_param, type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""The state of a resource.""")
-@click.option('--all', 'all_pages', is_flag=True, callback=cli_util.handle_optional_param, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
-@click.option('--page-size', type=click.INT, callback=cli_util.handle_optional_param, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--name', help="""A case-sensitive filter for zone names. Will match any zone with a name that equals the provided value.""")
+@cli_util.option('--name-contains', help="""Search by zone name. Will match any zone whose name (case-insensitive) contains the provided value.""")
+@cli_util.option('--zone-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""Search by zone type, `PRIMARY` or `SECONDARY`. Will match any zone whose type equals the provided value.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "zoneType", "timeCreated"]), help="""The field by which to sort zones.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""The state of a resource.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -565,14 +566,14 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
 
 
 @records_group.command(name=cli_util.override('patch_domain_records.command_name', 'patch-domain'), help="""Replaces records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--items', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
@@ -609,15 +610,15 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
 
 
 @rr_set_group.command(name=cli_util.override('patch_rr_set.command_name', 'patch'), help="""Updates records in the specified RRSet.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--rtype', callback=cli_util.handle_required_param, help="""The type of the target RRSet within the target zone. [required]""")
-@click.option('--items', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--rtype', required=True, help="""The type of the target RRSet within the target zone.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
@@ -658,13 +659,13 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
 
 
 @records_group.command(name=cli_util.override('patch_zone_records.command_name', 'patch-zone'), help="""Updates a collection of records in the specified zone. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--items', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
@@ -697,15 +698,15 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
 
 
 @records_group.command(name=cli_util.override('update_domain_records.command_name', 'update-domain'), help="""Replaces records in the specified zone at a domain with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--items', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -746,16 +747,16 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
 
 
 @record_collection_group.command(name=cli_util.override('update_rr_set.command_name', 'update-rr-set'), help="""Replaces records in the specified RRSet.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--domain', callback=cli_util.handle_required_param, help="""The target fully-qualified domain name (FQDN) within the target zone. [required]""")
-@click.option('--rtype', callback=cli_util.handle_required_param, help="""The type of the target RRSet within the target zone. [required]""")
-@click.option('--items', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
+@cli_util.option('--rtype', required=True, help="""The type of the target RRSet within the target zone.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -800,17 +801,17 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
 
 
 @zone_group.command(name=cli_util.override('update_zone.command_name', 'update'), help="""Updates the specified secondary zone with your new external master server information. For more information about secondary zone, see [Manage DNS Service Zone].""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--external-masters', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
-@click.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), callback=cli_util.handle_optional_param, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
-@click.option('--max-wait-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@click.option('--wait-interval-seconds', type=click.INT, callback=cli_util.handle_optional_param, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
 @cli_util.help_option
 @click.pass_context
@@ -863,14 +864,14 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
 
 @records_group.command(name=cli_util.override('update_zone_records.command_name', 'update-zone'), help="""Replaces records in the specified zone with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone.""")
-@click.option('--zone-name-or-id', callback=cli_util.handle_required_param, help="""The name or OCID of the target zone. [required]""")
-@click.option('--items', callback=cli_util.handle_optional_param, type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@click.option('--if-match', callback=cli_util.handle_optional_param, help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
-@click.option('--if-unmodified-since', callback=cli_util.handle_optional_param, help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
-@click.option('--compartment-id', callback=cli_util.handle_optional_param, help="""The OCID of the compartment the resource belongs to.""")
-@click.option('--force', callback=cli_util.handle_optional_param, help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
 @cli_util.help_option
 @click.pass_context

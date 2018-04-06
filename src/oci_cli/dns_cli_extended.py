@@ -2,9 +2,12 @@
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 from . import cli_util
+from .cli_util import option
 
 from .aliasing import CommandGroupWithAlias
 from .generated import dns_cli
+from . import json_skeleton_utils
+import click
 
 
 @dns_cli.dns_group.command('record', cls=CommandGroupWithAlias, help="""A DNS record.""")
@@ -32,8 +35,15 @@ def zone():
 
 
 # specify that compartment_id is required for create zone
-cli_util.update_param_help(dns_cli.create_zone, 'compartment_id', ' [required]', append=True)
-cli_util.get_param(dns_cli.create_zone, 'compartment_id').callback = cli_util.handle_required_param
+@cli_util.copy_params_from_generated_command(dns_cli.create_zone, params_to_exclude=['compartment_id'])
+@dns_cli.zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
+@option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@cli_util.wrap_exceptions
+def create_zone(ctx, **kwargs):
+    ctx.invoke(dns_cli.create_zone, **kwargs)
+
 
 dns_cli.dns_group.add_command(dns_cli.zone_group)
 dns_cli.zone_group.add_command(dns_cli.get_zone)
