@@ -100,9 +100,9 @@ def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_export') and callable(getattr(client, 'get_export')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -158,9 +158,9 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         if hasattr(client, 'get_file_system') and callable(getattr(client, 'get_file_system')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -232,9 +232,9 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -278,9 +278,9 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         if hasattr(client, 'get_snapshot') and callable(getattr(client, 'get_snapshot')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -321,9 +321,9 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_export') and callable(getattr(client, 'get_export')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -376,9 +376,9 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         if hasattr(client, 'get_file_system') and callable(getattr(client, 'get_file_system')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -431,9 +431,9 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -486,9 +486,9 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         if hasattr(client, 'get_snapshot') and callable(getattr(client, 'get_snapshot')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1003,9 +1003,9 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
         if hasattr(client, 'get_export_set') and callable(getattr(client, 'get_export_set')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1055,9 +1055,9 @@ def update_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         if hasattr(client, 'get_file_system') and callable(getattr(client, 'get_file_system')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1107,9 +1107,9 @@ def update_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)

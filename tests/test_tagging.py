@@ -25,7 +25,8 @@ def network_resources():
             '--display-name', vcn_name,
             '--cidr-block', cidr_block,
             '--dns-label', vcn_dns_label,
-            '--wait-for-state', 'AVAILABLE'
+            '--wait-for-state', 'AVAILABLE',
+            '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
         ])
         vcn_ocid = util.get_json_from_mixed_string(result.output)['data']['id']
 
@@ -40,17 +41,18 @@ def network_resources():
             '--vcn-id', vcn_ocid,
             '--cidr-block', cidr_block,
             '--dns-label', subnet_dns_label,
-            '--wait-for-state', 'AVAILABLE'
+            '--wait-for-state', 'AVAILABLE',
+            '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
         ])
         subnet_ocid = util.get_json_from_mixed_string(result.output)['data']['id']
 
         yield (vcn_ocid, subnet_ocid)
 
     with test_config_container.create_vcr().use_cassette('test_tagging_fixture_network_delete.yml'):
-        result = invoke(['network', 'subnet', 'delete', '--subnet-id', subnet_ocid, '--force', '--wait-for-state', 'TERMINATED'])
+        result = invoke(['network', 'subnet', 'delete', '--subnet-id', subnet_ocid, '--force', '--wait-for-state', 'TERMINATED', '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS])
         util.validate_response(result, json_response_expected=False)
 
-        result = util.invoke_command(['network', 'vcn', 'delete', '--vcn-id', vcn_ocid, '--force', '--wait-for-state', 'TERMINATED'])
+        result = util.invoke_command(['network', 'vcn', 'delete', '--vcn-id', vcn_ocid, '--force', '--wait-for-state', 'TERMINATED', '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS])
         util.validate_response(result, json_response_expected=False)
 
 
@@ -133,6 +135,7 @@ def test_launch_update_instance_with_tags(tag_namespace_and_tags, network_resour
                     '--image-id', util.oracle_linux_image(),
                     '--shape', 'VM.Standard1.1',
                     '--wait-for-state', 'RUNNING',
+                    '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS,
                     '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
                     '--defined-tags', 'file://tests/temp/defined_tags_1.json'
                 ])
@@ -222,7 +225,8 @@ def test_launch_update_instance_with_tags(tag_namespace_and_tags, network_resour
                     'compute', 'instance', 'terminate',
                     '--instance-id', instance_ocid,
                     '--force',
-                    '--wait-for-state', 'TERMINATED'
+                    '--wait-for-state', 'TERMINATED',
+                    '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
                 ])
                 util.validate_response(result, json_response_expected=False)
 
@@ -255,7 +259,8 @@ def test_create_update_volume_with_tags(tag_namespace_and_tags):
                     '--size-in-gbs', '50',
                     '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
                     '--defined-tags', 'file://tests/temp/defined_tags_1.json',
-                    '--wait-for-state', 'AVAILABLE'
+                    '--wait-for-state', 'AVAILABLE',
+                    '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
                 ])
                 if result.exit_code == 0:
                     break

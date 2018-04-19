@@ -9,7 +9,6 @@ from . import test_config_container
 from . import util
 from .test_list_filter import retrieve_list_by_field_and_check, retrieve_list_and_ensure_sorted
 import oci_cli
-import time
 
 
 class TestVirtualNetwork(unittest.TestCase):
@@ -41,7 +40,7 @@ class TestVirtualNetwork(unittest.TestCase):
                 if hasattr(self, 'drg_capacity_issue'):
                     pytest.skip('Skipped DRG tests due to capacity issues')
             finally:
-                time.sleep(20)
+                util.vcr_mode_aware_sleep(20)
                 self.subtest_delete()
 
     @util.log_test
@@ -106,7 +105,7 @@ class TestVirtualNetwork(unittest.TestCase):
         ingress_rules_v2 = """[{"protocol": "6", "source": "10.0.1.0/25", "tcpOptions": {"destinationPortRange": {"max": 1521, "min": 1521}}}]"""
 
         # TODO: A short sleep before every security list update to allow for replication.
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # Force update on all fields
         result = self.invoke(['security-list', 'update',
@@ -117,26 +116,26 @@ class TestVirtualNetwork(unittest.TestCase):
                               '--force'])
         util.validate_response(result, expect_etag=True)
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update display name only - does not show a prompt
         result = self.invoke(['security-list', 'update', '--security-list-id', self.sl_ocid, '--display-name', sl_name])
         util.validate_response(result, expect_etag=True)
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update egress-rules, confirm y
         result = self.invoke(['security-list', 'update', '--security-list-id', self.sl_ocid, '--egress-security-rules', egress_rules_v2], input='y')
         util.validate_response(result, json_response_expected=False)
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update ingress-rules, confirm y
         result = self.invoke(
             ['security-list', 'update', '--security-list-id', self.sl_ocid, '--ingress-security-rules', ingress_rules_v2], input='y')
         util.validate_response(result, json_response_expected=False)
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update both, confirm y
         result = self.invoke(
@@ -144,7 +143,7 @@ class TestVirtualNetwork(unittest.TestCase):
              ingress_rules, '--egress-security-rules', egress_rules], input='y')
         util.validate_response(result, json_response_expected=False)
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update egress-rules, confirm n
         result = self.invoke(
@@ -160,7 +159,7 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_security_list_stateless_rules(self):
 
-        time.sleep(10)
+        util.vcr_mode_aware_sleep(10)
 
         stateless_egress_rule = """[{"destination": "10.0.2.0/24", "protocol": "6", "tcpOptions": {"destinationPortRange": {"max": 2, "min": 1}}, "isStateless":"true"}]"""
         result = self.invoke(
@@ -169,7 +168,7 @@ class TestVirtualNetwork(unittest.TestCase):
         util.validate_response(result, expect_etag=True)
         assert json.loads(result.output)["data"]["egress-security-rules"][0]["is-stateless"] is True
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         explicit_stateful_egress_rule = """[{"destination": "10.0.2.0/24", "protocol": "6", "tcpOptions": {"destinationPortRange": {"max": 2, "min": 1}}, "isStateless":"false"}]"""
         result = self.invoke(
@@ -179,7 +178,7 @@ class TestVirtualNetwork(unittest.TestCase):
         util.validate_response(result, expect_etag=True)
         assert json.loads(result.output)["data"]["egress-security-rules"][0]["is-stateless"] is False
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         implicit_stateful_egress_rule = """[{"destination": "10.0.2.0/24", "protocol": "17", "udpOptions": {"destinationPortRange": {"max": 2, "min": 1}, "sourcePortRange": {"max": 4, "min": 3}}}]"""
         result = self.invoke(
@@ -324,7 +323,7 @@ class TestVirtualNetwork(unittest.TestCase):
             ['dhcp-options', 'update', '--dhcp-id', self.dhcp_options_ocid, '--options', options], input='n')
         assert result.exit_code != 0
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update options, force
         result = self.invoke(
@@ -481,7 +480,7 @@ class TestVirtualNetwork(unittest.TestCase):
         result = self.invoke(['route-table', 'update', '--rt-id', self.rt_ocid, '--display-name', rt_name])
         util.validate_response(result, expect_etag=True)
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update route-rules, confirm y
         result = self.invoke(
@@ -493,7 +492,7 @@ class TestVirtualNetwork(unittest.TestCase):
             ['route-table', 'update', '--rt-id', self.rt_ocid, '--route-rules', rules_v2], input='n')
         assert result.exit_code != 0
 
-        time.sleep(20)
+        util.vcr_mode_aware_sleep(20)
 
         # update route-rules, force
         result = self.invoke(
@@ -510,7 +509,7 @@ class TestVirtualNetwork(unittest.TestCase):
             try:
                 while retry < max_retry:
                     try:
-                        time.sleep(2)
+                        util.vcr_mode_aware_sleep(2)
                         result = self.invoke(['route-table', 'delete', '--rt-id', self.rt_ocid, '--force'])
                         util.validate_response(result)
                         break

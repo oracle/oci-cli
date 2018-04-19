@@ -4,8 +4,20 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
-The format is based on `Keep a
-Changelog <http://keepachangelog.com/>`__.
+The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
+
+2.4.21 - 2018-04-19
+---------------------
+Added
+~~~~~~~~
+* Support for the following features for the Database service:
+
+  * Tagging support for the following resources
+
+    * Update database (``oci db database update --defined-tags --freeform-tags``)
+    * Launch and update database system (``oci db system launch|update --defined-tags --freeform-tags``)
+
+  * Filter set of database versions based on database system ID (``oci db version list --db-system-id``)
 
 2.4.20 - 2018-04-05
 ---------------------

@@ -30,6 +30,8 @@ TEST_DATA_VERSION = '1'
 
 NUM_INVOKE_COMMAND_RETRIES = 3
 
+WAIT_INTERVAL_SECONDS = '30' if test_config_container.vcr_mode != 'none' else '0'
+
 USER_ID = os.environ['OCI_CLI_USER_ID']
 TENANT_ID = os.environ['OCI_CLI_TENANT_ID']
 COMPARTMENT_ID = os.environ['OCI_CLI_COMPARTMENT_ID']
@@ -568,6 +570,11 @@ def create_large_file(filename, size_in_mebibytes):
     sample_content = b'a'
     with open(filename, 'wb') as f:
         f.write(sample_content * MEBIBYTE * size_in_mebibytes)
+
+
+def vcr_mode_aware_sleep(duration):
+    if test_config_container.vcr_mode != 'none':
+        time.sleep(duration)
 
 
 @contextlib.contextmanager
