@@ -177,7 +177,11 @@ def get_install_dir():
         else:
             create_dir(install_dir)
             if os.listdir(install_dir):
-                print_status("'{}' is not empty and may contain a previous installation.".format(install_dir))
+                print_status("Install directory '{}' is not empty and may contain a previous installation.".format(install_dir))
+                if ACCEPT_ALL_DEFAULTS:
+                    # default behavior is to NOT delete an existing directory and re-prompt for install_dir, but we can't re-prompt if ACCEPT_ALL_DEFAULTS is set
+                    sys.exit("Refusing to remove existing directory {}. Please remove directory manually and re-run installation script.".format(install_dir))
+
                 ans_yes = prompt_y_n('Remove this directory?', 'n')
                 if ans_yes:
                     try:
