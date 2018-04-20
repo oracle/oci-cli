@@ -178,7 +178,7 @@ def get_install_dir():
             create_dir(install_dir)
             if os.listdir(install_dir):
                 print_status("'{}' is not empty and may contain a previous installation.".format(install_dir))
-                ans_yes = prompt_y_n('Remove this directory?', 'n')
+                ans_yes = True if ACCEPT_ALL_DEFAULTS else prompt_y_n('Remove this directory?', 'n')
                 if ans_yes:
                     try:
                         shutil.rmtree(install_dir)
