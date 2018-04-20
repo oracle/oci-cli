@@ -131,9 +131,9 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_backup') and callable(getattr(client, 'get_backup')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -204,9 +204,9 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -252,9 +252,9 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -306,9 +306,9 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         if hasattr(client, 'get_db_node') and callable(getattr(client, 'get_db_node')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -349,9 +349,9 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_backup') and callable(getattr(client, 'get_backup')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -407,9 +407,9 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -728,21 +728,27 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 **Subnet Restrictions:** See above subnetId's **Subnet Restriction**.""")
 @cli_util.option('--cluster-name', help="""Cluster name for Exadata and 2-node RAC DB Systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. This is not applicable for VM based DB systems.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB System. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
 @cli_util.option('--display-name', help="""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--domain', help="""A domain name used for the DB System. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (don't provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size, in GBs, of the initial data volume that will be created and attached to VM-shape based DB system. This storage can later be scaled up if needed. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB System. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--node-count', type=click.INT, help="""Number of nodes to launch for a VM-shape based RAC DB system.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, cpu_core_count, database_edition, db_home, hostname, shape, ssh_public_keys, subnet_id, backup_subnet_id, cluster_name, data_storage_percentage, disk_redundancy, display_name, domain, initial_data_storage_size_in_gb, license_model, node_count):
+def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, cpu_core_count, database_edition, db_home, hostname, shape, ssh_public_keys, subnet_id, backup_subnet_id, cluster_name, data_storage_percentage, defined_tags, disk_redundancy, display_name, domain, freeform_tags, initial_data_storage_size_in_gb, license_model, node_count):
     kwargs = {}
 
     details = {}
@@ -765,6 +771,9 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if data_storage_percentage is not None:
         details['dataStoragePercentage'] = data_storage_percentage
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if disk_redundancy is not None:
         details['diskRedundancy'] = disk_redundancy
 
@@ -773,6 +782,9 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if domain is not None:
         details['domain'] = domain
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if initial_data_storage_size_in_gb is not None:
         details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
@@ -792,9 +804,9 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1354,6 +1366,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--db-system-shape', help="""If provided, filters the results to the set of database versions which are supported for the given shape.""")
+@cli_util.option('--db-system-id', help="""The DB system OCID. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1361,7 +1374,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbVersionSummary]'})
 @cli_util.wrap_exceptions
-def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape):
+def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape, db_system_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1372,6 +1385,8 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         kwargs['page'] = page
     if db_system_shape is not None:
         kwargs['db_system_shape'] = db_system_shape
+    if db_system_id is not None:
+        kwargs['db_system_id'] = db_system_id
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -1535,9 +1550,9 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1565,23 +1580,29 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @database_group.command(name=cli_util.override('update_database.command_name', 'update'), help="""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, if_match):
+def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, defined_tags, freeform_tags, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     if not force:
-        if db_backup_config:
-            if not click.confirm("WARNING: Updates to db-backup-config will replace any existing values. Are you sure you want to continue?"):
+        if db_backup_config or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to db-backup-config and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -1591,6 +1612,12 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if db_backup_config is not None:
         details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.update_database(
@@ -1602,9 +1629,9 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1657,9 +1684,9 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1676,6 +1703,12 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU Cores to be set on the DB System. Applicable only for non-VM based DB systems.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help="""Size, in GBs, to which the currently attached storage needs to be scaled up to for VM based DB system. This must be greater than current storage size. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--version', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1683,18 +1716,18 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, data_storage_size_in_gbs, ssh_public_keys, version, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, data_storage_size_in_gbs, defined_tags, freeform_tags, ssh_public_keys, version, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
-        if ssh_public_keys or version:
-            if not click.confirm("WARNING: Updates to ssh-public-keys and version will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or ssh_public_keys or version:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and ssh-public-keys and version will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -1707,6 +1740,12 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if data_storage_size_in_gbs is not None:
         details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if ssh_public_keys is not None:
         details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
@@ -1724,9 +1763,9 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)

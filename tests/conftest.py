@@ -61,7 +61,8 @@ def malformed_config_file(config):
 
     yield malformed_config_file_path
 
-    os.remove(malformed_config_file_path)
+    if os.path.exists(malformed_config_file_path):
+        os.remove(malformed_config_file_path)
 
 
 @pytest.fixture(scope='session')

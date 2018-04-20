@@ -5,7 +5,6 @@ import json
 import os
 import pytest
 import re
-import time
 import unittest
 from . import command_coverage_validator
 from . import tag_data_container
@@ -221,7 +220,7 @@ class TestCompute(unittest.TestCase):
         self.assertEquals(None, second_vnic['public-ip'])
 
         # Some extra time is needed after VNIC CRUD operations for state to stabilize.
-        time.sleep(5)
+        util.vcr_mode_aware_sleep(5)
 
         # Ensure that new attachments are listed.
         result = self.invoke(
@@ -246,7 +245,7 @@ class TestCompute(unittest.TestCase):
         result = self.invoke(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id])
         util.validate_response(result)
 
-        time.sleep(10)
+        util.vcr_mode_aware_sleep(10)
 
         # Detach vnic
         result = self.invoke(
@@ -254,7 +253,7 @@ class TestCompute(unittest.TestCase):
         util.validate_response(result)
         util.wait_until(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id], 'DETACHED', max_wait_seconds=300, succeed_if_not_found=True)
 
-        time.sleep(10)
+        util.vcr_mode_aware_sleep(10)
 
     @util.log_test
     def subtest_public_ip_operations(self):
@@ -281,7 +280,7 @@ class TestCompute(unittest.TestCase):
         self.assertNotEquals(None, vnic_resp_public_ip)
 
         # Some extra time is needed after VNIC operations for state to stabilize.
-        time.sleep(5)
+        util.vcr_mode_aware_sleep(5)
 
         # Verify the public IP operations. Verify that each get below returns the same values for
         # public-ip-address, public-ip-id and private-ip-id since it is for the same public IP object
@@ -328,7 +327,7 @@ class TestCompute(unittest.TestCase):
         util.validate_response(result)
         util.wait_until(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id], 'DETACHED', max_wait_seconds=300, succeed_if_not_found=True)
 
-        time.sleep(10)
+        util.vcr_mode_aware_sleep(10)
 
     @util.log_test
     def subtest_volume_attachment_operations(self):
@@ -361,7 +360,8 @@ class TestCompute(unittest.TestCase):
              '--type', 'iscsi',
              '--instance-id', self.instance_ocid,
              '--volume-id', self.volume_ocid,
-             '--wait-for-state', 'ATTACHED'])
+             '--wait-for-state', 'ATTACHED',
+             '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS])
         util.validate_response(result, expect_etag=True, json_response_expected=False)
         self.va_ocid = util.get_json_from_mixed_string(result.output)['data']['id']
 
@@ -369,7 +369,8 @@ class TestCompute(unittest.TestCase):
             'compute', 'volume-attachment', 'detach',
             '--volume-attachment-id', self.va_ocid,
             '--force',
-            '--wait-for-state', 'DETACHED'
+            '--wait-for-state', 'DETACHED',
+            '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
         ])
         util.validate_response(result, json_response_expected=False)
 
@@ -413,10 +414,10 @@ class TestCompute(unittest.TestCase):
     def subtest_instance_action_operations(self):
         result = self.invoke(['compute', 'instance', 'action', '--instance-id', self.instance_ocid, '--action', 'RESET'])
         util.validate_response(result)
-        time.sleep(10)
+        util.vcr_mode_aware_sleep(10)
         util.wait_until(['compute', 'instance', 'get', '--instance-id', self.instance_ocid], 'RUNNING',
                         max_wait_seconds=300)
-        time.sleep(5)
+        util.vcr_mode_aware_sleep(5)
 
     @util.log_test
     def subtest_image_operations(self):

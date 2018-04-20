@@ -87,9 +87,9 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -211,9 +211,9 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -848,9 +848,9 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)

@@ -452,9 +452,9 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         if hasattr(client, 'get_cross_connect') and callable(getattr(client, 'get_cross_connect')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -500,9 +500,9 @@ def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
         if hasattr(client, 'get_cross_connect_group') and callable(getattr(client, 'get_cross_connect_group')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -564,9 +564,9 @@ def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if hasattr(client, 'get_dhcp_options') and callable(getattr(client, 'get_dhcp_options')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -612,9 +612,9 @@ def create_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
         if hasattr(client, 'get_drg') and callable(getattr(client, 'get_drg')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -662,9 +662,9 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
         if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -718,9 +718,9 @@ def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
         if hasattr(client, 'get_internet_gateway') and callable(getattr(client, 'get_internet_gateway')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -780,9 +780,9 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
         if hasattr(client, 'get_ip_sec_connection') and callable(getattr(client, 'get_ip_sec_connection')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -826,9 +826,9 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
         if hasattr(client, 'get_local_peering_gateway') and callable(getattr(client, 'get_local_peering_gateway')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -939,9 +939,9 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -985,9 +985,9 @@ def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
         if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1049,9 +1049,9 @@ def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         if hasattr(client, 'get_route_table') and callable(getattr(client, 'get_route_table')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1115,9 +1115,9 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         if hasattr(client, 'get_security_list') and callable(getattr(client, 'get_security_list')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1221,9 +1221,9 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_subnet') and callable(getattr(client, 'get_subnet')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1303,9 +1303,9 @@ def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
         if hasattr(client, 'get_vcn') and callable(getattr(client, 'get_vcn')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1397,9 +1397,9 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
         if hasattr(client, 'get_virtual_circuit') and callable(getattr(client, 'get_virtual_circuit')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1464,9 +1464,9 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         if hasattr(client, 'get_cross_connect') and callable(getattr(client, 'get_cross_connect')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1519,9 +1519,9 @@ def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
         if hasattr(client, 'get_cross_connect_group') and callable(getattr(client, 'get_cross_connect_group')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1576,9 +1576,9 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
         if hasattr(client, 'get_dhcp_options') and callable(getattr(client, 'get_dhcp_options')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1631,9 +1631,9 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
         if hasattr(client, 'get_drg') and callable(getattr(client, 'get_drg')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1686,9 +1686,9 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
         if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1743,9 +1743,9 @@ def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
         if hasattr(client, 'get_internet_gateway') and callable(getattr(client, 'get_internet_gateway')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1800,9 +1800,9 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
         if hasattr(client, 'get_ip_sec_connection') and callable(getattr(client, 'get_ip_sec_connection')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1857,9 +1857,9 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
         if hasattr(client, 'get_local_peering_gateway') and callable(getattr(client, 'get_local_peering_gateway')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -1944,9 +1944,9 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -2001,9 +2001,9 @@ def delete_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
         if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -2058,9 +2058,9 @@ def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         if hasattr(client, 'get_route_table') and callable(getattr(client, 'get_route_table')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -2115,9 +2115,9 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         if hasattr(client, 'get_security_list') and callable(getattr(client, 'get_security_list')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -2170,9 +2170,9 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_subnet') and callable(getattr(client, 'get_subnet')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -2225,9 +2225,9 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
         if hasattr(client, 'get_vcn') and callable(getattr(client, 'get_vcn')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -2282,9 +2282,9 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
         if hasattr(client, 'get_virtual_circuit') and callable(getattr(client, 'get_virtual_circuit')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4192,9 +4192,9 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
         if hasattr(client, 'get_cross_connect') and callable(getattr(client, 'get_cross_connect')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4242,9 +4242,9 @@ def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
         if hasattr(client, 'get_cross_connect_group') and callable(getattr(client, 'get_cross_connect_group')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4317,9 +4317,9 @@ def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds,
         if hasattr(client, 'get_dhcp_options') and callable(getattr(client, 'get_dhcp_options')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4367,9 +4367,9 @@ def update_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
         if hasattr(client, 'get_drg') and callable(getattr(client, 'get_drg')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4417,9 +4417,9 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
         if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4473,9 +4473,9 @@ def update_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
         if hasattr(client, 'get_internet_gateway') and callable(getattr(client, 'get_internet_gateway')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4523,9 +4523,9 @@ def update_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
         if hasattr(client, 'get_ip_sec_connection') and callable(getattr(client, 'get_ip_sec_connection')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4573,9 +4573,9 @@ def update_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
         if hasattr(client, 'get_local_peering_gateway') and callable(getattr(client, 'get_local_peering_gateway')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4705,9 +4705,9 @@ def update_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4755,9 +4755,9 @@ def update_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
         if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4830,9 +4830,9 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         if hasattr(client, 'get_route_table') and callable(getattr(client, 'get_route_table')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4911,9 +4911,9 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
         if hasattr(client, 'get_security_list') and callable(getattr(client, 'get_security_list')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -4978,9 +4978,9 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         if hasattr(client, 'get_subnet') and callable(getattr(client, 'get_subnet')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -5045,9 +5045,9 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
         if hasattr(client, 'get_vcn') and callable(getattr(client, 'get_vcn')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -5144,9 +5144,9 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
         if hasattr(client, 'get_virtual_circuit') and callable(getattr(client, 'get_virtual_circuit')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -5206,9 +5206,9 @@ def update_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         if hasattr(client, 'get_vnic') and callable(getattr(client, 'get_vnic')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)

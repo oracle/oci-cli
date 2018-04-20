@@ -67,9 +67,9 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_sender') and callable(getattr(client, 'get_sender')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
@@ -134,9 +134,9 @@ def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         if hasattr(client, 'get_sender') and callable(getattr(client, 'get_sender')):
             try:
                 wait_period_kwargs = {}
-                if max_wait_seconds:
+                if max_wait_seconds is not None:
                     wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds:
+                if wait_interval_seconds is not None:
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
