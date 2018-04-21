@@ -18,12 +18,15 @@ import shutil
 import subprocess
 import hashlib
 import glob
+import ssl
+import traceback
 try:
     # Attempt to load python 3 module
     from urllib.request import urlopen
+    from urllib.error import URLError
 except ImportError:
     # Import python 2 version
-    from urllib2 import urlopen
+    from urllib2 import urlopen, URLError
 
 try:
     # Rename raw_input to input to support Python 2
@@ -40,9 +43,9 @@ def is_windows():
 ACCEPT_ALL_DEFAULTS = False
 
 VIRTUALENV_VERSION = '15.0.0'
-VIRTUALENV_ARCHIVE = 'virtualenv-' + VIRTUALENV_VERSION + '.tar.gz'
-VIRTUALENV_DOWNLOAD_URL = 'https://pypi.python.org/packages/source/v/virtualenv/' + VIRTUALENV_ARCHIVE
-VIRTUALENV_ARCHIVE_SHA256 = '70d63fb7e949d07aeb37f6ecc94e8b60671edb15b890aa86dba5dfaf2225dc19'
+VIRTUALENV_ARCHIVE = VIRTUALENV_VERSION + '.tar.gz'
+VIRTUALENV_DOWNLOAD_URL = 'https://github.com/pypa/virtualenv/archive/' + VIRTUALENV_ARCHIVE
+VIRTUALENV_ARCHIVE_SHA256 = 'a9759798e8bf7398084ef08c5ba98d4fb38bf2d2d9897deb01ee5412af8804b8'
 
 DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
 DEFAULT_EXEC_DIR = os.path.expanduser(os.path.join('~', 'bin'))
@@ -125,7 +128,16 @@ def is_valid_sha256sum(a_file, expected_sum):
 def create_virtualenv(tmp_dir, install_dir):
     download_location = os.path.join(tmp_dir, VIRTUALENV_ARCHIVE)
     print_status('Downloading virtualenv package from {}.'.format(VIRTUALENV_DOWNLOAD_URL))
-    response = urlopen(VIRTUALENV_DOWNLOAD_URL)
+
+    try:
+        response = urlopen(VIRTUALENV_DOWNLOAD_URL)
+    except URLError as e:
+        if e.reason and isinstance(e.reason, ssl.SSLError):
+            traceback.print_exc()
+            sys.exit('ERROR: Failed to download virtualenv package. Please check that your trusted certificates are up to date and include the certificates necessary to verify github.com')
+        else:
+            raise e
+
     with open(download_location, 'wb') as f:
         f.write(response.read())
     print_status("Downloaded virtualenv package to {}.".format(download_location))
@@ -161,8 +173,16 @@ def install_cli(install_dir, tmp_dir):
         path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
     else:
         path_to_pip = os.path.join(install_dir, 'bin', 'pip')
+
+    # known issue on python 3 where shebang for scripts install using subprocess.call will not reference python executable from venv
+    # fix is to unset this environment variable
+    # https://github.com/pypa/virtualenv/issues/845
+    env = dict(os.environ)
+    if '__PYVENV_LAUNCHER__' in os.environ:
+        env.pop('__PYVENV_LAUNCHER__')
+
     cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'oci_cli', '--upgrade']
-    exec_command(cmd)
+    exec_command(cmd, env=env)
 
 
 def get_install_dir():
@@ -414,7 +434,7 @@ def verify_native_dependencies():
             dep_list = ['libssl-dev', 'libffi-dev', python_dep]
         elif distname == 'ubuntu' and version in ['15.10', '16.04']or distname == 'debian' and version.startswith('8'):
             dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
-    elif any(x in distname for x in ['centos', 'rhel', 'red hat', 'oracle linux server']):
+    elif any(x in distname for x in ['centos', 'rhel', 'red hat']):
         verify_cmd_args = ['rpm', '-q']
         update_cmd_args = ['sudo', 'yum', 'check-update']
         install_cmd_args = ['sudo', 'yum', 'install', '-y']
