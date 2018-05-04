@@ -55,6 +55,9 @@ function create_lb_with_all_options_as_individual_options() {
     # load balancer feature set by providing traffic routing flexibility.
     # More info about the feature can be found in scripts/create_load_balancer_example/path_route_sets_with_comments.json
     jsonlint -Sf scripts/create_load_balancer_example/path_route_sets_with_comments.json > scripts/create_load_balancer_example/path_route_sets.json
+    # Hostname are not mandatory parameter to load balancer create. They allow traffic to route to
+    # different backend sets by allowing multiple hostnames to map to a single listener in load balancer
+    jsonlint -Sf scripts/create_load_balancer_example/hostnames_with_comments.json > scripts/create_load_balancer_example/hostnames.json
 
     # Subnets are passed as a JSON array where each entry is a subnet OCID. For example:
     #
@@ -71,7 +74,15 @@ function create_lb_with_all_options_as_individual_options() {
     #   - The listener information (--listeners) may need the name of the certificate bundle specified in --certificates
     #
     # So you need to take that into account when preparing your files for input
-    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json --certificates file://scripts/create_load_balancer_example/certificates.json --backend-sets file://scripts/create_load_balancer_example/backend_sets.json --listeners file://scripts/create_load_balancer_example/listeners.json --path-route-sets file://scripts/create_load_balancer_example/path_route_sets.json)
+    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID \
+                                            --display-name exampleLb \
+                                            --shape-name $LB_SHAPE \
+                                            --subnet-ids file://scripts/create_load_balancer_example/subnets.json \
+                                            --certificates file://scripts/create_load_balancer_example/certificates.json \
+                                            --backend-sets file://scripts/create_load_balancer_example/backend_sets.json \
+                                            --listeners file://scripts/create_load_balancer_example/listeners.json \
+                                            --path-route-sets file://scripts/create_load_balancer_example/path_route_sets.json \
+                                            --hostnames file://scripts/create_load_balancer_example/hostnames.json)
     WORK_REQUEST_ID=$(jq -r '."opc-work-request-id"' <<< "$CREATED_LB")
     echo "Create Load Balancer Work Request ID: $WORK_REQUEST_ID"
 
@@ -205,6 +216,16 @@ function create_lb_with_minimum_then_add_related_resources() {
         --wait-for-state SUCCEEDED \
         --max-wait-seconds 300
 
+    # We can create multiple hostnames here to eventually attach them to load balancer listener.
+    # Each hostname can correspond to an application served from your backend.
+    oci lb hostname create --load-balancer-id $LB_ID \
+        --hostname host1.name.com \
+        --name hostname1
+
+    oci lb hostname create --load-balancer-id $LB_ID \
+        --hostname host2.name.com \
+        --name hostname2
+
     # Now that we have our certificates, backend set and path route set, we can add a listener. We need to specify a backend set which exists (e.g. the one we made)
     #
     # The valid values for --protocol can be found via "oci lb protocol list"
@@ -218,6 +239,7 @@ function create_lb_with_minimum_then_add_related_resources() {
         --ssl-certificate-name my_cert_bundle \
         --ssl-verify-depth 3 \
         --ssl-verify-peer-certificate false \
+        --hostname-names '["hostname1", "hostname2"]' \
         --path-route-set-name PathRouteSetName
 
     # Print out information about the load balancer

@@ -6,6 +6,31 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.22 - 2018-05-03
+---------------------
+Added
+~~~~~~~~
+* Support for returning ``event-name`` in logs extracted from Audit Service. (``oci audit event list``)
+* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
+* Support for FastConnect service. New commands as mentioned below are added:
+
+	* ``oci network cross-connect-group``
+	* ``oci network cross-connect``
+	* ``oci network cross-connect-location``
+	* ``oci network cross-connect-port-speed-shape``
+	* ``oci network cross-connect-status``
+	* ``oci network fast-connect-provider-service``
+	* ``oci network virtual-circuit``
+	* ``oci network virtual-circuit-public-prefix``
+
+Fixed
+~~~~~~~~
+* Multiple OCI CLI installation issues as specified below:
+
+	* Corrected usage of ``--accept-all-defaults`` to prevent an infinite loop.
+	* An issue which causes failure of OCI CLI installations in non-default directories.
+	* An issue related to download of virtualenv package on windows instances.
+
 2.4.21 - 2018-04-19
 ---------------------
 Added

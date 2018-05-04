@@ -101,7 +101,8 @@ OVERRIDES = {
     "file_storage_group.help": "File Storage Service",
     "file_storage_group.command_name": "fs",
     "email_group.help": "Email Delivery Service",
-    "dns_group.help": "DNS Zone Management Service"
+    "dns_group.help": "DNS Zone Management Service",
+    "list_crossconnect_port_speed_shapes.command_name": "list"
 }
 
 

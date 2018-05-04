@@ -49,12 +49,27 @@
             }
         }
     },
+    "hostnames": {
+        // The content here aligns with the example in the hostnames_with_comments.json file
+        "hostname1": {
+            "hostname": "host1.name.com",
+            "name": "hostname1"
+        },
+        "hostname2": {
+            "hostname": "host2.name.com",
+            "name": "hostname2"
+        }
+    },
     "listeners": {
         // The content here aligns with the example in the listeners_with_comments.json file
         "listenerName": {
             "defaultBackendSetName": "backendSetName",
+            "hostnameNames": [
+                "hostname1",
+                "hostname2"
+            ],
             "port": 8080,
-            "protocol": "HTTP"
+            "protocol": "HTTP",
             "pathRouteSetName": "PathRouteSetName"
         }
     },

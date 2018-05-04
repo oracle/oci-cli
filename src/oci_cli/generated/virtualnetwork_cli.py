@@ -4654,7 +4654,7 @@ def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, displa
 
 @public_ip_group.command(name=cli_util.override('update_public_ip.command_name', 'update'), help="""Updates the specified public IP. You must specify the object's OCID. Use this operation if you want to:
 
-* Assign a reserved public IP in your pool to a private IP. * Move a reserved public IP to a different private IP. * Unassign a reserved public IP from a private IP (which returns it to your pool of reserved public IPs). * Change the display name for a public IP (either ephemeral or reserved).
+* Assign a reserved public IP in your pool to a private IP. * Move a reserved public IP to a different private IP. * Unassign a reserved public IP from a private IP (which returns it to your pool of reserved public IPs). * Change the display name for a public IP.
 
 Assigning, moving, and unassigning a reserved public IP are asynchronous operations. Poll the public IP's `lifecycleState` to determine if the operation succeeded.
 
