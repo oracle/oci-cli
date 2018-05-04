@@ -65,10 +65,19 @@ virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.private_
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.public_ip_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.local_peering_gateway_group)
 virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.remote_peering_connection_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cross_connect_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cross_connect_group_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cross_connect_location_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cross_connect_port_speed_shape_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.cross_connect_status_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.fast_connect_provider_service_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.virtual_circuit_group)
+virtualnetwork_cli.virtual_network_group.add_command(virtualnetwork_cli.virtual_circuit_public_prefix_group)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)
 virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_ip_address.name)
 virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_private_ip_id.name)
+virtualnetwork_cli.fast_connect_provider_service_group.commands.pop(virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes.name)
 
 virtualnetwork_cli.get_ip_sec_connection_device_config.name = 'get-config'
 virtualnetwork_cli.get_ip_sec_connection_device_status.name = 'get-status'
@@ -771,7 +780,7 @@ def update_private_ip_extended(ctx, **kwargs):
 
 The default number of enabled serial console connections per tenancy is 10.
 
-For more information about serial console access, see [Accessing the Instance Console].""")
+For more information about serial console access, see [Accessing the Console].""")
 @cli_util.option('--ssh-public-key-file', required=True, type=click.File('r'), help="""A file containing the SSH public key used to authenticate the serial console connection""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
@@ -991,3 +1000,15 @@ def connect_remote_peering_connections_extended(ctx, **kwargs):
                 click.echo('{}'.format(elem))
             raise click.UsageError('Incorrect Peer Region Name given')
     ctx.invoke(virtualnetwork_cli.connect_remote_peering_connections, **kwargs)
+
+
+# Below customization is done to add another subgroup for an API and to make the API name shorter and consistent with general
+# CLI naming convention.
+@virtualnetwork_cli.fast_connect_provider_service_group.command(cli_util.override('virtual_circuit_bandwidth_shape_group.command_name', 'virtual-circuit-bandwidth-shape'), cls=CommandGroupWithAlias, help="""An individual bandwidth level for virtual circuits.""")
+@cli_util.help_option_group
+def virtual_circuit_bandwidth_shape_group():
+    pass
+
+
+virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes.name = 'list'
+virtual_circuit_bandwidth_shape_group.add_command(virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes)

@@ -15,6 +15,20 @@
         // --backend-sets option when doing a "oci lb load-balancer create")
         "defaultBackendSetName": "backendSetName",
 
+        // This should match the name of hostname group which has been/will be associated with a load balancer (e.g. via the
+        // --hostnames option when doing a "oci lb load-balancer create")
+        // You can assign one or more virtual hostnames to any listener you create for your load balancer.
+        // Each hostname can correspond to an application served from your backend.
+        "hostnameNames": [
+            "hostname1",
+            "hostname2"
+        ],
+
+        // This should match the name of a path route set which has been/will be associated with a load balancer (e.g. via the
+        // --path-route-sets option when doing a "oci lb load-balancer create")
+        // A path route set includes all path route strings and matching rules that define the data routing for a particular listener.
+        "pathRouteSetName": "PathRouteSetName",
+
         "port": 8080,
 
         // You can get valid protocol values by calling "oci lb protocol list"
@@ -24,7 +38,15 @@
     // as many times as necessary to add all the listeners you need
     /*
     , "mySecondListenerName": {
-        "defaultBackendSetName": "backendSetName",
+        "connectionConfiguration": {
+            "idleTimeout": 0
+        },
+        "defaultBackendSetName": "backendSetName2",
+        "hostnameNames": [
+            "hostname3",
+            "hostname4"
+        ],
+        "pathRouteSetName": "pathRouteSetName2",
         "port": 80,
         "protocol": "HTTP",
         "sslConfiguration": {

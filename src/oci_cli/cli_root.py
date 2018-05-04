@@ -177,9 +177,13 @@ def get_section_without_defaults(parser_without_defaults, section_name):
     return parser_without_defaults.items(section_name)
 
 
-@click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True, context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True), help="""Oracle Cloud Infrastructure command line interface, with support for Block Volume, Compute, Database, IAM, Load Balancing, Networking, and Object Storage Services.
+@click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True,
+               context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True),
+               help="""Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
+Compute, Database, IAM, Load Balancing, Networking, DNS, File Storage, Email Delivery and Object Storage Services.
 
-Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where $T contains the OCID of the current tenant):
+Most commands must specify a service, followed by a resource type and then an action. For example, to list users (where
+$T contains the OCID of the current tenant):
 
   oci iam user list --compartment-id $T
 

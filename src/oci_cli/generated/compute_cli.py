@@ -50,7 +50,7 @@ def instance_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot an Compute instance. For more information, see [Overview of Boot Volumes].
+@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -984,7 +984,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_credentials_group.command(name=cli_util.override('get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help="""Gets the generated credentials for the instance. Only works for Windows instances. The returned credentials are only valid for the initial login.""")
+@instance_credentials_group.command(name=cli_util.override('get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help="""Gets the generated credentials for the instance. Only works for instances that require password to log in (E.g. Windows). For certain OS'es, users will be forced to change the initial credentials.""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1418,7 +1418,7 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
 
 @instance_console_connection_group.command(name=cli_util.override('list_instance_console_connections.command_name', 'list'), help="""Lists the console connections for the specified compartment or instance.
 
-For more information about console access, see [Accessing the Instance Console].""")
+For more information about console access, see [Accessing the Console].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
