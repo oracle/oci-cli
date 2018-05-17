@@ -444,6 +444,9 @@ def wrap_exceptions(func):
             if 'missing_required_parameters' in ctx.obj:
                 raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option(s) --{}.'.format(', --'.join(ctx.obj['missing_required_parameters'])))
 
+            if 'missing_internal_parameters' in ctx.obj:
+                raise cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError('Unable to retrieve namespace internally. Please provide the namespace using the option "--{}".'.format(ctx.obj['missing_internal_parameters']))
+
             # check this AFTER checking for required params
             # if there are missing required params we want to show that notice, not prompt the user for deletion confirmation
             if 'prompt_for_deletion' in ctx.obj and ctx.obj['prompt_for_deletion']:
@@ -461,6 +464,11 @@ def wrap_exceptions(func):
             tpl = "{exc}:\n{details}"
             details = json.dumps(exception.args[0], indent=4, sort_keys=True)
             sys.exit(tpl.format(exc=exception.__class__.__name__, details=details))
+        except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError as exception:
+            if ctx.obj["debug"]:
+                raise
+            tpl = "{usage}\n\nError: {details}"
+            sys.exit(tpl.format(usage=ctx.get_usage(), details=str(exception)))
         except cli_exceptions.RequiredValueNotInDefaultOrUserInputError as exception:
             if ctx.obj["debug"]:
                 raise
@@ -879,7 +887,8 @@ def coalesce_provided_and_default_value(ctx, param_name, original_value, is_requ
     # In this case, if we get the default value for the switch AND we have something in the defaults file, honour
     # what was in the defaults file
     flag_param = None
-    if param_from_context and param_from_context.is_flag and len(param_from_context.secondary_opts) == 0:  # We found the parameter AND it is a flag AND it is single option
+    if param_from_context and param_from_context.is_flag and len(param_from_context.secondary_opts) == 0:
+        # We found the parameter AND it is a flag AND it is single option
         flag_param = param_from_context
     if flag_param:
         if original_value == flag_param.default:
@@ -911,6 +920,29 @@ def coalesce_provided_and_default_value(ctx, param_name, original_value, is_requ
     value_from_defaults_file = get_default_value_from_defaults_file(ctx, param_name, param_type, param_takes_multiple)
     if value_from_defaults_file is not None:
         return value_from_defaults_file
+
+    # For namespace parameter within object storage commands, if not explicitly provided we make a SDK API call to
+    # get the parameter. This removes the requirement for the parameter to be a required parameter.
+    if param_name in ['namespace-name', 'namespace']:
+        # Is this an object storage command? Check if the first level command is 'os' [oci os]
+        prev_command = None
+        while True:
+            if not ctx.parent:
+                os_command = prev_command == 'os'
+                break
+            prev_command = ctx.command.name
+            ctx = ctx.parent
+
+        if os_command:
+            client = build_client('object_storage', ctx)
+            try:
+                namespace = client.get_namespace().data
+            except Exception as e:
+                raise cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError(
+                    'Unable to retrieve namespace internally. '
+                    'Please provide the namespace using the option "--{}".'.format(param_name))
+
+            return namespace
 
     if is_required:
         raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option "--{}".'.format(param_name))
@@ -1239,6 +1271,16 @@ def _coalesce_param(ctx, param, value, required, explicit_default=None):
             value = explicit_default
 
         return value
+    except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError:
+        # if there is an explicit default then its not missing so just return explicit_default
+        if explicit_default is not None:
+            return explicit_default
+
+        if 'missing_internal_parameters' not in ctx.obj:
+            ctx.obj['missing_internal_parameters'] = []
+
+        ctx.obj['missing_internal_parameters'].append(hyphenated_param_name)
+
     except cli_exceptions.RequiredValueNotInDefaultOrUserInputError:
         # if there is an explicit default then its not missing so just return explicit_default
         if explicit_default is not None:

@@ -325,20 +325,41 @@ def log_test(func):
 
 def collect_commands(command, prefix=None, leaf_commands_only=False):
     """Returns a list of commands under and including the given command.
-    Each entry is a list of strings to invoke a particular command,
-    such as ["bmcs", "iam", "user", "list"]."""
+        Each entry is a list of strings to invoke a particular command,
+        such as ["bmcs", "iam", "user", "list"]."""
+    for path, _, _ in _collect_commands(command, prefix, leaf_commands_only):
+        yield path
+
+
+def collect_leaf_commands_with_counts(command):
+    """
+     Returns a list of tuples (command, number of params, number of required params) for leaf commands.
+    """
+    return _collect_commands(command, None, True)
+
+
+def _collect_commands(command, prefix=None, leaf_commands_only=False):
+    """
+    Returns a list of tuples (command, number of params, number of required params).
+    Command is a list of all the strings required to invoke a particular command.
+    The count of params and required params is 0 for non leaf commands.
+    """
     prefix = prefix or []
     subcommands = getattr(command, "commands", {})
 
     if subcommands:
         if not leaf_commands_only:
-            yield prefix
+            yield prefix, 0, 0
 
         for name, command in six.iteritems(subcommands):
-            for path in collect_commands(command, prefix + [name], leaf_commands_only=leaf_commands_only):
-                yield path
+            for path, params_count, req_params_count in \
+                    _collect_commands(command, prefix + [name], leaf_commands_only=leaf_commands_only):
+                yield path, params_count, req_params_count
     else:
-        yield prefix
+        params_count = len(command.params)
+        req_params_count = len(list(filter(lambda param: param.help.endswith(' [required]'), command.params)))
+
+        yield prefix, params_count, req_params_count
 
 
 def collect_commands_with_given_args(command, include_args=[], match_mode='any', prefix=None):

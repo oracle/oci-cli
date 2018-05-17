@@ -37,4 +37,24 @@ def add_shortcuts():
                 param.opts.append(shortcut)
 
 
+def remove_namespace_required_objectstorage():
+    # Since almost all object storage commands require the namespace parameter and it can be obtained via an SDK
+    # API call, this function goes through all the object storage commands and makes the namespace parameter as
+    # Optional. It also updates the help text for the parameter
+    if not cli_root.cli.commands.get('os', None):
+        return
+    commands = cli_util.collect_commands(cli_root.cli.commands.get('os'))
+    for command in commands:
+        for param in command.params:
+            if param.name in ['namespace_name', 'namespace', 'ns']:
+                param.required = False
+                if param.help.endswith(' [required]'):
+                    # Remove ' [required]'
+                    param.help = ' '.join(param.help.split(' ')[:-1])
+                    # Add help text
+                    param.help = param.help + " If not provided, this parameter will be obtained " \
+                                              "internally using a call to 'oci os ns get'"
+
+
 add_shortcuts()
+remove_namespace_required_objectstorage()

@@ -9,6 +9,7 @@ import six
 import sys
 
 from . import cli_util
+from . import cli_exceptions
 
 from .custom_types import CliFromJson, CLI_DATETIME
 from .string_utils import camelize, underscore
@@ -57,21 +58,38 @@ def json_skeleton_generation_handler(input_params_to_complex_types={}, output_ty
     def inner_decorator(func):
         @functools.wraps(func)
         def wrapped_call(ctx, *args, **kwargs):
-            cli_util.load_context_obj_values_from_defaults(ctx)
+            try:
+                cli_util.load_context_obj_values_from_defaults(ctx)
 
-            ctx.obj['input_params_to_complex_types'] = input_params_to_complex_types
-            ctx.obj['output_type'] = output_type
+                ctx.obj['input_params_to_complex_types'] = input_params_to_complex_types
+                ctx.obj['output_type'] = output_type
 
-            if ctx.obj['generate_full_command_json_input'] and ctx.obj['generate_param_json_input']:
-                raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
-            elif ctx.obj['generate_full_command_json_input']:
-                generate_json_skeleton_for_full_command(ctx)
-                sys.exit(0)
-            elif ctx.obj['generate_param_json_input']:
-                generate_json_skeleton_for_option(ctx, ctx.obj['generate_param_json_input'])
-                sys.exit(0)
+                if ctx.obj['generate_full_command_json_input'] and ctx.obj['generate_param_json_input']:
+                    raise click.UsageError("Cannot specify both the --generate-full-command-json-input and --generate-param-json-input parameters")
+                elif ctx.obj['generate_full_command_json_input']:
+                    generate_json_skeleton_for_full_command(ctx)
+                    sys.exit(0)
+                elif ctx.obj['generate_param_json_input']:
+                    generate_json_skeleton_for_option(ctx, ctx.obj['generate_param_json_input'])
+                    sys.exit(0)
 
-            func(ctx, *args, **kwargs)
+                func(ctx, *args, **kwargs)
+            except cli_exceptions.RequiredValueNotInDefaultOrUserInputError as exception:
+                if ctx.obj["debug"]:
+                    raise
+                tpl = "{usage}\n\nError: {details}"
+                sys.exit(tpl.format(usage=ctx.get_usage(), details=str(exception)))
+            except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError as exception:
+                if ctx.obj["debug"]:
+                    raise
+                tpl = "{usage}\n\nError: {details}"
+                sys.exit(tpl.format(usage=ctx.get_usage(), details=str(exception)))
+            except Exception as exception:
+                if ctx.obj["debug"]:
+                    raise
+                tpl = "{exc}: {details}"
+                sys.exit(tpl.format(exc=exception.__class__.__name__, details=str(exception)))
+
         return wrapped_call
 
     return inner_decorator

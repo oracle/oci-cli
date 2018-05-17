@@ -1014,7 +1014,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 **reset** - power off and power on
 
-Note that the **stop** state has no effect on the resources you consume. Billing continues for instances that you stop, and related resources continue to apply against any relevant quotas. You must terminate an instance ([TerminateInstance]) to remove its resources from billing and quotas.""")
+For more information see [Stopping and Starting an Instance].""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @cli_util.option('--action', required=True, help="""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

@@ -24,8 +24,8 @@ from . import email_cli_extended  # noqa: F401
 from . import filestorage_cli_extended  # noqa: F401
 from . import identity_cli_extended  # noqa: F401
 from . import lb_cli_extended  # noqa: F401
-from . import final_command_processor  # noqa: F401
 from . import objectstorage_cli_extended  # noqa: F401
+from . import final_command_processor  # noqa: F401
 from . import cli_setup  # noqa: F401
 
 if __name__ == '__main__':

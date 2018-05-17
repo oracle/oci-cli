@@ -4,6 +4,11 @@
 # Bash script to install the Oracle Cloud Infrastructure CLI
 # Example invocation: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
 #
+# Parameters:
+#   --accept-all-defauts: When specified, skips all interactive prompts by selecting the default response.
+#   --python-install-location: Optionally specifies where to install python on systems where it is not present. This must be an absolute path and it will be created if it does not exist.
+#                              This value will only be used on systems with 'yum' where a valid version of Python is not present on the system PATH.
+#
 SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" 
 INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/5657b833bfcf16298d43fb6f0204cd66173c5ac0/scripts/install/install.py"
 _TTY=/dev/tty
@@ -16,22 +21,42 @@ if ! [ -t 0 ]; then
     echo "WARNING: Script should either be downloaded and invoked directly, or be run with the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
 fi
 
+# parse script arguments
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    --python-install-location)
+    PYTHON_INSTALL_LOCATION="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    --accept-all-defaults)
+    ACCEPT_ALL_DEFAULTS=true
+    shift # past argument
+    ;;
+    *)    # unknown option
+    echo "Failed to run install script. Unrecognized argument: $1"
+    exit 1
+    ;;
+esac
+done
+
+yum_opts=""
+apt_get_opts=""
+if [ "$ACCEPT_ALL_DEFAULTS" = true ]; then
+    yum_opts="-y"
+    apt_get_opts="-y"
+    echo "Running with --accept-all-defaults"
+fi
+
 install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
 echo "Downloading Oracle Cloud Infrastructure CLI install script from $INSTALL_SCRIPT_URL to $install_script."
 curl -# $INSTALL_SCRIPT_URL > $install_script || exit
 
 # use default system executable on path unless we have to install one below
 python_exe=python
-
-yum_opts=""
-apt_get_opts=""
-accept_all_defaults=false
-if [ "$1" == "--accept-all-defaults" ]; then
-    accept_all_defaults=true
-    yum_opts="-y"
-    apt_get_opts="-y"
-    echo "Running with --accept-all-defaults"
-fi
 
 # if python is not installed or is less than the required version, then install Python
 need_to_install_python=true
@@ -79,14 +104,18 @@ if [ "$need_to_install_python" = true ]; then
             echo "ERROR: Required native dependencies were not installed, exiting install script. If you did not recieve a prompt to install native dependencies please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
             exit 1
         fi
-        curl -O https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
+        curl --tlsv1.2 -O https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
         tar -xvzf Python-3.6.0.tgz
         cd Python-3.6.0
-        ./configure
+        python_exe=/usr/local/bin/python3.6
+        if [ -n "$PYTHON_INSTALL_LOCATION" ]; then
+            configure_args="prefix=$PYTHON_INSTALL_LOCATION"
+            python_exe="$PYTHON_INSTALL_LOCATION/bin/python3.6"
+        fi
+        ./configure $configure_args
         make
         sudo make install
         cd ..
-        python_exe=/usr/local/bin/python3.6
     elif command -v apt-get
     then
         echo "Attempting to install Python."
@@ -107,7 +136,7 @@ chmod 775 $install_script
 echo "Running install script."
 
 install_args=""
-if [ "$accept_all_defaults" = true ]; then
+if [ "$ACCEPT_ALL_DEFAULTS" = true ]; then
     install_args="--accept-all-defaults"
 fi
 
