@@ -191,32 +191,33 @@ def test_create_with_complex_param_in_json(network_resources):
         parsed_output = json.loads(result.output)
 
         expected_egress = [
-            {'destination': '0.0.0.0/0', 'icmp-options': None, 'is-stateless': None, 'protocol': 'all', 'tcp-options': None, 'udp-options': None}
+            {'destination': '0.0.0.0/0', 'icmp-options': None, 'is-stateless': None, 'protocol': 'all',
+             'tcp-options': None, 'udp-options': None}
         ]
         expected_ingress = [
             {
-                'icmp-options': None,
-                'is-stateless': None,
                 'protocol': '6',
-                'source': '0.0.0.0/0',
-                'tcp-options': {'destination-port-range': {'max': 22, 'min': 22}, 'source-port-range': None},
-                'udp-options': None
+                'udp-options': None,
+                'is-stateless': None,
+                'icmp-options': None,
+                'tcp-options': {'source-port-range': None, 'destination-port-range': {'min': 22, 'max': 22}},
+                'source': '0.0.0.0/0'
             },
             {
-                'icmp-options': {'code': 4, 'type': 3},
-                'is-stateless': None,
                 'protocol': '1',
-                'source': '0.0.0.0/0',
+                'udp-options': None,
+                'is-stateless': None,
+                'icmp-options': {'type': 3, 'code': 4},
                 'tcp-options': None,
-                'udp-options': None
+                'source': '0.0.0.0/0'
             },
             {
-                'icmp-options': {'code': None, 'type': 3},
-                'is-stateless': None,
                 'protocol': '1',
-                'source': '10.0.0.0/16',
+                'udp-options': None,
+                'is-stateless': None,
+                'icmp-options': {'type': 3, 'code': None},
                 'tcp-options': None,
-                'udp-options': None
+                'source': '10.0.0.0/16'
             }
         ]
 

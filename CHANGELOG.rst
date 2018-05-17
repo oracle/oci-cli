@@ -6,12 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.23 - 2018-05-17
+---------------------
+Added
+~~~~~~~~
+* Support for backup or clone of multiple volumes at once using volume groups in the Block Storage service
+* Support for the ability to optionally specify a compartment filter when listing exports in the File Storage service
+* Support for tagging virtual cloud network resources in the Networking service
+* Support for specifying a custom python installation directory using the --python-install-location parameter of the bash install script
+
+Changed
+~~~~~~~~
+* For object storage commands (``oci os``), update --namespace parameter to be optional and fetch it from the server if it is not provided from the user
+
+Fixed
+~~~~~~~~
+* Force bash install script to use TLS 1.2 when downloading Python
+
 2.4.22 - 2018-05-03
 ---------------------
 Added
 ~~~~~~~~
 * Support for returning ``event-name`` in logs extracted from Audit Service. (``oci audit event list``)
-* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
+* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`__ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
 * Support for FastConnect service. New commands as mentioned below are added:
 
 	* ``oci network cross-connect-group``
@@ -29,7 +46,7 @@ Fixed
 
 	* Corrected usage of ``--accept-all-defaults`` to prevent an infinite loop.
 	* An issue which causes failure of OCI CLI installations in non-default directories.
-	* An issue related to download of virtualenv package on windows instances.
+	* An issue related to download of virtualenv package on Windows instances.
 
 2.4.21 - 2018-04-19
 ---------------------
@@ -48,7 +65,7 @@ Added
 ---------------------
 Added
 ~~~~~~~~
-* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/scale_vm_example.sh>`_
+* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/scale_vm_example.sh>`__
 * A warning message informing use of ``--all`` flag to get all items during list operations.
 
 Fixed
@@ -95,7 +112,7 @@ Added
 ~~~~~~~~~~
 * Support for the Email Service. (``oci email``)
 
-  * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_email.py>`_
+  * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_email.py>`__
   * This release does not include support for managing SMTP credentials.  Please use the web console or any OCI SDK to manage SMTP credentials.
 
 * Support for the following features in the Core Services:
@@ -117,7 +134,7 @@ Fixed
 Added
 ~~~~~~~~~~
 * Support for the File Storage Service. (``oci fs``)
-* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`_ (``oci lb path-route-set``)
+* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`__ (``oci lb path-route-set``)
 * Tagging support for *Bucket* resources in the Object Storage Service
 
   * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
@@ -126,7 +143,7 @@ Added
 
 * Support for specifying a restore period for archived objects in the *RestoreObjects* operation of the Object Storage service. (``oci os object restore --hours``)
 * Support for filtering by *backupId* in *ListDbSystems* operation in the Database Service (``oci db system list --backup-id``)
-* Support for getting plink (the `PuTTY <https://www.putty.org/>`_ command line interface) compatible instance console connection string for Windows users (``oci compute instance-console-connection get-plink-connection-string``)
+* Support for getting plink (the `PuTTY <https://www.putty.org/>`__ command line interface) compatible instance console connection string for Windows users (``oci compute instance-console-connection get-plink-connection-string``)
 
 2.4.16 - 2018-02-08
 ---------------------
@@ -134,7 +151,7 @@ Added
 ~~~~~~~~~~
 * Support for Domain Name System Service (oci dns)
 
-  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`_.
+  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`__.
 
 * Support for Reserved Public IPs in Virtual Networking Service (oci network public-ip)
 * Support for the following features in Block Storage Service

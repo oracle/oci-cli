@@ -26,7 +26,9 @@ DEFAULT_LOCAL_VNC_PORT = 5900
 DEFAULT_SSH_PROXY_PORT = 5905
 
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group)
+blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_group)
+blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_group_backup_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.boot_volume_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_policy_assignment_group)
 blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_policy_group)
@@ -526,12 +528,14 @@ def launch_instance_extended(ctx, **kwargs):
 @cli_util.option('--hostname-label', help="""The hostname for the VNIC. Used for DNS. The value is the hostname portion of the VNIC's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952](https://tools.ietf.org/html/rfc952) and [RFC 1123](https://tools.ietf.org/html/rfc1123). The value can be retrieved from the [Vnic](#/en/iaas/20160918/Vnic/).""")
 @cli_util.option('--nic-index', type=click.INT, help="""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use.""")
 @cli_util.option('--wait', is_flag=True, default=False, help="""If set, then wait for the attachment to complete and return the newly attached VNIC. If not set, then the command will not wait and will return nothing on success.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vnic'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait):
+def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
     kwargs = {}
 
     vnic_details = {}
@@ -540,6 +544,12 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assig
     vnic_details['assignPublicIp'] = assign_public_ip
     vnic_details['privateIp'] = private_ip
     vnic_details['hostnameLabel'] = hostname_label
+
+    if freeform_tags is not None:
+        vnic_details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        vnic_details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if skip_source_dest_check is not None:
         vnic_details['skipSourceDestCheck'] = skip_source_dest_check
@@ -555,6 +565,8 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, vnic_display_name, assig
         **kwargs
     )
 
+    # Returning without rendering any response in "no-wait" case makes sense here because displaying VNIC attachment
+    # details is not useful to the CLI user. VNIC details are more useful for which CLI user must use --wait option
     if not wait:
         return
 

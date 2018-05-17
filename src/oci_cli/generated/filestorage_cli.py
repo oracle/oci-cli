@@ -47,11 +47,11 @@ The export's path attribute is not a path in the referenced file system, but the
 
 The path must start with a slash (/) followed by a sequence of zero or more slash-separated path elements. For any two export resources associated with the same export set, except those in a 'DELETED' state, the path element sequence for the first export resource can't contain the complete path element sequence of the second export resource.
 
-For example, the following are acceptable:
+ For example, the following are acceptable:
 
-  * /foo and /bar   * /foo1 and /foo2   * /foo and /foo1
+  * /example and /path   * /example1 and /example2   * /example and /example1
 
-The following examples are not acceptable:   * /foo and /foo/bar   * / and /foo
+The following examples are not acceptable:   * /example and /example/path   * / and /example
 
 Paths may not end in a slash (/). No path element can be a period (.) or two periods in sequence (..). All path elements must be 255 bytes or less.
 
@@ -686,8 +686,8 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('list_exports.command_name', 'list'), help="""Lists the export resources in the specified compartment. You must also specify an export set, a file system, or both.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@export_group.command(name=cli_util.override('list_exports.command_name', 'list'), help="""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
@@ -710,6 +710,8 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -733,7 +735,6 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 
         result = cli_util.list_call_get_all_results(
             client.list_exports,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -741,12 +742,10 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
             client.list_exports,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_exports(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

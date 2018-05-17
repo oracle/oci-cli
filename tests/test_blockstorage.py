@@ -18,16 +18,21 @@ class TestBlockStorage(unittest.TestCase):
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""
         self.validator = validator
+        self.volumes = []
 
         try:
             self.subtest_volume_operations()
             self.subtest_clone_operations()
             self.subtest_volume_backup_operations()
+            self.subtest_volume_group_operations()
+            self.subtest_volume_group_clone_operations()
+            self.subtest_volume_group_backup_operations()
         finally:
             self.subtest_delete()
 
     def test_volume_create_validations(self):
-        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test', '--availability-domain', 'unit-test', '--compartment-id', 'unit-test'])
+        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test',
+                              '--availability-domain', 'unit-test', '--compartment-id', 'unit-test'])
         assert 'You cannot specify both the --volume-backup-id and --source-volume-id options' in result.output
 
         result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--size-in-gbs', '50'])
@@ -45,19 +50,26 @@ class TestBlockStorage(unittest.TestCase):
         result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--size-in-gbs', '50'])
         assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
 
-        result = self.invoke(['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test', '--size-in-mbs', '51200'])
+        result = self.invoke(
+            ['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test',
+             '--size-in-mbs', '51200'])
         assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
 
-        result = self.invoke(['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test', '--size-in-gbs', '50'])
+        result = self.invoke(
+            ['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test',
+             '--size-in-gbs', '50'])
         assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
 
-        result = self.invoke(['volume', 'create', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(), '--size-in-gbs', '50', '--size-in-mbs', '51200'])
+        result = self.invoke(
+            ['volume', 'create', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(),
+             '--size-in-gbs', '50', '--size-in-mbs', '51200'])
         assert 'You cannot specify both --size-in-mbs and --size-in-gbs' in result.output
 
     @util.log_test
     def subtest_volume_operations(self):
         volume_name = util.random_name('cli_test_volume')
-        params = ['volume', 'create', '--availability-domain', util.availability_domain(), '--compartment-id', util.COMPARTMENT_ID, '--display-name', volume_name]
+        params = ['volume', 'create', '--availability-domain', util.availability_domain(), '--compartment-id',
+                  util.COMPARTMENT_ID, '--display-name', volume_name]
 
         self.volume_id = self.volume_operations_internal(volume_name, params, None, str(50 * 1024))
         self.volume_id_two = self.volume_operations_internal(volume_name, params, '50', None)
@@ -82,6 +94,23 @@ class TestBlockStorage(unittest.TestCase):
             'time-created',
             'desc'
         )
+
+    @util.log_test
+    def subtest_volume_group_operations(self):
+        # create volumes to add to a volume group
+        for volume_num in range(0, 3):
+            volume_name = util.random_name('cli_test_volume')
+            params = ['volume', 'create', '--availability-domain', util.availability_domain(), '--compartment-id',
+                      util.COMPARTMENT_ID, '--display-name', volume_name]
+            volume = self.volume_operations_internal(volume_name, params, '50', None)
+            self.volumes.append(volume)
+
+        volume_group_name = util.random_name('cli_test_volume_group')
+        source_details = {'type': 'volumeIds', 'volumeIds': self.volumes}
+        params = ['volume-group', 'create', '--availability-domain', util.availability_domain(), '--compartment-id',
+                  util.COMPARTMENT_ID, '--display-name', volume_group_name,
+                  '--source-details', json.dumps(source_details)]
+        self.volume_group, self.volume_ids = self.volume_group_operations_internal(volume_group_name, params)
 
     def volume_operations_internal(self, volume_name, command_params, size_gb, size_mb):
         params_to_use = list(command_params)
@@ -135,7 +164,8 @@ class TestBlockStorage(unittest.TestCase):
 
         volume_id = util.find_id_in_response(result.output)
         util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], 'AVAILABLE', max_wait_seconds=180)
-        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], True, max_wait_seconds=360, state_property_name="is-hydrated")
+        util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], True, max_wait_seconds=360,
+                        state_property_name="is-hydrated")
 
         result = self.invoke(['volume', 'delete', '--volume-id', volume_id, '--force'])
         util.validate_response(result)
@@ -192,7 +222,8 @@ class TestBlockStorage(unittest.TestCase):
             ['backup', 'update', '--volume-backup-id', self.backup_id, '--display-name', backup_name])
         util.validate_response(result)
 
-        result = self.invoke(['volume', 'create', '--volume-backup-id', self.backup_id, '--availability-domain', util.second_availability_domain()])
+        result = self.invoke(['volume', 'create', '--volume-backup-id', self.backup_id, '--availability-domain',
+                              util.second_availability_domain()])
         util.validate_response(result)
 
         parsed_result = json.loads(result.output)
@@ -213,6 +244,97 @@ class TestBlockStorage(unittest.TestCase):
                         max_interval_seconds=180)
 
     @util.log_test
+    def subtest_volume_group_clone_operations(self):
+        # clone a volume group
+        volume_group_name = util.random_name('cli_test_volume_group_clone')
+        source_details = {'type': 'volumeGroupId', 'volumeGroupId': self.volume_group}
+        params = ['volume-group', 'create', '--availability-domain', util.availability_domain(), '--compartment-id',
+                  util.COMPARTMENT_ID, '--display-name', volume_group_name,
+                  '--source-details', json.dumps(source_details)]
+        self.volume_group_clone, self.volume_clones = self.volume_group_operations_internal(volume_group_name, params)
+
+    @util.log_test
+    def subtest_volume_group_backup_operations(self):
+        # create a volume group backup, perform get & list, update it & restore from it
+        backup_name = util.random_name('cli_test_volume_group_backup')
+        result = self.invoke(['volume-group-backup', 'create', '--volume-group-id', self.volume_group,
+                              '--display-name', backup_name])
+        util.validate_response(result)
+        self.volume_group_backup_id = util.find_id_in_response(result.output)
+
+        util.wait_until(['bv', 'volume-group-backup', 'get', '--volume-group-backup-id', self.volume_group_backup_id],
+                        'AVAILABLE',
+                        max_wait_seconds=600)
+
+        result = self.invoke(['volume-group-backup', 'get', '--volume-group-backup-id', self.volume_group_backup_id])
+        util.validate_response(result)
+        parsed_result = json.loads(result.output)
+        assert parsed_result['data']['size-in-mbs'] is not None
+        assert parsed_result['data']['unique-size-in-mbs'] is not None
+
+        result = self.invoke(['volume-group-backup', 'list', '--compartment-id', util.COMPARTMENT_ID])
+        util.validate_response(result)
+
+        result = self.invoke(
+            ['volume-group-backup', 'list', '--compartment-id', util.COMPARTMENT_ID, '--volume-group-id',
+             self.volume_group])
+        util.validate_response(result)
+        self.assertEquals(1, len(json.loads(result.output)['data']))
+
+        backup_name = backup_name + "_UPDATED"
+        result = self.invoke(
+            ['volume-group-backup', 'update', '--volume-group-backup-id', self.volume_group_backup_id, '--display-name',
+             backup_name])
+        util.validate_response(result)
+
+        volume_group_name = util.random_name('cli_test_volume_group_restore')
+        source_details = {'type': 'volumeGroupBackupId', 'volumeGroupBackupId': self.volume_group_backup_id}
+        params = ['volume-group', 'create', '--availability-domain', util.availability_domain(), '--compartment-id',
+                  util.COMPARTMENT_ID, '--display-name', volume_group_name,
+                  '--source-details', json.dumps(source_details)]
+        self.volume_group_restored, self.restored_volumes = self.volume_group_operations_internal(volume_group_name,
+                                                                                                  params)
+
+    def volume_group_operations_internal(self, volume_group_name, command_params):
+        params_to_use = list(command_params)
+
+        result = self.invoke(params_to_use)
+        util.validate_response(result)
+        parsed_result = json.loads(result.output)
+        volume_group_id = util.find_id_in_response(result.output)
+        volume_ids = parsed_result['data']['volume-ids']
+        assert len(volume_ids) > 0
+
+        util.wait_until(['bv', 'volume-group', 'get', '--volume-group-id', volume_group_id], 'AVAILABLE',
+                        max_wait_seconds=180)
+
+        result = self.invoke(['volume-group', 'get', '--volume-group-id', volume_group_id])
+        util.validate_response(result)
+        parsed_result = json.loads(result.output)
+        assert parsed_result['data']['size-in-mbs'] is not None
+        assert parsed_result['data']['time-created'] is not None
+
+        result = self.invoke(['volume-group', 'list', '--compartment-id', util.COMPARTMENT_ID])
+        util.validate_response(result)
+
+        volume_group_name = volume_group_name + "_UPDATED"
+        # if we have more than a single volume in the group, remove one and update
+        if len(volume_ids) > 1:
+            volume_ids.remove(volume_ids[len(volume_ids) - 1])
+            result = self.invoke(
+                ['volume-group', 'update', '--volume-group-id', volume_group_id, '--display-name', volume_group_name,
+                 '--volume-ids', json.dumps(volume_ids), '--force'])
+            util.validate_response(result)
+            parsed_result = json.loads(result.output)
+            assert len(parsed_result['data']['volume-ids']) == len(volume_ids)
+        else:
+            result = self.invoke(
+                ['volume-group', 'update', '--volume-group-id', volume_group_id, '--display-name', volume_group_name])
+            util.validate_response(result)
+
+        return volume_group_id, volume_ids
+
+    @util.log_test
     def subtest_delete(self):
         error_count = 0
 
@@ -222,6 +344,19 @@ class TestBlockStorage(unittest.TestCase):
                 util.validate_response(result)
                 util.wait_until(['bv', 'backup', 'get', '--volume-backup-id', self.backup_id], 'TERMINATED',
                                 max_interval_seconds=180)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'volume_group_backup_id'):
+            try:
+                result = self.invoke(
+                    ['volume-group-backup', 'delete', '--volume-group-backup-id', self.volume_group_backup_id,
+                     '--force'])
+                util.validate_response(result)
+                util.wait_until(
+                    ['bv', 'volume-group-backup', 'get', '--volume-group-backup-id', self.volume_group_backup_id],
+                    'TERMINATED', max_interval_seconds=180)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1
@@ -242,9 +377,62 @@ class TestBlockStorage(unittest.TestCase):
                 util.print_latest_exception(error)
                 error_count = error_count + 1
 
+        if hasattr(self, 'volume_group'):
+            try:
+                result = self.invoke(['volume-group', 'delete', '--volume-group-id', self.volume_group, '--force'])
+                util.validate_response(result)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'volume_group_clone'):
+            try:
+                result = self.invoke(
+                    ['volume-group', 'delete', '--volume-group-id', self.volume_group_clone, '--force'])
+                util.validate_response(result)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'volume_group_restored'):
+            try:
+                result = self.invoke(
+                    ['volume-group', 'delete', '--volume-group-id', self.volume_group_restored, '--force'])
+                util.validate_response(result)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'volumes'):
+            for volume in self.volumes:
+                try:
+                    result = self.invoke(['volume', 'delete', '--volume-id', volume, '--force'])
+                    util.validate_response(result)
+                except Exception as error:
+                    util.print_latest_exception(error)
+                    error_count = error_count + 1
+
+        if hasattr(self, 'volume_clones'):
+            for volume in self.volume_clones:
+                try:
+                    result = self.invoke(['volume', 'delete', '--volume-id', volume, '--force'])
+                    util.validate_response(result)
+                except Exception as error:
+                    util.print_latest_exception(error)
+                    error_count = error_count + 1
+
+        if hasattr(self, 'restored_volumes'):
+            for volume in self.restored_volumes:
+                try:
+                    result = self.invoke(['volume', 'delete', '--volume-id', volume, '--force'])
+                    util.validate_response(result)
+                except Exception as error:
+                    util.print_latest_exception(error)
+                    error_count = error_count + 1
+
         self.assertEquals(0, error_count)
 
-    def invoke(self, params, debug=False, ** args):
+    def invoke(self, params, debug=False, **args):
         commands = ['bv'] + params
 
         if hasattr(self, 'validator'):
@@ -253,7 +441,7 @@ class TestBlockStorage(unittest.TestCase):
         if debug is True:
             commands = ['--debug'] + commands
 
-        return util.invoke_command(commands, ** args)
+        return util.invoke_command(commands, **args)
 
 
 if __name__ == '__main__':

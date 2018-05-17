@@ -18,22 +18,39 @@ IGNORED_COMMANDS = [
     ['setup', 'oci-cli-rc']
 ]
 
+# Current output:
+# ['iam', 'region', 'list'],
+# ['network', 'peer-region-for-remote-peering', 'list-allowed-peer-regions-for-remote-peering'],
+# ['os', 'ns', 'get']
+# From returned list of (command, number of params, number of required params),
+# filter command names with number of params <= 2 (--help and --from-json) into a sorted list.
+COMMANDS_WITH_NO_PARAMS = sorted(command for command, _, _ in
+                                 filter(lambda x: x[1] <= 2 and x[0] not in IGNORED_COMMANDS,
+                                        util.collect_leaf_commands_with_counts(oci_cli.cli)))
 
-# Commands which have no parameters and so produce empty dictionaries
-COMMANDS_WITH_NO_PARAMS = [
-    ['os', 'ns', 'get'],
-    ['iam', 'region', 'list']
-]
 
-
-# Commands whose parameters are all marked as optional (though some combination of them may be needed for calls to succeed)
-COMMANDS_WITH_ALL_OPTIONAL_PARAMS = [
-    ['db', 'backup', 'list'],
-    ['network', 'private-ip', 'list'],
-    ['bv', 'volume', 'create'],
-    ['bv', 'volume-backup-policy', 'list'],
-    ['iam', 'compartment', 'list']
-]
+# Commands whose parameters are all marked as optional
+# though some combination of them may be needed for calls to succeed
+# Current output:
+# [['bv', 'volume', 'create'],
+# ['bv', 'volume-backup-policy', 'list'],
+# ['db', 'backup', 'list'],
+# ['fs', 'export', 'list'],
+# ['iam', 'compartment', 'list'],
+# ['iam', 'region', 'list'],
+# ['network', 'peer-region-for-remote-peering', 'list-allowed-peer-regions-for-remote-peering'],
+# ['network', 'private-ip', 'list'],
+# ['network', 'public-ip', 'get'],
+# ['network', 'service', 'list'],
+# ['os', 'ns', 'get'],
+# ['os', 'ns', 'get-metadata'],
+# ['os', 'ns', 'update-metadata'],
+# ['rqs', 'resource-type', 'list']]
+# From returned list of (command, number of params, number of required params),
+# filter command names with number of required params == 0 and command not in IGNORED_COMMANDS list into a sorted list.
+COMMANDS_WITH_ALL_OPTIONAL_PARAMS = sorted(command for command, _, _ in
+                                           filter(lambda x: x[2] == 0 and x[0] not in IGNORED_COMMANDS,
+                                                  util.collect_leaf_commands_with_counts(oci_cli.cli)))
 
 
 def test_all_commands_generate_skeleton():
@@ -64,12 +81,10 @@ def test_all_commands_generate_skeleton():
 
 
 def test_all_commands_can_accept_from_json_input():
-    commands = sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
 
+    commands = [cmd for cmd in sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
+                if cmd not in IGNORED_COMMANDS]
     for cmd in commands:
-        if cmd in IGNORED_COMMANDS:
-            continue
-
         full_command = list(cmd)
         full_command.extend(['--from-json', 'file://tests/resources/json_input/dummy.json'])
         result = util.invoke_command(full_command)
@@ -87,7 +102,6 @@ def test_all_commands_can_accept_from_json_input():
             if result.output:
                 # Sanity check that there are no errors
                 assert 'error' not in result.output.lower()
-
                 json.loads(result.output)
         elif cmd in COMMANDS_WITH_ALL_OPTIONAL_PARAMS:
             if result.output:

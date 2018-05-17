@@ -242,7 +242,33 @@ def test_generate_input_dict_complex_param_is_list_of_complex_type():
                 'isEnabled': True,
                 'lifecycleState': 'string',
                 'timeCreated': '2017-01-01T00:00:00.000000+00:00',
-                'vcnId': 'string'
+                'vcnId': 'string',
+                'freeformTags': {
+                    'string1': 'string',
+                    'string2': 'string'
+                },
+                'definedTags': {
+                    'string1': {
+                        'string1': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        },
+                        'string2': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        }
+                    },
+                    'string2': {
+                        'string1': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        },
+                        'string2': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        }
+                    }
+                }
             },
             {
                 'compartmentId': 'string',
@@ -251,7 +277,33 @@ def test_generate_input_dict_complex_param_is_list_of_complex_type():
                 'isEnabled': True,
                 'lifecycleState': 'string',
                 'timeCreated': '2017-01-01T00:00:00.000000+00:00',
-                'vcnId': 'string'
+                'vcnId': 'string',
+                'freeformTags': {
+                    'string1': 'string',
+                    'string2': 'string'
+                },
+                'definedTags': {
+                    'string1': {
+                        'string1': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        },
+                        'string2': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        }
+                    },
+                    'string2': {
+                        'string1': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        },
+                        'string2': {
+                            'string1': 'string',
+                            'string2': 'string'
+                        }
+                    }
+                }
             }
         ]
     }

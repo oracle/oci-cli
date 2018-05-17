@@ -492,7 +492,8 @@ def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, i
             bar.__enter__()
 
         # TODO: Make the download size a configurable option
-        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=False):
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
             if bar:
                 bar.update(len(chunk))
             file.write(chunk)

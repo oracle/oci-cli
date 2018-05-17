@@ -4,3 +4,7 @@
 
 class RequiredValueNotInDefaultOrUserInputError(Exception):
     """A required value was not in the specified defaults file, nor was it provided as part of user input."""
+
+
+class RequiredValueNotAvailableInternallyOrUserInputError(Exception):
+    """A required value was not available internally (via SDK API call) nor was it provided as part of user input."""
