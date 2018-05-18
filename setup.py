@@ -39,7 +39,7 @@ requires = [
     'pyOpenSSL<=17.4.0',
     'httpsig_cffi==15.0.0',
     'jmespath==0.9.3',
-    'python-dateutil==2.5.3',
+    'python-dateutil==2.7.3',
     'pytz==2016.10',
     'retrying==1.3.3',
     'requests[security]==2.18.4',

@@ -21,7 +21,7 @@ pycparser==2.17
 pyOpenSSL==17.4.0
 pyparsing==2.2.0
 pytest==3.2.3
-python-dateutil==2.5.3
+python-dateutil==2.7.3
 pytz==2016.10
 requests==2.18.4
 retrying==1.3.3
