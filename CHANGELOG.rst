@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.24 - 2018-05-31
+---------------------
+Added
+~~~~~~~~
+* Support for launching database system from backup in the Database service (``oci db system launch-from-backup``)
+* Support for soft shutdown of instances in the Compute service (SOFTSTOP option for --action in ``oci compute instance action``)
+* Use the root compartment ID (tenancy ID) from the config file as a default value for compartment/tenancy parameter for the following commands in the Identity service:
+
+  * ``oci iam region-subscription list``
+  * ``oci iam availability-domain list``
+  * ``oci iam group list | add-user | create | list-users | remove-user``
+  * ``oci iam user list | list-groups | create``
+  * ``oci iam dynamic-group list | create``
+
+Changed
+~~~~~~~~
+* Bumped version number of python-dateutil package (2.7.3) to address clock skew warning
+* Name for "Swift Passwords" to "Auth Tokens" in Identity service (Use ``oci iam auth-token`` instead of ``oci iam swift-password`` or ``oci iam user swift-password``)
+
+Fixed
+~~~~~~~~
+* Support for escaping non-alphanumeric characters in the Windows installation script.
+
 2.4.23 - 2018-05-17
 ---------------------
 Added

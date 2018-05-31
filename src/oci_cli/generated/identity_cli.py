@@ -144,7 +144,21 @@ def region_group():
     pass
 
 
-@click.command(cli_util.override('swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a Swift client with the Oracle Cloud Infrastructure Object Storage Service. This password is associated with the user's Console login. Swift passwords never expire. A user can have up to two Swift passwords at a time.
+@click.command(cli_util.override('auth_token_group.command_name', 'auth-token'), cls=CommandGroupWithAlias, help="""An `AuthToken` is an Oracle-generated token string that you can use to authenticate with third-party APIs that do not support Oracle Cloud Infrastructure's signature-based authentication. For example, use an `AuthToken` to authenticate with a Swift client with the Object Storage Service.
+
+The auth token is associated with the user's Console login. Auth tokens never expire. A user can have up to two auth tokens at a time.
+
+**Note:** The token is always an Oracle-generated string; you can't change it to a string of your choice.
+
+For more information, see [Managing User Credentials].""")
+@cli_util.help_option_group
+def auth_token_group():
+    pass
+
+
+@click.command(cli_util.override('swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""**Deprecated. Use [AuthToken] instead.**
+
+Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a Swift client with the Object Storage Service. This password is associated with the user's Console login. Swift passwords never expire. A user can have up to two Swift passwords at a time.
 
 **Note:** The password is always an Oracle-generated string; you can't change it to a string of your choice.
 
@@ -154,7 +168,7 @@ def swift_password_group():
     pass
 
 
-@click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], and [SwiftPassword]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
+@click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], [SwiftPassword] and [AuthToken]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
 
 These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service. They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure Console via an identity provider. For more information, see [Identity Providers and Federation].
 
@@ -227,6 +241,36 @@ def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@auth_token_group.command(name=cli_util.override('create_auth_token.command_name', 'create'), help="""Creates a new auth token for the specified user. For information about what auth tokens are for, see [Managing User Credentials].
+
+You must specify a *description* for the auth token (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateAuthToken].
+
+Every user has permission to create an auth token for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to create an auth token for any user, including themselves.""")
+@cli_util.option('--description', required=True, help="""The description you assign to the auth token during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'AuthToken'})
+@cli_util.wrap_exceptions
+def create_auth_token(ctx, from_json, description, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+    kwargs = {}
+
+    details = {}
+    details['description'] = description
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_auth_token(
+        user_id=user_id,
+        create_auth_token_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -506,6 +550,76 @@ def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@identity_provider_group.command(name=cli_util.override('create_identity_provider_create_saml2_identity_provider_details.command_name', 'create-identity-provider-create-saml2-identity-provider-details'), help="""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
+
+You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
+
+You must also specify a *name* for the `IdentityProvider`, which must be unique across all `IdentityProvider` objects in your tenancy and cannot be changed.
+
+You must also specify a *description* for the `IdentityProvider` (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateIdentityProvider].
+
+After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of your tenancy.""")
+@cli_util.option('--name', required=True, help="""The name you assign to the `IdentityProvider` during creation. The name must be unique across all `IdentityProvider` objects in the tenancy and cannot be changed.""")
+@cli_util.option('--description', required=True, help="""The description you assign to the `IdentityProvider` during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--product-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IDCS", "ADFS"]), help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
+
+Example: `IDCS`""")
+@cli_util.option('--metadata-url', required=True, help="""The URL for retrieving the identity provider's metadata, which contains information required for federating.""")
+@cli_util.option('--metadata', required=True, help="""The XML that contains the information required for federating.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@cli_util.wrap_exceptions
+def create_identity_provider_create_saml2_identity_provider_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, product_type, metadata_url, metadata, freeform_tags, defined_tags):
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['name'] = name
+    details['description'] = description
+    details['productType'] = product_type
+    details['metadataUrl'] = metadata_url
+    details['metadata'] = metadata
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    details['protocol'] = 'SAML2'
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_identity_provider(
+        create_identity_provider_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_identity_provider(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @idp_group_mapping_group.command(name=cli_util.override('create_idp_group_mapping.command_name', 'create'), help="""Creates a single mapping between an IdP group and an IAM Service [group].""")
 @cli_util.option('--idp-group-name', required=True, help="""The name of the IdP group you want to map.""")
 @cli_util.option('--group-id', required=True, help="""The OCID of the IAM Service [group] you want to map to the IdP group.""")
@@ -701,7 +815,9 @@ def create_smtp_credential(ctx, from_json, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('create_swift_password.command_name', 'create'), help="""Creates a new Swift password for the specified user. For information about what Swift passwords are for, see [Managing User Credentials].
+@swift_password_group.command(name=cli_util.override('create_swift_password.command_name', 'create'), help="""**Deprecated. Use [CreateAuthToken] instead.**
+
+Creates a new Swift password for the specified user. For information about what Swift passwords are for, see [Managing User Credentials].
 
 You must specify a *description* for the Swift password (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSwiftPassword].
 
@@ -904,6 +1020,35 @@ def delete_api_key(ctx, from_json, user_id, fingerprint, if_match):
     result = client.delete_api_key(
         user_id=user_id,
         fingerprint=fingerprint,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@auth_token_group.command(name=cli_util.override('delete_auth_token.command_name', 'delete'), help="""Deletes the specified auth token for the specified user.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--auth-token-id', required=True, help="""The OCID of the auth token.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_auth_token(ctx, from_json, user_id, auth_token_id, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
+        raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_auth_token(
+        user_id=user_id,
+        auth_token_id=auth_token_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1216,7 +1361,9 @@ def delete_smtp_credential(ctx, from_json, user_id, smtp_credential_id, if_match
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('delete_swift_password.command_name', 'delete'), help="""Deletes the specified Swift password for the specified user.""")
+@swift_password_group.command(name=cli_util.override('delete_swift_password.command_name', 'delete'), help="""**Deprecated. Use [DeleteAuthToken] instead.**
+
+Deletes the specified Swift password for the specified user.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--swift-password-id', required=True, help="""The OCID of the Swift password.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1550,6 +1697,26 @@ def list_api_keys(ctx, from_json, user_id):
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_api_keys(
+        user_id=user_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@auth_token_group.command(name=cli_util.override('list_auth_tokens.command_name', 'list'), help="""Lists the auth tokens for the specified user. The returned object contains the token's OCID, but not the token itself. The actual token is returned only upon creation.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[AuthToken]'})
+@cli_util.wrap_exceptions
+def list_auth_tokens(ctx, from_json, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.list_auth_tokens(
         user_id=user_id,
         **kwargs
     )
@@ -1933,7 +2100,9 @@ def list_smtp_credentials(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('list_swift_passwords.command_name', 'list'), help="""Lists the Swift passwords for the specified user. The returned object contains the password's OCID, but not the password itself. The actual password is returned only upon creation.""")
+@swift_password_group.command(name=cli_util.override('list_swift_passwords.command_name', 'list'), help="""**Deprecated. Use [ListAuthTokens] instead.**
+
+Lists the Swift passwords for the specified user. The returned object contains the password's OCID, but not the password itself. The actual password is returned only upon creation.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2170,6 +2339,42 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
     client = cli_util.build_client('identity', ctx)
     result = client.remove_user_from_group(
         user_group_membership_id=user_group_membership_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@auth_token_group.command(name=cli_util.override('update_auth_token.command_name', 'update'), help="""Updates the specified auth token's description.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--auth-token-id', required=True, help="""The OCID of the auth token.""")
+@cli_util.option('--description', help="""The description you assign to the auth token. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'AuthToken'})
+@cli_util.wrap_exceptions
+def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
+        raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if description is not None:
+        details['description'] = description
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_auth_token(
+        user_id=user_id,
+        auth_token_id=auth_token_id,
+        update_auth_token_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2462,6 +2667,79 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
+@identity_provider_group.command(name=cli_util.override('update_identity_provider_update_saml2_identity_provider_details.command_name', 'update-identity-provider-update-saml2-identity-provider-details'), help="""Updates the specified identity provider.""")
+@cli_util.option('--identity-provider-id', required=True, help="""The OCID of the identity provider.""")
+@cli_util.option('--description', help="""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metadata-url', help="""The URL for retrieving the identity provider's metadata, which contains information required for federating.""")
+@cli_util.option('--metadata', help="""The XML that contains the information required for federating.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@cli_util.wrap_exceptions
+def update_identity_provider_update_saml2_identity_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, identity_provider_id, description, freeform_tags, defined_tags, metadata_url, metadata, if_match):
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if description is not None:
+        details['description'] = description
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if metadata_url is not None:
+        details['metadataUrl'] = metadata_url
+
+    if metadata is not None:
+        details['metadata'] = metadata
+
+    details['protocol'] = 'SAML2'
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_identity_provider(
+        identity_provider_id=identity_provider_id,
+        update_identity_provider_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_identity_provider(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @idp_group_mapping_group.command(name=cli_util.override('update_idp_group_mapping.command_name', 'update'), help="""Updates the specified group mapping.""")
 @cli_util.option('--identity-provider-id', required=True, help="""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help="""The OCID of the group mapping.""")
@@ -2630,7 +2908,9 @@ def update_smtp_credential(ctx, from_json, user_id, smtp_credential_id, descript
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('update_swift_password.command_name', 'update'), help="""Updates the specified Swift password's description.""")
+@swift_password_group.command(name=cli_util.override('update_swift_password.command_name', 'update'), help="""**Deprecated. Use [UpdateAuthToken] instead.**
+
+Updates the specified Swift password's description.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--swift-password-id', required=True, help="""The OCID of the Swift password.""")
 @cli_util.option('--description', help="""The description you assign to the Swift password. Does not have to be unique, and it's changeable.""")

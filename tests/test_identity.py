@@ -29,7 +29,7 @@ class TestIdentity(unittest.TestCase):
     #   - tag and tag-namespace operations (x12). These are handled via test_tagging and test_tag_management
     #   - dynamic group operations (create, get, update, delete, list)
     #   - smtp credential operations (create, update, delete, list) covered in test_email.py
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=24)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.identity_group, expected_not_called_count=27)
     @test_config_container.RecordReplay('identity')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
@@ -47,11 +47,15 @@ class TestIdentity(unittest.TestCase):
             self.subtest_swift_password_operations()
             self.subtest_policy_operations()
             self.subtest_customer_secret_key_operations()
+            self.subtest_region_subscription_operations()
         finally:
             self.subtest_cleanup()
 
     def subtest_availability_domain_operations(self):
         result = self.invoke(['availability-domain', 'list', '--compartment-id', util.TENANT_ID])
+        self.validate_response(result)
+
+        result = self.invoke(['availability-domain', 'list'])
         self.validate_response(result)
 
     def subtest_compartment_operations(self):
@@ -99,6 +103,9 @@ class TestIdentity(unittest.TestCase):
         result = self.invoke(['user', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
         self.validate_response(result, extra_validation=self.validate_user)
 
+        result = self.invoke(['user', 'list', '--limit', '1000'])
+        self.validate_response(result, extra_validation=self.validate_user)
+
         self.user_description = 'UPDATED ' + self.user_description
         result = self.invoke(['user', 'update', '--user-id', self.user_ocid, '--description', self.user_description])
         self.validate_response(result, extra_validation=self.validate_user, expect_etag=True)
@@ -120,6 +127,9 @@ class TestIdentity(unittest.TestCase):
         self.validate_response(result, extra_validation=self.validate_group, expect_etag=True)
 
         result = self.invoke(['group', 'list', '--compartment-id', util.TENANT_ID, '--limit', '1000'])
+        self.validate_response(result, extra_validation=self.validate_group)
+
+        result = self.invoke(['group', 'list', '--limit', '1000'])
         self.validate_response(result, extra_validation=self.validate_group)
 
         self.group_description = 'UPDATED ' + self.user_description
@@ -453,6 +463,13 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
             if len(parsed_list_result['data']) != 0:
                 for item in parsed_list_result['data']:
                     assert item['lifecycle-state'] in self.VALID_DELETED_CUSTOMER_SECRET_KEY_STATES
+
+    def subtest_region_subscription_operations(self):
+        result = self.invoke(['region-subscription', 'list', '--tenancy-id', util.TENANT_ID])
+        self.validate_response(result)
+
+        result = self.invoke(['region-subscription', 'list'])
+        self.validate_response(result)
 
     def subtest_cleanup(self):
         if hasattr(self, 'user_ocid'):

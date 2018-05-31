@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 from . import cli_root, cli_util
+import six
 
 
 # Map parameter variable names to shortcuts.
@@ -56,5 +57,28 @@ def remove_namespace_required_objectstorage():
                                               "internally using a call to 'oci os ns get'"
 
 
+# Many iam commands accept the compartment-id or tenany-id as a parameter.
+# In most cases, except policy, we can use the tenancy from the config file as a default for the tenancy-id or
+# root compartment-id.
+def set_iam_default_tenancy_help():
+    iam_tenancy_defaults = cli_util.get_iam_commands_that_use_tenancy_defaults()
+
+    iam_command = cli_root.cli.commands.get('iam')
+    for _, entitycommand in six.iteritems(iam_command.commands):
+        if entitycommand.name in iam_tenancy_defaults.keys():
+            for _, subcommand in six.iteritems(entitycommand.commands):
+                for param in subcommand.params:
+                    if subcommand.name in iam_tenancy_defaults[entitycommand.name]:
+                        if param.name == 'compartment_id' or param.name == 'tenancy_id':
+                            if param.help.endswith(' [required]'):
+                                # Remove ' [required]'
+                                param.help = ' '.join(param.help.split(' ')[:-1])
+                                # Add help text
+                                param.help = param.help + \
+                                    " If not provided, this parameter will use the " + \
+                                    "tenancy from the config file."
+
+
 add_shortcuts()
 remove_namespace_required_objectstorage()
+set_iam_default_tenancy_help()

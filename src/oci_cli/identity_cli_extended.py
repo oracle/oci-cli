@@ -26,6 +26,7 @@ identity_cli.user_group.add_command(identity_cli.swift_password_group)
 identity_cli.user_group.add_command(identity_cli.ui_password_group)
 
 identity_cli.identity_group.add_command(identity_cli.tag_group)
+identity_cli.identity_group.add_command(identity_cli.auth_token_group)
 identity_cli.tag_group.commands.pop(identity_cli.update_tag.name)
 
 identity_cli.identity_group.add_command(identity_cli.tag_namespace_group)
@@ -473,27 +474,3 @@ def upload_api_key(ctx, **kwargs):
     kwargs.pop('key_file')
 
     ctx.invoke(identity_cli.upload_api_key, **kwargs)
-
-
-# Below change assumes the default compartment ID for 'oci iam compartment list' is tenancy OCID.
-# It is ONLY done for the case where the user does not have a default compartment OCID in
-# the config file and does not mention any compartment ID as part of the command param. In this case,
-# it is safe to assume that the user wants a list of all compartments in his tenancy i.e. root compartment.
-# If the user sets the compartment ID in any other way, that will take priority over this default used.
-@cli_util.copy_params_from_generated_command(identity_cli.list_compartments, params_to_exclude=['compartment_id'])
-@identity_cli.compartment_group.command(name='list', help="""Lists the compartments in your tenancy if no compartment is specified. If a compartment OCID is specified, it lists the compartments within that compartment.
-Since there is no compartment nesting supported currently, the only current choice for compartment OCID parameter is to mention tenancy OCID i.e. root compartment. See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
-@cli_util.wrap_exceptions
-def list_compartments_extended(ctx, **kwargs):
-    if 'compartment_id' not in kwargs or kwargs['compartment_id'] is None:
-        # If config file is not found, allow the command to be invoked
-        try:
-            client_config = cli_util.build_config(ctx.obj)
-            kwargs['compartment_id'] = client_config['tenancy']
-        except Exception:
-            pass
-
-    ctx.invoke(identity_cli.list_compartments, **kwargs)

@@ -36,6 +36,10 @@ blockstorage_cli.blockstorage_group.add_command(blockstorage_cli.volume_backup_p
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 
 compute_cli.compute_group.add_command(compute_cli.image_group)
+# Disabling subclass commands
+compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_uri_details.name)
+compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_tuple_details.name)
+
 compute_cli.image_group.commands.pop(compute_cli.export_image.name)
 
 compute_cli.compute_group.add_command(compute_cli.instance_group)
@@ -43,6 +47,11 @@ compute_cli.compute_group.add_command(compute_cli.shape_group)
 compute_cli.compute_group.add_command(compute_cli.vnic_attachment_group)
 compute_cli.compute_group.add_command(compute_cli.boot_volume_attachment_group)
 compute_cli.compute_group.add_command(compute_cli.volume_attachment_group)
+
+# Disabling subclass commands
+compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_i_scsi_volume_details.name)
+compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_paravirtualized_volume_details.name)
+
 compute_cli.compute_group.add_command(compute_cli.console_history_group)
 compute_cli.compute_group.add_command(compute_cli.instance_console_connection_group)
 compute_cli.instance_group.add_command(compute_cli.get_windows_instance_initial_credentials)

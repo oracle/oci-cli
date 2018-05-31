@@ -306,7 +306,6 @@ def is_top_level_help(ctx):
 def load_default_values(ctx, defaults_file, profile):
     file_location = os.path.expandvars(os.path.expanduser(defaults_file))
     ctx.obj['default_values_from_file'] = {}
-
     if os.path.exists(file_location):
         parser = configparser.ConfigParser(interpolation=None)
         parser.read(file_location)
