@@ -73,8 +73,8 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
     }
 
     # need to escape spaces in the path for Invoke-Expression
-    $EscapedExecutable = $PythonExecutable -replace ' ','` '
-    $PythonVersion = Invoke-Expression "$EscapedExecutable -c 'import platform;print(platform.python_version())'"
+    $EscapedExecutable = $PythonExecutable
+    $PythonVersion = Invoke-Expression "& `"$EscapedExecutable`" -c 'import platform;print(platform.python_version())'"
     $MinVersionToCheck = $MinValidPython2Version
     if ($PythonVersion.StartsWith("3")) {
         $MinVersionToCheck = $MinValidPython3Version

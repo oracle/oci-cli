@@ -12,6 +12,104 @@ from .generated import database_cli
 from .aliasing import CommandGroupWithAlias
 
 
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'ssh_public_keys'])
+@database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
+@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
+@cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
+@cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
+@cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def launch_db_system_extended(ctx, **kwargs):
+    create_db_home_details = {}
+    if 'db_version' in kwargs and kwargs['db_version']:
+        create_db_home_details['dbVersion'] = kwargs['db_version']
+
+    create_database_details = {}
+    if 'admin_password' in kwargs and kwargs['admin_password']:
+        create_database_details['adminPassword'] = kwargs['admin_password']
+
+    if 'character_set' in kwargs and kwargs['character_set']:
+        create_database_details['characterSet'] = kwargs['character_set']
+
+    if 'db_name' in kwargs and kwargs['db_name']:
+        create_database_details['dbName'] = kwargs['db_name']
+
+    if 'db_workload' in kwargs and kwargs['db_workload']:
+        create_database_details['dbWorkload'] = kwargs['db_workload']
+
+    if 'ncharacter_set' in kwargs and kwargs['ncharacter_set']:
+        create_database_details['ncharacterSet'] = kwargs['ncharacter_set']
+
+    if 'pdb_name' in kwargs and kwargs['pdb_name']:
+        create_database_details['pdbName'] = kwargs['pdb_name']
+
+    create_db_home_details['database'] = create_database_details
+
+    kwargs['db_home'] = json.dumps(create_db_home_details)
+
+    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
+        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
+        kwargs['ssh_public_keys'] = json.dumps(content)
+
+    # remove all of the kwargs that launch_db_system wont recognize
+    del kwargs['admin_password']
+    del kwargs['character_set']
+    del kwargs['db_name']
+    del kwargs['db_version']
+    del kwargs['db_workload']
+    del kwargs['ncharacter_set']
+    del kwargs['pdb_name']
+    del kwargs['ssh_authorized_keys_file']
+
+    ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'ssh_public_keys'])
+@database_cli.db_system_group.command(name='launch-from-backup', help=database_cli.launch_db_system_launch_db_system_from_backup_details.help)
+@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
+@cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def launch_db_system_backup_extended(ctx, **kwargs):
+
+    create_database_details = {}
+
+    if 'admin_password' in kwargs and kwargs['admin_password']:
+        create_database_details['adminPassword'] = kwargs['admin_password']
+
+    if 'backup_id' in kwargs and kwargs['backup_id']:
+        create_database_details['backupId'] = kwargs['backup_id']
+
+    if 'backup_tde_password' in kwargs and kwargs['backup_tde_password']:
+        create_database_details['backupTDEPassword'] = kwargs['backup_tde_password']
+
+    create_db_home_details = {}
+    create_db_home_details['database'] = create_database_details
+
+    kwargs['db_home'] = json.dumps(create_db_home_details)
+
+    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
+        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
+        kwargs['ssh_public_keys'] = json.dumps(content)
+
+    # remove all of the kwargs that launch_db_system wont recognize
+    del kwargs['admin_password']
+    del kwargs['backup_id']
+    del kwargs['backup_tde_password']
+    del kwargs['ssh_authorized_keys_file']
+
+    ctx.invoke(database_cli.launch_db_system_launch_db_system_from_backup_details, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
 @database_cli.database_group.command(name='create', help="""Creates a new database in the given DB System.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
@@ -281,64 +379,6 @@ def db_node_reset(ctx, **kwargs):
     ctx.invoke(database_cli.db_node_action, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system, params_to_exclude=['db_home', 'ssh_public_keys'])
-@database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system.help)
-@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
-@cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
-@cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
-@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
-@cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
-@cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
-@cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
-@cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'DbSystem'})
-@cli_util.wrap_exceptions
-def launch_db_system_extended(ctx, **kwargs):
-    create_db_home_details = {}
-    if 'db_version' in kwargs and kwargs['db_version']:
-        create_db_home_details['dbVersion'] = kwargs['db_version']
-
-    create_database_details = {}
-    if 'admin_password' in kwargs and kwargs['admin_password']:
-        create_database_details['adminPassword'] = kwargs['admin_password']
-
-    if 'character_set' in kwargs and kwargs['character_set']:
-        create_database_details['characterSet'] = kwargs['character_set']
-
-    if 'db_name' in kwargs and kwargs['db_name']:
-        create_database_details['dbName'] = kwargs['db_name']
-
-    if 'db_workload' in kwargs and kwargs['db_workload']:
-        create_database_details['dbWorkload'] = kwargs['db_workload']
-
-    if 'ncharacter_set' in kwargs and kwargs['ncharacter_set']:
-        create_database_details['ncharacterSet'] = kwargs['ncharacter_set']
-
-    if 'pdb_name' in kwargs and kwargs['pdb_name']:
-        create_database_details['pdbName'] = kwargs['pdb_name']
-
-    create_db_home_details['database'] = create_database_details
-
-    kwargs['db_home'] = json.dumps(create_db_home_details)
-
-    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
-        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
-        kwargs['ssh_public_keys'] = json.dumps(content)
-
-    # remove all of the kwargs that launch_db_system wont recognize
-    del kwargs['admin_password']
-    del kwargs['character_set']
-    del kwargs['db_name']
-    del kwargs['db_version']
-    del kwargs['db_workload']
-    del kwargs['ncharacter_set']
-    del kwargs['pdb_name']
-    del kwargs['ssh_authorized_keys_file']
-
-    ctx.invoke(database_cli.launch_db_system, **kwargs)
-
-
 @cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version'])
 @database_cli.db_system_group.command(name='update', help=database_cli.update_db_system.help)
 @cli_util.option('--patch-action', help="""The action to perform on the patch.""")
@@ -540,8 +580,17 @@ database_cli.db_group.add_command(database_cli.db_version_group)
 database_cli.database_group.commands.pop(database_cli.list_databases.name)
 database_cli.db_node_group.commands.pop(database_cli.db_node_action.name)
 database_cli.db_system_group.commands.pop(database_cli.launch_db_system.name)
+
+# Disable subclass commands
+database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_db_system_details.name)
+database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_db_system_from_backup_details.name)
+
 database_cli.db_system_group.commands.pop(database_cli.update_db_system.name)
 database_cli.db_group.add_command(database_cli.data_guard_association_group)
+
+# Disable subclass command
+database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_to_existing_db_system_details.name)
+
 database_cli.db_group.add_command(database_cli.patch_group)
 database_cli.db_group.add_command(database_cli.patch_history_entry_group)
 
@@ -551,6 +600,7 @@ database_cli.database_group.add_command(create_database_from_backup)
 database_cli.database_group.add_command(delete_database)
 database_cli.database_group.add_command(list_databases)
 database_cli.db_system_group.add_command(launch_db_system_extended)
+database_cli.db_system_group.add_command(launch_db_system_backup_extended)
 database_cli.db_system_group.add_command(update_db_system_extended)
 
 database_cli.patch_group.commands.pop(database_cli.get_db_home_patch.name)
@@ -566,9 +616,3 @@ database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_system_p
 
 patch_history_get_group.add_command(database_cli.get_db_system_patch_history_entry)
 patch_history_list_group.add_command(database_cli.list_db_system_patch_history_entries)
-
-cpu_core_count_help_override = """The number of CPU cores to enable. The valid values depend on the specified shape:
-
-- BM.DenseIO1.36 and BM.HighIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.RACLocalStorage1.72 - Specify a multiple of 4, from 4 to 72. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. [required]"""
-
-cli_util.override_option_help(launch_db_system_extended, 'cpu_core_count', cpu_core_count_help_override)

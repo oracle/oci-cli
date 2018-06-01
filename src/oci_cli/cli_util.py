@@ -266,7 +266,20 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
     expression = None
     if ctx.obj['query']:
         search_path = resolve_jmespath_query(ctx, ctx.obj['query'])
-        expression = jmespath.compile(search_path)
+        try:
+            expression = jmespath.compile(search_path)
+        # Print an appropriate helpful error message for improper escaping of user input by the user.
+        except jmespath.exceptions.LexerError as e:
+            if 'Unknown token' in e.message:
+                click.echo('If a key name has any characters besides [a-z, A-Z, 0-9, _], it needs to be escaped.',
+                           file=sys.stderr)
+                click.echo('In bash or similar "NIX" based shells used in "NIX" environment, escaping can be done by'
+                           'using double quotes inside single quotes.\ne.g. --query \'data[*]."display-name"\'',
+                           file=sys.stderr)
+                click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'
+                           'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',
+                           file=sys.stderr)
+            raise
 
     if headers:
         for header in headers:
@@ -921,33 +934,46 @@ def coalesce_provided_and_default_value(ctx, param_name, original_value, is_requ
     if value_from_defaults_file is not None:
         return value_from_defaults_file
 
+    # Many iam commands accept the compartment-id or tenany-id as a parameter.
+    # In most cases, except policy, we can use the tenancy from the config file as a default for the tenancy-id or
+    # root compartment-id.
+    prev_command = get_previous_command(ctx)
+    if prev_command == 'iam':
+        iam_tenancy_defaults = get_iam_commands_that_use_tenancy_defaults()
+        if ctx.parent.command.name in iam_tenancy_defaults.keys():
+            if ctx.command.name in iam_tenancy_defaults[ctx.parent.command.name]:
+                if param_name in ['compartment-id', 'tenancy-id']:
+                    value = get_tenancy_from_config(ctx)
+                    return value
+
     # For namespace parameter within object storage commands, if not explicitly provided we make a SDK API call to
     # get the parameter. This removes the requirement for the parameter to be a required parameter.
-    if param_name in ['namespace-name', 'namespace']:
-        # Is this an object storage command? Check if the first level command is 'os' [oci os]
-        prev_command = None
-        while True:
-            if not ctx.parent:
-                os_command = prev_command == 'os'
-                break
-            prev_command = ctx.command.name
-            ctx = ctx.parent
-
-        if os_command:
-            client = build_client('object_storage', ctx)
-            try:
-                namespace = client.get_namespace().data
-            except Exception as e:
-                raise cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError(
-                    'Unable to retrieve namespace internally. '
-                    'Please provide the namespace using the option "--{}".'.format(param_name))
-
-            return namespace
+    # Is this an object storage command? Check if the first level command is 'os' [oci os]
+    if prev_command == 'os' and param_name in ['namespace-name', 'namespace']:
+        client = build_client('object_storage', ctx)
+        try:
+            namespace = client.get_namespace().data
+        except Exception as e:
+            raise cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError(
+                'Unable to retrieve namespace internally. '
+                'Please provide the namespace using the option "--{}".'.format(param_name))
+        return namespace
 
     if is_required:
         raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option "--{}".'.format(param_name))
 
     return None
+
+
+def get_previous_command(ctx):
+    prev_command = None
+    while True:
+        if not ctx.parent:
+
+            break
+        prev_command = ctx.command.name
+        ctx = ctx.parent
+    return prev_command
 
 
 def get_param_from_click_context(ctx, param_name):
@@ -993,7 +1019,6 @@ def get_default_value_from_defaults_file(ctx, param_name, param_type, param_take
 
             if target_key in ctx.obj['default_values_from_file']:
                 return convert_value_from_param_type(ctx.obj['default_values_from_file'][target_key], param_type, param_takes_multiple)
-
     return None
 
 
@@ -1460,3 +1485,26 @@ def retrieve_attribute_for_sort(target_obj, attribute_name, **kwargs):
         return datetime.datetime.min
     else:
         return ''
+
+
+def get_iam_commands_that_use_tenancy_defaults():
+    iam_tenancy_defaults = {
+        'availability-domain': ['list'],
+        'compartment': ['list'],
+        'dynamic-group': ['create', 'list'],
+        'group': ['add-user', 'create', 'list', 'list-users', 'remove-user'],
+        'user': ['create', 'list', 'list-groups'],
+        'region-subscription': ['list']
+    }
+    return iam_tenancy_defaults
+
+
+def get_tenancy_from_config(ctx):
+    client_config = None
+    try:
+        client_config = build_config(ctx.obj)
+        if 'tenancy' not in client_config:
+            return None
+    except Exception:
+        return None
+    return client_config['tenancy']

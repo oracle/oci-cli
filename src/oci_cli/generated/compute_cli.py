@@ -246,6 +246,114 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@volume_attachment_group.command(name=cli_util.override('attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help="""Attaches the specified storage volume to the specified instance.""")
+@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--use-chap', type=click.BOOL, help="""Whether to use CHAP authentication for the volume attachment. Defaults to false.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@cli_util.wrap_exceptions
+def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, display_name, is_read_only, use_chap):
+    kwargs = {}
+
+    details = {}
+    details['instanceId'] = instance_id
+    details['volumeId'] = volume_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if is_read_only is not None:
+        details['isReadOnly'] = is_read_only
+
+    if use_chap is not None:
+        details['useChap'] = use_chap
+
+    details['type'] = 'iscsi'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.attach_volume(
+        attach_volume_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_attachment_group.command(name=cli_util.override('attach_volume_attach_paravirtualized_volume_details.command_name', 'attach-volume-attach-paravirtualized-volume-details'), help="""Attaches the specified storage volume to the specified instance.""")
+@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@cli_util.wrap_exceptions
+def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, display_name, is_read_only):
+    kwargs = {}
+
+    details = {}
+    details['instanceId'] = instance_id
+    details['volumeId'] = volume_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if is_read_only is not None:
+        details['isReadOnly'] = is_read_only
+
+    details['type'] = 'paravirtualized'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.attach_volume(
+        attach_volume_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @console_history_group.command(name=cli_util.override('capture_console_history.command_name', 'capture'), help="""Captures the most recent serial console data (up to a megabyte) for the specified instance.
 
 The `CaptureConsoleHistory` operation works with the other console history operations as described below.
@@ -817,6 +925,94 @@ def export_image(ctx, from_json, image_id, destination_type, if_match):
     cli_util.render_response(result, ctx)
 
 
+@image_group.command(name=cli_util.override('export_image_export_image_via_object_storage_uri_details.command_name', 'export-image-export-image-via-object-storage-uri-details'), help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage service. You can use the Object Storage URL, or the namespace, bucket name, and object name when specifying the location to export to.
+
+For more information about exporting images, see [Image Import/Export].
+
+To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+@cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
+@cli_util.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
+@cli_util.option('--destination-uri', required=True, help="""The Object Storage URL to export the image to. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@cli_util.wrap_exceptions
+def export_image_export_image_via_object_storage_uri_details(ctx, from_json, image_id, destination_type, destination_uri, if_match):
+
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['destinationType'] = destination_type
+    details['destinationUri'] = destination_uri
+
+    details['destinationType'] = 'objectStorageUri'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.export_image(
+        image_id=image_id,
+        export_image_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@image_group.command(name=cli_util.override('export_image_export_image_via_object_storage_tuple_details.command_name', 'export-image-export-image-via-object-storage-tuple-details'), help="""Exports the specified image to the Oracle Cloud Infrastructure Object Storage service. You can use the Object Storage URL, or the namespace, bucket name, and object name when specifying the location to export to.
+
+For more information about exporting images, see [Image Import/Export].
+
+To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
+
+See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+@cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
+@cli_util.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
+@cli_util.option('--bucket-name', help="""The Object Storage bucket to export the image to.""")
+@cli_util.option('--namespace-name', help="""The Object Storage namespace to export the image to.""")
+@cli_util.option('--object-name', help="""The Object Storage object name for the exported image.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
+@cli_util.wrap_exceptions
+def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, image_id, destination_type, bucket_name, namespace_name, object_name, if_match):
+
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['destinationType'] = destination_type
+
+    if bucket_name is not None:
+        details['bucketName'] = bucket_name
+
+    if namespace_name is not None:
+        details['namespaceName'] = namespace_name
+
+    if object_name is not None:
+        details['objectName'] = object_name
+
+    details['destinationType'] = 'objectStorageTuple'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.export_image(
+        image_id=image_id,
+        export_image_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_attachment_group.command(name=cli_util.override('get_boot_volume_attachment.command_name', 'get'), help="""Gets information about the specified boot volume attachment.""")
 @cli_util.option('--boot-volume-attachment-id', required=True, help="""The OCID of the boot volume attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1004,7 +1200,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('instance_action.command_name', 'instance-action'), help="""Performs one of the power actions (start, stop, softreset, or reset) on the specified instance.
+@instance_group.command(name=cli_util.override('instance_action.command_name', 'instance-action'), help="""Performs one of the power actions (start, stop, softreset, softstop, or reset) on the specified instance.
 
 **start** - power on
 
@@ -1012,11 +1208,13 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 **softreset** - ACPI shutdown and power on
 
+**softstop** - signal the instance operating system to shutdown gracefully
+
 **reset** - power off and power on
 
 For more information see [Stopping and Starting an Instance].""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
-@cli_util.option('--action', required=True, help="""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET""")
+@cli_util.option('--action', required=True, help="""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
