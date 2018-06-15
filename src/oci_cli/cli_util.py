@@ -67,27 +67,36 @@ OVERRIDES = {
     "blockstorage_group.help": "Block Volume Service",
     "compute_group.command_name": "compute",
     "compute_group.help": "Compute Service",
+    "container_engine_group.command_name": "container-engine",
     "db_group.help": "Database Service",
     "db_group.command_name": "db",
     "db_node_group.command_name": "node",
     "db_system_group.command_name": "system",
     "db_system_shape_group.command_name": "system-shape",
     "db_version_group.command_name": "version",
+    "dns_group.help": "DNS Zone Management Service",
+    "email_group.help": "Email Delivery Service",
+    "file_storage_group.command_name": "fs",
+    "file_storage_group.help": "File Storage Service",
+    "get_console_history_content.command_name": "get-content",
     "get_db_system_patch.command_name": "by-db-system",
     "get_db_system_patch_history_entry.command_name": "by-db-system",
     "get_namespace_metadata.command_name": "get-metadata",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
     "identity_group.command_name": "iam",
     "identity_group.help": "Identity and Access Management Service",
+    "instance_action.command_name": "action",
     "list_db_system_patches.command_name": "by-db-system",
     "list_db_system_patch_history_entries.command_name": "by-db-system",
     "lb_group.help": "Load Balancing Service",
     "load_balancer_policy_group.command_name": "policy",
     "load_balancer_protocol_group.command_name": "protocol",
     "load_balancer_shape_group.command_name": "shape",
+    "list_crossconnect_port_speed_shapes.command_name": "list",
     "list_protocols.command_name": "list",
     "list_shapes.command_name": "list",
     "list_policies.command_name": "list",
+    "list_work_request_logs.command_name": "list",
     "namespace_group.command_name": "ns",
     "os_group.help": "Object Storage Service",
     "patch_history_entry_group.command_name": "patch-history",
@@ -95,14 +104,7 @@ OVERRIDES = {
     "update_namespace_metadata.command_name": "update-metadata",
     "virtual_network_group.command_name": "network",
     "virtual_network_group.help": "Networking Service",
-    "get_console_history_content.command_name": "get-content",
-    "instance_action.command_name": "action",
-    "volume_backup_group.command_name": "backup",
-    "file_storage_group.help": "File Storage Service",
-    "file_storage_group.command_name": "fs",
-    "email_group.help": "Email Delivery Service",
-    "dns_group.help": "DNS Zone Management Service",
-    "list_crossconnect_port_speed_shapes.command_name": "list"
+    "volume_backup_group.command_name": "backup"
 }
 
 
@@ -766,7 +768,7 @@ def serialize_key(private_key=None, public_key=None, passphrase=None):
             format=serialization.PublicFormat.SubjectPublicKeyInfo)
 
 
-def copy_params_from_generated_command(generated_command, params_to_exclude=[]):
+def copy_params_from_generated_command(generated_command, params_to_exclude=[], copy_from_json=True, copy_help=True):
     def copy_params(extended_func):
         index = 0
         for param in generated_command.params[0:-2]:
@@ -775,8 +777,11 @@ def copy_params_from_generated_command(generated_command, params_to_exclude=[]):
                 index += 1
 
         # last two params params are the '--from-json' and '--help' params and we want to make sure they stay last
-        extended_func.params.append(generated_command.params[-2])
-        extended_func.params.append(generated_command.params[-1])
+        # The implicit assumption is second last param is '--from-json' and last param is '--help'
+        if copy_from_json:
+            extended_func.params.append(generated_command.params[-2])
+        if copy_help:
+            extended_func.params.append(generated_command.params[-1])
 
         return extended_func
 

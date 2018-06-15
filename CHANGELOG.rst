@@ -6,6 +6,31 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.26 - 2018-06-15
+---------------------
+Fixed
+~~~~~~~~
+* Cluster create command in Oracle Container Engine Service is not working correctly in previous release v2.4.25. It has been fixed as part of this release. (``oci ce cluster create`` fixed)
+
+  * A sample test using the Oracle Container (Kubernetes) Engine Service feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_containerengine.py>`__
+
+2.4.25 - 2018-06-14
+---------------------
+Added
+~~~~~~~~
+* Support for Oracle Container Engine Service (``oci ce``)
+
+  * A sample test using the Oracle Container (Kubernetes) Engine Service feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_containerengine.py>`__
+
+NOTE: Release 2.4.25 should not be used if you are trying to use Oracle Container Engine Service.
+A bug with `oci ce cluster create` was discovered shortly after releasing version 2.4.25 to PyPi, so there is no 2.4.25 release on Github.
+Users should upgrade to release 2.4.26 to use Oracle Container Engine Service related functionality.
+
+Fixed
+~~~~~~~~
+* Enabled 'namespace-name' parameter for all commands in the Object Storage service.
+* Add dependency to idna >=2.5,<2.7 since cryptography and requests both have a dependency on the library and pip can install a version that is incompatable with requests.
+
 2.4.24 - 2018-05-31
 ---------------------
 Added

@@ -62,13 +62,13 @@ get_param(objectstorage_cli.update_namespace_metadata, 'namespace_name').opts.ex
 objectstorage_cli.os_group.add_command(objectstorage_cli.bucket_group)
 objectstorage_cli.bucket_group.commands.pop(objectstorage_cli.head_bucket.name)
 get_param(objectstorage_cli.create_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
-get_param(objectstorage_cli.delete_bucket, 'bucket_name').opts.extend(['--name'])
+get_param(objectstorage_cli.delete_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
 get_param(objectstorage_cli.delete_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
-get_param(objectstorage_cli.get_bucket, 'bucket_name').opts.extend(['--name'])
+get_param(objectstorage_cli.get_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
 get_param(objectstorage_cli.get_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.list_buckets, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
-get_param(objectstorage_cli.update_bucket, 'bucket_name').opts.extend(['--name'])
+get_param(objectstorage_cli.update_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
 
 objectstorage_cli.os_group.add_command(objectstorage_cli.object_group)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.abort_multipart_upload.name)
@@ -105,7 +105,7 @@ get_param(objectstorage_cli.list_preauthenticated_requests, 'namespace_name').op
 
 
 @objectstorage_cli.object_group.command(name='list')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--prefix', help='Only object names that begin with this prefix will be returned.')
 @cli_util.option('--start', help='Only object names greater or equal to this parameter will be returned.')
@@ -211,7 +211,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 
 
 @objectstorage_cli.object_group.command(name='put')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--file', type=click.File(mode='rb'), required=True,
                  help="The file to load as the content of the object, or '-' to read from STDIN.")
@@ -399,7 +399,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
 
 @objectstorage_cli.object_group.command(name='bulk-upload')
-@cli_util.option('-ns', '--namespace', required=True, help='Object Storage namespace.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='Object Storage namespace.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--src-dir', required=True, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.')
 @cli_util.option('--object-prefix', help='A prefix to apply to the names of all files being uploaded')
@@ -654,7 +654,7 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 
 
 @objectstorage_cli.object_group.command(name='get')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--name', required=True, help='The name of the object.')
 @cli_util.option('--file', type=click.File(mode='wb'), required=True,
@@ -746,7 +746,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
 
 
 @objectstorage_cli.object_group.command(name='bulk-download')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--prefix', help='Retrieve all objects with the given prefix. Omit this parameter to get all objects in the bucket')
 @cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
@@ -977,7 +977,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
 
 
 @objectstorage_cli.object_group.command(name='head')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--name', required=True, help='The name of the object.')
 @cli_util.option('--if-match', help='The entity tag to match.')
@@ -1007,7 +1007,7 @@ def object_head(ctx, from_json, namespace, bucket_name, name, if_match, if_none_
 
 
 @objectstorage_cli.object_group.command(name='bulk-delete')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--prefix', help='Delete all objects with the given prefix. Omit this parameter to delete all objects in the bucket.')
 @cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
@@ -1257,7 +1257,7 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
 
 
 @objectstorage_cli.object_group.command(name='resume-put')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--file', type=click.File(mode='rb'), required=True, help="The file to load as the content of the object.")
 @cli_util.option('--name',
@@ -1322,8 +1322,8 @@ def object_resume_put(ctx, from_json, namespace, bucket_name, name, file, upload
 
 @cli_util.copy_params_from_generated_command(objectstorage_cli.restore_objects, params_to_exclude=['namespace_name', 'bucket_name', 'object_name'])
 @objectstorage_cli.object_group.command(name='restore', help=objectstorage_cli.restore_objects.help)
-@cli_util.option('-ns', '--namespace', required=True, help="""The top-level namespace used for the request.""")
-@cli_util.option('-bn', '--bucket', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help="""The top-level namespace used for the request.""")
+@cli_util.option('-bn', '--bucket', '--bucket-name', 'bucket_name', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--name', required=True, help="""A object which was in an archived state and need to be restored.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
@@ -1332,7 +1332,7 @@ def restore_objects(ctx, **kwargs):
     details = {}
 
     namespace = kwargs['namespace']
-    bucket = kwargs['bucket']
+    bucket = kwargs['bucket_name']
     name = kwargs['name']
 
     details['objectName'] = name
@@ -1356,7 +1356,7 @@ def restore_objects(ctx, **kwargs):
 
 
 @objectstorage_cli.object_group.command(name='restore-status')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--name', required=True, help='The name of the object.')
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1423,7 +1423,7 @@ def multipart():
 
 
 @click.command(name='abort')
-@cli_util.option('-ns', '--namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('-on', '--object-name', required=True, help='The name of the object.')
 @cli_util.option('--upload-id', required=True, help='Upload ID to abort.')
