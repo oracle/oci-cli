@@ -535,6 +535,11 @@ class TestCompute(unittest.TestCase):
 
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
         parsed_result = json.loads(result.output)
+        if 'DELET' not in parsed_result['data']['lifecycle-state']:
+            print("parsed_result=" + str(parsed_result) + ", lifecycle-state=" + str(parsed_result['data']['lifecycle-state']))
+            util.vcr_mode_aware_sleep(10)
+            result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
+            parsed_result = json.loads(result.output)
         self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')
 
     @util.log_test
@@ -565,6 +570,11 @@ class TestCompute(unittest.TestCase):
         self.invoke(['compute', 'instance-console-connection', 'delete', '--instance-console-connection-id', instance_console_connection_details['data']['id'], '--force'])
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
         parsed_result = json.loads(result.output)
+        if 'DELET' not in parsed_result['data']['lifecycle-state']:
+            print("parsed_result=" + str(parsed_result) + ", lifecycle-state=" + str(parsed_result['data']['lifecycle-state']))
+            util.vcr_mode_aware_sleep(10)
+            result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
+            parsed_result = json.loads(result.output)
         self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')
 
     @util.log_test

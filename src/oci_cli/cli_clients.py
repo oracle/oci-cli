@@ -3,6 +3,7 @@
 
 import oci
 from oci.audit import AuditClient
+from oci.container_engine import ContainerEngineClient
 from oci.core import BlockstorageClient
 from oci.core import ComputeClient
 from oci.core import VirtualNetworkClient
@@ -18,6 +19,7 @@ CLIENT_MAP = {
     "audit": AuditClient,
     "blockstorage": BlockstorageClient,
     "compute": ComputeClient,
+    "container_engine": ContainerEngineClient,
     "database": DatabaseClient,
     "dns": DnsClient,
     "email": EmailClient,
@@ -30,6 +32,7 @@ CLIENT_MAP = {
 
 MODULE_TO_TYPE_MAPPINGS = {
     "audit": oci.audit.models.audit_type_mapping,
+    "container_engine": oci.container_engine.models.container_engine_type_mapping,
     "core": oci.core.models.core_type_mapping,
     "database": oci.database.models.database_type_mapping,
     "dns": oci.dns.models.dns_type_mapping,

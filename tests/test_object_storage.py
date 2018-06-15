@@ -61,6 +61,22 @@ def teardown_module():
         os.remove(GENERATED_CONTENT_INPUT_FILE)
 
 
+def test_verify_namespace_name_param():
+    """ Checks whether all object storage commands have the namespace-name parameter """
+    commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
+    for command in commands:
+        for param in command.params:
+            if any(p in param.opts for p in ['-ns', '--namespace', '--namespace-name']):
+                print(command.name)
+                assert '-ns' in param.opts
+                assert '--namespace' in param.opts
+                assert '--namespace-name' in param.opts
+            if any(p in param.opts for p in ['-bn', '--bucket-name']):
+                print(command.name)
+                assert '-bn' in param.opts
+                assert '--bucket-name' in param.opts
+
+
 def test_run_all_operations(runner, config_file, config_profile, debug, test_id):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_' + test_id + ('_debug' if debug else '_no_debug')

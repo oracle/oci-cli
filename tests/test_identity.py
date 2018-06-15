@@ -538,15 +538,19 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
                 if item['name'].find(self.RENAME_COMPARTMENT_PREFIX) == 0:
                     return item
 
-            next_page = parsed_result['opc-next-page']
+            if 'opc-next-page' in parsed_result:
+                next_page = parsed_result['opc-next-page']
             keep_paginating = (next_page is not None)
 
-        # If we're here, we need to create the compartment
+        # If we're here, we need to create the compartment.
+        # Could also create PythonCliCompartmentRenameTest-0 ahead of time and add privs
+        # to the the compartment via policy.
         result = self.invoke([
             'compartment', 'create',
             '--compartment-id', util.TENANT_ID,
             '--name', '{}{}'.format(self.RENAME_COMPARTMENT_PREFIX, util.random_number_string()),
-            '--description', 'Compartment for CLI compartment rename testing'
+            '--description', 'Compartment for CLI compartment rename testing',
+            '--profile', 'ADMIN'
         ])
         parsed_result = json.loads(result.output)
         print('Created compartment: {}'.format(parsed_result['data']))

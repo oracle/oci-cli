@@ -172,7 +172,7 @@ def find_id_in_response(response):
 
 
 def remove_outer_quotes(text):
-    if (text.startswith("'") and text.endswith("'")):
+    if text.startswith("'") and text.endswith("'"):
         return text[1:-1]
     else:
         return text

@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
 
 
 requires = [
-    'oci==1.4.1',
+    'oci==1.4.3',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
@@ -44,7 +44,8 @@ requires = [
     'retrying==1.3.3',
     'requests[security]==2.18.4',
     'six==1.11.0',
-    'terminaltables==3.1.0'
+    'terminaltables==3.1.0',
+    'idna>=2.5,<2.7'
 ]
 
 setup(
