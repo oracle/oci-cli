@@ -76,15 +76,13 @@ OVERRIDES = {
     "db_version_group.command_name": "version",
     "dns_group.help": "DNS Zone Management Service",
     "email_group.help": "Email Delivery Service",
-    "file_storage_group.command_name": "fs",
-    "file_storage_group.help": "File Storage Service",
+    "fs_group.help": "File Storage Service",
     "get_console_history_content.command_name": "get-content",
     "get_db_system_patch.command_name": "by-db-system",
     "get_db_system_patch_history_entry.command_name": "by-db-system",
     "get_namespace_metadata.command_name": "get-metadata",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
-    "identity_group.command_name": "iam",
-    "identity_group.help": "Identity and Access Management Service",
+    "iam_group.help": "Identity and Access Management Service",
     "instance_action.command_name": "action",
     "list_db_system_patches.command_name": "by-db-system",
     "list_db_system_patch_history_entries.command_name": "by-db-system",
@@ -1298,7 +1296,12 @@ def _coalesce_param(ctx, param, value, required, explicit_default=None):
             value = coalesce_provided_and_default_value(ctx, hyphenated_param_name, value, required)
 
         if value is None and explicit_default is not None:
-            value = explicit_default
+            # if the param is a click.File, we need to convert explicit_default from a string to a File
+            if isinstance(param.type, click.types.File) and value is None:
+                explicit_default_path = os.path.expanduser(explicit_default)
+                value = param.type.convert(explicit_default_path, None, ctx)
+            else:
+                value = explicit_default
 
         return value
     except cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError:

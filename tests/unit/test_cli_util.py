@@ -1,6 +1,8 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
+import click
+import tempfile
 import unittest
 from oci_cli import cli_util
 
@@ -105,3 +107,25 @@ class TestCliUtil(unittest.TestCase):
         Mock.expected_result = {'tenancy': 'abc'}
         value = cli_util.coalesce_provided_and_default_value(ctx, param_name, original_value, is_required)
         assert value == 'abc'
+
+    def test_coalesce_param_with_explicit_default_value_for_file_type_param(self):
+        ctx = Obj()
+        ctx.obj = Obj()
+        ctx.obj['parameter_aliases'] = {}
+        ctx.obj['default_values_from_file'] = {}
+        ctx.obj['parameter_lookup_heirarchy'] = []
+
+        ctx.command = Obj()
+        ctx.command.params = []
+
+        param = Obj()
+        param.type = click.File(mode='r')
+        param.name = 'test'
+
+        ctx.call_on_close = lambda x: x
+
+        with tempfile.NamedTemporaryFile() as f:
+            value = cli_util._coalesce_param(ctx, param, None, False, explicit_default=f.name)
+
+            # ensure that returned value is a file handle, not a string
+            assert hasattr(value, 'read')

@@ -14,7 +14,7 @@ import oci_cli
 class TestVirtualNetwork(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.virtualnetwork_cli.virtual_network_group, expected_not_called_count=49)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.virtualnetwork_cli.virtual_network_group, expected_not_called_count=58)
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options. The exceptions are 'vnic get' and 'vnic update', which are tested
         in test_compute.py since they require an instance.
@@ -427,9 +427,8 @@ class TestVirtualNetwork(unittest.TestCase):
 
         self.ipsc_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
-
         util.wait_until(['network', 'ip-sec-connection', 'get', '--ipsc-id', self.ipsc_ocid], 'AVAILABLE',
-                        max_wait_seconds=300)
+                        max_wait_seconds=600)
 
         result = self.invoke(['ip-sec-connection', 'list', '--compartment-id', util.COMPARTMENT_ID])
         util.validate_response(result)

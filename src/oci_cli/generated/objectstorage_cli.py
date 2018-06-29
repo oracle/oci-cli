@@ -48,6 +48,12 @@ def namespace_group():
     pass
 
 
+os_group.add_command(bucket_group)
+os_group.add_command(preauthenticated_request_group)
+os_group.add_command(object_group)
+os_group.add_command(namespace_group)
+
+
 @object_group.command(name=cli_util.override('abort_multipart_upload.command_name', 'abort-multipart-upload'), help="""Aborts an in-progress multipart upload and deletes all parts that have been uploaded.""")
 @cli_util.option('--namespace-name', required=True, help="""The top-level namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")

@@ -221,12 +221,26 @@ def test_create_with_complex_param_in_json(network_resources):
             }
         ]
 
-        assert parsed_output['data']['display-name'] == 'JSON Skeleton Test List'
-        assert parsed_output['data']['egress-security-rules'] == expected_egress
-        assert parsed_output['data']['ingress-security-rules'] == expected_ingress
-
-        invoke(['network', 'security-list', 'delete', '--security-list-id', security_list_ocid, '--force'])
-        util.wait_until(['network', 'security-list', 'get', '--security-list-id', security_list_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
+        # These seem to be new fields but not present under all testing conditions.
+        if "CIDR_BLOCK" in str(parsed_output['data']):
+            expected_egress[0]['destination-type'] = 'CIDR_BLOCK'
+            expected_ingress[0]['source-type'] = 'CIDR_BLOCK'
+            expected_ingress[1]['source-type'] = 'CIDR_BLOCK'
+            expected_ingress[2]['source-type'] = 'CIDR_BLOCK'
+        has_errors = False
+        try:
+            assert parsed_output['data']['display-name'] == 'JSON Skeleton Test List'
+            assert parsed_output['data']['egress-security-rules'] == expected_egress
+            assert parsed_output['data']['ingress-security-rules'] == expected_ingress
+        except AssertionError as ae:
+            print("test_create_with_complex_param_in_json: parsed_output data=" + str(parsed_output['data']))
+            has_errors = True
+        finally:
+            print("terminating network security list")
+            invoke(['network', 'security-list', 'delete', '--security-list-id', security_list_ocid, '--force'])
+            util.wait_until(['network', 'security-list', 'get', '--security-list-id', security_list_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
+            if has_errors:
+                raise AssertionError("test_create_with_complex_param_in_json data assertions failed.")
 
 
 @util.slow
@@ -234,10 +248,11 @@ def test_launch_instance(network_resources):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_invoke_launch_instance.yml'):
         launch_instance_json = 'file://{}'.format(os.path.join('tests', 'resources', 'json_input', 'launch_instance.json'))
         image_id = util.oracle_linux_image()
-        shape = 'VM.Standard1.4'  # This overrides the shape in the JSON
+        shape = 'VM.Standard1.1'  # This overrides the shape in the JSON which is VM.Standard1.2
         hostname_label = util.random_name('bminstance', insert_underscore=False)
         private_ip = '10.0.0.15'
 
+        print("launching instance")
         launch_instance_result = util.invoke_command([
             'compute', 'instance', 'launch',
             '--compartment-id', util.COMPARTMENT_ID,
@@ -256,7 +271,7 @@ def test_launch_instance(network_resources):
         instance_ocid = util.find_id_in_response(launch_instance_result.output)
 
         parsed_result = json.loads(launch_instance_result.output)
-        assert parsed_result['data']['shape'] == 'VM.Standard1.4'
+        assert parsed_result['data']['shape'] == 'VM.Standard1.1'
         assert parsed_result['data']['display-name'] == 'From JSON Skeleton'
         assert parsed_result['data']['metadata'] == {'meta1': 'meta2', 'meta3': 'meta4'}
 
@@ -290,9 +305,10 @@ def test_launch_instance(network_resources):
         assert parsed_result['data'][0]['display-name'] == 'JSON Skeleton VNIC'
         assert parsed_result['data'][0]['private-ip'] == '10.0.0.15'
 
+        print("terminating instance")
         result = invoke(['compute', 'instance', 'terminate', '--instance-id', instance_ocid, '--force'])
         util.validate_response(result)
-        util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
+        util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'TERMINATED', max_wait_seconds=1200, succeed_if_not_found=True)
 
 
 def test_generate_example_metadata_on_object_put():

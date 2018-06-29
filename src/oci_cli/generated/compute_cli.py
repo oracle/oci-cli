@@ -98,6 +98,19 @@ def console_history_group():
     pass
 
 
+compute_group.add_command(volume_group)
+compute_group.add_command(image_group)
+compute_group.add_command(instance_credentials_group)
+compute_group.add_command(instance_group)
+compute_group.add_command(boot_volume_group)
+compute_group.add_command(shape_group)
+compute_group.add_command(vnic_attachment_group)
+compute_group.add_command(volume_attachment_group)
+compute_group.add_command(boot_volume_attachment_group)
+compute_group.add_command(instance_console_connection_group)
+compute_group.add_command(console_history_group)
+
+
 @boot_volume_attachment_group.command(name=cli_util.override('attach_boot_volume.command_name', 'attach'), help="""Attaches the specified boot volume to the specified instance.""")
 @cli_util.option('--boot-volume-id', required=True, help="""The OCID of the  boot volume.""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
@@ -1200,17 +1213,17 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('instance_action.command_name', 'instance-action'), help="""Performs one of the power actions (start, stop, softreset, softstop, or reset) on the specified instance.
+@instance_group.command(name=cli_util.override('instance_action.command_name', 'instance-action'), help="""Performs one of the following power actions on the specified instance:
 
-**start** - power on
+- **START** - Powers on the instance.
 
-**stop** - power off
+- **STOP** - Powers off the instance.
 
-**softreset** - ACPI shutdown and power on
+- **SOFTRESET** - Gracefully reboots instance by sending a shutdown command to the operating system and then powers the instance back on.
 
-**softstop** - signal the instance operating system to shutdown gracefully
+- **SOFTSTOP** - Gracefully shuts down instance by sending a shutdown command to the operating system.
 
-**reset** - power off and power on
+- **RESET** - Powers off the instance and then powers it back on.
 
 For more information see [Stopping and Starting an Instance].""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")

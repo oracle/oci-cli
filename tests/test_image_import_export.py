@@ -11,7 +11,8 @@ class TestImageImportExport(object):
 
     @util.long_running
     def test_image_import_export(self, config):
-        with test_config_container.create_vcr().use_cassette('compute_test_image_import_export.yml'):
+        the_vcr = test_config_container.create_vcr()
+        with the_vcr.use_cassette('compute_test_image_import_export.yml'):
             try:
                 self.set_up_resources()
                 self.subtest_image_import_export_via_tuple()
@@ -189,15 +190,17 @@ class TestImageImportExport(object):
         self.object_storage_namespace = json.loads(result.output)['data']
 
         # Create a bucket
+        print("Creating bucket")
         self.bucket_name = util.random_name('CliImageImportExport')
         result = self.invoke(
             ['os', 'bucket', 'create',
-             '--compartment-id', util.COMPARTMENT_ID,
-             '--namespace', self.object_storage_namespace,
-             '--name', self.bucket_name])
+                '--compartment-id', util.COMPARTMENT_ID,
+                '--namespace', self.object_storage_namespace,
+                '--name', self.bucket_name])
         util.validate_response(result, expect_etag=True)
 
         # Create a VCN
+        print("Creating VCN")
         vcn_name = util.random_name('cli_test_compute_vcn')
         result = self.invoke(
             ['network', 'vcn', 'create',
@@ -210,6 +213,7 @@ class TestImageImportExport(object):
         util.wait_until(['network', 'vcn', 'get', '--vcn-id', self.vcn_ocid], 'AVAILABLE', max_wait_seconds=300)
 
         # Create a subnet
+        print("Creating subnet")
         subnet_name = util.random_name('cli_test_compute_subnet')
         result = self.invoke(
             ['network', 'subnet', 'create',
@@ -228,6 +232,7 @@ class TestImageImportExport(object):
         image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.1'
         instance_name = util.random_name('cli_test_instance')
+        print("Creating instance " + instance_name)
         result = self.invoke(
             ['compute', 'instance', 'launch',
              '--compartment-id', util.COMPARTMENT_ID,
@@ -241,6 +246,7 @@ class TestImageImportExport(object):
         util.wait_until(['compute', 'instance', 'get', '--instance-id', self.instance_id], 'RUNNING', max_wait_seconds=600)
 
         # Export an image from the instance to use in tests
+        print("Exporting image")
         result = self.invoke(
             ['compute', 'image', 'create',
              '--compartment-id', util.COMPARTMENT_ID,
@@ -254,11 +260,11 @@ class TestImageImportExport(object):
 
         if hasattr(self, 'instance_id'):
             try:
-                print("Deleting instance")
+                print("Deleting instance " + self.instance_id)
                 result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.instance_id, '--force'])
                 util.validate_response(result)
                 util.wait_until(['compute', 'instance', 'get', '--instance-id', self.instance_id], 'TERMINATED',
-                                max_wait_seconds=600, succeed_if_not_found=True)
+                                max_wait_seconds=1200, succeed_if_not_found=True)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1

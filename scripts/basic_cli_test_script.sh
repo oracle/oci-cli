@@ -3,6 +3,15 @@
 
 set -e
 
+
+if [ "$RECORD_ONLY" == "1" ];then
+    SKIP_BASIC_TESTS=1
+fi
+if [ "$SKIP_BASIC_TESTS" == "1" ];then
+    echo "Skipping basic_cli_test_script"
+    exit 0
+fi
+
 # Runs a few commands. If you don't see Success at the end, then something's wrong.
 
 # Setup

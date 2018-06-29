@@ -26,6 +26,7 @@ def pytest_addoption(parser):
     parser.addoption("--enable-long-running", action="store_true", default=False, help="Enables tests marked with the @enable_long_running annotation")
     parser.addoption("--config-profile", action="store", help="profile to use from the config file", default=oci.config.DEFAULT_PROFILE)
     parser.addoption("--vcr-record-mode", action="store", default='once', help="Record mode option for VCRpy library.")
+    parser.addoption("--run-recordable-tests-only", action="store", default=False, help="Skip tests where we don't want to record their output.")
 
 
 def pytest_configure(config):

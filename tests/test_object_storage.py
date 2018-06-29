@@ -49,6 +49,8 @@ def setup_function():
 
 
 def setup_module():
+    if os.getenv('RECORD_ONLY', '') == '1':
+        return
     # generate large file for multipart testing
     util.create_large_file(GENERATED_CONTENT_INPUT_FILE, LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
 
@@ -61,6 +63,7 @@ def teardown_module():
         os.remove(GENERATED_CONTENT_INPUT_FILE)
 
 
+@util.skip_while_rerecording
 def test_verify_namespace_name_param():
     """ Checks whether all object storage commands have the namespace-name parameter """
     commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
@@ -77,6 +80,7 @@ def test_verify_namespace_name_param():
                 assert '--bucket-name' in param.opts
 
 
+@util.skip_while_rerecording
 def test_run_all_operations(runner, config_file, config_profile, debug, test_id):
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_temp_bucket_' + test_id + ('_debug' if debug else '_no_debug')
@@ -168,6 +172,7 @@ def test_run_all_operations(runner, config_file, config_profile, debug, test_id)
     validate_response(result, includes_debug_data=debug)
 
 
+@util.skip_while_rerecording
 def test_archive_bucket(runner, config_file, config_profile, test_id):
     bucket_name = 'cli_temp_archive_bucket_' + test_id + '_no_debug'
     object_name = 'a'
@@ -216,6 +221,7 @@ def test_archive_bucket(runner, config_file, config_profile, test_id):
     validate_response(result)
 
 
+@util.skip_while_rerecording
 def test_move_bucket_to_another_compartment(object_storage_client, runner, config_file, config_profile, test_id):
     if not MOVE_BUCKET_TO_COMPARTMENT_ID:
         pytest.skip('Skipping as no value was provided for the environment variable OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
@@ -264,6 +270,7 @@ def test_move_bucket_to_another_compartment(object_storage_client, runner, confi
     validate_response(result)
 
 
+@util.skip_while_rerecording
 def test_namespace_metadata(runner, config_file, config_profile):
     util.set_admin_pass_phrase()
     result = util.invoke_command_as_admin(['os', 'ns', 'get-metadata', '-ns', util.NAMESPACE])
@@ -274,6 +281,7 @@ def test_namespace_metadata(runner, config_file, config_profile):
     assert response["data"]["default-swift-compartment-id"] is not None
 
 
+@util.skip_while_rerecording
 def test_set_client_request_id(runner, config_file, config_profile):
     input_id = 'examplerequestid'
     result = invoke(runner, config_file, config_profile, ['ns', 'get'], root_params=['--request-id', input_id], debug=True)
@@ -281,6 +289,7 @@ def test_set_client_request_id(runner, config_file, config_profile):
     assert input_id in result.output
 
 
+@util.skip_while_rerecording
 def test_bucket_options(runner, config_file, config_profile, test_id):
     bucket = 'cli_test_bucket_options_' + test_id
 
@@ -313,6 +322,7 @@ def test_bucket_options(runner, config_file, config_profile, test_id):
     validate_response(result)
 
 
+@util.skip_while_rerecording
 def test_object_put_confirmation_prompt(runner, config_file, config_profile, content_input_file, test_id, multipart):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_confirmation_prompt_' + test_id
@@ -412,6 +422,7 @@ def test_object_put_confirmation_prompt(runner, config_file, config_profile, con
     validate_response(result)
 
 
+@util.skip_while_rerecording
 def test_object_options(runner, config_file, config_profile, test_id, content_input_file, multipart):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_options_' + test_id
@@ -523,6 +534,7 @@ def subtest_object_list_preserves_prefixes_order(runner, config_file, config_pro
     assertListEqual(prefixes, ["a/", "b/", "f/", "s/"])
 
 
+@util.skip_while_rerecording
 def test_object_put_default_name(runner, config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
     object_name = "TestObject_" + test_id
@@ -549,6 +561,7 @@ def test_object_put_default_name(runner, config_file, config_profile, test_id):
     os.remove(filename)
 
 
+@util.skip_while_rerecording
 def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
     object_name = "TestObject_" + test_id
@@ -578,6 +591,7 @@ def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
     os.remove(filename)
 
 
+@util.skip_while_rerecording
 def test_object_put_from_stdin_requires_object_name(runner, config_file, config_profile):
     bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
     put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--file', '-', '--force']
@@ -587,6 +601,7 @@ def test_object_put_from_stdin_requires_object_name(runner, config_file, config_
 
 
 @pytest.mark.parametrize('content_type,content_language,content_encoding', [{'image/gif', 'en', 'gzip'}, {'notarealtype', 'notareallanguage', 'notarealencoding'}, {'text/html; charset=ISO-8859-4', 'mi, en', 'compress'}])
+@util.skip_while_rerecording
 def test_object_content_headers(runner, config_file, config_profile, content_type, content_language, content_encoding, content_input_file, test_id, multipart):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'
     object_name = 'cli_test_object_put_options_' + test_id
@@ -620,6 +635,7 @@ def test_object_content_headers(runner, config_file, config_profile, content_typ
     validate_response(result)
 
 
+@util.skip_while_rerecording
 def test_list_options(runner, config_file, config_profile, object_storage_client):
     subtest_bucket_list(runner, config_file, config_profile)
     subtest_object_list(runner, config_file, config_profile)
@@ -627,6 +643,7 @@ def test_list_options(runner, config_file, config_profile, object_storage_client
     subtest_object_list_paging(runner, config_file, config_profile)
 
 
+@util.skip_while_rerecording
 def test_bucket_list_with_tags(runner, config_file, config_profile):
     result_tags_not_requested = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID])
     parsed_data = json.loads(result_tags_not_requested.output)
@@ -784,6 +801,7 @@ def subtest_object_list_paging(runner, config_file, config_profile):
     assert (pages == math.ceil(float(list_size) / page_size))
 
 
+@util.skip_while_rerecording
 def test_preauthenticated_requests(runner, config_file, config_profile):
     preauthenticated_request_name = util.random_name('cli_preauth_request')
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
@@ -859,6 +877,7 @@ def invoke(runner, config_file, config_profile, params, debug=False, root_params
     return result
 
 
+@util.skip_while_rerecording
 def test_get_object_multipart_download(runner, config_file, config_profile, test_id):
     test_file_path = os.path.join('tests', 'temp', 'for_multipart_download_{}.bin'.format(test_id))
     util.create_large_file(test_file_path, 400)

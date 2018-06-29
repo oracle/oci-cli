@@ -122,6 +122,7 @@ def generate_test_data(object_storage_client):
     shutil.rmtree(root_bulk_put_folder)
 
 
+@util.skip_while_rerecording
 def test_normalize_object_name_path():
     assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path')
     assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path', '/')
@@ -133,6 +134,7 @@ def test_normalize_object_name_path():
     assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '\\')
 
 
+@util.skip_while_rerecording
 def test_get_all_objects_in_bucket():
     download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name)
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
@@ -154,6 +156,7 @@ def test_get_all_objects_in_bucket():
     shutil.rmtree(download_folder)
 
 
+@util.skip_while_rerecording
 def test_get_directory_and_subdirectories():
     download_folder = 'tests/temp/get_directory_and_subdirectories_{}'.format(bulk_get_bucket_name)
 
@@ -183,6 +186,7 @@ def test_get_directory_and_subdirectories():
     shutil.rmtree(download_folder)
 
 
+@util.skip_while_rerecording
 def test_get_directory_no_subdirectory():
     download_folder = 'tests/temp/get_directory_only_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'a/b/c/', '--delimiter', '/'])
@@ -198,6 +202,7 @@ def test_get_directory_no_subdirectory():
     shutil.rmtree(download_folder)
 
 
+@util.skip_while_rerecording
 def test_get_files_skipped():
     download_folder = 'tests/temp/skip_and_replace_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
@@ -225,6 +230,7 @@ def test_get_files_skipped():
     shutil.rmtree(download_folder)
 
 
+@util.skip_while_rerecording
 def test_get_no_objects():
     download_folder = 'tests/temp/no_objects_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'batman'])
@@ -234,6 +240,7 @@ def test_get_no_objects():
     shutil.rmtree(download_folder)
 
 
+@util.skip_while_rerecording
 def test_get_multipart(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(random.randint(0, 1000000))
@@ -275,6 +282,7 @@ def test_get_multipart(object_storage_client):
 
 
 # Since we've created a reasonable number of objects in this test suite, it's a good opportunity to test using the --all and --limit parameters
+@util.skip_while_rerecording
 def test_list_all_objects_operations():
     result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--all'])
     parsed_result = json.loads(result.output)
@@ -298,6 +306,7 @@ def test_list_all_objects_operations():
 
 
 # Bulk puts objects, uses multipart where appropriate (when we breach the default of 128MiB)
+@util.skip_while_rerecording
 def test_bulk_put_default_options():
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder])
 
@@ -355,6 +364,7 @@ def test_bulk_put_default_options():
 #
 #   - Try to upload with a part size of 10MiB (this will force the large and mid-sized files to be multipart uploaded)
 #   - Try to upload with multipart disabled
+@util.skip_while_rerecording
 def test_bulk_put_with_multipart_params(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(random.randint(0, 1000000))
@@ -389,6 +399,7 @@ def test_bulk_put_with_multipart_params(object_storage_client):
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
 
 
+@util.skip_while_rerecording
 def test_bulk_put_with_prefix():
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--object-prefix', 'bulk_put_prefix_test/'])
 
@@ -416,6 +427,7 @@ def test_bulk_put_with_prefix():
     shutil.rmtree(download_folder)
 
 
+@util.skip_while_rerecording
 def test_bulk_put_with_non_existent_folder():
     fake_directory = 'tests/folder/not/exist'
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', fake_directory])
@@ -424,6 +436,7 @@ def test_bulk_put_with_non_existent_folder():
     assert 'The specified --src-dir {} (expanded to: {}) does not exist'.format(fake_directory, fake_directory) in result.output
 
 
+@util.skip_while_rerecording
 def test_bulk_put_get_delete_with_inclusions(object_storage_client):
     inclusion_test_folder = os.path.join('tests', 'temp', 'os_bulk_upload_inclusion_test')
     if not os.path.exists(inclusion_test_folder):
@@ -569,6 +582,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
     shutil.rmtree(inclusion_test_folder)
 
 
+@util.skip_while_rerecording
 def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     exclusion_test_folder = os.path.join('tests', 'temp', 'os_bulk_upload_exclusion_test')
     if not os.path.exists(exclusion_test_folder):
@@ -709,6 +723,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     shutil.rmtree(exclusion_test_folder)
 
 
+@util.skip_while_rerecording
 def test_delete_when_no_objects_in_bucket(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
@@ -721,6 +736,7 @@ def test_delete_when_no_objects_in_bucket(object_storage_client):
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
 
 
+@util.skip_while_rerecording
 def test_delete_dry_run():
     # Dry-run against entire bucket
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run'])
@@ -739,6 +755,7 @@ def test_delete_dry_run():
     assert set(parsed_result['deleted-objects']) == set(bulk_get_prefix_to_object['a/b'])
 
 
+@util.skip_while_rerecording
 def test_delete(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
@@ -769,6 +786,7 @@ def test_delete(object_storage_client):
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
 
 
+@util.skip_while_rerecording
 def test_bulk_operation_table_output_query(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(random.randint(0, 1000000))

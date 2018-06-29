@@ -378,22 +378,36 @@ class TestSecondaryPrivateIp(unittest.TestCase):
 
         if hasattr(self, 'first_instance_id'):
             try:
-                print("Deleting instance")
+                print("Deleting instance " + self.first_instance_id)
                 result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.first_instance_id, '--force'])
                 util.validate_response(result)
-                util.wait_until(['compute', 'instance', 'get', '--instance-id', self.first_instance_id], 'TERMINATED',
-                                max_wait_seconds=600, succeed_if_not_found=True)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1
 
         if hasattr(self, 'second_instance_id'):
             try:
-                print("Deleting instance")
+                print("Deleting instance " + self.second_instance_id)
                 result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.second_instance_id, '--force'])
                 util.validate_response(result)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'first_instance_id'):
+            try:
+                print("Checking instance terminated " + self.first_instance_id)
+                util.wait_until(['compute', 'instance', 'get', '--instance-id', self.first_instance_id], 'TERMINATED',
+                                max_wait_seconds=1200, succeed_if_not_found=True)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'second_instance_id'):
+            try:
+                print("Checking instance terminated " + self.second_instance_id)
                 util.wait_until(['compute', 'instance', 'get', '--instance-id', self.second_instance_id], 'TERMINATED',
-                                max_wait_seconds=600, succeed_if_not_found=True)
+                                max_wait_seconds=1200, succeed_if_not_found=True)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1

@@ -11,25 +11,21 @@ from . import cli_exceptions
 from . import custom_types
 from . import json_skeleton_utils
 
-identity_cli.identity_group.add_command(identity_cli.availability_domain_group)
-identity_cli.identity_group.add_command(identity_cli.compartment_group)
-identity_cli.identity_group.add_command(identity_cli.customer_secret_key_group)
-identity_cli.identity_group.add_command(identity_cli.dynamic_group_group)
-identity_cli.identity_group.add_command(identity_cli.group_group)
-identity_cli.identity_group.add_command(identity_cli.policy_group)
-identity_cli.identity_group.add_command(identity_cli.region_group)
-identity_cli.identity_group.add_command(identity_cli.region_subscription_group)
-identity_cli.identity_group.add_command(identity_cli.smtp_credential_group)
-identity_cli.identity_group.add_command(identity_cli.user_group)
+
+identity_cli.iam_group.commands.pop(identity_cli.idp_group_mapping_group.name)
+identity_cli.iam_group.commands.pop(identity_cli.tenancy_group.name)
+identity_cli.iam_group.commands.pop(identity_cli.user_group_membership_group.name)
+identity_cli.iam_group.commands.pop(identity_cli.identity_provider_group.name)
+identity_cli.iam_group.commands.pop(identity_cli.api_key_group.name)
+identity_cli.iam_group.commands.pop(identity_cli.swift_password_group.name)
+identity_cli.iam_group.commands.pop(identity_cli.ui_password_group.name)
+
 identity_cli.user_group.add_command(identity_cli.api_key_group)
 identity_cli.user_group.add_command(identity_cli.swift_password_group)
 identity_cli.user_group.add_command(identity_cli.ui_password_group)
 
-identity_cli.identity_group.add_command(identity_cli.tag_group)
-identity_cli.identity_group.add_command(identity_cli.auth_token_group)
 identity_cli.tag_group.commands.pop(identity_cli.update_tag.name)
 
-identity_cli.identity_group.add_command(identity_cli.tag_namespace_group)
 identity_cli.tag_namespace_group.commands.pop(identity_cli.update_tag_namespace.name)
 
 identity_cli.api_key_group.commands.pop(identity_cli.upload_api_key.name)

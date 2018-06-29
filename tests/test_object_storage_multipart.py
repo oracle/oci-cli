@@ -76,6 +76,7 @@ def setup_function():
         os.remove(CONTENT_OUTPUT_FILE)
 
 
+@util.skip_while_rerecording
 def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a'
 
@@ -108,6 +109,7 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     validate_response(result, json_response_expected=False)
 
 
+@util.skip_while_rerecording
 def test_resume_multipart_upload(runner, config_file, config_profile, content_input_file, temp_bucket, object_storage_client):
     object_name = 'a'
 
@@ -196,6 +198,7 @@ def setup_resume_multipart_upload_non_windows(runner, config_file, config_profil
     return upload_id
 
 
+@util.skip_while_rerecording
 def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket, content_input_file, object_storage_client):
     object_name = 'a_abort'
 
@@ -247,6 +250,7 @@ def setup_abort_multipart_upload_non_windows(runner, config_file, config_profile
     return upload_id
 
 
+@util.skip_while_rerecording
 def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a_metadata'
 
@@ -280,6 +284,7 @@ def test_multipart_upload_with_metadata(runner, config_file, config_profile, tem
     validate_response(result, json_response_expected=False)
 
 
+@util.skip_while_rerecording
 def test_resume_with_unknown_upload_id(runner, config_file, config_profile, temp_bucket, content_input_file):
     object_name = 'a'
     upload_id = 'UNKNOWN_UPLOAD_ID'
@@ -289,6 +294,7 @@ def test_resume_with_unknown_upload_id(runner, config_file, config_profile, temp
     util.validate_service_error(result, error_message='No such upload')
 
 
+@util.skip_while_rerecording
 def test_put_object_multipart_and_parallel_options(runner, config_file, config_profile, content_input_file):
     object_name = 'a'
 

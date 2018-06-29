@@ -1,3 +1,6 @@
+# coding: utf-8
+# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
 import os
 import json
 import yaml
@@ -202,8 +205,8 @@ def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
         util.validate_response(result)
         # Pick the first version in the response to be used for the test cluster
         kub_version = json.loads(result.output)['data']['kubernetes-versions'][0]  # v1.8.11
-        node_shape = json.loads(result.output)['data']['shapes'][2]  # VM.Standard1.1
-        node_image = json.loads(result.output)['data']['images'][0]  # Oracle-Linux-7.4
+        node_shape = "VM.Standard1.1"
+        node_image = "Oracle-Linux-7.4"
         # Get the return values from the cluster generator
         cluster_id, subnet_id1, subnet_id2, subnet_id3 = oce_cluster
         node_pool_subnet_ids = '["' + subnet_id1 + '", "' + subnet_id2 + '", "' + subnet_id3 + '"]'

@@ -10,9 +10,11 @@ import oci
 import oci_cli
 import pytest
 
+from . import util
 from requests.exceptions import ConnectionError
 
 
+@util.skip_while_rerecording
 def test_list_objects_retry_connection_error_exhaust_retries():
     side_effect = [ConnectionError(), ConnectionError(), ConnectionError()]
 
@@ -34,6 +36,7 @@ def test_list_objects_retry_connection_error_exhaust_retries():
     assert mock_client.list_objects.call_count == 3
 
 
+@util.skip_while_rerecording
 def test_list_objects_retry_internal_server_error_exhaust_retries():
     side_effect = [
         oci.exceptions.ServiceError(500, "blah", {}, "blah"),
@@ -62,6 +65,7 @@ def test_list_objects_retry_internal_server_error_exhaust_retries():
     assert exception.value.status == 502
 
 
+@util.skip_while_rerecording
 def test_list_objects_retry_unknown_service_error_exhaust_retries():
     side_effect = [
         oci.exceptions.ServiceError(-1, "blah", {}, "blah"),
@@ -90,6 +94,7 @@ def test_list_objects_retry_unknown_service_error_exhaust_retries():
     assert exception.value.status == -1
 
 
+@util.skip_while_rerecording
 def test_list_objects_retry_throttles_exhaust_retries():
     side_effect = [
         oci.exceptions.ServiceError(429, "blah", {}, "blah"),
@@ -118,6 +123,7 @@ def test_list_objects_retry_throttles_exhaust_retries():
     assert exception.value.status == 429
 
 
+@util.skip_while_rerecording
 def test_list_objects_does_not_retry_on_client_error():
     side_effect = [oci.exceptions.ServiceError(400, "blah", {}, "blah")]
 
@@ -142,6 +148,7 @@ def test_list_objects_does_not_retry_on_client_error():
     assert exception.value.status == 400
 
 
+@util.skip_while_rerecording
 def test_list_objects_does_not_retry_on_random_exception():
     side_effect = [Exception()]
 
@@ -163,6 +170,7 @@ def test_list_objects_does_not_retry_on_random_exception():
     assert mock_client.list_objects.call_count == 1
 
 
+@util.skip_while_rerecording
 def test_list_objects_succeeds_after_retries():
     dummy_data = oci.object_storage.models.ListObjects()
     dummy_data.objects = []

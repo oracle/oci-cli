@@ -46,11 +46,11 @@ REGIONAL_CONFIG = {
     'us-phoenix-1': {
         'bucket_regional_prefix': '',
         'windows_vm_image': 'ocid1.image.oc1.phx.aaaaaaaa53cliasgvqmutflwqkafbro2y4ywjebci5szc4eus5byy2e2b7ua',
-        'oracle_linux_image': 'ocid1.image.oc1.phx.aaaaaaaamv5wg7ffvaxaba3orhpuya7x7opz24hd6m7epmwfqbeudi6meepq'},
+        'oracle_linux_image': 'ocid1.image.oc1.phx.aaaaaaaaxyc7rpmh3v4yyuxcdjndofxuuus4iwd7a7wjc63u2ykycojr5djq'},
     'us-ashburn-1': {
         'bucket_regional_prefix': 'iad_',
         'windows_vm_image': 'ocid1.image.oc1.iad.aaaaaaaatob7wb2ljtvsvjy7olpsyuttodb7ok3osflx3hqd2nt4l6jagxla',
-        'oracle_linux_image': 'ocid1.image.oc1.iad.aaaaaaaay7kt3yikvnm47x7rhb7myj5yxbsl7hfuuxn5fikdpb73y76woiba'}
+        'oracle_linux_image': 'ocid1.image.oc1.iad.aaaaaaaazq7xlunevyn3cf4wppcx2j53eb26pnnc4ukqtfj4tbjjcklnhpaa'}
 }
 
 PROFILE_TO_REGION = {
@@ -137,6 +137,18 @@ def long_running(func):
         return pytest.mark.long_running(internal(func))
 
 
+# Along with long running tests, tests which are marked with @util.skip_while_rerecording
+# will not be executed when using --run-recordable-tests-only.
+def skip_while_rerecording(func):
+    def internal(function):
+        return pytest.mark.skipif(
+            pytest.config.getoption("--run-recordable-tests-only"),
+            reason="These tests are not run when with the run-recordable-tests-only option."
+        )(function)
+
+    return pytest.mark.skip_while_rerecording(internal(func))
+
+
 def random_name(prefix, insert_underscore=True):
     if test_config_container.using_vcr_with_mock_responses():
         return prefix + ('_' if insert_underscore else '') + 'vcr'
@@ -198,7 +210,11 @@ def validate_response(result, extra_validation=None, includes_debug_data=False, 
             extra_validation(result)
 
     except AssertionError:
-        print(result.output)
+        if result and hasattr(result, 'output'):
+            print("validate_response response output=" + result.output)
+        else:
+            print ("validate_response response=" + str(result))
+
         raise
 
 
@@ -303,6 +319,8 @@ def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15,
 
         if elapsed_seconds + sleep_interval_seconds > max_wait_seconds:
             if max_wait_seconds <= elapsed_seconds:
+                if result.output:
+                    print("wait_until result.output=" + str(result.output))
                 raise RuntimeError('Maximum wait time has been exceeded.')
 
     return result

@@ -31,17 +31,18 @@ class TestCompute(unittest.TestCase):
         try:
             self.subtest_setup()
             self.subtest_instance_operations()
-            self.subtest_windows_instance_operations()
             self.subtest_list_vnics()
             self.subtest_vnic_operations()
             self.subtest_public_ip_operations()
             self.subtest_volume_attachment_operations()
             self.subtest_shape_operations()
             self.subtest_console_history_operations()
-            self.subtest_instance_action_operations()
             self.subtest_instance_console_connections()
             self.subtest_instance_console_connections_tagging()
+            self.subtest_instance_action_operations()
             self.subtest_image_operations()
+            self.subtest_delete_instance()
+            self.subtest_windows_instance_operations()
         finally:
             self.subtest_delete()
 
@@ -154,6 +155,10 @@ class TestCompute(unittest.TestCase):
         assert credentials['username'] == 'opc'
         assert 'password' in credentials
 
+        result = self.invoke(
+            ['compute', 'instance', 'terminate', '--instance-id', self.windows_instance_ocid, '--force'])
+        util.validate_response(result)
+
     @util.log_test
     def subtest_list_vnics(self):
         result = self.invoke(['compute', 'instance', 'list-vnics', '--instance-id', self.instance_ocid])
@@ -257,7 +262,6 @@ class TestCompute(unittest.TestCase):
 
     @util.log_test
     def subtest_public_ip_operations(self):
-
         # Attach a new vnic
         vnic_display_name = 'myfloatingipvnic'
         vnic_private_ip = '10.0.0.200'
@@ -577,10 +581,17 @@ class TestCompute(unittest.TestCase):
             parsed_result = json.loads(result.output)
         self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')
 
+    # This was pulled-out separately b/c it has been taking so darn long
+    @util.log_test
+    def subtest_delete_instance(self):
+        if hasattr(self, 'instance_ocid'):
+            print("Deleting instance " + self.instance_ocid)
+            result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.instance_ocid, '--force'])
+            util.validate_response(result)
+
     @util.log_test
     def subtest_delete(self):
         error_count = 0
-
         if hasattr(self, 'image_ocid'):
             try:
                 print("Deleting image")
@@ -601,24 +612,19 @@ class TestCompute(unittest.TestCase):
 
         if hasattr(self, 'instance_ocid'):
             try:
-                print("Deleting instance")
-                result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.instance_ocid, '--force'])
-                util.validate_response(result)
+                print("Checking instance terminated " + self.instance_ocid)
                 util.wait_until(['compute', 'instance', 'get', '--instance-id', self.instance_ocid], 'TERMINATED',
-                                max_wait_seconds=600, succeed_if_not_found=True)
+                                max_wait_seconds=1200, succeed_if_not_found=True)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1
 
         if hasattr(self, 'windows_instance_ocid'):
             try:
-                print("Deleting windows instance")
-                result = self.invoke(
-                    ['compute', 'instance', 'terminate', '--instance-id', self.windows_instance_ocid, '--force'])
-                util.validate_response(result)
+                print("Checking windows instance terminated " + self.windows_instance_ocid)
                 util.wait_until(['compute', 'instance', 'get', '--instance-id', self.windows_instance_ocid],
                                 'TERMINATED',
-                                max_wait_seconds=600, succeed_if_not_found=True)
+                                max_wait_seconds=1200, succeed_if_not_found=True)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1

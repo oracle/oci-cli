@@ -14,10 +14,10 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('file_storage_group.command_name', 'file_storage'), cls=CommandGroupWithAlias, help=cli_util.override('file_storage_group.help', """The API for the File Storage Service.
+@cli.command(cli_util.override('fs_group.command_name', 'fs'), cls=CommandGroupWithAlias, help=cli_util.override('fs_group.help', """The API for the File Storage Service.
 """))
 @cli_util.help_option_group
-def file_storage_group():
+def fs_group():
     pass
 
 
@@ -65,6 +65,13 @@ def export_group():
 @cli_util.help_option_group
 def snapshot_group():
     pass
+
+
+fs_group.add_command(file_system_group)
+fs_group.add_command(export_set_group)
+fs_group.add_command(mount_target_group)
+fs_group.add_command(export_group)
+fs_group.add_command(snapshot_group)
 
 
 @export_group.command(name=cli_util.override('create_export.command_name', 'create'), help="""Creates a new export in the specified export set, path, and file system.""")

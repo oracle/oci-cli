@@ -8,8 +8,6 @@ from . import json_skeleton_utils
 
 import click
 
-audit_cli.audit_group.add_command(audit_cli.audit_event_group)
-audit_cli.audit_group.add_command(audit_cli.configuration_group)
 audit_cli.configuration_group.commands.pop(audit_cli.update_configuration.name)
 
 cli_util.get_param(audit_cli.list_events, 'start_time').type = custom_types.CLI_DATETIME_ROUNDED_MINUTE
