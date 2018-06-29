@@ -55,11 +55,9 @@ A namespace is a logical entity that serves as a top-level container for all buc
 Namespace metadata stores the compartment assignments for resources created by the Amazon S3 Compatibility API and the Swift API. By default, resources created by the Amazon S3 Compatibility and Swift APIs are stored in the root compartment of the tenancy.
 """
 
-objectstorage_cli.os_group.add_command(objectstorage_cli.namespace_group)
 get_param(objectstorage_cli.get_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
-objectstorage_cli.os_group.add_command(objectstorage_cli.bucket_group)
 objectstorage_cli.bucket_group.commands.pop(objectstorage_cli.head_bucket.name)
 get_param(objectstorage_cli.create_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.delete_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
@@ -70,7 +68,6 @@ get_param(objectstorage_cli.list_buckets, 'namespace_name').opts.extend(['--name
 get_param(objectstorage_cli.update_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
 
-objectstorage_cli.os_group.add_command(objectstorage_cli.object_group)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.abort_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.create_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.commit_multipart_upload.name)
@@ -92,7 +89,6 @@ get_param(objectstorage_cli.rename_object, 'new_obj_if_none_match_e_tag').opts.e
 get_param(objectstorage_cli.rename_object, 'source_name').opts.extend(['--name'])
 get_param(objectstorage_cli.rename_object, 'src_obj_if_match_e_tag').opts.extend(['--src-if-match'])
 
-objectstorage_cli.os_group.add_command(objectstorage_cli.preauthenticated_request_group)
 get_param(objectstorage_cli.create_preauthenticated_request, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.create_preauthenticated_request, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.create_preauthenticated_request, 'object_name').opts.extend(['-on'])

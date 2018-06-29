@@ -241,7 +241,7 @@ def generate_oci_config():
 
 This command will populate the file with some default aliases and predefined queries.
 """)
-@cli_util.option('--file', default=os.path.expanduser(CLI_RC_DEFAULT_LOCATION), type=click.File(mode='a+b'), required=True, help="The file into which default aliases and predefined queries will be loaded")
+@cli_util.option('--file', show_default=True, default=CLI_RC_DEFAULT_LOCATION, type=click.File(mode='a+b'), help="The file into which default aliases and predefined queries will be loaded")
 @cli_util.help_option
 def setup_cli_rc(file):
     if hasattr(file, 'name') and file.name == '<stdout>':

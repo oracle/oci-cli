@@ -32,6 +32,10 @@ def configuration_group():
     pass
 
 
+audit_group.add_command(audit_event_group)
+audit_group.add_command(configuration_group)
+
+
 @configuration_group.command(name=cli_util.override('get_configuration.command_name', 'get'), help="""Get the configuration""")
 @cli_util.option('--compartment-id', required=True, help="""ID of the root compartment (tenancy)""")
 @json_skeleton_utils.get_cli_json_input_option({})

@@ -117,6 +117,8 @@ def test_all_commands_can_accept_from_json_input():
                     # a response was received
                     assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
                     assert 'region-name' in result.output
+                elif cmd in [['network', 'service', 'list']]:
+                    assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
                 else:
                     assert 'Missing' in result.output or 'UsageError' in result.output or 'ServiceError' in result.output
         else:

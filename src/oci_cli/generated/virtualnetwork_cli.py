@@ -214,6 +214,14 @@ def peer_region_for_remote_peering_group():
     pass
 
 
+@click.command(cli_util.override('service_gateway_group.command_name', 'service-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with public Oracle Cloud Infrastructure services such as Object Storage. Traffic leaving the VCN and destined for a supported public service (see [ListServices]) is routed through the service gateway and does not traverse the internet. The instances in the VCN do not need to have public IP addresses nor be in a public subnet. The VCN does not need an internet gateway for this traffic. For more information, see [Access to Object Storage: Service Gateway].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def service_gateway_group():
+    pass
+
+
 @click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario that uses an Internet Gateway, see [Typical Networking Service Scenarios].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -227,6 +235,12 @@ def internet_gateway_group():
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def ip_sec_connection_group():
+    pass
+
+
+@click.command(cli_util.override('service_group.command_name', 'service'), cls=CommandGroupWithAlias, help="""Information about a service that is accessible through a service gateway.""")
+@cli_util.help_option_group
+def service_group():
     pass
 
 
@@ -248,6 +262,69 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 @cli_util.help_option_group
 def security_list_group():
     pass
+
+
+virtual_network_group.add_command(remote_peering_connection_group)
+virtual_network_group.add_command(subnet_group)
+virtual_network_group.add_command(drg_attachment_group)
+virtual_network_group.add_command(public_ip_group)
+virtual_network_group.add_command(ip_sec_connection_device_config_group)
+virtual_network_group.add_command(fast_connect_provider_service_group)
+virtual_network_group.add_command(cross_connect_location_group)
+virtual_network_group.add_command(virtual_circuit_public_prefix_group)
+virtual_network_group.add_command(private_ip_group)
+virtual_network_group.add_command(virtual_circuit_group)
+virtual_network_group.add_command(local_peering_gateway_group)
+virtual_network_group.add_command(cross_connect_port_speed_shape_group)
+virtual_network_group.add_command(drg_group)
+virtual_network_group.add_command(route_table_group)
+virtual_network_group.add_command(cpe_group)
+virtual_network_group.add_command(cross_connect_group)
+virtual_network_group.add_command(letter_of_authority_group)
+virtual_network_group.add_command(cross_connect_status_group)
+virtual_network_group.add_command(vcn_group)
+virtual_network_group.add_command(ip_sec_connection_device_status_group)
+virtual_network_group.add_command(vnic_group)
+virtual_network_group.add_command(dhcp_options_group)
+virtual_network_group.add_command(virtual_circuit_bandwidth_shape_group)
+virtual_network_group.add_command(peer_region_for_remote_peering_group)
+virtual_network_group.add_command(service_gateway_group)
+virtual_network_group.add_command(internet_gateway_group)
+virtual_network_group.add_command(ip_sec_connection_group)
+virtual_network_group.add_command(service_group)
+virtual_network_group.add_command(cross_connect_group_group)
+virtual_network_group.add_command(security_list_group)
+
+
+@service_gateway_group.command(name=cli_util.override('attach_service_id.command_name', 'attach'), help="""Enables the specified service on the specified gateway. In other words, enables the service gateway to send traffic to the specified service. You must also set up a route rule with the service's `cidrBlock` as the rule's destination CIDR and the gateway as the rule's target. See [Route Table].
+
+**Note:** The `AttachServiceId` operation is an easy way to enable an individual service on the service gateway. Compare it with [UpdateServiceGateway], which also lets you enable an individual service. However, with `UpdateServiceGateway`, you must specify the *entire* list of services you want enabled on the service gateway.""")
+@cli_util.option('--service-gateway-id', required=True, help="""The service gateway's [OCID].""")
+@cli_util.option('--service-id', required=True, help="""The [OCID] of the service.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ServiceGateway'})
+@cli_util.wrap_exceptions
+def attach_service_id(ctx, from_json, service_gateway_id, service_id, if_match):
+
+    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['serviceId'] = service_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.attach_service_id(
+        service_gateway_id=service_gateway_id,
+        attach_service_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @virtual_circuit_public_prefix_group.command(name=cli_util.override('bulk_add_virtual_circuit_public_prefixes.command_name', 'bulk-add'), help="""Adds one or more customer public IP prefixes to the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to add prefixes to the virtual circuit. Oracle must verify the customer's ownership of each prefix before traffic for that prefix will flow across the virtual circuit.""")
@@ -701,7 +778,7 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('create_internet_gateway.command_name', 'create'), help="""Creates a new Internet Gateway for the specified VCN. For more information, see [Connectivity to the Internet].
+@internet_gateway_group.command(name=cli_util.override('create_internet_gateway.command_name', 'create'), help="""Creates a new Internet Gateway for the specified VCN. For more information, see [Access to the Internet].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the Internet Gateway to reside. Notice that the Internet Gateway doesn't have to be in the same compartment as the VCN or other Networking Service components. If you're not sure which compartment to use, put the Internet Gateway in the same compartment with the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
@@ -1194,6 +1271,70 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_security_list(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@service_gateway_group.command(name=cli_util.override('create_service_gateway.command_name', 'create'), help="""Creates a new service gateway in the specified compartment.
+
+For the purposes of access control, you must provide the OCID of the compartment where you want the service gateway to reside. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
+
+You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID]   of the compartment to contain the Service Gateway.""")
+@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""List of the Service OCIDs. These are the Services which will be enabled on the Service Gateway. This list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vcn-id', required=True, help="""The [OCID] of the VCN.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}}, output_type={'module': 'core', 'class': 'ServiceGateway'})
+@cli_util.wrap_exceptions
+def create_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, services, vcn_id, defined_tags, display_name, freeform_tags):
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['services'] = cli_util.parse_json_parameter("services", services)
+    details['vcnId'] = vcn_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_service_gateway(
+        create_service_gateway_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_service_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2214,6 +2355,61 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
+@service_gateway_group.command(name=cli_util.override('delete_service_gateway.command_name', 'delete'), help="""Deletes the specified service gateway. There must not be a route table that lists the service gateway as a target.""")
+@cli_util.option('--service-gateway-id', required=True, help="""The service gateway's [OCID].""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, if_match):
+
+    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_service_gateway(
+        service_gateway_id=service_gateway_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_service_gateway(service_gateway_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @subnet_group.command(name=cli_util.override('delete_subnet.command_name', 'delete'), help="""Deletes the specified subnet, but only if there are no instances in the subnet. This is an asynchronous operation. The subnet's `lifecycleState` will change to TERMINATING temporarily. If there are any instances in the subnet, the state will instead change back to AVAILABLE.""")
 @cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2378,6 +2574,37 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
                 click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@service_gateway_group.command(name=cli_util.override('detach_service_id.command_name', 'detach'), help="""Disables the specified service on the specified gateway. In other words, stops the service gateway from sending traffic to the specified service. You do not need to remove any route rules that specify this service's `cidrBlock` as the destination CIDR. However, consider removing the rules if your intent is to permanently disable use of the service through this service gateway.
+
+**Note:** The `DetachServiceId` operation is an easy way to disable an individual service on the service gateway. Compare it with [UpdateServiceGateway], which also lets you disable an individual service. However, with `UpdateServiceGateway`, you must specify the *entire* list of services you want enabled on the service gateway. `UpdateServiceGateway` also lets you block all traffic through the service gateway without having to disable each of the individual services.""")
+@cli_util.option('--service-gateway-id', required=True, help="""The service gateway's [OCID].""")
+@cli_util.option('--service-id', required=True, help="""The [OCID] of the service.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ServiceGateway'})
+@cli_util.wrap_exceptions
+def detach_service_id(ctx, from_json, service_gateway_id, service_id, if_match):
+
+    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['serviceId'] = service_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.detach_service_id(
+        service_gateway_id=service_gateway_id,
+        detach_service_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2808,6 +3035,46 @@ def get_security_list(ctx, from_json, security_list_id):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_security_list(
         security_list_id=security_list_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@service_group.command(name=cli_util.override('get_service.command_name', 'get'), help="""Gets the specified service's information.""")
+@cli_util.option('--service-id', required=True, help="""The service's [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Service'})
+@cli_util.wrap_exceptions
+def get_service(ctx, from_json, service_id):
+
+    if isinstance(service_id, six.string_types) and len(service_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_service(
+        service_id=service_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@service_gateway_group.command(name=cli_util.override('get_service_gateway.command_name', 'get'), help="""Gets the specified service gateway's information.""")
+@cli_util.option('--service-gateway-id', required=True, help="""The service gateway's [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ServiceGateway'})
+@cli_util.wrap_exceptions
+def get_service_gateway(ctx, from_json, service_gateway_id):
+
+    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_service_gateway(
+        service_gateway_id=service_gateway_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3926,6 +4193,112 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
         result = client.list_security_lists(
             compartment_id=compartment_id,
             vcn_id=vcn_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@service_gateway_group.command(name=cli_util.override('list_service_gateways.command_name', 'list'), help="""Lists the service gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--vcn-id', help="""The OCID of the VCN.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ServiceGateway]'})
+@cli_util.wrap_exceptions
+def list_service_gateways(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_service_gateways,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_service_gateways,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_service_gateways(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@service_group.command(name=cli_util.override('list_services.command_name', 'list'), help="""Lists the available services that you can access through a service gateway in this region.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Service]'})
+@cli_util.wrap_exceptions
+def list_services(ctx, from_json, all_pages, page_size, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_services,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_services,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_services(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -5092,6 +5465,85 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_security_list(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@service_gateway_group.command(name=cli_util.override('update_service_gateway.command_name', 'update'), help="""Updates the specified service gateway. The information you provide overwrites the existing attributes of the gateway.""")
+@cli_util.option('--service-gateway-id', required=True, help="""The service gateway's [OCID].""")
+@cli_util.option('--block-traffic', type=click.BOOL, help="""Whether the service gateway blocks all traffic through it. The default is `false`. When this is `true`, traffic is not routed to any services, regardless of route rules.
+
+Example: `true`""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help="""List of all the services you want enabled on this service gateway. Sending an empty list means you want to disable all services. Omitting this parameter entirely keeps the existing list of services intact.
+
+You can also enable or disable a particular service by using [AttachServiceId] and [DetachServiceId].
+
+For each enabled service, make sure there's a route rule with the service's `cidrBlock` as the rule's destination CIDR and the service gateway as the rule's target. See [Route Table].
+
+This option is a JSON list with items of type ServiceIdRequestDetails.  For documentation on ServiceIdRequestDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}}, output_type={'module': 'core', 'class': 'ServiceGateway'})
+@cli_util.wrap_exceptions
+def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, block_traffic, defined_tags, display_name, freeform_tags, services, if_match):
+
+    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or services:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and services will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if block_traffic is not None:
+        details['blockTraffic'] = block_traffic
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if services is not None:
+        details['services'] = cli_util.parse_json_parameter("services", services)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_service_gateway(
+        service_gateway_id=service_gateway_id,
+        update_service_gateway_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_service_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

@@ -50,6 +50,13 @@ def zones_group():
     pass
 
 
+dns_group.add_command(zone_group)
+dns_group.add_command(rr_set_group)
+dns_group.add_command(record_collection_group)
+dns_group.add_command(records_group)
+dns_group.add_command(zones_group)
+
+
 @zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
 @cli_util.option('--name', required=True, help="""The name of the zone.""")
 @cli_util.option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")

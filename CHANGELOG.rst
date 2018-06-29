@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.27 - 2018-06-28
+---------------------
+Added
+~~~~~~~~
+* Support for Service Gateway feature in the Networking Service (``oci network service`` and ``oci network service-gateway``)
+* Support for Backup and Clone of Boot Volumes in the Block Storage Service (``oci bv boot-volume-backup`` and ``oci bv boot-volume create``)
+
+Fixed
+~~~~~~~~
+* ``oci setup oci-cli-rc`` now works without specifying --file option
+
 2.4.26 - 2018-06-15
 ---------------------
 Fixed

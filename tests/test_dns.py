@@ -5,6 +5,7 @@ import json
 import oci
 import oci_cli
 import pytest
+import random
 
 from . import util
 from . import test_config_container
@@ -12,27 +13,38 @@ from . import test_config_container
 
 @pytest.fixture(autouse=True, scope='function')
 def vcr_fixture(request):
-    with test_config_container.create_vcr().use_cassette('dns_{name}.yml'.format(name=request.function.__name__)):
+    my_vcr = test_config_container.create_vcr()
+    # This will help us match the random zone name from the cassette.
+    # For test_update_zone, we are only expecting POST for the fixture and PUT.
+    print(request.function.__name__)
+    if request.function.__name__ == "test_update_zone":
+        my_vcr.match_on = ['method']
+    with my_vcr.use_cassette('dns_{name}.yml'.format(name=request.function.__name__)):
         yield
 
 
 @pytest.fixture(scope='module')
 def zone(dns_client, runner, config_file, config_profile):
+    # Since zone names are global, if the name is used in another tenancy or even another instance
+    # of this test, it would make this test fail.  So by varying the zone name, we have less
+    # chances of name collision.
+    zone_name = 'dnszone_' + str(random.randint(0, 1000000)) + '.com'
     params = [
         'zone', 'create',
-        '--name', util.random_name('dnszone', insert_underscore=False) + '.com',
+        '--name', zone_name,
         '--compartment-id', util.COMPARTMENT_ID,
         '--zone-type', 'PRIMARY'
     ]
 
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
-    zone_name = json.loads(result.output)['data']['name']
 
     oci.wait_until(dns_client, dns_client.get_zone(zone_name), evaluate_response=lambda r: r.data.id != '', max_wait_seconds=300)
-
+    # The zone name from a cassette response will not match the zone name randomly generated.
+    zone_name = json.loads(result.output)['data']['name']
     zone_id = dns_client.get_zone(zone_name).data.id
 
+    print("created zone_id=" + str(zone_id) + ", zone_name=" + str(zone_name))
     yield zone_id, zone_name
 
     with test_config_container.create_vcr().use_cassette('dns_test_cleanup.yml'):
@@ -44,20 +56,10 @@ def zone(dns_client, runner, config_file, config_profile):
 
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
+        print("deleted zone_id=" + str(zone_id) + ", zone_name=" + str(zone_name))
 
 
 def test_update_zone(zone, runner, config_file, config_profile):
-    # zone_id = zone[0]
-    # params = [
-    #     'zone', 'update',
-    #     '--zone-name-or-id', zone_id,
-    #     '--external-masters', '[]',
-    #     '--force'
-    # ]
-
-    # result = invoke(runner, config_file, config_profile, params)
-    # util.validate_response(result)
-
     zone_name = zone[1]
     params = [
         'zone', 'update',

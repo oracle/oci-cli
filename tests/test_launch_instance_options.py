@@ -83,7 +83,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
              '--image-id', image_id,
              '--shape', shape,
              '--ipxe-script-file', IPXE_SCRIPT_FILE,
-             '--hostname-label', hostname_label,
+             '--hostname-label', hostname_label + "1",
              '--private-ip', private_ip,
              '--assign-public-ip', assign_public_ip,
              '--vnic-display-name', vnic_display_name,
@@ -97,8 +97,19 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         assert extended_metadata_result['a'] == '1'
         assert extended_metadata_result['b']['c'] == '3'
 
-        util.wait_until(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
-                         temp_instance_ocid], 'ATTACHED', max_wait_seconds=20, item_index_in_list_response=0)
+        # This can be in ATTACHING state for some time
+        try:
+            util.wait_until(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+                            temp_instance_ocid], 'ATTACHED', max_wait_seconds=60, item_index_in_list_response=0)
+        except Exception:
+            try:
+                # If it is ATTACHING we will consider it good enough
+                util.wait_until(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+                                temp_instance_ocid], 'ATTACHING', max_wait_seconds=30, item_index_in_list_response=0)
+            except Exception:
+                # If it is not ATTACHING, double check that it didn't go to ATTACHED
+                util.wait_until(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id',
+                                temp_instance_ocid], 'ATTACHED', max_wait_seconds=30, item_index_in_list_response=0)
 
         # get vnic attachments for given instance
         list_vnics_result = util.invoke_command(
@@ -117,7 +128,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
 
         vnic = json.loads(get_vnic_result.output)['data']
 
-        assert vnic['hostname-label'] == hostname_label
+        assert vnic['hostname-label'] == hostname_label + "1"
         assert vnic['display-name'] == vnic_display_name
         assert vnic['public-ip']
 
@@ -130,7 +141,6 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         assert content[:5] in launch_instance_result.output
 
         self.delete_instance(temp_instance_ocid)
-        self.instance_ocids.remove(temp_instance_ocid)
 
     @util.log_test
     def subtest_launch_instance_ssh_authorized_keys_in_param_and_in_metadata_throws_error(self):
@@ -147,7 +157,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
-             '--hostname-label', hostname_label,
+             '--hostname-label', hostname_label + "2",
              '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
              '--metadata', util.remove_outer_quotes(oci_cli.core_cli_extended.compute_instance_launch_metadata_example)])
 
@@ -191,7 +201,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
-             '--hostname-label', hostname_label,
+             '--hostname-label', hostname_label + "3",
              '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
              '--user-data-file', USER_DATA_FILE
              ])
@@ -206,7 +216,6 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         assert instance_metadata['ssh_authorized_keys']
 
         self.delete_instance(temp_instance_ocid)
-        self.instance_ocids.remove(temp_instance_ocid)
 
     @util.log_test
     def subtest_launch_instance_merges_user_data_file_param_with_metadata(self):
@@ -223,7 +232,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
-             '--hostname-label', hostname_label,
+             '--hostname-label', hostname_label + "4",
              '--user-data-file', USER_DATA_FILE,
              '--metadata', util.remove_outer_quotes(oci_cli.core_cli_extended.compute_instance_launch_metadata_example)])
 
@@ -237,7 +246,6 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         assert instance_metadata['ssh_authorized_keys']
 
         self.delete_instance(temp_instance_ocid)
-        self.instance_ocids.remove(temp_instance_ocid)
 
     @util.log_test
     def subtest_delete(self):
@@ -246,7 +254,8 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         if len(self.instance_ocids) > 0:
             for ocid in self.instance_ocids:
                 try:
-                    self.delete_instance(ocid)
+                    print("checking TERMINATED for " + ocid)
+                    util.wait_until(['compute', 'instance', 'get', '--instance-id', ocid], 'TERMINATED', max_wait_seconds=1200, succeed_if_not_found=True)
                 except Exception as error:
                     util.print_latest_exception(error)
                     error_count = error_count + 1
@@ -276,11 +285,10 @@ class TestLaunchInstanceOptions(unittest.TestCase):
         self.assertEquals(0, error_count)
 
     def delete_instance(self, instance_ocid):
-        print("Deleting instance")
+        print("Deleting instance " + instance_ocid)
         util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'RUNNING', max_wait_seconds=600, succeed_if_not_found=True)
         result = util.invoke_command(['compute', 'instance', 'terminate', '--instance-id', instance_ocid, '--force'])
         util.validate_response(result)
-        util.wait_until(['compute', 'instance', 'get', '--instance-id', instance_ocid], 'TERMINATED', max_wait_seconds=600, succeed_if_not_found=True)
 
 
 if __name__ == '__main__':

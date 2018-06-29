@@ -570,12 +570,7 @@ def list_patch_history_entries_by_database(ctx, **kwargs):
     ctx.invoke(database_cli.list_db_home_patch_history_entries, **kwargs)
 
 
-database_cli.db_group.add_command(database_cli.backup_group)
-database_cli.db_group.add_command(database_cli.database_group)
-database_cli.db_group.add_command(database_cli.db_node_group)
-database_cli.db_group.add_command(database_cli.db_system_group)
-database_cli.db_group.add_command(database_cli.db_system_shape_group)
-database_cli.db_group.add_command(database_cli.db_version_group)
+database_cli.db_group.commands.pop(database_cli.db_home_group.name)
 
 database_cli.database_group.commands.pop(database_cli.list_databases.name)
 database_cli.db_node_group.commands.pop(database_cli.db_node_action.name)
@@ -586,13 +581,9 @@ database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_d
 database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_db_system_from_backup_details.name)
 
 database_cli.db_system_group.commands.pop(database_cli.update_db_system.name)
-database_cli.db_group.add_command(database_cli.data_guard_association_group)
 
 # Disable subclass command
 database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_to_existing_db_system_details.name)
-
-database_cli.db_group.add_command(database_cli.patch_group)
-database_cli.db_group.add_command(database_cli.patch_history_entry_group)
 
 # we need to expose customized create / delete / list database commands in order to avoid exposing DbHomes
 database_cli.database_group.add_command(create_database)

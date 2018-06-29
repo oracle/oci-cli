@@ -28,6 +28,12 @@ def volume_group():
     pass
 
 
+@click.command(cli_util.override('boot_volume_backup_group.command_name', 'boot-volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Boot Volume Backups] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def boot_volume_backup_group():
+    pass
+
+
 @click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -44,7 +50,7 @@ def volume_backup_group():
     pass
 
 
-@click.command(cli_util.override('volume_group_backup_group.command_name', 'volume-group-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume group that can then be used to create a new block volume group or recover a block volume group.
+@click.command(cli_util.override('volume_group_backup_group.command_name', 'volume-group-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume group that can then be used to create a new volume group or restore a volume group. For more information, see [Volume Groups].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -58,7 +64,7 @@ def volume_backup_policy_assignment_group():
     pass
 
 
-@click.command(cli_util.override('volume_group_group.command_name', 'volume-group'), cls=CommandGroupWithAlias, help="""Specifies a volume group. A volume group is a collection of block volumes.""")
+@click.command(cli_util.override('volume_group_group.command_name', 'volume-group'), cls=CommandGroupWithAlias, help="""Specifies a volume group which is a collection of volumes. For more information, see [Volume Groups].""")
 @cli_util.help_option_group
 def volume_group_group():
     pass
@@ -70,7 +76,145 @@ def volume_backup_policy_group():
     pass
 
 
-@volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 16 TB (16777216 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+blockstorage_group.add_command(volume_group)
+blockstorage_group.add_command(boot_volume_backup_group)
+blockstorage_group.add_command(boot_volume_group)
+blockstorage_group.add_command(volume_backup_group)
+blockstorage_group.add_command(volume_group_backup_group)
+blockstorage_group.add_command(volume_backup_policy_assignment_group)
+blockstorage_group.add_command(volume_group_group)
+blockstorage_group.add_command(volume_backup_policy_group)
+
+
+@boot_volume_group.command(name=cli_util.override('create_boot_volume.command_name', 'create'), help="""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@cli_util.option('--availability-domain', required=True, help="""The Availability Domain of the boot volume.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""Specifies the boot volume source details for a new boot volume. The volume source is either another boot volume in the same Availability Domain or a boot volume backup. This is a mandatory field for a boot volume.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--size-in-gbs', type=click.INT, help="""The size of the volume in GBs.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@cli_util.wrap_exceptions
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, defined_tags, display_name, freeform_tags, size_in_gbs):
+    kwargs = {}
+
+    details = {}
+    details['availabilityDomain'] = availability_domain
+    details['compartmentId'] = compartment_id
+    details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if size_in_gbs is not None:
+        details['sizeInGBs'] = size_in_gbs
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.create_boot_volume(
+        create_boot_volume_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_backup_group.command(name=cli_util.override('create_boot_volume_backup.command_name', 'create'), help="""Creates a new boot volume backup of the specified boot volume. For general information about boot volume backups, see [Overview of Boot Volume Backups]
+
+When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state.""")
+@cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume that needs to be backed up.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help="""A user-friendly name for the boot volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["FULL", "INCREMENTAL"]), help="""The type of backup to create. If omitted, defaults to incremental.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
+@cli_util.wrap_exceptions
+def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, type):
+    kwargs = {}
+
+    details = {}
+    details['bootVolumeId'] = boot_volume_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if type is not None:
+        details['type'] = type
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.create_boot_volume_backup(
+        create_boot_volume_backup_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 
 A volume and instance can be in separate compartments but must be in the same Availability Domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
@@ -239,7 +383,9 @@ def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('create_volume_group.command_name', 'create'), help="""Creates a new volume group in the specified compartment. A volume group can have at most 20 block volumes. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group or by restoring a volume group backup. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@volume_group_group.command(name=cli_util.override('create_volume_group.command_name', 'create'), help="""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+
+For more information, see [Volume Groups].""")
 @cli_util.option('--availability-domain', required=True, help="""The Availability Domain of the volume group.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment that contains the volume group.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""Specifies the volume group source details for a new volume group. The volume source is either another a list of volume ids in the same Availability Domain, another volume group or a volume group backup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -299,7 +445,7 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('create_volume_group_backup.command_name', 'create'), help="""Creates a new group backup of the specified volume group.""")
+@volume_group_backup_group.command(name=cli_util.override('create_volume_group_backup.command_name', 'create'), help="""Creates a new backup volume group of the specified volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help="""The OCID of the volume group that needs to be backed up.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment that will contain the volume group backup. This parameter is optional, by default backup will be created in the same compartment and source volume group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -398,6 +544,61 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_boot_volume(boot_volume_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_backup_group.command(name=cli_util.override('delete_boot_volume_backup.command_name', 'delete'), help="""Deletes a boot volume backup.""")
+@cli_util.option('--boot-volume-backup-id', required=True, help="""The OCID of the boot volume backup.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, if_match):
+
+    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.delete_boot_volume_backup(
+        boot_volume_backup_id=boot_volume_backup_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_boot_volume_backup(boot_volume_backup_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -552,7 +753,7 @@ def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id,
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('delete_volume_group.command_name', 'delete'), help="""Deletes the specified volume group. This will NOT delete data volumes.""")
+@volume_group_group.command(name=cli_util.override('delete_volume_group.command_name', 'delete'), help="""Deletes the specified volume group. Individual volumes are not deleted, only the volume group is deleted. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help="""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -607,7 +808,7 @@ def delete_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('delete_volume_group_backup.command_name', 'delete'), help="""Deletes a volume group backup. This will NOT delete backups within the volume group backup.""")
+@volume_group_backup_group.command(name=cli_util.override('delete_volume_group_backup.command_name', 'delete'), help="""Deletes a volume group backup. This operation deletes all the backups in the volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-backup-id', required=True, help="""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -677,6 +878,26 @@ def get_boot_volume(ctx, from_json, boot_volume_id):
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_boot_volume(
         boot_volume_id=boot_volume_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_backup_group.command(name=cli_util.override('get_boot_volume_backup.command_name', 'get'), help="""Gets information for the specified boot volume backup.""")
+@cli_util.option('--boot-volume-backup-id', required=True, help="""The OCID of the boot volume backup.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
+@cli_util.wrap_exceptions
+def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
+
+    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.get_boot_volume_backup(
+        boot_volume_backup_id=boot_volume_backup_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -787,7 +1008,7 @@ def get_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('get_volume_group.command_name', 'get'), help="""Gets information for the specified volume group.""")
+@volume_group_group.command(name=cli_util.override('get_volume_group.command_name', 'get'), help="""Gets information for the specified volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help="""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -807,7 +1028,7 @@ def get_volume_group(ctx, from_json, volume_group_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('get_volume_group_backup.command_name', 'get'), help="""Gets information for the specified volume group backup.""")
+@volume_group_backup_group.command(name=cli_util.override('get_volume_group_backup.command_name', 'get'), help="""Gets information for the specified volume group backup. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-backup-id', required=True, help="""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -824,6 +1045,71 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
         volume_group_backup_id=volume_group_backup_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_backup_group.command(name=cli_util.override('list_boot_volume_backups.command_name', 'list'), help="""Lists the boot volume backups in the specified compartment. You can filter the results by boot volume.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--boot-volume-id', help="""The OCID of the boot volume.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+
+Example: `500`""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BootVolumeBackup]'})
+@cli_util.wrap_exceptions
+def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, boot_volume_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if boot_volume_id is not None:
+        kwargs['boot_volume_id'] = boot_volume_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('blockstorage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_boot_volume_backups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_boot_volume_backups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_boot_volume_backups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -993,7 +1279,7 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('list_volume_group_backups.command_name', 'list'), help="""Lists the backups for volume groups in the specified compartment. You can filter the results by volume group.""")
+@volume_group_backup_group.command(name=cli_util.override('list_volume_group_backups.command_name', 'list'), help="""Lists the volume group backups in the specified compartment. You can filter the results by volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--volume-group-id', help="""The OCID of the volume group.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
@@ -1055,7 +1341,7 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('list_volume_groups.command_name', 'list'), help="""Lists the volume groups in the specified compartment and Availability Domain.""")
+@volume_group_group.command(name=cli_util.override('list_volume_groups.command_name', 'list'), help="""Lists the volume groups in the specified compartment and availability domain. For more information, see [Volume Groups].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', help="""The name of the Availability Domain.
 
@@ -1198,28 +1484,45 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
 
 @boot_volume_group.command(name=cli_util.override('update_boot_volume.command_name', 'update'), help="""Updates the specified boot volume's display name.""")
 @cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolume'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def update_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, display_name, if_match):
+def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('blockstorage', ctx)
     result = client.update_boot_volume(
@@ -1238,6 +1541,73 @@ def update_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_boot_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_backup_group.command(name=cli_util.override('update_boot_volume_backup.command_name', 'update'), help="""Updates the display name for the specified boot volume backup. Avoid entering confidential information.""")
+@cli_util.option('--boot-volume-backup-id', required=True, help="""The OCID of the boot volume backup.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help="""A friendly user-specified name for the boot volume backup. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
+@cli_util.wrap_exceptions
+def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.update_boot_volume_backup(
+        boot_volume_backup_id=boot_volume_backup_id,
+        update_boot_volume_backup_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1380,7 +1750,9 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('update_volume_group.command_name', 'update'), help="""Updates the set of volumes in a volume group along with (optionally) it's display name. This call can be used to add or remove volumes in a volume group. The entire list of volume ids must be specified. Avoid entering confidential information.""")
+@volume_group_group.command(name=cli_util.override('update_volume_group.command_name', 'update'), help="""Updates the set of volumes in a volume group along with the display name. Use this operation to add or remove volumes in a volume group. Specify the full list of volume IDs to include in the volume group. If the volume ID is not specified in the call, it will be removed from the volume group. Avoid entering confidential information.
+
+For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help="""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1451,7 +1823,7 @@ def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('update_volume_group_backup.command_name', 'update'), help="""Updates the display name for the specified volume group backup.""")
+@volume_group_backup_group.command(name=cli_util.override('update_volume_group_backup.command_name', 'update'), help="""Updates the display name for the specified volume group backup. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-backup-id', required=True, help="""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

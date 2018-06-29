@@ -23,7 +23,6 @@ from . import core_cli_extended  # noqa: F401
 from . import database_cli_extended  # noqa: F401
 from . import dns_cli_extended  # noqa: F401
 from . import email_cli_extended  # noqa: F401
-from . import filestorage_cli_extended  # noqa: F401
 from . import identity_cli_extended  # noqa: F401
 from . import lb_cli_extended  # noqa: F401
 from . import objectstorage_cli_extended  # noqa: F401
