@@ -5,6 +5,7 @@ certifi
 cffi==1.9.1
 click==6.7
 configparser==3.5.0
+coverage==4.5.1
 cryptography==2.1.3
 httpsig-cffi==15.0.0
 idna>=2.5,<2.7
@@ -12,7 +13,7 @@ Jinja2==2.9.6
 jmespath==0.9.3
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==1.4.4
+oci==1.4.5
 packaging==16.8
 pluggy==0.4.0
 py==1.4.33
@@ -21,6 +22,7 @@ pycparser==2.17
 pyOpenSSL==17.4.0
 pyparsing==2.2.0
 pytest==3.2.3
+pytest-cov==2.5.1
 python-dateutil==2.7.3
 pytz==2016.10
 requests==2.18.4

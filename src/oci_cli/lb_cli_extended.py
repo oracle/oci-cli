@@ -11,9 +11,6 @@ from . import custom_types  # noqa: F401
 from .generated import loadbalancer_cli
 
 
-loadbalancer_cli.load_balancer_group.commands.pop('update')
-
-
 def process_ssl_configuration_kwargs(kwargs):
     ssl_configuration = {}
     if kwargs['ssl_certificate_name']:

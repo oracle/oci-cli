@@ -59,6 +59,9 @@ PROFILE_TO_REGION = {
     'IAD': 'us-ashburn-1'
 }
 
+LARGE_FILE_NAME = 'reallyLargeFile.dat'
+LARGE_FILE_LOCATION = os.path.join('data', LARGE_FILE_NAME)
+
 # The check_json_key_format method validates that keys are snake-cased and all in lower case
 # (e.g. this-is-a-valid-key, ButThisIsNot, And_neither_is_this). However, there are exceptions such
 # as where the key is sourced directly from user input (e.g. metadata, tagging) and we should
@@ -213,8 +216,7 @@ def validate_response(result, extra_validation=None, includes_debug_data=False, 
         if result and hasattr(result, 'output'):
             print("validate_response response output=" + result.output)
         else:
-            print ("validate_response response=" + str(result))
-
+            print("validate_response response=" + str(result))
         raise
 
 
@@ -489,13 +491,17 @@ def ensure_test_data(api, namespace, compartment, bucket_prefix):
     clear_test_data(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket')
 
     print('Creating test data.')
+    if not os.path.exists(LARGE_FILE_LOCATION):
+        os.makedirs('data')
+        create_large_file(LARGE_FILE_LOCATION, 100)
+
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket1',
                   objects=['object1', 'object2', 'object3', 'object4', 'object5'])
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket2',
                   objects=['a/b/c/object1', 'a/b/c/object2', 'a/b/c/object3', 'a/b/object4', 'a/b/object5'])
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket3', objects=['a/b/object1'])
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket4')
-    create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket4', 'reallyLargeFile.dat', file_name='data/reallyLargeFile.dat')
+    create_object(api, namespace, bucket_prefix + 'ReadOnlyTestBucket4', LARGE_FILE_NAME, file_name=LARGE_FILE_LOCATION)
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket5', {'foo1': 'bar1', 'foo2': 'bar2'})
     create_bucket(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket6')
 
@@ -602,7 +608,10 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
 
 
 def show_progress():
-    print('.', end='', flush=True)
+    try:
+        print('.', end='', flush=True)
+    except TypeError:
+        print('.', end='')
 
 
 def create_large_file(filename, size_in_mebibytes):
@@ -662,3 +671,16 @@ def get_json_from_mixed_string(source_string):
             json_str += line
 
     return json.loads(json_str)
+
+
+# Trivial object to provide dictionary and dot accessor capabilities
+class Obj(dict):
+    def __getattr__(self, attr):
+        return self.get(attr)
+
+    def __setattr__(self, key, value):
+        self.__setitem__(key, value)
+
+    def __setitem__(self, key, value):
+        super(Obj, self).__setitem__(key, value)
+        self.__dict__.update({key: value})

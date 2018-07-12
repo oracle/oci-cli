@@ -146,6 +146,11 @@ def generate_json_skeleton_for_full_command(ctx):
 # JSON for a single option. This is useful if the option represents some JSON which a user would need to provide as
 # a string or file
 def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
+    if targeted_complex_param == "defined-tags":
+        return generate_input_dict_for_defined_tags()
+    if targeted_complex_param == "freeform-tags":
+        return generate_input_dict_for_freeform_tags()
+
     input_params_to_complex_types = ctx.obj['input_params_to_complex_types']
 
     input_as_dict = {}
@@ -196,6 +201,24 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
         input_as_dict[camelize(attr_name)] = example_obj
 
     return input_as_dict
+
+
+def generate_input_dict_for_defined_tags():
+    dict = {}
+    dict['tagNamespace1'] = {}
+    dict['tagNamespace1']['tagKey1'] = 'tagValue1'
+    dict['tagNamespace1']['tagKey2'] = 'tagValue2'
+    dict['tagNamespace2'] = {}
+    dict['tagNamespace2']['tagKey1'] = 'tagValue1'
+    dict['tagNamespace2']['tagKey2'] = 'tagValue2'
+    return dict
+
+
+def generate_input_dict_for_freeform_tags():
+    dict = {}
+    dict['tagKey1'] = 'tagValue1'
+    dict['tagKey2'] = 'tagValue2'
+    return dict
 
 
 def translate_complex_param_to_example_object(complex_param_entry):
