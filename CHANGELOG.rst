@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.28 - 2018-07-12
+---------------------
+Added
+~~~~~~~~
+* Human-friendly Resource, Compartment and User name fields in Events listed by Audit Service (``oci audit event list``).
+* Improve access control to file systems by introducing NFS Export option in the File Storage Service.
+
+  * (``oci fs export create --export-options``)
+  * (``oci fs export update --export-options``)
+
+* Support for updating a load balancer.
+
+  * (``oci lb load-balancer update``)
+
+* Support for tagging of load balancer resource enabled in the Load Balancer service.
+
+  * (``oci lb load-balancer create --defined-tags --freeform-tags``)
+  * (``oci lb load-balancer update --defined-tags --freeform-tags``)
+
+Fixed
+~~~~~~~~
+* Output created by ``--generate-param-json-input`` has been customized to produce more helpful json for defined and free-form tags.
+
 2.4.27 - 2018-06-28
 ---------------------
 Added

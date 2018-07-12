@@ -55,7 +55,9 @@ The following examples are not acceptable:   * /example and /example/path   * / 
 
 Paths may not end in a slash (/). No path element can be a period (.) or two periods in sequence (..). All path elements must be 255 bytes or less.
 
-No two non-'DELETED' export resources in the same export set can reference the same file system.""")
+No two non-'DELETED' export resources in the same export set can reference the same file system.
+
+Use `exportOptions` to control access to an export. For more information, see [Export Options].""")
 @cli_util.help_option_group
 def export_group():
     pass
@@ -82,21 +84,35 @@ fs_group.add_command(snapshot_group)
 Avoid entering confidential information.
 
 Example: `/mediafiles`""")
+@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help="""Export options for the new export. If left unspecified, defaults to:
+
+       [          {             \"source\" : \"0.0.0.0/0\",             \"requirePrivilegedSourcePort\" : false,             \"access\" : \"READ_WRITE\",             \"identitySquash\" : \"NONE\"           }        ]
+
+  **Note:** Mount targets do not have Internet-routable IP   addresses.  Therefore they will not be reachable from the   Internet, even if an associated `ClientOptions` item has   a source of `0.0.0.0/0`.
+
+  **If set to the empty array then the export will not be   visible to any clients.**
+
+  The export's `exportOptions` can be changed after creation   using the `UpdateExport` operation.
+
+This option is a JSON list with items of type ClientOptions.  For documentation on ClientOptions please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'Export'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}}, output_type={'module': 'file_storage', 'class': 'Export'})
 @cli_util.wrap_exceptions
-def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, file_system_id, path):
+def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, file_system_id, path, export_options):
     kwargs = {}
 
     details = {}
     details['exportSetId'] = export_set_id
     details['fileSystemId'] = file_system_id
     details['path'] = path
+
+    if export_options is not None:
+        details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
 
     client = cli_util.build_client('file_storage', ctx)
     result = client.create_export(
@@ -255,7 +271,7 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 
 @snapshot_group.command(name=cli_util.override('create_snapshot.command_name', 'create'), help="""Creates a new snapshot of the specified file system. You can access the snapshot at `.snapshot/<name>`.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of this export's file system.""")
+@cli_util.option('--file-system-id', required=True, help="""The OCID of the file system to take a snapshot of.""")
 @cli_util.option('--name', required=True, help="""Name of the snapshot. This value is immutable. It must also be unique with respect to all other non-DELETED snapshots on the associated file system.
 
 Avoid entering confidential information.
@@ -961,6 +977,67 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
             file_system_id=file_system_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@export_group.command(name=cli_util.override('update_export.command_name', 'update'), help="""Updates the specified export's information.""")
+@cli_util.option('--export-id', required=True, help="""The OCID of the export.""")
+@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help="""New export options for the export.
+
+**Setting to the empty array will make the export invisible to all clients.**
+
+Leaving unset will leave the `exportOptions` unchanged.
+
+This option is a JSON list with items of type ClientOptions.  For documentation on ClientOptions please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}}, output_type={'module': 'file_storage', 'class': 'Export'})
+@cli_util.wrap_exceptions
+def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, export_options, if_match):
+
+    if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
+        raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
+    if not force:
+        if export_options:
+            if not click.confirm("WARNING: Updates to export-options will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if export_options is not None:
+        details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
+
+    client = cli_util.build_client('file_storage', ctx)
+    result = client.update_export(
+        export_id=export_id,
+        update_export_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_export') and callable(getattr(client, 'get_export')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_export(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

@@ -803,7 +803,8 @@ def subtest_object_list_paging(runner, config_file, config_profile):
 
 @util.skip_while_rerecording
 def test_preauthenticated_requests(runner, config_file, config_profile):
-    preauthenticated_request_name = util.random_name('cli_preauth_request')
+    preauthenticated_request_name_1 = util.random_name('cli_preauth_request_1')
+    preauthenticated_request_name_2 = util.random_name('cli_preauth_request_2')
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
 
     target_year = arrow.now().year + 1
@@ -820,10 +821,11 @@ def test_preauthenticated_requests(runner, config_file, config_profile):
 
     for item in expiry_time_input_and_expected:
         # create PAR
-        par_id = create_and_validate_bucket_level_par(runner, config_file, config_profile, preauthenticated_request_name, bucket_name, item['input'], item['expected'])
+        par_id_1 = create_and_validate_bucket_level_par(runner, config_file, config_profile, preauthenticated_request_name_1, bucket_name, item['input'], item['expected'])
+        par_id_2 = create_and_validate_bucket_level_par(runner, config_file, config_profile, preauthenticated_request_name_2, bucket_name, item['input'], item['expected'])
 
         # get PAR
-        result = invoke(runner, config_file, config_profile, ['preauth-request', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id])
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'get', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id_1])
         validate_response(result)
 
         # list PAR
@@ -840,8 +842,11 @@ def test_preauthenticated_requests(runner, config_file, config_profile):
         validate_response(result)
         assert 'opc-next-page' in result.output
 
-        # delete PAR
-        result = invoke(runner, config_file, config_profile, ['preauth-request', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id, '--force'])
+        # delete PARs
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id_1, '--force'])
+        validate_response(result)
+
+        result = invoke(runner, config_file, config_profile, ['preauth-request', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--par-id', par_id_2, '--force'])
         validate_response(result)
 
 

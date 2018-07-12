@@ -5,6 +5,7 @@ import json
 import oci_cli
 import os
 import pytest
+from . import tag_data_container
 from . import test_config_container
 from . import util
 
@@ -621,6 +622,151 @@ def test_load_balancer_operations_with_waiters(runner, config_file, config_profi
         ]
         result = invoke(runner, config_file, config_profile, params)
         _validate_work_request_result(result, load_balancer['data']['id'])
+
+
+@pytest.mark.usefixtures("tag_namespace_and_tags")
+def test_load_balancer_tagging(runner, config_file, config_profile, vcn_and_subnets, key_pair_files):
+    with test_config_container.create_vcr().use_cassette('test_load_balancer_tagging.yml'):
+        subnet_ocid_1 = vcn_and_subnets[1]
+        subnet_ocid_2 = vcn_and_subnets[2]
+
+        # Setup the tag inputs
+        tag_names_to_values = {}
+        for t in tag_data_container.tags:
+            tag_names_to_values[t.name] = 'somevalue {}'.format(t.name)
+        tag_data_container.write_defined_tags_to_file(
+            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            tag_data_container.tag_namespace,
+            tag_names_to_values
+        )
+
+        # Create the LB with tags
+        lb_name = util.random_name('cli_lb')
+        params = [
+            'load-balancer', 'create',
+            '-c', util.COMPARTMENT_ID,
+            '--display-name', lb_name,
+            '--shape-name', '100Mbps',
+            '--subnet-ids', '["{}","{}"]'.format(subnet_ocid_1, subnet_ocid_2),
+            '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+            '--wait-for-state', 'SUCCEEDED',
+            '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
+        ]
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result, json_response_expected=False)
+        load_balancer = util.get_json_from_mixed_string(result.output)
+        id = load_balancer['data']['id']
+
+        try:
+            # Make sure the tags are in the results
+            assert "tagOne" in load_balancer['data']['freeform-tags']
+            assert "value three" == load_balancer['data']['freeform-tags']["tagOne"]
+            assert "cli_tag_ns_320683" in load_balancer['data']['defined-tags']
+            assert "cli_tag_320683" in load_balancer['data']['defined-tags']['cli_tag_ns_320683']
+            assert "cli_tag_320683" in load_balancer['data']['defined-tags']['cli_tag_ns_320683']
+            assert "somevalue cli_tag_320683" == load_balancer['data']['defined-tags']['cli_tag_ns_320683']['cli_tag_320683']
+
+            # Get the LB and make sure the tags are in the results
+            params = [
+                'load-balancer', 'get',
+                '--load-balancer-id', id
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result, json_response_expected=False)
+            load_balancer = util.get_json_from_mixed_string(result.output)
+            id = load_balancer['data']['id']
+            assert "tagOne" in load_balancer['data']['freeform-tags']
+            assert "value three" == load_balancer['data']['freeform-tags']["tagOne"]
+            assert "cli_tag_ns_320683" in load_balancer['data']['defined-tags']
+            assert "cli_tag_320683" in load_balancer['data']['defined-tags']['cli_tag_ns_320683']
+            assert "cli_tag_320683" in load_balancer['data']['defined-tags']['cli_tag_ns_320683']
+            assert "somevalue cli_tag_320683" == load_balancer['data']['defined-tags']['cli_tag_ns_320683']['cli_tag_320683']
+
+            # List the LB and check that the tags are in the result
+            params = [
+                'load-balancer', 'list',
+                '-c', util.COMPARTMENT_ID
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result, json_response_expected=False)
+            list_result = util.get_json_from_mixed_string(result.output)
+            if len(list_result['data']) == 1:
+                load_balancer = list_result['data'][0]
+                assert "tagOne" in load_balancer['freeform-tags']
+                assert "value three" == load_balancer['freeform-tags']["tagOne"]
+                assert "cli_tag_ns_320683" in load_balancer['defined-tags']
+                assert "cli_tag_320683" in load_balancer['defined-tags']['cli_tag_ns_320683']
+                assert "cli_tag_320683" in load_balancer['defined-tags']['cli_tag_ns_320683']
+                assert "somevalue cli_tag_320683" == load_balancer['defined-tags']['cli_tag_ns_320683']['cli_tag_320683']
+
+            # Update the display name for the lb.
+            params = [
+                'load-balancer', 'update',
+                '--load-balancer-id', id,
+                '--display-name', 'new' + lb_name,
+                '--wait-for-state', 'SUCCEEDED'
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result, json_response_expected=False)
+
+            params = [
+                'load-balancer', 'get',
+                '--load-balancer-id', id
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result, json_response_expected=False)
+            load_balancer = util.get_json_from_mixed_string(result.output)
+            assert "new" + lb_name == load_balancer['data']['display-name']
+
+            # Setup the tag inputs
+            tag_names_to_values = {}
+            for t in tag_data_container.tags:
+                tag_names_to_values[t.name] = 'newvalue {}'.format(t.name)
+            tag_data_container.write_defined_tags_to_file(
+                os.path.join('tests', 'temp', 'defined_tags_1.json'),
+                tag_data_container.tag_namespace,
+                tag_names_to_values
+            )
+
+            # Update the tags for the lb.
+            params = [
+                'load-balancer', 'update',
+                '--load-balancer-id', id,
+                '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
+                '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+                '--wait-for-state', 'SUCCEEDED',
+                '--force'
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result, json_response_expected=False)
+
+            params = [
+                'load-balancer', 'get',
+                '--load-balancer-id', id
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result, json_response_expected=False)
+            load_balancer = util.get_json_from_mixed_string(result.output)
+            assert "tagOne" in load_balancer['data']['freeform-tags']
+            assert "tag_Two" in load_balancer['data']['freeform-tags']
+            assert "value1" == load_balancer['data']['freeform-tags']["tagOne"]
+            assert "value two" == load_balancer['data']['freeform-tags']["tag_Two"]
+            assert "cli_tag_ns_320683" in load_balancer['data']['defined-tags']
+            assert "cli_tag_320683" in load_balancer['data']['defined-tags']['cli_tag_ns_320683']
+            assert "newvalue cli_tag_320683" == load_balancer['data']['defined-tags']['cli_tag_ns_320683']['cli_tag_320683']
+
+        finally:
+            # Delete the LB
+            params = [
+                'load-balancer', 'delete',
+                '--load-balancer-id', id,
+                '--force',
+                '--wait-for-state', 'SUCCEEDED',
+                '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            _validate_work_request_result(result, id)
 
 
 def _do_backend_and_backend_set_waiters(runner, load_balancer_id, config_file, config_profile):
