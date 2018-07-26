@@ -14,6 +14,7 @@ from oci.file_storage import FileStorageClient
 from oci.identity import IdentityClient
 from oci.load_balancer import LoadBalancerClient
 from oci.object_storage import ObjectStorageClient
+from oci.resource_search import ResourceSearchClient
 
 CLIENT_MAP = {
     "audit": AuditClient,
@@ -27,6 +28,7 @@ CLIENT_MAP = {
     "identity": IdentityClient,
     "load_balancer": LoadBalancerClient,
     "object_storage": ObjectStorageClient,
+    "resource_search": ResourceSearchClient,
     "virtual_network": VirtualNetworkClient
 }
 
@@ -40,5 +42,6 @@ MODULE_TO_TYPE_MAPPINGS = {
     "file_storage": oci.file_storage.models.file_storage_type_mapping,
     "identity": oci.identity.models.identity_type_mapping,
     "load_balancer": oci.load_balancer.models.load_balancer_type_mapping,
-    "object_storage": oci.object_storage.models.object_storage_type_mapping
+    "object_storage": oci.object_storage.models.object_storage_type_mapping,
+    "resource_search": oci.resource_search.models.resource_search_type_mapping
 }

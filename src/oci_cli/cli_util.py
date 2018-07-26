@@ -16,7 +16,6 @@ import os
 import os.path
 import pytz
 import re
-import requests
 import six
 import stat
 import subprocess
@@ -33,6 +32,7 @@ from . import cli_exceptions
 from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
 from oci import exceptions, config, dns, Response
+from oci._vendor import requests
 
 from .version import __version__
 
@@ -102,7 +102,12 @@ OVERRIDES = {
     "update_namespace_metadata.command_name": "update-metadata",
     "virtual_network_group.command_name": "network",
     "virtual_network_group.help": "Networking Service",
-    "volume_backup_group.command_name": "backup"
+    "compute_management_group.command_name": "compute-management",
+    "compute_management_group.help": "Compute Management Service",
+    "volume_backup_group.command_name": "backup",
+    "resource_summary_collection_group.command_name": "resource",
+    "search_resources_structured_search_details.command_name": "structured-search",
+    "search_resources_free_text_search_details.command_name": "free-text-search"
 }
 
 

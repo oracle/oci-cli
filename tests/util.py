@@ -33,6 +33,7 @@ NUM_INVOKE_COMMAND_RETRIES = 3
 WAIT_INTERVAL_SECONDS = '30' if test_config_container.vcr_mode != 'none' else '0'
 
 USER_ID = os.environ['OCI_CLI_USER_ID']
+ADMIN_USER_ID = os.environ['OCI_CLI_ADMIN_USER_ID']
 TENANT_ID = os.environ['OCI_CLI_TENANT_ID']
 COMPARTMENT_ID = os.environ['OCI_CLI_COMPARTMENT_ID']
 COMPARTMENT_NAME = os.environ['OCI_CLI_COMPARTMENT_NAME']

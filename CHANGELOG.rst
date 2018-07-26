@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.29 - 2018-07-26
+---------------------
+Added
+~~~~~~~~
+* Support for Resource Search service (``oci search``)
+
+  * An example on using the Resource Search Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/resource_search_example.sh>`__.
+
+* Ability to set the scheduled backup policy on Boot Volume creation in the Block Storage Service. (``oci bv boot-volume create --backup-policy-id``)
+
 2.4.28 - 2018-07-12
 ---------------------
 Added

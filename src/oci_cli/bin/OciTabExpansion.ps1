@@ -1,7 +1,7 @@
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 $ociTopLevelCommands = @(
-    'audit', 'bv', 'ce', 'compute', 'db', 'dns', 'email', 'fs', 'iam', 'lb', 'network', 'os', 'setup'
+    'audit', 'bv', 'ce', 'compute', 'db', 'dns', 'email', 'fs', 'iam', 'lb', 'network', 'os', 'search', 'setup'
 )
 
 $ociSubcommands = @{
@@ -132,6 +132,9 @@ $ociSubcommands = @{
     'os ns' = 'get get-metadata update-metadata'
     'os object' = 'bulk-delete bulk-download bulk-upload delete get head list put rename restore restore-status resume-put'
     'os preauth-request' = 'create delete get list'
+    'search' = 'resource resource-type'
+    'search resource' = 'free-text-search structured-search'
+    'search resource-type' = 'get list'
     'setup' = 'autocomplete config keys oci-cli-rc repair-file-permissions'
 }
 $script:ociSubcommandKeys = $ociSubcommands.Keys -join '|'
@@ -145,7 +148,7 @@ $ociCommandsToLongParams = @{
     'bv backup get' = 'from-json help volume-backup-id'
     'bv backup list' = 'all compartment-id display-name from-json help lifecycle-state limit page page-size sort-by sort-order volume-id'
     'bv backup update' = 'defined-tags display-name force freeform-tags from-json help if-match max-wait-seconds volume-backup-id wait-for-state wait-interval-seconds'
-    'bv boot-volume create' = 'availability-domain boot-volume-backup-id compartment-id defined-tags display-name freeform-tags from-json help max-wait-seconds source-boot-volume-id wait-for-state wait-interval-seconds'
+    'bv boot-volume create' = 'availability-domain backup-policy-id boot-volume-backup-id compartment-id defined-tags display-name freeform-tags from-json help max-wait-seconds source-boot-volume-id wait-for-state wait-interval-seconds'
     'bv boot-volume delete' = 'boot-volume-id force from-json help if-match max-wait-seconds wait-for-state wait-interval-seconds'
     'bv boot-volume get' = 'boot-volume-id from-json help'
     'bv boot-volume list' = 'all availability-domain compartment-id from-json help limit page page-size volume-group-id'
@@ -565,6 +568,10 @@ $ociCommandsToLongParams = @{
     'os preauth-request delete' = 'bucket-name force from-json help namespace namespace-name par-id'
     'os preauth-request get' = 'bucket-name from-json help namespace namespace-name par-id'
     'os preauth-request list' = 'all bucket-name from-json help limit namespace namespace-name object-name-prefix page page-size'
+    'search resource free-text-search' = 'from-json help limit matching-context-type page text'
+    'search resource structured-search' = 'from-json help limit matching-context-type page query-text'
+    'search resource-type get' = 'from-json help name'
+    'search resource-type list' = 'all from-json help limit page page-size'
     'setup autocomplete' = 'help'
     'setup config' = 'help'
     'setup keys' = 'help key-name output-dir overwrite passphrase passphrase-file'
@@ -1002,6 +1009,10 @@ $ociCommandsToShortParams = @{
     'os preauth-request delete' = '? bn h ns'
     'os preauth-request get' = '? bn h ns'
     'os preauth-request list' = '? bn h ns'
+    'search resource free-text-search' = '? h'
+    'search resource structured-search' = '? h'
+    'search resource-type get' = '? h'
+    'search resource-type list' = '? h'
     'setup autocomplete' = '? h'
     'setup config' = '? h'
     'setup keys' = '? h'

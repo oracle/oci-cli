@@ -439,7 +439,9 @@ def test_object_options(runner, config_file, config_profile, test_id, content_in
         util.validate_service_error(result, 'IfMatchFailed')
     except AssertionError as e:
         # known issue with requests: https://github.com/requests/requests/issues/4062
-        util.validate_service_error(result, 'ConnectionError')
+        # ConnectionError is now wrapped as oci.exceptions.RequestException
+        util.validate_service_error(result, 'RequestException')
+        util.validate_service_error(result, 'EPIPE')
 
     result = invoke(runner, config_file, config_profile, required_args)
     assertEqual(0, result.exit_code)
@@ -460,7 +462,9 @@ def test_object_options(runner, config_file, config_profile, test_id, content_in
             util.validate_service_error(result, error_message='The value of the Content-MD5 header')
         except AssertionError as e:
             # known issue with requests: https://github.com/requests/requests/issues/4062
-            util.validate_service_error(result, 'ConnectionError')
+            # ConnectionError is now wrapped as oci.exceptions.RequestException
+            util.validate_service_error(result, 'RequestException')
+            util.validate_service_error(result, 'EPIPE')
 
         result = invoke(runner, config_file, config_profile, required_args + ['--content-md5', md5])
         validate_response(result)

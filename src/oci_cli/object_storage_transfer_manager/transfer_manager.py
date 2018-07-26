@@ -1,8 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
-import requests
-
+from oci._vendor import requests
 from oci.object_storage import UploadManager
 
 from .work_pool import WorkPool
