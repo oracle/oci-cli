@@ -92,6 +92,7 @@ blockstorage_group.add_command(volume_backup_policy_group)
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment that contains the boot volume.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""Specifies the boot volume source details for a new boot volume. The volume source is either another boot volume in the same Availability Domain or a boot volume backup. This is a mandatory field for a boot volume.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-policy-id', help="""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -108,13 +109,16 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, defined_tags, display_name, freeform_tags, size_in_gbs):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, size_in_gbs):
     kwargs = {}
 
     details = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if backup_policy_id is not None:
+        details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)

@@ -11,7 +11,7 @@ import oci_cli
 import pytest
 
 from . import util
-from requests.exceptions import ConnectionError
+from oci._vendor.requests.exceptions import ConnectionError
 
 
 @util.skip_while_rerecording

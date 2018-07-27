@@ -100,7 +100,7 @@ def test_smtp_credential(runner, config_file, config_profile):
     try:
         params = [
             'iam', 'smtp-credential', 'create',
-            '--user-id', util.USER_ID,
+            '--user-id', util.ADMIN_USER_ID,
             '--description', 'Test SMTP credentials for CLI user',
             '--profile', 'ADMIN'
         ]
@@ -112,7 +112,7 @@ def test_smtp_credential(runner, config_file, config_profile):
         params = [
             'iam', 'smtp-credential', 'update',
             '--smtp-credential-id', smtp_credential_id,
-            '--user-id', util.USER_ID,
+            '--user-id', util.ADMIN_USER_ID,
             '--description', 'Updated Test SMTP credentials for CLI user',
             '--profile', 'ADMIN'
         ]
@@ -123,7 +123,7 @@ def test_smtp_credential(runner, config_file, config_profile):
 
         params = [
             'iam', 'smtp-credential', 'list',
-            '--user-id', util.USER_ID,
+            '--user-id', util.ADMIN_USER_ID,
             '--profile', 'ADMIN'
         ]
 
@@ -135,7 +135,7 @@ def test_smtp_credential(runner, config_file, config_profile):
             params = [
                 'iam', 'smtp-credential', 'delete',
                 '--smtp-credential-id', smtp_credential_id,
-                '--user-id', util.USER_ID,
+                '--user-id', util.ADMIN_USER_ID,
                 '--force',
                 '--profile', 'ADMIN'
             ]

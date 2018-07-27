@@ -15,6 +15,7 @@ from .generated import filestorage_cli  # noqa: F401
 from .generated import identity_cli  # noqa: F401
 from .generated import loadbalancer_cli  # noqa: F401
 from .generated import objectstorage_cli  # noqa: F401
+from .generated import resourcesearch_cli  # noqa: F401
 from .generated import virtualnetwork_cli  # noqa: F401
 
 from . import audit_cli_extended  # noqa: F401
@@ -26,6 +27,7 @@ from . import email_cli_extended  # noqa: F401
 from . import identity_cli_extended  # noqa: F401
 from . import lb_cli_extended  # noqa: F401
 from . import objectstorage_cli_extended  # noqa: F401
+from . import resourcesearch_cli_extended  # noqa: F401
 from . import final_command_processor  # noqa: F401
 from . import cli_setup  # noqa: F401
 

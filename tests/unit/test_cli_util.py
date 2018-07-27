@@ -108,6 +108,8 @@ class TestCliUtil(unittest.TestCase):
         value = cli_util.coalesce_provided_and_default_value(ctx, param_name, original_value, is_required)
         assert value == 'abc'
 
+    # TODO: This test does not work on Windows due to the use of tempfile.NamedTemoraryFile.
+    # https://bugs.python.org/issue14243
     def test_coalesce_param_with_explicit_default_value_for_file_type_param(self):
         ctx = Obj()
         ctx.obj = Obj()

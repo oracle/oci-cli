@@ -5,6 +5,8 @@
 # can figure out what kind of recording (via VCR) is being done and also so that they can take actions (e.g. waiting)
 # in a VCR compatible/friendly way
 
+from . import vcr_mods  # noqa: F401
+
 import oci
 import vcr
 
