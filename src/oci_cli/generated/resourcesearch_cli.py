@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('search_group.command_name', 'search'), cls=CommandGroupWithAlias, help=cli_util.override('search_group.help', """Search for resources in your cloud network."""))
+@cli.command(cli_util.override('search_root_group.command_name', 'search'), cls=CommandGroupWithAlias, help=cli_util.override('search_root_group.help', """Search for resources in your cloud network."""))
 @cli_util.help_option_group
-def search_group():
+def search_root_group():
     pass
 
 
@@ -32,8 +32,8 @@ def resource_type_group():
     pass
 
 
-search_group.add_command(resource_summary_collection_group)
-search_group.add_command(resource_type_group)
+search_root_group.add_command(resource_summary_collection_group)
+search_root_group.add_command(resource_type_group)
 
 
 @resource_type_group.command(name=cli_util.override('get_resource_type.command_name', 'get'), help="""Gets detailed information about a resource type by using the resource type name.""")

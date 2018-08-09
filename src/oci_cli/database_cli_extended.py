@@ -570,7 +570,7 @@ def list_patch_history_entries_by_database(ctx, **kwargs):
     ctx.invoke(database_cli.list_db_home_patch_history_entries, **kwargs)
 
 
-database_cli.db_group.commands.pop(database_cli.db_home_group.name)
+database_cli.db_root_group.commands.pop(database_cli.db_home_group.name)
 
 database_cli.database_group.commands.pop(database_cli.list_databases.name)
 database_cli.db_node_group.commands.pop(database_cli.db_node_action.name)

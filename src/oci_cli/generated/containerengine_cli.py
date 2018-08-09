@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ce_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_group.help', """Container Engine for Kubernetes API"""))
+@cli.command(cli_util.override('ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_root_group.help', """Container Engine for Kubernetes API"""))
 @cli_util.help_option_group
-def ce_group():
+def ce_root_group():
     pass
 
 
@@ -62,13 +62,13 @@ def cluster_options_group():
     pass
 
 
-ce_group.add_command(cluster_group)
-ce_group.add_command(work_request_error_group)
-ce_group.add_command(node_pool_options_group)
-ce_group.add_command(work_request_log_entry_group)
-ce_group.add_command(node_pool_group)
-ce_group.add_command(work_request_group)
-ce_group.add_command(cluster_options_group)
+ce_root_group.add_command(cluster_group)
+ce_root_group.add_command(work_request_error_group)
+ce_root_group.add_command(node_pool_options_group)
+ce_root_group.add_command(work_request_log_entry_group)
+ce_root_group.add_command(node_pool_group)
+ce_root_group.add_command(work_request_group)
+ce_root_group.add_command(cluster_options_group)
 
 
 @cluster_group.command(name=cli_util.override('create_cluster.command_name', 'create'), help="""Create a new cluster.""")

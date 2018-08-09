@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('lb_group.command_name', 'lb'), cls=CommandGroupWithAlias, help=cli_util.override('lb_group.help', """API for the Load Balancing Service"""))
+@cli.command(cli_util.override('lb_root_group.command_name', 'lb'), cls=CommandGroupWithAlias, help=cli_util.override('lb_root_group.help', """API for the Load Balancing Service"""))
 @cli_util.help_option_group
-def lb_group():
+def lb_root_group():
     pass
 
 
@@ -120,21 +120,21 @@ def backend_group():
     pass
 
 
-lb_group.add_command(load_balancer_group)
-lb_group.add_command(load_balancer_shape_group)
-lb_group.add_command(certificate_group)
-lb_group.add_command(listener_group)
-lb_group.add_command(work_request_group)
-lb_group.add_command(backend_set_health_group)
-lb_group.add_command(health_checker_group)
-lb_group.add_command(path_route_set_group)
-lb_group.add_command(load_balancer_protocol_group)
-lb_group.add_command(load_balancer_health_group)
-lb_group.add_command(hostname_group)
-lb_group.add_command(load_balancer_policy_group)
-lb_group.add_command(backend_health_group)
-lb_group.add_command(backend_set_group)
-lb_group.add_command(backend_group)
+lb_root_group.add_command(load_balancer_group)
+lb_root_group.add_command(load_balancer_shape_group)
+lb_root_group.add_command(certificate_group)
+lb_root_group.add_command(listener_group)
+lb_root_group.add_command(work_request_group)
+lb_root_group.add_command(backend_set_health_group)
+lb_root_group.add_command(health_checker_group)
+lb_root_group.add_command(path_route_set_group)
+lb_root_group.add_command(load_balancer_protocol_group)
+lb_root_group.add_command(load_balancer_health_group)
+lb_root_group.add_command(hostname_group)
+lb_root_group.add_command(load_balancer_policy_group)
+lb_root_group.add_command(backend_health_group)
+lb_root_group.add_command(backend_set_group)
+lb_root_group.add_command(backend_group)
 
 
 @backend_group.command(name=cli_util.override('create_backend.command_name', 'create'), help="""Adds a backend server to a backend set.""")

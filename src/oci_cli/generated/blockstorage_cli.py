@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('blockstorage_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
 @cli_util.help_option_group
-def blockstorage_group():
+def blockstorage_root_group():
     pass
 
 
@@ -76,14 +76,14 @@ def volume_backup_policy_group():
     pass
 
 
-blockstorage_group.add_command(volume_group)
-blockstorage_group.add_command(boot_volume_backup_group)
-blockstorage_group.add_command(boot_volume_group)
-blockstorage_group.add_command(volume_backup_group)
-blockstorage_group.add_command(volume_group_backup_group)
-blockstorage_group.add_command(volume_backup_policy_assignment_group)
-blockstorage_group.add_command(volume_group_group)
-blockstorage_group.add_command(volume_backup_policy_group)
+blockstorage_root_group.add_command(volume_group)
+blockstorage_root_group.add_command(boot_volume_backup_group)
+blockstorage_root_group.add_command(boot_volume_group)
+blockstorage_root_group.add_command(volume_backup_group)
+blockstorage_root_group.add_command(volume_group_backup_group)
+blockstorage_root_group.add_command(volume_backup_policy_assignment_group)
+blockstorage_root_group.add_command(volume_group_group)
+blockstorage_root_group.add_command(volume_backup_policy_group)
 
 
 @boot_volume_group.command(name=cli_util.override('create_boot_volume.command_name', 'create'), help="""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")

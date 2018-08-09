@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('compute_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
 @cli_util.help_option_group
-def compute_group():
+def compute_root_group():
     pass
 
 
@@ -98,17 +98,17 @@ def console_history_group():
     pass
 
 
-compute_group.add_command(volume_group)
-compute_group.add_command(image_group)
-compute_group.add_command(instance_credentials_group)
-compute_group.add_command(instance_group)
-compute_group.add_command(boot_volume_group)
-compute_group.add_command(shape_group)
-compute_group.add_command(vnic_attachment_group)
-compute_group.add_command(volume_attachment_group)
-compute_group.add_command(boot_volume_attachment_group)
-compute_group.add_command(instance_console_connection_group)
-compute_group.add_command(console_history_group)
+compute_root_group.add_command(volume_group)
+compute_root_group.add_command(image_group)
+compute_root_group.add_command(instance_credentials_group)
+compute_root_group.add_command(instance_group)
+compute_root_group.add_command(boot_volume_group)
+compute_root_group.add_command(shape_group)
+compute_root_group.add_command(vnic_attachment_group)
+compute_root_group.add_command(volume_attachment_group)
+compute_root_group.add_command(boot_volume_attachment_group)
+compute_root_group.add_command(instance_console_connection_group)
+compute_root_group.add_command(console_history_group)
 
 
 @boot_volume_attachment_group.command(name=cli_util.override('attach_boot_volume.command_name', 'attach'), help="""Attaches the specified boot volume to the specified instance.""")
@@ -1301,6 +1301,11 @@ Example: `My bare metal instance`""")
 They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
 
 If you don't need nested metadata values, it is strongly advised to avoid using this object and use the Metadata object instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fault-domain', help="""The name of the Fault Domain in which to launch an instance.
+
+To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1358,7 +1363,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, defined_tags, display_name, extended_metadata, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, source_details, subnet_id):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, source_details, subnet_id):
     kwargs = {}
 
     details = {}
@@ -1377,6 +1382,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if extended_metadata is not None:
         details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+
+    if fault_domain is not None:
+        details['faultDomain'] = fault_domain
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

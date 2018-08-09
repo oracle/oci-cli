@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('dns_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns_group.help', """API for managing DNS zones, records, and policies."""))
+@cli.command(cli_util.override('dns_root_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns_root_group.help', """API for managing DNS zones, records, and policies."""))
 @cli_util.help_option_group
-def dns_group():
+def dns_root_group():
     pass
 
 
@@ -50,11 +50,11 @@ def zones_group():
     pass
 
 
-dns_group.add_command(zone_group)
-dns_group.add_command(rr_set_group)
-dns_group.add_command(record_collection_group)
-dns_group.add_command(records_group)
-dns_group.add_command(zones_group)
+dns_root_group.add_command(zone_group)
+dns_root_group.add_command(rr_set_group)
+dns_root_group.add_command(record_collection_group)
+dns_root_group.add_command(records_group)
+dns_root_group.add_command(zones_group)
 
 
 @zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")

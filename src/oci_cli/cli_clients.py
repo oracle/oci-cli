@@ -3,10 +3,9 @@
 
 import oci
 from oci.audit import AuditClient
-from oci.container_engine import ContainerEngineClient
 from oci.core import BlockstorageClient
 from oci.core import ComputeClient
-from oci.core import VirtualNetworkClient
+from oci.container_engine import ContainerEngineClient
 from oci.database import DatabaseClient
 from oci.dns import DnsClient
 from oci.email import EmailClient
@@ -15,6 +14,7 @@ from oci.identity import IdentityClient
 from oci.load_balancer import LoadBalancerClient
 from oci.object_storage import ObjectStorageClient
 from oci.resource_search import ResourceSearchClient
+from oci.core import VirtualNetworkClient
 
 CLIENT_MAP = {
     "audit": AuditClient,

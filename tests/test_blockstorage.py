@@ -13,7 +13,7 @@ import oci_cli
 class TestBlockStorage(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_group, expected_not_called_count=16)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_root_group, expected_not_called_count=16)
     @test_config_container.RecordReplay('blockstorage')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options."""

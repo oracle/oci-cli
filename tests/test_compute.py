@@ -20,7 +20,7 @@ CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
 class TestCompute(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_group, expected_not_called_count=8)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_root_group, expected_not_called_count=8)
     @test_config_container.RecordReplay('compute')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  The exceptions are the image import and export
@@ -91,6 +91,7 @@ class TestCompute(unittest.TestCase):
     @util.log_test
     def subtest_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
+        fault_domain = 'FAULT-DOMAIN-1'
         image_id = util.oracle_linux_image()
         shape = 'VM.Standard1.1'
 
@@ -99,6 +100,7 @@ class TestCompute(unittest.TestCase):
              '--compartment-id', util.COMPARTMENT_ID,
              '--availability-domain', util.availability_domain(),
              '--display-name', instance_name,
+             '--fault-domain', fault_domain,
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,

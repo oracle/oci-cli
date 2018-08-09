@@ -28,9 +28,9 @@ DEFAULT_SSH_PROXY_PORT = 5905
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 blockstorage_cli.boot_volume_group.commands.pop(blockstorage_cli.create_boot_volume.name)
 
-compute_cli.compute_group.commands.pop(compute_cli.volume_group.name)
-compute_cli.compute_group.commands.pop(compute_cli.instance_credentials_group.name)
-compute_cli.compute_group.commands.pop(compute_cli.boot_volume_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.volume_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.boot_volume_group.name)
 
 # Disabling subclass commands
 compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_uri_details.name)
@@ -38,18 +38,18 @@ compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_o
 
 compute_cli.image_group.commands.pop(compute_cli.export_image.name)
 
-compute_cli.compute_group.add_command(compute_cli.instance_group)
-compute_cli.compute_group.add_command(compute_cli.shape_group)
-compute_cli.compute_group.add_command(compute_cli.vnic_attachment_group)
-compute_cli.compute_group.add_command(compute_cli.boot_volume_attachment_group)
-compute_cli.compute_group.add_command(compute_cli.volume_attachment_group)
+compute_cli.compute_root_group.add_command(compute_cli.instance_group)
+compute_cli.compute_root_group.add_command(compute_cli.shape_group)
+compute_cli.compute_root_group.add_command(compute_cli.vnic_attachment_group)
+compute_cli.compute_root_group.add_command(compute_cli.boot_volume_attachment_group)
+compute_cli.compute_root_group.add_command(compute_cli.volume_attachment_group)
 
 # Disabling subclass commands
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_i_scsi_volume_details.name)
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_paravirtualized_volume_details.name)
 
-compute_cli.compute_group.add_command(compute_cli.console_history_group)
-compute_cli.compute_group.add_command(compute_cli.instance_console_connection_group)
+compute_cli.compute_root_group.add_command(compute_cli.console_history_group)
+compute_cli.compute_root_group.add_command(compute_cli.instance_console_connection_group)
 compute_cli.instance_group.add_command(compute_cli.get_windows_instance_initial_credentials)
 compute_cli.volume_attachment_group.add_command(compute_cli.detach_volume)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.attach_vnic.name)
@@ -57,11 +57,11 @@ compute_cli.vnic_attachment_group.commands.pop(compute_cli.detach_vnic.name)
 compute_cli.instance_console_connection_group.commands.pop(compute_cli.create_instance_console_connection.name)
 compute_cli.boot_volume_attachment_group.add_command(compute_cli.detach_boot_volume)
 
-virtualnetwork_cli.virtual_network_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_config_group.name)
-virtualnetwork_cli.virtual_network_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_status_group.name)
-virtualnetwork_cli.virtual_network_group.commands.pop(virtualnetwork_cli.letter_of_authority_group.name)
-virtualnetwork_cli.virtual_network_group.commands.pop(virtualnetwork_cli.virtual_circuit_bandwidth_shape_group.name)
-virtualnetwork_cli.virtual_network_group.commands.pop(virtualnetwork_cli.peer_region_for_remote_peering_group.name)
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_config_group.name)
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_status_group.name)
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.letter_of_authority_group.name)
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.virtual_circuit_bandwidth_shape_group.name)
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.peer_region_for_remote_peering_group.name)
 
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)

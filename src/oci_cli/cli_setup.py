@@ -6,10 +6,9 @@ import click
 from .cli_root import cli
 from .cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION
 from . import cli_util
+from .util import pymd5
 
 import base64
-import hashlib
-
 import os
 import os.path
 import stat
@@ -388,7 +387,7 @@ def public_key_to_fingerprint(public_key):
     bytes = bytes.replace(header, b'').replace(footer, b'').replace(b'\n', b'')
 
     key = base64.b64decode(bytes)
-    fp_plain = hashlib.md5(key).hexdigest()
+    fp_plain = pymd5.md5(key).hexdigest()
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
 
 

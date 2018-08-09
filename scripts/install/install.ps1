@@ -37,27 +37,34 @@ function LogOutput($Output) {
 }
 
 function VersionMeetsMinimumRequirements($Version, $MinVersion) {
-    $Version = $Version.split('.')
-    $MinVersion = $MinVersion.split('.')
+    $VersionArray = @($Version.split('.'))
+    $MinVersionArray = @($MinVersion.split('.'))
 
-    For ($i=0; $i -le $Version.Length; $i++) {
+    For ($i=0; $i -le $VersionArray.Length; $i++) {
         # if we have reached the end of the MinVersion and we still have digits on the system version then the version is sufficient
-        if ($i -ge $MinVersion.Length) {
+        if ($i -ge $MinVersionArray.Length) {
             return $true
         }
 
+        $VersionSegment = 0
+        Try {
+            $VersionSegment = [int]$VersionArray[$i]
+        } Catch {}
+        $MinVersionSegment = 0
+        Try {
+            $MinVersionSegment = [int]$MinVersionArray[$i]
+        } Catch {}
         # loop from most significant to least significant digits in version
-        # if Version digit is ever greater than MinVersion, then version is sufficient
-        # if Version digit is ever less than MinVersion, the version is not sufficient
+        # if Version segment is ever greater than MinVersion, then version is sufficient
+        # if Version segment is ever less than MinVersion, the version is not sufficient
         # if they are equal, we will continue to check less significant digits
-        if ($Version[$i] -gt $MinVersion[$i]) {
+        if ($VersionSegment -gt $MinVersionSegment) {
             return $true
         }
-        elseif ($Version[$i] -lt $MinVersion[$i]) {
+        elseif ($VersionSegment -lt $MinVersionSegment) {
             return $false
         }
     }
-
     return $true
 }
 

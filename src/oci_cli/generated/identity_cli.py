@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('iam_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam_group.help', """APIs for managing users, groups, compartments, and policies."""))
+@cli.command(cli_util.override('iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam_root_group.help', """APIs for managing users, groups, compartments, and policies."""))
 @cli_util.help_option_group
-def iam_group():
+def iam_root_group():
     pass
 
 
@@ -200,26 +200,26 @@ def policy_group():
     pass
 
 
-iam_group.add_command(tag_namespace_group)
-iam_group.add_command(availability_domain_group)
-iam_group.add_command(customer_secret_key_group)
-iam_group.add_command(idp_group_mapping_group)
-iam_group.add_command(tenancy_group)
-iam_group.add_command(user_group_membership_group)
-iam_group.add_command(identity_provider_group)
-iam_group.add_command(ui_password_group)
-iam_group.add_command(api_key_group)
-iam_group.add_command(region_subscription_group)
-iam_group.add_command(compartment_group)
-iam_group.add_command(smtp_credential_group)
-iam_group.add_command(tag_group)
-iam_group.add_command(dynamic_group_group)
-iam_group.add_command(region_group)
-iam_group.add_command(auth_token_group)
-iam_group.add_command(swift_password_group)
-iam_group.add_command(user_group)
-iam_group.add_command(group_group)
-iam_group.add_command(policy_group)
+iam_root_group.add_command(tag_namespace_group)
+iam_root_group.add_command(availability_domain_group)
+iam_root_group.add_command(customer_secret_key_group)
+iam_root_group.add_command(idp_group_mapping_group)
+iam_root_group.add_command(tenancy_group)
+iam_root_group.add_command(user_group_membership_group)
+iam_root_group.add_command(identity_provider_group)
+iam_root_group.add_command(ui_password_group)
+iam_root_group.add_command(api_key_group)
+iam_root_group.add_command(region_subscription_group)
+iam_root_group.add_command(compartment_group)
+iam_root_group.add_command(smtp_credential_group)
+iam_root_group.add_command(tag_group)
+iam_root_group.add_command(dynamic_group_group)
+iam_root_group.add_command(region_group)
+iam_root_group.add_command(auth_token_group)
+iam_root_group.add_command(swift_password_group)
+iam_root_group.add_command(user_group)
+iam_root_group.add_command(group_group)
+iam_root_group.add_command(policy_group)
 
 
 @user_group_membership_group.command(name=cli_util.override('add_user_to_group.command_name', 'add'), help="""Adds the specified user to the specified group and returns a `UserGroupMembership` object with its own OCID.
