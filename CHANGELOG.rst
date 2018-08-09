@@ -6,13 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.30 - 2018-08-09
+---------------------
+Added
+~~~~~~~~
+* Support for instances in the Compute service by fault domains (--fault-domain option for ``oci compute instance launch``)
+* The ability to use a FIPS compliant version of libcrypto on linux platforms.
+* Support for short date and time format when providing a datetime parameter to the CLI.
+
+  * YYYY-MM-DD HH:mm, e.g. 2017-09-15 17:25. The timezone for this date will be taken as UTC. (Needs to be surrounded by single or double quotes)
+
+Fixed
+~~~~~~~~
+* The minimum python version check in the Windows install script now works properly with the following scenario.  Previously version 2.7.13 was not being detected as greater than 2.7.5.
+
+
+Changed
+~~~~~~~~
+* Moved all example scripts to separate 'examples' directory under scripts
+
 2.4.29 - 2018-07-26
 ---------------------
 Added
 ~~~~~~~~
 * Support for Resource Search service (``oci search``)
 
-  * An example on using the Resource Search Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/resource_search_example.sh>`__.
+  * An example on using the Resource Search Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/resource_search_example.sh>`__.
 
 * Ability to set the scheduled backup policy on Boot Volume creation in the Block Storage Service. (``oci bv boot-volume create --backup-policy-id``)
 
@@ -56,7 +75,7 @@ Fixed
 ~~~~~~~~
 * Cluster create command in Oracle Container Engine Service is not working correctly in previous release v2.4.25. It has been fixed as part of this release. (``oci ce cluster create`` fixed)
 
-  * A sample test using the Oracle Container (Kubernetes) Engine Service feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_containerengine.py>`__
+  * A sample test using the Oracle Container (Kubernetes) Engine Service feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/examples/test_containerengine.py>`__
 
 2.4.25 - 2018-06-14
 ---------------------
@@ -64,7 +83,7 @@ Added
 ~~~~~~~~
 * Support for Oracle Container Engine Service (``oci ce``)
 
-  * A sample test using the Oracle Container (Kubernetes) Engine Service feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_containerengine.py>`__
+  * A sample test using the Oracle Container (Kubernetes) Engine Service feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/examples/test_containerengine.py>`__
 
 NOTE: Release 2.4.25 should not be used if you are trying to use Oracle Container Engine Service.
 A bug with `oci ce cluster create` was discovered shortly after releasing version 2.4.25 to PyPi, so there is no 2.4.25 release on Github.
@@ -120,7 +139,7 @@ Fixed
 Added
 ~~~~~~~~
 * Support for returning ``event-name`` in logs extracted from Audit Service. (``oci audit event list``)
-* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`__ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
+* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_load_balancer.sh>`__ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
 * Support for FastConnect service. New commands as mentioned below are added:
 
   * ``oci network cross-connect-group``
@@ -157,7 +176,7 @@ Added
 ---------------------
 Added
 ~~~~~~~~
-* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/scale_vm_example.sh>`__
+* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/examples/scale_vm_example.sh>`__
 * A warning message informing use of ``--all`` flag to get all items during list operations.
 
 Fixed
@@ -204,7 +223,7 @@ Added
 ~~~~~~~~~~
 * Support for the Email Service. (``oci email``)
 
-  * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/test_email.py>`__
+  * A sample test using the email feature can be found on `Github <https://github.com/oracle/oci-cli/blob/master/tests/examples/test_email.py>`__
   * This release does not include support for managing SMTP credentials.  Please use the web console or any OCI SDK to manage SMTP credentials.
 
 * Support for the following features in the Core Services:
@@ -226,7 +245,7 @@ Fixed
 Added
 ~~~~~~~~~~
 * Support for the File Storage Service. (``oci fs``)
-* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh>`__ (``oci lb path-route-set``)
+* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_load_balancer.sh>`__ (``oci lb path-route-set``)
 * Tagging support for *Bucket* resources in the Object Storage Service
 
   * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
@@ -243,7 +262,7 @@ Added
 ~~~~~~~~~~
 * Support for Domain Name System Service (oci dns)
 
-  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/dns_example.sh>`__.
+  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/dns_example.sh>`__.
 
 * Support for Reserved Public IPs in Virtual Networking Service (oci network public-ip)
 * Support for the following features in Block Storage Service
@@ -268,7 +287,7 @@ Added
 
   * Tags and tag namespaces can be managed via the 'oci iam tag-namespace' and 'oci iam tag' commands
   * Operations which support applying tags will have --defined-tags and --freeform-tags options. Check the help dump (https://github.com/oracle/oci-cli/blob/master/tests/output/inline_help_dump.txt) for resources which support tags. A general list of taggable resources can also be found in: https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/taggingoverview.htm#Taggable
-  * An example of using tagging can be found at https://github.com/oracle/oci-cli/blob/master/scripts/tagging_example.sh
+  * An example of using tagging can be found at https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh
 
 * Support for bringing your own custom image for emulation mode virtual machines in Compute Service (--launch-mode parameter on create image)
 * Support for returning unquoted strings when the result of a JMESPath --query is a single string value (using --raw-output option)
@@ -292,7 +311,7 @@ Added
 ~~~~~~~~~~
 * Support for Load Balancing Service operations ('oci lb')
 
-  * An example of creating a load balancer can be found a https://github.com/oracle/oci-cli/blob/master/scripts/create_load_balancer.sh
+  * An example of creating a load balancer can be found a https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_load_balancer.sh
 
 * Support for user managed boot volumes: 'oci bv boot-volume', 'oci compute instance launch --source-details', 'oci compute instance terminate --preserve-boot-volume'
 * Operations which create, update or delete resources with a lifecycle-state now support a --wait-for-state option which allows you to perform the action and then wait until the resource reaches a given state
@@ -311,7 +330,7 @@ Added
 * Support for Local Peering Gateway operations ('oci network local-peering-gateway')
 * Support for specifying a default for the --profile option in the oci_cli_rc file
 * Support create database from backup (oci db database create-from-backup)
-* Support for getting archived object restore status ('oci os object restore-status') more details in sample (https://github.com/oracle/oci-cli/scripts/restore_archived_object.sh)
+* Support for getting archived object restore status ('oci os object restore-status') more details in sample (https://github.com/oracle/oci-cli/scripts/examples/restore_archived_object.sh)
 
 Changed
 ~~~~~~~~~~

@@ -1,6 +1,5 @@
 appdirs==1.4.3
 arrow==0.10.0
-asn1crypto==0.22.0
 certifi
 cffi==1.9.1
 click==6.7
@@ -13,13 +12,13 @@ Jinja2==2.9.6
 jmespath==0.9.3
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.0.0
+oci==2.0.1
 packaging==16.8
 pluggy==0.4.0
 py==1.4.33
 pyasn1==0.2.3
-pycparser==2.17
 pyOpenSSL==17.4.0
+pycparser==2.17
 pyparsing==2.2.0
 pytest==3.2.3
 pytest-cov==2.5.1

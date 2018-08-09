@@ -77,6 +77,12 @@ SKIP_JSON_KEY_FORMAT_CHECK = set([
     "freeform-tags"
 ])
 
+
+# this allows generated tests to look up operations that have been moved in the CLI
+MOVED_COMMANDS = {
+    ('iam', 'user_group_membership', 'add'): ['iam', 'group', 'add-user'],
+}
+
 # This global can be changed to influence what configuration data this module vends.
 target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
 
@@ -672,6 +678,19 @@ def get_json_from_mixed_string(source_string):
             json_str += line
 
     return json.loads(json_str)
+
+
+def get_command_list(root_command, parent, leaf):
+    if (root_command, parent, leaf) in MOVED_COMMANDS:
+        return MOVED_COMMANDS[(root_command, parent, leaf)]
+
+    parent = parent.replace('_', '-')
+    leaf = leaf.replace('_', '-')
+
+    commands = collect_commands(oci_cli.cli)
+    for command in commands:
+        if len(command) > 2 and command[0] == root_command and command[-2] == parent and command[-1] == leaf:
+            return command
 
 
 # Trivial object to provide dictionary and dot accessor capabilities

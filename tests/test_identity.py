@@ -29,7 +29,7 @@ class TestIdentity(unittest.TestCase):
     #   - tag and tag-namespace operations (x12). These are handled via test_tagging and test_tag_management
     #   - dynamic group operations (create, get, update, delete, list)
     #   - smtp credential operations (create, update, delete, list) covered in test_email.py
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.iam_group, expected_not_called_count=27)
+    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.iam_root_group, expected_not_called_count=27)
     @test_config_container.RecordReplay('identity')
     def test_all_operations(self, validator):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""

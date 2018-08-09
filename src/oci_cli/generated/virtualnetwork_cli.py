@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('virtual_network_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('virtual_network_root_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
 @cli_util.help_option_group
-def virtual_network_group():
+def virtual_network_root_group():
     pass
 
 
@@ -264,36 +264,36 @@ def security_list_group():
     pass
 
 
-virtual_network_group.add_command(remote_peering_connection_group)
-virtual_network_group.add_command(subnet_group)
-virtual_network_group.add_command(drg_attachment_group)
-virtual_network_group.add_command(public_ip_group)
-virtual_network_group.add_command(ip_sec_connection_device_config_group)
-virtual_network_group.add_command(fast_connect_provider_service_group)
-virtual_network_group.add_command(cross_connect_location_group)
-virtual_network_group.add_command(virtual_circuit_public_prefix_group)
-virtual_network_group.add_command(private_ip_group)
-virtual_network_group.add_command(virtual_circuit_group)
-virtual_network_group.add_command(local_peering_gateway_group)
-virtual_network_group.add_command(cross_connect_port_speed_shape_group)
-virtual_network_group.add_command(drg_group)
-virtual_network_group.add_command(route_table_group)
-virtual_network_group.add_command(cpe_group)
-virtual_network_group.add_command(cross_connect_group)
-virtual_network_group.add_command(letter_of_authority_group)
-virtual_network_group.add_command(cross_connect_status_group)
-virtual_network_group.add_command(vcn_group)
-virtual_network_group.add_command(ip_sec_connection_device_status_group)
-virtual_network_group.add_command(vnic_group)
-virtual_network_group.add_command(dhcp_options_group)
-virtual_network_group.add_command(virtual_circuit_bandwidth_shape_group)
-virtual_network_group.add_command(peer_region_for_remote_peering_group)
-virtual_network_group.add_command(service_gateway_group)
-virtual_network_group.add_command(internet_gateway_group)
-virtual_network_group.add_command(ip_sec_connection_group)
-virtual_network_group.add_command(service_group)
-virtual_network_group.add_command(cross_connect_group_group)
-virtual_network_group.add_command(security_list_group)
+virtual_network_root_group.add_command(remote_peering_connection_group)
+virtual_network_root_group.add_command(subnet_group)
+virtual_network_root_group.add_command(drg_attachment_group)
+virtual_network_root_group.add_command(public_ip_group)
+virtual_network_root_group.add_command(ip_sec_connection_device_config_group)
+virtual_network_root_group.add_command(fast_connect_provider_service_group)
+virtual_network_root_group.add_command(cross_connect_location_group)
+virtual_network_root_group.add_command(virtual_circuit_public_prefix_group)
+virtual_network_root_group.add_command(private_ip_group)
+virtual_network_root_group.add_command(virtual_circuit_group)
+virtual_network_root_group.add_command(local_peering_gateway_group)
+virtual_network_root_group.add_command(cross_connect_port_speed_shape_group)
+virtual_network_root_group.add_command(drg_group)
+virtual_network_root_group.add_command(route_table_group)
+virtual_network_root_group.add_command(cpe_group)
+virtual_network_root_group.add_command(cross_connect_group)
+virtual_network_root_group.add_command(letter_of_authority_group)
+virtual_network_root_group.add_command(cross_connect_status_group)
+virtual_network_root_group.add_command(vcn_group)
+virtual_network_root_group.add_command(ip_sec_connection_device_status_group)
+virtual_network_root_group.add_command(vnic_group)
+virtual_network_root_group.add_command(dhcp_options_group)
+virtual_network_root_group.add_command(virtual_circuit_bandwidth_shape_group)
+virtual_network_root_group.add_command(peer_region_for_remote_peering_group)
+virtual_network_root_group.add_command(service_gateway_group)
+virtual_network_root_group.add_command(internet_gateway_group)
+virtual_network_root_group.add_command(ip_sec_connection_group)
+virtual_network_root_group.add_command(service_group)
+virtual_network_root_group.add_command(cross_connect_group_group)
+virtual_network_root_group.add_command(security_list_group)
 
 
 @service_gateway_group.command(name=cli_util.override('attach_service_id.command_name', 'attach'), help="""Enables the specified service on the specified gateway. In other words, enables the service gateway to send traffic to the specified service. You must also set up a route rule with the service's `cidrBlock` as the rule's destination CIDR and the gateway as the rule's target. See [Route Table].

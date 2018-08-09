@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('os_group.command_name', 'os'), cls=CommandGroupWithAlias, help=cli_util.override('os_group.help', """Common set of Object and Archive Storage APIs for managing buckets and objects."""))
+@cli.command(cli_util.override('os_root_group.command_name', 'os'), cls=CommandGroupWithAlias, help=cli_util.override('os_root_group.help', """Common set of Object and Archive Storage APIs for managing buckets and objects."""))
 @cli_util.help_option_group
-def os_group():
+def os_root_group():
     pass
 
 
@@ -48,10 +48,10 @@ def namespace_group():
     pass
 
 
-os_group.add_command(bucket_group)
-os_group.add_command(preauthenticated_request_group)
-os_group.add_command(object_group)
-os_group.add_command(namespace_group)
+os_root_group.add_command(bucket_group)
+os_root_group.add_command(preauthenticated_request_group)
+os_root_group.add_command(object_group)
+os_root_group.add_command(namespace_group)
 
 
 @object_group.command(name=cli_util.override('abort_multipart_upload.command_name', 'abort-multipart-upload'), help="""Aborts an in-progress multipart upload and deletes all parts that have been uploaded.""")

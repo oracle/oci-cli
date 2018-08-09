@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('db_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db_group.help', """The API for the Database Service."""))
+@cli.command(cli_util.override('db_root_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db_root_group.help', """The API for the Database Service."""))
 @cli_util.help_option_group
-def db_group():
+def db_root_group():
     pass
 
 
@@ -104,16 +104,16 @@ def db_node_group():
     pass
 
 
-db_group.add_command(patch_group)
-db_group.add_command(db_version_group)
-db_group.add_command(backup_group)
-db_group.add_command(database_group)
-db_group.add_command(patch_history_entry_group)
-db_group.add_command(db_system_shape_group)
-db_group.add_command(data_guard_association_group)
-db_group.add_command(db_home_group)
-db_group.add_command(db_system_group)
-db_group.add_command(db_node_group)
+db_root_group.add_command(patch_group)
+db_root_group.add_command(db_version_group)
+db_root_group.add_command(backup_group)
+db_root_group.add_command(database_group)
+db_root_group.add_command(patch_history_entry_group)
+db_root_group.add_command(db_system_shape_group)
+db_root_group.add_command(data_guard_association_group)
+db_root_group.add_command(db_home_group)
+db_root_group.add_command(db_system_group)
+db_root_group.add_command(db_node_group)
 
 
 @backup_group.command(name=cli_util.override('create_backup.command_name', 'create'), help="""Creates a new backup in the specified database based on the request parameters you provide. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")

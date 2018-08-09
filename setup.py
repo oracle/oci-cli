@@ -17,7 +17,6 @@ def open_relative(*path):
     filename = os.path.join(here, *path)
     return io.open(filename, mode="r", encoding="utf-8")
 
-
 with open_relative("src", "oci_cli", "version.py") as fd:
     version = re.search(
         r"^__version__\s*=\s*['\"]([^'\"]*)['\"]",
@@ -28,15 +27,13 @@ with open_relative("src", "oci_cli", "version.py") as fd:
 with open_relative("README.rst") as f:
     readme = f.read()
 
-
 requires = [
-    'oci==2.0.0',
+    'oci==2.0.1',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
     'configparser==3.5.0',
     'cryptography==2.1.3',
-    'pyOpenSSL<=17.4.0',
     'httpsig_cffi==15.0.0',
     'jmespath==0.9.3',
     'python-dateutil==2.7.3',
@@ -46,6 +43,13 @@ requires = [
     'terminaltables==3.1.0',
     'idna>=2.5,<2.7'
 ]
+
+fips_libcrypto_file = os.getenv("OCI_CLI_FIPS_LIBCRYPTO_FILE")
+if fips_libcrypto_file:
+    from setuptools.command.easy_install import ScriptWriter
+    with open('src/oci_cli/oci_template.py', 'r') as template_file:
+        template = template_file.read()
+        ScriptWriter.template = template
 
 setup(
     name='oci-cli',

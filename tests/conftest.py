@@ -144,6 +144,23 @@ def dns_client(config):
     return oci.dns.DnsClient(config)
 
 
+@pytest.fixture(scope='session')
+def cli_testing_service_client():
+    try:
+        from .cli_testing_service_client import CLITestingServiceClient
+        client = CLITestingServiceClient()
+
+        with test_config_container.create_vcr().use_cassette('generated/create_test_service_session.yml'):
+            client.create_session()
+
+        yield client
+
+        with test_config_container.create_vcr().use_cassette('generated/close_test_service_session.yml'):
+            client.end_session()
+    except ImportError:
+        yield None
+
+
 @pytest.fixture(scope='module')
 def key_pair_files():
     temp_dir = os.path.join('tests', 'temp')

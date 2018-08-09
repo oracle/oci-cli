@@ -12,13 +12,13 @@ from . import custom_types
 from . import json_skeleton_utils
 
 
-identity_cli.iam_group.commands.pop(identity_cli.idp_group_mapping_group.name)
-identity_cli.iam_group.commands.pop(identity_cli.tenancy_group.name)
-identity_cli.iam_group.commands.pop(identity_cli.user_group_membership_group.name)
-identity_cli.iam_group.commands.pop(identity_cli.identity_provider_group.name)
-identity_cli.iam_group.commands.pop(identity_cli.api_key_group.name)
-identity_cli.iam_group.commands.pop(identity_cli.swift_password_group.name)
-identity_cli.iam_group.commands.pop(identity_cli.ui_password_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.idp_group_mapping_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.tenancy_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.user_group_membership_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.identity_provider_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.api_key_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.swift_password_group.name)
+identity_cli.iam_root_group.commands.pop(identity_cli.ui_password_group.name)
 
 identity_cli.user_group.add_command(identity_cli.api_key_group)
 identity_cli.user_group.add_command(identity_cli.swift_password_group)

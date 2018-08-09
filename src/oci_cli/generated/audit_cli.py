@@ -14,9 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('audit_group.command_name', 'audit'), cls=CommandGroupWithAlias, help=cli_util.override('audit_group.help', """API for the Audit Service. You can use this API for queries, but not bulk-export operations."""))
+@cli.command(cli_util.override('audit_root_group.command_name', 'audit'), cls=CommandGroupWithAlias, help=cli_util.override('audit_root_group.help', """API for the Audit Service. You can use this API for queries, but not bulk-export operations."""))
 @cli_util.help_option_group
-def audit_group():
+def audit_root_group():
     pass
 
 
@@ -32,8 +32,8 @@ def configuration_group():
     pass
 
 
-audit_group.add_command(audit_event_group)
-audit_group.add_command(configuration_group)
+audit_root_group.add_command(audit_event_group)
+audit_root_group.add_command(configuration_group)
 
 
 @configuration_group.command(name=cli_util.override('get_configuration.command_name', 'get'), help="""Get the configuration""")

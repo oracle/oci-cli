@@ -90,6 +90,11 @@ class CliDatetime(click.ParamType):
         # Short datetimes we interpret as UTC
         ######################################
         {
+            'format_string': 'YYYY-MM-DDTHH:mm',
+            'regex_pattern': re.compile(r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9])$"),
+            'use_timezone': 'utc'
+        },
+        {
             'format_string': 'YYYY-MM-DD',
             'regex_pattern': re.compile(r"^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$"),
             'use_timezone': 'utc'
@@ -104,6 +109,7 @@ class CliDatetime(click.ParamType):
     YYYY-MM-DDTHH:mm:ssTZD (timzone with offset) with milliseconds, e.g. 2017-09-15T12:30:00.456-08:00, 2017-09-15T12:30:00.456-0800
     YYYY-MM-DDTHH:mm:ssTZD (timezone with offset) without milliseconds, e.g. 2017-09-15T12:30:00-08:00, 2017-09-15T12:30:00-0800
     YYYY-MM-DDTHH:mmTZD (timezone with offset) with minute precision, e.g. 2017-09-15T12:35-08:00, 2017-09-15T12:35-0800
+    YYYY-MM-DD HH:mm, e.g. 2017-09-15 17:25. The timezone for this date will be taken as UTC. (Needs to be surrounded by single or double quotes)
     YYYY-MM-DD, e.g. 2017-09-15. This date will be taken as midnight UTC of that day
     Unix time in seconds, e.g. 1412195400
     """
@@ -147,6 +153,12 @@ Format: YYYY-MM-DDTHH:mmTZD
 Example:
 2017-09-15T12:30-08:00,
 2017-09-15T12:30-0800
+\b
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
 \b
 Date Only
 *********

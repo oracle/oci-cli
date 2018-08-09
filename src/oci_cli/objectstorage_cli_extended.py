@@ -1452,7 +1452,7 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
     render_response(client.abort_multipart_upload(namespace, bucket_name, object_name, upload_id), ctx)
 
 
-objectstorage_cli.os_group.add_command(multipart)
+objectstorage_cli.os_root_group.add_command(multipart)
 objectstorage_cli.list_multipart_uploads.name = 'list'
 get_param(objectstorage_cli.list_multipart_uploads, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.list_multipart_uploads, 'namespace_name').opts.extend(['--namespace', '-ns'])
