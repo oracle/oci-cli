@@ -3,7 +3,6 @@
 
 import oci_cli
 import unittest
-from . import command_coverage_validator
 from . import util
 from oci_cli import config
 
@@ -33,10 +32,7 @@ PRIVATE_KEY_FILENAME = os.path.join(TEMP_DIR, 'oci_api_key.pem')
 class TestSetup(unittest.TestCase):
 
     @util.log_test
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.cli_setup.setup_group)
-    def test_all_operations(self, validator):
-        self.validator = validator
-
+    def test_all_operations(self):
         self.subtest_keys()
         self.subtest_keys_with_passphrase_option()
         self.subtest_keys_with_passphrase_file_option()
@@ -365,7 +361,6 @@ class TestSetup(unittest.TestCase):
                 Running manually on Windows with Python 2.7 works and Windows tests with Python 3 work, just this case breaks.
                 """
             )
-            self.validator.expected_not_called_count += 1
             return
 
         # fully testing the command would edit the machine's bash_profile / bash_rc
@@ -497,8 +492,6 @@ class TestSetup(unittest.TestCase):
         assert os.path.isabs(input_config['key_file'])
 
     def invoke(self, commands, debug=False, ** args):
-        self.validator.register_call(commands)
-
         if debug is True:
             commands = ['--debug'] + commands
 

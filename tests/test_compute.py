@@ -6,7 +6,6 @@ import os
 import pytest
 import re
 import unittest
-from . import command_coverage_validator
 from . import tag_data_container
 from . import test_config_container
 from . import util
@@ -20,14 +19,11 @@ CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'
 class TestCompute(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.compute_cli.compute_root_group, expected_not_called_count=8)
     @test_config_container.RecordReplay('compute')
-    def test_all_operations(self, validator):
+    def test_all_operations(self):
         """Successfully calls every operation with basic options.  The exceptions are the image import and export
         commands as they are handled by test_image_import_export.py
         """
-        self.validator = validator
-
         try:
             self.subtest_setup()
             self.subtest_instance_operations()
@@ -665,8 +661,6 @@ class TestCompute(unittest.TestCase):
         self.assertEquals(0, error_count)
 
     def invoke(self, commands, debug=False, ** args):
-        self.validator.register_call(commands)
-
         if debug is True:
             commands = ['--debug'] + commands
 

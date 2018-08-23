@@ -4,10 +4,8 @@
 import datetime
 import unittest
 import json
-import oci_cli
 import pytz
 from dateutil.parser import parse
-from . import command_coverage_validator
 from . import test_config_container
 from . import util
 
@@ -19,12 +17,9 @@ class TestAudit(unittest.TestCase):
 
     # For recording, don't match on the query string because that includes the date range for the query
     # (and that will change between runs)
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.audit_cli.audit_root_group, expected_not_called_count=2)
     @test_config_container.RecordReplay('audit', match_on=['method', 'scheme', 'host', 'port', 'path'])
-    def test_all_operations(self, validator):
+    def test_all_operations(self):
         """Successfully calls every operation with basic options."""
-        self.validator = validator
-
         self.subtest_event_list()
         # Not present in the preview spec
         # self.subtest_config_get()
@@ -59,8 +54,6 @@ class TestAudit(unittest.TestCase):
                     assert parsed_date <= end_time_with_zone
 
     def invoke(self, commands, debug=False, ** args):
-        self.validator.register_call(commands)
-
         if debug is True:
             commands = ['--debug'] + commands
 
