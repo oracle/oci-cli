@@ -1298,9 +1298,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `My bare metal instance`""")
 @cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
 
-They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
-
-If you don't need nested metadata values, it is strongly advised to avoid using this object and use the Metadata object instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domain', help="""The name of the Fault Domain in which to launch an instance.
 
 To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
@@ -1560,7 +1558,9 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment. If you specify a value for the `sortBy` parameter, Oracle-provided images appear first in the list, followed by custom images. For more information about images, see [Managing Custom Images].""")
+@image_group.command(name=cli_util.override('list_images.command_name', 'list'), help="""Lists the available images in the specified compartment, including both [Oracle-provided images] and [custom images] that have been created. The list of images returned is ordered to first show all Oracle-provided images, then all custom images.
+
+The order of images returned may change when new images are released.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--operating-system', help="""The image's operating system.

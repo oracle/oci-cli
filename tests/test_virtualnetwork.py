@@ -4,7 +4,6 @@
 import json
 import pytest
 import unittest
-from . import command_coverage_validator
 from . import test_config_container
 from . import util
 from .test_list_filter import retrieve_list_by_field_and_check, retrieve_list_and_ensure_sorted
@@ -14,15 +13,12 @@ import oci_cli
 class TestVirtualNetwork(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.virtualnetwork_cli.virtual_network_root_group, expected_not_called_count=58)
-    def test_all_operations(self, validator):
+    def test_all_operations(self):
         """Successfully calls every operation with basic options. The exceptions are 'vnic get' and 'vnic update', which are tested
         in test_compute.py since they require an instance.
 
         We also have exceptions for private-ip get/update/delete/list and attaching and detaching private IPs from VNICs, as
         these are handlde in test_secondary_private_ip.py"""
-        self.validator = validator
-
         with test_config_container.create_vcr().use_cassette('virtual_network.yml'):
             try:
                 self.subtest_vcn_operations()
@@ -610,7 +606,6 @@ class TestVirtualNetwork(unittest.TestCase):
 
     def invoke(self, params, debug=False, ** args):
         commands = ['network'] + params
-        self.validator.register_call(commands)
 
         if debug is True:
             commands = ['--debug'] + commands

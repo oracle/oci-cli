@@ -93,10 +93,10 @@ def _bytelist2long(list):
     i = 0
     while i < imax:
         if sys.version_info[0] < 3:
-            b0 = long(ord(list[j]))
-            b1 = (long(ord(list[j + 1]))) << 8
-            b2 = (long(ord(list[j + 2]))) << 16
-            b3 = (long(ord(list[j + 3]))) << 24
+            b0 = long(ord(list[j]))                 # noqa: F821
+            b1 = (long(ord(list[j + 1]))) << 8      # noqa: F821
+            b2 = (long(ord(list[j + 2]))) << 16     # noqa: F821
+            b3 = (long(ord(list[j + 3]))) << 24     # noqa: F821
         else:
             b0 = list[j]
             if isinstance(b0, str):
@@ -307,7 +307,7 @@ class MD5Type:
         """
 
         if sys.version_info[0] < 3:
-            leninBuf = long(len(inBuf))
+            leninBuf = long(len(inBuf))     # noqa: F821
         else:
             leninBuf = len(inBuf)
 

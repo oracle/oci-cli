@@ -5,11 +5,9 @@ import json
 import pytest
 import tempfile
 import unittest
-from . import command_coverage_validator
 from . import tag_data_container
 from . import test_config_container
 from . import util
-import oci_cli
 import os.path
 
 
@@ -29,12 +27,9 @@ class TestIdentity(unittest.TestCase):
     #   - tag and tag-namespace operations (x12). These are handled via test_tagging and test_tag_management
     #   - dynamic group operations (create, get, update, delete, list)
     #   - smtp credential operations (create, update, delete, list) covered in test_email.py
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.identity_cli.iam_root_group, expected_not_called_count=27)
     @test_config_container.RecordReplay('identity')
-    def test_all_operations(self, validator):
+    def test_all_operations(self):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
-        self.validator = validator
-
         try:
             self.subtest_availability_domain_operations()
             self.subtest_compartment_operations()
@@ -509,8 +504,6 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
 
     def invoke(self, params, debug=False, ** args):
         commands = ['iam'] + params
-        if hasattr(self, 'validator'):
-            self.validator.register_call(commands)
 
         if debug is True:
             commands = ['--debug'] + commands

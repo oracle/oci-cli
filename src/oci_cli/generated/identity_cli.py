@@ -60,6 +60,12 @@ def tenancy_group():
     pass
 
 
+@click.command(cli_util.override('fault_domain_group.command_name', 'fault-domain'), cls=CommandGroupWithAlias, help="""A Fault Domain is a logical grouping of hardware and infrastructure within an Availability Domain that can become unavailable in its entirety either due to hardware failure such as Top-of-rack (TOR) switch failure or due to planned software maintenance such as security updates that reboot your instances.""")
+@cli_util.help_option_group
+def fault_domain_group():
+    pass
+
+
 @click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
 @cli_util.help_option_group
 def user_group_membership_group():
@@ -205,6 +211,7 @@ iam_root_group.add_command(availability_domain_group)
 iam_root_group.add_command(customer_secret_key_group)
 iam_root_group.add_command(idp_group_mapping_group)
 iam_root_group.add_command(tenancy_group)
+iam_root_group.add_command(fault_domain_group)
 iam_root_group.add_command(user_group_membership_group)
 iam_root_group.add_command(identity_provider_group)
 iam_root_group.add_command(ui_password_group)
@@ -1745,7 +1752,7 @@ def list_auth_tokens(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@availability_domain_group.command(name=cli_util.override('list_availability_domains.command_name', 'list'), help="""Lists the Availability Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@availability_domain_group.command(name=cli_util.override('list_availability_domains.command_name', 'list'), help="""Lists the availability domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. Note that the order of the results returned can change if availability domains are added or removed; therefore, do not create a dependency on the list order.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1871,6 +1878,25 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@fault_domain_group.command(name=cli_util.override('list_fault_domains.command_name', 'list'), help="""Lists the Fault Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--availability-domain', required=True, help="""The name of the availibilityDomain.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[FaultDomain]'})
+@cli_util.wrap_exceptions
+def list_fault_domains(ctx, from_json, compartment_id, availability_domain):
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.list_fault_domains(
+        compartment_id=compartment_id,
+        availability_domain=availability_domain,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

@@ -1495,6 +1495,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--size-in-gbs', type=click.INT, help="""The size to resize the volume to in GBs. Has to be larger than the current size.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -1505,7 +1506,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, if_match):
+def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
@@ -1527,6 +1528,9 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if size_in_gbs is not None:
+        details['sizeInGBs'] = size_in_gbs
 
     client = cli_util.build_client('blockstorage', ctx)
     result = client.update_boot_volume(
@@ -1629,6 +1633,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--size-in-gbs', type=click.INT, help="""The size to resize the volume to in GBs. Has to be larger than the current size.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -1639,7 +1644,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, if_match):
+def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
@@ -1661,6 +1666,9 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if size_in_gbs is not None:
+        details['sizeInGBs'] = size_in_gbs
 
     client = cli_util.build_client('blockstorage', ctx)
     result = client.update_volume(

@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.31 - 2018-08-23
+---------------------
+Added
+~~~~~~~~
+* Support for Autonomous DataWarehouse and Autonomous Transaction Processing features as a part of the Database Service
+
+  * (``oci db autonomous-data-warehouse``)
+  * (``oci db autonomous-data-warehouse-backup``)
+  * (``oci db autonomous-database``)
+  * (``oci db autonomous-database-backup``)
+
+* Ability to increase size of boot and block volumes in the Block Storage Service.
+   
+  * (``oci bv boot-volume update --size-in-gbs``)
+  * (``oci bv volume update --size-in-gbs``)
+
+* Support for Fault Domains feature in the Identity Service. (``oci iam fault-domain``)
+
 2.4.30 - 2018-08-09
 ---------------------
 Added
@@ -19,7 +37,6 @@ Added
 Fixed
 ~~~~~~~~
 * The minimum python version check in the Windows install script now works properly with the following scenario.  Previously version 2.7.13 was not being detected as greater than 2.7.5.
-
 
 Changed
 ~~~~~~~~

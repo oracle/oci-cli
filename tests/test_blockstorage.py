@@ -3,21 +3,17 @@
 
 import json
 import unittest
-from . import command_coverage_validator
 from . import test_config_container
 from . import util
 from .test_list_filter import retrieve_list_and_ensure_sorted
-import oci_cli
 
 
 class TestBlockStorage(unittest.TestCase):
 
     @util.slow
-    @command_coverage_validator.CommandCoverageValidator(oci_cli.blockstorage_cli.blockstorage_root_group, expected_not_called_count=16)
     @test_config_container.RecordReplay('blockstorage')
-    def test_all_operations(self, validator):
+    def test_all_operations(self):
         """Successfully calls every operation with basic options."""
-        self.validator = validator
         self.volumes = []
 
         try:
@@ -141,9 +137,21 @@ class TestBlockStorage(unittest.TestCase):
         result = self.invoke(['volume', 'list', '--compartment-id', util.COMPARTMENT_ID])
         util.validate_response(result)
 
-        volume_name = volume_name + "_UPDATED"
-        result = self.invoke(['volume', 'update', '--volume-id', volume_id, '--display-name', volume_name])
-        util.validate_response(result)
+        if size_gb:
+            new_size_gb = int(size_gb) + 10
+
+            volume_name = volume_name + "_UPDATED"
+            result = self.invoke(['volume', 'update', '--volume-id', volume_id, '--display-name', volume_name,
+                                  '--size-in-gbs', str(new_size_gb)])
+            util.validate_response(result)
+
+            util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id],
+                            'AVAILABLE', max_wait_seconds=180)
+
+            result = self.invoke(['volume', 'get', '--volume-id', volume_id])
+            util.validate_response(result)
+            parsed_result = json.loads(result.output)
+            assert str(parsed_result['data']['size-in-gbs']) == str(new_size_gb)
 
         return volume_id
 
@@ -434,9 +442,6 @@ class TestBlockStorage(unittest.TestCase):
 
     def invoke(self, params, debug=False, **args):
         commands = ['bv'] + params
-
-        if hasattr(self, 'validator'):
-            self.validator.register_call(commands)
 
         if debug is True:
             commands = ['--debug'] + commands
