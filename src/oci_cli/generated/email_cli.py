@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('email_root_group.command_name', 'email'), cls=CommandGroupWithAlias, help=cli_util.override('email_root_group.help', """API spec for managing OCI Email Delivery services."""))
+@cli.command(cli_util.override('email_root_group.command_name', 'email'), cls=CommandGroupWithAlias, help=cli_util.override('email_root_group.help', """API spec for managing OCI Email Delivery services."""), short_help=cli_util.override('email_root_group.short_help', """Email Delivery Service API"""))
 @cli_util.help_option_group
 def email_root_group():
     pass

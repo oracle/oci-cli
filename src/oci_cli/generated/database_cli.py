@@ -14,53 +14,63 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('db_root_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db_root_group.help', """The API for the Database Service."""))
+@cli.command(cli_util.override('db_root_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db_root_group.help', """The API for the Database Service."""), short_help=cli_util.override('db_root_group.short_help', """Database Service API"""))
 @cli_util.help_option_group
 def db_root_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Data Warehouse backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Data Warehouse backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_backup_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Data Warehouse.""")
+@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Data Warehouse.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_group():
     pass
 
 
-@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""A database backup To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""A database backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def backup_group():
     pass
 
 
-@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""The Database Service supports several types of DB Systems, ranging in size, price, and performance. For details about each type of system, see:
+@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""The Database Service supports several types of DB systems, ranging in size, price, and performance. For details about each type of system, see:
 
 - [Exadata DB Systems] - [Bare Metal and Virtual Machine DB Systems]
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+To use any of the API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 For information about access control and compartments, see [Overview of the Identity Service].
 
-For information about Availability Domains, see [Regions and Availability Domains].
+For information about availability domains, see [Regions and Availability Domains].
 
-To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity Service API.""")
+To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity Service API.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def db_system_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
+@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def autonomous_database_group():
     pass
 
 
-@click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""A Patch for a DB System or DB Home.
+@click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""A Patch for a DB system or DB Home.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -76,9 +86,11 @@ def db_version_group():
     pass
 
 
-@click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""An Oracle database on a DB System. For more information, see [Managing Oracle Databases].
+@click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""An Oracle database on a bare metal or virtual machine DB system. For more information, see [Bare Metal and Virtual Machine DB Systems].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def database_group():
     pass
@@ -90,7 +102,7 @@ def patch_history_entry_group():
     pass
 
 
-@click.command(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB System. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. For a description of shapes, see [DB System Launch Options]. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. For a description of shapes, see [DB System Launch Options]. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def db_system_shape_group():
     pass
@@ -106,23 +118,29 @@ def data_guard_association_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_database_backup_group.command_name', 'autonomous-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Database backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('autonomous_database_backup_group.command_name', 'autonomous-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Database backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def autonomous_database_backup_group():
     pass
 
 
-@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""A directory where Oracle database software is installed. Each DB System can have multiple database homes, and each database home can have multiple databases within it. All the databases within a single database home must be the same database version, but different database homes can run different versions. For more information, see [Managing Oracle Databases].
+@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""A directory where Oracle Database software is installed. A bare metal DB system can have multiple database homes and each database home can run a different supported version of Oracle Database. A virtual machine DB system can have only one database home. For more information, see [Bare Metal and Virtual Machine DB Systems].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def db_home_group():
     pass
 
 
-@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""A server where Oracle database software is running.
+@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""A server where Oracle Database software is running.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def db_node_group():
     pass
@@ -146,7 +164,7 @@ db_root_group.add_command(db_node_group)
 
 @autonomous_data_warehouse_group.command(name=cli_util.override('create_autonomous_data_warehouse.command_name', 'create'), help="""Creates a new Autonomous Data Warehouse.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
-@cli_util.option('--compartment-id', required=True, help="""The Oracle Cloud ID (OCID) of the compartment of the DB system.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment of the Autonomous Data Warehouse.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU Cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help="""Size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
 @cli_util.option('--db-name', required=True, help="""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
@@ -256,9 +274,9 @@ def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_
 
 @autonomous_database_group.command(name=cli_util.override('create_autonomous_database.command_name', 'create'), help="""Creates a new Autonomous Database.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
-@cli_util.option('--compartment-id', required=True, help="""The Oracle Cloud ID (OCID) of the compartment of the DB system.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment of the autonomous database.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU Cores to be made available to the database.""")
-@cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help="""Size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
+@cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help="""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
 @cli_util.option('--db-name', required=True, help="""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -365,8 +383,8 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 
 
 @backup_group.command(name=cli_util.override('create_backup.command_name', 'create'), help="""Creates a new backup in the specified database based on the request parameters you provide. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
-@cli_util.option('--database-id', required=True, help="""The OCID of the database.""")
-@cli_util.option('--display-name', required=True, help="""The user-friendly name for the backup. It does not have to be unique.""")
+@cli_util.option('--database-id', required=True, help="""The [OCID] of the database.""")
+@cli_util.option('--display-name', required=True, help="""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "RESTORING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -507,7 +525,7 @@ The password must contain no fewer than nine characters and include:
 For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.
 
 **IMPORTANT** - The only transport type currently supported by the Database Service is ASYNC.""")
-@cli_util.option('--peer-db-system-id', help="""The [OCID] of the DB System to create the standby database on.""")
+@cli_util.option('--peer-db-system-id', help="""The [OCID] of the DB system to create the standby database on.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -558,10 +576,10 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home.command_name', 'create'), help="""Creates a new DB Home in the specified DB System based on the request parameters you provide.""")
-@cli_util.option('--db-system-id', required=True, help="""The OCID of the DB System.""")
+@db_home_group.command(name=cli_util.override('create_db_home.command_name', 'create'), help="""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
 @cli_util.option('--display-name', help="""The user-provided name of the database home.""")
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help="""Source of database:   NONE for creating a new database   DB_BACKUP for creating a new database by restoring a backup""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help="""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -606,8 +624,8 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help="""Creates a new DB Home in the specified DB System based on the request parameters you provide.""")
-@cli_util.option('--db-system-id', required=True, help="""The OCID of the DB System.""")
+@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help="""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""The user-provided name of the database home.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -654,10 +672,10 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help="""Creates a new DB Home in the specified DB System based on the request parameters you provide.""")
-@cli_util.option('--db-system-id', required=True, help="""The OCID of the DB System.""")
+@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help="""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
 @cli_util.option('--display-name', help="""The user-provided name of the database home.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -714,7 +732,7 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 
 **reset** - power off and power on
 
-Note that the **stop** state has no effect on the resources you consume. Billing continues for DB Nodes that you stop, and related resources continue to apply against any relevant quotas. You must terminate the DB System ([TerminateDbSystem]) to remove its resources from billing and quotas.""")
+Note that the **stop** state has no effect on the resources you consume. Billing continues for DB Nodes that you stop, and related resources continue to apply against any relevant quotas. You must terminate the DB system ([TerminateDbSystem]) to remove its resources from billing and quotas.""")
 @cli_util.option('--db-node-id', required=True, help="""The database node [OCID].""")
 @cli_util.option('--action', required=True, help="""The action to perform on the DB Node. Allowed values are: STOP, START, SOFTRESET, RESET""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -869,7 +887,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @backup_group.command(name=cli_util.override('delete_backup.command_name', 'delete'), help="""Deletes a full backup. You cannot delete automatic backups using this API.""")
-@cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
+@cli_util.option('--backup-id', required=True, help="""The backup [OCID].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "RESTORING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -923,7 +941,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('delete_db_home.command_name', 'delete'), help="""Deletes a DB Home. The DB Home and its database data are local to the DB System and will be lost when it is deleted. Oracle recommends that you back up any data in the DB System prior to deleting it.""")
+@db_home_group.command(name=cli_util.override('delete_db_home.command_name', 'delete'), help="""Deletes a DB Home. The DB Home and its database data are local to the DB system and will be lost when it is deleted. Oracle recommends that you back up any data in the DB system prior to deleting it.""")
 @cli_util.option('--db-home-id', required=True, help="""The database home [OCID].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--perform-final-backup', type=click.BOOL, help="""Whether to perform a final backup of the database or not. Default is false. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
@@ -986,7 +1004,7 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 A failover might result in data loss depending on the protection mode in effect at the time of the primary database failure.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help="""The Data Guard association's [OCID].""")
-@cli_util.option('--database-admin-password', required=True, help="""The DB System administrator password.""")
+@cli_util.option('--database-admin-password', required=True, help="""The DB system administrator password.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1098,7 +1116,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
 
 
 @backup_group.command(name=cli_util.override('get_backup.command_name', 'get'), help="""Gets information about the specified backup.""")
-@cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
+@cli_util.option('--backup-id', required=True, help="""The backup [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1184,7 +1202,7 @@ def get_db_home(ctx, from_json, db_home_id):
 
 @patch_group.command(name=cli_util.override('get_db_home_patch.command_name', 'get-db-home'), help="""Gets information about a specified patch package.""")
 @cli_util.option('--db-home-id', required=True, help="""The database home [OCID].""")
-@cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
+@cli_util.option('--patch-id', required=True, help="""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1209,7 +1227,7 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
 
 @patch_history_entry_group.command(name=cli_util.override('get_db_home_patch_history_entry.command_name', 'get-db-home'), help="""Gets the patch history details for the specified patchHistoryEntryId""")
 @cli_util.option('--db-home-id', required=True, help="""The database home [OCID].""")
-@cli_util.option('--patch-history-entry-id', required=True, help="""The OCID of the patch history entry.""")
+@cli_util.option('--patch-history-entry-id', required=True, help="""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1252,8 +1270,8 @@ def get_db_node(ctx, from_json, db_node_id):
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('get_db_system.command_name', 'get'), help="""Gets information about the specified DB System.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
+@db_system_group.command(name=cli_util.override('get_db_system.command_name', 'get'), help="""Gets information about the specified DB system.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1273,8 +1291,8 @@ def get_db_system(ctx, from_json, db_system_id):
 
 
 @patch_group.command(name=cli_util.override('get_db_system_patch.command_name', 'get-db-system'), help="""Gets information about a specified patch package.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
-@cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
+@cli_util.option('--patch-id', required=True, help="""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1298,8 +1316,8 @@ def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
 
 
 @patch_history_entry_group.command(name=cli_util.override('get_db_system_patch_history_entry.command_name', 'get-db-system'), help="""Gets the patch history details for the specified patchHistoryEntryId.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
-@cli_util.option('--patch-history-entry-id', required=True, help="""The OCID of the patch history entry.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
+@cli_util.option('--patch-history-entry-id', required=True, help="""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1322,46 +1340,46 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('launch_db_system.command_name', 'launch'), help="""Launches a new DB System in the specified compartment and Availability Domain. You'll specify a single Oracle Database Edition that applies to all the databases on that DB System. The selected edition cannot be changed.
+@db_system_group.command(name=cli_util.override('launch_db_system.command_name', 'launch'), help="""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
-An initial database is created on the DB System based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].
+An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
+@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
 
-The DB System will include a command line interface (CLI) that you can use to create additional databases and manage existing databases. For more information, see the [Oracle Database CLI Reference].""")
-@cli_util.option('--availability-domain', required=True, help="""The Availability Domain where the DB System is located.""")
-@cli_util.option('--compartment-id', required=True, help="""The Oracle Cloud ID (OCID) of the compartment the DB System  belongs in.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable. The valid values depend on the specified shape:
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
 
-- BM.DenseIO1.36 and BM.HighIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.RACLocalStorage1.72 - Specify a multiple of 4, from 4 to 72. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336.
-
-For VM DB systems, the core count is inferred from the specific VM shape chosen, so this parameter is not used.""")
-@cli_util.option('--hostname', required=True, help="""The host name for the DB System. The host name must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
 
 The maximum length of the combined hostname and domain is 63 characters.
 
-**Note:** The hostname must be unique within the subnet. If it is not unique, the DB System will fail to provision.""")
-@cli_util.option('--shape', required=True, help="""The shape of the DB System. The shape determines resources allocated to the DB System - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with.
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
 
-**Subnet Restrictions:** - For single node and 2-node (RAC) DB Systems, do not use a subnet that overlaps with 192.168.16.16/28 - For Exadata and VM-based RAC DB Systems, do not use a subnet that overlaps with 192.168.128.0/20
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', required=True, help="""The [OCID] of the subnet the DB system is associated with.
 
-These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
-@cli_util.option('--backup-subnet-id', help="""The OCID of the backup network subnet the DB System is associated with. Applicable only to Exadata.
+**Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
-**Subnet Restrictions:** See above subnetId's **Subnet Restriction**.""")
-@cli_util.option('--cluster-name', help="""Cluster name for Exadata and 2-node RAC DB Systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
-@cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. This is not applicable for VM based DB systems.""")
+These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
+@cli_util.option('--backup-subnet-id', help="""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
+
+**Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--cluster-name', help="""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
+@cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name for the DB System. It does not have to be unique.""")
-@cli_util.option('--domain', help="""A domain name used for the DB System. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (don't provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size, in GBs, of the initial data volume that will be created and attached to VM-shape based DB system. This storage can later be scaled up if needed. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
-@cli_util.option('--node-count', type=click.INT, help="""Number of nodes to launch for a VM-shape based RAC DB system.""")
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help="""Source of database:   NONE for creating a new database   DB_BACKUP for creating a new database by restoring a backup""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help="""The source of the database:   NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a backup. The default is NONE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1436,49 +1454,49 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_details.command_name', 'launch-db-system-launch-db-system-details'), help="""Launches a new DB System in the specified compartment and Availability Domain. You'll specify a single Oracle Database Edition that applies to all the databases on that DB System. The selected edition cannot be changed.
+@db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_details.command_name', 'launch-db-system-launch-db-system-details'), help="""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
-An initial database is created on the DB System based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].
+An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
+@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
 
-The DB System will include a command line interface (CLI) that you can use to create additional databases and manage existing databases. For more information, see the [Oracle Database CLI Reference].""")
-@cli_util.option('--availability-domain', required=True, help="""The Availability Domain where the DB System is located.""")
-@cli_util.option('--compartment-id', required=True, help="""The Oracle Cloud ID (OCID) of the compartment the DB System  belongs in.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable. The valid values depend on the specified shape:
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
 
-- BM.DenseIO1.36 and BM.HighIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.RACLocalStorage1.72 - Specify a multiple of 4, from 4 to 72. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336.
-
-For VM DB systems, the core count is inferred from the specific VM shape chosen, so this parameter is not used.""")
-@cli_util.option('--hostname', required=True, help="""The host name for the DB System. The host name must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
 
 The maximum length of the combined hostname and domain is 63 characters.
 
-**Note:** The hostname must be unique within the subnet. If it is not unique, the DB System will fail to provision.""")
-@cli_util.option('--shape', required=True, help="""The shape of the DB System. The shape determines resources allocated to the DB System - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with.
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
 
-**Subnet Restrictions:** - For single node and 2-node (RAC) DB Systems, do not use a subnet that overlaps with 192.168.16.16/28 - For Exadata and VM-based RAC DB Systems, do not use a subnet that overlaps with 192.168.128.0/20
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', required=True, help="""The [OCID] of the subnet the DB system is associated with.
 
-These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_HIGH_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB System. Exadata DB Systems and 2-node RAC DB Systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+**Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
+
+These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--backup-subnet-id', help="""The OCID of the backup network subnet the DB System is associated with. Applicable only to Exadata.
+@cli_util.option('--backup-subnet-id', help="""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
 
-**Subnet Restrictions:** See above subnetId's **Subnet Restriction**.""")
-@cli_util.option('--cluster-name', help="""Cluster name for Exadata and 2-node RAC DB Systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
-@cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. This is not applicable for VM based DB systems.""")
+**Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--cluster-name', help="""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
+@cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name for the DB System. It does not have to be unique.""")
-@cli_util.option('--domain', help="""A domain name used for the DB System. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (don't provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size, in GBs, of the initial data volume that will be created and attached to VM-shape based DB system. This storage can later be scaled up if needed. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
-@cli_util.option('--node-count', type=click.INT, help="""Number of nodes to launch for a VM-shape based RAC DB system.""")
-@cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB System. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
-@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB System. The default is BRING_YOUR_OWN_LICENSE.""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
+@cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB system. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1560,49 +1578,49 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_from_backup_details.command_name', 'launch-db-system-launch-db-system-from-backup-details'), help="""Launches a new DB System in the specified compartment and Availability Domain. You'll specify a single Oracle Database Edition that applies to all the databases on that DB System. The selected edition cannot be changed.
+@db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_from_backup_details.command_name', 'launch-db-system-launch-db-system-from-backup-details'), help="""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
-An initial database is created on the DB System based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].
+An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
+@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
 
-The DB System will include a command line interface (CLI) that you can use to create additional databases and manage existing databases. For more information, see the [Oracle Database CLI Reference].""")
-@cli_util.option('--availability-domain', required=True, help="""The Availability Domain where the DB System is located.""")
-@cli_util.option('--compartment-id', required=True, help="""The Oracle Cloud ID (OCID) of the compartment the DB System  belongs in.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable. The valid values depend on the specified shape:
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
 
-- BM.DenseIO1.36 and BM.HighIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.RACLocalStorage1.72 - Specify a multiple of 4, from 4 to 72. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336.
-
-For VM DB systems, the core count is inferred from the specific VM shape chosen, so this parameter is not used.""")
-@cli_util.option('--hostname', required=True, help="""The host name for the DB System. The host name must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
 
 The maximum length of the combined hostname and domain is 63 characters.
 
-**Note:** The hostname must be unique within the subnet. If it is not unique, the DB System will fail to provision.""")
-@cli_util.option('--shape', required=True, help="""The shape of the DB System. The shape determines resources allocated to the DB System - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with.
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
 
-**Subnet Restrictions:** - For single node and 2-node (RAC) DB Systems, do not use a subnet that overlaps with 192.168.16.16/28 - For Exadata and VM-based RAC DB Systems, do not use a subnet that overlaps with 192.168.128.0/20
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', required=True, help="""The [OCID] of the subnet the DB system is associated with.
 
-These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_HIGH_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB System. Exadata DB Systems and 2-node RAC DB Systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+**Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
+
+These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--backup-subnet-id', help="""The OCID of the backup network subnet the DB System is associated with. Applicable only to Exadata.
+@cli_util.option('--backup-subnet-id', help="""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
 
-**Subnet Restrictions:** See above subnetId's **Subnet Restriction**.""")
-@cli_util.option('--cluster-name', help="""Cluster name for Exadata and 2-node RAC DB Systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
-@cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. This is not applicable for VM based DB systems.""")
+**Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--cluster-name', help="""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
+@cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name for the DB System. It does not have to be unique.""")
-@cli_util.option('--domain', help="""A domain name used for the DB System. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (don't provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size, in GBs, of the initial data volume that will be created and attached to VM-shape based DB system. This storage can later be scaled up if needed. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
-@cli_util.option('--node-count', type=click.INT, help="""Number of nodes to launch for a VM-shape based RAC DB system.""")
-@cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB System. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
-@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB System. The default is BRING_YOUR_OWN_LICENSE.""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
+@cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB system. NORMAL 2-way redundancy, recommended for test and development systems. HIGH is 3-way redundancy, recommended for production systems.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1686,8 +1704,8 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
 
 @autonomous_data_warehouse_backup_group.command(name=cli_util.override('list_autonomous_data_warehouse_backups.command_name', 'list'), help="""Gets a list of Autonomous Data Warehouse backups based on either the `autonomousDataWarehouseId` or `compartmentId` specified as a query parameter.""")
 @cli_util.option('--autonomous-data-warehouse-id', help="""The database [OCID].""")
-@cli_util.option('--compartment-id', help="""The compartment OCID.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--compartment-id', help="""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -1748,7 +1766,7 @@ def list_autonomous_data_warehouse_backups(ctx, from_json, all_pages, page_size,
 
 @autonomous_data_warehouse_group.command(name=cli_util.override('list_autonomous_data_warehouses.command_name', 'list'), help="""Gets a list of Autonomous Data Warehouses.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -1808,8 +1826,8 @@ def list_autonomous_data_warehouses(ctx, from_json, all_pages, page_size, compar
 
 @autonomous_database_backup_group.command(name=cli_util.override('list_autonomous_database_backups.command_name', 'list'), help="""Gets a list of Autonomous Database backups based on either the `autonomousDatabaseId` or `compartmentId` specified as a query parameter.""")
 @cli_util.option('--autonomous-database-id', help="""The database [OCID].""")
-@cli_util.option('--compartment-id', help="""The compartment OCID.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--compartment-id', help="""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -1870,7 +1888,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
 
 @autonomous_database_group.command(name=cli_util.override('list_autonomous_databases.command_name', 'list'), help="""Gets a list of Autonomous Databases.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -1929,9 +1947,9 @@ def list_autonomous_databases(ctx, from_json, all_pages, page_size, compartment_
 
 
 @backup_group.command(name=cli_util.override('list_backups.command_name', 'list'), help="""Gets a list of backups based on the databaseId or compartmentId specified. Either one of the query parameters must be provided.""")
-@cli_util.option('--database-id', help="""The OCID of the database.""")
-@cli_util.option('--compartment-id', help="""The compartment OCID.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--database-id', help="""The [OCID] of the database.""")
+@cli_util.option('--compartment-id', help="""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1978,7 +1996,7 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
 
 @data_guard_association_group.command(name=cli_util.override('list_data_guard_associations.command_name', 'list'), help="""Lists all Data Guard associations for the specified database.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2028,7 +2046,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @database_group.command(name=cli_util.override('list_databases.command_name', 'list'), help="""Gets a list of the databases in the specified database home.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
 @cli_util.option('--db-home-id', required=True, help="""A database home [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2077,7 +2095,7 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
 
 @patch_history_entry_group.command(name=cli_util.override('list_db_home_patch_history_entries.command_name', 'list-db-home'), help="""Gets history of the actions taken for patches for the specified database home.""")
 @cli_util.option('--db-home-id', required=True, help="""The database home [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2126,7 +2144,7 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
 
 @patch_group.command(name=cli_util.override('list_db_home_patches.command_name', 'list-db-home'), help="""Lists patches applicable to the requested database home.""")
 @cli_util.option('--db-home-id', required=True, help="""The database home [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2173,10 +2191,10 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('list_db_homes.command_name', 'list'), help="""Gets a list of database homes in the specified DB System and compartment. A database home is a directory where Oracle database software is installed.""")
+@db_home_group.command(name=cli_util.override('list_db_homes.command_name', 'list'), help="""Gets a list of database homes in the specified DB system and compartment. A database home is a directory where Oracle database software is installed.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB System.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2223,10 +2241,10 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     cli_util.render_response(result, ctx)
 
 
-@db_node_group.command(name=cli_util.override('list_db_nodes.command_name', 'list'), help="""Gets a list of database nodes in the specified DB System and compartment. A database node is a server running database software.""")
+@db_node_group.command(name=cli_util.override('list_db_nodes.command_name', 'list'), help="""Gets a list of database nodes in the specified DB system and compartment. A database node is a server running database software.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB System.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2273,9 +2291,9 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     cli_util.render_response(result, ctx)
 
 
-@patch_history_entry_group.command(name=cli_util.override('list_db_system_patch_history_entries.command_name', 'list-db-system'), help="""Gets the history of the patch actions performed on the specified DB System.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@patch_history_entry_group.command(name=cli_util.override('list_db_system_patch_history_entries.command_name', 'list-db-system'), help="""Gets the history of the patch actions performed on the specified DB system.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2322,9 +2340,9 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
     cli_util.render_response(result, ctx)
 
 
-@patch_group.command(name=cli_util.override('list_db_system_patches.command_name', 'list-db-system'), help="""Lists the patches applicable to the requested DB System.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@patch_group.command(name=cli_util.override('list_db_system_patches.command_name', 'list-db-system'), help="""Lists the patches applicable to the requested DB system.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2371,10 +2389,10 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
     cli_util.render_response(result, ctx)
 
 
-@db_system_shape_group.command(name=cli_util.override('list_db_system_shapes.command_name', 'list'), help="""Gets a list of the shapes that can be used to launch a new DB System. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.""")
+@db_system_shape_group.command(name=cli_util.override('list_db_system_shapes.command_name', 'list'), help="""Gets a list of the shapes that can be used to launch a new DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.""")
 @cli_util.option('--availability-domain', required=True, help="""The name of the Availability Domain.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -2421,11 +2439,11 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('list_db_systems.command_name', 'list'), help="""Gets a list of the DB Systems in the specified compartment. You can specify a backupId to list only the DB Systems that support creating a database using this backup in this compartment.""")
+@db_system_group.command(name=cli_util.override('list_db_systems.command_name', 'list'), help="""Gets a list of the DB systems in the specified compartment. You can specify a backupId to list only the DB systems that support creating a database using this backup in this compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
-@cli_util.option('--backup-id', help="""The OCID of the backup. Specify a backupId to list only the DB Systems that support creating a database using this backup in this compartment.""")
+@cli_util.option('--backup-id', help="""The [OCID] of the backup. Specify a backupId to list only the DB systems that support creating a database using this backup in this compartment.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2472,10 +2490,10 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 
 @db_version_group.command(name=cli_util.override('list_db_versions.command_name', 'list'), help="""Gets a list of supported Oracle database versions.""")
 @cli_util.option('--compartment-id', required=True, help="""The compartment [OCID].""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--db-system-shape', help="""If provided, filters the results to the set of database versions which are supported for the given shape.""")
-@cli_util.option('--db-system-id', help="""The DB system OCID. If provided, filters the results to the set of database versions which are supported for the DB system.""")
+@cli_util.option('--db-system-id', help="""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2525,7 +2543,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 @data_guard_association_group.command(name=cli_util.override('reinstate_data_guard_association.command_name', 'reinstate'), help="""Reinstates the database identified by the `databaseId` parameter into the standby role in a Data Guard association.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help="""The Data Guard association's [OCID].""")
-@cli_util.option('--database-admin-password', required=True, help="""The DB System administrator password.""")
+@cli_util.option('--database-admin-password', required=True, help="""The DB system administrator password.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2750,7 +2768,7 @@ def stop_autonomous_database(ctx, from_json, autonomous_database_id, if_match):
 A switchover guarantees no data loss.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help="""The Data Guard association's [OCID].""")
-@cli_util.option('--database-admin-password', required=True, help="""The DB System administrator password.""")
+@cli_util.option('--database-admin-password', required=True, help="""The DB system administrator password.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2781,8 +2799,8 @@ def switchover_data_guard_association(ctx, from_json, database_id, data_guard_as
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('terminate_db_system.command_name', 'terminate'), help="""Terminates a DB System and permanently deletes it and any databases running on it, and any storage volumes attached to it. The database data is local to the DB System and will be lost when the system is terminated. Oracle recommends that you back up any data in the DB System prior to terminating it.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
+@db_system_group.command(name=cli_util.override('terminate_db_system.command_name', 'terminate'), help="""Terminates a DB system and permanently deletes it and any databases running on it, and any storage volumes attached to it. The database data is local to the DB system and will be lost when the system is terminated. Oracle recommends that you back up any data in the DB system prior to terminating it.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -2839,8 +2857,8 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @autonomous_data_warehouse_group.command(name=cli_util.override('update_autonomous_data_warehouse.command_name', 'update'), help="""Updates the specified Autonomous Data Warehouse with a new CPU core count and size.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--admin-password', help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU Cores to be made available to the database.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help="""Size, in TBs, of the data volume that will be attached to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU cores to be made available to the database.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help="""Size, in terabytes, of the data volume that will be attached to the database.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2918,8 +2936,8 @@ def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_
 @autonomous_database_group.command(name=cli_util.override('update_autonomous_database.command_name', 'update'), help="""Updates the specified Autonomous Database with a new CPU core count and size.""")
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--admin-password', help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
-@cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU Cores to be made available to the database.""")
-@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help="""Size, in TBs, of the data volume that will be attached to the database.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU cores to be made available to the database.""")
+@cli_util.option('--data-storage-size-in-tbs', type=click.INT, help="""The size, in terabytes, of the data volume that will be attached to the database.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3116,17 +3134,17 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('update_db_system.command_name', 'update'), help="""Updates the properties of a DB System, such as the CPU core count.""")
-@cli_util.option('--db-system-id', required=True, help="""The DB System [OCID].""")
-@cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU Cores to be set on the DB System. Applicable only for non-VM based DB systems.""")
-@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help="""Size, in GBs, to which the currently attached storage needs to be scaled up to for VM based DB system. This must be greater than current storage size. Note that the total storage size attached will be more than what is requested, to account for REDO/RECO space and software volume.""")
+@db_system_group.command(name=cli_util.override('update_db_system.command_name', 'update'), help="""Updates the properties of a DB system, such as the CPU core count.""")
+@cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
+@cli_util.option('--cpu-core-count', type=click.INT, help="""The new number of CPU cores to set for the DB system. Not applicable for virtual machine DB systems.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help="""The size, in gigabytes, to scale the attached storage up to for this virtual machine DB system. This value must be greater than current storage size. Note that the resulting total storage size attached will be greater than the amount requested to allow for REDO/RECO space and software volume. Applies only to virtual machine DB systems.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB System. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--version', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

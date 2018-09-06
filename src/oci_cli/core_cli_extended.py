@@ -807,8 +807,7 @@ cli_util.update_param_help(blockstorage_cli.create_volume, 'availability_domain'
 
 This is optional when cloning a volume as the newly created volume will be created in the same Availability Domain as its source. This is required when creating an empty volume or restoring a volume from a backup.""", append=False)
 cli_util.update_param_help(blockstorage_cli.create_volume, 'compartment_id', """The OCID of the compartment that contains the volume. This is optional when cloning a volume or restoring a volume from a backup. If it is not supplied then the volume will be created in the same compartment as the source. This is requied when creating an empty volume.""", append=False)
-cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_gbs', """This option cannot be supplied when cloning a volume or restoring a volume from a backup""", append=True)
-cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_mbs', """[DEPRECATED] The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use --size-in-gbs instead. This option cannot be supplied when cloning a volume or restoring a volume from a backup""", append=False)
+cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_mbs', """[DEPRECATED] The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use --size-in-gbs instead.""", append=False)
 
 
 @cli_util.copy_params_from_generated_command(blockstorage_cli.create_volume, params_to_exclude=['source_details', 'volume_backup_id', 'availability_domain', 'compartment_id'])
@@ -836,10 +835,7 @@ def create_volume_extended(ctx, **kwargs):
     if not kwargs['source_volume_id'] and not kwargs['volume_backup_id'] and not kwargs['compartment_id']:
         raise click.UsageError('A compartment ID must be specified when creating an empty volume')
 
-    if (kwargs['volume_backup_id'] or kwargs['source_volume_id']) and (kwargs['size_in_gbs'] or kwargs['size_in_mbs']):
-        raise click.UsageError('You cannot specify a size when cloning a volume or restoring a volume from a backup')
-
-    if (kwargs['size_in_mbs'] and kwargs['size_in_gbs']):
+    if kwargs['size_in_mbs'] and kwargs['size_in_gbs']:
         raise click.UsageError('You cannot specify both --size-in-mbs and --size-in-gbs')
 
     client = cli_util.build_client('blockstorage', ctx)
@@ -877,7 +873,7 @@ def create_volume_extended(ctx, **kwargs):
     ctx.invoke(blockstorage_cli.create_volume, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(blockstorage_cli.create_boot_volume, params_to_exclude=['source_details', 'size_in_gbs', 'availability_domain', 'compartment_id'])
+@cli_util.copy_params_from_generated_command(blockstorage_cli.create_boot_volume, params_to_exclude=['source_details', 'availability_domain', 'compartment_id'])
 @blockstorage_cli.boot_volume_group.command(name=cli_util.override('create_boot_volume.command_name', 'create'), help="""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', help="""The Availability Domain of the boot volume. Example: `Uocm:PHX-AD-1`.
 

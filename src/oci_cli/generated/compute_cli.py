@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('compute_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_root_group():
     pass
@@ -22,7 +22,9 @@ def compute_root_group():
 
 @click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def volume_group():
     pass
@@ -30,7 +32,9 @@ def volume_group():
 
 @click.command(cli_util.override('image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see [Overview of the Compute Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def image_group():
     pass
@@ -44,7 +48,9 @@ def instance_credentials_group():
 
 @click.command(cli_util.override('instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance. For more information, see [Overview of the Compute Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def instance_group():
     pass
@@ -52,7 +58,9 @@ def instance_group():
 
 @click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def boot_volume_group():
     pass
@@ -64,7 +72,9 @@ def shape_group():
     pass
 
 
-@click.command(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a VNIC and an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+@click.command(cli_util.override('vnic_attachment_group.command_name', 'vnic-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a VNIC and an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def vnic_attachment_group():
     pass
@@ -72,13 +82,17 @@ def vnic_attachment_group():
 
 @click.command(cli_util.override('volume_attachment_group.command_name', 'volume-attachment'), cls=CommandGroupWithAlias, help="""A base object for all types of attachments between a storage volume and an instance. For specific details about iSCSI attachments, see [IScsiVolumeAttachment Reference].
 
-For general information about volume attachments, see [Overview of Block Volume Storage].""")
+For general information about volume attachments, see [Overview of Block Volume Storage].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.""")
+@click.command(cli_util.override('boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def boot_volume_attachment_group():
     pass
@@ -92,7 +106,9 @@ def instance_console_connection_group():
     pass
 
 
-@click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the instance boots, such as kernel and BIOS messages, and is useful for checking the status of the instance or diagnosing problems. The console data is minimally formatted ASCII text.""")
+@click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the instance boots, such as kernel and BIOS messages, and is useful for checking the status of the instance or diagnosing problems. The console data is minimally formatted ASCII text.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def console_history_group():
     pass
@@ -1269,11 +1285,11 @@ def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('launch_instance.command_name', 'launch'), help="""Creates a new instance in the specified compartment and the specified Availability Domain. For general information about instances, see [Overview of the Compute Service].
+@instance_group.command(name=cli_util.override('launch_instance.command_name', 'launch'), help="""Creates a new instance in the specified compartment and the specified availability domain. For general information about instances, see [Overview of the Compute Service].
 
 For information about access control and compartments, see [Overview of the IAM Service].
 
-For information about Availability Domains, see [Regions and Availability Domains]. To get a list of Availability Domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 All Oracle Cloud Infrastructure resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
 
@@ -1282,7 +1298,7 @@ To launch an instance using an image or a boot volume use the `sourceDetails` pa
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
-@cli_util.option('--availability-domain', required=True, help="""The Availability Domain of the instance.
+@cli_util.option('--availability-domain', required=True, help="""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
@@ -1296,12 +1312,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide.  They serve a similar purpose and functionality from fields in the 'metadata' object.
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
 
 They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--fault-domain', help="""The name of the Fault Domain in which to launch an instance.
+@cli_util.option('--fault-domain', help="""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
 
-To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
 
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -1430,7 +1446,7 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @boot_volume_attachment_group.command(name=cli_util.override('list_boot_volume_attachments.command_name', 'list'), help="""Lists the boot volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, boot volume OCID, or both.""")
-@cli_util.option('--availability-domain', required=True, help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
@@ -1491,7 +1507,7 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
 
 @console_history_group.command(name=cli_util.override('list_console_histories.command_name', 'list'), help="""Lists the console history metadata for the specified compartment or instance.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
@@ -1501,7 +1517,7 @@ Example: `500`""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "GETTING-HISTORY", "SUCCEEDED", "FAILED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1576,7 +1592,7 @@ Example: `500`""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1688,9 +1704,9 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('list_instances.command_name', 'list'), help="""Lists the instances in the specified compartment and the specified Availability Domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
+@instance_group.command(name=cli_util.override('list_instances.command_name', 'list'), help="""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
@@ -1700,7 +1716,7 @@ Example: `500`""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1759,7 +1775,7 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
 
 @shape_group.command(name=cli_util.override('list_shapes.command_name', 'list'), help="""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
@@ -1813,9 +1829,9 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
     cli_util.render_response(result, ctx)
 
 
-@vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help="""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or Availability Domain.""")
+@vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help="""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or availability domain.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
@@ -1876,7 +1892,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
 
 Currently, the only supported volume attachment type are [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
@@ -2131,7 +2147,11 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('update_instance.command_name', 'update'), help="""Updates the display name of the specified instance. Avoid entering confidential information. The OCID of the instance remains the same.""")
+@instance_group.command(name=cli_util.override('update_instance.command_name', 'update'), help="""Updates certain fields on the specified instance. Fields that are not provided in the request will not be updated. Avoid entering confidential information.
+
+Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
+
+The OCID of the instance remains the same.""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2142,23 +2162,31 @@ Example: `My bare metal instance`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Custom metadata key/value string pairs that you provide. Any set of key/value pairs provided here will completely replace the current set of key/value pairs in the 'metadata' field on the instance.
+
+Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an instance has launched. Any request which updates, removes, or adds either of these fields will be rejected. You must provide the same values for 'user_data' and 'ssh_authorized_keys' that already exist on the instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+
+They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
+
+Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an instance has launched. Any request which updates, removes, or adds either of these fields will be rejected. You must provide the same values for 'user_data' and 'ssh_authorized_keys' that already exist on the instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, metadata, extended_metadata, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or metadata or extended_metadata:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and extended-metadata will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -2174,6 +2202,12 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if metadata is not None:
+        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if extended_metadata is not None:
+        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
 
     client = cli_util.build_client('compute', ctx)
     result = client.update_instance(

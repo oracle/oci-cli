@@ -59,34 +59,25 @@ DISPLAY_HEADERS = {
 
 
 OVERRIDES = {
-    "audit_root_group.help": "Audit Service",
     "audit_event_group.command_name": "event",
     "configuration_group.command_name": "config",
     "list_events.command_name": "list",
     "blockstorage_root_group.command_name": "bv",
-    "blockstorage_root_group.help": "Block Volume Service",
     "compute_root_group.command_name": "compute",
-    "compute_root_group.help": "Compute Service",
     "ce_root_group.command_name": "ce",
-    "db_root_group.help": "Database Service",
     "db_root_group.command_name": "db",
     "db_node_group.command_name": "node",
     "db_system_group.command_name": "system",
     "db_system_shape_group.command_name": "system-shape",
     "db_version_group.command_name": "version",
-    "dns_root_group.help": "DNS Zone Management Service",
-    "email_root_group.help": "Email Delivery Service",
-    "fs_root_group.help": "File Storage Service",
     "get_console_history_content.command_name": "get-content",
     "get_db_system_patch.command_name": "by-db-system",
     "get_db_system_patch_history_entry.command_name": "by-db-system",
     "get_namespace_metadata.command_name": "get-metadata",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
-    "iam_root_group.help": "Identity and Access Management Service",
     "instance_action.command_name": "action",
     "list_db_system_patches.command_name": "by-db-system",
     "list_db_system_patch_history_entries.command_name": "by-db-system",
-    "lb_root_group.help": "Load Balancing Service",
     "load_balancer_policy_group.command_name": "policy",
     "load_balancer_protocol_group.command_name": "protocol",
     "load_balancer_shape_group.command_name": "shape",
@@ -96,20 +87,31 @@ OVERRIDES = {
     "list_policies.command_name": "list",
     "list_work_request_logs.command_name": "list",
     "namespace_group.command_name": "ns",
-    "os_root_group.help": "Object Storage Service",
     "patch_history_entry_group.command_name": "patch-history",
     "preauthenticated_request_group.command_name": "preauth-request",
     "update_namespace_metadata.command_name": "update-metadata",
     "virtual_network_root_group.command_name": "network",
-    "virtual_network_root_group.help": "Networking Service",
-    "compute_management_group.command_name": "compute-management",
-    "compute_management_group.help": "Compute Management Service",
     "volume_backup_group.command_name": "backup",
     "resource_summary_collection_group.command_name": "resource",
     "search_resources_structured_search_details.command_name": "structured-search",
     "search_resources_free_text_search_details.command_name": "free-text-search"
 }
 
+ROOT_COMMAND_HELP_OVERRIDES = {
+    "compute_root_group.help": "Compute Service CLI",
+    "compute_root_group.short_help": "Compute Service",
+    "compute_management_root_group.help": "Compute Management Service CLI",
+    "compute_management_root_group.short_help": "Compute Management Service",
+    "blockstorage_root_group.help": "Block Volume Service CLI",
+    "blockstorage_root_group.short_help": "Block Volume Service",
+    "compute_root_group.help": "Compute Service CLI",
+    "compute_root_group.short_help": "Compute Service",
+    "os_root_group.help": "Object Storage Service CLI",
+    "os_root_group.short_help": "Object Storage Service",
+    "virtual_network_root_group.help": "Networking Service CLI",
+    "virtual_network_root_group.short_help": "Networking Service",
+    "email_root_group.help": "Email Delivery Service CLI",
+}
 
 DNS_OVERRIDES = {
     "get_domain_records.command_name": "get",
@@ -126,6 +128,7 @@ DNS_OVERRIDES = {
 
 
 OVERRIDES.update(DNS_OVERRIDES)
+OVERRIDES.update(ROOT_COMMAND_HELP_OVERRIDES)
 
 
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
@@ -142,6 +145,18 @@ LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports paginati
 
 
 def override(key, default):
+    # special case for root command help
+    # - the short help is used in the `oci --help` output, and is the spec title so we remove 'API'
+    #  - the regular help is used in the command help `oci bv --help` and is the spec description so we
+    #    replace 'API' with 'CLI' since the description may be a full sentence
+    # note: this is simply meant to cover as many places as possible automatically, if there are descriptions
+    # that don't work well, we should add them to the manual overrides
+    if 'API' in default:
+        if key.endswith('_root_group.help'):
+            default = default.replace('API', 'CLI').strip()
+        elif key.endswith('_root_group.short_help'):
+            default = default.replace('API', '').strip()
+
     return OVERRIDES.get(key, default)
 
 

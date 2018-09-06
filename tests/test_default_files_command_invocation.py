@@ -9,7 +9,6 @@ import random
 import shutil
 import six
 import string
-import time
 import unittest
 from . import test_config_container
 from . import util
@@ -20,28 +19,36 @@ IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'
 class TestDefaultFilesCommandInvocation(unittest.TestCase):
 
     def test_invoke_with_default_file_global(self):
-        result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/global_default'])
-        assert result.exit_code == 0
-        assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_global.yml'):
+            result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/global_default'])
+            assert result.exit_code == 0
+            assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
     def test_invoke_with_default_file_command_group(self):
-        result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/command_group_default'])
-        assert result.exit_code == 0
-        assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_command_group.yml'):
+            result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/command_group_default'])
+            assert result.exit_code == 0
+            assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
     def test_invoke_with_default_file_command_subgroup(self):
-        result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/command_subgroup_default'])
-        print(result.output)
-        assert result.exit_code == 0
-        assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_command_subgroup.yml'):
+            result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/command_subgroup_default'])
+            print(result.output)
+            assert result.exit_code == 0
+            assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
     def test_invoke_with_default_file_specific_command(self):
-        result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/specific_command_default'])
-        assert result.exit_code == 0
-        assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_specific_command.yml'):
+            result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/specific_command_default'])
+            assert result.exit_code == 0
+            assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
     def test_invoke_with_default_file_param_accepts_multiple_values(self):
-        test_bucket_name = 'BulkPutDefaultsFileTempBucket_{}'.format(int(time.time()))
+        test_bucket_name = util.random_name('BulkPutDefaultsFileTempBucket')
 
         test_folder = os.path.join('tests', 'temp', 'os_bulk_put_default_file_test')
         if not os.path.exists(test_folder):
@@ -64,12 +71,17 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
                     # For non-text extension types this won't create a valid file, but for testing is probably OK
                     f.write(self.generate_random_string(100))
 
-        result = self.invoke(['os', 'bucket', 'create', '-c', util.COMPARTMENT_ID, '-ns', util.NAMESPACE, '--name', test_bucket_name])
+        # Grab the Object Storage namespace
+        result = self.invoke(['os', 'ns', 'get'])
+        util.validate_response(result)
+        namespace = json.loads(result.output)['data']
+
+        result = self.invoke(['os', 'bucket', 'create', '-c', util.COMPARTMENT_ID, '-ns', namespace, '--name', test_bucket_name])
         util.validate_response(result)
 
         result = self.invoke([
             'os', 'object', 'bulk-upload',
-            '-ns', util.NAMESPACE,
+            '-ns', namespace,
             '--bucket-name', test_bucket_name,
             '--src-dir', test_folder,
             '--overwrite',
@@ -91,10 +103,10 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
         for f in expected_uploaded_files:
             assert f in parsed_result['uploaded-objects']
 
-        result = self.invoke(['os', 'object', 'bulk-delete', '-ns', util.NAMESPACE, '--bucket-name', test_bucket_name, '--force'])
+        result = self.invoke(['os', 'object', 'bulk-delete', '-ns', namespace, '--bucket-name', test_bucket_name, '--force'])
         assert result.exit_code == 0
 
-        result = self.invoke(['os', 'bucket', 'delete', '-ns', util.NAMESPACE, '--name', test_bucket_name, '--force'])
+        result = self.invoke(['os', 'bucket', 'delete', '-ns', namespace, '--name', test_bucket_name, '--force'])
         util.validate_response(result)
 
         shutil.rmtree(test_folder)

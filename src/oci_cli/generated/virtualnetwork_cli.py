@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('virtual_network_root_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""))
+@cli.command(cli_util.override('virtual_network_root_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def virtual_network_root_group():
     pass
@@ -22,21 +22,27 @@ def virtual_network_root_group():
 
 @click.command(cli_util.override('remote_peering_connection_group.command_name', 'remote-peering-connection'), cls=CommandGroupWithAlias, help="""A remote peering connection (RPC) is an object on a DRG that lets the VCN that is attached to the DRG peer with a VCN in a different region. *Peering* means that the two VCNs can communicate using private IP addresses, but without the traffic traversing the internet or routing through your on-premises network. For more information, see [VCN Peering].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def remote_peering_connection_group():
     pass
 
 
-@click.command(cli_util.override('subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single Availability Domain and consists of a contiguous range of IP addresses that do not overlap with other subnets in the VCN. Example: 172.16.1.0/24. For more information, see [Overview of the Networking Service] and [VCNs and Subnets].
+@click.command(cli_util.override('subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single availability domain and consists of a contiguous range of IP addresses that do not overlap with other subnets in the VCN. Example: 172.16.1.0/24. For more information, see [Overview of the Networking Service] and [VCNs and Subnets].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def subnet_group():
     pass
 
 
-@click.command(cli_util.override('drg_attachment_group.command_name', 'drg-attachment'), cls=CommandGroupWithAlias, help="""A link between a DRG and VCN. For more information, see [Overview of the Networking Service].""")
+@click.command(cli_util.override('drg_attachment_group.command_name', 'drg-attachment'), cls=CommandGroupWithAlias, help="""A link between a DRG and VCN. For more information, see [Overview of the Networking Service].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def drg_attachment_group():
     pass
@@ -46,7 +52,9 @@ def drg_attachment_group():
 
 There are two types of public IPs: 1. Ephemeral 2. Reserved
 
-For more information and comparison of the two types, see [Public IP Addresses].""")
+For more information and comparison of the two types, see [Public IP Addresses].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def public_ip_group():
     pass
@@ -84,7 +92,9 @@ You can add *secondary private IPs* to a VNIC after it's created. For more infor
 
 **Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use [UpdateVnic].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def private_ip_group():
     pass
@@ -96,7 +106,9 @@ A virtual circuit is an isolated network path that runs over one or more physica
 
 Each virtual circuit is made up of information shared between a customer, Oracle, and a provider (if the customer is using FastConnect via a provider). Who fills in a given property of a virtual circuit depends on whether the BGP session related to that virtual circuit goes from the customer's edge router to Oracle, or from the provider's edge router to Oracle. Also, in the case where the customer is using a provider, values for some of the properties may not be present immediately, but may get filled in as the provider and Oracle each do their part to provision the virtual circuit.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def virtual_circuit_group():
     pass
@@ -104,7 +116,9 @@ def virtual_circuit_group():
 
 @click.command(cli_util.override('local_peering_gateway_group.command_name', 'local-peering-gateway'), cls=CommandGroupWithAlias, help="""A local peering gateway (LPG) is an object on a VCN that lets that VCN peer with another VCN in the same region. *Peering* means that the two VCNs can communicate using private IP addresses, but without the traffic traversing the internet or routing through your on-premises network. For more information, see [VCN Peering].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def local_peering_gateway_group():
     pass
@@ -116,9 +130,11 @@ def cross_connect_port_speed_shape_group():
     pass
 
 
-@click.command(cli_util.override('drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A Dynamic Routing Gateway (DRG), which is a virtual router that provides a path for private network traffic between your VCN and your existing network. You use it with other Networking Service components to create an IPSec VPN or a connection that uses Oracle Cloud Infrastructure FastConnect. For more information, see [Overview of the Networking Service].
+@click.command(cli_util.override('drg_group.command_name', 'drg'), cls=CommandGroupWithAlias, help="""A dynamic routing gateway (DRG), which is a virtual router that provides a path for private network traffic between your VCN and your existing network. You use it with other Networking Service components to create an IPSec VPN or a connection that uses Oracle Cloud Infrastructure FastConnect. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def drg_group():
     pass
@@ -126,15 +142,19 @@ def drg_group():
 
 @click.command(cli_util.override('route_table_group.command_name', 'route-table'), cls=CommandGroupWithAlias, help="""A collection of `RouteRule` objects, which are used to route packets based on destination IP to a particular network entity. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def route_table_group():
     pass
 
 
-@click.command(cli_util.override('cpe_group.command_name', 'cpe'), cls=CommandGroupWithAlias, help="""An object you create when setting up an IPSec VPN between your on-premises network and VCN. The `Cpe` is a virtual representation of your Customer-Premises Equipment, which is the actual router on-premises at your site at your end of the IPSec VPN connection. For more information, see [Overview of the Networking Service].
+@click.command(cli_util.override('cpe_group.command_name', 'cpe'), cls=CommandGroupWithAlias, help="""An object you create when setting up an IPSec VPN between your on-premises network and VCN. The `Cpe` is a virtual representation of your customer-premises equipment, which is the actual router on-premises at your site at your end of the IPSec VPN connection. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def cpe_group():
     pass
@@ -146,7 +166,9 @@ Oracle recommends you create each cross-connect in a [CrossConnectGroup] so you 
 
 **Note:** If you're a provider who is setting up a physical connection to Oracle so customers can use FastConnect over the connection, be aware that your connection is modeled the same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def cross_connect_group():
     pass
@@ -164,9 +186,11 @@ def cross_connect_status_group():
     pass
 
 
-@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A Virtual Cloud Network (VCN). For more information, see [Overview of the Networking Service].
+@click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A virtual cloud network (VCN). For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def vcn_group():
     pass
@@ -182,7 +206,9 @@ def ip_sec_connection_device_status_group():
 
 Each VNIC has a *primary private IP* that is automatically assigned during launch. You can add *secondary private IPs* to a VNIC after it's created. For more information, see [CreatePrivateIp] and [IP Addresses].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def vnic_group():
     pass
@@ -196,7 +222,9 @@ def vnic_group():
 
 For more information, see  [DNS in Your Virtual Cloud Network] and [DHCP Options].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def dhcp_options_group():
     pass
@@ -216,15 +244,19 @@ def peer_region_for_remote_peering_group():
 
 @click.command(cli_util.override('service_gateway_group.command_name', 'service-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with public Oracle Cloud Infrastructure services such as Object Storage. Traffic leaving the VCN and destined for a supported public service (see [ListServices]) is routed through the service gateway and does not traverse the internet. The instances in the VCN do not need to have public IP addresses nor be in a public subnet. The VCN does not need an internet gateway for this traffic. For more information, see [Access to Object Storage: Service Gateway].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def service_gateway_group():
     pass
 
 
-@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario that uses an Internet Gateway, see [Typical Networking Service Scenarios].
+@click.command(cli_util.override('internet_gateway_group.command_name', 'internet-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with the Internet. For an example scenario that uses an internet gateway, see [Typical Networking Service Scenarios].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def internet_gateway_group():
     pass
@@ -232,7 +264,9 @@ def internet_gateway_group():
 
 @click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec tunnels. Creating this connection is one of the steps required when setting up an IPSec VPN. For more information, see [Overview of the Networking Service].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def ip_sec_connection_group():
     pass
@@ -248,7 +282,9 @@ def service_group():
 
 **Note:** If you're a provider who is setting up a physical connection to Oracle so customers can use FastConnect over the connection, be aware that your connection is modeled the same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def cross_connect_group_group():
     pass
@@ -258,7 +294,9 @@ def cross_connect_group_group():
 
 **Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure both the security lists associated with the instance's subnet and the instance's firewall rules are set correctly.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def security_list_group():
     pass
@@ -439,7 +477,7 @@ def connect_remote_peering_connections(ctx, from_json, remote_peering_connection
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('create_cpe.command_name', 'create'), help="""Creates a new virtual Customer-Premises Equipment (CPE) object in the specified compartment. For more information, see [IPSec VPNs].
+@cpe_group.command(name=cli_util.override('create_cpe.command_name', 'create'), help="""Creates a new virtual customer-premises equipment (CPE) object in the specified compartment. For more information, see [IPSec VPNs].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the CPE to reside. Notice that the CPE doesn't have to be in the same compartment as the IPSec connection or other Networking Service components. If you're not sure which compartment to use, put the CPE in the same compartment as the DRG. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
@@ -668,7 +706,7 @@ def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@drg_group.command(name=cli_util.override('create_drg.command_name', 'create'), help="""Creates a new Dynamic Routing Gateway (DRG) in the specified compartment. For more information, see [Dynamic Routing Gateways (DRGs)].
+@drg_group.command(name=cli_util.override('create_drg.command_name', 'create'), help="""Creates a new dynamic routing gateway (DRG) in the specified compartment. For more information, see [Dynamic Routing Gateways (DRGs)].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the DRG to reside. Notice that the DRG doesn't have to be in the same compartment as the VCN, the DRG attachment, or other Networking Service components. If you're not sure which compartment to use, put the DRG in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
@@ -778,18 +816,18 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('create_internet_gateway.command_name', 'create'), help="""Creates a new Internet Gateway for the specified VCN. For more information, see [Access to the Internet].
+@internet_gateway_group.command(name=cli_util.override('create_internet_gateway.command_name', 'create'), help="""Creates a new internet gateway for the specified VCN. For more information, see [Access to the Internet].
 
-For the purposes of access control, you must provide the OCID of the compartment where you want the Internet Gateway to reside. Notice that the Internet Gateway doesn't have to be in the same compartment as the VCN or other Networking Service components. If you're not sure which compartment to use, put the Internet Gateway in the same compartment with the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
+For the purposes of access control, you must provide the OCID of the compartment where you want the Internet Gateway to reside. Notice that the internet gateway doesn't have to be in the same compartment as the VCN or other Networking Service components. If you're not sure which compartment to use, put the Internet Gateway in the same compartment with the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the Internet Gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
+You may optionally specify a *display name* for the internet gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
-For traffic to flow between a subnet and an Internet Gateway, you must create a route rule accordingly in the subnet's route table (for example, 0.0.0.0/0 > Internet Gateway). See [UpdateRouteTable].
+For traffic to flow between a subnet and an internet gateway, you must create a route rule accordingly in the subnet's route table (for example, 0.0.0.0/0 > internet gateway). See [UpdateRouteTable].
 
-You must specify whether the Internet Gateway is enabled when you create it. If it's disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic. You can later use [UpdateInternetGateway] to easily disable/enable the gateway without changing the route rule.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the Internet Gateway.""")
+You must specify whether the internet gateway is enabled when you create it. If it's disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic. You can later use [UpdateInternetGateway] to easily disable/enable the gateway without changing the route rule.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the internet gateway.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help="""Whether the gateway is enabled upon creation.""")
-@cli_util.option('--vcn-id', required=True, help="""The OCID of the VCN the Internet Gateway is attached to.""")
+@cli_util.option('--vcn-id', required=True, help="""The OCID of the VCN the internet gateway is attached to.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1031,7 +1069,7 @@ def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freef
 
 @public_ip_group.command(name=cli_util.override('create_public_ip.command_name', 'create'), help="""Creates a public IP. Use the `lifetime` property to specify whether it's an ephemeral or reserved public IP. For information about limits on how many you can create, see [Public IP Addresses].
 
-* **For an ephemeral public IP:** You must also specify a `privateIpId` with the OCID of the primary private IP you want to assign the public IP to. The public IP is created in the same Availability Domain as the private IP. An ephemeral public IP must always be assigned to a private IP, and only to the *primary* private IP on a VNIC, not a secondary private IP.
+* **For an ephemeral public IP:** You must also specify a `privateIpId` with the OCID of the primary private IP you want to assign the public IP to. The public IP is created in the same availability domain as the private IP. An ephemeral public IP must always be assigned to a private IP, and only to the *primary* private IP on a VNIC, not a secondary private IP.
 
 * **For a reserved public IP:** You may also optionally assign the public IP to a private IP by specifying `privateIpId`. Or you can later assign the public IP with [UpdatePublicIp].
 
@@ -1284,8 +1322,8 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 For the purposes of access control, you must provide the OCID of the compartment where you want the service gateway to reside. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
 You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID]   of the compartment to contain the Service Gateway.""")
-@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""List of the Service OCIDs. These are the Services which will be enabled on the Service Gateway. This list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help="""The [OCID]   of the compartment to contain the service gateway.""")
+@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""List of the service OCIDs. These are the services that will be enabled on the service gateway. This list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vcn-id', required=True, help="""The [OCID] of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1356,7 +1394,7 @@ You may optionally associate a set of DHCP options with the subnet. If you don't
 You may optionally specify a *display name* for the subnet, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network].""")
-@cli_util.option('--availability-domain', required=True, help="""The Availability Domain to contain the subnet.
+@cli_util.option('--availability-domain', required=True, help="""The availability domain to contain the subnet.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--cidr-block', required=True, help="""The CIDR IP address range of the subnet.
@@ -1449,7 +1487,7 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('create_vcn.command_name', 'create'), help="""Creates a new Virtual Cloud Network (VCN). For more information, see [VCNs and Subnets].
+@vcn_group.command(name=cli_util.override('create_vcn.command_name', 'create'), help="""Creates a new virtual cloud network (VCN). For more information, see [VCNs and Subnets].
 
 For the VCN you must specify a single, contiguous IPv4 CIDR block. Oracle recommends using one of the private IP address ranges specified in [RFC 1918] (10.0.0.0/8, 172.16/12, and 192.168/16). Example: 172.16.0.0/16. The CIDR block can range from /16 to /30, and it must not overlap with your on-premises network. You can't change the size of the VCN after creation.
 
@@ -1461,7 +1499,7 @@ You can also add a DNS label for the VCN, which is required if you want the inst
 
 The VCN automatically comes with a default route table, default security list, and default set of DHCP options. The OCID for each is returned in the response. You can't delete these default objects, but you can change their contents (that is, change the route rules, security list rules, and so on).
 
-The VCN and subnets you create are not accessible until you attach an Internet Gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service].""")
+The VCN and subnets you create are not accessible until you attach an internet gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service].""")
 @cli_util.option('--cidr-block', required=True, help="""The CIDR IP address block of the VCN.
 
 Example: `172.16.0.0/16`""")
@@ -1548,7 +1586,7 @@ Example: `10 Gbps`""")
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--customer-bgp-asn', type=click.INT, help="""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--gateway-id', help="""For private virtual circuits only. The OCID of the [Dynamic Routing Gateway (DRG)] that this virtual circuit uses.""")
+@cli_util.option('--gateway-id', help="""For private virtual circuits only. The OCID of the [dynamic routing gateway (DRG)] that this virtual circuit uses.""")
 @cli_util.option('--provider-name', help="""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @cli_util.option('--provider-service-id', help="""The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
 @cli_util.option('--provider-service-name', help="""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
@@ -1926,10 +1964,10 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('delete_internet_gateway.command_name', 'delete'), help="""Deletes the specified Internet Gateway. The Internet Gateway does not have to be disabled, but there must not be a route table that lists it as a target.
+@internet_gateway_group.command(name=cli_util.override('delete_internet_gateway.command_name', 'delete'), help="""Deletes the specified internet gateway. The internet gateway does not have to be disabled, but there must not be a route table that lists it as a target.
 
 This is an asynchronous operation. The gateway's `lifecycleState` will change to TERMINATING temporarily until the gateway is completely removed.""")
-@cli_util.option('--ig-id', required=True, help="""The OCID of the Internet Gateway.""")
+@cli_util.option('--ig-id', required=True, help="""The OCID of the internet gateway.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -2788,8 +2826,8 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('get_internet_gateway.command_name', 'get'), help="""Gets the specified Internet Gateway's information.""")
-@cli_util.option('--ig-id', required=True, help="""The OCID of the Internet Gateway.""")
+@internet_gateway_group.command(name=cli_util.override('get_internet_gateway.command_name', 'get'), help="""Gets the specified internet gateway's information.""")
+@cli_util.option('--ig-id', required=True, help="""The OCID of the internet gateway.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3175,7 +3213,7 @@ def list_allowed_peer_regions_for_remote_peering(ctx, from_json, ):
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('list_cpes.command_name', 'list'), help="""Lists the Customer-Premises Equipment objects (CPEs) in the specified compartment.""")
+@cpe_group.command(name=cli_util.override('list_cpes.command_name', 'list'), help="""Lists the customer-premises equipment objects (CPEs) in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
@@ -3232,7 +3270,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3343,7 +3381,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3456,7 +3494,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3719,7 +3757,7 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('list_internet_gateways.command_name', 'list'), help="""Lists the Internet Gateways in the specified VCN and the specified compartment.""")
+@internet_gateway_group.command(name=cli_util.override('list_internet_gateways.command_name', 'list'), help="""Lists the internet gateways in the specified VCN and the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--vcn-id', required=True, help="""The OCID of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
@@ -3729,7 +3767,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3954,18 +3992,18 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
 
 To list your reserved public IPs, set `scope` = `REGION`, and leave the `availabilityDomain` parameter empty.
 
-To list your ephemeral public IPs, set `scope` = `AVAILABILITY_DOMAIN`, and set the `availabilityDomain` parameter to the desired Availability Domain. An ephemeral public IP is always in the same Availability Domain and compartment as the private IP it's assigned to.""")
-@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["REGION", "AVAILABILITY_DOMAIN"]), help="""Whether the public IP is regional or specific to a particular Availability Domain.
+To list your ephemeral public IPs, set `scope` = `AVAILABILITY_DOMAIN`, and set the `availabilityDomain` parameter to the desired availability domain. An ephemeral public IP is always in the same availability domain and compartment as the private IP it's assigned to.""")
+@cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["REGION", "AVAILABILITY_DOMAIN"]), help="""Whether the public IP is regional or specific to a particular availability domain.
 
-* `REGION`: The public IP exists within a region and can be assigned to a private IP in any Availability Domain in the region. Reserved public IPs have `scope` = `REGION`.
+* `REGION`: The public IP exists within a region and can be assigned to a private IP in any availability domain in the region. Reserved public IPs have `scope` = `REGION`.
 
-* `AVAILABILITY_DOMAIN`: The public IP exists within the Availability Domain of the private IP it's assigned to, which is specified by the `availabilityDomain` property of the public IP object. Ephemeral public IPs have `scope` = `AVAILABILITY_DOMAIN`.""")
+* `AVAILABILITY_DOMAIN`: The public IP exists within the availability domain of the private IP it's assigned to, which is specified by the `availabilityDomain` property of the public IP object. Ephemeral public IPs have `scope` = `AVAILABILITY_DOMAIN`.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--availability-domain', help="""The name of the Availability Domain.
+@cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4076,7 +4114,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4142,7 +4180,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4207,7 +4245,7 @@ Example: `500`""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4314,7 +4352,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4370,7 +4408,7 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('list_vcns.command_name', 'list'), help="""Lists the Virtual Cloud Networks (VCNs) in the specified compartment.""")
+@vcn_group.command(name=cli_util.override('list_vcns.command_name', 'list'), help="""Lists the virtual cloud networks (VCNs) in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
@@ -4379,7 +4417,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4512,7 +4550,7 @@ Example: `500`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
-**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4911,10 +4949,10 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('update_internet_gateway.command_name', 'update'), help="""Updates the specified Internet Gateway. You can disable/enable it, or change its display name or tags. Avoid entering confidential information.
+@internet_gateway_group.command(name=cli_util.override('update_internet_gateway.command_name', 'update'), help="""Updates the specified internet gateway. You can disable/enable it, or change its display name or tags. Avoid entering confidential information.
 
 If the gateway is disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic.""")
-@cli_util.option('--ig-id', required=True, help="""The OCID of the Internet Gateway.""")
+@cli_util.option('--ig-id', required=True, help="""The OCID of the internet gateway.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5706,7 +5744,7 @@ If the BGP session is from the provider's edge router to Oracle, the required va
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique. Avoid entering confidential information.
 
 To be updated only by the customer who owns the virtual circuit.""")
-@cli_util.option('--gateway-id', help="""The OCID of the [Dynamic Routing Gateway (DRG)] that this private virtual circuit uses.
+@cli_util.option('--gateway-id', help="""The OCID of the [dynamic routing gateway (DRG)] that this private virtual circuit uses.
 
 To be updated only by the customer who owns the virtual circuit.""")
 @cli_util.option('--provider-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help="""The provider's state in relation to this virtual circuit. Relevant only if the customer is using FastConnect via a provider.  ACTIVE means the provider has provisioned the virtual circuit from their end. INACTIVE means the provider has not yet provisioned the virtual circuit, or has de-provisioned it.

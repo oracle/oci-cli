@@ -693,6 +693,25 @@ def get_command_list(root_command, parent, leaf):
             return command
 
 
+# TODO: This is a temporary fix for overriding variables returned by the testing service.
+# This table is repeated here from OracleCodegenHelper.java in the codegen repository
+# Please remove this table and subsequent function once the fix has been implemented in the testing service.
+VARIABLE_NAME_OVERRIDES = {
+    "dataStorageSizeInTBs": "dataStorageSizeInTbs",
+    "sizeInMBs": "sizeInMbs",
+    "dataStorageSizeInGBs": "dataStorageSizeInGbs",
+    "sizeInGBs": "sizeInGbs",
+    "uniqueSizeInGBs": "uniqueSizeInGbs",
+    "bootVolumeSizeInGBs": "bootVolumeSizeInGbs",
+    "dbDataSizeInMBs": "dbDataSizeInMbs",
+    "query": "queryText"
+}
+
+
+def variable_name_override(key):
+    return VARIABLE_NAME_OVERRIDES.get(key, None)
+
+
 # Trivial object to provide dictionary and dot accessor capabilities
 class Obj(dict):
     def __getattr__(self, attr):

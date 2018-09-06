@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.32 - 2018-09-06
+---------------------
+Added
+~~~~~~~~
+* Support for updating user custom metadata on an instance in the Compute service after the instance has launched
+
+  * (``oci compute instance update --instance-id --metadata --extended-metadata``)
+
+* Ability to increase size of boot and block volumes during creation (from clone or restore from backup) in the Block Storage Service.
+
+  * (``oci bv boot-volume create --size-in-gbs``)
+  * (``oci bv volume create --size-in-gbs``)
+
+Changed
+~~~~~~~~
+* Updated the Description of Database API to include new character set.
+* The default License Type for Autonomous DataWarehouse and Autonomous Transaction Processing will be Bring Your Own License.
+
 2.4.31 - 2018-08-23
 ---------------------
 Added

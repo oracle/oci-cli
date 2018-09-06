@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_root_group.help', """Container Engine for Kubernetes API"""))
+@cli.command(cli_util.override('ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_root_group.help', """Container Engine for Kubernetes API"""), short_help=cli_util.override('ce_root_group.short_help', """Container Engine for Kubernetes API"""))
 @cli_util.help_option_group
 def ce_root_group():
     pass

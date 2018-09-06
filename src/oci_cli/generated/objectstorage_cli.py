@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('os_root_group.command_name', 'os'), cls=CommandGroupWithAlias, help=cli_util.override('os_root_group.help', """Common set of Object and Archive Storage APIs for managing buckets and objects."""))
+@cli.command(cli_util.override('os_root_group.command_name', 'os'), cls=CommandGroupWithAlias, help=cli_util.override('os_root_group.help', """Common set of Object and Archive Storage APIs for managing buckets and objects."""), short_help=cli_util.override('os_root_group.short_help', """Object Storage Service API"""))
 @cli_util.help_option_group
 def os_root_group():
     pass
