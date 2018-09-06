@@ -17,6 +17,7 @@ class TestBlockStorage(unittest.TestCase):
         self.volumes = []
 
         try:
+            self.test_volume_create_validations()
             self.subtest_volume_operations()
             self.subtest_clone_operations()
             self.subtest_volume_backup_operations()
@@ -26,6 +27,7 @@ class TestBlockStorage(unittest.TestCase):
         finally:
             self.subtest_delete()
 
+    @util.log_test
     def test_volume_create_validations(self):
         result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--volume-backup-id', 'unit-test',
                               '--availability-domain', 'unit-test', '--compartment-id', 'unit-test'])
@@ -39,22 +41,6 @@ class TestBlockStorage(unittest.TestCase):
 
         result = self.invoke(['volume', 'create', '--availability-domain', util.availability_domain()])
         assert 'A compartment ID must be specified when creating an empty volume' in result.output
-
-        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--size-in-mbs', '51200'])
-        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
-
-        result = self.invoke(['volume', 'create', '--source-volume-id', 'unit-test', '--size-in-gbs', '50'])
-        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
-
-        result = self.invoke(
-            ['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test',
-             '--size-in-mbs', '51200'])
-        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
-
-        result = self.invoke(
-            ['volume', 'create', '--availability-domain', util.availability_domain(), '--volume-backup-id', 'unit-test',
-             '--size-in-gbs', '50'])
-        assert 'You cannot specify a size when cloning a volume or restoring a volume from a backup' in result.output
 
         result = self.invoke(
             ['volume', 'create', '-c', util.COMPARTMENT_ID, '--availability-domain', util.availability_domain(),
@@ -158,7 +144,8 @@ class TestBlockStorage(unittest.TestCase):
     @util.log_test
     def subtest_clone_operations(self):
         volume_name = util.random_name('cli_test_clone_vol')
-        params = ['volume', 'create', '--source-volume-id', self.volume_id, '--display-name', volume_name]
+        params = ['volume', 'create', '--source-volume-id', self.volume_id, '--display-name', volume_name,
+                  '--size-in-gbs', '60']
 
         result = self.invoke(params)
         util.validate_response(result)
@@ -166,9 +153,8 @@ class TestBlockStorage(unittest.TestCase):
         parsed_result = json.loads(result.output)
         source_details = {'id': self.volume_id, 'type': 'volume'}
         assert source_details == parsed_result['data']['source-details']
-        assert util.COMPARTMENT_ID == parsed_result['data']['compartment-id']
         assert util.availability_domain() == parsed_result['data']['availability-domain']
-        assert 50 == int(parsed_result['data']['size-in-gbs'])  # We initially created a 50GB volume
+        assert 60 == int(parsed_result['data']['size-in-gbs'])  # We initially created a 50GB volume, now increasing to 60
 
         volume_id = util.find_id_in_response(result.output)
         util.wait_until(['bv', 'volume', 'get', '--volume-id', volume_id], 'AVAILABLE', max_wait_seconds=180)
@@ -237,7 +223,6 @@ class TestBlockStorage(unittest.TestCase):
         parsed_result = json.loads(result.output)
         source_details = {'id': self.backup_id, 'type': 'volumeBackup'}
         assert source_details == parsed_result['data']['source-details']
-        assert util.COMPARTMENT_ID == parsed_result['data']['compartment-id']
         assert util.second_availability_domain() == parsed_result['data']['availability-domain']
         assert 50 == int(parsed_result['data']['size-in-gbs'])  # We initially created a 50GB volume
 

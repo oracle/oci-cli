@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam_root_group.help', """APIs for managing users, groups, compartments, and policies."""))
+@cli.command(cli_util.override('iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam_root_group.help', """APIs for managing users, groups, compartments, and policies."""), short_help=cli_util.override('iam_root_group.short_help', """Identity and Access Management Service API"""))
 @cli_util.help_option_group
 def iam_root_group():
     pass

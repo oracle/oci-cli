@@ -13,12 +13,23 @@ from . import test_config_container
 
 import click
 import datetime
+import logging
 import oci
 import os
 import os.path
 import pytest
 import random
 import time
+
+
+# docs on VCR log levels: http://vcrpy.readthedocs.io/en/latest/debugging.html
+logging.basicConfig()
+vcr_log = logging.getLogger("vcr")
+vcr_log.setLevel(logging.INFO)
+
+
+if not os.path.exists(os.path.join('tests', 'temp')):
+    os.makedirs(os.path.join('tests', 'temp'))
 
 
 def pytest_addoption(parser):
@@ -301,7 +312,8 @@ def vcn_and_subnets(network_client):
 
 @pytest.fixture(scope='session')
 def tag_namespace_and_tags(identity_client, test_id):
-    with test_config_container.create_vcr().use_cassette('_conftest_fixture_tag_namespace_and_tags.yml'):
+    with test_config_container.create_vcr().use_cassette('_conftest_fixture_tag_namespace_and_tags.yml',
+                                                         match_on=['method', 'scheme', 'host', 'port', 'vcr_query_matcher']):
         if not os.environ.get('OCI_CLI_TAG_NAMESPACE_ID'):
             tag_namespace_name = 'cli_tag_ns_{}'.format(test_id)
             create_tag_namespace_response = identity_client.create_tag_namespace(

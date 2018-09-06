@@ -11,10 +11,12 @@ from . import test_config_container
 from . import util
 
 
-JSON_TEMPLATE_LIST_BUCKETS = """{{
-    "compartmentId": "{}",
-    "namespace": "{}"
-}}""".format(util.COMPARTMENT_ID, util.NAMESPACE)
+def json_template_list_buckets(namespace):
+    JSON_TEMPLATE_LIST_BUCKETS = """{{
+        "compartmentId": "{}",
+        "namespace": "{}"
+    }}""".format(util.COMPARTMENT_ID, namespace)
+    return JSON_TEMPLATE_LIST_BUCKETS
 
 
 # This intentionally has some camel and snake case in there to make sure we coerce correctly
@@ -75,7 +77,13 @@ def prepare_input_file_folder():
         os.makedirs(INPUT_FILE_FOLDER)
 
     with open(os.path.join(INPUT_FILE_FOLDER, 'list_buckets.json'), 'w') as f:
-        f.write(JSON_TEMPLATE_LIST_BUCKETS)
+        with test_config_container.create_vcr().use_cassette(
+                'object_storage_namespace_get.yml'):
+            # Grab the Object Storage namespace
+            result = invoke(['os', 'ns', 'get'])
+            util.validate_response(result)
+            namespace = json.loads(result.output)['data']
+            f.write(json_template_list_buckets(namespace))
 
     yield
 

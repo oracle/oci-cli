@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('dns_root_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns_root_group.help', """API for managing DNS zones, records, and policies."""))
+@cli.command(cli_util.override('dns_root_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns_root_group.help', """API for managing DNS zones, records, and policies."""), short_help=cli_util.override('dns_root_group.short_help', """Public DNS Service"""))
 @cli_util.help_option_group
 def dns_root_group():
     pass

@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('search_root_group.command_name', 'search'), cls=CommandGroupWithAlias, help=cli_util.override('search_root_group.help', """Search for resources in your cloud network."""))
+@cli.command(cli_util.override('search_root_group.command_name', 'search'), cls=CommandGroupWithAlias, help=cli_util.override('search_root_group.help', """Search for resources in your cloud network."""), short_help=cli_util.override('search_root_group.short_help', """Search Service API"""))
 @cli_util.help_option_group
 def search_root_group():
     pass

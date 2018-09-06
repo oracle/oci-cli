@@ -17,7 +17,7 @@ class TestAudit(unittest.TestCase):
 
     # For recording, don't match on the query string because that includes the date range for the query
     # (and that will change between runs)
-    @test_config_container.RecordReplay('audit', match_on=['method', 'scheme', 'host', 'port', 'path'])
+    @test_config_container.RecordReplay('audit', match_on=['method', 'scheme', 'host', 'port', 'vcr_path_matcher'])
     def test_all_operations(self):
         """Successfully calls every operation with basic options."""
         self.subtest_event_list()
@@ -46,7 +46,6 @@ class TestAudit(unittest.TestCase):
             start_time_with_zone = pytz.utc.localize(start_time) + datetime.timedelta(minutes=-5)
 
             for event in response["data"]:
-                assert util.COMPARTMENT_ID == event["compartment-id"]
 
                 if not test_config_container.using_vcr_with_mock_responses():
                     parsed_date = parse(event["event-time"])
