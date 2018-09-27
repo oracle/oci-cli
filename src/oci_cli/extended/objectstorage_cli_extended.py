@@ -9,18 +9,18 @@ import stat
 import sys
 from oci import exceptions
 from oci.object_storage.transfer import constants
-from .cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param
+from ..cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
 from retrying import retry
-from . import retry_utils
-from .object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
-from . import json_skeleton_utils
-from .aliasing import CommandGroupWithAlias
-from .custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
-from .generated import objectstorage_cli
-from . import cli_util
+from .. import retry_utils
+from ..object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
+from .. import json_skeleton_utils
+from ..aliasing import CommandGroupWithAlias
+from ..custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
+from ..generated import objectstorage_cli
+from .. import cli_util
 
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000

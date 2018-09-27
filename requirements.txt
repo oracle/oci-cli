@@ -1,3 +1,8 @@
+# You may need to run this as: 
+# pip install --trusted-host=artifactory.oci.oraclecorp.com -r requirements.txt
+# because the requirements.txt file doesn't support the --trusted-host option (https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format)
+--extra-index-url https://artifactory.oci.oraclecorp.com/api/pypi/opc-public-sdk-dev-pypi-local/simple
+
 appdirs==1.4.3
 arrow==0.10.0
 certifi
@@ -12,7 +17,7 @@ Jinja2==2.9.6
 jmespath==0.9.3
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.0.3
+oci==2.0.4
 packaging==16.8
 pluggy==0.4.0
 py==1.4.33
@@ -31,6 +36,6 @@ sphinx==1.6.4
 sphinx-rtd-theme==0.2.5b1
 terminaltables==3.1.0
 tox==2.9.1
-vcrpy==1.11.1
+vcrpy==1.13.0
 virtualenv==15.1.0
 pytest-xdist==1.22.2

@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.33 - 2018-09-27
+---------------------
+Added
+~~~~~~~~
+* Support for Key Management Service (``oci kms``)
+
+  * Examples on using the Key Management Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
+* Support for ``--wait-for-state`` option on multiple commands.
+* Improved custom image support by introducing PARAVIRTUALIZED as a launch mode option in the Image Import command.
+
+  * (``oci compute image import --launch-mode PARAVIRTUALIZED``)
+* Support for creating bucket with ``--kms-key-id``, updating ``--kms-key-id`` of a bucket.
+* Support for creating data volume, boot volume, launch instance with ``--kms-key-id``, updating ``--kms-key-id`` for a data volume or boot volume.
+
 2.4.32 - 2018-09-06
 ---------------------
 Added

@@ -188,7 +188,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
-This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-public-key', help="""The SSH public key to add to each node in the node pool.""")
 @cli_util.option('--quantity-per-subnet', type=click.INT, help="""The number of nodes to create in each subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
@@ -754,7 +754,7 @@ def update_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--quantity-per-subnet', type=click.INT, help="""The number of nodes to ensure in each subnet.""")
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
-This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

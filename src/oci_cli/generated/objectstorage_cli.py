@@ -28,7 +28,7 @@ def bucket_group():
     pass
 
 
-@click.command(cli_util.override('preauthenticated_request_group.command_name', 'preauthenticated-request'), cls=CommandGroupWithAlias, help="""Pre-authenticated requests provide a way to let users access a bucket or an object without having their own credentials. When you create a pre-authenticated request, a unique URL is generated. Users in your organization, partners, or third parties can use this URL to access the targets identified in the pre-authenticated request. See [Managing Access to Buckets and Objects].
+@click.command(cli_util.override('preauthenticated_request_group.command_name', 'preauthenticated-request'), cls=CommandGroupWithAlias, help="""Pre-authenticated requests provide a way to let users access a bucket or an object without having their own credentials. When you create a pre-authenticated request, a unique URL is generated. Users in your organization, partners, or third parties can use this URL to access the targets identified in the pre-authenticated request. See [Using Pre-Authenticated Requests].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -137,7 +137,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('create_bucket.command_name', 'create'), help="""Creates a bucket in the given namespace with a bucket name and optional user-defined metadata.""")
+@bucket_group.command(name=cli_util.override('create_bucket.command_name', 'create'), help="""Creates a bucket in the given namespace with a bucket name and optional user-defined metadata. Avoid entering confidential information in bucket names.""")
 @cli_util.option('--namespace-name', required=True, help="""The top-level namespace used for the request.""")
 @cli_util.option('--name', required=True, help="""The name of the bucket. Valid characters are uppercase or lowercase letters, numbers, and dashes. Bucket names must be unique within the namespace. Avoid entering confidential information. example: Example: my-new-bucket1""")
 @cli_util.option('--compartment-id', required=True, help="""The ID of the compartment in which to create the bucket.""")
@@ -146,12 +146,13 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "Archive"]), help="""The type of storage tier of this bucket. A bucket is set to 'Standard' tier by default, which means the bucket will be put in the standard storage tier. When 'Archive' tier type is set explicitly, the bucket is put in the Archive Storage tier. The 'storageTier' property is immutable after bucket is created.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help="""The OCID of a KMS key id used to call KMS to generate data key, decrypt the encrypted data key""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, freeform_tags, defined_tags):
+def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, freeform_tags, defined_tags, kms_key_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -176,6 +177,9 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.create_bucket(
@@ -899,7 +903,7 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('put_object.command_name', 'put'), help="""Creates a new object or overwrites an existing one.""")
+@object_group.command(name=cli_util.override('put_object.command_name', 'put'), help="""Creates a new object or overwrites an existing one. See [Special Instructions for Object Storage PUT] for request signature requirements.""")
 @cli_util.option('--namespace-name', required=True, help="""The top-level namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help="""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -1053,13 +1057,14 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
 @cli_util.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help="""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help="""A KMS key OCID that will be associated with the given bucket. If it is empty the Update operation will actually remove the KMS key, if there is one, from the given bucket. Please note, the old kms key should still be enbaled in KMS otherwise all the objects in the bucket encrypted with the old KMS key will no longer accessible.""")
 @cli_util.option('--if-match', help="""The entity tag to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, freeform_tags, defined_tags, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, freeform_tags, defined_tags, kms_key_id, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1090,6 +1095,9 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.update_bucket(
@@ -1134,7 +1142,7 @@ def update_namespace_metadata(ctx, from_json, namespace_name, default_s3_compart
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('upload_part.command_name', 'upload-part'), help="""Uploads a single part of a multipart upload.""")
+@object_group.command(name=cli_util.override('upload_part.command_name', 'upload-part'), help="""Uploads a single part of a multipart upload. See [Special Instructions for Object Storage PUT] for request signature requirements.""")
 @cli_util.option('--namespace-name', required=True, help="""The top-level namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help="""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")

@@ -6,10 +6,10 @@ import click
 import json
 import oci
 
-from . import cli_util
-from . import json_skeleton_utils
-from .generated import database_cli
-from .aliasing import CommandGroupWithAlias
+from .. import cli_util
+from .. import json_skeleton_utils
+from ..generated import database_cli
+from ..aliasing import CommandGroupWithAlias
 
 
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'ssh_public_keys'])

@@ -5,10 +5,8 @@ import json
 import os
 import os.path
 import pytest
-import random
 import shutil
 import six
-import string
 import unittest
 from . import test_config_container
 from . import util
@@ -48,68 +46,76 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
             assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
 
     def test_invoke_with_default_file_param_accepts_multiple_values(self):
-        test_bucket_name = util.random_name('BulkPutDefaultsFileTempBucket')
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_param_accepts_multiple_values.yml'):
+            test_bucket_name = util.random_name('BulkPutDefaultsFileTempBucket')
 
-        test_folder = os.path.join('tests', 'temp', 'os_bulk_put_default_file_test')
-        if not os.path.exists(test_folder):
-            os.makedirs(test_folder)
+            test_folder = os.path.join('tests', 'temp', 'os_bulk_put_default_file_test')
+            if not os.path.exists(test_folder):
+                os.makedirs(test_folder)
 
-        # Make some files for include/exclude
-        folders_to_files = {
-            '': ['test_file1.txt', 'test_file2.png'],
-            'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
-            'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
-        }
-        for folder, files in six.iteritems(folders_to_files):
-            folder_path = os.path.join(test_folder, folder)
-            if not os.path.exists(folder_path):
-                os.makedirs(folder_path)
+            # Make some files for include/exclude
+            folders_to_files = {
+                '': ['test_file1.txt', 'test_file2.png'],
+                'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
+                'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
+            }
+            for folder, files in six.iteritems(folders_to_files):
+                folder_path = os.path.join(test_folder, folder)
+                if not os.path.exists(folder_path):
+                    os.makedirs(folder_path)
 
-            for file in files:
-                file_path = os.path.join(folder_path, file)
-                with open(file_path, 'w') as f:
-                    # For non-text extension types this won't create a valid file, but for testing is probably OK
-                    f.write(self.generate_random_string(100))
+                for file in files:
+                    file_path = os.path.join(folder_path, file)
+                    with open(file_path, 'w') as f:
+                        # For non-text extension types this won't create a valid file, but for testing is probably OK
+                        f.write('this is some bulk upload content')
 
-        # Grab the Object Storage namespace
-        result = self.invoke(['os', 'ns', 'get'])
-        util.validate_response(result)
-        namespace = json.loads(result.output)['data']
+            # Grab the Object Storage namespace
+            result = self.invoke(['os', 'ns', 'get'])
+            util.validate_response(result)
+            namespace = json.loads(result.output)['data']
 
-        result = self.invoke(['os', 'bucket', 'create', '-c', util.COMPARTMENT_ID, '-ns', namespace, '--name', test_bucket_name])
-        util.validate_response(result)
+            result = self.invoke(['os', 'bucket', 'create', '-c', util.COMPARTMENT_ID, '-ns', namespace, '--name', test_bucket_name])
+            util.validate_response(result)
 
-        result = self.invoke([
-            'os', 'object', 'bulk-upload',
-            '-ns', namespace,
-            '--bucket-name', test_bucket_name,
-            '--src-dir', test_folder,
-            '--overwrite',
-            '--defaults-file', 'tests/resources/default_files/param_multiple_default'
-        ])
-        parsed_result = self.parse_json_response_from_mixed_output(result.output)
-        assert parsed_result['skipped-objects'] == []
-        assert parsed_result['upload-failures'] == {}
+            result = self.invoke([
+                'os', 'object', 'bulk-upload',
+                '-ns', namespace,
+                '--bucket-name', test_bucket_name,
+                '--src-dir', test_folder,
+                '--overwrite',
+                '--defaults-file', 'tests/resources/default_files/param_multiple_default'
+            ])
+            parsed_result = self.parse_json_response_from_mixed_output(result.output)
+            assert parsed_result['skipped-objects'] == []
+            assert parsed_result['upload-failures'] == {}
 
-        expected_uploaded_files = [
-            'test_file1.txt',
-            'subfolder/hello.txt',
-            'subfolder/testfile3.png',
-            'subfolder/subfolder2/blag.txt',
-            'subfolder/subfolder2/testfile4.png'
-        ]
+            expected_uploaded_files = [
+                'test_file1.txt',
+                'subfolder/hello.txt',
+                'subfolder/testfile3.png',
+                'subfolder/subfolder2/blag.txt',
+                'subfolder/subfolder2/testfile4.png'
+            ]
 
-        assert len(parsed_result['uploaded-objects']) == len(expected_uploaded_files)
-        for f in expected_uploaded_files:
-            assert f in parsed_result['uploaded-objects']
+            assert len(parsed_result['uploaded-objects']) == len(expected_uploaded_files)
+            for f in expected_uploaded_files:
+                assert f in parsed_result['uploaded-objects']
 
-        result = self.invoke(['os', 'object', 'bulk-delete', '-ns', namespace, '--bucket-name', test_bucket_name, '--force'])
-        assert result.exit_code == 0
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_param_accepts_multiple_value_bulk_delete.yml'):
 
-        result = self.invoke(['os', 'bucket', 'delete', '-ns', namespace, '--name', test_bucket_name, '--force'])
-        util.validate_response(result)
+            result = self.invoke(['os', 'object', 'bulk-delete', '-ns', namespace, '--bucket-name', test_bucket_name, '--force'])
+            assert result.exit_code == 0
 
-        shutil.rmtree(test_folder)
+        with test_config_container.create_vcr().use_cassette(
+                'default_files_command_invoke_with_default_file_param_accepts_multiple_values_delete_bucket.yml'):
+
+            result = self.invoke(['os', 'bucket', 'delete', '-ns', namespace, '--name', test_bucket_name, '--force'])
+            util.validate_response(result)
+
+            shutil.rmtree(test_folder)
 
     @util.slow
     def test_invoke_with_file_paths_and_json_in_default_file(self):
@@ -228,9 +234,6 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
             commands = ['--debug'] + commands
 
         return util.invoke_command(commands, ** args)
-
-    def generate_random_string(self, length):
-        return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
 
     def parse_json_response_from_mixed_output(self, output):
         lines = output.split('\n')

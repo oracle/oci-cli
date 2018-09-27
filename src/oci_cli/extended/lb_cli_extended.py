@@ -5,10 +5,10 @@ from __future__ import print_function
 import click
 import json
 import six  # noqa: F401
-from . import cli_util
-from . import json_skeleton_utils
-from . import custom_types  # noqa: F401
-from .generated import loadbalancer_cli
+from .. import cli_util
+from .. import json_skeleton_utils
+from .. import custom_types  # noqa: F401
+from ..generated import loadbalancer_cli
 
 
 def process_ssl_configuration_kwargs(kwargs):

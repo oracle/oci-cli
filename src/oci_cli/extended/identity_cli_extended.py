@@ -5,11 +5,11 @@ from __future__ import print_function
 import click
 import six
 import sys
-from .generated import identity_cli
-from . import cli_util
-from . import cli_exceptions
-from . import custom_types
-from . import json_skeleton_utils
+from ..generated import identity_cli
+from .. import cli_util
+from .. import cli_exceptions
+from .. import custom_types
+from .. import json_skeleton_utils
 
 
 identity_cli.iam_root_group.commands.pop(identity_cli.idp_group_mapping_group.name)
