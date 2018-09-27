@@ -1,12 +1,12 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
-from . import cli_util
-from .cli_util import option
+from .. import cli_util
+from ..cli_util import option
 
-from .aliasing import CommandGroupWithAlias
-from .generated import dns_cli
-from . import json_skeleton_utils
+from ..aliasing import CommandGroupWithAlias
+from ..generated import dns_cli
+from .. import json_skeleton_utils
 import click
 
 

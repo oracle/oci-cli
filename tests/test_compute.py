@@ -539,7 +539,7 @@ class TestCompute(unittest.TestCase):
         parsed_result = json.loads(result.output)
         if 'DELET' not in parsed_result['data']['lifecycle-state']:
             print("parsed_result=" + str(parsed_result) + ", lifecycle-state=" + str(parsed_result['data']['lifecycle-state']))
-            util.vcr_mode_aware_sleep(10)
+            util.vcr_mode_aware_sleep(60)
             result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
             parsed_result = json.loads(result.output)
         self.assertTrue(parsed_result['data']['lifecycle-state'] == 'DELETED' or parsed_result['data']['lifecycle-state'] == 'DELETING')
@@ -594,7 +594,7 @@ class TestCompute(unittest.TestCase):
             try:
                 print("Deleting image")
                 result = self.invoke(['compute', 'image', 'delete', '--image-id', self.image_ocid, '--force'])
-                util.validate_service_error(result, error_message="409")
+                util.validate_response(result)
             except Exception as error:
                 util.print_latest_exception(error)
                 error_count = error_count + 1

@@ -1,10 +1,10 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
-from . import cli_util
-from .cli_util import option
-from .generated import email_cli
-from . import json_skeleton_utils
+from .. import cli_util
+from ..cli_util import option
+from ..generated import email_cli
+from .. import json_skeleton_utils
 import click
 
 

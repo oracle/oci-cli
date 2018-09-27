@@ -75,6 +75,9 @@ OVERRIDES = {
     "get_db_system_patch_history_entry.command_name": "by-db-system",
     "get_namespace_metadata.command_name": "get-metadata",
     "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
+    "kms_crypto_root_group.command_name": "crypto",
+    "kms_vault_root_group.command_name": "vault",
+    "kms_management_root_group.command_name": "management",
     "instance_action.command_name": "action",
     "list_db_system_patches.command_name": "by-db-system",
     "list_db_system_patch_history_entries.command_name": "by-db-system",
@@ -126,8 +129,13 @@ DNS_OVERRIDES = {
     "update_zone_records.command_name": "update"
 }
 
+KMS_OVERRIDES = {
+    "cancel_vault_deletion.command_name": "cancel-deletion",
+    "schedule_vault_deletion.command_name": "schedule-deletion"
+}
 
 OVERRIDES.update(DNS_OVERRIDES)
+OVERRIDES.update(KMS_OVERRIDES)
 OVERRIDES.update(ROOT_COMMAND_HELP_OVERRIDES)
 
 
@@ -209,6 +217,13 @@ def build_client(service_name, ctx):
     # Build the client, then fix up a few properties.
     try:
         client_class = CLIENT_MAP[service_name]
+
+        # The constructors for these clients need an endpoint
+        #
+        # TODO: Potentially integrate with a specific --vault-endpoint parameter or find a way to translate a vault
+        # (e.g. a vault's OCID) to the relevant endpoint
+        if service_name in ['kms_crypto', 'kms_management']:
+            kwargs['service_endpoint'] = ctx.obj.get('endpoint')
 
         try:
             client = client_class(client_config, **kwargs)
@@ -507,6 +522,11 @@ def wrap_exceptions(func):
                 raise
             tpl = "{usage}\n\nError: {details}"
             sys.exit(tpl.format(usage=ctx.get_usage(), details=str(exception)))
+        except exceptions.MissingEndpointForNonRegionalServiceClientError as exception:
+            if ctx.obj["debug"]:
+                raise
+            tpl = "{usage}\n\nError: Missing option --endpoint."
+            sys.exit(tpl.format(usage=ctx.get_usage()))
         except Exception as exception:
             if ctx.obj["debug"]:
                 raise
@@ -688,6 +708,11 @@ def update_param_help(command, param_name, updated_help, append=False, example=N
 Example: {example}""".format(help=updated_help, example=example)
 
     param.help = updated_help
+
+
+def override_command_short_help_and_help(command, help_text):
+    command.help = help_text
+    command.short_help = click.utils.make_default_short_help(help_text)
 
 
 def collect_commands(command):

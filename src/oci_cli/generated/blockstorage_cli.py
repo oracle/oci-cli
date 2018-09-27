@@ -20,6 +20,12 @@ def blockstorage_root_group():
     pass
 
 
+@click.command(cli_util.override('boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""Kms key id associated with this volume.""")
+@cli_util.help_option_group
+def boot_volume_kms_key_group():
+    pass
+
+
 @click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -90,6 +96,13 @@ def volume_backup_policy_group():
     pass
 
 
+@click.command(cli_util.override('volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""Kms key id associated with this volume.""")
+@cli_util.help_option_group
+def volume_kms_key_group():
+    pass
+
+
+blockstorage_root_group.add_command(boot_volume_kms_key_group)
 blockstorage_root_group.add_command(volume_group)
 blockstorage_root_group.add_command(boot_volume_backup_group)
 blockstorage_root_group.add_command(boot_volume_group)
@@ -98,6 +111,7 @@ blockstorage_root_group.add_command(volume_group_backup_group)
 blockstorage_root_group.add_command(volume_backup_policy_assignment_group)
 blockstorage_root_group.add_command(volume_group_group)
 blockstorage_root_group.add_command(volume_backup_policy_group)
+blockstorage_root_group.add_command(volume_kms_key_group)
 
 
 @boot_volume_group.command(name=cli_util.override('create_boot_volume.command_name', 'create'), help="""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
@@ -114,6 +128,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help="""The OCID of the KMS key to be used as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help="""The size of the volume in GBs.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -123,7 +138,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, size_in_gbs):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs):
     kwargs = {}
 
     details = {}
@@ -142,6 +157,9 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
 
     if size_in_gbs is not None:
         details['sizeInGBs'] = size_in_gbs
@@ -249,6 +267,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help="""The OCID of the KMS key to be used as the master encryption key for the volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help="""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help="""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Specifies the volume source details for a new Block volume. The volume source is either another Block volume in the same availability domain or a Block volume backup. This is an optional field. If not specified or set to null, the new Block volume will be empty. When specified, the new Block volume will contain data from the source volume or backup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -261,7 +280,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, size_in_gbs, size_in_mbs, source_details, volume_backup_id):
+def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, size_in_mbs, source_details, volume_backup_id):
     kwargs = {}
 
     details = {}
@@ -279,6 +298,9 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
 
     if size_in_gbs is not None:
         details['sizeInGBs'] = size_in_gbs
@@ -637,6 +659,30 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@boot_volume_kms_key_group.command(name=cli_util.override('delete_boot_volume_kms_key.command_name', 'delete'), help="""Remove kms for the specific boot volume. If the volume doesn't use KMS, then do nothing.""")
+@cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
+
+    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.delete_boot_volume_kms_key(
+        boot_volume_id=boot_volume_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @volume_group.command(name=cli_util.override('delete_volume.command_name', 'delete'), help="""Deletes the specified volume. The volume cannot have an active connection to an instance. To disconnect the volume from a connected instance, see [Disconnecting From a Volume]. **Warning:** All data on the volume will be permanently lost when the volume is deleted.""")
 @cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -881,6 +927,30 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
+@volume_kms_key_group.command(name=cli_util.override('delete_volume_kms_key.command_name', 'delete'), help="""Remove kms for the specific volume. If the volume doesn't use KMS, then do nothing.""")
+@cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
+
+    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.delete_volume_kms_key(
+        volume_id=volume_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_group.command(name=cli_util.override('get_boot_volume.command_name', 'get'), help="""Gets information for the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -916,6 +986,29 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_boot_volume_backup(
         boot_volume_backup_id=boot_volume_backup_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_kms_key_group.command(name=cli_util.override('get_boot_volume_kms_key.command_name', 'get'), help="""Gets kms key id for the specified boot volume.""")
+@cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeKmsKey'})
+@cli_util.wrap_exceptions
+def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
+
+    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.get_boot_volume_kms_key(
+        boot_volume_id=boot_volume_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1061,6 +1154,29 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume_group_backup(
         volume_group_backup_id=volume_group_backup_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_kms_key_group.command(name=cli_util.override('get_volume_kms_key.command_name', 'get'), help="""Gets kms key id for the specified volume.""")
+@cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeKmsKey'})
+@cli_util.wrap_exceptions
+def get_volume_kms_key(ctx, from_json, volume_id, if_match):
+
+    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.get_volume_kms_key(
+        volume_id=volume_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1638,6 +1754,37 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@boot_volume_kms_key_group.command(name=cli_util.override('update_boot_volume_kms_key.command_name', 'update'), help="""Update kms key id for the specific volume.""")
+@cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume.""")
+@cli_util.option('--kms-key-id', help="""The new kms key which will be used to protect the specific volume. This key has to be a valid kms key ocid, and user must have key delegation policy to allow them to access this key. Even if this new kms key is the same as the previous kms key id, block storage service will use it to regenerate a new volume encryption key. Example: `{\"kmsKeyId\": \"ocid1.key.region1.sea.afnl2n7daag4s.abzwkljs6uevhlgcznhmh7oiatyrxngrywc3tje3uk3g77hzmewqiieuk75f\"}`""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeKmsKey'})
+@cli_util.wrap_exceptions
+def update_boot_volume_kms_key(ctx, from_json, boot_volume_id, kms_key_id, if_match):
+
+    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.update_boot_volume_kms_key(
+        boot_volume_id=boot_volume_id,
+        update_boot_volume_kms_key_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @volume_group.command(name=cli_util.override('update_volume.command_name', 'update'), help="""Updates the specified volume's display name. Avoid entering confidential information.""")
 @cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1913,4 +2060,35 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_kms_key_group.command(name=cli_util.override('update_volume_kms_key.command_name', 'update'), help="""Update kms key id for the specific volume.""")
+@cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--kms-key-id', help="""The new kms key which will be used to protect the specific volume. This key has to be a valid kms key ocid, and user must have key delegation policy to allow them to access this key. Even if this new kms key is the same as the previous kms key id, block storage service will use it to regenerate a new volume encryption key. Example: `{\"kmsKeyId\": \"ocid1.key.region1.sea.afnl2n7daag4s.abzwkljs6uevhlgcznhmh7oiatyrxngrywc3tje3uk3g77hzmewqiieuk75f\"}`""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeKmsKey'})
+@cli_util.wrap_exceptions
+def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match):
+
+    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.update_volume_kms_key(
+        volume_id=volume_id,
+        update_volume_kms_key_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)

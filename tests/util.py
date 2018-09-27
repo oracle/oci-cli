@@ -78,9 +78,26 @@ SKIP_JSON_KEY_FORMAT_CHECK = set([
 ])
 
 
-# this allows generated tests to look up operations that have been moved in the CLI
+# this allows generated tests to look up operations that have been moved in code in the CLI
 MOVED_COMMANDS = {
     ('iam', 'user_group_membership', 'add'): ['iam', 'group', 'add-user'],
+    ('kms', 'encrypted_data', 'encrypt'): ['kms', 'crypto', 'encrypt'],
+    ('kms', 'decrypted_data', 'decrypt'): ['kms', 'crypto', 'decrypt'],
+    ('kms', 'generated_key', 'generate-data-encryption-key'): ['kms', 'crypto', 'generate-data-encryption-key'],
+    ('kms', 'vault', 'cancel-deletion'): ['kms', 'management', 'vault', 'cancel-deletion'],
+    ('kms', 'vault', 'schedule-deletion'): ['kms', 'management', 'vault', 'schedule-deletion'],
+    ('kms', 'vault', 'get'): ['kms', 'management', 'vault', 'get'],
+    ('kms', 'vault', 'create'): ['kms', 'management', 'vault', 'create'],
+    ('kms', 'vault', 'list'): ['kms', 'management', 'vault', 'list'],
+    ('kms', 'vault', 'delete'): ['kms', 'management', 'vault', 'delete'],
+    ('kms', 'vault', 'update'): ['kms', 'management', 'vault', 'update']
+}
+
+# this allows generated tests to look up operations that have been given an extra layer of nesting in the CLI
+NESTED_COMMANDS = {
+    'management': 'kms',
+    'vault': 'kms',
+    'crypto': 'kms'
 }
 
 # This global can be changed to influence what configuration data this module vends.
@@ -681,6 +698,9 @@ def get_json_from_mixed_string(source_string):
 
 
 def get_command_list(root_command, parent, leaf):
+    if root_command in NESTED_COMMANDS:
+        root_command = NESTED_COMMANDS[root_command]
+
     if (root_command, parent, leaf) in MOVED_COMMANDS:
         return MOVED_COMMANDS[(root_command, parent, leaf)]
 

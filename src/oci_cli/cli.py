@@ -5,17 +5,8 @@ from .cli_root import cli
 
 # Add additional service cli imports here.
 from .generated import *  # noqa: F401,F403
+from .extended import *  # noqa: F401,F403
 
-from . import audit_cli_extended  # noqa: F401
-from . import containerengine_cli_extended  # noqa: F401
-from . import core_cli_extended  # noqa: F401
-from . import database_cli_extended  # noqa: F401
-from . import dns_cli_extended  # noqa: F401
-from . import email_cli_extended  # noqa: F401
-from . import identity_cli_extended  # noqa: F401
-from . import lb_cli_extended  # noqa: F401
-from . import objectstorage_cli_extended  # noqa: F401
-from . import resourcesearch_cli_extended  # noqa: F401
 from . import final_command_processor  # noqa: F401
 from . import cli_setup  # noqa: F401
 

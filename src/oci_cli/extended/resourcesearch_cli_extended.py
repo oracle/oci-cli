@@ -1,9 +1,9 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
-from .generated import resourcesearch_cli
-from . import cli_util
-from . import json_skeleton_utils
+from ..generated import resourcesearch_cli
+from .. import cli_util
+from .. import json_skeleton_utils
 import click
 
 resourcesearch_cli.resource_summary_collection_group.commands.pop(resourcesearch_cli.search_resources.name)

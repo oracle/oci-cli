@@ -8,18 +8,18 @@ import json
 import re
 import six
 import sys
-from .generated import blockstorage_cli
-from .generated import compute_cli
-from .generated import virtualnetwork_cli
+from ..generated import blockstorage_cli
+from ..generated import compute_cli
+from ..generated import virtualnetwork_cli
 
 from oci import wait_until
 from oci.exceptions import ServiceError
 from oci.exceptions import MaximumWaitTimeExceeded
-from . import cli_util
-from . import custom_types
-from . import json_skeleton_utils
-from .aliasing import CommandGroupWithAlias
-from .cli_util import option
+from .. import cli_util
+from .. import custom_types
+from .. import json_skeleton_utils
+from ..aliasing import CommandGroupWithAlias
+from ..cli_util import option
 
 INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"
 DEFAULT_LOCAL_VNC_PORT = 5900

@@ -62,7 +62,7 @@ dns_root_group.add_command(zones_group)
 @cli_util.option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
 
-This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -577,7 +577,7 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
 @cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
-This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
@@ -622,7 +622,7 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
 @cli_util.option('--rtype', required=True, help="""The type of the target RRSet within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
-This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
@@ -669,7 +669,7 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
-This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
@@ -709,7 +709,7 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
 @cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
-This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
@@ -759,7 +759,7 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
 @cli_util.option('--rtype', required=True, help="""The type of the target RRSet within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
-This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
@@ -811,7 +811,7 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
 
-This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
@@ -874,7 +874,7 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
-This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.us-phoenix-1.oraclecloud.com/api/#.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
