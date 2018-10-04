@@ -70,12 +70,12 @@ def test_verify_namespace_name_param():
     for command in commands:
         for param in command.params:
             if any(p in param.opts for p in ['-ns', '--namespace', '--namespace-name']):
-                print(command.name)
+                print(command.parent.name, command.name, param.opts)
                 assert '-ns' in param.opts
                 assert '--namespace' in param.opts
                 assert '--namespace-name' in param.opts
             if any(p in param.opts for p in ['-bn', '--bucket-name']):
-                print(command.name)
+                print(command.parent.name, command.name, param.opts)
                 assert '-bn' in param.opts
                 assert '--bucket-name' in param.opts
 
@@ -662,6 +662,17 @@ def test_bucket_list_with_tags(runner, config_file, config_profile):
     for bucket_summary in parsed_data['data']:
         assert bucket_summary['defined-tags'] is not None
         assert bucket_summary['freeform-tags'] is not None
+
+
+def test_copy_object(runner, config_file, config_profile, test_id):
+    result = invoke(runner, config_file, config_profile, ['object', 'copy'])
+    assert "Error: Missing option" in result.output
+    assert "bucket-name" in result.output
+    assert "source-object-name" in result.output
+    assert "destination-bucket" in result.output
+    assert "destination-object-name" not in result.output
+    assert "destination-namespace" not in result.output
+    assert "destination-region" not in result.output
 
 
 def subtest_bucket_list(runner, config_file, config_profile):

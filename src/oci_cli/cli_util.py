@@ -722,6 +722,7 @@ def collect_commands(command):
     else:
         for _, subcommand in six.iteritems(command.commands):
             for descendent in collect_commands(subcommand):
+                descendent.parent = subcommand
                 yield descendent
 
 

@@ -1,0 +1,21 @@
+[
+  {
+    "action": "ARCHIVE",
+    "isEnabled": true,
+    "name": "archive-all-objects-after-30-days",
+    "timeAmount": 30,
+    "timeUnit": "DAYS"
+  },
+  {
+    "action": "ARCHIVE",
+    "isEnabled": true,
+    "name": "archive-tmp-objects-after-1-day",
+    "objectNameFilter": {
+      "inclusionPrefixes": [
+        "/tmp/"
+      ]
+    },
+    "timeAmount": 1,
+    "timeUnit": "DAYS"
+  }
+]

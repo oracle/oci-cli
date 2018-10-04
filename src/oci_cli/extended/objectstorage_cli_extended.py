@@ -18,6 +18,7 @@ from .. import retry_utils
 from ..object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
 from .. import json_skeleton_utils
 from ..aliasing import CommandGroupWithAlias
+from .. import custom_types  # noqa: F401
 from ..custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 from ..generated import objectstorage_cli
 from .. import cli_util
@@ -57,6 +58,12 @@ Namespace metadata stores the compartment assignments for resources created by t
 
 get_param(objectstorage_cli.get_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_namespace_metadata, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.delete_object_lifecycle_policy, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.delete_object_lifecycle_policy, 'bucket_name').opts.extend(['-bn'])
+get_param(objectstorage_cli.get_object_lifecycle_policy, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.get_object_lifecycle_policy, 'bucket_name').opts.extend(['-bn'])
+get_param(objectstorage_cli.put_object_lifecycle_policy, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.put_object_lifecycle_policy, 'bucket_name').opts.extend(['-bn'])
 
 objectstorage_cli.bucket_group.commands.pop(objectstorage_cli.head_bucket.name)
 get_param(objectstorage_cli.create_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
@@ -67,8 +74,11 @@ get_param(objectstorage_cli.get_bucket, 'namespace_name').opts.extend(['--namesp
 get_param(objectstorage_cli.list_buckets, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.update_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
+get_param(objectstorage_cli.copy_object, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.copy_object, 'bucket_name').opts.extend(['-bn'])
 
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.abort_multipart_upload.name)
+objectstorage_cli.object_group.commands.pop(objectstorage_cli.copy_object.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.create_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.commit_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.get_object.name)
@@ -1450,6 +1460,25 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
                 raise
 
     render_response(client.abort_multipart_upload(namespace, bucket_name, object_name, upload_id), ctx)
+
+
+@cli_util.copy_params_from_generated_command(objectstorage_cli.copy_object, params_to_exclude=['destination_object_name', 'destination_region', 'destination_namespace'])
+@objectstorage_cli.object_group.command(name='copy', help=objectstorage_cli.copy_object.help)
+@cli_util.option('--destination-region', help="""The destination region object will be copied to.""")
+@cli_util.option('--destination-namespace', help="""The destination namespace object will be copied to.""")
+@cli_util.option('--destination-object-name', help="""The destination name for the copy object.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def copy_object(ctx, **kwargs):
+    if 'source_object_name' in kwargs and ('destination_object_name' not in kwargs or kwargs['destination_object_name'] is None):
+        kwargs['destination_object_name'] = kwargs['source_object_name']
+    if 'destination_namespace' not in kwargs or kwargs['destination_namespace'] is None:
+        client = build_client('object_storage', ctx)
+        kwargs['destination_namespace'] = client.get_namespace().data
+    if 'destination_region' not in kwargs or kwargs['destination_region'] is None:
+        kwargs['destination_region'] = ctx.obj['config']['region']
+    ctx.invoke(objectstorage_cli.copy_object, **kwargs)
 
 
 objectstorage_cli.os_root_group.add_command(multipart)

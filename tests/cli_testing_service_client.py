@@ -4,7 +4,7 @@
 # TODO: handle 'missing option' (missing parameter required) verification locally since CLI doesnt send request to service
 
 import json
-import requests
+from oci._vendor import requests
 from oci_cli.cli_util import use_or_generate_request_id, make_dict_keys_camel_case, LIST_NOT_ALL_ITEMS_RETURNED_WARNING
 
 # if you are running the CLI tests inside a docker container on Mac, change SERVICE_HOSTNAME to 'docker.for.mac.localhost'
