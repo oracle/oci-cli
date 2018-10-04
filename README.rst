@@ -13,7 +13,13 @@ __ https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/cliconcepts.ht
 Installation
 ============
 
-Mac / Linux
+Oracle Linux 7.x
+----------------
+::
+
+   $ sudo yum install -y python-oci-cli
+
+Mac / Other Linux
 -----------
 ::
 
