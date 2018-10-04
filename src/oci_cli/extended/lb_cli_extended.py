@@ -202,10 +202,8 @@ def update_backend_set(ctx, **kwargs):
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
-@cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)
@@ -220,10 +218,8 @@ def create_listener(ctx, **kwargs):
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
-@json_skeleton_utils.get_cli_json_input_option({'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
-@cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)

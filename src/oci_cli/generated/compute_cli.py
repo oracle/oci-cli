@@ -20,16 +20,6 @@ def compute_root_group():
     pass
 
 
-@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def volume_group():
-    pass
-
-
 @click.command(cli_util.override('image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -40,12 +30,6 @@ def image_group():
     pass
 
 
-@click.command(cli_util.override('instance_credentials_group.command_name', 'instance-credentials'), cls=CommandGroupWithAlias, help="""The credentials for a particular instance.""")
-@cli_util.help_option_group
-def instance_credentials_group():
-    pass
-
-
 @click.command(cli_util.override('instance_group.command_name', 'instance'), cls=CommandGroupWithAlias, help="""A compute host. The image used to launch the instance determines its operating system and other software. The shape specified during the launch process determines the number of CPUs and memory allocated to the instance. For more information, see [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -53,16 +37,6 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def instance_group():
-    pass
-
-
-@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
-@cli_util.help_option_group
-def boot_volume_group():
     pass
 
 
@@ -90,6 +64,24 @@ def volume_attachment_group():
     pass
 
 
+@click.command(cli_util.override('app_catalog_listing_resource_version_group.command_name', 'app-catalog-listing-resource-version'), cls=CommandGroupWithAlias, help="""Listing Resource Version""")
+@cli_util.help_option_group
+def app_catalog_listing_resource_version_group():
+    pass
+
+
+@click.command(cli_util.override('app_catalog_listing_group.command_name', 'app-catalog-listing'), cls=CommandGroupWithAlias, help="""Listing details.""")
+@cli_util.help_option_group
+def app_catalog_listing_group():
+    pass
+
+
+@click.command(cli_util.override('app_catalog_subscription_group.command_name', 'app-catalog-subscription'), cls=CommandGroupWithAlias, help="""a subscription for a listing resource version.""")
+@cli_util.help_option_group
+def app_catalog_subscription_group():
+    pass
+
+
 @click.command(cli_util.override('boot_volume_attachment_group.command_name', 'boot-volume-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a boot volume and an instance.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -106,6 +98,38 @@ def instance_console_connection_group():
     pass
 
 
+@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def volume_group():
+    pass
+
+
+@click.command(cli_util.override('instance_credentials_group.command_name', 'instance-credentials'), cls=CommandGroupWithAlias, help="""The credentials for a particular instance.""")
+@cli_util.help_option_group
+def instance_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def boot_volume_group():
+    pass
+
+
+@click.command(cli_util.override('app_catalog_listing_resource_version_agreements_group.command_name', 'app-catalog-listing-resource-version-agreements'), cls=CommandGroupWithAlias, help="""Agreements for a listing resource version.""")
+@cli_util.help_option_group
+def app_catalog_listing_resource_version_agreements_group():
+    pass
+
+
 @click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the instance boots, such as kernel and BIOS messages, and is useful for checking the status of the instance or diagnosing problems. The console data is minimally formatted ASCII text.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -114,16 +138,20 @@ def console_history_group():
     pass
 
 
-compute_root_group.add_command(volume_group)
 compute_root_group.add_command(image_group)
-compute_root_group.add_command(instance_credentials_group)
 compute_root_group.add_command(instance_group)
-compute_root_group.add_command(boot_volume_group)
 compute_root_group.add_command(shape_group)
 compute_root_group.add_command(vnic_attachment_group)
 compute_root_group.add_command(volume_attachment_group)
+compute_root_group.add_command(app_catalog_listing_resource_version_group)
+compute_root_group.add_command(app_catalog_listing_group)
+compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(instance_console_connection_group)
+compute_root_group.add_command(volume_group)
+compute_root_group.add_command(instance_credentials_group)
+compute_root_group.add_command(boot_volume_group)
+compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
 compute_root_group.add_command(console_history_group)
 
 
@@ -443,6 +471,53 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@app_catalog_subscription_group.command(name=cli_util.override('create_app_catalog_subscription.command_name', 'create'), help="""Create a subscription for listing resource version for a compartment. It will take some time to propagate to all regions.""")
+@cli_util.option('--compartment-id', help="""The compartmentID for the subscription.""")
+@cli_util.option('--listing-id', help="""The OCID of the listing.""")
+@cli_util.option('--listing-resource-version', help="""Listing resource version.""")
+@cli_util.option('--oracle-terms-of-use-link', help="""Oracle TOU link""")
+@cli_util.option('--eula-link', help="""EULA link""")
+@cli_util.option('--time-retrieved', type=custom_types.CLI_DATETIME, help="""Date and time the agreements were retrieved, in RFC3339 format. Example: `2018-03-20T12:32:53.532Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--signature', help="""A generated signature for this listing resource version retrieved the agreements API.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AppCatalogSubscription'})
+@cli_util.wrap_exceptions
+def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, listing_resource_version, oracle_terms_of_use_link, eula_link, time_retrieved, signature):
+    kwargs = {}
+
+    details = {}
+
+    if compartment_id is not None:
+        details['compartmentId'] = compartment_id
+
+    if listing_id is not None:
+        details['listingId'] = listing_id
+
+    if listing_resource_version is not None:
+        details['listingResourceVersion'] = listing_resource_version
+
+    if oracle_terms_of_use_link is not None:
+        details['oracleTermsOfUseLink'] = oracle_terms_of_use_link
+
+    if eula_link is not None:
+        details['eulaLink'] = eula_link
+
+    if time_retrieved is not None:
+        details['timeRetrieved'] = time_retrieved
+
+    if signature is not None:
+        details['signature'] = signature
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.create_app_catalog_subscription(
+        create_app_catalog_subscription_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @image_group.command(name=cli_util.override('create_image.command_name', 'create'), help="""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Cloud Infrastructure Object Storage service.
 
 When creating a new image, you must provide the OCID of the instance you want to use as the basis for the image, and the OCID of the compartment containing that instance. For more information about images, see [Managing Custom Images].
@@ -580,6 +655,28 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@app_catalog_subscription_group.command(name=cli_util.override('delete_app_catalog_subscription.command_name', 'delete'), help="""Delete a subscription for a listing resource version for a compartment.""")
+@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--resource-version', required=True, help="""Listing Resource Version.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, resource_version):
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.delete_app_catalog_subscription(
+        listing_id=listing_id,
+        compartment_id=compartment_id,
+        resource_version=resource_version,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1099,6 +1196,76 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
     cli_util.render_response(result, ctx)
 
 
+@app_catalog_listing_group.command(name=cli_util.override('get_app_catalog_listing.command_name', 'get'), help="""Gets the specified listing.""")
+@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AppCatalogListing'})
+@cli_util.wrap_exceptions
+def get_app_catalog_listing(ctx, from_json, listing_id):
+
+    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_app_catalog_listing(
+        listing_id=listing_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@app_catalog_listing_resource_version_agreements_group.command(name=cli_util.override('get_app_catalog_listing_agreements.command_name', 'get-app-catalog-listing-agreements'), help="""Retrieves the agreements for a particular resource version of a listing.""")
+@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
+@cli_util.option('--resource-version', required=True, help="""Listing Resource Version.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AppCatalogListingResourceVersionAgreements'})
+@cli_util.wrap_exceptions
+def get_app_catalog_listing_agreements(ctx, from_json, listing_id, resource_version):
+
+    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+
+    if isinstance(resource_version, six.string_types) and len(resource_version.strip()) == 0:
+        raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_app_catalog_listing_agreements(
+        listing_id=listing_id,
+        resource_version=resource_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@app_catalog_listing_resource_version_group.command(name=cli_util.override('get_app_catalog_listing_resource_version.command_name', 'get'), help="""Gets the specified listing resource version.""")
+@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
+@cli_util.option('--resource-version', required=True, help="""Listing Resource Version.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AppCatalogListingResourceVersion'})
+@cli_util.wrap_exceptions
+def get_app_catalog_listing_resource_version(ctx, from_json, listing_id, resource_version):
+
+    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+
+    if isinstance(resource_version, six.string_types) and len(resource_version.strip()) == 0:
+        raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_app_catalog_listing_resource_version(
+        listing_id=listing_id,
+        resource_version=resource_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_attachment_group.command(name=cli_util.override('get_boot_volume_attachment.command_name', 'get'), help="""Gets information about the specified boot volume attachment.""")
 @cli_util.option('--boot-volume-attachment-id', required=True, help="""The OCID of the boot volume attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1376,6 +1543,8 @@ They are distinguished from 'metadata' fields in that these can be nested JSON o
 
 If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
 
+To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -1502,15 +1671,184 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@app_catalog_listing_resource_version_group.command(name=cli_util.override('list_app_catalog_listing_resource_versions.command_name', 'list'), help="""Gets all resource versions for a particular listing.""")
+@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[AppCatalogListingResourceVersionSummary]'})
+@cli_util.wrap_exceptions
+def list_app_catalog_listing_resource_versions(ctx, from_json, all_pages, page_size, listing_id, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_app_catalog_listing_resource_versions,
+            listing_id=listing_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_app_catalog_listing_resource_versions,
+            limit,
+            page_size,
+            listing_id=listing_id,
+            **kwargs
+        )
+    else:
+        result = client.list_app_catalog_listing_resource_versions(
+            listing_id=listing_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@app_catalog_listing_group.command(name=cli_util.override('list_app_catalog_listings.command_name', 'list'), help="""Lists the published listings.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--publisher-name', help="""A filter to return only the publisher that matches the given publisher name exactly.""")
+@cli_util.option('--publisher-type', help="""A filter to return only publishers that match the given publisher type exactly. Valid types are OCI, ORACLE, TRUSTED, STANDARD.""")
+@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[AppCatalogListingSummary]'})
+@cli_util.wrap_exceptions
+def list_app_catalog_listings(ctx, from_json, all_pages, page_size, limit, page, sort_order, publisher_name, publisher_type, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if publisher_name is not None:
+        kwargs['publisher_name'] = publisher_name
+    if publisher_type is not None:
+        kwargs['publisher_type'] = publisher_type
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_app_catalog_listings,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_app_catalog_listings,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_app_catalog_listings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@app_catalog_subscription_group.command(name=cli_util.override('list_app_catalog_subscriptions.command_name', 'list'), help="""Lists subscriptions for a compartment.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--listing-id', help="""A filter to return only the listings that matches the given listing id.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[AppCatalogSubscriptionSummary]'})
+@cli_util.wrap_exceptions
+def list_app_catalog_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, listing_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if listing_id is not None:
+        kwargs['listing_id'] = listing_id
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_app_catalog_subscriptions,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_app_catalog_subscriptions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_app_catalog_subscriptions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_attachment_group.command(name=cli_util.override('list_boot_volume_attachments.command_name', 'list'), help="""Lists the boot volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, boot volume OCID, or both.""")
 @cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--boot-volume-id', help="""The OCID of the boot volume.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1567,10 +1905,10 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
 @cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -1643,10 +1981,10 @@ Example: `Oracle Linux`""")
 
 Example: `7.2`""")
 @cli_util.option('--shape', help="""Shape name.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
@@ -1713,10 +2051,10 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
 For more information about console access, see [Accessing the Console].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1767,10 +2105,10 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
@@ -1835,10 +2173,10 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
 @cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--image-id', help="""The OCID of an image.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1892,10 +2230,10 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--vnic-id', help="""The OCID of the VNIC.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1952,10 +2290,10 @@ Currently, the only supported volume attachment type are [IScsiVolumeAttachment]
 @cli_util.option('--availability-domain', help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--volume-id', help="""The OCID of the volume.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

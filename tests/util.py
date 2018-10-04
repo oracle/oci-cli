@@ -90,7 +90,15 @@ MOVED_COMMANDS = {
     ('kms', 'vault', 'create'): ['kms', 'management', 'vault', 'create'],
     ('kms', 'vault', 'list'): ['kms', 'management', 'vault', 'list'],
     ('kms', 'vault', 'delete'): ['kms', 'management', 'vault', 'delete'],
-    ('kms', 'vault', 'update'): ['kms', 'management', 'vault', 'update']
+    ('kms', 'vault', 'update'): ['kms', 'management', 'vault', 'update'],
+    ('compute', 'app_catalog_listing', 'get'): ['compute', 'pic', 'listing', 'get'],
+    ('compute', 'app_catalog_listing', 'list'): ['compute', 'pic', 'listing', 'list'],
+    ('compute', 'app_catalog_listing_resource_version', 'get'): ['compute', 'pic', 'version', 'get'],
+    ('compute', 'app_catalog_listing_resource_version', 'list'): ['compute', 'pic', 'version', 'list'],
+    ('compute', 'app_catalog_listing_resource_version_agreements', 'get-app-catalog-listing-agreements'): ['compute', 'pic', 'agreements', 'get'],
+    ('compute', 'app_catalog_subscription', 'create'): ['compute', 'pic', 'subscription', 'create'],
+    ('compute', 'app_catalog_subscription', 'delete'): ['compute', 'pic', 'subscription', 'delete'],
+    ('compute', 'app_catalog_subscription', 'list'): ['compute', 'pic', 'subscription', 'list']
 }
 
 # this allows generated tests to look up operations that have been given an extra layer of nesting in the CLI

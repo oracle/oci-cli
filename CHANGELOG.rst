@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.34 - 2018-10-04
+---------------------
+Added
+~~~~~~~~
+* Support to consume Image Catalog Listings as part of Compute Service
+
+  * (``oci compute pic listing``)
+  * (``oci compute pic version``)
+  * (``oci compute pic agreements``)
+  * (``oci compute pic subscription``)  
+
+* Support for Cross Region Copy in Object Storage.
+
+  * (``oci os object copy --bucket-name --source-object-name --destination-region --destination-namespace --destination-bucket --destination-object``)
+
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/copy_object_example.sh>`__
+
+* Support for Object Lifecycle Management as part of the Object Storage service.
+
+  * (``oci os object-lifecycle-policy put``)
+  * (``oci os object-lifecycle-policy get``)
+  * (``oci os object-lifecycle-policy delete``)
+
+* Support for network address translation gateway in Networking service
+
+  * (``oci network nat-gateway create``)
+  * (``oci network nat-gateway delete``)
+  * (``oci network nat-gateway get``)
+  * (``oci network nat-gateway list``)
+  * (``oci network nat-gateway update``)
+
 2.4.33 - 2018-09-27
 ---------------------
 Added
