@@ -4,6 +4,7 @@
 # TODO: handle 'missing option' (missing parameter required) verification locally since CLI doesnt send request to service
 
 import json
+import base64
 from oci._vendor import requests
 from oci_cli.cli_util import use_or_generate_request_id, make_dict_keys_camel_case, LIST_NOT_ALL_ITEMS_RETURNED_WARNING
 
@@ -55,7 +56,8 @@ class CLITestingServiceClient:
             print('Failed to parse testing service response as valid JSON. Response: ' + response_content)
             raise e
 
-    def validate_result(self, service_name, api_name, container_id, request, result, data_field_name, is_delete_operation):
+    def validate_result(self, service_name, api_name, container_id, request, result, data_field_name, is_delete_operation,
+                        is_binary_operation=False, filename=None):
         """
         Calls the testing service to validate a CLI command result.
 
@@ -81,6 +83,15 @@ class CLITestingServiceClient:
         :param str data_field_name:
             The CLI returns the main resource under the field name 'data' but we need to convert it to
             the name used in the Java SDK (e.g. for GetGroup data -> group)
+
+        :param is_delete_operation:
+            Field to indicate if the operation is a delete operation
+
+        :param is_binary_operation:
+            Field to indicate if the operation produces binary output (default: False)
+
+        :param filename:
+            Field for the file to read from, for binary data (default: None)
 
         :return: None
 
@@ -109,7 +120,11 @@ class CLITestingServiceClient:
             output = result.output.replace(LIST_NOT_ALL_ITEMS_RETURNED_WARNING, '')
 
             # list and delete CLI commands can return an empty string so specially handle those cases
-            if len(output) == 0:
+            if is_binary_operation:
+                with open(filename, 'rb') as f:
+                    content = f.read()
+                normalized_response_json = {"inputStream": str(base64.b64encode(content).decode('utf-8')), "contentLength": len(content)}
+            elif len(output) == 0:
                 if api_name.lower().startswith('list'):
                     normalized_response_json = {data_field_name: []}
                 elif is_delete_operation:

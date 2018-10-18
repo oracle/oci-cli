@@ -1,14 +1,17 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
+from __future__ import print_function
 from ..generated import audit_cli
 from .. import cli_util
 from .. import custom_types
 from .. import json_skeleton_utils
-
+from timeit import default_timer as timer
 import click
+import sys
 
 audit_cli.configuration_group.commands.pop(audit_cli.update_configuration.name)
+audit_cli.audit_event_group.commands.pop(audit_cli.list_events.name)
 
 cli_util.get_param(audit_cli.list_events, 'start_time').type = custom_types.CLI_DATETIME_ROUNDED_MINUTE
 cli_util.get_param(audit_cli.list_events, 'end_time').type = custom_types.CLI_DATETIME_ROUNDED_MINUTE
@@ -30,3 +33,64 @@ cli_util.update_param_help(audit_cli.list_events, 'end_time', audit_end_time_hel
 @cli_util.wrap_exceptions
 def update_configuration(ctx, **kwargs):
     ctx.invoke(audit_cli.update_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(audit_cli.list_events, params_to_exclude=[])
+@audit_cli.audit_event_group.command(name=cli_util.override('list_events.command_name', 'list-events'), help=audit_cli.list_events.help)
+@cli_util.option('--skip-deserialization', 'skip_deserialization', is_flag=True, help="""Skips deserializing service response into python sdk response models and returns as plain JSON object.""")
+@cli_util.option('--stream-output', 'stream_output', is_flag=True, help="""Print output to stdout as it is fetched so the full response is not stored in memory. This only works with --all.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def list_events(ctx, from_json, all_pages, compartment_id, start_time, end_time, page, skip_deserialization, stream_output):
+    if ctx.obj['debug']:
+        start_command = timer()
+        cli_util.output_memory('total memory usage before command execution: ')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    if skip_deserialization:
+        ctx.obj['skip_deserialization'] = True
+
+    client = cli_util.build_client('audit', ctx)
+    if all_pages:
+        result = cli_util.list_call_get_all_results(
+            client.list_events,
+            stream_output=stream_output,
+            ctx=ctx,
+            is_json=True,
+            compartment_id=compartment_id,
+            start_time=start_time,
+            end_time=end_time,
+            **kwargs
+        )
+    else:
+        # TODO: figure out streaming output for single page
+        if stream_output:
+            print("--stream-output requires --all.", file=sys.stderr)
+            return
+
+        result = client.list_events(
+            compartment_id=compartment_id,
+            start_time=start_time,
+            end_time=end_time,
+            **kwargs
+        )
+    if stream_output:
+        # we've already printed everything
+        if ctx.obj['debug']:
+            print("", file=sys.stderr)
+    else:
+        start_render = timer()
+        cli_util.render_response(result, ctx)
+        if ctx.obj['debug']:
+            print("", file=sys.stderr)
+            end_render = timer()
+            print("Time elapsed for total rendering response: {}".format(end_render - start_render), file=sys.stderr)
+    if ctx.obj['debug']:
+        end_command = timer()
+        print("Time elapsed for total command execution: {}".format(end_command - start_command), file=sys.stderr)
+        cli_util.output_memory('total memory usage after command execution: ')

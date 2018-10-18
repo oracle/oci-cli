@@ -7,7 +7,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
-from oci_cli import cli_util
+from oci_cli import cli_util, cli_setup
 from . import tag_data_container
 from . import test_config_container
 
@@ -20,6 +20,7 @@ import os.path
 import pytest
 import random
 import time
+import configparser
 
 
 # docs on VCR log levels: http://vcrpy.readthedocs.io/en/latest/debugging.html
@@ -170,6 +171,42 @@ def cli_testing_service_client():
             client.end_session()
     except ImportError:
         yield None
+
+
+# Input: config file location
+# Output: 1) ConfigParser config object and
+#         2) List of sections from config file e.g. ['DEFAULT', 'ADMIN', 'PHX']
+def get_config_profiles(config_file):
+    expanded_file_location = os.path.expandvars(os.path.expanduser(config_file))
+    config = configparser.ConfigParser(interpolation=None)
+    if not config.read(expanded_file_location):
+        raise IOError("No such file or directory: {}".format(expanded_file_location))
+    config_profiles = config.sections()
+    # The 'DEFAULT' section is not returned as part of sections() call so we need to add it if present in config object.
+    if 'DEFAULT' in config:
+        config_profiles.extend(['DEFAULT'])
+    return config, config_profiles
+
+
+# This fixture ensures the file permissions are correct when CLI pytests are run.
+# We generally expect users to source test_setup.sh which ensures correct file permissions before running the tests.
+# This fixture helps in cases where permissions accidentally get changed again causing errors while running tests.
+# The function below fixes the 'key_file' permissions for all profiles in the config file since at this point we do not
+# know which profile user will use for a test case.
+# There is a corner case where user might give a file path explicitly in the test case. This should be rare and is
+# intentionally not taken care of as a trade-off for an elegant solution. This function has an added benefit of
+# throwing an early and appropriate 'File not found' error if the config file location is incorrect.
+# Input: config_file fixture
+# Output: None. It changes the file permissions for 'config' and 'key' files for all profiles in config file.
+@pytest.fixture(scope='session', autouse=True)
+def fix_config_and_key_file_permissions(config_file):
+    cli_setup.apply_user_only_access_permissions(os.path.expandvars(os.path.expanduser(config_file)))
+    config, config_profiles = get_config_profiles(config_file)
+    for config_profile_name in config_profiles:
+        config_key_file_path = os.path.expandvars(os.path.expanduser(config[config_profile_name]['key_file']))
+        # Below check ensures we do not raise an exception when the key file is not found for a particular profile
+        if (os.path.isfile(config_key_file_path)):
+            cli_setup.apply_user_only_access_permissions(config_key_file_path)
 
 
 @pytest.fixture(scope='module')

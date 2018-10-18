@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('kms_management_root_group.command_name', 'kms_management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_management_root_group.short_help', """Key Management Service API"""))
+@cli.command(cli_util.override('kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_management_root_group.short_help', """Key Management Service API"""))
 @cli_util.help_option_group
 def kms_management_root_group():
     pass
@@ -36,7 +36,9 @@ kms_management_root_group.add_command(key_version_group)
 kms_management_root_group.add_command(key_group)
 
 
-@key_group.command(name=cli_util.override('create_key.command_name', 'create'), help="""Creates a new key.""")
+@key_group.command(name=cli_util.override('create_key.command_name', 'create'), help="""Creates a new key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment that contains this key.""")
 @cli_util.option('--display-name', required=True, help="""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -81,7 +83,9 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help="""Generates new cryptographic material for a key. Key must be in an `ENABLED` state to be rotated.""")
+@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help="""Generates new cryptographic material for a key. Key must be in an `ENABLED` state to be rotated.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -102,7 +106,9 @@ def create_key_version(ctx, from_json, key_id):
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('disable_key.command_name', 'disable'), help="""Disables a key to make it unavailable for encryption or decryption.""")
+@key_group.command(name=cli_util.override('disable_key.command_name', 'disable'), help="""Disables a key to make it unavailable for encryption or decryption.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -145,7 +151,9 @@ def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('enable_key.command_name', 'enable'), help="""Enables a key to make it available for encryption or decryption.""")
+@key_group.command(name=cli_util.override('enable_key.command_name', 'enable'), help="""Enables a key to make it available for encryption or decryption.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -188,7 +196,9 @@ def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('get_key.command_name', 'get'), help="""Gets information about the specified key.""")
+@key_group.command(name=cli_util.override('get_key.command_name', 'get'), help="""Gets information about the specified key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -209,7 +219,9 @@ def get_key(ctx, from_json, key_id):
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('get_key_version.command_name', 'get'), help="""Gets information about the specified key version.""")
+@key_version_group.command(name=cli_util.override('get_key_version.command_name', 'get'), help="""Gets information about the specified key version.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @cli_util.option('--key-version-id', required=True, help="""The OCID of the key version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -235,7 +247,9 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('list_key_versions.command_name', 'list'), help="""Lists all key versions for the specified key.""")
+@key_version_group.command(name=cli_util.override('list_key_versions.command_name', 'list'), help="""Lists all key versions for the specified key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -291,7 +305,9 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('list_keys.command_name', 'list'), help="""Lists the keys in the specified vault and compartment.""")
+@key_group.command(name=cli_util.override('list_keys.command_name', 'list'), help="""Lists the keys in the specified vault and compartment.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -344,7 +360,9 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help="""Updates the properties of a key. Specifically, you can only update the `displayName` property. Furthermore, the key must in an `ACTIVE` or `CREATING` state.""")
+@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help="""Updates the properties of a key. Specifically, you can only update the `displayName` property. Furthermore, the key must in an `ACTIVE` or `CREATING` state.
+
+The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
 @cli_util.option('--display-name', help="""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

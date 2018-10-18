@@ -32,6 +32,10 @@ echo "Creating second tag"
 TAG_TWO_NAME="cli_example_tag_2"
 oci iam tag create --tag-namespace-id $TAG_NAMESPACE_ID --name $TAG_TWO_NAME --description "A description of the tag"
 
+echo "Creating cost tracking tag"
+COST_TRACKING_TAG_NAME="cli_example_cost_tracking_tag"
+oci iam tag create --tag-namespace-id $TAG_NAMESPACE_ID  --name $COST_TRACKING_TAG_NAME  --description "A description for cost tracking tag" --is-cost-tracking true
+
 # We can retrieve individual namespaces
 echo "Getting tag namespace"
 oci iam tag-namespace get --tag-namespace-id $TAG_NAMESPACE_ID
@@ -48,6 +52,10 @@ oci iam tag-namespace list -c $COMPARTMENT_ID --all
 # just a single page of results
 echo "Listing tag namespaces in tenancy and sub-compartments"
 oci iam tag-namespace list -c $TENANCY_ID --include-subcompartments true --all
+
+# Listing tag namespace from tenancy
+echo "Listing cost tracking tags in tenancy"
+oci iam tag list-cost-tracking -c $TENANCY_ID
 
 # We can also use jq filters to only get non-retired namespaces. The filter here is:
 #
@@ -76,6 +84,7 @@ oci iam tag list --tag-namespace-id $TAG_NAMESPACE_ID --all
 echo "Reactivating tags"
 oci iam tag reactivate --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $TAG_ONE_NAME
 oci iam tag reactivate --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $TAG_TWO_NAME
+oci iam tag reactivate --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $COST_TRACKING_TAG_NAME
 
 echo "Retiring an individual tag"
 oci iam tag retire --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $TAG_ONE_NAME
@@ -93,6 +102,11 @@ oci iam tag-namespace update --tag-namespace-id $TAG_NAMESPACE_ID --description 
 # tags to the tag using the --defined-tags and --freeform-tags parameters
 echo "Updating tag $TAG_ONE_NAME description"
 oci iam tag update --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $TAG_ONE_NAME --description "An updated description"
+
+# We can also update tag descriptions. Similar to tag namespaces, this operation can also be used to assign
+# tags to the tag using the --defined-tags and --freeform-tags parameters
+echo "Updating cost tracking tag $COST_TRACKING_TAG_NAME to a regular tag"
+oci iam tag update --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $COST_TRACKING_TAG_NAME --description "A description for cost tracking tag" --is-cost-tracking false
 
 # If we create/update and then try to use tags straight away, sometimes we can get a 404. To try and avoid this, the script
 # adds a short delay between the tag management operations and using the tags on resources

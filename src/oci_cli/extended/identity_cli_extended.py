@@ -273,47 +273,14 @@ def update_policy(ctx, from_json, policy_id, description, statements, version_da
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
 def update_tag_description(ctx, **kwargs):
-    tag_namespace_id = kwargs['tag_namespace_id']
-    tag_name = kwargs['tag_name']
-    description = kwargs.get('description')
-    freeform_tags = kwargs.get('freeform_tags')
-    defined_tags = kwargs.get('defined_tags')
-
-    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
-        raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
-
-    if isinstance(tag_name, six.string_types) and len(tag_name.strip()) == 0:
-        raise click.UsageError('Parameter --tag-name cannot be whitespace or empty string')
-
-    if not kwargs.get('force'):
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
-                ctx.abort()
-
-    service_kwargs = {}
-    details = {}
-
-    if description is not None:
-        details['description'] = kwargs['description']
-
-    if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    client = cli_util.build_client('identity', ctx)
-    result = client.update_tag(
-        tag_namespace_id=tag_namespace_id,
-        tag_name=tag_name,
-        update_tag_details=details,
-        **service_kwargs
-    )
-    cli_util.render_response(result, ctx)
+    ctx.invoke(identity_cli.update_tag, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(identity_cli.update_tag, params_to_exclude=['is_retired', 'force', 'description', 'freeform_tags', 'defined_tags', 'from_json'])
-@identity_cli.tag_group.command(name='retire', short_help='Retire tag and related rules', help="""Retires a tag so that it cannot be used to tag resources. Retiring a tag will also retire the related rules. You can not a tag with the same name as a retired tag. Tags must be unique within their tag namespace but can be repeated across namespaces. You cannot add a tag with the same name as a retired tag in the same tag namespace.""")
+@identity_cli.tag_group.command(name='retire', short_help='Retire tag and related rules', help="""Retires a tag so that it cannot be used to tag resources. Retiring a tag will also retire the related rules. You can not create a tag with the same name as a retired tag. Tags must be unique within their tag namespace but can be repeated across namespaces. You cannot add a tag with the same name as a retired tag in the same tag namespace.""")
+@cli_util.option('--tag-namespace-id', required=True, help="""The OCID of the tag namespace.""")
+@cli_util.option('--tag-name', required=True, help="""The name of the tag.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
@@ -340,8 +307,11 @@ def retire_tag(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(identity_cli.update_tag, params_to_exclude=['is_retired', 'force', 'description', 'freeform_tags', 'defined_tags', 'from_json'])
 @identity_cli.tag_group.command(name='reactivate', help="""Reactivate tag so it can be used""")
+@cli_util.option('--tag-namespace-id', required=True, help="""The OCID of the tag namespace.""")
+@cli_util.option('--tag-name', required=True, help="""The name of the tag.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
@@ -408,8 +378,10 @@ def update_tag_namespace_description(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(identity_cli.update_tag_namespace, params_to_exclude=['is_retired', 'force', 'description', 'from_json', 'freeform_tags', 'defined_tags'])
 @identity_cli.tag_namespace_group.command(name='retire', short_help='Retire namespace and its tags and rules', help="""Retire the namespace, all the contained tags and the related rules. Reactivating a namespace  will not reactivate any tag definition that is retired when the namespace was retired. They will have to be individually reactivated *after* the namespace is reactivated. You can't add a namespace with the same name as a retired namespace in the same tenant.""")
+@cli_util.option('--tag-namespace-id', required=True, help="""The OCID of the tag namespace.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions
@@ -428,8 +400,10 @@ def retire_tag_namespace(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(identity_cli.update_tag_namespace, params_to_exclude=['is_retired', 'force', 'description', 'from_json', 'freeform_tags', 'defined_tags'])
 @identity_cli.tag_namespace_group.command(name='reactivate', short_help='Reactivate namespace (only)', help="""Reactivates a namespace. Reactivating a namespace will not reactivate any tag definition that is retired when the namespace was retired. They will have to be individually reactivated *after* the namespace is reactivated.""")
+@cli_util.option('--tag-namespace-id', required=True, help="""The OCID of the tag namespace.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions

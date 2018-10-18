@@ -49,9 +49,11 @@ VIRTUALENV_ARCHIVE_SHA256 = 'a9759798e8bf7398084ef08c5ba98d4fb38bf2d2d9897deb01e
 
 DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
 DEFAULT_EXEC_DIR = os.path.expanduser(os.path.join('~', 'bin'))
+DEFAULT_SCRIPT_DIR = os.path.expanduser(os.path.join('~', 'bin', 'oci-cli-scripts'))
 OCI_EXECUTABLE_NAME = 'oci.exe' if is_windows() else 'oci'
 # 'bmcs' is deprecated and is retained for backwards compatibiity, it will be removed completely in March 2018.
 BMCS_EXECUTABLE_NAME = 'bmcs.exe' if is_windows() else 'bmcs'
+DBAAS_SCRIPT_NAME = 'create_backup_from_onprem.exe' if is_windows() else 'create_backup_from_onprem'
 
 USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
 USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
@@ -237,6 +239,27 @@ def get_exec_dir(install_dir):
     create_dir(exec_dir)
     print_status("The executable will be in '{}'.".format(exec_dir))
     return exec_dir
+
+
+def get_script_dir(install_dir):
+    script_dir = None
+    while not script_dir:
+        prompt_message = "In what directory would you like to place the OCI scripts?".format(OCI_EXECUTABLE_NAME)
+        script_dir = prompt_input_with_default(prompt_message, DEFAULT_SCRIPT_DIR)
+        script_dir = os.path.realpath(os.path.expanduser(script_dir))
+        if ' ' in script_dir:
+            print_status("The script directory '{}' cannot contain spaces.".format(script_dir))
+            script_dir = None
+
+        install_dir_bin_folder = 'Scripts' if is_windows() else 'bin'
+        install_bin_dir = os.path.join(install_dir, install_dir_bin_folder)
+        if script_dir == install_bin_dir:
+            print_status("The script directory cannot be the same as the {} directory of the virtualenv. Adding this directory to your PATH could interfere with your system python installation.".format(install_dir_bin_folder))
+            script_dir = None
+
+    create_dir(script_dir)
+    print_status("The scripts will be in '{}'.".format(script_dir))
+    return script_dir
 
 
 def _backup_rc(rc_file):
@@ -465,8 +488,10 @@ def main():
     tmp_dir = create_tmp_dir()
     install_dir = get_install_dir()
     exec_dir = get_exec_dir(install_dir)
+    script_dir = get_script_dir(install_dir)
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
     bmcs_exec_path = os.path.join(exec_dir, BMCS_EXECUTABLE_NAME)
+    dbaas_exec_path = os.path.join(script_dir, DBAAS_SCRIPT_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)
     verify_install_dir_exec_path_conflict(install_dir, bmcs_exec_path)
     create_virtualenv(tmp_dir, install_dir)
@@ -480,14 +505,19 @@ def main():
         # copy the executable created from the pip install to the bin directory specified by the user
         shutil.copyfile(os.path.join(install_dir, 'Scripts', OCI_EXECUTABLE_NAME), oci_exec_path)
         shutil.copyfile(os.path.join(install_dir, 'Scripts', BMCS_EXECUTABLE_NAME), bmcs_exec_path)
+        shutil.copyfile(os.path.join(install_dir, 'Scripts', DBAAS_SCRIPT_NAME), dbaas_exec_path)
     else:
         # copy the executable created from the pip install to the bin directory specified by the user
         shutil.copyfile(os.path.join(install_dir, 'bin', OCI_EXECUTABLE_NAME), oci_exec_path)
         shutil.copyfile(os.path.join(install_dir, 'bin', BMCS_EXECUTABLE_NAME), bmcs_exec_path)
+        shutil.copyfile(os.path.join(install_dir, 'bin', DBAAS_SCRIPT_NAME), dbaas_exec_path)
+
         oci_exec_cur_stat = os.stat(oci_exec_path)
         bmcs_exec_cur_stat = os.stat(bmcs_exec_path)
+        dbaas_exec_cur_stat = os.stat(dbaas_exec_path)
         os.chmod(oci_exec_path, oci_exec_cur_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
         os.chmod(bmcs_exec_path, bmcs_exec_cur_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+        os.chmod(dbaas_exec_path, dbaas_exec_cur_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
         # find the site-packages directory in the virtual environment where we installed oci
         # and use the autocomplete script contained in the bin/ directory

@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.35 - 2018-10-18
+---------------------
+Added
+~~~~~~~~
+* Support to Generate and Download wallet for Autonomous Transaction Processing Database and Autonomous Data Warehouse
+
+  * (``oci db autonomous-data-warehouse generate-wallet``)
+  * (``oci db autonomous-database generate-wallet``)
+
+* Support for creating a standalone backup from an on-premises database as part of the Database service
+
+  * Details can be found `here <https://docs.cloud.oracle.com/iaas/Content/Database/Tasks/mig-onprembackup.htm>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/src/oci_cli/scripts/database/dbaas.py>`__.
+
+* Support for Cross Region Backup Copy in Block Storage.
+
+  * (``oci bv backup copy --volume-backup-id --destination-region``)
+
+* Support for Cost Tracking Tags as part of Identity Service.
+
+  * (``oci iam tag create --is-cost-tracking``)
+  * (``oci iam tag update --is-cost-tracking``)
+  * (``oci iam tag list-cost-tracking``)
+
+* Support for Compartment Delete, listing WorkRequests under a compartment and getting details for a work request.
+
+  * (``oci iam compartment delete --compartment-id``)
+  * (``oci iam work-request list --compartment-id``)
+  * (``oci iam work-request get --work-request-id``)
+
+* Support for Instance Configurations as part of Compute Management service
+
+  * (``oci compute-management instance-configuration create``)
+  * (``oci compute-management instance-configuration delete``)
+  * (``oci compute-management instance-configuration get``)
+  * (``oci compute-management instance-configuration list``)
+  * (``oci compute-management instance-configuration update``)
+  * (``oci compute-management instance-configuration launch-compute-instance``)
+
+* Support for Instance Pools as part of Compute Management service
+
+  * (``oci compute-management instance-pool create``)
+  * (``oci compute-management instance-pool terminate``)
+  * (``oci compute-management instance-pool get``)
+  * (``oci compute-management instance-pool list``)
+  * (``oci compute-management instance-pool update``)
+  * (``oci compute-management instance-pool reset``)
+  * (``oci compute-management instance-pool softreset``)
+  * (``oci compute-management instance-pool start``)
+  * (``oci compute-management instance-pool stop``)
+  * (``oci compute-management instance-pool list-instances``)
+
+Changed
+~~~~~~~~
+* New Attribute ``dbVersion`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
+* New Attribute ``allConnectionStrings`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
+
 2.4.34 - 2018-10-04
 ---------------------
 Added

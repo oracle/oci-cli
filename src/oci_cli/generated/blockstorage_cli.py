@@ -114,6 +114,58 @@ blockstorage_root_group.add_command(volume_backup_policy_group)
 blockstorage_root_group.add_command(volume_kms_key_group)
 
 
+@volume_backup_group.command(name=cli_util.override('copy_volume_backup.command_name', 'copy'), help="""Creates a volume backup copy in specified region. For general information about volume backups, see [Overview of Block Volume Service Backups]""")
+@cli_util.option('--volume-backup-id', required=True, help="""The OCID of the volume backup.""")
+@cli_util.option('--destination-region', required=True, help="""The name of the destination region.
+
+Example: `us-ashburn-1`""")
+@cli_util.option('--display-name', help="""A user-friendly name for the volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeBackup'})
+@cli_util.wrap_exceptions
+def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, destination_region, display_name):
+
+    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['destinationRegion'] = destination_region
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.copy_volume_backup(
+        volume_backup_id=volume_backup_id,
+        copy_volume_backup_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_volume_backup') and callable(getattr(client, 'get_volume_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @boot_volume_group.command(name=cli_util.override('create_boot_volume.command_name', 'create'), help="""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', required=True, help="""The availability domain of the boot volume.
 
@@ -1356,6 +1408,7 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
 Example: `50`""")
 @cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--source-volume-backup-id', help="""A filter to return only resources that originated from the given source volume backup.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
@@ -1368,7 +1421,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeBackup]'})
 @cli_util.wrap_exceptions
-def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, volume_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, volume_id, limit, page, display_name, source_volume_backup_id, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1381,6 +1434,8 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
         kwargs['page'] = page
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if source_volume_backup_id is not None:
+        kwargs['source_volume_backup_id'] = source_volume_backup_id
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -1616,7 +1671,7 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('update_boot_volume.command_name', 'update'), help="""Updates the specified boot volume's display name.""")
+@boot_volume_group.command(name=cli_util.override('update_boot_volume.command_name', 'update'), help="""Updates the specified boot volume's display name, defined tags, and free-form tags.""")
 @cli_util.option('--boot-volume-id', required=True, help="""The OCID of the boot volume.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

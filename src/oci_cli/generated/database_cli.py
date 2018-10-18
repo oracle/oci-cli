@@ -146,6 +146,12 @@ def db_node_group():
     pass
 
 
+@click.command(cli_util.override('external_backup_job_group.command_name', 'external-backup-job'), cls=CommandGroupWithAlias, help="""Provides all the details that apply to an external backup job.""")
+@cli_util.help_option_group
+def external_backup_job_group():
+    pass
+
+
 db_root_group.add_command(autonomous_data_warehouse_backup_group)
 db_root_group.add_command(autonomous_data_warehouse_group)
 db_root_group.add_command(backup_group)
@@ -160,6 +166,60 @@ db_root_group.add_command(data_guard_association_group)
 db_root_group.add_command(autonomous_database_backup_group)
 db_root_group.add_command(db_home_group)
 db_root_group.add_command(db_node_group)
+db_root_group.add_command(external_backup_job_group)
+
+
+@external_backup_job_group.command(name=cli_util.override('complete_external_backup_job.command_name', 'complete'), help="""Changes the status of the standalone backup resource to `ACTIVE` after the backup is created from the on-premises database and placed in Oracle Cloud Infrastructure Object Storage.
+
+**Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
+@cli_util.option('--backup-id', required=True, help="""The backup [OCID].""")
+@cli_util.option('--cf-backup-handle', help="""The handle of the control file backup.""")
+@cli_util.option('--data-size', type=click.INT, help="""The size of the data in the database, in megabytes.""")
+@cli_util.option('--redo-size', type=click.INT, help="""The size of the redo in the database, in megabytes.""")
+@cli_util.option('--spf-backup-handle', help="""The handle of the spfile backup.""")
+@cli_util.option('--sql-patches', type=custom_types.CLI_COMPLEX_TYPE, help="""The list of SQL patches that need to be applied to the backup during the restore.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tde-wallet-path', help="""If the database being backed up is TDE enabled, this will be the path to the associated TDE wallet in Object Storage.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'sql-patches': {'module': 'database', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-patches': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'ExternalBackupJob'})
+@cli_util.wrap_exceptions
+def complete_external_backup_job(ctx, from_json, backup_id, cf_backup_handle, data_size, redo_size, spf_backup_handle, sql_patches, tde_wallet_path, if_match):
+
+    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if cf_backup_handle is not None:
+        details['cfBackupHandle'] = cf_backup_handle
+
+    if data_size is not None:
+        details['dataSize'] = data_size
+
+    if redo_size is not None:
+        details['redoSize'] = redo_size
+
+    if spf_backup_handle is not None:
+        details['spfBackupHandle'] = spf_backup_handle
+
+    if sql_patches is not None:
+        details['sqlPatches'] = cli_util.parse_json_parameter("sql_patches", sql_patches)
+
+    if tde_wallet_path is not None:
+        details['tdeWalletPath'] = tde_wallet_path
+
+    client = cli_util.build_client('database', ctx)
+    result = client.complete_external_backup_job(
+        backup_id=backup_id,
+        complete_external_backup_job_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @autonomous_data_warehouse_group.command(name=cli_util.override('create_autonomous_data_warehouse.command_name', 'create'), help="""Creates a new Autonomous Data Warehouse.""")
@@ -286,7 +346,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to the Oracle Autonomous Database. The default is BRING_YOUR_OWN_LICENSE.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
@@ -296,6 +356,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, admin_password, compartment_id, cpu_core_count, data_storage_size_in_tbs, db_name, defined_tags, display_name, freeform_tags, license_model):
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['adminPassword'] = admin_password
@@ -353,6 +414,7 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, display_name):
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['autonomousDatabaseId'] = autonomous_database_id
@@ -501,7 +563,6 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--creation-type', required=True, help="""Specifies where to create the associated database. \"ExistingDbSystem\" is the only supported `creationType` value.""")
 @cli_util.option('--database-admin-password', required=True, help="""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -534,14 +595,13 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, creation_type, database_admin_password, protection_mode, transport_type, peer_db_system_id):
+def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, peer_db_system_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     kwargs = {}
 
     details = {}
-    details['creationType'] = creation_type
     details['databaseAdminPassword'] = database_admin_password
     details['protectionMode'] = protection_mode
     details['transportType'] = transport_type
@@ -722,6 +782,55 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
+@external_backup_job_group.command(name=cli_util.override('create_external_backup_job.command_name', 'create'), help="""Creates a new backup resource and returns the information the caller needs to back up an on-premises Oracle Database to Oracle Cloud Infrastructure.
+
+**Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
+@cli_util.option('--availability-domain', required=True, help="""The targeted availability domain for the backup.""")
+@cli_util.option('--character-set', required=True, help="""The character set for the database.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment where this backup should be created.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database edition to use for creating a database from this standalone backup. Note that 2-node RAC DB systems require Enterprise Edition - Extreme Performance.""")
+@cli_util.option('--database-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["SI", "RAC"]), help="""The mode (single instance or RAC) of the database being backed up.""")
+@cli_util.option('--db-name', required=True, help="""The name of the database from which the backup is being taken.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle Database version.""")
+@cli_util.option('--display-name', required=True, help="""A user-friendly name for the backup. This name does not have to be unique.""")
+@cli_util.option('--external-database-identifier', required=True, type=click.INT, help="""The `DBID` of the Oracle Database being backed up.""")
+@cli_util.option('--ncharacter-set', required=True, help="""The national character set for the database.""")
+@cli_util.option('--db-unique-name', help="""The `DB_UNIQUE_NAME` of the Oracle Database being backed up.""")
+@cli_util.option('--pdb-name', help="""The pluggable database name.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalBackupJob'})
+@cli_util.wrap_exceptions
+def create_external_backup_job(ctx, from_json, availability_domain, character_set, compartment_id, database_edition, database_mode, db_name, db_version, display_name, external_database_identifier, ncharacter_set, db_unique_name, pdb_name):
+    kwargs = {}
+
+    details = {}
+    details['availabilityDomain'] = availability_domain
+    details['characterSet'] = character_set
+    details['compartmentId'] = compartment_id
+    details['databaseEdition'] = database_edition
+    details['databaseMode'] = database_mode
+    details['dbName'] = db_name
+    details['dbVersion'] = db_version
+    details['displayName'] = display_name
+    details['externalDatabaseIdentifier'] = external_database_identifier
+    details['ncharacterSet'] = ncharacter_set
+
+    if db_unique_name is not None:
+        details['dbUniqueName'] = db_unique_name
+
+    if pdb_name is not None:
+        details['pdbName'] = pdb_name
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_external_backup_job(
+        create_external_backup_job_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_node_group.command(name=cli_util.override('db_node_action.command_name', 'db-node-action'), help="""Performs an action, such as one of the power actions (start, stop, softreset, or reset), on the specified DB Node.
 
 **start** - power on
@@ -835,7 +944,7 @@ def delete_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -850,6 +959,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
     result = client.delete_autonomous_database(
         autonomous_database_id=autonomous_database_id,
@@ -1054,6 +1164,106 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
+@autonomous_data_warehouse_group.command(name=cli_util.override('generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'), help="""Creates and downloads a wallet for the specified Autonomous Data Warehouse.""")
+@cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--password', required=True, help="""The password to encrypt the keys inside the wallet.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_data_warehouse_id, password):
+
+    if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['password'] = password
+
+    client = cli_util.build_client('database', ctx)
+    result = client.generate_autonomous_data_warehouse_wallet(
+        autonomous_data_warehouse_id=autonomous_data_warehouse_id,
+        generate_autonomous_data_warehouse_wallet_details=details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@autonomous_database_group.command(name=cli_util.override('generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help="""Creates and downloads a wallet for the specified Autonomous Transaction Processing database.""")
+@cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--password', required=True, help="""The password to encrypt the keys inside the wallet.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_database_id, password):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['password'] = password
+
+    client = cli_util.build_client('database', ctx)
+    result = client.generate_autonomous_database_wallet(
+        autonomous_database_id=autonomous_database_id,
+        generate_autonomous_database_wallet_details=details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @autonomous_data_warehouse_group.command(name=cli_util.override('get_autonomous_data_warehouse.command_name', 'get'), help="""Gets the details of the specified Autonomous Data Warehouse.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1106,6 +1316,7 @@ def get_autonomous_database(ctx, from_json, autonomous_database_id):
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
     result = client.get_autonomous_database(
         autonomous_database_id=autonomous_database_id,
@@ -1126,6 +1337,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
     if isinstance(autonomous_database_backup_id, six.string_types) and len(autonomous_database_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-backup-id cannot be whitespace or empty string')
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
     result = client.get_autonomous_database_backup(
         autonomous_database_backup_id=autonomous_database_backup_id,
@@ -1354,6 +1566,28 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
     result = client.get_db_system_patch_history_entry(
         db_system_id=db_system_id,
         patch_history_entry_id=patch_history_entry_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@external_backup_job_group.command(name=cli_util.override('get_external_backup_job.command_name', 'get'), help="""Gets information about the specified external backup job.
+
+**Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
+@cli_util.option('--backup-id', required=True, help="""The backup [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalBackupJob'})
+@cli_util.wrap_exceptions
+def get_external_backup_job(ctx, from_json, backup_id):
+
+    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('database', ctx)
+    result = client.get_external_backup_job(
+        backup_id=backup_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1882,6 +2116,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -1913,7 +2148,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
 
 **Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help="""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1939,6 +2174,7 @@ def list_autonomous_databases(ctx, from_json, all_pages, page_size, compartment_
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -2067,6 +2303,10 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @cli_util.option('--db-home-id', required=True, help="""A database home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DBNAME", "TIMECREATED"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DBNAME is ascending. The DBNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), help="""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--db-name', help="""A filter to return only resources that match the entire database name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2074,7 +2314,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
 @cli_util.wrap_exceptions
-def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home_id, limit, page):
+def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home_id, limit, page, sort_by, sort_order, lifecycle_state, db_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2083,6 +2323,14 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if db_name is not None:
+        kwargs['db_name'] = db_name
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -2215,6 +2463,10 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 @cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help="""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2222,7 +2474,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbHomeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page):
+def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2231,6 +2483,14 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -2265,6 +2525,9 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 @cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED"]), help="""Sort by TIMECREATED.  Default order for TIMECREATED is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "FAILED"]), help="""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2272,7 +2535,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbNodeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page):
+def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2281,6 +2544,12 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -2463,6 +2732,13 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return per page.""")
 @cli_util.option('--page', help="""The pagination token to continue listing from.""")
 @cli_util.option('--backup-id', help="""The [OCID] of the backup. Specify a backupId to list only the DB systems that support creating a database using this backup in this compartment.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--availability-domain', help="""A filter to return only resources that match the given availability domain exactly.""")
+@cli_util.option('--display-name', help="""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2470,10 +2746,12 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemSummary]'})
 @cli_util.wrap_exceptions
-def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit, page, backup_id):
+def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit, page, backup_id, sort_by, sort_order, lifecycle_state, availability_domain, display_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2481,6 +2759,16 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
         kwargs['page'] = page
     if backup_id is not None:
         kwargs['backup_id'] = backup_id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if display_name is not None:
+        kwargs['display_name'] = display_name
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:
@@ -2664,7 +2952,7 @@ def restore_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--timestamp', required=True, type=custom_types.CLI_DATETIME, help="""The time to restore the database to.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2811,7 +3099,7 @@ def start_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_sec
 @autonomous_database_group.command(name=cli_util.override('start_autonomous_database.command_name', 'start'), help="""Starts the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2895,7 +3183,7 @@ def stop_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seco
 @autonomous_database_group.command(name=cli_util.override('stop_autonomous_database.command_name', 'stop'), help="""Stops the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2910,6 +3198,7 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
     result = client.stop_autonomous_database(
         autonomous_database_id=autonomous_database_id,
@@ -3137,7 +3426,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
@@ -3156,6 +3445,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
