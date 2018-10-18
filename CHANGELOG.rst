@@ -63,6 +63,10 @@ Changed
 * New Attribute ``dbVersion`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
 * New Attribute ``allConnectionStrings`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
 
+Known Issues
+~~~~~~~~~~~~
+* Block Storage service for copying volume backups across regions is not enabled.
+
 2.4.34 - 2018-10-04
 ---------------------
 Added
