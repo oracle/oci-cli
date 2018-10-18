@@ -1078,7 +1078,6 @@ To perform an image export, you need write access to the Object Storage bucket f
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
 @cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
-@cli_util.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
 @cli_util.option('--destination-uri', required=True, help="""The Object Storage URL to export the image to. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -1089,7 +1088,7 @@ See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image_export_image_via_object_storage_uri_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, destination_type, destination_uri, if_match):
+def export_image_export_image_via_object_storage_uri_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, destination_uri, if_match):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
@@ -1098,7 +1097,6 @@ def export_image_export_image_via_object_storage_uri_details(ctx, from_json, wai
         kwargs['if_match'] = if_match
 
     details = {}
-    details['destinationType'] = destination_type
     details['destinationUri'] = destination_uri
 
     details['destinationType'] = 'objectStorageUri'
@@ -1136,7 +1134,6 @@ To perform an image export, you need write access to the Object Storage bucket f
 
 See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
 @cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
-@cli_util.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
 @cli_util.option('--bucket-name', help="""The Object Storage bucket to export the image to.""")
 @cli_util.option('--namespace-name', help="""The Object Storage namespace to export the image to.""")
 @cli_util.option('--object-name', help="""The Object Storage object name for the exported image.""")
@@ -1149,7 +1146,7 @@ See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, destination_type, bucket_name, namespace_name, object_name, if_match):
+def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, bucket_name, namespace_name, object_name, if_match):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
@@ -1158,7 +1155,6 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
         kwargs['if_match'] = if_match
 
     details = {}
-    details['destinationType'] = destination_type
 
     if bucket_name is not None:
         details['bucketName'] = bucket_name

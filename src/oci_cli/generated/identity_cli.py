@@ -66,6 +66,12 @@ def fault_domain_group():
     pass
 
 
+@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
 @click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
 @cli_util.help_option_group
 def user_group_membership_group():
@@ -212,6 +218,7 @@ iam_root_group.add_command(customer_secret_key_group)
 iam_root_group.add_command(idp_group_mapping_group)
 iam_root_group.add_command(tenancy_group)
 iam_root_group.add_command(fault_domain_group)
+iam_root_group.add_command(work_request_group)
 iam_root_group.add_command(user_group_membership_group)
 iam_root_group.add_command(identity_provider_group)
 iam_root_group.add_command(ui_password_group)
@@ -303,19 +310,19 @@ def create_auth_token(ctx, from_json, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('create_compartment.command_name', 'create'), help="""Creates a new compartment in your tenancy.
+@compartment_group.command(name=cli_util.override('create_compartment.command_name', 'create'), help="""Creates a new compartment in the specified compartment.
 
 **Important:** Compartments cannot be deleted.
 
-You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
+Specify the parent compartment's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
 You must also specify a *name* for the compartment, which must be unique across all compartments in your tenancy. You can use this name or the OCID when writing policies that apply to the compartment. For more information about policies, see [How Policies Work].
 
 You must also specify a *description* for the compartment (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCompartment].
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the tenancy containing the compartment.""")
-@cli_util.option('--name', required=True, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the tenancy. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment containing the compartment.""")
+@cli_util.option('--name', required=True, help="""The name you assign to the compartment during creation. The name must be unique across all compartments in the parent compartment. Avoid entering confidential information.""")
 @cli_util.option('--description', required=True, help="""The description you assign to the compartment during creation. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -888,12 +895,13 @@ You must also specify a *description* for the tag. It does not have to be unique
 @cli_util.option('--description', required=True, help="""The description you assign to the tag during creation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-cost-tracking', type=click.BOOL, help="""Indicates whether the tag is enabled for cost tracking.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tags, defined_tags):
+def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -908,6 +916,9 @@ def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tag
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_cost_tracking is not None:
+        details['isCostTracking'] = is_cost_tracking
 
     client = cli_util.build_client('identity', ctx)
     result = client.create_tag(
@@ -1080,6 +1091,49 @@ def delete_auth_token(ctx, from_json, user_id, auth_token_id, if_match):
         auth_token_id=auth_token_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@compartment_group.command(name=cli_util.override('delete_compartment.command_name', 'delete'), help="""Deletes the specified compartment. The compartment must be empty.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, if_match):
+
+    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+        raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_compartment(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1710,6 +1764,26 @@ def get_user_group_membership(ctx, from_json, user_group_membership_id):
     cli_util.render_response(result, ctx)
 
 
+@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help="""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service.""")
+@cli_util.option('--work-request-id', required=True, help="""The OCID of the work request.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'WorkRequest'})
+@cli_util.wrap_exceptions
+def get_work_request(ctx, from_json, work_request_id):
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_work_request(
+        work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @api_key_group.command(name=cli_util.override('list_api_keys.command_name', 'list'), help="""Lists the API signing keys for the specified user. A user can have a maximum of three keys.
 
 Every user has permission to use this API call for *their own user ID*.  An administrator in your organization does not need to write a policy to give users this ability.""")
@@ -1753,7 +1827,7 @@ def list_auth_tokens(ctx, from_json, user_id):
 
 
 @availability_domain_group.command(name=cli_util.override('list_availability_domains.command_name', 'list'), help="""Lists the availability domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. Note that the order of the results returned can change if availability domains are added or removed; therefore, do not create a dependency on the list order.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1769,10 +1843,22 @@ def list_availability_domains(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('list_compartments.command_name', 'list'), help="""Lists the compartments in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@compartment_group.command(name=cli_util.override('list_compartments.command_name', 'list'), help="""Lists the compartments in a specified compartment. The members of the list returned depends on the values set for several parameters.
+
+With the exception of the tenancy (root compartment), the ListCompartments operation returns only the first-level child compartments in the parent compartment specified in `compartmentId`. The list does not include any subcompartments of the child compartments (grandchildren).
+
+The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (the resource can be in a subcompartment).
+
+The parameter `compartmentIdInSubtree` applies only when you perform ListCompartments on the tenancy (root compartment). When set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ANY.
+
+See [Where to Get the Tenancy's OCID and User's OCID].""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["ANY", "ACCESSIBLE"]), help="""Valid values are `ANY` and `ACCESSIBLE`. Default is `ANY`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). For the compartments on which the user indirectly has INSPECT permissions, a restricted set of fields is returned.
+
+When set to `ANY` permissions are not checked.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help="""Default is false. Can only be set to true when performing ListCompartments on the tenancy (root compartment). When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1780,7 +1866,7 @@ def list_availability_domains(ctx, from_json, compartment_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
 @cli_util.wrap_exceptions
-def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit, access_level, compartment_id_in_subtree):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1789,6 +1875,10 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     client = cli_util.build_client('identity', ctx)
     if all_pages:
         if page_size:
@@ -1809,6 +1899,52 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         )
     else:
         result = client.list_compartments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@tag_group.command(name=cli_util.override('list_cost_tracking_tags.command_name', 'list-cost-tracking'), help="""Lists all the tags enabled for cost-tracking in the specified tenancy. For information about cost-tracking tags, see [Using Cost-tracking Tags].""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Tag]'})
+@cli_util.wrap_exceptions
+def list_cost_tracking_tags(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cost_tracking_tags,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cost_tracking_tags,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cost_tracking_tags(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -1836,7 +1972,7 @@ def list_customer_secret_keys(ctx, from_json, user_id):
 
 
 @dynamic_group_group.command(name=cli_util.override('list_dynamic_groups.command_name', 'list'), help="""Lists the dynamic groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1882,7 +2018,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
 
 
 @fault_domain_group.command(name=cli_util.override('list_fault_domains.command_name', 'list'), help="""Lists the Fault Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--availability-domain', required=True, help="""The name of the availibilityDomain.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1901,7 +2037,7 @@ def list_fault_domains(ctx, from_json, compartment_id, availability_domain):
 
 
 @group_group.command(name=cli_util.override('list_groups.command_name', 'list'), help="""Lists the groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1948,7 +2084,7 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 
 @identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help="""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--protocol', required=True, help="""The protocol used for federation. Allowed values are: SAML2""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2048,7 +2184,7 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
 @policy_group.command(name=cli_util.override('list_policies.command_name', 'list'), help="""Lists the policies in the specified compartment (either the tenancy or another of your compartments). See [Where to Get the Tenancy's OCID and User's OCID].
 
 To determine which policies apply to a particular group or compartment, you must view the individual statements inside all your policies. There isn't a way to automatically obtain that information via the API.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2171,7 +2307,7 @@ def list_swift_passwords(ctx, from_json, user_id):
 
 
 @tag_namespace_group.command(name=cli_util.override('list_tag_namespaces.command_name', 'list'), help="""Lists the tag namespaces in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--include-subcompartments', type=click.BOOL, help="""An optional boolean parameter indicating whether to retrieve all tag namespaces in subcompartments. If this parameter is not specified, only the tag namespaces defined in the specified compartment are retrieved.""")
@@ -2271,7 +2407,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
 @user_group_membership_group.command(name=cli_util.override('list_user_group_memberships.command_name', 'list'), help="""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
 
 - You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list. - Although`userId` and `groupId` are not indvidually required, you must set one of them.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--user-id', help="""The OCID of the user.""")
 @cli_util.option('--group-id', help="""The OCID of the group.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -2323,7 +2459,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 
 
 @user_group.command(name=cli_util.override('list_users.command_name', 'list'), help="""Lists the users in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2362,6 +2498,55 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
         )
     else:
         result = client.list_users(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help="""Lists the work requests in compartment.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--resource-identifier', help="""The identifier of the resource the work request affects.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[WorkRequestSummary]'})
+@cli_util.wrap_exceptions
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, page, limit, resource_identifier):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if resource_identifier is not None:
+        kwargs['resource_identifier'] = resource_identifier
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_work_requests,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_work_requests,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_work_requests(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -2431,7 +2616,7 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
 @compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help="""Updates the specified compartment's description or name. You can't update the root compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--description', help="""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
-@cli_util.option('--name', help="""The new name you assign to the compartment. The name must be unique across all compartments in the tenancy. Avoid entering confidential information.""")
+@cli_util.option('--name', help="""The new name you assign to the compartment. The name must be unique across all compartments in the parent compartment. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3001,13 +3186,14 @@ def update_swift_password(ctx, from_json, user_id, swift_password_id, descriptio
 @cli_util.option('--is-retired', type=click.BOOL, help="""Whether the tag is retired. See [Retiring Key Definitions and Namespace Definitions].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-cost-tracking', type=click.BOOL, help="""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags):
+def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -3033,6 +3219,9 @@ def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, i
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_cost_tracking is not None:
+        details['isCostTracking'] = is_cost_tracking
 
     client = cli_util.build_client('identity', ctx)
     result = client.update_tag(

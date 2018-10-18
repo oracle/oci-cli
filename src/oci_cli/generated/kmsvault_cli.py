@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('kms_vault_root_group.command_name', 'kms_vault'), cls=CommandGroupWithAlias, help=cli_util.override('kms_vault_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_vault_root_group.short_help', """Key Management Service API"""))
+@cli.command(cli_util.override('kms_vault_root_group.command_name', 'kms-vault'), cls=CommandGroupWithAlias, help=cli_util.override('kms_vault_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_vault_root_group.short_help', """Key Management Service API"""))
 @cli_util.help_option_group
 def kms_vault_root_group():
     pass

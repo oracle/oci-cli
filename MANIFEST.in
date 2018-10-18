@@ -3,5 +3,7 @@ include README.rst
 include CHANGELOG.rst
 include src/oci_cli/bin/oci_autocomplete.sh
 include src/oci_cli/bin/OciTabExpansion.ps1
+include src/oci_cli/scripts/database/dbaas.py
+include src/oci_cli/bin/*.psm1
 recursive-include src/oci_cli/help_text_producer/data_files *
 exclude setup.cfg

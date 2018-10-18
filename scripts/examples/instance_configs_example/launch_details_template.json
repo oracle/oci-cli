@@ -1,0 +1,6 @@
+{
+  "availabilityDomain": "__AD__",
+  "createVnicDetails": {
+    "subnetId": "__SUBNET_ID__"
+  }
+}

@@ -23,6 +23,7 @@ import sys
 import uuid
 from .formatting import render_config_errors
 from terminaltables import AsciiTable
+from timeit import default_timer as timer
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -64,6 +65,7 @@ OVERRIDES = {
     "list_events.command_name": "list",
     "blockstorage_root_group.command_name": "bv",
     "compute_root_group.command_name": "compute",
+    "list_instance_pool_instances.command_name": "list-instances",
     "ce_root_group.command_name": "ce",
     "db_root_group.command_name": "db",
     "db_node_group.command_name": "node",
@@ -79,6 +81,7 @@ OVERRIDES = {
     "kms_vault_root_group.command_name": "vault",
     "kms_management_root_group.command_name": "management",
     "instance_action.command_name": "action",
+    "launch_instance_configuration_compute_instance_details.command_name": "launch-compute-instance",
     "list_db_system_patches.command_name": "by-db-system",
     "list_db_system_patch_history_entries.command_name": "by-db-system",
     "load_balancer_policy_group.command_name": "policy",
@@ -97,7 +100,11 @@ OVERRIDES = {
     "volume_backup_group.command_name": "backup",
     "resource_summary_collection_group.command_name": "resource",
     "search_resources_structured_search_details.command_name": "structured-search",
-    "search_resources_free_text_search_details.command_name": "free-text-search"
+    "search_resources_free_text_search_details.command_name": "free-text-search",
+    "attach_volume_attach_paravirtualized_volume_details.command_name": "attach-paravirtualized-volume",
+    "generate_autonomous_data_warehouse_wallet.command_name": "generate-wallet",
+    "generate_autonomous_database_wallet.command_name": "generate-wallet"
+
 }
 
 ROOT_COMMAND_HELP_OVERRIDES = {
@@ -152,6 +159,31 @@ MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
 LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports pagination and not all resources were returned.  Re-run using the --all option to auto paginate and list all resources."
 
 
+# Used to format the memory usage.
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
+
+
+def output_memory(msg):
+    # resource does not work on windows
+    if not is_windows():
+        import resource  # noqa: E402
+        memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        print(msg + '{} ({})'.format(sizeof_fmt(memory_usage), memory_usage), file=sys.stderr)
+
+
+# A utility/data class to hold a Python SDK config and a signer
+class ConfigAndSigner(object):
+    def __init__(self, config=None, signer=None, uses_instance_principals_auth=False):
+        self.config = config
+        self.signer = signer
+        self.uses_instance_principals_auth = uses_instance_principals_auth
+
+
 def override(key, default):
     # special case for root command help
     # - the short help is used in the `oci --help` output, and is the spec title so we remove 'API'
@@ -204,6 +236,9 @@ def build_client(service_name, ctx):
 
     # Add to ctx for later by the operations.
     ctx.obj["config"] = client_config
+
+    if 'skip_deserialization' in ctx.obj:
+        kwargs['skip_deserialization'] = ctx.obj['skip_deserialization']
 
     # If not set by the user as part of the command, then set it to a default.
     # This value is used later by some commands.
@@ -294,27 +329,17 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
 
     if data:
         if nest_data_in_data_attribute:
+            start_to_dict = timer()
             display_dictionary["data"] = to_dict(data)
+            if ctx.obj['debug']:
+                end_to_dict = timer()
+                print('time elapsed calling to_dict from render: {}'.format(str(end_to_dict - start_to_dict)), file=sys.stderr)
         else:
             display_dictionary = to_dict(data)
 
     expression = None
     if ctx.obj['query']:
-        search_path = resolve_jmespath_query(ctx, ctx.obj['query'])
-        try:
-            expression = jmespath.compile(search_path)
-        # Print an appropriate helpful error message for improper escaping of user input by the user.
-        except jmespath.exceptions.LexerError as e:
-            if 'Unknown token' in e.message:
-                click.echo('If a key name has any characters besides [a-z, A-Z, 0-9, _], it needs to be escaped.',
-                           file=sys.stderr)
-                click.echo('In bash or similar "NIX" based shells used in "NIX" environment, escaping can be done by'
-                           'using double quotes inside single quotes.\ne.g. --query \'data[*]."display-name"\'',
-                           file=sys.stderr)
-                click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'
-                           'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',
-                           file=sys.stderr)
-            raise
+        expression = build_query_expression(ctx)
 
     if headers:
         for header in headers:
@@ -325,16 +350,27 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
     if display_dictionary:
         display_data = display_dictionary
         if expression:
+            start_search = timer()
             display_data = expression.search(display_dictionary)
+            if ctx.obj['debug']:
+                end_search = timer()
+                print('time elapsed evaluating expression: {}'.format(str(end_search - start_search)), file=sys.stderr)
             if not display_data:
                 click.echo("Query returned empty result, no output to show.", file=sys.stderr)
                 return
+
+        if ctx.obj['debug']:
+            output_memory('total memory usage before printing: ')
 
         if ctx.obj['output'] == "json":
             if ctx.obj['raw_output'] and isinstance(display_data, six.string_types):
                 print(display_data)
             else:
+                start_format = timer()
                 print(pretty_print_format(display_data))
+                if ctx.obj['debug']:
+                    end_format = timer()
+                    print('Time elapsed printing response data: {}'.format(str(end_format - start_format)), file=sys.stderr)
         elif ctx.obj['output'] == 'table':
             table_data = display_data
 
@@ -344,8 +380,11 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             # directly as a table
             if 'data' in display_data and not expression:
                 table_data = display_data['data']
-
+            start_format = timer()
             print_table(table_data)
+            if ctx.obj['debug']:
+                end_format = timer()
+                print('Time elapsed printing response data: {}'.format(str(end_format - start_format)), file=sys.stderr)
 
             # if there were any additional headers in the response, print them out here, below the table
             # if there is no 'data' in the display dictionary (i.e. oci os object put) then all we have is headers
@@ -354,6 +393,9 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                 for key in display_dictionary:
                     if key is not 'data':
                         click.echo('{}: {}'.format(key, display_dictionary[key]), file=sys.stderr)
+
+        if ctx.obj['debug']:
+            output_memory('total memory usage after printing: ')
 
     # print out a notice if not all results were returned, and the operation supports the --all parameter
     if headers and headers.get('opc-next-page'):
@@ -1475,26 +1517,50 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
     return final_response
 
 
-def list_call_get_all_results(list_func_ref, **func_kwargs):
+def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_output=False, **func_kwargs):
     keep_paginating = True
     call_result = None
     aggregated_results = []
     is_dns_record_collection = False
     dns_record_collection_class = None
 
-    while keep_paginating:
-        call_result = list_func_ref(**func_kwargs)
-        if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
-            is_dns_record_collection = True
-            dns_record_collection_class = call_result.data.__class__
-            aggregated_results.extend(call_result.data.items)
-        else:
-            aggregated_results.extend(call_result.data)
+    page_index = 1
+    previous_page_has_data = False  # Indicates whether some previous page had data
+    if stream_output:
+        if ctx.obj['query']:
+            ctx.obj['expression'] = build_query_expression(ctx)
+        stream_header(is_json, ctx)
+    try:
+        while keep_paginating:
+            call_result = list_func_ref(**func_kwargs)
+            start = timer()
+            if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
+                is_dns_record_collection = True
+                dns_record_collection_class = call_result.data.__class__
+                aggregated_results.extend(call_result.data.items)
+            else:
+                if stream_output:
+                    previous_page_has_data = stream_page(is_json, page_index, call_result, ctx, previous_page_has_data)
+                else:
+                    aggregated_results.extend(call_result.data)
 
-        if call_result.next_page is not None:
-            func_kwargs['page'] = call_result.next_page
+            if call_result.next_page is not None:
+                func_kwargs['page'] = call_result.next_page
 
-        keep_paginating = call_result.has_next_page
+            keep_paginating = call_result.has_next_page
+            if ctx and ctx.obj['debug']:
+                end = timer()
+                print('time elapsed evaluating logic after page {}: {}'.format(str(page_index), str(end - start)), file=sys.stderr)
+                output_memory('total memory usage after evaluating page' + str(page_index) + ': ')
+            page_index = page_index + 1
+    finally:
+        if stream_output:
+            stream_footer(is_json, ctx)
+            post_processed_results = aggregated_results
+            final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
+            return final_response
+    if ctx and ctx.obj['debug']:
+        print("", file=sys.stderr)
 
     post_processed_results = aggregated_results
     if 'sort_by' in func_kwargs:
@@ -1523,6 +1589,105 @@ def list_call_get_all_results(list_func_ref, **func_kwargs):
         final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
 
     return final_response
+
+
+# Called by stream_page to execute a jmes query against a page of data.
+def execute_query(expression, input, ctx):
+    search_data = None
+    start_search = timer()
+    try:
+        search_data = expression.search(input)
+    except Exception as e:
+        print(e, file=sys.stderr)
+    if ctx.obj['debug']:
+        end_search = timer()
+        print('time elapsed evaluating expression: {}'.format(str(end_search - start_search)), file=sys.stderr)
+    return search_data
+
+
+def stream_header(is_json, ctx):
+    if is_json:
+        if ctx and ctx.obj and 'expression' in ctx.obj and ctx.obj['expression']:
+            pass
+        else:
+            print('{ "data": ')
+
+
+def stream_footer(is_json, ctx):
+    if is_json:
+        if ctx and ctx.obj and 'expression' in ctx.obj and ctx.obj['expression']:
+            pass
+        else:
+            print('}')
+
+
+# This processes a single page of data and optionally executes a jmes query on it
+# before outputting the data.
+def stream_page(is_json, page_index, call_result, ctx, previous_page_has_data):
+    # Each page is like this [ {. . .}, {. . .} ]
+    # but we want this:
+    # first page:       [ {. . .}, {. . .
+    # subsequent pages:   }, {. . .}, {. . .
+    # last page:          }, {. . .}, {. . .} ]
+    json_page_matcher = re.compile("(^\s*\[)([\s\S]*?)(}\s*\]$)")
+    if is_json:
+        if 'skip_deserialization' in ctx.obj:
+            display_dictionary = {}
+            display_dictionary['data'] = call_result.data
+            if ctx and ctx.obj and 'expression' in ctx.obj and ctx.obj['expression']:
+                display_data = execute_query(ctx.obj['expression'], display_dictionary, ctx)
+            else:
+                display_data = call_result.data
+            json_data = json.dumps(display_data)
+        else:
+            display_dictionary = {}
+            display_dictionary['data'] = to_dict(call_result.data)
+            if ctx and ctx.obj and 'expression' in ctx.obj and ctx.obj['expression']:
+                display_data = execute_query(ctx.obj['expression'], display_dictionary, ctx)
+                display_data = pretty_print_format(display_data)
+            else:
+                display_dictionary = to_dict(call_result.data)
+                display_data = pretty_print_format(display_dictionary)
+            json_data = display_data
+
+        # group 1="["; group2="{. . .}, {. . .";  group3="}]"
+        page_parts = json_page_matcher.search(json_data)
+        if page_parts:
+            previous_page_has_data = True
+            if page_index > 1:
+                if previous_page_has_data:
+                    print("},")
+                print(page_parts.group(2))                          # print data minus last }
+            else:
+                print(page_parts.group(1), page_parts.group(2))     # print [ with data
+    else:
+        print(call_result.data)
+
+    if call_result.next_page is None:
+        if is_json:
+            if previous_page_has_data:
+                print("}]")
+    return previous_page_has_data
+
+
+def build_query_expression(ctx):
+    expression = None
+    search_path = resolve_jmespath_query(ctx, ctx.obj['query'])
+    try:
+        expression = jmespath.compile(search_path)
+    # Print an appropriate helpful error message for improper escaping of user input by the user.
+    except jmespath.exceptions.LexerError as e:
+        if 'Unknown token' in e.message:
+            click.echo('If a key name has any characters besides [a-z, A-Z, 0-9, _], it needs to be escaped.',
+                        file=sys.stderr)   # noqa: E127
+            click.echo('In bash or similar "NIX" based shells used in "NIX" environment, escaping can be done by'
+                        'using double quotes inside single quotes.\ne.g. --query \'data[*]."display-name"\'',  # noqa: E127
+                        file=sys.stderr)
+            click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'
+                        'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',  # noqa: E127
+                        file=sys.stderr)
+        raise
+    return expression
 
 
 # Retrieves an attribute and returns a default value if it doesn't exist. This default be specified as a keyword argument, but if none is given

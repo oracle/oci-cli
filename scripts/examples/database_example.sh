@@ -57,6 +57,9 @@ oci db autonomous-data-warehouse update --autonomous-data-warehouse-id $ADW_ID -
                 --cpu-core-count $SCALED_CPU --wait-for-state AVAILABLE
 echo 'Updated AutonomousDatawarehouse cpuCoreCount and storageSize'
 
+echo 'Generate and download AutonomousDatawarehouse wallet'
+oci db autonomous-data-warehouse generate-wallet --autonomous-data-warehouse-id $ADW_ID  --password $PASSWORD1 --file  wallet_adw.zip
+
 echo 'Delete AutonomousDatawarehouse'
 oci db autonomous-data-warehouse delete --autonomous-data-warehouse-id $ADW_ID --force --wait-for-state TERMINATED
 echo 'Deleted AutonomousDatawarehouse'
@@ -103,6 +106,9 @@ echo 'Update Autonomous Transaction Processing cpuCoreCount and storage'
 oci db autonomous-database update --autonomous-database-id $ADB_ID --data-storage-size-in-tbs $SCALED_STORAGE \
                 --cpu-core-count $SCALED_CPU --wait-for-state AVAILABLE
 echo 'Updated Autonomous Transaction Processing cpuCoreCount and storageSize'
+
+echo 'Generate and download AutonomousDatabase wallet'
+oci db autonomous-database generate-wallet --autonomous-database-id $ADB_ID --password $PASSWORD1 --file  wallet_adb.zip
 
 echo 'Delete Autonomous Transaction Processing'
 oci db autonomous-database delete --autonomous-database-id $ADB_ID --force --wait-for-state TERMINATED

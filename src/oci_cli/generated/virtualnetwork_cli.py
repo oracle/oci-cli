@@ -14,7 +14,7 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('virtual_network_root_group.command_name', 'virtual_network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
+@cli.command(cli_util.override('virtual_network_root_group.command_name', 'virtual-network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def virtual_network_root_group():
     pass
@@ -1499,7 +1499,7 @@ Example: `172.16.1.0/24`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dhcp-options-id', help="""The OCID of the set of DHCP options the subnet will use. If you don't provide a value, the subnet will use the VCN's default set of DHCP options.""")
+@cli_util.option('--dhcp-options-id', help="""The OCID of the set of DHCP options the subnet will use. If you don't provide a value, the subnet uses the VCN's default set of DHCP options.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--dns-label', help="""A DNS label for the subnet, used in conjunction with the VNIC's hostname and VCN's DNS label to form a fully qualified domain name (FQDN) for each VNIC within this subnet (for example, `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be an alphanumeric string that begins with a letter and is unique within the VCN. The value cannot be changed.
 
@@ -1514,8 +1514,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--prohibit-public-ip-on-vnic', type=click.BOOL, help="""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch or VNIC creation (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (that is, it's a private subnet).
 
 Example: `true`""")
-@cli_util.option('--route-table-id', help="""The OCID of the route table the subnet will use. If you don't provide a value, the subnet will use the VCN's default route table.""")
-@cli_util.option('--security-list-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""OCIDs for the security lists to associate with the subnet. If you don't provide a value, the VCN's default security list will be associated with the subnet. Remember that security lists are associated at the subnet level, but the rules are applied to the individual VNICs in the subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help="""The OCID of the route table the subnet will use. If you don't provide a value, the subnet uses the VCN's default route table.""")
+@cli_util.option('--security-list-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the security list or lists the subnet will use. If you don't provide a value, the subnet uses the VCN's default security list. Remember that security lists are associated *with the subnet*, but the rules are applied to the individual VNICs in the subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5931,7 +5931,7 @@ def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('update_subnet.command_name', 'update'), help="""Updates the specified subnet's display name. Avoid entering confidential information.""")
+@subnet_group.command(name=cli_util.override('update_subnet.command_name', 'update'), help="""Updates the specified subnet.""")
 @cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -5998,7 +5998,7 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('update_vcn.command_name', 'update'), help="""Updates the specified VCN's display name. Avoid entering confidential information.""")
+@vcn_group.command(name=cli_util.override('update_vcn.command_name', 'update'), help="""Updates the specified VCN.""")
 @cli_util.option('--vcn-id', required=True, help="""The OCID of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

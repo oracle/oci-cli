@@ -98,7 +98,9 @@ MOVED_COMMANDS = {
     ('compute', 'app_catalog_listing_resource_version_agreements', 'get-app-catalog-listing-agreements'): ['compute', 'pic', 'agreements', 'get'],
     ('compute', 'app_catalog_subscription', 'create'): ['compute', 'pic', 'subscription', 'create'],
     ('compute', 'app_catalog_subscription', 'delete'): ['compute', 'pic', 'subscription', 'delete'],
-    ('compute', 'app_catalog_subscription', 'list'): ['compute', 'pic', 'subscription', 'list']
+    ('compute', 'app_catalog_subscription', 'list'): ['compute', 'pic', 'subscription', 'list'],
+    ('compute-management', 'instance', 'launch-compute-instance'): ['compute-management', 'instance-configuration', 'launch-compute-instance'],
+    ('compute-management', 'instance', 'list-instances'): ['compute-management', 'instance-pool', 'list-instances']
 }
 
 # this allows generated tests to look up operations that have been given an extra layer of nesting in the CLI
