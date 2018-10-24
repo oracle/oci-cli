@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.36 - 2018-11-01
+---------------------
+* Improve access control to Compartments by introducing only show accessible compartments and list entire compartments under current tenancy.
+
+  * (``oci iam compartment list --access-level``)
+  * (``oci iam compartment list --compartment-id-in-subtree``)
+
+Added
+~~~~~~~
+* Support for modifying the route table, DHCP options, or security lists associated with a subnet.
+
 2.4.35 - 2018-10-18
 ---------------------
 Added
@@ -64,7 +75,7 @@ Changed
 * New Attribute ``allConnectionStrings`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
 
 Known Issues
-~~~~~~~~~~~~
+~~~~~~~~
 * Block Storage service for copying volume backups across regions is not enabled.
 
 2.4.34 - 2018-10-04

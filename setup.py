@@ -28,7 +28,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.0.6',
+    'oci==2.0.7',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
