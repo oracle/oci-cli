@@ -21,7 +21,7 @@ from .. import json_skeleton_utils
 from ..aliasing import CommandGroupWithAlias
 from ..cli_util import option
 
-INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"
+INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"  # noqa: W605
 DEFAULT_LOCAL_VNC_PORT = 5900
 DEFAULT_SSH_PROXY_PORT = 5905
 

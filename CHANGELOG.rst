@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.36 - 2018-10-26
+---------------------
+Fixed
+~~~~~~~
+* Fix malformed instance metadata keys for ``oci compute-management instance-configuration create`` and  ``oci compute-management instance-configuration launch-compute-instance``.  This was preventing SSH access to instances created through these commands.
+
 2.4.35 - 2018-10-18
 ---------------------
 Added
@@ -64,7 +70,7 @@ Changed
 * New Attribute ``allConnectionStrings`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
 
 Known Issues
-~~~~~~~~~~~~
+~~~~~~~~
 * Block Storage service for copying volume backups across regions is not enabled.
 
 2.4.34 - 2018-10-04

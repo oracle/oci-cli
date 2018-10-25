@@ -233,7 +233,7 @@ def create_backup_from_onprem(ctx, config_file, profile, **kwargs):
     cursor.execute('select sum(bytes)/1024/1024 from ( select sum(bytes) bytes from v$datafile union select sum(bytes) bytes from v$tempfile)')
     for row in cursor:
         dataSize = math.ceil(row[0])
-    cursor.execute("select sum(bytes)/1024/1024 from (select sum(bytes*members) bytes from v$log where group# in " +
+    cursor.execute("select sum(bytes)/1024/1024 from (select sum(bytes*members) bytes from v$log where group# in " +  # noqa: W504
                    "(select group# from v$logfile where type='ONLINE') union select (BLOCK_SIZE*FILE_SIZE_BLKS) bytes from v$controlfile)")
     for row in cursor:
         redoSize = math.ceil(row[0])
@@ -392,12 +392,12 @@ def create_backup_from_onprem(ctx, config_file, profile, **kwargs):
 
         script.write("run {\n")
         for channel in range(rmanchannels):
-            script.write("allocate channel odbms" + str(channel) + " type sbt " +
-                         "PARMS='SBT_LIBRARY=" + tmpdir + os.path.sep + libfile + "," +
+            script.write("allocate channel odbms" + str(channel) + " type sbt " +            # noqa: W504
+                         "PARMS='SBT_LIBRARY=" + tmpdir + os.path.sep + libfile + "," +      # noqa: W504
                          "SBT_PARMS=(OPC_PFILE=" + tmpdir + os.path.sep + "opc" + os.environ['ORACLE_SID'] + ".ora)';\n")
-        script.write("backup as compressed backupset database tag '" + rmanTag + "' " +
-                     "format '" + rmanTag + "__%d_%I_%U_%T_%t' " +
-                     "keep until time 'sysdate+29000' restore point '" + rmanTag + "';\n" +
+        script.write("backup as compressed backupset database tag '" + rmanTag + "' " +      # noqa: W504
+                     "format '" + rmanTag + "__%d_%I_%U_%T_%t' " +                           # noqa: W504
+                     "keep until time 'sysdate+29000' restore point '" + rmanTag + "';\n" +  # noqa: W504
                      "}\n")
         script.close()
 

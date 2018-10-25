@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
 import click
+import oci
 import tempfile
 import unittest
 from oci_cli import cli_util
@@ -131,3 +132,12 @@ class TestCliUtil(unittest.TestCase):
 
             # ensure that returned value is a file handle, not a string
             assert hasattr(value, 'read')
+
+    def test_get_possible_subtype_based_on_payload(self):
+        payload = {
+            'instanceType': 'compute',
+            'instanceDetails': {}
+        }
+
+        subtype = cli_util.get_possible_subtype_based_on_payload(oci.core.models.InstanceConfigurationInstanceDetails, 'core', payload)
+        assert subtype.__class__.__name__ == 'ComputeInstanceDetails'

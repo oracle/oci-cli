@@ -372,7 +372,7 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
 
             # powershell one-liner to append the exec_dir to the USER path permanently
             # makes the assumption that powershell is on the PATH already
-            command = "powershell -Command \"[Environment]::SetEnvironmentVariable(\\\"PATH\\\", \\\"{};\\\" + (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).Path, \\\"User\\\")".format(exec_dir)
+            command = "powershell -Command \"[Environment]::SetEnvironmentVariable(\\\"PATH\\\", \\\"{};\\\" + (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).Path, \\\"User\\\")".format(exec_dir)  # noqa: W605
             subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
             print_status()
             print_status('** Close and re-open PowerShell to reload changes to your PATH **')
