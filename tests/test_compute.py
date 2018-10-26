@@ -472,7 +472,7 @@ class TestCompute(unittest.TestCase):
         self.assertEquals({}, instance_console_connection_details['data']['defined-tags'])
         self.assertIsNotNone(parsed_result['data']['lifecycle-state'])
 
-        private_key_file = 'C:\\Users\\oci\console.ppk'
+        private_key_file = 'C:\\Users\\oci\console.ppk'  # noqa: W605
         params = [
             'compute', 'instance-console-connection', 'get-plink-connection-string',
             '--instance-console-connection-id', instance_console_connection_details['data']['id'],

@@ -658,7 +658,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
             param_type_to_pass = None
             if complex_type_definition:
                 if complex_type_definition['class'].find("dict(") == 0:
-                    param_type_to_pass = {
+                    param_type_to_pass = {  # noqa: W605
                         'module': complex_type_definition['module'],
                         'class': re.match('dict\(([^,]*), (.*)\)', complex_type_definition['class']).group(2)
                     }
@@ -667,13 +667,26 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
                 else:
                     cls_type = MODULE_TO_TYPE_MAPPINGS[complex_type_definition['module']][complex_type_definition['class']]
                     instance = cls_type()
-                    for underscored_name, camelized_name in instance.attribute_map.items():
-                        if camelized_key == camelized_name:
-                            param_type_to_pass = {
-                                'module': complex_type_definition['module'],
-                                'class': instance.swagger_types[underscored_name]
-                            }
-                            break
+                    possible_instances = [instance]
+
+                    # if the declared input type has subtypes, the actual data passed in may be a subtype
+                    # in this case we need to check which subtype the input data is, and try to camelize based on that subtype
+                    # if we try to camelize exclusively based on the base type, we dont know how to treat fields that are only present
+                    # on the subtype (for example, if a field that is only present on the subtype is a dict, we need to that so we can
+                    # skip camelizing it)
+                    possible_subtype_instance = get_possible_subtype_based_on_payload(cls_type, complex_type_definition['module'], original_obj)
+                    if possible_subtype_instance:
+                        possible_instances.append(possible_subtype_instance)
+
+                    # try to process this as either the base type or the subtype we found based on discriminator value
+                    for instance in possible_instances:
+                        for underscored_name, camelized_name in instance.attribute_map.items():
+                            if camelized_key == camelized_name:
+                                param_type_to_pass = {
+                                    'module': complex_type_definition['module'],
+                                    'class': instance.swagger_types[underscored_name]
+                                }
+                                break
 
             if camelize_keys:
                 new_dict[camelized_key] = make_dict_keys_camel_case(value, parameter_name=key, complex_parameter_type=param_type_to_pass)
@@ -686,7 +699,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
         new_list = []
         list_type = None
         if complex_type_definition and complex_type_definition['class'].find('list[') == 0:
-            list_type = {'module': complex_type_definition['module'], 'class': re.match('list\[(.*)\]', complex_type_definition['class']).group(1)}
+            list_type = {'module': complex_type_definition['module'], 'class': re.match('list\[(.*)\]', complex_type_definition['class']).group(1)}  # noqa: W605
 
         for obj in original_obj:
             new_list.append(make_dict_keys_camel_case(obj, complex_parameter_type=list_type))
@@ -727,6 +740,16 @@ def get_complex_type_definition_for_key_camelization(parameter_name, ctx=None):
             return complex_type_definitions[key]
 
     return None
+
+
+def get_possible_subtype_based_on_payload(declared_type, module, payload):
+    if hasattr(declared_type, 'get_subtype'):
+        # get_subtype method checks the discriminator field on the input object to determine which type it is
+        # it expects the keys to be camelized so thus we are passing in camelized_top_level_keys instead of just original_obj
+        camelized_top_level_keys = {string_utils.camelize(key): value for key, value in six.iteritems(payload)}
+        subtype_name_of_input_data = declared_type.get_subtype(camelized_top_level_keys)
+        subtype_of_input_data = getattr(getattr(getattr(oci, module), 'models'), subtype_name_of_input_data)
+        return subtype_of_input_data()
 
 
 def get_param(command, param_name):
@@ -1629,7 +1652,7 @@ def stream_page(is_json, page_index, call_result, ctx, previous_page_has_data):
     # first page:       [ {. . .}, {. . .
     # subsequent pages:   }, {. . .}, {. . .
     # last page:          }, {. . .}, {. . .} ]
-    json_page_matcher = re.compile("(^\s*\[)([\s\S]*?)(}\s*\]$)")
+    json_page_matcher = re.compile("(^\s*\[)([\s\S]*?)(}\s*\]$)")  # noqa: W605
     if is_json:
         if 'skip_deserialization' in ctx.obj:
             display_dictionary = {}
@@ -1683,7 +1706,7 @@ def build_query_expression(ctx):
             click.echo('In bash or similar "NIX" based shells used in "NIX" environment, escaping can be done by'
                         'using double quotes inside single quotes.\ne.g. --query \'data[*]."display-name"\'',  # noqa: E127
                         file=sys.stderr)
-            click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'
+            click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'  # noqa: W605
                         'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',  # noqa: E127
                         file=sys.stderr)
         raise
