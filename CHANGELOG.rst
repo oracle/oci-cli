@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.37 - 2018-11-01
+-------------------
+Added
+~~~~~
+* Support for tagging as part of FSS
+
+  * (``oci fs file-system create --freeform-tags --defined-tags``)
+  * (``oci fs snapshot create --freeform-tags --defined-tags``)
+  * (``oci fs mount-target create --freeform-tags --defined-tags``)
+
+* Support for modifying the route table, DHCP options, or security lists associated with a subnet.
+
+* Improvements to access control of compartments by allowing users to only show accessible compartments and list all compartments under the current tenancy.
+
+  * (``oci iam compartment list --access-level``)
+  * (``oci iam compartment list --compartment-id-in-subtree``)
+
 2.4.36 - 2018-10-26
 ---------------------
 Fixed

@@ -12,6 +12,7 @@ import shutil
 import six
 import string
 from . import util
+from . import test_config_container
 
 
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
@@ -38,6 +39,12 @@ root_bulk_put_folder = None
 bulk_put_bucket_name = None
 
 
+@pytest.fixture
+def vcr_fixture(request):
+    with test_config_container.create_vcr().use_cassette('object_storage_bulk_operations_{name}.yml'.format(name=request.function.__name__)):
+        yield
+
+
 # Generate test data for different operations:
 #
 #    Bulk Get: create a new bucket and populate it with some objects, then tear it all down afterwards
@@ -49,7 +56,7 @@ def generate_test_data(object_storage_client):
 
     # Create a test bucket
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -80,12 +87,12 @@ def generate_test_data(object_storage_client):
         bulk_get_object_to_content[object_name] = object_content
 
     # makedirs creates all subfolders recursively
-    root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(random.randint(0, 1000000))
+    root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(util.random_number_string())
     bulk_put_folder_leaf = '{}/subfolder1/subfolder2/subfolder3'.format(root_bulk_put_folder)
     os.makedirs(bulk_put_folder_leaf)
 
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -135,7 +142,7 @@ def test_normalize_object_name_path():
 
 
 @util.skip_while_rerecording
-def test_get_all_objects_in_bucket():
+def test_get_all_objects_in_bucket(vcr_fixture):
     download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name)
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
     print(result.output)
@@ -157,7 +164,7 @@ def test_get_all_objects_in_bucket():
 
 
 @util.skip_while_rerecording
-def test_get_directory_and_subdirectories():
+def test_get_directory_and_subdirectories(vcr_fixture):
     download_folder = 'tests/temp/get_directory_and_subdirectories_{}'.format(bulk_get_bucket_name)
 
     # This should get us a/b/<object>, a/b/c/<object> and a/b/c/d/<object>
@@ -187,7 +194,7 @@ def test_get_directory_and_subdirectories():
 
 
 @util.skip_while_rerecording
-def test_get_directory_no_subdirectory():
+def test_get_directory_no_subdirectory(vcr_fixture):
     download_folder = 'tests/temp/get_directory_only_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'a/b/c/', '--delimiter', '/'])
 
@@ -231,7 +238,7 @@ def test_get_files_skipped():
 
 
 @util.skip_while_rerecording
-def test_get_no_objects():
+def test_get_no_objects(vcr_fixture):
     download_folder = 'tests/temp/no_objects_{}'.format(bulk_get_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--prefix', 'batman'])
 
@@ -243,7 +250,7 @@ def test_get_no_objects():
 @util.skip_while_rerecording
 def test_get_multipart(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -283,7 +290,7 @@ def test_get_multipart(object_storage_client):
 
 # Since we've created a reasonable number of objects in this test suite, it's a good opportunity to test using the --all and --limit parameters
 @util.skip_while_rerecording
-def test_list_all_objects_operations():
+def test_list_all_objects_operations(vcr_fixture):
     result = invoke(['os', 'object', 'list', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--all'])
     parsed_result = json.loads(result.output)
     assert len(parsed_result['data']) == OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET
@@ -367,7 +374,7 @@ def test_bulk_put_default_options():
 @util.skip_while_rerecording
 def test_bulk_put_with_multipart_params(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -724,9 +731,9 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
 
 
 @util.skip_while_rerecording
-def test_delete_when_no_objects_in_bucket(object_storage_client):
+def test_delete_when_no_objects_in_bucket(vcr_fixture, object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -737,7 +744,7 @@ def test_delete_when_no_objects_in_bucket(object_storage_client):
 
 
 @util.skip_while_rerecording
-def test_delete_dry_run():
+def test_delete_dry_run(vcr_fixture):
     # Dry-run against entire bucket
     result = invoke(['os', 'object', 'bulk-delete', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run'])
     parsed_result = json.loads(result.output)
@@ -789,7 +796,7 @@ def test_delete(object_storage_client):
 @util.skip_while_rerecording
 def test_bulk_operation_table_output_query(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(random.randint(0, 1000000))
+    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -838,7 +845,10 @@ def get_count_of_files_in_folder_and_subfolders(directory):
 
 
 def generate_random_string(length):
-    return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
+    if test_config_container.using_vcr_with_mock_responses():
+        return 'a' * length
+    else:
+        return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
 
 
 # Pull JSON data out of output which may have stuff other than JSON in it. Assumes that nothing

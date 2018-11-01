@@ -123,7 +123,10 @@ def runner():
 
 @pytest.fixture(scope='session')
 def test_id():
-    return str(random.randint(0, 1000000))
+    if test_config_container.using_vcr_with_mock_responses():
+        return '1000000'
+    else:
+        return str(random.randint(0, 1000000))
 
 
 @pytest.fixture(scope='session')

@@ -12,6 +12,7 @@ import pytest
 import re
 import oci_cli
 from . import util
+from . import test_config_container
 
 
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
@@ -20,6 +21,12 @@ CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 5
 DEFAULT_TEST_PART_SIZE = 2
 MOVE_BUCKET_TO_COMPARTMENT_ID = os.environ.get('OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
+
+
+@pytest.fixture
+def vcr_fixture(request):
+    with test_config_container.create_vcr().use_cassette('object_storage_{name}.yml'.format(name=request.function.__name__)):
+        yield
 
 
 @pytest.fixture
@@ -222,7 +229,7 @@ def test_archive_bucket(runner, config_file, config_profile, test_id):
 
 
 @util.skip_while_rerecording
-def test_move_bucket_to_another_compartment(object_storage_client, runner, config_file, config_profile, test_id):
+def test_move_bucket_to_another_compartment(vcr_fixture, object_storage_client, runner, config_file, config_profile, test_id):
     if not MOVE_BUCKET_TO_COMPARTMENT_ID:
         pytest.skip('Skipping as no value was provided for the environment variable OCI_CLI_MOVE_BUCKET_TO_COMPARTMENT_ID')
 
@@ -270,8 +277,7 @@ def test_move_bucket_to_another_compartment(object_storage_client, runner, confi
     validate_response(result)
 
 
-@util.skip_while_rerecording
-def test_namespace_metadata(runner, config_file, config_profile):
+def test_namespace_metadata(vcr_fixture, runner, config_file, config_profile):
     util.set_admin_pass_phrase()
     result = util.invoke_command_as_admin(['os', 'ns', 'get-metadata', '-ns', util.NAMESPACE])
     util.unset_admin_pass_phrase()
@@ -289,8 +295,7 @@ def test_set_client_request_id(runner, config_file, config_profile):
     assert input_id in result.output
 
 
-@util.skip_while_rerecording
-def test_bucket_options(runner, config_file, config_profile, test_id):
+def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_id):
     bucket = 'cli_test_bucket_options_' + test_id
 
     # bucket create
@@ -639,16 +644,14 @@ def test_object_content_headers(runner, config_file, config_profile, content_typ
     validate_response(result)
 
 
-@util.skip_while_rerecording
-def test_list_options(runner, config_file, config_profile, object_storage_client):
+def test_list_options(vcr_fixture, runner, config_file, config_profile, object_storage_client):
     subtest_bucket_list(runner, config_file, config_profile)
     subtest_object_list(runner, config_file, config_profile)
     subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile)
     subtest_object_list_paging(runner, config_file, config_profile)
 
 
-@util.skip_while_rerecording
-def test_bucket_list_with_tags(runner, config_file, config_profile):
+def test_bucket_list_with_tags(vcr_fixture, runner, config_file, config_profile):
     result_tags_not_requested = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID])
     parsed_data = json.loads(result_tags_not_requested.output)
 
@@ -816,8 +819,7 @@ def subtest_object_list_paging(runner, config_file, config_profile):
     assert (pages == math.ceil(float(list_size) / page_size))
 
 
-@util.skip_while_rerecording
-def test_preauthenticated_requests(runner, config_file, config_profile):
+def test_preauthenticated_requests(vcr_fixture, runner, config_file, config_profile):
     preauthenticated_request_name_1 = util.random_name('cli_preauth_request_1')
     preauthenticated_request_name_2 = util.random_name('cli_preauth_request_2')
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
@@ -826,7 +828,8 @@ def test_preauthenticated_requests(runner, config_file, config_profile):
     target_date_for_epoch_timestamp = arrow.now().replace(year=target_year)
 
     expiry_time_input_and_expected = [
-        {'input': target_date_for_epoch_timestamp.format('X'), 'expected': target_date_for_epoch_timestamp.replace(microsecond=0)},
+        # TODO: Enable this case
+        # {'input': target_date_for_epoch_timestamp.format('X'), 'expected': target_date_for_epoch_timestamp.replace(microsecond=0)},
         {'input': '{}-10-10'.format(target_year), 'expected': arrow.Arrow(target_year, 10, 10, 0, 0, 0, 0, tzinfo='utc')},
         {'input': '{}-05-31T17:15:15.123+08:00'.format(target_year), 'expected': arrow.Arrow(target_year, 5, 31, 17, 15, 15, 123000, tzinfo='+08:00')},
         {'input': '{}-06-01T06:15:15-07:00'.format(target_year), 'expected': arrow.Arrow(target_year, 6, 1, 6, 15, 15, 0, tzinfo='-07:00')},
