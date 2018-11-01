@@ -23,19 +23,25 @@ def fs_root_group():
 
 @click.command(cli_util.override('file_system_group.command_name', 'file-system'), cls=CommandGroupWithAlias, help="""An NFS file system. To allow access to a file system, add it to an export set and associate the export set with a mount target. The same file system can be in multiple export sets and associated with multiple mount targets.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def file_system_group():
     pass
 
 
-@click.command(cli_util.override('export_set_group.command_name', 'export-set'), cls=CommandGroupWithAlias, help="""A set of file systems to export through one or more mount targets. Composed of zero or more export resources.""")
+@click.command(cli_util.override('export_set_group.command_name', 'export-set'), cls=CommandGroupWithAlias, help="""A set of file systems to export through one or more mount targets. Composed of zero or more export resources.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def export_set_group():
     pass
 
 
-@click.command(cli_util.override('mount_target_group.command_name', 'mount-target'), cls=CommandGroupWithAlias, help="""Provides access to a collection of file systems through one or more VNICs on a specified subnet. The set of file systems is controlled through the referenced export set.""")
+@click.command(cli_util.override('mount_target_group.command_name', 'mount-target'), cls=CommandGroupWithAlias, help="""Provides access to a collection of file systems through one or more VNICs on a specified subnet. The set of file systems is controlled through the referenced export set.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def mount_target_group():
     pass
@@ -57,13 +63,17 @@ Paths may not end in a slash (/). No path element can be a period (.) or two per
 
 No two non-'DELETED' export resources in the same export set can reference the same file system.
 
-Use `exportOptions` to control access to an export. For more information, see [Export Options].""")
+Use `exportOptions` to control access to an export. For more information, see [Export Options].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def export_group():
     pass
 
 
-@click.command(cli_util.override('snapshot_group.command_name', 'snapshot'), cls=CommandGroupWithAlias, help="""A point-in-time snapshot of a specified file system.""")
+@click.command(cli_util.override('snapshot_group.command_name', 'snapshot'), cls=CommandGroupWithAlias, help="""A point-in-time snapshot of a specified file system.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def snapshot_group():
     pass
@@ -154,15 +164,17 @@ Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My file system`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
-def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name):
+def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags):
     kwargs = {}
 
     details = {}
@@ -171,6 +183,12 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('file_storage', ctx)
     result = client.create_file_system(
@@ -221,15 +239,17 @@ Example: `files-1`""")
 @cli_util.option('--ip-address', help="""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address):
+def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, freeform_tags, defined_tags):
     kwargs = {}
 
     details = {}
@@ -245,6 +265,12 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if ip_address is not None:
         details['ipAddress'] = ip_address
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('file_storage', ctx)
     result = client.create_mount_target(
@@ -277,20 +303,28 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 Avoid entering confidential information.
 
 Example: `Sunday`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
 @cli_util.wrap_exceptions
-def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name):
+def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, freeform_tags, defined_tags):
     kwargs = {}
 
     details = {}
     details['fileSystemId'] = file_system_id
     details['name'] = name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('file_storage', ctx)
     result = client.create_snapshot(
@@ -641,10 +675,14 @@ def get_snapshot(ctx, from_json, snapshot_id):
 @cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
@@ -711,10 +749,14 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
 
 @export_group.command(name=cli_util.override('list_exports.command_name', 'list'), help="""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID.""")
 @cli_util.option('--compartment-id', help="""The OCID of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--export-set-id', help="""The OCID of the export set.""")
 @cli_util.option('--file-system-id', help="""The OCID of the file system.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
@@ -779,10 +821,14 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 @cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
@@ -852,10 +898,14 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
 @cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
@@ -925,10 +975,14 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
 
 @snapshot_group.command(name=cli_util.override('list_snapshots.command_name', 'list'), help="""Lists snapshots of the specified file system.""")
 @cli_util.option('--file-system-id', required=True, help="""The OCID of the file system.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help="""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
@@ -1106,19 +1160,26 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My file system`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
-def update_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, display_name, if_match):
+def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, display_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1127,6 +1188,12 @@ def update_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('file_storage', ctx)
     result = client.update_file_system(
@@ -1158,19 +1225,26 @@ def update_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My mount target`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def update_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, if_match):
+def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, freeform_tags, defined_tags, if_match):
 
     if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1179,6 +1253,12 @@ def update_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('file_storage', ctx)
     result = client.update_mount_target(
@@ -1197,6 +1277,65 @@ def update_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@snapshot_group.command(name=cli_util.override('update_snapshot.command_name', 'update'), help="""Updates the specified snapshot's information.""")
+@cli_util.option('--snapshot-id', required=True, help="""The OCID of the snapshot.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
+@cli_util.wrap_exceptions
+def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('file_storage', ctx)
+    result = client.update_snapshot(
+        snapshot_id=snapshot_id,
+        update_snapshot_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_snapshot') and callable(getattr(client, 'get_snapshot')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except Exception as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

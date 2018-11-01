@@ -1,9 +1,10 @@
 #!/bin/bash
 # This script provides a basic example of how to use the File Storage service in the CLI.
-# The two variables at the beginning of the script must be specified accordingly:
+# The three variables at the beginning of the script must be specified accordingly:
 #
 #   * COMPARTMENT_ID: The OCID of the compartment where we'll create our file system and related resources
 #   * AVAILABILITY_DOMAIN: The availability domain, e.g. Uocm:PHX-AD-1, where we'll create our file system and related resources
+#   * DEFINED_TAGS: The defined tag namespace/key
 #
 # The script will demonstrate:
 #
@@ -26,6 +27,8 @@ set -e
 
 COMPARTMENT_ID=""
 AVAILABILITY_DOMAIN=""
+DEFINED_TAGS='{"": {"": "value"}}'
+FREEFORM_TAGS='{"foo": "value"}'
 
 # First we will create a VCN and a subnet. Since these resources have a lifecycle state, we can create them and use
 # the --wait-for-state option so that our command will only return/complete when the resouce enters the desired
@@ -41,7 +44,7 @@ echo ""
 
 # First we create a file system. A file system has a lifecycle state so we can use the --wait-for-state
 # option so that our command will only return/complete when the file system reaches the desired state.
-CREATED_FILE_SYSTEM=$(oci fs file-system create -c $COMPARTMENT_ID --availability-domain $AVAILABILITY_DOMAIN --display-name exampleFileSystem --wait-for-state ACTIVE)
+CREATED_FILE_SYSTEM=$(oci fs file-system create -c $COMPARTMENT_ID --availability-domain $AVAILABILITY_DOMAIN --display-name exampleFileSystem --freeform-tags "$FREEFORM_TAGS" --defined-tags "$DEFINED_TAGS" --wait-for-state ACTIVE)
 FILE_SYSTEM_ID=$(jq -r '.data.id' <<< "$CREATED_FILE_SYSTEM")
 echo "File System OCID: $FILE_SYSTEM_ID"
 echo ""
@@ -65,7 +68,7 @@ echo ""
 #   - If we don't specify an --ip-address then one will be assigned from the free private IPs in the subnet
 #   - A mount target has a lifecycle state, so we can use --wait-for-state so that the command will only return/complete when the
 #     mount target reaches the desired state
-CREATED_MOUNT_TARGET=$(oci fs mount-target create -c $COMPARTMENT_ID --availability-domain $AVAILABILITY_DOMAIN --subnet-id $SUBNET_ID --display-name exampleMountTarget --wait-for-state ACTIVE)
+CREATED_MOUNT_TARGET=$(oci fs mount-target create -c $COMPARTMENT_ID --availability-domain $AVAILABILITY_DOMAIN --subnet-id $SUBNET_ID --display-name exampleMountTarget --freeform-tags "$FREEFORM_TAGS" --defined-tags "$DEFINED_TAGS" --wait-for-state ACTIVE)
 MOUNT_TARGET_ID=$(jq -r '.data.id' <<< "$CREATED_MOUNT_TARGET")
 echo "Mount Target OCID: $FILE_SYSTEM_ID"
 echo ""
@@ -126,7 +129,7 @@ echo ""
 # to become available
 #
 # Note that snapshot names are immutable and must be unique amongst all non-DELETED snapshots for a file system.
-CREATED_SNAPSHOT=$(oci fs snapshot create --file-system-id $FILE_SYSTEM_ID --name exampleSnapshot --wait-for-state ACTIVE)
+CREATED_SNAPSHOT=$(oci fs snapshot create --file-system-id $FILE_SYSTEM_ID --name exampleSnapshot --freeform-tags "$FREEFORM_TAGS" --defined-tags "$DEFINED_TAGS" --wait-for-state ACTIVE)
 SNAPSHOT_ID=$(jq -r '.data.id' <<< "$CREATED_SNAPSHOT")
 echo "Snapshot OCID: $SNAPSHOT_ID"
 echo ""
