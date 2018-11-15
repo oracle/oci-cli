@@ -1677,6 +1677,15 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique. Avoid entering confidential
                                   information.
+  --route-table-id TEXT           The OCID of the route table the DRG attachment
+                                  will use.
+                                  
+                                  If you don't specify a route table
+                                  here, the DRG attachment is created without an
+                                  associated route table. The Networking service
+                                  does NOT automatically associate the attached
+                                  VCN's default route table with the DRG
+                                  attachment.
   --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1808,6 +1817,8 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --route-table-id TEXT           The OCID of the route table the DRG attachment
+                                  will use.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -2784,6 +2795,12 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --route-table-id TEXT           The OCID of the route table the LPG will use.
+                                  If you don't specify a route table here, the
+                                  LPG is created without an associated route
+                                  table. The Networking service does NOT
+                                  automatically associate the attached VCN's
+                                  default route table with the LPG.
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -2963,6 +2980,7 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --route-table-id TEXT           The OCID of the route table the LPG will use.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
