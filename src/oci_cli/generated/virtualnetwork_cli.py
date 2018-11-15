@@ -804,6 +804,9 @@ For the purposes of access control, the DRG attachment is automatically placed i
 @cli_util.option('--drg-id', required=True, help="""The OCID of the DRG.""")
 @cli_util.option('--vcn-id', required=True, help="""The OCID of the VCN.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--route-table-id', help="""The OCID of the route table the DRG attachment will use.
+
+If you don't specify a route table here, the DRG attachment is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the DRG attachment.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -812,7 +815,7 @@ For the purposes of access control, the DRG attachment is automatically placed i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, vcn_id, display_name):
+def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, vcn_id, display_name, route_table_id):
     kwargs = {}
 
     details = {}
@@ -821,6 +824,9 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if route_table_id is not None:
+        details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_drg_attachment(
@@ -998,6 +1004,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help="""The OCID of the route table the LPG will use.
+
+If you don't specify a route table here, the LPG is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the LPG.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1006,7 +1015,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
 @cli_util.wrap_exceptions
-def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags):
+def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, route_table_id):
     kwargs = {}
 
     details = {}
@@ -1021,6 +1030,9 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if route_table_id is not None:
+        details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_local_peering_gateway(
@@ -5166,6 +5178,7 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @drg_attachment_group.command(name=cli_util.override('update_drg_attachment.command_name', 'update'), help="""Updates the display name for the specified `DrgAttachment`. Avoid entering confidential information.""")
 @cli_util.option('--drg-attachment-id', required=True, help="""The OCID of the DRG attachment.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--route-table-id', help="""The OCID of the route table the DRG attachment will use.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5175,7 +5188,7 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, if_match):
+def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, route_table_id, if_match):
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
@@ -5187,6 +5200,9 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if route_table_id is not None:
+        details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_drg_attachment(
@@ -5362,6 +5378,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help="""The OCID of the route table the LPG will use.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -5372,7 +5389,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
 @cli_util.wrap_exceptions
-def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, local_peering_gateway_id, defined_tags, display_name, freeform_tags, if_match):
+def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, local_peering_gateway_id, defined_tags, display_name, freeform_tags, route_table_id, if_match):
 
     if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
@@ -5394,6 +5411,9 @@ def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if route_table_id is not None:
+        details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_local_peering_gateway(

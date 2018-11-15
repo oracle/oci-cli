@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.38 - 2018-11-15
+-------------------
+Added
+~~~~~
+* VCN Transit Routing (VTR) feature as part of Virtual Cloud Network
+
+    * Ability to associate route table when creating drg-attachment (`oci network drg-attachment create --routeTableId`)
+    * Ability to associate route table when creating local-peering-gateway (`oci network local-peering-gateway create --routeTableId`)
+    * Ability to associate route table when updating drg-attachment (`oci network drg-attachment update --routeTableId`)
+    * Ability to associate route table when updating local-peering-gateway (`oci network local-peering-gateway update --routeTableId`)
+    * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/vcn_transit_routing.sh>`__.
+
 2.4.37 - 2018-11-01
 -------------------
 Added
