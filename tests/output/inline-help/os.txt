@@ -214,6 +214,15 @@ Options:
                                   multipart upload, this is the entity tag of
                                   the target object. For uploading a part, this
                                   is the entity tag of the target part.
+  --fields [approximateCount|approximateSize]
+                                  Bucket summary includes the 'namespace',
+                                  'name', 'compartmentId', 'createdBy',
+                                  'timeCreated', and 'etag' fields. This
+                                  parameter can also include 'approximateCount'
+                                  (Approximate number of objects) and
+                                  'approximateSize' (total approximate size in
+                                  bytes of all objects). For example
+                                  'approximateCount,approximateSize'
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
