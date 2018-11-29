@@ -542,12 +542,13 @@ def delete_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
 @cli_util.option('--bucket-name', required=True, help="""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help="""The entity tag to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @cli_util.option('--if-none-match', help="""The entity tag to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["approximateCount", "approximateSize"]), multiple=True, help="""Bucket summary includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields. This parameter can also include 'approximateCount' (Approximate number of objects) and 'approximateSize' (total approximate size in bytes of all objects). For example 'approximateCount,approximateSize'""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_match):
+def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_match, fields):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -559,6 +560,8 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
         kwargs['if_match'] = if_match
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
     result = client.get_bucket(

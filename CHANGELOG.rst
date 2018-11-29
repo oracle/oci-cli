@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.39 - 2018-11-29
+-------------------
+Added
+~~~~~
+* Support for fetching bucket statistics in Object Storage getBucket service.
+  * (``oci os bucket get --bucket-name --namespace-name --fields``)
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_bucket_example.sh>`__
+
 2.4.38 - 2018-11-15
 -------------------
 Added
