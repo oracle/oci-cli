@@ -14,13 +14,17 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('dns_root_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns_root_group.help', """API for managing DNS zones, records, and policies."""), short_help=cli_util.override('dns_root_group.short_help', """Public DNS Service"""))
+@cli.command(cli_util.override('dns_root_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns_root_group.help', """API for the DNS service. Use this API to manage DNS zones, records, and other DNS resources.
+For more information, see [Overview of the DNS Service](/iaas/Content/DNS/Concepts/dnszonemanagement.htm).
+"""), short_help=cli_util.override('dns_root_group.short_help', """DNS API"""))
 @cli_util.help_option_group
 def dns_root_group():
     pass
 
 
-@click.command(cli_util.override('zone_group.command_name', 'zone'), cls=CommandGroupWithAlias, help="""A DNS zone.""")
+@click.command(cli_util.override('zone_group.command_name', 'zone'), cls=CommandGroupWithAlias, help="""A DNS zone.
+
+*Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def zone_group():
     pass
@@ -60,19 +64,21 @@ dns_root_group.add_command(zones_group)
 @zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
 @cli_util.option('--name', required=True, help="""The name of the zone.""")
 @cli_util.option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
-@cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help="""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, zone_type, external_masters, compartment_id):
+def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, zone_type, freeform_tags, defined_tags, external_masters, compartment_id):
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
@@ -81,6 +87,12 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     details['name'] = name
     details['zoneType'] = zone_type
     details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if external_masters is not None:
         details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
@@ -426,7 +438,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('get_zone_records.command_name', 'get-zone'), help="""Gets all records in the specified zone. The results are sorted by `domain` in alphabetical order by default. For more information about records, please see [Resource Record (RR) TYPEs].""")
+@records_group.command(name=cli_util.override('get_zone_records.command_name', 'get-zone'), help="""Gets all records in the specified zone. The results are sorted by `domain` in alphabetical order by default. For more information about records, see [Resource Record (RR) TYPEs].""")
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -511,9 +523,9 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 @cli_util.option('--zone-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""Search by zone type, `PRIMARY` or `SECONDARY`. Will match any zone whose type equals the provided value.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""The state of a resource.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "zoneType", "timeCreated"]), help="""The field by which to sort zones.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""The state of a resource.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -521,7 +533,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[ZoneSummary]'})
 @cli_util.wrap_exceptions
-def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page, name, name_contains, zone_type, time_created_greater_than_or_equal_to, time_created_less_than, sort_by, sort_order, lifecycle_state):
+def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page, name, name_contains, zone_type, time_created_greater_than_or_equal_to, time_created_less_than, lifecycle_state, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -540,12 +552,12 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
         kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    if lifecycle_state is not None:
-        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -572,7 +584,7 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('patch_domain_records.command_name', 'patch-domain'), help="""Replaces records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.""")
+@records_group.command(name=cli_util.override('patch_domain_records.command_name', 'patch-domain'), help="""Updates records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.""")
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help="""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help="""
@@ -809,7 +821,9 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
 
 @zone_group.command(name=cli_util.override('update_zone.command_name', 'update'), help="""Updates the specified secondary zone with your new external master server information. For more information about secondary zone, see [Manage DNS Service Zone].""")
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
-@cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone.
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -819,18 +833,18 @@ This option is a JSON list with items of type ExternalMaster.  For documentation
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, external_masters, if_match, if_unmodified_since, compartment_id):
+def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, freeform_tags, defined_tags, external_masters, if_match, if_unmodified_since, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
     if not force:
-        if external_masters:
-            if not click.confirm("WARNING: Updates to external-masters will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or external_masters:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and external-masters will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -841,6 +855,12 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         kwargs['compartment_id'] = compartment_id
 
     details = {}
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if external_masters is not None:
         details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)

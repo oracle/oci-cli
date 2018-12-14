@@ -81,9 +81,9 @@ SKIP_JSON_KEY_FORMAT_CHECK = set([
 # this allows generated tests to look up operations that have been moved in code in the CLI
 MOVED_COMMANDS = {
     ('iam', 'user_group_membership', 'add'): ['iam', 'group', 'add-user'],
-    ('kms', 'encrypted_data', 'encrypt'): ['kms', 'crypto', 'encrypt'],
-    ('kms', 'decrypted_data', 'decrypt'): ['kms', 'crypto', 'decrypt'],
-    ('kms', 'generated_key', 'generate-data-encryption-key'): ['kms', 'crypto', 'generate-data-encryption-key'],
+    ('kms', 'crypto', 'encrypted_data', 'encrypt'): ['kms', 'crypto', 'encrypt'],
+    ('kms', 'crypto', 'decrypted_data', 'decrypt'): ['kms', 'crypto', 'decrypt'],
+    ('kms', 'crypto', 'generated_key', 'generate-data-encryption-key'): ['kms', 'crypto', 'generate-data-encryption-key'],
     ('kms', 'vault', 'cancel-deletion'): ['kms', 'management', 'vault', 'cancel-deletion'],
     ('kms', 'vault', 'schedule-deletion'): ['kms', 'management', 'vault', 'schedule-deletion'],
     ('kms', 'vault', 'get'): ['kms', 'management', 'vault', 'get'],
@@ -103,12 +103,6 @@ MOVED_COMMANDS = {
     ('compute-management', 'instance', 'list-instances'): ['compute-management', 'instance-pool', 'list-instances']
 }
 
-# this allows generated tests to look up operations that have been given an extra layer of nesting in the CLI
-NESTED_COMMANDS = {
-    'management': 'kms',
-    'vault': 'kms',
-    'crypto': 'kms'
-}
 
 # This global can be changed to influence what configuration data this module vends.
 target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
@@ -707,19 +701,30 @@ def get_json_from_mixed_string(source_string):
     return json.loads(json_str)
 
 
-def get_command_list(root_command, parent, leaf):
-    if root_command in NESTED_COMMANDS:
-        root_command = NESTED_COMMANDS[root_command]
-
-    if (root_command, parent, leaf) in MOVED_COMMANDS:
+def get_command_list(root_command, parent, leaf, multiple_tags=False):
+    command_id_tuple = (root_command, parent, leaf)
+    if command_id_tuple in MOVED_COMMANDS:
         return MOVED_COMMANDS[(root_command, parent, leaf)]
+    # for spec with multiple tags, we just have to check if the passed tuple(root_command, parent, leaf) is a subset of
+    # any of the MOVED commands keys since we do not have the newly added nested root group info.
+    if multiple_tags:
+        for cmd in MOVED_COMMANDS:
+            if set(command_id_tuple).issubset(cmd):
+                return MOVED_COMMANDS[cmd]
 
     parent = parent.replace('_', '-')
     leaf = leaf.replace('_', '-')
 
     commands = collect_commands(oci_cli.cli)
     for command in commands:
-        if len(command) > 2 and command[0] == root_command and command[-2] == parent and command[-1] == leaf:
+        if (len(command) > 2
+                and ((multiple_tags and command[1] == root_command) or command[0] == root_command)
+                and command[-2] == parent
+                and command[-1] == leaf):
+            # Find matching command and return. The second condition above is explained as below with examples:
+            # spec with single tags e.g. iam: command[0](iam) == root_command(iam) is True
+            # spec with multiple tags e.g. kms: multiple_tags and command[1](kmsCrypto) == root_command(kmsCrypto) is True
+            # spec with multiple tags and root group removed e.g. core: command[0](compute) == root_command(compute) is True
             return command
 
 

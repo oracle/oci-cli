@@ -127,10 +127,8 @@ class CLITestingServiceClient:
             elif len(output) == 0:
                 if api_name.lower().startswith('list'):
                     normalized_response_json = {data_field_name: []}
-                elif is_delete_operation:
-                    normalized_response_json = {}
                 else:
-                    raise ValueError('CLI output was empty')
+                    normalized_response_json = {}
             else:
                 try:
                     normalized_response_json = json.loads(output)
@@ -251,7 +249,7 @@ class CLITestingServiceClient:
         assert api_enabled_response is True or api_enabled_response is False, 'Received invalid response from testing service, should be true or false. Response: {}'.format(api_enabled_response)
         return api_enabled_response
 
-    def get_endpoint(self, service_name, client_name):
+    def get_endpoint(self, service_name, client_name, api_name):
         # standardize service name to convention for Java SDK model namespaces (all lower case one word)
         service_name = service_name.replace('_', '').lower()
 
@@ -259,7 +257,9 @@ class CLITestingServiceClient:
         params = {
             'sessionId': self.session_id,
             'serviceName': service_name,
-            'clientName': client_name
+            'clientName': client_name,
+            'lang': SERVICE_LANGUAGE,
+            'apiName': api_name
         }
 
         response = requests.get(url, params=params)

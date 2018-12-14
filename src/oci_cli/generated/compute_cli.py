@@ -6,15 +6,14 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from ..cli_root import cli
-from .. import cli_constants  # noqa: F401
 from .. import cli_util
 from .. import json_skeleton_utils
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
+from . import core_service_cli
 
 
-@cli.command(cli_util.override('compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('compute_root_group.short_help', """Core Services API"""))
+@click.command(cli_util.override('compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('compute_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_root_group():
     pass
@@ -138,6 +137,7 @@ def console_history_group():
     pass
 
 
+core_service_cli.core_service_group.add_command(compute_root_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_group)
 compute_root_group.add_command(shape_group)
@@ -364,6 +364,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable encryption in transit for the PV data volume attachment. Defaults to false.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -372,7 +373,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, display_name, is_read_only):
+def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, display_name, is_read_only, is_pv_encryption_in_transit_enabled):
     kwargs = {}
 
     details = {}
@@ -384,6 +385,9 @@ def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for
 
     if is_read_only is not None:
         details['isReadOnly'] = is_read_only
+
+    if is_pv_encryption_in_transit_enabled is not None:
+        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
 
     details['type'] = 'paravirtualized'
 
@@ -1591,6 +1595,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
  You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an instance. Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help="""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable encryption in transit for the PV boot volume attachment. Defaults to false.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1599,7 +1604,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, source_details, subnet_id):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, source_details, subnet_id, is_pv_encryption_in_transit_enabled):
     kwargs = {}
 
     details = {}
@@ -1642,6 +1647,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if subnet_id is not None:
         details['subnetId'] = subnet_id
+
+    if is_pv_encryption_in_transit_enabled is not None:
+        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
 
     client = cli_util.build_client('compute', ctx)
     result = client.launch_instance(

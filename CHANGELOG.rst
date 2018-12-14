@@ -6,11 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.40 - 2018-12-13
+-------------------
+Added
+~~~~~
+* Support for sparse diskgroup option with Exadata shape in the following command:
+
+  * (``oci db system launch``)
+
+* Support for Data Guard on VM DB Shape
+
+* Support create option with-new-db-system along with from-existing-db-system
+
+  * (``oci db data-guard-association create with-new-db-system``)
+
+* Support for tagging Zones in the DNS service.
+
+* Block Storage paravirtualized-encryption-in-transit feature
+
+  * Ability to enable encryption-in-transit for paravirtualized volume attachment for both boot volumes and data volumes (``oci compute volume-attachment attach-paravirtualized-volume``)
+
+* Support for resetting idp scim client as part of Identity Service.
+
+  * (``oci iam scim-client-credentials reset-idp-scim-client --identity-provider-id``)
+
+* Support for updating user capabilities as part of Identity Service.
+
+  * (``oci iam user update-user-capabilities --user-id``)
+
+* Support for listing identity provider groups as part of Identity Service.
+
+  * (``oci iam identity-provider-group list``)
+
+Changed
+~~~~~~~
+* New Attribute ``is-latest-for-major-version`` is included in (``oci db version list``) response
+
+* pyOpenSSL was upgraded to version 17.5.0 and cryptography to version 2.1.4 to address a vulnerability identified on GitHub as CVE-2018-1000808.
+
 2.4.39 - 2018-11-29
 -------------------
 Added
 ~~~~~
 * Support for fetching bucket statistics in Object Storage getBucket service.
+
   * (``oci os bucket get --bucket-name --namespace-name --fields``)
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_bucket_example.sh>`__
 
@@ -105,10 +144,6 @@ Changed
 ~~~~~~~~
 * New Attribute ``dbVersion`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
 * New Attribute ``allConnectionStrings`` is included in the GET Response for Autonomous Transaction Processing Database and Autonomous Data Warehouse.
-
-Known Issues
-~~~~~~~~
-* Block Storage service for copying volume backups across regions is not enabled.
 
 2.4.34 - 2018-10-04
 ---------------------

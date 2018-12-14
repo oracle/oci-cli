@@ -6,6 +6,8 @@
 # The following variables must be populated at the top of this script:
 #   * The compartment ID where the Database Service resources will be created
 
+set -e
+
 COMPARTMENT_ID=""
 DISPLAY_NAME1="displayName"
 DISPLAY_NAME2="newDisplayName"
@@ -17,6 +19,7 @@ SCALED_CPU="2"
 SCALED_STORAGE="2"
 STORAGE="1"
 LICENSE_TYPE="LICENSE_INCLUDED"
+DB_SYSTEM_SHAPE="VM.Standard1.1"
 
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
@@ -118,3 +121,42 @@ echo 'Trying to Get Deleted Autonomous Transaction Processing. Should not find i
 oci db autonomous-database get --autonomous-database-id $ADB_ID
 
 echo 'End of Autonomous Transaction Processing Examples.'
+
+
+############################################################################## VM Data Guard ##############################################################################
+
+##Pre requisite to have VCN, Subnet and a VM Database in AVAILABLE state
+## Below are Sample values - Replace with actuals
+AVAILABILITY_DOMAIN="XXIT:PHX-AD-3"
+SUBNET_ID="ocid1.subnet.oc1.phx.aaaaaaaa5ydvrdwdhk7chxgy4wt5eje4fporgd7wckvzezvqbezblantmyxq"
+DATABASE_ID="ocid1.database.oc1.phx.abyhqljthelork4yotrsbpiaoimbvh7heod33qp4dnsqf34gfzksmk5t4egq"
+
+echo 'Starting DataGuard for VM Examples'
+
+#Step-1 Create Dataguard
+echo 'Create Data Guard...'
+CREATE_VMDG=$(oci db data-guard-association create with-new-db-system --database-id $DATABASE_ID  \
+                    --database-admin-password $PASSWORD1 --protection-mode 'MAXIMUM_PERFORMANCE'  \
+                    --transport-type 'ASYNC' --creation-type 'NewDbSystem' --display-name $DISPLAY_NAME1  \
+                    --hostname $HOST_NAME --availability-domain $AVAILABILITY_DOMAIN --subnet-id $SUBNET_ID  \
+                    --wait-for-state AVAILABLE)
+VMDG_ID=$(jq -r '.data.id' <<< "$CREATE_VMDG")
+
+#Step-2 Once DataGuard is AVAILABLE, do Switchover
+echo 'Switchover on current primary'
+SWITCHOVER_DG=$(oci db data-guard-association switchover --database-id $DATABASE_ID  --data-guard-association-id $VMDG_ID \
+                    --database-admin-password $PASSWORD1 --wait-for-state AVAILABLE)
+
+#Step-3 Failover
+echo 'After switch over old primary will become standby. Failover on current standby'
+FAILOVER_DG=$(oci db data-guard-association failover --database-id $DATABASE_ID  --data-guard-association-id $VMDG_ID \
+                    --database-admin-password $PASSWORD1 --wait-for-state AVAILABLE)
+
+#Step-4 Reinstate
+echo 'Reinstate current primary'
+REINSTATE_DG=$(oci db data-guard-association reinstate --database-id $DATABASE_ID  --data-guard-association-id $VMDG_ID \
+                    --database-admin-password $PASSWORD1 --wait-for-state AVAILABLE)
+
+echo 'Trying to List Oracle DB Versions for compartment and shape.'
+oci db version list -c $COMPARTMENT_ID --db-system-shape $DB_SYSTEM_SHAPE
+echo 'End of List Oracle DB Versions Examples.'
