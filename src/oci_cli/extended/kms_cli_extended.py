@@ -1,26 +1,12 @@
 # coding: utf-8
 # Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 
-from ..aliasing import CommandGroupWithAlias
-from ..generated import kmscrypto_cli, kmsmanagement_cli, kmsvault_cli
-from ..cli_root import cli
+from ..generated import kms_service_cli, kmscrypto_cli, kmsmanagement_cli, kmsvault_cli
 from .. import cli_util
 
-cli.commands.pop(kmscrypto_cli.kms_crypto_root_group.name)
-cli.commands.pop(kmsmanagement_cli.kms_management_root_group.name)
-cli.commands.pop(kmsvault_cli.kms_vault_root_group.name)
-
-
-@cli.command('kms', cls=CommandGroupWithAlias, help="""Key Management Service""")
-@cli_util.help_option_group
-def kms_group():
-    pass
-
-
-kms_group.add_command(kmscrypto_cli.kms_crypto_root_group)
-kms_group.add_command(kmsmanagement_cli.kms_management_root_group)
 
 # move kms vault commands under kms management vault
+kms_service_cli.kms_service_group.commands.pop(kmsvault_cli.kms_vault_root_group.name)
 kmsmanagement_cli.kms_management_root_group.add_command(kmsvault_cli.vault_group)
 
 # remove one nested layer from crypto commands (e.g. kms crypto encrypted-data encrypt -> kms crypto encrypt)
@@ -38,3 +24,4 @@ cli_util.override_command_short_help_and_help(kmsvault_cli.vault_group, "A logic
 
 cli_util.override_command_short_help_and_help(kmsmanagement_cli.kms_management_root_group, "Operations for managing keys and vaults.")
 cli_util.override_command_short_help_and_help(kmscrypto_cli.kms_crypto_root_group, "Operations for performing data encryption, decryption and generation of data encryption keys.")
+cli_util.override_command_short_help_and_help(kms_service_cli.kms_service_group, "Key Management Service")

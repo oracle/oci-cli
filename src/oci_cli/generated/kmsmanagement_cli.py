@@ -6,15 +6,14 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from ..cli_root import cli
-from .. import cli_constants  # noqa: F401
 from .. import cli_util
 from .. import json_skeleton_utils
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
+from . import kms_service_cli
 
 
-@cli.command(cli_util.override('kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_management_root_group.short_help', """Key Management Service API"""))
+@click.command(cli_util.override('kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_management_root_group.short_help', """Key Management Service API"""))
 @cli_util.help_option_group
 def kms_management_root_group():
     pass
@@ -32,6 +31,7 @@ def key_group():
     pass
 
 
+kms_service_cli.kms_service_group.add_command(kms_management_root_group)
 kms_management_root_group.add_command(key_version_group)
 kms_management_root_group.add_command(key_group)
 

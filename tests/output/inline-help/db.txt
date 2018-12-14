@@ -35,9 +35,6 @@ Usage: oci db autonomous-data-warehouse [OPTIONS] COMMAND [ARGS]...
 
   An Oracle Autonomous Data Warehouse.
 
-  **Warning:** Oracle recommends that you avoid using any confidential
-  information when you supply string values using the API.
-
 Options:
   -?, -h, --help  Show this message and exit.
 
@@ -59,14 +56,13 @@ Usage: oci db autonomous-data-warehouse create [OPTIONS]
   Creates a new Autonomous Data Warehouse.
 
 Options:
-  --admin-password TEXT           A strong password for Admin. The password must
-                                  be between 12 and 60 characters long, and must
-                                  contain at least 1 uppercase, 1 lowercase and
-                                  2 numeric characters. It cannot contain the
-                                  double quote symbol ("). It must be different
-                                  than the last 4 passwords. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment of the
                                   Autonomous Data Warehouse. [required]
+  --db-name TEXT                  The database name. The name must begin with an
+                                  alphabetic character and can contain a maximum
+                                  of 14 alphanumeric characters. Special
+                                  characters are not permitted. The database
+                                  name must be unique in the tenancy. [required]
   --cpu-core-count INTEGER        The number of CPU Cores to be made available
                                   to the database. [required]
   --data-storage-size-in-tbs INTEGER
@@ -74,34 +70,19 @@ Options:
                                   will be created and attached to the database.
                                   This storage can later be scaled up if needed.
                                   [required]
-  --db-name TEXT                  The database name. The name must begin with an
-                                  alphabetic character and can contain a maximum
-                                  of 14 alphanumeric characters. Special
-                                  characters are not permitted. The database
-                                  name must be unique in the tenancy. [required]
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+  --admin-password TEXT           The password must be between 12 and 30
+                                  characters long, and must contain at least 1
+                                  uppercase, 1 lowercase, and 1 numeric
+                                  character. It cannot contain the double quote
+                                  symbol (") or the username "admin", regardless
+                                  of casing. [required]
   --display-name TEXT             The user-friendly name for the Autonomous Data
                                   Warehouse. The name does not have to be
                                   unique.
+  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
+                                  The Oracle license model that applies to the
+                                  Oracle Autonomous Data Warehouse. The default
+                                  is BRING_YOUR_OWN_LICENSE.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -123,10 +104,26 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
-                                  The Oracle license model that applies to the
-                                  Oracle Autonomous Data Warehouse. The default
-                                  is BRING_YOUR_OWN_LICENSE.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -203,7 +200,10 @@ Options:
   --autonomous-data-warehouse-id TEXT
                                   The database [OCID]. [required]
   --password TEXT                 The password to encrypt the keys inside the
-                                  wallet. [required]
+                                  wallet. The password must be at least 8
+                                  characters long and must include at least 1
+                                  letter and either 1 numeric character or 1
+                                  special character. [required]
   --file FILENAME                 The name of the file that will receive the
                                   response data, or '-' to write to STDOUT.
                                   [required]
@@ -485,40 +485,22 @@ Usage: oci db autonomous-data-warehouse update [OPTIONS]
 Options:
   --autonomous-data-warehouse-id TEXT
                                   The database [OCID]. [required]
-  --admin-password TEXT           A strong password for Admin. The password must
-                                  be between 12 and 60 characters long, and must
-                                  contain at least 1 uppercase, 1 lowercase and
-                                  2 numeric characters. It cannot contain the
-                                  double quote symbol ("). It must be different
-                                  than the last 4 passwords.
   --cpu-core-count INTEGER        The number of CPU cores to be made available
                                   to the database.
   --data-storage-size-in-tbs INTEGER
                                   Size, in terabytes, of the data volume that
                                   will be attached to the database.
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
   --display-name TEXT             The user-friendly name for the Autonomous Data
                                   Warehouse. The name does not have to be
                                   unique.
+  --admin-password TEXT           The password must be between 12 and 30
+                                  characters long, and must contain at least 1
+                                  uppercase, 1 lowercase, and 1 numeric
+                                  character. It cannot contain the double quote
+                                  symbol (") or the username "admin", regardless
+                                  of casing. It must be different from the last
+                                  four passwords and it must not be a password
+                                  used within the last 24 hours.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -530,6 +512,26 @@ Options:
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command
                                   line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -577,13 +579,7 @@ Options:
 $ oci db autonomous-data-warehouse-backup --help
 Usage: oci db autonomous-data-warehouse-backup [OPTIONS] COMMAND [ARGS]...
 
-  An Autonomous Data Warehouse backup. To use any of the API operations, you
-  must be authorized in an IAM policy. If you're not authorized, talk to an
-  administrator. If you're an administrator who needs to write policies to
-  give users access, see [Getting Started with Policies].
-
-  **Warning:** Oracle recommends that you avoid using any confidential
-  information when you supply string values using the API.
+  An Autonomous Data Warehouse backup.
 
 Options:
   -?, -h, --help  Show this message and exit.
@@ -601,11 +597,11 @@ Usage: oci db autonomous-data-warehouse-backup create [OPTIONS]
   based on the provided request parameters.
 
 Options:
+  --display-name TEXT             The user-friendly name for the backup. The
+                                  name does not have to be unique. [required]
   --autonomous-data-warehouse-id TEXT
                                   The [OCID] of the Autonomous Data Warehouse
                                   backup. [required]
-  --display-name TEXT             The user-friendly name for the backup. The
-                                  name does not have to be unique. [required]
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED|FAILED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -706,9 +702,6 @@ Usage: oci db autonomous-database [OPTIONS] COMMAND [ARGS]...
 
   An Oracle Autonomous Database.
 
-  **Warning:** Oracle recommends that you avoid using any confidential
-  information when you supply string values using the API.
-
 Options:
   -?, -h, --help  Show this message and exit.
 
@@ -730,14 +723,13 @@ Usage: oci db autonomous-database create [OPTIONS]
   Creates a new Autonomous Database.
 
 Options:
-  --admin-password TEXT           A strong password for Admin. The password must
-                                  be between 12 and 60 characters long, and must
-                                  contain at least 1 uppercase, 1 lowercase and
-                                  2 numeric characters. It cannot contain the
-                                  double quote symbol ("). It must be different
-                                  than the last 4 passwords. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment of the
                                   autonomous database. [required]
+  --db-name TEXT                  The database name. The name must begin with an
+                                  alphabetic character and can contain a maximum
+                                  of 14 alphanumeric characters. Special
+                                  characters are not permitted. The database
+                                  name must be unique in the tenancy. [required]
   --cpu-core-count INTEGER        The number of CPU Cores to be made available
                                   to the database. [required]
   --data-storage-size-in-tbs INTEGER
@@ -745,33 +737,18 @@ Options:
                                   that will be created and attached to the
                                   database. This storage can later be scaled up
                                   if needed. [required]
-  --db-name TEXT                  The database name. The name must begin with an
-                                  alphabetic character and can contain a maximum
-                                  of 14 alphanumeric characters. Special
-                                  characters are not permitted. The database
-                                  name must be unique in the tenancy. [required]
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+  --admin-password TEXT           The password must be between 12 and 30
+                                  characters long, and must contain at least 1
+                                  uppercase, 1 lowercase, and 1 numeric
+                                  character. It cannot contain the double quote
+                                  symbol (") or the username "admin", regardless
+                                  of casing. [required]
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
+  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
+                                  The Oracle license model that applies to the
+                                  Oracle Autonomous Database. The default is
+                                  BRING_YOUR_OWN_LICENSE.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -793,10 +770,26 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
-                                  The Oracle license model that applies to the
-                                  Oracle Autonomous Database. The default is
-                                  BRING_YOUR_OWN_LICENSE.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -872,7 +865,10 @@ Usage: oci db autonomous-database generate-wallet [OPTIONS]
 Options:
   --autonomous-database-id TEXT  The database [OCID]. [required]
   --password TEXT                The password to encrypt the keys inside the
-                                 wallet. [required]
+                                 wallet. The password must be at least 8
+                                 characters long and must include at least 1
+                                 letter and either 1 numeric character or 1
+                                 special character. [required]
   --file FILENAME                The name of the file that will receive the
                                  response data, or '-' to write to STDOUT.
                                  [required]
@@ -1148,39 +1144,21 @@ Usage: oci db autonomous-database update [OPTIONS]
 
 Options:
   --autonomous-database-id TEXT   The database [OCID]. [required]
-  --admin-password TEXT           A strong password for Admin. The password must
-                                  be between 12 and 60 characters long, and must
-                                  contain at least 1 uppercase, 1 lowercase and
-                                  2 numeric characters. It cannot contain the
-                                  double quote symbol ("). It must be different
-                                  than the last 4 passwords.
   --cpu-core-count INTEGER        The number of CPU cores to be made available
                                   to the database.
   --data-storage-size-in-tbs INTEGER
                                   The size, in terabytes, of the data volume
                                   that will be attached to the database.
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
+  --admin-password TEXT           The password must be between 12 and 30
+                                  characters long, and must contain at least 1
+                                  uppercase, 1 lowercase, and 1 numeric
+                                  character. It cannot contain the double quote
+                                  symbol (") or the username "admin", regardless
+                                  of casing. It must be different from the last
+                                  four passwords and it must not be a password
+                                  used within the last 24 hours.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -1192,6 +1170,26 @@ Options:
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command
                                   line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -1239,13 +1237,7 @@ Options:
 $ oci db autonomous-database-backup --help
 Usage: oci db autonomous-database-backup [OPTIONS] COMMAND [ARGS]...
 
-  An Autonomous Database backup. To use any of the API operations, you must be
-  authorized in an IAM policy. If you're not authorized, talk to an
-  administrator. If you're an administrator who needs to write policies to
-  give users access, see [Getting Started with Policies].
-
-  **Warning:** Oracle recommends that you avoid using any confidential
-  information when you supply string values using the API.
+  An Autonomous Database backup.
 
 Options:
   -?, -h, --help  Show this message and exit.
@@ -1263,10 +1255,10 @@ Usage: oci db autonomous-database-backup create [OPTIONS]
   the provided request parameters.
 
 Options:
-  --autonomous-database-id TEXT   The [OCID] of the Autonomous Database backup.
-                                  [required]
   --display-name TEXT             The user-friendly name for the backup. The
                                   name does not have to be unique. [required]
+  --autonomous-database-id TEXT   The [OCID] of the Autonomous Database backup.
+                                  [required]
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED|FAILED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1367,9 +1359,6 @@ Usage: oci db backup [OPTIONS] COMMAND [ARGS]...
   in an IAM policy. If you're not authorized, talk to an administrator. If
   you're an administrator who needs to write policies to give users access,
   see [Getting Started with Policies].
-
-  **Warning:** Oracle recommends that you avoid using any confidential
-  information when you supply string values using the API.
 
 Options:
   -?, -h, --help  Show this message and exit.
@@ -1506,13 +1495,10 @@ Options:
 $ oci db data-guard-association --help
 Usage: oci db data-guard-association [OPTIONS] COMMAND [ARGS]...
 
-  The properties that define a Data Guard association.
-
-  To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
-
+  The properties that define a Data Guard association. To use any of the API
+  operations, you must be authorized in an IAM policy. If you're not
+  authorized, talk to an administrator. If you're an administrator who needs
+  to write policies to give users access, see [Getting Started with Policies].
   For information about endpoints and signing API requests, see [About the
   API]. For information about available SDKs and tools, see [SDKS and Other
   Tools].
@@ -1548,6 +1534,7 @@ Options:
 
 Commands:
   from-existing-db-system  Creates a new Data Guard association using an...
+  with-new-db-system       Creates a new Data Guard association with a...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association create from-existing-db-system --help
@@ -1568,9 +1555,6 @@ Usage: oci db data-guard-association create from-existing-db-system
 
 Options:
   --database-id TEXT              The database [OCID]. [required]
-  --creation-type TEXT            Specifies where to create the associated
-                                  database. "ExistingDbSystem" is the only
-                                  supported `creationType` value. [required]
   --database-admin-password TEXT  A strong password for the `SYS`, `SYSTEM`, and
                                   `PDB Admin` users to apply during standby
                                   creation.
@@ -1600,7 +1584,7 @@ Options:
                                   information, see [Oracle Data Guard Protection
                                   Modes] in the Oracle Data Guard documentation.
                                   **IMPORTANT** - The only protection mode
-                                  currently supported by the Database Service is
+                                  currently supported by the Database service is
                                   MAXIMUM_PERFORMANCE. [required]
   --transport-type [SYNC|ASYNC|FASTSYNC]
                                   The redo transport type to use for this Data
@@ -1616,10 +1600,112 @@ Options:
                                   information, see [Redo Transport Services] in
                                   the Oracle Data Guard documentation.
                                   **IMPORTANT** - The only transport type
-                                  currently supported by the Database Service is
+                                  currently supported by the Database service is
                                   ASYNC. [required]
+  --creation-type TEXT            Specifies whether to create the peer database
+                                  in an existing DB system or in a new DB
+                                  system. Use either "ExistingDbSystem" or
+                                  "NewDbSystem." [required]
   --peer-db-system-id TEXT        The OCID of the DB System to create the
                                   standby database on. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db data-guard-association create with-new-db-system --help
+Usage: oci db data-guard-association create with-new-db-system 
+           [OPTIONS]
+
+  Creates a new Data Guard association with a new DB System.  A Data Guard
+  association represents the replication relationship between the specified
+  database and a peer database. For more information, see [Using Oracle Data
+  Guard].
+
+  All Oracle Cloud Infrastructue resources, including Data Guard associations,
+  get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).
+  When you create a resource, you can find its OCID in the response. You can
+  also retrieve a resource's OCID by using a List API operation on that
+  resource type, or by viewing the resource in the Console. Fore more
+  information, see [Resource Identifiers].
+
+Options:
+  --database-id TEXT              The database [OCID]. [required]
+  --database-admin-password TEXT  A strong password for the `SYS`, `SYSTEM`, and
+                                  `PDB Admin` users to apply during standby
+                                  creation.
+                                  
+                                  The password must contain no fewer
+                                  than nine characters and include:
+                                  
+                                  * At least
+                                  two uppercase characters.
+                                  
+                                  * At least two
+                                  lowercase characters.
+                                  
+                                  * At least two numeric
+                                  characters.
+                                  
+                                  * At least two special
+                                  characters. Valid special characters include
+                                  "_", "#", and "-" only.
+                                  
+                                  **The password MUST
+                                  be the same as the primary admin password.**
+                                  [required]
+  --protection-mode [MAXIMUM_AVAILABILITY|MAXIMUM_PERFORMANCE|MAXIMUM_PROTECTION]
+                                  The protection mode to set up between the
+                                  primary and standby databases. For more
+                                  information, see [Oracle Data Guard Protection
+                                  Modes] in the Oracle Data Guard documentation.
+                                  **IMPORTANT** - The only protection mode
+                                  currently supported by the Database service is
+                                  MAXIMUM_PERFORMANCE. [required]
+  --transport-type [SYNC|ASYNC|FASTSYNC]
+                                  The redo transport type to use for this Data
+                                  Guard association.  Valid values depend on the
+                                  specified `protectionMode`:
+                                  
+                                  *
+                                  MAXIMUM_AVAILABILITY - SYNC or FASTSYNC *
+                                  MAXIMUM_PERFORMANCE - ASYNC *
+                                  MAXIMUM_PROTECTION - SYNC
+                                  
+                                  For more
+                                  information, see [Redo Transport Services] in
+                                  the Oracle Data Guard documentation.
+                                  **IMPORTANT** - The only transport type
+                                  currently supported by the Database service is
+                                  ASYNC. [required]
+  --creation-type TEXT            Specifies whether to create the peer database
+                                  in an existing DB system or in a new DB
+                                  system. Use either "ExistingDbSystem" or
+                                  "NewDbSystem." [required]
+  --display-name TEXT             The user-friendly name for the DB System to
+                                  create the standby database on. It does not
+                                  have to be unique. [required]
+  --hostname TEXT                 The host name for the DB Node. [required]
+  --availability-domain TEXT      The name of the Availability Domain that the
+                                  standby database DB System will be located in.
+                                  [required]
+  --subnet-id TEXT                The OCID of the subnet the DB System is
+                                  associated with. **Subnet Restrictions:** -
+                                  For 1- and 2-node RAC DB Systems, do not use a
+                                  subnet that overlaps with 192.168.16.16/28
+                                  These subnets are used by the Oracle
+                                  Clusterware private interconnect on the
+                                  database instance. Specifying an overlapping
+                                  subnet will cause the private interconnect to
+                                  malfunction. This restriction applies to both
+                                  the client subnet and backup subnet.
+                                  [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -1822,13 +1908,10 @@ $ oci db database --help
 Usage: oci db database [OPTIONS] COMMAND [ARGS]...
 
   An Oracle database on a bare metal or virtual machine DB system. For more
-  information, see [Bare Metal and Virtual Machine DB Systems].
-
-  To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
-
+  information, see [Bare Metal and Virtual Machine DB Systems]. To use any of
+  the API operations, you must be authorized in an IAM policy. If you're not
+  authorized, talk to an administrator. If you're an administrator who needs
+  to write policies to give users access, see [Getting Started with Policies].
   **Warning:** Oracle recommends that you avoid using any confidential
   information when you supply string values using the API.
 
@@ -2076,8 +2159,6 @@ Options:
   --database-id TEXT              The database [OCID]. [required]
   --database-scn TEXT             Restores using the backup with the System
                                   Change Number (SCN) specified.
-  --latest BOOLEAN                Restores to the last known good state with the
-                                  least possible data loss.
   --timestamp DATETIME            Restores to the timestamp specified.
                                   
                                   The
@@ -2149,6 +2230,8 @@ Options:
                                   Epoch seconds
                                   **************
                                   Example: 1412195400
+  --latest BOOLEAN                Restores to the last known good state with the
+                                  least possible data loss.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -2188,26 +2271,6 @@ Usage: oci db database update [OPTIONS]
 
 Options:
   --database-id TEXT              The database [OCID]. [required]
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -2219,6 +2282,26 @@ Options:
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command
                                   line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -2294,11 +2377,10 @@ Usage: oci db external-backup-job complete [OPTIONS]
 
 Options:
   --backup-id TEXT            The backup [OCID]. [required]
+  --tde-wallet-path TEXT      If the database being backed up is TDE enabled,
+                              this will be the path to the associated TDE wallet
+                              in Object Storage.
   --cf-backup-handle TEXT     The handle of the control file backup.
-  --data-size INTEGER         The size of the data in the database, in
-                              megabytes.
-  --redo-size INTEGER         The size of the redo in the database, in
-                              megabytes.
   --spf-backup-handle TEXT    The handle of the spfile backup.
   --sql-patches COMPLEX TYPE  The list of SQL patches that need to be applied to
                               the backup during the restore.
@@ -2315,9 +2397,10 @@ Options:
                               example
                               in a file, modifying it as needed and then
                               passing it back in via the file:// syntax.
-  --tde-wallet-path TEXT      If the database being backed up is TDE enabled,
-                              this will be the path to the associated TDE wallet
-                              in Object Storage.
+  --data-size INTEGER         The size of the data in the database, in
+                              megabytes.
+  --redo-size INTEGER         The size of the redo in the database, in
+                              megabytes.
   --if-match TEXT             For optimistic concurrency control. In the PUT or
                               DELETE call for a resource, set the `if-match`
                               parameter to the value of the etag from a previous
@@ -2350,27 +2433,27 @@ Usage: oci db external-backup-job create [OPTIONS]
 Options:
   --availability-domain TEXT      The targeted availability domain for the
                                   backup. [required]
-  --character-set TEXT            The character set for the database. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment where this
                                   backup should be created. [required]
+  --display-name TEXT             A user-friendly name for the backup. This name
+                                  does not have to be unique. [required]
+  --db-version TEXT               A valid Oracle Database version. [required]
+  --db-name TEXT                  The name of the database from which the backup
+                                  is being taken. [required]
+  --external-database-identifier INTEGER
+                                  The `DBID` of the Oracle Database being backed
+                                  up. [required]
+  --character-set TEXT            The character set for the database. [required]
+  --ncharacter-set TEXT           The national character set for the database.
+                                  [required]
+  --database-mode [SI|RAC]        The mode (single instance or RAC) of the
+                                  database being backed up. [required]
   --database-edition [STANDARD_EDITION|ENTERPRISE_EDITION|ENTERPRISE_EDITION_HIGH_PERFORMANCE|ENTERPRISE_EDITION_EXTREME_PERFORMANCE]
                                   The Oracle Database edition to use for
                                   creating a database from this standalone
                                   backup. Note that 2-node RAC DB systems
                                   require Enterprise Edition - Extreme
                                   Performance. [required]
-  --database-mode [SI|RAC]        The mode (single instance or RAC) of the
-                                  database being backed up. [required]
-  --db-name TEXT                  The name of the database from which the backup
-                                  is being taken. [required]
-  --db-version TEXT               A valid Oracle Database version. [required]
-  --display-name TEXT             A user-friendly name for the backup. This name
-                                  does not have to be unique. [required]
-  --external-database-identifier INTEGER
-                                  The `DBID` of the Oracle Database being backed
-                                  up. [required]
-  --ncharacter-set TEXT           The national character set for the database.
-                                  [required]
   --db-unique-name TEXT           The `DB_UNIQUE_NAME` of the Oracle Database
                                   being backed up.
   --pdb-name TEXT                 The pluggable database name.
@@ -2410,13 +2493,10 @@ Options:
 $ oci db node --help
 Usage: oci db node [OPTIONS] COMMAND [ARGS]...
 
-  A server where Oracle Database software is running.
-
-  To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
-
+  A server where Oracle Database software is running. To use any of the API
+  operations, you must be authorized in an IAM policy. If you're not
+  authorized, talk to an administrator. If you're an administrator who needs
+  to write policies to give users access, see [Getting Started with Policies].
   **Warning:** Oracle recommends that you avoid using any confidential
   information when you supply string values using the API.
 
@@ -2644,12 +2724,10 @@ Options:
 $ oci db patch --help
 Usage: oci db patch [OPTIONS] COMMAND [ARGS]...
 
-  A Patch for a DB system or DB Home.
-
-  To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
+  A Patch for a DB system or DB Home. To use any of the API operations, you
+  must be authorized in an IAM policy. If you're not authorized, talk to an
+  administrator. If you're an administrator who needs to write policies to
+  give users access, see [Getting Started with Policies].
 
 Options:
   -?, -h, --help  Show this message and exit.
@@ -2903,26 +2981,17 @@ $ oci db system --help
 Usage: oci db system [OPTIONS] COMMAND [ARGS]...
 
   The Database Service supports several types of DB systems, ranging in size,
-  price, and performance. For details about each type of system, see:
-
-  - [Exadata DB Systems] - [Bare Metal and Virtual Machine DB Systems]
-
-  To use any of the API operations, you must be authorized in an IAM policy.
-  If you are not authorized, talk to an administrator. If you are an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
-
-  For information about access control and compartments, see [Overview of the
-  Identity Service].
-
-  For information about availability domains, see [Regions and Availability
-  Domains].
-
-  To get a list of availability domains, use the `ListAvailabilityDomains`
-  operation in the Identity Service API.
-
-  **Warning:** Oracle recommends that you avoid using any confidential
-  information when you supply string values using the API.
+  price, and performance. For details about each type of system, see: -
+  [Exadata DB Systems] - [Bare Metal and Virtual Machine DB Systems] To use
+  any of the API operations, you must be authorized in an IAM policy. If you
+  are not authorized, talk to an administrator. If you are an administrator
+  who needs to write policies to give users access, see [Getting Started with
+  Policies]. For information about access control and compartments, see
+  [Overview of the Identity Service]. For information about availability
+  domains, see [Regions and Availability Domains]. To get a list of
+  availability domains, use the `ListAvailabilityDomains` operation in the
+  Identity Service API. **Warning:** Oracle recommends that you avoid using
+  any confidential information when you supply string values using the API.
 
 Options:
   -?, -h, --help  Show this message and exit.
@@ -2966,10 +3035,51 @@ Usage: oci db system launch [OPTIONS]
   [Default Options for the Initial Database].
 
 Options:
-  --availability-domain TEXT      The availability domain where the DB system is
-                                  located. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment the DB system
                                   belongs in. [required]
+  --availability-domain TEXT      The availability domain where the DB system is
+                                  located. [required]
+  --subnet-id TEXT                The [OCID] of the subnet the DB system is
+                                  associated with.
+                                  
+                                  **Subnet Restrictions:** -
+                                  For bare metal DB systems and for single node
+                                  virtual machine DB systems, do not use a
+                                  subnet that overlaps with 192.168.16.16/28. -
+                                  For Exadata and virtual machine 2-node RAC DB
+                                  systems, do not use a subnet that overlaps
+                                  with 192.168.128.0/20.
+                                  
+                                  These subnets are used
+                                  by the Oracle Clusterware private interconnect
+                                  on the database instance. Specifying an
+                                  overlapping subnet will cause the private
+                                  interconnect to malfunction. This restriction
+                                  applies to both the client subnet and the
+                                  backup subnet. [required]
+  --shape TEXT                    The shape of the DB system. The shape
+                                  determines resources allocated to the DB
+                                  system. - For virtual machine shapes, the
+                                  number of CPU cores and memory - For bare
+                                  metal and Exadata shapes, the number of CPU
+                                  cores, memory, and storage
+                                  
+                                  To get a list of
+                                  shapes, use the [ListDbSystemShapes]
+                                  operation. [required]
+  --hostname TEXT                 The hostname for the DB system. The hostname
+                                  must begin with an alphabetic character and
+                                  can contain a maximum of 30 alphanumeric
+                                  characters, including hyphens (-).
+                                  
+                                  The
+                                  maximum length of the combined hostname and
+                                  domain is 63 characters.
+                                  
+                                  **Note:** The
+                                  hostname must be unique within the subnet. If
+                                  it is not unique, the DB system will fail to
+                                  provision. [required]
   --cpu-core-count INTEGER        The number of CPU cores to enable for a bare
                                   metal or Exadata DB system. The valid values
                                   depend on the specified shape:
@@ -2995,53 +3105,14 @@ Options:
                                   number of cores for a virtual machine DB
                                   system shape, see [Virtual Machine DB Systems]
                                   [required]
-  --hostname TEXT                 The hostname for the DB system. The hostname
-                                  must begin with an alphabetic character and
-                                  can contain a maximum of 30 alphanumeric
-                                  characters, including hyphens (-).
-                                  
-                                  The
-                                  maximum length of the combined hostname and
-                                  domain is 63 characters.
-                                  
-                                  **Note:** The
-                                  hostname must be unique within the subnet. If
-                                  it is not unique, the DB system will fail to
-                                  provision. [required]
-  --shape TEXT                    The shape of the DB system. The shape
-                                  determines resources allocated to the DB
-                                  system. - For virtual machine shapes, the
-                                  number of CPU cores and memory - For bare
-                                  metal and Exadata shapes, the number of CPU
-                                  cores, memory, and storage
-                                  
-                                  To get a list of
-                                  shapes, use the [ListDbSystemShapes]
-                                  operation. [required]
-  --subnet-id TEXT                The [OCID] of the subnet the DB system is
-                                  associated with.
-                                  
-                                  **Subnet Restrictions:** -
-                                  For bare metal DB systems and for single node
-                                  virtual machine DB systems, do not use a
-                                  subnet that overlaps with 192.168.16.16/28. -
-                                  For Exadata and virtual machine 2-node RAC DB
-                                  systems, do not use a subnet that overlaps
-                                  with 192.168.128.0/20.
-                                  
-                                  These subnets are used
-                                  by the Oracle Clusterware private interconnect
-                                  on the database instance. Specifying an
-                                  overlapping subnet will cause the private
-                                  interconnect to malfunction. This restriction
-                                  applies to both the client subnet and the
-                                  backup subnet. [required]
   --database-edition [STANDARD_EDITION|ENTERPRISE_EDITION|ENTERPRISE_EDITION_HIGH_PERFORMANCE|ENTERPRISE_EDITION_EXTREME_PERFORMANCE]
                                   The Oracle Database Edition that applies to
                                   all the databases on the DB system. Exadata DB
                                   systems and 2-node RAC DB systems require
                                   ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
                                   [required]
+  --display-name TEXT             The user-friendly name for the DB system. The
+                                  name does not have to be unique.
   --backup-subnet-id TEXT         The [OCID] of the backup network subnet the DB
                                   system is associated with. Applicable only to
                                   Exadata DB systems.
@@ -3049,6 +3120,15 @@ Options:
                                   **Subnet Restrictions:**
                                   See the subnet restrictions information for
                                   **subnetId**.
+  --sparse-diskgroup BOOLEAN      If true, Sparse Diskgroup is configured for
+                                  Exadata dbsystem. If False, Sparse diskgroup
+                                  is not configured.
+  --domain TEXT                   A domain name used for the DB system. If the
+                                  Oracle-provided Internet and VCN Resolver is
+                                  enabled for the specified subnet, the domain
+                                  name for the subnet is used (do not provide
+                                  one). Otherwise, provide a valid DNS domain
+                                  name. Hyphens (-) are not permitted.
   --cluster-name TEXT             The cluster name for Exadata and 2-node RAC
                                   virtual machine DB systems. The cluster name
                                   must begin with an an alphabetic character,
@@ -3065,34 +3145,16 @@ Options:
                                   The default is 80 percent assigned to DATA
                                   storage. Not applicable for virtual machine DB
                                   systems.
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --display-name TEXT             The user-friendly name for the DB system. The
-                                  name does not have to be unique.
-  --domain TEXT                   A domain name used for the DB system. If the
-                                  Oracle-provided Internet and VCN Resolver is
-                                  enabled for the specified subnet, the domain
-                                  name for the subnet is used (do not provide
-                                  one). Otherwise, provide a valid DNS domain
-                                  name. Hyphens (-) are not permitted.
+  --initial-data-storage-size-in-gb INTEGER
+                                  Size (in GB) of the initial data volume that
+                                  will be created and attached to a virtual
+                                  machine DB system. You can scale up storage
+                                  after provisioning, as needed. Note that the
+                                  total storage size attached will be more than
+                                  the amount you specify to allow for REDO/RECO
+                                  space and software volume.
+  --node-count INTEGER            The number of nodes to launch for a 2-node RAC
+                                  virtual machine DB system.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3114,16 +3176,26 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --initial-data-storage-size-in-gb INTEGER
-                                  Size (in GB) of the initial data volume that
-                                  will be created and attached to a virtual
-                                  machine DB system. You can scale up storage
-                                  after provisioning, as needed. Note that the
-                                  total storage size attached will be more than
-                                  the amount you specify to allow for REDO/RECO
-                                  space and software volume.
-  --node-count INTEGER            The number of nodes to launch for a 2-node RAC
-                                  virtual machine DB system.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --disk-redundancy [HIGH|NORMAL]
                                   The type of redundancy configured for the DB
                                   system. Normal is 2-way redundancy,
@@ -3233,10 +3305,51 @@ Usage: oci db system launch-from-backup [OPTIONS]
   [Default Options for the Initial Database].
 
 Options:
-  --availability-domain TEXT      The availability domain where the DB system is
-                                  located. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment the DB system
                                   belongs in. [required]
+  --availability-domain TEXT      The availability domain where the DB system is
+                                  located. [required]
+  --subnet-id TEXT                The [OCID] of the subnet the DB system is
+                                  associated with.
+                                  
+                                  **Subnet Restrictions:** -
+                                  For bare metal DB systems and for single node
+                                  virtual machine DB systems, do not use a
+                                  subnet that overlaps with 192.168.16.16/28. -
+                                  For Exadata and virtual machine 2-node RAC DB
+                                  systems, do not use a subnet that overlaps
+                                  with 192.168.128.0/20.
+                                  
+                                  These subnets are used
+                                  by the Oracle Clusterware private interconnect
+                                  on the database instance. Specifying an
+                                  overlapping subnet will cause the private
+                                  interconnect to malfunction. This restriction
+                                  applies to both the client subnet and the
+                                  backup subnet. [required]
+  --shape TEXT                    The shape of the DB system. The shape
+                                  determines resources allocated to the DB
+                                  system. - For virtual machine shapes, the
+                                  number of CPU cores and memory - For bare
+                                  metal and Exadata shapes, the number of CPU
+                                  cores, memory, and storage
+                                  
+                                  To get a list of
+                                  shapes, use the [ListDbSystemShapes]
+                                  operation. [required]
+  --hostname TEXT                 The hostname for the DB system. The hostname
+                                  must begin with an alphabetic character and
+                                  can contain a maximum of 30 alphanumeric
+                                  characters, including hyphens (-).
+                                  
+                                  The
+                                  maximum length of the combined hostname and
+                                  domain is 63 characters.
+                                  
+                                  **Note:** The
+                                  hostname must be unique within the subnet. If
+                                  it is not unique, the DB system will fail to
+                                  provision. [required]
   --cpu-core-count INTEGER        The number of CPU cores to enable for a bare
                                   metal or Exadata DB system. The valid values
                                   depend on the specified shape:
@@ -3262,53 +3375,14 @@ Options:
                                   number of cores for a virtual machine DB
                                   system shape, see [Virtual Machine DB Systems]
                                   [required]
-  --hostname TEXT                 The hostname for the DB system. The hostname
-                                  must begin with an alphabetic character and
-                                  can contain a maximum of 30 alphanumeric
-                                  characters, including hyphens (-).
-                                  
-                                  The
-                                  maximum length of the combined hostname and
-                                  domain is 63 characters.
-                                  
-                                  **Note:** The
-                                  hostname must be unique within the subnet. If
-                                  it is not unique, the DB system will fail to
-                                  provision. [required]
-  --shape TEXT                    The shape of the DB system. The shape
-                                  determines resources allocated to the DB
-                                  system. - For virtual machine shapes, the
-                                  number of CPU cores and memory - For bare
-                                  metal and Exadata shapes, the number of CPU
-                                  cores, memory, and storage
-                                  
-                                  To get a list of
-                                  shapes, use the [ListDbSystemShapes]
-                                  operation. [required]
-  --subnet-id TEXT                The [OCID] of the subnet the DB system is
-                                  associated with.
-                                  
-                                  **Subnet Restrictions:** -
-                                  For bare metal DB systems and for single node
-                                  virtual machine DB systems, do not use a
-                                  subnet that overlaps with 192.168.16.16/28. -
-                                  For Exadata and virtual machine 2-node RAC DB
-                                  systems, do not use a subnet that overlaps
-                                  with 192.168.128.0/20.
-                                  
-                                  These subnets are used
-                                  by the Oracle Clusterware private interconnect
-                                  on the database instance. Specifying an
-                                  overlapping subnet will cause the private
-                                  interconnect to malfunction. This restriction
-                                  applies to both the client subnet and the
-                                  backup subnet. [required]
   --database-edition [STANDARD_EDITION|ENTERPRISE_EDITION|ENTERPRISE_EDITION_HIGH_PERFORMANCE|ENTERPRISE_EDITION_EXTREME_PERFORMANCE]
                                   The Oracle Database Edition that applies to
                                   all the databases on the DB system. Exadata DB
                                   systems and 2-node RAC DB systems require
                                   ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
                                   [required]
+  --display-name TEXT             The user-friendly name for the DB system. The
+                                  name does not have to be unique.
   --backup-subnet-id TEXT         The [OCID] of the backup network subnet the DB
                                   system is associated with. Applicable only to
                                   Exadata DB systems.
@@ -3316,6 +3390,15 @@ Options:
                                   **Subnet Restrictions:**
                                   See the subnet restrictions information for
                                   **subnetId**.
+  --sparse-diskgroup BOOLEAN      If true, Sparse Diskgroup is configured for
+                                  Exadata dbsystem. If False, Sparse diskgroup
+                                  is not configured.
+  --domain TEXT                   A domain name used for the DB system. If the
+                                  Oracle-provided Internet and VCN Resolver is
+                                  enabled for the specified subnet, the domain
+                                  name for the subnet is used (do not provide
+                                  one). Otherwise, provide a valid DNS domain
+                                  name. Hyphens (-) are not permitted.
   --cluster-name TEXT             The cluster name for Exadata and 2-node RAC
                                   virtual machine DB systems. The cluster name
                                   must begin with an an alphabetic character,
@@ -3332,34 +3415,16 @@ Options:
                                   The default is 80 percent assigned to DATA
                                   storage. Not applicable for virtual machine DB
                                   systems.
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --display-name TEXT             The user-friendly name for the DB system. The
-                                  name does not have to be unique.
-  --domain TEXT                   A domain name used for the DB system. If the
-                                  Oracle-provided Internet and VCN Resolver is
-                                  enabled for the specified subnet, the domain
-                                  name for the subnet is used (do not provide
-                                  one). Otherwise, provide a valid DNS domain
-                                  name. Hyphens (-) are not permitted.
+  --initial-data-storage-size-in-gb INTEGER
+                                  Size (in GB) of the initial data volume that
+                                  will be created and attached to a virtual
+                                  machine DB system. You can scale up storage
+                                  after provisioning, as needed. Note that the
+                                  total storage size attached will be more than
+                                  the amount you specify to allow for REDO/RECO
+                                  space and software volume.
+  --node-count INTEGER            The number of nodes to launch for a 2-node RAC
+                                  virtual machine DB system.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3381,16 +3446,26 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --initial-data-storage-size-in-gb INTEGER
-                                  Size (in GB) of the initial data volume that
-                                  will be created and attached to a virtual
-                                  machine DB system. You can scale up storage
-                                  after provisioning, as needed. Note that the
-                                  total storage size attached will be more than
-                                  the amount you specify to allow for REDO/RECO
-                                  space and software volume.
-  --node-count INTEGER            The number of nodes to launch for a 2-node RAC
-                                  virtual machine DB system.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --disk-redundancy [HIGH|NORMAL]
                                   The type of redundancy configured for the DB
                                   system. NORMAL 2-way redundancy, recommended
@@ -3578,26 +3653,6 @@ Options:
                                   than the amount requested to allow for
                                   REDO/RECO space and software volume. Applies
                                   only to virtual machine DB systems.
-  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
-                                  predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3609,6 +3664,26 @@ Options:
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command
                                   line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   

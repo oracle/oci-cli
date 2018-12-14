@@ -1762,6 +1762,10 @@ Options:
                                   passing it back in via the file:// syntax.
   --subnet-id TEXT                The OCID of the subnet where the VNIC attached
                                   to this instance will be created.
+  --is-pv-encryption-in-transit-enabled BOOLEAN
+                                  Whether to enable encryption in transit for
+                                  the PV boot volume attachment. Defaults to
+                                  false.
   --wait-for-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -2989,10 +2993,12 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  attach  Attaches the specified storage volume to the...
-  detach  Detaches a storage volume from an instance.
-  get     Gets information about the specified volume...
-  list    Lists the volume attachments in the specified...
+  attach                         Attaches the specified storage volume to the...
+  attach-paravirtualized-volume  Attaches the specified storage volume to the...
+  detach                         Detaches a storage volume from an instance.
+  get                            Gets information about the specified volume...
+  list                           Lists the volume attachments in the
+                                 specified...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute volume-attachment attach --help
@@ -3010,6 +3016,49 @@ Options:
                                   entering confidential information.
   --is-read-only BOOLEAN          Whether the attachment was created in read-
                                   only mode.
+  --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute volume-attachment attach-paravirtualized-volume --help
+Usage: oci compute volume-attachment attach-paravirtualized-volume 
+           [OPTIONS]
+
+  Attaches the specified storage volume to the specified instance.
+
+Options:
+  --instance-id TEXT              The OCID of the instance. [required]
+  --volume-id TEXT                The OCID of the volume. [required]
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it cannot be changed. Avoid
+                                  entering confidential information.
+  --is-read-only BOOLEAN          Whether the attachment was created in read-
+                                  only mode.
+  --is-pv-encryption-in-transit-enabled BOOLEAN
+                                  Whether to enable encryption in transit for
+                                  the PV data volume attachment. Defaults to
+                                  false.
   --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.

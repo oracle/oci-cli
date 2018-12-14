@@ -1686,6 +1686,11 @@ Options:
                                   does NOT automatically associate the attached
                                   VCN's default route table with the DRG
                                   attachment.
+                                  
+                                  For information about why you
+                                  would associate a route table with a DRG
+                                  attachment, see [Advanced Scenario: Transit
+                                  Routing].
   --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1818,7 +1823,9 @@ Options:
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
   --route-table-id TEXT           The OCID of the route table the DRG attachment
-                                  will use.
+                                  will use. For information about why you would
+                                  associate a route table with a DRG attachment,
+                                  see [Advanced Scenario: Transit Routing].
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -2801,6 +2808,11 @@ Options:
                                   table. The Networking service does NOT
                                   automatically associate the attached VCN's
                                   default route table with the LPG.
+                                  
+                                  For
+                                  information about why you would associate a
+                                  route table with an LPG, see [Advanced
+                                  Scenario: Transit Routing].
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -2981,6 +2993,9 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --route-table-id TEXT           The OCID of the route table the LPG will use.
+                                  For information about why you would associate
+                                  a route table with an LPG, see [Advanced
+                                  Scenario: Transit Routing].
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -3907,9 +3922,9 @@ Usage: oci network public-ip update [OPTIONS]
   private IP, use [DeletePublicIp], which unassigns and deletes the ephemeral
   public IP.
 
-  **Note:** If a public IP (either ephemeral or reserved) is assigned to a
-  secondary private IP (see [PrivateIp]), and you move that secondary private
-  IP to another VNIC, the public IP moves with it.
+  **Note:** If a public IP is assigned to a secondary private IP (see
+  [PrivateIp]), and you move that secondary private IP to another VNIC, the
+  public IP moves with it.
 
   **Note:** There's a limit to the number of [public IPs] a VNIC or instance
   can have. If you try to move a reserved public IP to a VNIC or instance that
@@ -4055,11 +4070,11 @@ Options:
                                   you want to peer with.
                                   
                                   The region names that
-                                  could be used are listed here: https://docs
-                                  .us-phoenix-1.oraclecloud.com/Content/General/
-                                  Concepts/regions.htm
-                                  Example: `us-ashburn-1`
-                                  [required]
+                                  could be used are listed here:
+                                  https://docs.us-phoenix-1.oraclecloud.com/Cont
+                                  ent/General/Concepts/regions.htm
+                                  Example: `us-
+                                  ashburn-1` [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   

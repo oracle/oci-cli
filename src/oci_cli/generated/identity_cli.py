@@ -86,6 +86,12 @@ def identity_provider_group():
     pass
 
 
+@click.command(cli_util.override('identity_provider_group_group.command_name', 'identity-provider-group'), cls=CommandGroupWithAlias, help="""A group created in an identity provider that can be mapped to a group in OCI""")
+@cli_util.help_option_group
+def identity_provider_group_group():
+    pass
+
+
 @click.command(cli_util.override('ui_password_group.command_name', 'ui-password'), cls=CommandGroupWithAlias, help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
 
 For more information about user credentials, see [User Credentials].""")
@@ -131,6 +137,12 @@ def compartment_group():
 For more information, see [Managing User Credentials].""")
 @cli_util.help_option_group
 def smtp_credential_group():
+    pass
+
+
+@click.command(cli_util.override('scim_client_credentials_group.command_name', 'scim-client-credentials'), cls=CommandGroupWithAlias, help="""The OAuth2 client credentials.""")
+@cli_util.help_option_group
+def scim_client_credentials_group():
     pass
 
 
@@ -221,11 +233,13 @@ iam_root_group.add_command(fault_domain_group)
 iam_root_group.add_command(work_request_group)
 iam_root_group.add_command(user_group_membership_group)
 iam_root_group.add_command(identity_provider_group)
+iam_root_group.add_command(identity_provider_group_group)
 iam_root_group.add_command(ui_password_group)
 iam_root_group.add_command(api_key_group)
 iam_root_group.add_command(region_subscription_group)
 iam_root_group.add_command(compartment_group)
 iam_root_group.add_command(smtp_credential_group)
+iam_root_group.add_command(scim_client_credentials_group)
 iam_root_group.add_command(tag_group)
 iam_root_group.add_command(dynamic_group_group)
 iam_root_group.add_command(region_group)
@@ -605,15 +619,16 @@ Example: `IDCS`""")
 @cli_util.option('--metadata', required=True, help="""The XML that contains the information required for federating.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-attributes', type=custom_types.CLI_COMPLEX_TYPE, help="""Extra name value pairs associated with this identity provider. Example: `{\"clientId\": \"app_sf3kdjf3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'freeform-attributes': {'module': 'identity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'freeform-attributes': {'module': 'identity', 'class': 'dict(str, string)'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
-def create_identity_provider_create_saml2_identity_provider_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, product_type, metadata_url, metadata, freeform_tags, defined_tags):
+def create_identity_provider_create_saml2_identity_provider_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, product_type, metadata_url, metadata, freeform_tags, defined_tags, freeform_attributes):
     kwargs = {}
 
     details = {}
@@ -629,6 +644,9 @@ def create_identity_provider_create_saml2_identity_provider_details(ctx, from_js
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_attributes is not None:
+        details['freeformAttributes'] = cli_util.parse_json_parameter("freeform_attributes", freeform_attributes)
 
     details['protocol'] = 'SAML2'
 
@@ -2082,6 +2100,55 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
+@identity_provider_group_group.command(name=cli_util.override('list_identity_provider_groups.command_name', 'list'), help="""Lists the identity provider groups.""")
+@cli_util.option('--identity-provider-id', required=True, help="""The OCID of the identity provider.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdentityProviderGroupSummary]'})
+@cli_util.wrap_exceptions
+def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity_provider_id, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_identity_provider_groups,
+            identity_provider_id=identity_provider_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_identity_provider_groups,
+            limit,
+            page_size,
+            identity_provider_id=identity_provider_id,
+            **kwargs
+        )
+    else:
+        result = client.list_identity_provider_groups(
+            identity_provider_id=identity_provider_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help="""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--protocol', required=True, help="""The protocol used for federation. Allowed values are: SAML2""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
@@ -2462,6 +2529,8 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--identity-provider-id', help="""The id of the identity provider.""")
+@cli_util.option('--external-identifier', help="""The id of a user in the identity provider.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2469,7 +2538,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[User]'})
 @cli_util.wrap_exceptions
-def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit, identity_provider_id, external_identifier):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2478,6 +2547,10 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if identity_provider_id is not None:
+        kwargs['identity_provider_id'] = identity_provider_id
+    if external_identifier is not None:
+        kwargs['external_identifier'] = external_identifier
     client = cli_util.build_client('identity', ctx)
     if all_pages:
         if page_size:
@@ -2572,6 +2645,26 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
     client = cli_util.build_client('identity', ctx)
     result = client.remove_user_from_group(
         user_group_membership_id=user_group_membership_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scim_client_credentials_group.command(name=cli_util.override('reset_idp_scim_client.command_name', 'reset-idp-scim-client'), help="""Resets the OAuth2 client credentials for the SCIM client associated with this identity provider.""")
+@cli_util.option('--identity-provider-id', required=True, help="""The OCID of the identity provider.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'ScimClientCredentials'})
+@cli_util.wrap_exceptions
+def reset_idp_scim_client(ctx, from_json, identity_provider_id):
+
+    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+        raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.reset_idp_scim_client(
+        identity_provider_id=identity_provider_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2907,23 +3000,24 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata-url', help="""The URL for retrieving the identity provider's metadata, which contains information required for federating.""")
 @cli_util.option('--metadata', help="""The XML that contains the information required for federating.""")
+@cli_util.option('--freeform-attributes', type=custom_types.CLI_COMPLEX_TYPE, help="""Extra name value pairs associated with this identity provider. Example: `{\"clientId\": \"app_sf3kdjf3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'freeform-attributes': {'module': 'identity', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'freeform-attributes': {'module': 'identity', 'class': 'dict(str, string)'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
-def update_identity_provider_update_saml2_identity_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, identity_provider_id, description, freeform_tags, defined_tags, metadata_url, metadata, if_match):
+def update_identity_provider_update_saml2_identity_provider_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, identity_provider_id, description, freeform_tags, defined_tags, metadata_url, metadata, freeform_attributes, if_match):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or freeform_attributes:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and freeform-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -2945,6 +3039,9 @@ def update_identity_provider_update_saml2_identity_provider_details(ctx, from_js
 
     if metadata is not None:
         details['metadata'] = metadata
+
+    if freeform_attributes is not None:
+        details['freeformAttributes'] = cli_util.parse_json_parameter("freeform_attributes", freeform_attributes)
 
     details['protocol'] = 'SAML2'
 
@@ -3324,6 +3421,72 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     result = client.update_user(
         user_id=user_id,
         update_user_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_user(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('update_user_capabilities.command_name', 'update-user-capabilities'), help="""Updates the capabilities of the specified user.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--can-use-console-password', type=click.BOOL, help="""Indicates if the user can log in to the console.""")
+@cli_util.option('--can-use-api-keys', type=click.BOOL, help="""Indicates if the user can use API keys.""")
+@cli_util.option('--can-use-auth-tokens', type=click.BOOL, help="""Indicates if the user can use SWIFT passwords / auth tokens.""")
+@cli_util.option('--can-use-smtp-credentials', type=click.BOOL, help="""Indicates if the user can use SMTP passwords.""")
+@cli_util.option('--can-use-customer-secret-keys', type=click.BOOL, help="""Indicates if the user can use SigV4 symmetric keys.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
+@cli_util.wrap_exceptions
+def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, can_use_console_password, can_use_api_keys, can_use_auth_tokens, can_use_smtp_credentials, can_use_customer_secret_keys, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if can_use_console_password is not None:
+        details['canUseConsolePassword'] = can_use_console_password
+
+    if can_use_api_keys is not None:
+        details['canUseApiKeys'] = can_use_api_keys
+
+    if can_use_auth_tokens is not None:
+        details['canUseAuthTokens'] = can_use_auth_tokens
+
+    if can_use_smtp_credentials is not None:
+        details['canUseSmtpCredentials'] = can_use_smtp_credentials
+
+    if can_use_customer_secret_keys is not None:
+        details['canUseCustomerSecretKeys'] = can_use_customer_secret_keys
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_user_capabilities(
+        user_id=user_id,
+        update_user_capabilities_details=details,
         **kwargs
     )
     if wait_for_state:

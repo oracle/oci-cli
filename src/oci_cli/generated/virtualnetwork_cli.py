@@ -6,15 +6,14 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from ..cli_root import cli
-from .. import cli_constants  # noqa: F401
 from .. import cli_util
 from .. import json_skeleton_utils
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
+from . import core_service_cli
 
 
-@cli.command(cli_util.override('virtual_network_root_group.command_name', 'virtual-network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
+@click.command(cli_util.override('virtual_network_root_group.command_name', 'virtual-network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def virtual_network_root_group():
     pass
@@ -312,6 +311,7 @@ def security_list_group():
     pass
 
 
+core_service_cli.core_service_group.add_command(virtual_network_root_group)
 virtual_network_root_group.add_command(remote_peering_connection_group)
 virtual_network_root_group.add_command(subnet_group)
 virtual_network_root_group.add_command(nat_gateway_group)
@@ -806,7 +806,9 @@ For the purposes of access control, the DRG attachment is automatically placed i
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--route-table-id', help="""The OCID of the route table the DRG attachment will use.
 
-If you don't specify a route table here, the DRG attachment is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the DRG attachment.""")
+If you don't specify a route table here, the DRG attachment is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the DRG attachment.
+
+For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1006,7 +1008,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--route-table-id', help="""The OCID of the route table the LPG will use.
 
-If you don't specify a route table here, the LPG is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the LPG.""")
+If you don't specify a route table here, the LPG is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the LPG.
+
+For information about why you would associate a route table with an LPG, see [Advanced Scenario: Transit Routing].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -5178,7 +5182,7 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @drg_attachment_group.command(name=cli_util.override('update_drg_attachment.command_name', 'update'), help="""Updates the display name for the specified `DrgAttachment`. Avoid entering confidential information.""")
 @cli_util.option('--drg-attachment-id', required=True, help="""The OCID of the DRG attachment.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--route-table-id', help="""The OCID of the route table the DRG attachment will use.""")
+@cli_util.option('--route-table-id', help="""The OCID of the route table the DRG attachment will use. For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5378,7 +5382,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--route-table-id', help="""The OCID of the route table the LPG will use.""")
+@cli_util.option('--route-table-id', help="""The OCID of the route table the LPG will use. For information about why you would associate a route table with an LPG, see [Advanced Scenario: Transit Routing].""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -5589,7 +5593,7 @@ Regarding ephemeral public IPs:
 
 * If you want to assign an ephemeral public IP to a primary private IP, use [CreatePublicIp]. * You can't move an ephemeral public IP to a different private IP. * If you want to unassign an ephemeral public IP from its private IP, use [DeletePublicIp], which unassigns and deletes the ephemeral public IP.
 
-**Note:** If a public IP (either ephemeral or reserved) is assigned to a secondary private IP (see [PrivateIp]), and you move that secondary private IP to another VNIC, the public IP moves with it.
+**Note:** If a public IP is assigned to a secondary private IP (see [PrivateIp]), and you move that secondary private IP to another VNIC, the public IP moves with it.
 
 **Note:** There's a limit to the number of [public IPs] a VNIC or instance can have. If you try to move a reserved public IP to a VNIC or instance that has already reached its public IP limit, an error is returned. For information about the public IP limits, see [Public IP Addresses].""")
 @cli_util.option('--public-ip-id', required=True, help="""The OCID of the public IP.""")

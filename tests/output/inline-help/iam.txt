@@ -12,21 +12,23 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  auth-token           An `AuthToken` is an Oracle-generated token...
-  availability-domain  One or more isolated, fault-tolerant Oracle...
-  compartment          A collection of related resources.
-  customer-secret-key  A `CustomerSecretKey` is an Oracle-provided...
-  dynamic-group        A dynamic group defines a matching rule.
-  fault-domain         A Fault Domain is a logical grouping of...
-  group                A collection of users who all need the same...
-  policy               A document that specifies the type of access...
-  region               A localized geographic area, such as Phoenix,...
-  region-subscription  An object that represents your tenancy's...
-  smtp-credential      Simple Mail Transfer Protocol (SMTP)...
-  tag                  A tag definition that belongs to a specific...
-  tag-namespace        A managed container for defined tags.
-  user                 An individual employee or system that needs...
-  work-request         The asynchronous API request does not take...
+  auth-token               An `AuthToken` is an Oracle-generated token...
+  availability-domain      One or more isolated, fault-tolerant Oracle...
+  compartment              A collection of related resources.
+  customer-secret-key      A `CustomerSecretKey` is an Oracle-provided...
+  dynamic-group            A dynamic group defines a matching rule.
+  fault-domain             A Fault Domain is a logical grouping of...
+  group                    A collection of users who all need the same...
+  identity-provider-group  A group created in an identity provider that...
+  policy                   A document that specifies the type of access...
+  region                   A localized geographic area, such as Phoenix,...
+  region-subscription      An object that represents your tenancy's...
+  scim-client-credentials  The OAuth2 client credentials.
+  smtp-credential          Simple Mail Transfer Protocol (SMTP)...
+  tag                      A tag definition that belongs to a specific...
+  tag-namespace            A managed container for defined tags.
+  user                     An individual employee or system that needs...
+  work-request             The asynchronous API request does not take...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam auth-token --help
@@ -1324,6 +1326,45 @@ Options:
   -?, -h, --help                  Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam identity-provider-group --help
+Usage: oci iam identity-provider-group [OPTIONS] COMMAND [ARGS]...
+
+  A group created in an identity provider that can be mapped to a group in OCI
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  list  Lists the identity provider groups.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam identity-provider-group list --help
+Usage: oci iam identity-provider-group list [OPTIONS]
+
+  Lists the identity provider groups.
+
+Options:
+  --identity-provider-id TEXT  The OCID of the identity provider. [required]
+  --page TEXT                  The value of the `opc-next-page` response header
+                               from the previous "List" call.
+  --limit INTEGER              The maximum number of items to return in a
+                               paginated "List" call.
+  --all                        Fetches all pages of results. If you provide this
+                               option, then you cannot provide the --limit
+                               option.
+  --page-size INTEGER          When fetching results, the number of results to
+                               fetch per call. Only valid when used with --all
+                               or --limit, and ignored otherwise.
+  --from-json TEXT             Provide input to this command as a JSON document
+                               from a file.
+                               
+                               Options can still be provided on
+                               the command line. If an option exists in both the
+                               JSON document and the command line then the
+                               command line specified value will be used
+  -?, -h, --help               Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam policy --help
 Usage: oci iam policy [OPTIONS] COMMAND [ARGS]...
 
@@ -1815,6 +1856,37 @@ Options:
                      command line then the command line specified value will be
                      used
   -?, -h, --help     Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam scim-client-credentials --help
+Usage: oci iam scim-client-credentials [OPTIONS] COMMAND [ARGS]...
+
+  The OAuth2 client credentials.
+
+Options:
+  -?, -h, --help  Show this message and exit.
+
+Commands:
+  reset-idp-scim-client  Resets the OAuth2 client credentials for the...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam scim-client-credentials reset-idp-scim-client --help
+Usage: oci iam scim-client-credentials reset-idp-scim-client 
+           [OPTIONS]
+
+  Resets the OAuth2 client credentials for the SCIM client associated with
+  this identity provider.
+
+Options:
+  --identity-provider-id TEXT  The OCID of the identity provider. [required]
+  --from-json TEXT             Provide input to this command as a JSON document
+                               from a file.
+                               
+                               Options can still be provided on
+                               the command line. If an option exists in both the
+                               JSON document and the command line then the
+                               command line specified value will be used
+  -?, -h, --help               Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam smtp-credential --help
@@ -2474,16 +2546,17 @@ Options:
   -?, -h, --help  Show this message and exit.
 
 Commands:
-  api-key            A PEM-format RSA credential for securing...
-  create             Creates a new user in your tenancy.
-  delete             Deletes the specified user.
-  get                Gets the specified user's information.
-  list               Lists the users in your tenancy.
-  list-groups        Lists the groups for which the specified user...
-  swift-password     **Deprecated.
-  ui-password        A text password that enables a user to sign...
-  update             Updates the description of the specified...
-  update-user-state  Updates the state of the specified user.
+  api-key                   A PEM-format RSA credential for securing...
+  create                    Creates a new user in your tenancy.
+  delete                    Deletes the specified user.
+  get                       Gets the specified user's information.
+  list                      Lists the users in your tenancy.
+  list-groups               Lists the groups for which the specified user...
+  swift-password            **Deprecated.
+  ui-password               A text password that enables a user to sign...
+  update                    Updates the description of the specified...
+  update-user-capabilities  Updates the capabilities of the specified...
+  update-user-state         Updates the state of the specified user.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam user api-key --help
@@ -2782,27 +2855,30 @@ Usage: oci iam user list [OPTIONS]
   compartment). See [Where to Get the Tenancy's OCID and User's OCID].
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the parent compartment (remember that
-                             the tenancy is simply the root compartment). If not
-                             provided, this parameter will use the tenancy from
-                             the config file.
-  --page TEXT                The value of the `opc-next-page` response header
-                             from the previous "List" call.
-  --limit INTEGER            The maximum number of items to return in a
-                             paginated "List" call.
-  --all                      Fetches all pages of results. If you provide this
-                             option, then you cannot provide the --limit option.
-  --page-size INTEGER        When fetching results, the number of results to
-                             fetch per call. Only valid when used with --all or
-                             --limit, and ignored otherwise.
-  --from-json TEXT           Provide input to this command as a JSON document
-                             from a file.
-                             
-                             Options can still be provided on the
-                             command line. If an option exists in both the JSON
-                             document and the command line then the command line
-                             specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -c, --compartment-id TEXT    The OCID of the parent compartment (remember that
+                               the tenancy is simply the root compartment). If
+                               not provided, this parameter will use the tenancy
+                               from the config file.
+  --page TEXT                  The value of the `opc-next-page` response header
+                               from the previous "List" call.
+  --limit INTEGER              The maximum number of items to return in a
+                               paginated "List" call.
+  --identity-provider-id TEXT  The id of the identity provider.
+  --external-identifier TEXT   The id of a user in the identity provider.
+  --all                        Fetches all pages of results. If you provide this
+                               option, then you cannot provide the --limit
+                               option.
+  --page-size INTEGER          When fetching results, the number of results to
+                               fetch per call. Only valid when used with --all
+                               or --limit, and ignored otherwise.
+  --from-json TEXT             Provide input to this command as a JSON document
+                               from a file.
+                               
+                               Options can still be provided on
+                               the command line. If an option exists in both the
+                               JSON document and the command line then the
+                               command line specified value will be used
+  -?, -h, --help               Show this message and exit.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam user list-groups --help
@@ -3070,6 +3146,56 @@ Options:
                                   the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
+  --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  Show this message and exit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam user update-user-capabilities --help
+Usage: oci iam user update-user-capabilities [OPTIONS]
+
+  Updates the capabilities of the specified user.
+
+Options:
+  --user-id TEXT                  The OCID of the user. [required]
+  --can-use-console-password BOOLEAN
+                                  Indicates if the user can log in to the
+                                  console.
+  --can-use-api-keys BOOLEAN      Indicates if the user can use API keys.
+  --can-use-auth-tokens BOOLEAN   Indicates if the user can use SWIFT passwords
+                                  / auth tokens.
+  --can-use-smtp-credentials BOOLEAN
+                                  Indicates if the user can use SMTP passwords.
+  --can-use-customer-secret-keys BOOLEAN
+                                  Indicates if the user can use SigV4 symmetric
+                                  keys.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
   --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.

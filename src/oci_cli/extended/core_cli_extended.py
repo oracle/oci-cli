@@ -8,13 +8,16 @@ import json
 import re
 import six
 import sys
+from ..generated import core_service_cli
 from ..generated import blockstorage_cli
 from ..generated import compute_cli
 from ..generated import virtualnetwork_cli
+from ..generated import computemanagement_cli
 
 from oci import wait_until
 from oci.exceptions import ServiceError
 from oci.exceptions import MaximumWaitTimeExceeded
+from ..cli_root import cli
 from .. import cli_util
 from .. import custom_types
 from .. import json_skeleton_utils
@@ -24,6 +27,13 @@ from ..cli_util import option
 INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"  # noqa: W605
 DEFAULT_LOCAL_VNC_PORT = 5900
 DEFAULT_SSH_PROXY_PORT = 5905
+
+
+cli.commands.pop(core_service_cli.core_service_group.name)
+cli.add_command(compute_cli.compute_root_group)
+cli.add_command(blockstorage_cli.blockstorage_root_group)
+cli.add_command(virtualnetwork_cli.virtual_network_root_group)
+cli.add_command(computemanagement_cli.compute_management_root_group)
 
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 blockstorage_cli.boot_volume_group.commands.pop(blockstorage_cli.create_boot_volume.name)
@@ -47,7 +57,6 @@ compute_cli.compute_root_group.add_command(compute_cli.volume_attachment_group)
 
 # Disabling subclass commands
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_i_scsi_volume_details.name)
-compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_paravirtualized_volume_details.name)
 
 compute_cli.compute_root_group.add_command(compute_cli.console_history_group)
 compute_cli.compute_root_group.add_command(compute_cli.instance_console_connection_group)

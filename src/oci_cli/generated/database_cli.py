@@ -20,59 +20,37 @@ def db_root_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Data Warehouse backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Data Warehouse backup.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_backup_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Data Warehouse.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Data Warehouse.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_group():
     pass
 
 
-@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""A database backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def backup_group():
     pass
 
 
-@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""The Database Service supports several types of DB systems, ranging in size, price, and performance. For details about each type of system, see:
-
-- [Exadata DB Systems] - [Bare Metal and Virtual Machine DB Systems]
-
-To use any of the API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-For information about access control and compartments, see [Overview of the Identity Service].
-
-For information about availability domains, see [Regions and Availability Domains].
-
-To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity Service API.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_system_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
 @cli_util.help_option_group
 def autonomous_database_group():
     pass
 
 
-@click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""A Patch for a DB system or DB Home.
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def patch_group():
     pass
@@ -86,17 +64,13 @@ def db_version_group():
     pass
 
 
-@click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""An Oracle database on a bare metal or virtual machine DB system. For more information, see [Bare Metal and Virtual Machine DB Systems].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def database_group():
     pass
 
 
-@click.command(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""The record of a patch action on a specified target.""")
+@click.command(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def patch_history_entry_group():
     pass
@@ -108,39 +82,25 @@ def db_system_shape_group():
     pass
 
 
-@click.command(cli_util.override('data_guard_association_group.command_name', 'data-guard-association'), cls=CommandGroupWithAlias, help="""The properties that define a Data Guard association.
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-For information about endpoints and signing API requests, see [About the API]. For information about available SDKs and tools, see [SDKS and Other Tools].""")
+@click.command(cli_util.override('data_guard_association_group.command_name', 'data-guard-association'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def data_guard_association_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_database_backup_group.command_name', 'autonomous-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Database backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('autonomous_database_backup_group.command_name', 'autonomous-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Database backup.""")
 @cli_util.help_option_group
 def autonomous_database_backup_group():
     pass
 
 
-@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""A directory where Oracle Database software is installed. A bare metal DB system can have multiple database homes and each database home can run a different supported version of Oracle Database. A virtual machine DB system can have only one database home. For more information, see [Bare Metal and Virtual Machine DB Systems].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_home_group():
     pass
 
 
-@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""A server where Oracle Database software is running.
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
-
-**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_node_group():
     pass
@@ -173,19 +133,19 @@ db_root_group.add_command(external_backup_job_group)
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
 @cli_util.option('--backup-id', required=True, help="""The backup [OCID].""")
+@cli_util.option('--tde-wallet-path', help="""If the database being backed up is TDE enabled, this will be the path to the associated TDE wallet in Object Storage.""")
 @cli_util.option('--cf-backup-handle', help="""The handle of the control file backup.""")
-@cli_util.option('--data-size', type=click.INT, help="""The size of the data in the database, in megabytes.""")
-@cli_util.option('--redo-size', type=click.INT, help="""The size of the redo in the database, in megabytes.""")
 @cli_util.option('--spf-backup-handle', help="""The handle of the spfile backup.""")
 @cli_util.option('--sql-patches', type=custom_types.CLI_COMPLEX_TYPE, help="""The list of SQL patches that need to be applied to the backup during the restore.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--tde-wallet-path', help="""If the database being backed up is TDE enabled, this will be the path to the associated TDE wallet in Object Storage.""")
+@cli_util.option('--data-size', type=click.INT, help="""The size of the data in the database, in megabytes.""")
+@cli_util.option('--redo-size', type=click.INT, help="""The size of the redo in the database, in megabytes.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'sql-patches': {'module': 'database', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sql-patches': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'ExternalBackupJob'})
 @cli_util.wrap_exceptions
-def complete_external_backup_job(ctx, from_json, backup_id, cf_backup_handle, data_size, redo_size, spf_backup_handle, sql_patches, tde_wallet_path, if_match):
+def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_backup_handle, spf_backup_handle, sql_patches, data_size, redo_size, if_match):
 
     if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
@@ -195,14 +155,11 @@ def complete_external_backup_job(ctx, from_json, backup_id, cf_backup_handle, da
 
     details = {}
 
+    if tde_wallet_path is not None:
+        details['tdeWalletPath'] = tde_wallet_path
+
     if cf_backup_handle is not None:
         details['cfBackupHandle'] = cf_backup_handle
-
-    if data_size is not None:
-        details['dataSize'] = data_size
-
-    if redo_size is not None:
-        details['redoSize'] = redo_size
 
     if spf_backup_handle is not None:
         details['spfBackupHandle'] = spf_backup_handle
@@ -210,8 +167,11 @@ def complete_external_backup_job(ctx, from_json, backup_id, cf_backup_handle, da
     if sql_patches is not None:
         details['sqlPatches'] = cli_util.parse_json_parameter("sql_patches", sql_patches)
 
-    if tde_wallet_path is not None:
-        details['tdeWalletPath'] = tde_wallet_path
+    if data_size is not None:
+        details['dataSize'] = data_size
+
+    if redo_size is not None:
+        details['redoSize'] = redo_size
 
     client = cli_util.build_client('database', ctx)
     result = client.complete_external_backup_job(
@@ -223,48 +183,48 @@ def complete_external_backup_job(ctx, from_json, backup_id, cf_backup_handle, da
 
 
 @autonomous_data_warehouse_group.command(name=cli_util.override('create_autonomous_data_warehouse.command_name', 'create'), help="""Creates a new Autonomous Data Warehouse.""")
-@cli_util.option('--admin-password', required=True, help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment of the Autonomous Data Warehouse.""")
+@cli_util.option('--db-name', required=True, help="""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU Cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help="""Size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--db-name', required=True, help="""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--admin-password', required=True, help="""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help="""The user-friendly name for the Autonomous Data Warehouse. The name does not have to be unique.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to the Oracle Autonomous Data Warehouse. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to the Oracle Autonomous Data Warehouse. The default is BRING_YOUR_OWN_LICENSE.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouse'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouse'})
 @cli_util.wrap_exceptions
-def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, admin_password, compartment_id, cpu_core_count, data_storage_size_in_tbs, db_name, defined_tags, display_name, freeform_tags, license_model):
+def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, data_storage_size_in_tbs, admin_password, display_name, license_model, freeform_tags, defined_tags):
     kwargs = {}
 
     details = {}
-    details['adminPassword'] = admin_password
     details['compartmentId'] = compartment_id
+    details['dbName'] = db_name
     details['cpuCoreCount'] = cpu_core_count
     details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['dbName'] = db_name
-
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+    details['adminPassword'] = admin_password
 
     if display_name is not None:
         details['displayName'] = display_name
 
+    if license_model is not None:
+        details['licenseModel'] = license_model
+
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    if license_model is not None:
-        details['licenseModel'] = license_model
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.create_autonomous_data_warehouse(
@@ -291,8 +251,8 @@ def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 
 
 @autonomous_data_warehouse_backup_group.command(name=cli_util.override('create_autonomous_data_warehouse_backup.command_name', 'create'), help="""Creates a new Autonomous Data Warehouse backup for the specified database based on the provided request parameters.""")
-@cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The [OCID] of the Autonomous Data Warehouse backup.""")
 @cli_util.option('--display-name', required=True, help="""The user-friendly name for the backup. The name does not have to be unique.""")
+@cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The [OCID] of the Autonomous Data Warehouse backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -301,12 +261,12 @@ def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouseBackup'})
 @cli_util.wrap_exceptions
-def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_data_warehouse_id, display_name):
+def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, autonomous_data_warehouse_id):
     kwargs = {}
 
     details = {}
-    details['autonomousDataWarehouseId'] = autonomous_data_warehouse_id
     details['displayName'] = display_name
+    details['autonomousDataWarehouseId'] = autonomous_data_warehouse_id
 
     client = cli_util.build_client('database', ctx)
     result = client.create_autonomous_data_warehouse_backup(
@@ -333,49 +293,49 @@ def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_
 
 
 @autonomous_database_group.command(name=cli_util.override('create_autonomous_database.command_name', 'create'), help="""Creates a new Autonomous Database.""")
-@cli_util.option('--admin-password', required=True, help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment of the autonomous database.""")
+@cli_util.option('--db-name', required=True, help="""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU Cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help="""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
-@cli_util.option('--db-name', required=True, help="""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--admin-password', required=True, help="""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--display-name', help="""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to the Oracle Autonomous Database. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to the Oracle Autonomous Database. The default is BRING_YOUR_OWN_LICENSE.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, admin_password, compartment_id, cpu_core_count, data_storage_size_in_tbs, db_name, defined_tags, display_name, freeform_tags, license_model):
+def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, data_storage_size_in_tbs, admin_password, display_name, license_model, freeform_tags, defined_tags):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
-    details['adminPassword'] = admin_password
     details['compartmentId'] = compartment_id
+    details['dbName'] = db_name
     details['cpuCoreCount'] = cpu_core_count
     details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['dbName'] = db_name
-
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+    details['adminPassword'] = admin_password
 
     if display_name is not None:
         details['displayName'] = display_name
 
+    if license_model is not None:
+        details['licenseModel'] = license_model
+
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    if license_model is not None:
-        details['licenseModel'] = license_model
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.create_autonomous_database(
@@ -402,8 +362,8 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
 
 @autonomous_database_backup_group.command(name=cli_util.override('create_autonomous_database_backup.command_name', 'create'), help="""Creates a new Autonomous Database backup for the specified database based on the provided request parameters.""")
-@cli_util.option('--autonomous-database-id', required=True, help="""The [OCID] of the Autonomous Database backup.""")
 @cli_util.option('--display-name', required=True, help="""The user-friendly name for the backup. The name does not have to be unique.""")
+@cli_util.option('--autonomous-database-id', required=True, help="""The [OCID] of the Autonomous Database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -412,13 +372,13 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseBackup'})
 @cli_util.wrap_exceptions
-def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, display_name):
+def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, autonomous_database_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
-    details['autonomousDatabaseId'] = autonomous_database_id
     details['displayName'] = display_name
+    details['autonomousDatabaseId'] = autonomous_database_id
 
     client = cli_util.build_client('database', ctx)
     result = client.create_autonomous_database_backup(
@@ -490,7 +450,6 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--creation-type', required=True, help="""Specifies where to create the associated database. \"ExistingDbSystem\" is the only supported `creationType` value.""")
 @cli_util.option('--database-admin-password', required=True, help="""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
 
 The password must contain no fewer than nine characters and include:
@@ -506,14 +465,15 @@ The password must contain no fewer than nine characters and include:
 **The password MUST be the same as the primary admin password.**""")
 @cli_util.option('--protection-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE", "MAXIMUM_PROTECTION"]), help="""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
 
-**IMPORTANT** - The only protection mode currently supported by the Database Service is MAXIMUM_PERFORMANCE.""")
+**IMPORTANT** - The only protection mode currently supported by the Database service is MAXIMUM_PERFORMANCE.""")
 @cli_util.option('--transport-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help="""The redo transport type to use for this Data Guard association.  Valid values depend on the specified `protectionMode`:
 
 * MAXIMUM_AVAILABILITY - SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - ASYNC * MAXIMUM_PROTECTION - SYNC
 
 For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.
 
-**IMPORTANT** - The only transport type currently supported by the Database Service is ASYNC.""")
+**IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
+@cli_util.option('--creation-type', required=True, help="""Specifies whether to create the peer database in an existing DB system or in a new DB system. Use either \"ExistingDbSystem\" or \"NewDbSystem.\"""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -522,17 +482,108 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, creation_type, database_admin_password, protection_mode, transport_type):
+def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, creation_type):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     kwargs = {}
 
     details = {}
-    details['creationType'] = creation_type
     details['databaseAdminPassword'] = database_admin_password
     details['protectionMode'] = protection_mode
     details['transportType'] = transport_type
+    details['creationType'] = creation_type
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_data_guard_association(
+        database_id=database_id,
+        create_data_guard_association_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_guard_association_group.command(name=cli_util.override('create_data_guard_association_create_data_guard_association_with_new_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-with-new-db-system-details'), help="""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+
+All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
+@cli_util.option('--database-id', required=True, help="""The database [OCID].""")
+@cli_util.option('--database-admin-password', required=True, help="""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
+
+The password must contain no fewer than nine characters and include:
+
+* At least two uppercase characters.
+
+* At least two lowercase characters.
+
+* At least two numeric characters.
+
+* At least two special characters. Valid special characters include \"_\", \"#\", and \"-\" only.
+
+**The password MUST be the same as the primary admin password.**""")
+@cli_util.option('--protection-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE", "MAXIMUM_PROTECTION"]), help="""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
+
+**IMPORTANT** - The only protection mode currently supported by the Database service is MAXIMUM_PERFORMANCE.""")
+@cli_util.option('--transport-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help="""The redo transport type to use for this Data Guard association.  Valid values depend on the specified `protectionMode`:
+
+* MAXIMUM_AVAILABILITY - SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - ASYNC * MAXIMUM_PROTECTION - SYNC
+
+For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.
+
+**IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
+@cli_util.option('--display-name', help="""The user-friendly name of the DB system that will contain the the standby database. The display name does not have to be unique.""")
+@cli_util.option('--availability-domain', help="""The name of the availability domain that the standby database DB system will be located in. For example- \"Uocm:PHX-AD-1\".""")
+@cli_util.option('--subnet-id', help="""The OCID of the subnet the DB system is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.16.16/28
+
+These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
+@cli_util.option('--hostname', help="""The host name for the DB Node.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, display_name, availability_domain, subnet_id, hostname):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+    kwargs = {}
+
+    details = {}
+    details['databaseAdminPassword'] = database_admin_password
+    details['protectionMode'] = protection_mode
+    details['transportType'] = transport_type
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if availability_domain is not None:
+        details['availabilityDomain'] = availability_domain
+
+    if subnet_id is not None:
+        details['subnetId'] = subnet_id
+
+    if hostname is not None:
+        details['hostname'] = hostname
+
+    details['creationType'] = 'NewDbSystem'
 
     client = cli_util.build_client('database', ctx)
     result = client.create_data_guard_association(
@@ -578,15 +629,15 @@ The password must contain no fewer than nine characters and include:
 **The password MUST be the same as the primary admin password.**""")
 @cli_util.option('--protection-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE", "MAXIMUM_PROTECTION"]), help="""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
 
-**IMPORTANT** - The only protection mode currently supported by the Database Service is MAXIMUM_PERFORMANCE.""")
+**IMPORTANT** - The only protection mode currently supported by the Database service is MAXIMUM_PERFORMANCE.""")
 @cli_util.option('--transport-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help="""The redo transport type to use for this Data Guard association.  Valid values depend on the specified `protectionMode`:
 
 * MAXIMUM_AVAILABILITY - SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - ASYNC * MAXIMUM_PROTECTION - SYNC
 
 For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.
 
-**IMPORTANT** - The only transport type currently supported by the Database Service is ASYNC.""")
-@cli_util.option('--peer-db-system-id', help="""The [OCID] of the DB system to create the standby database on.""")
+**IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
+@cli_util.option('--peer-db-system-id', help="""The [OCID] of the DB system in which to create the standby database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -734,8 +785,8 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 
 @db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help="""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--db-system-id', required=True, help="""The [OCID] of the DB system.""")
-@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', required=True, help="""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""The user-provided name of the database home.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -745,13 +796,13 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, db_version, display_name):
+def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, db_version, database, display_name):
     kwargs = {}
 
     details = {}
     details['dbSystemId'] = db_system_id
-    details['database'] = cli_util.parse_json_parameter("database", database)
     details['dbVersion'] = db_version
+    details['database'] = cli_util.parse_json_parameter("database", database)
 
     if display_name is not None:
         details['displayName'] = display_name
@@ -786,15 +837,15 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
 @cli_util.option('--availability-domain', required=True, help="""The targeted availability domain for the backup.""")
-@cli_util.option('--character-set', required=True, help="""The character set for the database.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment where this backup should be created.""")
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database edition to use for creating a database from this standalone backup. Note that 2-node RAC DB systems require Enterprise Edition - Extreme Performance.""")
-@cli_util.option('--database-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["SI", "RAC"]), help="""The mode (single instance or RAC) of the database being backed up.""")
-@cli_util.option('--db-name', required=True, help="""The name of the database from which the backup is being taken.""")
-@cli_util.option('--db-version', required=True, help="""A valid Oracle Database version.""")
 @cli_util.option('--display-name', required=True, help="""A user-friendly name for the backup. This name does not have to be unique.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle Database version.""")
+@cli_util.option('--db-name', required=True, help="""The name of the database from which the backup is being taken.""")
 @cli_util.option('--external-database-identifier', required=True, type=click.INT, help="""The `DBID` of the Oracle Database being backed up.""")
+@cli_util.option('--character-set', required=True, help="""The character set for the database.""")
 @cli_util.option('--ncharacter-set', required=True, help="""The national character set for the database.""")
+@cli_util.option('--database-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["SI", "RAC"]), help="""The mode (single instance or RAC) of the database being backed up.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database edition to use for creating a database from this standalone backup. Note that 2-node RAC DB systems require Enterprise Edition - Extreme Performance.""")
 @cli_util.option('--db-unique-name', help="""The `DB_UNIQUE_NAME` of the Oracle Database being backed up.""")
 @cli_util.option('--pdb-name', help="""The pluggable database name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -802,20 +853,20 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalBackupJob'})
 @cli_util.wrap_exceptions
-def create_external_backup_job(ctx, from_json, availability_domain, character_set, compartment_id, database_edition, database_mode, db_name, db_version, display_name, external_database_identifier, ncharacter_set, db_unique_name, pdb_name):
+def create_external_backup_job(ctx, from_json, availability_domain, compartment_id, display_name, db_version, db_name, external_database_identifier, character_set, ncharacter_set, database_mode, database_edition, db_unique_name, pdb_name):
     kwargs = {}
 
     details = {}
     details['availabilityDomain'] = availability_domain
-    details['characterSet'] = character_set
     details['compartmentId'] = compartment_id
-    details['databaseEdition'] = database_edition
-    details['databaseMode'] = database_mode
-    details['dbName'] = db_name
-    details['dbVersion'] = db_version
     details['displayName'] = display_name
+    details['dbVersion'] = db_version
+    details['dbName'] = db_name
     details['externalDatabaseIdentifier'] = external_database_identifier
+    details['characterSet'] = character_set
     details['ncharacterSet'] = ncharacter_set
+    details['databaseMode'] = database_mode
+    details['databaseEdition'] = database_edition
 
     if db_unique_name is not None:
         details['dbUniqueName'] = db_unique_name
@@ -1166,7 +1217,7 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
 
 @autonomous_data_warehouse_group.command(name=cli_util.override('generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'), help="""Creates and downloads a wallet for the specified Autonomous Data Warehouse.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--password', required=True, help="""The password to encrypt the keys inside the wallet.""")
+@cli_util.option('--password', required=True, help="""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1216,7 +1267,7 @@ def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_d
 
 @autonomous_database_group.command(name=cli_util.override('generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help="""Creates and downloads a wallet for the specified Autonomous Transaction Processing database.""")
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--password', required=True, help="""The password to encrypt the keys inside the wallet.""")
+@cli_util.option('--password', required=True, help="""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1596,65 +1647,75 @@ def get_external_backup_job(ctx, from_json, backup_id):
 @db_system_group.command(name=cli_util.override('launch_db_system.command_name', 'launch'), help="""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
 An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
-@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment the DB system  belongs in.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
-
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
-
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
-@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
-
-The maximum length of the combined hostname and domain is 63 characters.
-
-**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
-
-To get a list of shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
 @cli_util.option('--subnet-id', required=True, help="""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
+@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
+
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
+
+The maximum length of the combined hostname and domain is 63 characters.
+
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--backup-subnet-id', help="""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
 
 **Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--sparse-diskgroup', type=click.BOOL, help="""If true, Sparse Diskgroup is configured for Exadata dbsystem. If False, Sparse diskgroup is not configured.""")
+@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--cluster-name', help="""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
-@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
-@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help="""The source of the database:   NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a backup. The default is NONE.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, cpu_core_count, hostname, shape, ssh_public_keys, subnet_id, backup_subnet_id, cluster_name, data_storage_percentage, defined_tags, display_name, domain, freeform_tags, initial_data_storage_size_in_gb, node_count, source):
+def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, display_name, backup_subnet_id, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, source):
     kwargs = {}
 
     details = {}
-    details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
-    details['cpuCoreCount'] = cpu_core_count
-    details['hostname'] = hostname
+    details['availabilityDomain'] = availability_domain
+    details['subnetId'] = subnet_id
     details['shape'] = shape
     details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['subnetId'] = subnet_id
+    details['hostname'] = hostname
+    details['cpuCoreCount'] = cpu_core_count
+
+    if display_name is not None:
+        details['displayName'] = display_name
 
     if backup_subnet_id is not None:
         details['backupSubnetId'] = backup_subnet_id
+
+    if sparse_diskgroup is not None:
+        details['sparseDiskgroup'] = sparse_diskgroup
+
+    if domain is not None:
+        details['domain'] = domain
 
     if cluster_name is not None:
         details['clusterName'] = cluster_name
@@ -1662,23 +1723,17 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if data_storage_percentage is not None:
         details['dataStoragePercentage'] = data_storage_percentage
 
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if display_name is not None:
-        details['displayName'] = display_name
-
-    if domain is not None:
-        details['domain'] = domain
-
-    if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
     if initial_data_storage_size_in_gb is not None:
         details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
 
     if node_count is not None:
         details['nodeCount'] = node_count
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if source is not None:
         details['source'] = source
@@ -1710,70 +1765,80 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_details.command_name', 'launch-db-system-launch-db-system-details'), help="""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
 An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
-@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment the DB system  belongs in.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
-
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
-
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
-@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
-
-The maximum length of the combined hostname and domain is 63 characters.
-
-**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
-
-To get a list of shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
 @cli_util.option('--subnet-id', required=True, help="""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
+
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
+
+The maximum length of the combined hostname and domain is 63 characters.
+
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--backup-subnet-id', help="""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
 
 **Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--sparse-diskgroup', type=click.BOOL, help="""If true, Sparse Diskgroup is configured for Exadata dbsystem. If False, Sparse diskgroup is not configured.""")
+@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--cluster-name', help="""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
-@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
-@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB system. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, cpu_core_count, hostname, shape, ssh_public_keys, subnet_id, database_edition, db_home, backup_subnet_id, cluster_name, data_storage_percentage, defined_tags, display_name, domain, freeform_tags, initial_data_storage_size_in_gb, node_count, disk_redundancy, license_model):
+def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, db_home, database_edition, display_name, backup_subnet_id, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, disk_redundancy, license_model):
     kwargs = {}
 
     details = {}
-    details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
-    details['cpuCoreCount'] = cpu_core_count
-    details['hostname'] = hostname
+    details['availabilityDomain'] = availability_domain
+    details['subnetId'] = subnet_id
     details['shape'] = shape
     details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['subnetId'] = subnet_id
-    details['databaseEdition'] = database_edition
+    details['hostname'] = hostname
+    details['cpuCoreCount'] = cpu_core_count
     details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
+    details['databaseEdition'] = database_edition
+
+    if display_name is not None:
+        details['displayName'] = display_name
 
     if backup_subnet_id is not None:
         details['backupSubnetId'] = backup_subnet_id
+
+    if sparse_diskgroup is not None:
+        details['sparseDiskgroup'] = sparse_diskgroup
+
+    if domain is not None:
+        details['domain'] = domain
 
     if cluster_name is not None:
         details['clusterName'] = cluster_name
@@ -1781,23 +1846,17 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
     if data_storage_percentage is not None:
         details['dataStoragePercentage'] = data_storage_percentage
 
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if display_name is not None:
-        details['displayName'] = display_name
-
-    if domain is not None:
-        details['domain'] = domain
-
-    if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
     if initial_data_storage_size_in_gb is not None:
         details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
 
     if node_count is not None:
         details['nodeCount'] = node_count
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if disk_redundancy is not None:
         details['diskRedundancy'] = disk_redundancy
@@ -1834,70 +1893,80 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
 @db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_from_backup_details.command_name', 'launch-db-system-launch-db-system-from-backup-details'), help="""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
 An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
-@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment the DB system  belongs in.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
-
-- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
-
-This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
-@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
-
-The maximum length of the combined hostname and domain is 63 characters.
-
-**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
-@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
-
-To get a list of shapes, use the [ListDbSystemShapes] operation.""")
-@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-domain', required=True, help="""The availability domain where the DB system is located.""")
 @cli_util.option('--subnet-id', required=True, help="""The [OCID] of the subnet the DB system is associated with.
 
 **Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
 
 These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--shape', required=True, help="""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
+
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostname', required=True, help="""The hostname for the DB system. The hostname must begin with an alphabetic character and can contain a maximum of 30 alphanumeric characters, including hyphens (-).
+
+The maximum length of the combined hostname and domain is 63 characters.
+
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help="""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help="""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
 @cli_util.option('--backup-subnet-id', help="""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
 
 **Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--sparse-diskgroup', type=click.BOOL, help="""If true, Sparse Diskgroup is configured for Exadata dbsystem. If False, Sparse diskgroup is not configured.""")
+@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--cluster-name', help="""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--data-storage-percentage', type=click.INT, help="""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name for the DB system. The name does not have to be unique.""")
-@cli_util.option('--domain', help="""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help="""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
-@cli_util.option('--node-count', type=click.INT, help="""The number of nodes to launch for a 2-node RAC virtual machine DB system.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help="""The type of redundancy configured for the DB system. NORMAL 2-way redundancy, recommended for test and development systems. HIGH is 3-way redundancy, recommended for production systems.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help="""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromBackupDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromBackupDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, cpu_core_count, hostname, shape, ssh_public_keys, subnet_id, database_edition, db_home, backup_subnet_id, cluster_name, data_storage_percentage, defined_tags, display_name, domain, freeform_tags, initial_data_storage_size_in_gb, node_count, disk_redundancy, license_model):
+def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, db_home, database_edition, display_name, backup_subnet_id, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, disk_redundancy, license_model):
     kwargs = {}
 
     details = {}
-    details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
-    details['cpuCoreCount'] = cpu_core_count
-    details['hostname'] = hostname
+    details['availabilityDomain'] = availability_domain
+    details['subnetId'] = subnet_id
     details['shape'] = shape
     details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['subnetId'] = subnet_id
-    details['databaseEdition'] = database_edition
+    details['hostname'] = hostname
+    details['cpuCoreCount'] = cpu_core_count
     details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
+    details['databaseEdition'] = database_edition
+
+    if display_name is not None:
+        details['displayName'] = display_name
 
     if backup_subnet_id is not None:
         details['backupSubnetId'] = backup_subnet_id
+
+    if sparse_diskgroup is not None:
+        details['sparseDiskgroup'] = sparse_diskgroup
+
+    if domain is not None:
+        details['domain'] = domain
 
     if cluster_name is not None:
         details['clusterName'] = cluster_name
@@ -1905,23 +1974,17 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
     if data_storage_percentage is not None:
         details['dataStoragePercentage'] = data_storage_percentage
 
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if display_name is not None:
-        details['displayName'] = display_name
-
-    if domain is not None:
-        details['domain'] = domain
-
-    if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
     if initial_data_storage_size_in_gb is not None:
         details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
 
     if node_count is not None:
         details['nodeCount'] = node_count
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if disk_redundancy is not None:
         details['diskRedundancy'] = disk_redundancy
@@ -2999,8 +3062,8 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 @database_group.command(name=cli_util.override('restore_database.command_name', 'restore'), help="""Restore a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--database-scn', help="""Restores using the backup with the System Change Number (SCN) specified.""")
-@cli_util.option('--latest', type=click.BOOL, help="""Restores to the last known good state with the least possible data loss.""")
 @cli_util.option('--timestamp', type=custom_types.CLI_DATETIME, help="""Restores to the timestamp specified.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--latest', type=click.BOOL, help="""Restores to the last known good state with the least possible data loss.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3010,7 +3073,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_scn, latest, timestamp, if_match):
+def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_scn, timestamp, latest, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -3023,11 +3086,11 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if database_scn is not None:
         details['databaseSCN'] = database_scn
 
-    if latest is not None:
-        details['latest'] = latest
-
     if timestamp is not None:
         details['timestamp'] = timestamp
+
+    if latest is not None:
+        details['latest'] = latest
 
     client = cli_util.build_client('database', ctx)
     result = client.restore_database(
@@ -3335,33 +3398,33 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @autonomous_data_warehouse_group.command(name=cli_util.override('update_autonomous_data_warehouse.command_name', 'update'), help="""Updates the specified Autonomous Data Warehouse with a new CPU core count and size.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--admin-password', help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help="""Size, in terabytes, of the data volume that will be attached to the database.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""The user-friendly name for the Autonomous Data Warehouse. The name does not have to be unique.""")
+@cli_util.option('--admin-password', help="""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing. It must be different from the last four passwords and it must not be a password used within the last 24 hours.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouse'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouse'})
 @cli_util.wrap_exceptions
-def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_data_warehouse_id, admin_password, cpu_core_count, data_storage_size_in_tbs, defined_tags, display_name, freeform_tags, if_match):
+def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_data_warehouse_id, cpu_core_count, data_storage_size_in_tbs, display_name, admin_password, freeform_tags, defined_tags, if_match):
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3369,23 +3432,23 @@ def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_
 
     details = {}
 
-    if admin_password is not None:
-        details['adminPassword'] = admin_password
-
     if cpu_core_count is not None:
         details['cpuCoreCount'] = cpu_core_count
 
     if data_storage_size_in_tbs is not None:
         details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
 
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
     if display_name is not None:
         details['displayName'] = display_name
 
+    if admin_password is not None:
+        details['adminPassword'] = admin_password
+
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.update_autonomous_data_warehouse(
@@ -3414,33 +3477,33 @@ def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_
 
 @autonomous_database_group.command(name=cli_util.override('update_autonomous_database.command_name', 'update'), help="""Updates the specified Autonomous Database with a new CPU core count and size.""")
 @cli_util.option('--autonomous-database-id', required=True, help="""The database [OCID].""")
-@cli_util.option('--admin-password', help="""A strong password for Admin. The password must be between 12 and 60 characters long, and must contain at least 1 uppercase, 1 lowercase and 2 numeric characters. It cannot contain the double quote symbol (\"). It must be different than the last 4 passwords.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help="""The number of CPU cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help="""The size, in terabytes, of the data volume that will be attached to the database.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
+@cli_util.option('--admin-password', help="""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing. It must be different from the last four passwords and it must not be a password used within the last 24 hours.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, admin_password, cpu_core_count, data_storage_size_in_tbs, defined_tags, display_name, freeform_tags, if_match):
+def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, data_storage_size_in_tbs, display_name, admin_password, freeform_tags, defined_tags, if_match):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3449,23 +3512,23 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
     details = {}
 
-    if admin_password is not None:
-        details['adminPassword'] = admin_password
-
     if cpu_core_count is not None:
         details['cpuCoreCount'] = cpu_core_count
 
     if data_storage_size_in_tbs is not None:
         details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
 
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
     if display_name is not None:
         details['displayName'] = display_name
 
+    if admin_password is not None:
+        details['adminPassword'] = admin_password
+
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.update_autonomous_database(
@@ -3495,29 +3558,29 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 @database_group.command(name=cli_util.override('update_database.command_name', 'update'), help="""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help="""The database [OCID].""")
 @cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, defined_tags, freeform_tags, if_match):
+def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     if not force:
-        if db_backup_config or defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to db-backup-config and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if db_backup_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to db-backup-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3528,11 +3591,11 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     if db_backup_config is not None:
         details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
 
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.update_database(
@@ -3617,32 +3680,32 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @db_system_group.command(name=cli_util.override('update_db_system.command_name', 'update'), help="""Updates the properties of a DB system, such as the CPU core count.""")
 @cli_util.option('--db-system-id', required=True, help="""The DB system [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help="""The new number of CPU cores to set for the DB system. Not applicable for virtual machine DB systems.""")
+@cli_util.option('--version', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help="""The size, in gigabytes, to scale the attached storage up to for this virtual machine DB system. This value must be greater than current storage size. Note that the resulting total storage size attached will be greater than the amount requested to allow for REDO/RECO space and software volume. Applies only to virtual machine DB systems.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help="""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 10,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--version', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'version': {'module': 'database', 'class': 'PatchDetails'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'version': {'module': 'database', 'class': 'PatchDetails'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, data_storage_size_in_gbs, defined_tags, freeform_tags, ssh_public_keys, version, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, version, ssh_public_keys, data_storage_size_in_gbs, freeform_tags, defined_tags, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or ssh_public_keys or version:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and ssh-public-keys and version will replace any existing values. Are you sure you want to continue?"):
+        if version or ssh_public_keys or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to version and ssh-public-keys and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
     kwargs = {}
     if if_match is not None:
@@ -3653,20 +3716,20 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     if cpu_core_count is not None:
         details['cpuCoreCount'] = cpu_core_count
 
-    if data_storage_size_in_gbs is not None:
-        details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
-
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+    if version is not None:
+        details['version'] = cli_util.parse_json_parameter("version", version)
 
     if ssh_public_keys is not None:
         details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
 
-    if version is not None:
-        details['version'] = cli_util.parse_json_parameter("version", version)
+    if data_storage_size_in_gbs is not None:
+        details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('database', ctx)
     result = client.update_db_system(

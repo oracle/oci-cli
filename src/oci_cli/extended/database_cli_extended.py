@@ -472,6 +472,48 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     cli_util.render_response(result, ctx)
 
 
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
+@create_data_guard_association_group.command('with-new-db-system', help="""Creates a new Data Guard association with a new DB System.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+
+
+All Oracle Cloud Infrastructue resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
+@cli_util.option('--display-name', required=True, help="""The user-friendly name for the DB System to create the standby database on. It does not have to be unique.""")
+@cli_util.option('--hostname', required=True, help="""The host name for the DB Node.""")
+@cli_util.option('--availability-domain', required=True, help="""The name of the Availability Domain that the standby database DB System will be located in.""")
+@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB Systems, do not use a subnet that overlaps with 192.168.16.16/28
+
+These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and backup subnet.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, subnet_id):
+    kwargs = {}
+
+    details = {}
+    details['creationType'] = creation_type
+    details['databaseAdminPassword'] = database_admin_password
+    details['protectionMode'] = protection_mode
+    details['transportType'] = transport_type
+
+    if availability_domain is not None:
+        details['availabilityDomain'] = availability_domain
+    if display_name is not None:
+        details['displayName'] = display_name
+    if hostname is not None:
+        details['hostname'] = hostname
+    if subnet_id is not None:
+        details['subnetId'] = subnet_id
+    details['creationType'] = 'NewDbSystem'
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_data_guard_association(
+        database_id=database_id,
+        create_data_guard_association_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_cli.patch_group.command('get', cls=CommandGroupWithAlias, help=database_cli.get_db_home_patch.help)
 @cli_util.help_option_group
 def patch_get_group():
@@ -584,6 +626,7 @@ database_cli.db_system_group.commands.pop(database_cli.update_db_system.name)
 
 # Disable subclass command
 database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_to_existing_db_system_details.name)
+database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_with_new_db_system_details.name)
 
 # we need to expose customized create / delete / list database commands in order to avoid exposing DbHomes
 database_cli.database_group.add_command(create_database)
@@ -607,3 +650,24 @@ database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_system_p
 
 patch_history_get_group.add_command(database_cli.get_db_system_patch_history_entry)
 patch_history_list_group.add_command(database_cli.list_db_system_patch_history_entries)
+
+cli_util.override_command_short_help_and_help(database_cli.backup_group, """A database backup. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+cli_util.override_command_short_help_and_help(database_cli.data_guard_association_group, """The properties that define a Data Guard association.
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+For information about endpoints and signing API requests, see [About the API]. For information about available SDKs and tools, see [SDKS and Other Tools].""")
+cli_util.override_command_short_help_and_help(database_cli.database_group, """An Oracle database on a bare metal or virtual machine DB system. For more information, see Bare Metal and Virtual Machine DB Systems.
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+cli_util.override_command_short_help_and_help(database_cli.db_node_group, """A server where Oracle Database software is running.
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+cli_util.override_command_short_help_and_help(database_cli.patch_group, """A Patch for a DB system or DB Home.
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+cli_util.override_command_short_help_and_help(database_cli.patch_history_entry_group, """The record of a patch action on a specified target.""")
+cli_util.override_command_short_help_and_help(database_cli.db_system_group, """The Database Service supports several types of DB systems, ranging in size, price, and performance. For details about each type of system, see:
+- Exadata DB Systems - Bare Metal and Virtual Machine DB Systems
+To use any of the API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+For information about access control and compartments, see Overview of the Identity Service.
+For information about availability domains, see [Regions and Availability Domains].
+To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity Service API.
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")

@@ -6,15 +6,14 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from ..cli_root import cli
-from .. import cli_constants  # noqa: F401
 from .. import cli_util
 from .. import json_skeleton_utils
 from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
+from . import core_service_cli
 
 
-@cli.command(cli_util.override('blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('blockstorage_root_group.short_help', """Core Services API"""))
+@click.command(cli_util.override('blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('blockstorage_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def blockstorage_root_group():
     pass
@@ -102,6 +101,7 @@ def volume_kms_key_group():
     pass
 
 
+core_service_cli.core_service_group.add_command(blockstorage_root_group)
 blockstorage_root_group.add_command(boot_volume_kms_key_group)
 blockstorage_root_group.add_command(volume_group)
 blockstorage_root_group.add_command(boot_volume_backup_group)
