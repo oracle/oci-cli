@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 # Restore an archived object and download it
 # The archived object is not available for download initialy. Issue the restore
 # command will kick off the process and it will be available for download in about

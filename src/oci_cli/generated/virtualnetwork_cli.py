@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -363,6 +363,7 @@ def attach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -407,6 +408,7 @@ def bulk_add_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id,
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -433,6 +435,7 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -461,6 +464,7 @@ def connect_local_peering_gateways(ctx, from_json, local_peering_gateway_id, pee
 
     if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -492,6 +496,7 @@ def connect_remote_peering_connections(ctx, from_json, remote_peering_connection
 
     if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -531,6 +536,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Cpe'})
 @cli_util.wrap_exceptions
 def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -581,6 +587,7 @@ Example: `10 Gbps`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
 def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, display_name, far_cross_connect_or_cross_connect_group_id, near_cross_connect_or_cross_connect_group_id):
+
     kwargs = {}
 
     details = {}
@@ -640,6 +647,7 @@ You may optionally specify a *display name* for the cross-connect group. It does
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
 def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name):
+
     kwargs = {}
 
     details = {}
@@ -696,6 +704,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'options': {'module': 'core', 'class': 'list[DhcpOption]'}}, output_type={'module': 'core', 'class': 'DhcpOptions'})
 @cli_util.wrap_exceptions
 def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, options, vcn_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -758,6 +767,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Drg'})
 @cli_util.wrap_exceptions
 def create_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -818,6 +828,7 @@ For information about why you would associate a route table with a DRG attachmen
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
 def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, vcn_id, display_name, route_table_id):
+
     kwargs = {}
 
     details = {}
@@ -882,6 +893,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InternetGateway'})
 @cli_util.wrap_exceptions
 def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_enabled, vcn_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -955,6 +967,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
 @cli_util.wrap_exceptions
 def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, static_routes, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -1020,6 +1033,7 @@ For information about why you would associate a route table with an LPG, see [Ad
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
 @cli_util.wrap_exceptions
 def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, route_table_id):
+
     kwargs = {}
 
     details = {}
@@ -1084,6 +1098,7 @@ Example: `true`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'NatGateway'})
 @cli_util.wrap_exceptions
 def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, block_traffic):
+
     kwargs = {}
 
     details = {}
@@ -1149,6 +1164,7 @@ Example: `10.0.3.3`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
 def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, hostname_label, ip_address):
+
     kwargs = {}
 
     details = {}
@@ -1209,6 +1225,7 @@ Optional for a reserved public IP. If you don't provide it, the public IP is cre
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PublicIp'})
 @cli_util.wrap_exceptions
 def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, lifetime, defined_tags, display_name, freeform_tags, private_ip_id):
+
     kwargs = {}
 
     details = {}
@@ -1264,6 +1281,7 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
 @cli_util.wrap_exceptions
 def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, drg_id, display_name):
+
     kwargs = {}
 
     details = {}
@@ -1321,6 +1339,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'route-rules': {'module': 'core', 'class': 'list[RouteRule]'}}, output_type={'module': 'core', 'class': 'RouteTable'})
 @cli_util.wrap_exceptions
 def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, route_rules, vcn_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -1386,6 +1405,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'egress-security-rules': {'module': 'core', 'class': 'list[EgressSecurityRule]'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ingress-security-rules': {'module': 'core', 'class': 'list[IngressSecurityRule]'}}, output_type={'module': 'core', 'class': 'SecurityList'})
 @cli_util.wrap_exceptions
 def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, egress_security_rules, ingress_security_rules, vcn_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -1451,6 +1471,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}}, output_type={'module': 'core', 'class': 'ServiceGateway'})
 @cli_util.wrap_exceptions
 def create_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, services, vcn_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -1541,6 +1562,7 @@ Example: `true`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Subnet'})
 @cli_util.wrap_exceptions
 def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, cidr_block, compartment_id, vcn_id, defined_tags, dhcp_options_id, display_name, dns_label, freeform_tags, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
+
     kwargs = {}
 
     details = {}
@@ -1637,6 +1659,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
 def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, defined_tags, display_name, dns_label, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -1713,6 +1736,7 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
 def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_id, provider_service_name, public_prefixes, region):
+
     kwargs = {}
 
     details = {}
@@ -1786,6 +1810,7 @@ def delete_cpe(ctx, from_json, cpe_id, if_match):
 
     if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1813,6 +1838,7 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1868,6 +1894,7 @@ def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1925,6 +1952,7 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1980,6 +2008,7 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2035,6 +2064,7 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2092,6 +2122,7 @@ def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2149,6 +2180,7 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2206,6 +2238,7 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
     if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2263,6 +2296,7 @@ def delete_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2319,6 +2353,7 @@ def delete_private_ip(ctx, from_json, private_ip_id, if_match):
 
     if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2352,6 +2387,7 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2409,6 +2445,7 @@ def delete_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
 
     if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2466,6 +2503,7 @@ def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2523,6 +2561,7 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2578,6 +2617,7 @@ def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2633,6 +2673,7 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2688,6 +2729,7 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2745,6 +2787,7 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2802,6 +2845,7 @@ def detach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2845,6 +2889,7 @@ def get_cpe(ctx, from_json, cpe_id):
 
     if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cpe(
@@ -2865,6 +2910,7 @@ def get_cross_connect(ctx, from_json, cross_connect_id):
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cross_connect(
@@ -2885,6 +2931,7 @@ def get_cross_connect_group(ctx, from_json, cross_connect_group_id):
 
     if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cross_connect_group(
@@ -2905,6 +2952,7 @@ def get_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id):
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cross_connect_letter_of_authority(
@@ -2925,6 +2973,7 @@ def get_cross_connect_status(ctx, from_json, cross_connect_id):
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_cross_connect_status(
@@ -2945,6 +2994,7 @@ def get_dhcp_options(ctx, from_json, dhcp_id):
 
     if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_dhcp_options(
@@ -2965,6 +3015,7 @@ def get_drg(ctx, from_json, drg_id):
 
     if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_drg(
@@ -2985,6 +3036,7 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_drg_attachment(
@@ -3005,6 +3057,7 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
 
     if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_fast_connect_provider_service(
@@ -3025,6 +3078,7 @@ def get_internet_gateway(ctx, from_json, ig_id):
 
     if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_internet_gateway(
@@ -3045,6 +3099,7 @@ def get_ip_sec_connection(ctx, from_json, ipsc_id):
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_ip_sec_connection(
@@ -3065,6 +3120,7 @@ def get_ip_sec_connection_device_config(ctx, from_json, ipsc_id):
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_ip_sec_connection_device_config(
@@ -3085,6 +3141,7 @@ def get_ip_sec_connection_device_status(ctx, from_json, ipsc_id):
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_ip_sec_connection_device_status(
@@ -3105,6 +3162,7 @@ def get_local_peering_gateway(ctx, from_json, local_peering_gateway_id):
 
     if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_local_peering_gateway(
@@ -3125,6 +3183,7 @@ def get_nat_gateway(ctx, from_json, nat_gateway_id):
 
     if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_nat_gateway(
@@ -3145,6 +3204,7 @@ def get_private_ip(ctx, from_json, private_ip_id):
 
     if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_private_ip(
@@ -3171,6 +3231,7 @@ def get_public_ip(ctx, from_json, public_ip_id):
 
     if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_public_ip(
@@ -3190,6 +3251,7 @@ def get_public_ip(ctx, from_json, public_ip_id):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
 @cli_util.wrap_exceptions
 def get_public_ip_by_ip_address(ctx, from_json, ip_address):
+
     kwargs = {}
 
     details = {}
@@ -3213,6 +3275,7 @@ def get_public_ip_by_ip_address(ctx, from_json, ip_address):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PublicIp'})
 @cli_util.wrap_exceptions
 def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
+
     kwargs = {}
 
     details = {}
@@ -3237,6 +3300,7 @@ def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
 
     if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_remote_peering_connection(
@@ -3257,6 +3321,7 @@ def get_route_table(ctx, from_json, rt_id):
 
     if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_route_table(
@@ -3277,6 +3342,7 @@ def get_security_list(ctx, from_json, security_list_id):
 
     if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_security_list(
@@ -3297,6 +3363,7 @@ def get_service(ctx, from_json, service_id):
 
     if isinstance(service_id, six.string_types) and len(service_id.strip()) == 0:
         raise click.UsageError('Parameter --service-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_service(
@@ -3317,6 +3384,7 @@ def get_service_gateway(ctx, from_json, service_gateway_id):
 
     if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_service_gateway(
@@ -3337,6 +3405,7 @@ def get_subnet(ctx, from_json, subnet_id):
 
     if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_subnet(
@@ -3357,6 +3426,7 @@ def get_vcn(ctx, from_json, vcn_id):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_vcn(
@@ -3377,6 +3447,7 @@ def get_virtual_circuit(ctx, from_json, virtual_circuit_id):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_virtual_circuit(
@@ -3397,6 +3468,7 @@ def get_vnic(ctx, from_json, vnic_id):
 
     if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_vnic(
@@ -3413,6 +3485,7 @@ def get_vnic(ctx, from_json, vnic_id):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[PeerRegionForRemotePeering]'})
 @cli_util.wrap_exceptions
 def list_allowed_peer_regions_for_remote_peering(ctx, from_json, ):
+
     kwargs = {}
     client = cli_util.build_client('virtual_network', ctx)
     result = client.list_allowed_peer_regions_for_remote_peering(
@@ -3438,6 +3511,7 @@ def list_cpes(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3492,6 +3566,7 @@ def list_cross_connect_groups(ctx, from_json, all_pages, page_size, compartment_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3548,6 +3623,7 @@ def list_cross_connect_locations(ctx, from_json, all_pages, page_size, compartme
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3603,6 +3679,7 @@ def list_cross_connects(ctx, from_json, all_pages, page_size, compartment_id, cr
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if cross_connect_group_id is not None:
         kwargs['cross_connect_group_id'] = cross_connect_group_id
@@ -3661,6 +3738,7 @@ def list_crossconnect_port_speed_shapes(ctx, from_json, all_pages, page_size, co
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3716,6 +3794,7 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3777,6 +3856,7 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if vcn_id is not None:
         kwargs['vcn_id'] = vcn_id
@@ -3829,6 +3909,7 @@ def list_drgs(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3881,6 +3962,7 @@ def list_fast_connect_provider_services(ctx, from_json, all_pages, page_size, co
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3934,6 +4016,7 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
 
     if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -3989,6 +4072,7 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4050,6 +4134,7 @@ def list_ip_sec_connections(ctx, from_json, all_pages, page_size, compartment_id
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if drg_id is not None:
         kwargs['drg_id'] = drg_id
@@ -4103,6 +4188,7 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4161,6 +4247,7 @@ def list_nat_gateways(ctx, from_json, all_pages, page_size, compartment_id, vcn_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if vcn_id is not None:
         kwargs['vcn_id'] = vcn_id
@@ -4227,6 +4314,7 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4295,6 +4383,7 @@ def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4351,6 +4440,7 @@ def list_remote_peering_connections(ctx, from_json, all_pages, page_size, compar
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if drg_id is not None:
         kwargs['drg_id'] = drg_id
@@ -4408,6 +4498,7 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4474,6 +4565,7 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4539,6 +4631,7 @@ def list_service_gateways(ctx, from_json, all_pages, page_size, compartment_id, 
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if vcn_id is not None:
         kwargs['vcn_id'] = vcn_id
@@ -4594,6 +4687,7 @@ def list_services(ctx, from_json, all_pages, page_size, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4646,6 +4740,7 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4711,6 +4806,7 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4767,6 +4863,7 @@ def list_virtual_circuit_bandwidth_shapes(ctx, from_json, all_pages, page_size, 
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4810,6 +4907,7 @@ def list_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id, ver
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
     kwargs = {}
     if verification_state is not None:
         kwargs['verification_state'] = verification_state
@@ -4844,6 +4942,7 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -4907,6 +5006,7 @@ def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freefo
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -4950,6 +5050,7 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5003,6 +5104,7 @@ def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5069,6 +5171,7 @@ def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds,
         if defined_tags or freeform_tags or options:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and options will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5139,6 +5242,7 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5196,6 +5300,7 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5263,6 +5368,7 @@ def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seco
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5333,6 +5439,7 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5401,6 +5508,7 @@ def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5474,6 +5582,7 @@ def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5551,6 +5660,7 @@ def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, displa
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5623,6 +5733,7 @@ def update_public_ip(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5682,6 +5793,7 @@ def update_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
 
     if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5748,6 +5860,7 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         if defined_tags or freeform_tags or route_rules:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and route-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5826,6 +5939,7 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
         if defined_tags or egress_security_rules or freeform_tags or ingress_security_rules:
             if not click.confirm("WARNING: Updates to defined-tags and egress-security-rules and freeform-tags and ingress-security-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5909,6 +6023,7 @@ def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_secon
         if defined_tags or freeform_tags or services:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and services will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -5985,6 +6100,7 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         if defined_tags or freeform_tags or security_list_ids:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and security-list-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -6061,6 +6177,7 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -6148,6 +6265,7 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
         if cross_connect_mappings:
             if not click.confirm("WARNING: Updates to cross-connect-mappings will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -6233,6 +6351,7 @@ def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

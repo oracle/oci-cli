@@ -9,7 +9,8 @@ Usage: oci os [OPTIONS] COMMAND [ARGS]...
   Object Storage Service CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   bucket                   A bucket is a container for storing objects...
@@ -37,7 +38,8 @@ Usage: oci os bucket [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a bucket in the given namespace with...
@@ -150,7 +152,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os bucket delete --help
@@ -184,7 +187,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os bucket get --help
@@ -231,7 +235,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os bucket list --help
@@ -277,7 +282,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os bucket update --help
@@ -382,14 +388,16 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os multipart --help
 Usage: oci os multipart [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   abort  Aborts an uncommitted multipart upload...
@@ -423,7 +431,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os multipart list --help
@@ -457,7 +466,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os ns --help
@@ -476,7 +486,8 @@ Usage: oci os ns [OPTIONS] COMMAND [ARGS]...
   compartment of the tenancy.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get              Gets the name of the namespace for the user
@@ -496,7 +507,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os ns get-metadata --help
@@ -522,7 +534,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os ns update-metadata --help
@@ -554,7 +567,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object --help
@@ -566,7 +580,8 @@ Usage: oci os object [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   bulk-delete     Deletes all objects in a bucket which match...
@@ -710,7 +725,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object bulk-download --help
@@ -848,7 +864,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object bulk-upload --help
@@ -986,7 +1003,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object copy --help
@@ -1064,7 +1082,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object delete --help
@@ -1099,7 +1118,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object get --help
@@ -1150,7 +1170,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object head --help
@@ -1179,7 +1200,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object list --help
@@ -1236,7 +1258,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object put --help
@@ -1314,7 +1337,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object rename --help
@@ -1350,7 +1374,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object restore --help
@@ -1384,7 +1409,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object restore-status --help
@@ -1411,7 +1437,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object resume-put --help
@@ -1451,7 +1478,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object-lifecycle-policy --help
@@ -1461,7 +1489,8 @@ Usage: oci os object-lifecycle-policy [OPTIONS] COMMAND [ARGS]...
   lifecycle policy of a given bucket.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Deletes the object lifecycle policy for the...
@@ -1498,7 +1527,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object-lifecycle-policy get --help
@@ -1523,7 +1553,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os object-lifecycle-policy put --help
@@ -1583,7 +1614,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os preauth-request --help
@@ -1602,7 +1634,8 @@ Usage: oci os preauth-request [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a pre-authenticated request specific...
@@ -1720,7 +1753,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os preauth-request delete --help
@@ -1752,7 +1786,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os preauth-request get --help
@@ -1782,7 +1817,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os preauth-request list --help
@@ -1818,7 +1854,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os work-request --help
@@ -1827,7 +1864,8 @@ Usage: oci os work-request [OPTIONS] COMMAND [ARGS]...
   A description of workRequest status
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   cancel  Cancel a work request.
@@ -1850,7 +1888,8 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os work-request get --help
@@ -1867,7 +1906,8 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os work-request list --help
@@ -1892,14 +1932,16 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os work-request-error --help
 Usage: oci os work-request-error [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Lists the errors of the work request with the...
@@ -1926,14 +1968,16 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os work-request-log-entry --help
 Usage: oci os work-request-log-entry [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Lists the logs of the work request with the...
@@ -1960,5 +2004,6 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 

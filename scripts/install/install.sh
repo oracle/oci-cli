@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 #
 # Bash script to install the Oracle Cloud Infrastructure CLI
 # Example invocation: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
@@ -104,9 +104,9 @@ if [ "$need_to_install_python" = true ]; then
             echo "ERROR: Required native dependencies were not installed, exiting install script. If you did not recieve a prompt to install native dependencies please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
             exit 1
         fi
-        curl --tlsv1.2 -O https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
-        tar -xvzf Python-3.6.0.tgz
-        cd Python-3.6.0
+        curl --tlsv1.2 -O https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
+        tar -xvzf Python-3.6.5.tgz
+        cd Python-3.6.5
         python_exe=/usr/local/bin/python3.6
         if [ -n "$PYTHON_INSTALL_LOCATION" ]; then
             configure_args="prefix=$PYTHON_INSTALL_LOCATION"
@@ -140,4 +140,5 @@ if [ "$ACCEPT_ALL_DEFAULTS" = true ]; then
     install_args="--accept-all-defaults"
 fi
 
+echo "$python_exe $install_script $install_args < $_TTY"
 $python_exe $install_script $install_args < $_TTY

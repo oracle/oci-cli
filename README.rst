@@ -93,7 +93,7 @@ __ https://github.com/oracle/oci-cli
 
 License
 =======
-Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 This SDK and sample is dual licensed under the Universal Permissive License 1.0 and the Apache License 2.0.
 

@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -149,6 +149,7 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
 
     if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -205,6 +206,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouse'})
 @cli_util.wrap_exceptions
 def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, data_storage_size_in_tbs, admin_password, display_name, license_model, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -262,6 +264,7 @@ def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDataWarehouseBackup'})
 @cli_util.wrap_exceptions
 def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, autonomous_data_warehouse_id):
+
     kwargs = {}
 
     details = {}
@@ -315,6 +318,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
 def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_name, cpu_core_count, data_storage_size_in_tbs, admin_password, display_name, license_model, freeform_tags, defined_tags):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -373,6 +377,7 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseBackup'})
 @cli_util.wrap_exceptions
 def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, autonomous_database_id):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -416,6 +421,7 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Backup'})
 @cli_util.wrap_exceptions
 def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, display_name):
+
     kwargs = {}
 
     details = {}
@@ -486,6 +492,7 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -564,6 +571,7 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -650,6 +658,7 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -700,6 +709,7 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
 def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, source):
+
     kwargs = {}
 
     details = {}
@@ -748,6 +758,7 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
 def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name):
+
     kwargs = {}
 
     details = {}
@@ -797,6 +808,7 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
 def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, db_version, database, display_name):
+
     kwargs = {}
 
     details = {}
@@ -854,6 +866,7 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExternalBackupJob'})
 @cli_util.wrap_exceptions
 def create_external_backup_job(ctx, from_json, availability_domain, compartment_id, display_name, db_version, db_name, external_database_identifier, character_set, ncharacter_set, database_mode, database_edition, db_unique_name, pdb_name):
+
     kwargs = {}
 
     details = {}
@@ -908,6 +921,7 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -952,6 +966,7 @@ def delete_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1007,6 +1022,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1063,6 +1079,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1119,6 +1136,7 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1182,6 +1200,7 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
 
     if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1228,6 +1247,7 @@ def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_d
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -1278,6 +1298,7 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -1326,6 +1347,7 @@ def get_autonomous_data_warehouse(ctx, from_json, autonomous_data_warehouse_id):
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_autonomous_data_warehouse(
@@ -1346,6 +1368,7 @@ def get_autonomous_data_warehouse_backup(ctx, from_json, autonomous_data_warehou
 
     if isinstance(autonomous_data_warehouse_backup_id, six.string_types) and len(autonomous_data_warehouse_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_autonomous_data_warehouse_backup(
@@ -1366,6 +1389,7 @@ def get_autonomous_database(ctx, from_json, autonomous_database_id):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
@@ -1387,6 +1411,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
 
     if isinstance(autonomous_database_backup_id, six.string_types) and len(autonomous_database_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', ctx)
@@ -1408,6 +1433,7 @@ def get_backup(ctx, from_json, backup_id):
 
     if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_backup(
@@ -1432,6 +1458,7 @@ def get_data_guard_association(ctx, from_json, database_id, data_guard_associati
 
     if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_data_guard_association(
@@ -1453,6 +1480,7 @@ def get_database(ctx, from_json, database_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_database(
@@ -1473,6 +1501,7 @@ def get_db_home(ctx, from_json, db_home_id):
 
     if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_home(
@@ -1497,6 +1526,7 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
 
     if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_home_patch(
@@ -1522,6 +1552,7 @@ def get_db_home_patch_history_entry(ctx, from_json, db_home_id, patch_history_en
 
     if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_home_patch_history_entry(
@@ -1543,6 +1574,7 @@ def get_db_node(ctx, from_json, db_node_id):
 
     if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_node(
@@ -1563,6 +1595,7 @@ def get_db_system(ctx, from_json, db_system_id):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_system(
@@ -1587,6 +1620,7 @@ def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
 
     if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_system_patch(
@@ -1612,6 +1646,7 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
 
     if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_db_system_patch_history_entry(
@@ -1635,6 +1670,7 @@ def get_external_backup_job(ctx, from_json, backup_id):
 
     if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('database', ctx)
     result = client.get_external_backup_job(
@@ -1694,6 +1730,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, display_name, backup_subnet_id, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, source):
+
     kwargs = {}
 
     details = {}
@@ -1815,6 +1852,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, db_home, database_edition, display_name, backup_subnet_id, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, disk_redundancy, license_model):
+
     kwargs = {}
 
     details = {}
@@ -1943,6 +1981,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, db_home, database_edition, display_name, backup_subnet_id, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, disk_redundancy, license_model):
+
     kwargs = {}
 
     details = {}
@@ -2040,6 +2079,7 @@ def list_autonomous_data_warehouse_backups(ctx, from_json, all_pages, page_size,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if autonomous_data_warehouse_id is not None:
         kwargs['autonomous_data_warehouse_id'] = autonomous_data_warehouse_id
@@ -2101,6 +2141,7 @@ def list_autonomous_data_warehouses(ctx, from_json, all_pages, page_size, compar
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2162,6 +2203,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if autonomous_database_id is not None:
         kwargs['autonomous_database_id'] = autonomous_database_id
@@ -2224,6 +2266,7 @@ def list_autonomous_databases(ctx, from_json, all_pages, page_size, compartment_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2280,6 +2323,7 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if database_id is not None:
         kwargs['database_id'] = database_id
@@ -2330,6 +2374,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2381,6 +2426,7 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2441,6 +2487,7 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
 
     if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2490,6 +2537,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 
     if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2541,6 +2589,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2602,6 +2651,7 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2660,6 +2710,7 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2709,6 +2760,7 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2756,6 +2808,7 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2815,6 +2868,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2875,6 +2929,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -2930,6 +2985,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
 
     if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2979,6 +3035,7 @@ def restore_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_s
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3027,6 +3084,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3077,6 +3135,7 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3132,6 +3191,7 @@ def start_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_sec
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3174,6 +3234,7 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3216,6 +3277,7 @@ def stop_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seco
 
     if isinstance(autonomous_data_warehouse_id, six.string_types) and len(autonomous_data_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3258,6 +3320,7 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3308,6 +3371,7 @@ def switchover_data_guard_association(ctx, from_json, wait_for_state, max_wait_s
 
     if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3357,6 +3421,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3426,6 +3491,7 @@ def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3505,6 +3571,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3582,6 +3649,7 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         if db_backup_config or freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to db-backup-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3643,6 +3711,7 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
         if db_version:
             if not click.confirm("WARNING: Updates to db-version will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3707,6 +3776,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
         if version or ssh_public_keys or freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to version and ssh-public-keys and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

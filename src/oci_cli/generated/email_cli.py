@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -48,6 +48,7 @@ email_root_group.add_command(suppression_group)
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'Sender'})
 @cli_util.wrap_exceptions
 def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, email_address):
+
     kwargs = {}
 
     details = {}
@@ -91,6 +92,7 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'Suppression'})
 @cli_util.wrap_exceptions
 def create_suppression(ctx, from_json, compartment_id, email_address):
+
     kwargs = {}
 
     details = {}
@@ -124,6 +126,7 @@ def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('email', ctx)
     result = client.delete_sender(
@@ -173,6 +176,7 @@ def delete_suppression(ctx, from_json, suppression_id):
 
     if isinstance(suppression_id, six.string_types) and len(suppression_id.strip()) == 0:
         raise click.UsageError('Parameter --suppression-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('email', ctx)
     result = client.delete_suppression(
@@ -193,6 +197,7 @@ def get_sender(ctx, from_json, sender_id):
 
     if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('email', ctx)
     result = client.get_sender(
@@ -213,6 +218,7 @@ def get_suppression(ctx, from_json, suppression_id):
 
     if isinstance(suppression_id, six.string_types) and len(suppression_id.strip()) == 0:
         raise click.UsageError('Parameter --suppression-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('email', ctx)
     result = client.get_suppression(
@@ -241,6 +247,7 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
@@ -304,6 +311,7 @@ def list_suppressions(ctx, from_json, all_pages, page_size, compartment_id, emai
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if email_address is not None:
         kwargs['email_address'] = email_address

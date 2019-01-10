@@ -9,7 +9,8 @@ Usage: oci bv [OPTIONS] COMMAND [ARGS]...
   Block Volume Service CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   backup                          A point-in-time copy of a volume that can...
@@ -43,7 +44,8 @@ Usage: oci bv backup [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   copy    Creates a volume backup copy in specified...
@@ -92,7 +94,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv backup create --help
@@ -177,7 +180,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv backup delete --help
@@ -218,7 +222,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv backup get --help
@@ -235,7 +240,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv backup list --help
@@ -300,7 +306,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv backup update --help
@@ -386,7 +393,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume --help
@@ -404,7 +412,8 @@ Usage: oci bv boot-volume [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new boot volume in the specified...
@@ -521,7 +530,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume delete --help
@@ -565,7 +575,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume get --help
@@ -582,7 +593,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume list --help
@@ -620,7 +632,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume update --help
@@ -708,7 +721,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-backup --help
@@ -725,7 +739,8 @@ Usage: oci bv boot-volume-backup [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new boot volume backup of the...
@@ -817,7 +832,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-backup delete --help
@@ -858,7 +874,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-backup get --help
@@ -875,7 +892,8 @@ Options:
                                 the command line. If an option exists in both
                                 the JSON document and the command line then the
                                 command line specified value will be used
-  -?, -h, --help                Show this message and exit.
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-backup list --help
@@ -937,7 +955,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-backup update --help
@@ -1023,7 +1042,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-kms-key --help
@@ -1032,7 +1052,8 @@ Usage: oci bv boot-volume-kms-key [OPTIONS] COMMAND [ARGS]...
   Kms key id associated with this volume.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Remove kms for the specific boot volume.
@@ -1062,7 +1083,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-kms-key get --help
@@ -1085,7 +1107,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-kms-key update --help
@@ -1117,7 +1140,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume --help
@@ -1136,7 +1160,8 @@ Usage: oci bv volume [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new volume in the specified...
@@ -1259,7 +1284,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume delete --help
@@ -1303,7 +1329,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume get --help
@@ -1319,7 +1346,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume list --help
@@ -1384,7 +1412,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume update --help
@@ -1472,7 +1501,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy --help
@@ -1486,7 +1516,8 @@ Usage: oci bv volume-backup-policy [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets information for the specified volume...
@@ -1506,7 +1537,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy list --help
@@ -1537,7 +1569,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy-assignment --help
@@ -1547,7 +1580,8 @@ Usage: oci bv volume-backup-policy-assignment [OPTIONS] COMMAND [ARGS]...
   such as a volume.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create                          Assigns a policy to the specified asset,
@@ -1578,7 +1612,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy-assignment delete --help
@@ -1606,7 +1641,8 @@ Options:
                                the command line. If an option exists in both the
                                JSON document and the command line then the
                                command line specified value will be used
-  -?, -h, --help               Show this message and exit.
+  -?, -h, --help               For detailed help on any of these individual
+                               commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy-assignment get --help
@@ -1624,7 +1660,8 @@ Options:
                                the command line. If an option exists in both the
                                JSON document and the command line then the
                                command line specified value will be used
-  -?, -h, --help               Show this message and exit.
+  -?, -h, --help               For detailed help on any of these individual
+                               commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy-assignment get-volume-backup-policy-asset-assignment --help
@@ -1651,7 +1688,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group --help
@@ -1664,7 +1702,8 @@ Usage: oci bv volume-group [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new volume group in the specified...
@@ -1778,7 +1817,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group delete --help
@@ -1821,7 +1861,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group get --help
@@ -1840,7 +1881,8 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group list --help
@@ -1905,7 +1947,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group update --help
@@ -2008,7 +2051,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group-backup --help
@@ -2027,7 +2071,8 @@ Usage: oci bv volume-group-backup [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new backup volume group of the...
@@ -2118,7 +2163,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group-backup delete --help
@@ -2161,7 +2207,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group-backup get --help
@@ -2181,7 +2228,8 @@ Options:
                                  exists in both the JSON document and the
                                  command line then the command line specified
                                  value will be used
-  -?, -h, --help                 Show this message and exit.
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group-backup list --help
@@ -2239,7 +2287,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-group-backup update --help
@@ -2325,7 +2374,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-kms-key --help
@@ -2334,7 +2384,8 @@ Usage: oci bv volume-kms-key [OPTIONS] COMMAND [ARGS]...
   Kms key id associated with this volume.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Remove kms for the specific volume.
@@ -2363,7 +2414,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-kms-key get --help
@@ -2385,7 +2437,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-kms-key update --help
@@ -2416,5 +2469,6 @@ Options:
                      If an option exists in both the JSON document and the
                      command line then the command line specified value will be
                      used
-  -?, -h, --help     Show this message and exit.
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 

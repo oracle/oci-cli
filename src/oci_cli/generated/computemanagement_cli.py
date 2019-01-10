@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -63,6 +63,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-details': {'module': 'core', 'class': 'InstanceConfigurationInstanceDetails'}}, output_type={'module': 'core', 'class': 'InstanceConfiguration'})
 @cli_util.wrap_exceptions
 def create_instance_configuration(ctx, from_json, compartment_id, instance_details, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -107,6 +108,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
 def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -161,6 +163,7 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -183,6 +186,7 @@ def get_instance_configuration(ctx, from_json, instance_configuration_id):
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute_management', ctx)
     result = client.get_instance_configuration(
@@ -203,6 +207,7 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute_management', ctx)
     result = client.get_instance_pool(
@@ -224,6 +229,7 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -256,6 +262,7 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
 
     if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -301,6 +308,7 @@ def list_instance_configurations(ctx, from_json, all_pages, page_size, compartme
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -362,6 +370,7 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
@@ -425,6 +434,7 @@ def list_instance_pools(ctx, from_json, all_pages, page_size, compartment_id, di
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
@@ -479,6 +489,7 @@ def reset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -521,6 +532,7 @@ def softreset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -563,6 +575,7 @@ def start_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -605,6 +618,7 @@ def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -648,6 +662,7 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -713,6 +728,7 @@ def update_instance_configuration(ctx, from_json, force, instance_configuration_
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -769,6 +785,7 @@ def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds
         if defined_tags or freeform_tags or placement_configurations:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

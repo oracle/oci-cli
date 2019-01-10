@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -55,6 +55,7 @@ The top level --endpoint parameter must be supplied for this operation.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'associated-data': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'DecryptedData'})
 @cli_util.wrap_exceptions
 def decrypt(ctx, from_json, ciphertext, key_id, associated_data):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -85,6 +86,7 @@ The top level --endpoint parameter must be supplied for this operation.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'associated-data': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'EncryptedData'})
 @cli_util.wrap_exceptions
 def encrypt(ctx, from_json, key_id, plaintext, associated_data):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -116,6 +118,7 @@ The top level --endpoint parameter must be supplied for this operation.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'associated-data': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}}, output_type={'module': 'key_management', 'class': 'GeneratedKey'})
 @cli_util.wrap_exceptions
 def generate_data_encryption_key(ctx, from_json, include_plaintext_key, key_id, key_shape, associated_data):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 

@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import sys
 from oci.config import DEFAULT_LOCATION, DEFAULT_PROFILE
@@ -221,7 +221,7 @@ This JSON document can be saved to a file, modified with the appropriate option 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.""")
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
-@click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.')
+@click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
 def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, generate_full_command_json_input, generate_param_json_input, no_retry, debug, help):
     if ctx.command_path == 'bmcs':

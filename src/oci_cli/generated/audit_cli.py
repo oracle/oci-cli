@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -44,6 +44,7 @@ audit_root_group.add_command(configuration_group)
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'audit', 'class': 'Configuration'})
 @cli_util.wrap_exceptions
 def get_configuration(ctx, from_json, compartment_id):
+
     kwargs = {}
     client = cli_util.build_client('audit', ctx)
     result = client.get_configuration(
@@ -101,6 +102,7 @@ def list_events(ctx, from_json, all_pages, compartment_id, start_time, end_time,
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def update_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, retention_period_days):
+
     kwargs = {}
 
     details = {}

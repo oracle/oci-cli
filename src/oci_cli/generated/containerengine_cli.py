@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -86,6 +86,7 @@ ce_root_group.add_command(cluster_options_group)
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'options': {'module': 'container_engine', 'class': 'ClusterCreateOptions'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, vcn_id, kubernetes_version, options):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -136,6 +137,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -200,6 +202,7 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_image_name, node_shape, subnet_ids, initial_node_labels, ssh_public_key, quantity_per_subnet):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -261,6 +264,7 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -305,6 +309,7 @@ def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -346,6 +351,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -369,6 +375,7 @@ def get_cluster(ctx, from_json, cluster_id):
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -390,6 +397,7 @@ def get_cluster_options(ctx, from_json, cluster_option_id):
 
     if isinstance(cluster_option_id, six.string_types) and len(cluster_option_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-option-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -411,6 +419,7 @@ def get_node_pool(ctx, from_json, node_pool_id):
 
     if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -432,6 +441,7 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id):
 
     if isinstance(node_pool_option_id, six.string_types) and len(node_pool_option_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-option-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -453,6 +463,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -482,6 +493,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if lifecycle_state is not None and len(lifecycle_state) > 0:
         kwargs['lifecycle_state'] = lifecycle_state
@@ -541,6 +553,7 @@ def list_node_pools(ctx, from_json, all_pages, page_size, compartment_id, cluste
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if cluster_id is not None:
         kwargs['cluster_id'] = cluster_id
@@ -593,6 +606,7 @@ def list_work_request_errors(ctx, from_json, compartment_id, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -616,6 +630,7 @@ def list_work_request_logs(ctx, from_json, compartment_id, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
@@ -648,6 +663,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, clu
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if cluster_id is not None:
         kwargs['cluster_id'] = cluster_id
@@ -709,6 +725,7 @@ def update_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -774,6 +791,7 @@ def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
         if initial_node_labels or subnet_ids:
             if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

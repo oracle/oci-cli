@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import arrow
 import click
@@ -824,7 +824,7 @@ def test_preauthenticated_requests(vcr_fixture, runner, config_file, config_prof
     preauthenticated_request_name_2 = util.random_name('cli_preauth_request_2')
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
 
-    target_year = arrow.now().year + 1
+    target_year = 2100
     target_date_for_epoch_timestamp = arrow.now().replace(year=target_year)
 
     expiry_time_input_and_expected = [

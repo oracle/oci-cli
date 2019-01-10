@@ -9,7 +9,8 @@ Usage: oci setup [OPTIONS] COMMAND [ARGS]...
   Setup commands for CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   autocomplete             Interactive script to set up tab completion...
@@ -25,7 +26,8 @@ Usage: oci setup autocomplete [OPTIONS]
   Interactive script to set up tab completion for commands and parameters.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci setup config --help
@@ -34,7 +36,8 @@ Usage: oci setup config [OPTIONS]
   Interactive script to generate oci config file.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci setup keys --help
@@ -55,7 +58,8 @@ Options:
                               read from stdin).
   --overwrite                 An option to overwrite existing files without a
                               confirmation prompt.
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci setup oci-cli-rc --help
@@ -71,7 +75,8 @@ Usage: oci setup oci-cli-rc [OPTIONS]
 Options:
   --file FILENAME  The file into which default aliases and predefined queries
                    will be loaded [default: ~/.oci/oci_cli_rc]
-  -?, -h, --help   Show this message and exit.
+  -?, -h, --help   For detailed help on any of these individual commands, enter
+                   <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci setup repair-file-permissions --help
@@ -85,5 +90,6 @@ Usage: oci setup repair-file-permissions [OPTIONS]
 
 Options:
   --file TEXT     The file to repair permissions on. [required]
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 

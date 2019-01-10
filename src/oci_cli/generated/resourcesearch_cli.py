@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -47,6 +47,7 @@ def get_resource_type(ctx, from_json, name):
 
     if isinstance(name, six.string_types) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('resource_search', ctx)
@@ -71,6 +72,7 @@ def list_resource_types(ctx, from_json, all_pages, page_size, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -111,6 +113,7 @@ def list_resource_types(ctx, from_json, all_pages, page_size, limit, page):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_search', 'class': 'ResourceSummaryCollection'})
 @cli_util.wrap_exceptions
 def search_resources(ctx, from_json, type, matching_context_type, limit, page):
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -143,6 +146,7 @@ def search_resources(ctx, from_json, type, matching_context_type, limit, page):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_search', 'class': 'ResourceSummaryCollection'})
 @cli_util.wrap_exceptions
 def search_resources_structured_search_details(ctx, from_json, query, matching_context_type, limit, page):
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -177,6 +181,7 @@ def search_resources_structured_search_details(ctx, from_json, query, matching_c
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_search', 'class': 'ResourceSummaryCollection'})
 @cli_util.wrap_exceptions
 def search_resources_free_text_search_details(ctx, from_json, text, matching_context_type, limit, page):
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit

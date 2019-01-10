@@ -11,7 +11,8 @@ Usage: oci dns [OPTIONS] COMMAND [ARGS]...
   Service](/iaas/Content/DNS/Concepts/dnszonemanagement.htm).
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   record  A DNS record.
@@ -24,7 +25,8 @@ Usage: oci dns record [OPTIONS] COMMAND [ARGS]...
   A DNS record.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   domain  A collection of DNS records for the same...
@@ -38,7 +40,8 @@ Usage: oci dns record domain [OPTIONS] COMMAND [ARGS]...
   A collection of DNS records for the same domain.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Deletes all records at the specified zone and...
@@ -82,7 +85,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record domain get --help
@@ -133,7 +137,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record domain patch --help
@@ -187,7 +192,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record domain update --help
@@ -245,7 +251,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record rrset --help
@@ -255,7 +262,8 @@ Usage: oci dns record rrset [OPTIONS] COMMAND [ARGS]...
   information about record types, see [Resource Record (RR) TYPEs].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Deletes all records in the specified RRSet.
@@ -301,7 +309,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record rrset get --help
@@ -348,7 +357,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record rrset patch --help
@@ -402,7 +412,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record rrset update --help
@@ -458,7 +469,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record zone --help
@@ -467,7 +479,8 @@ Usage: oci dns record zone [OPTIONS] COMMAND [ARGS]...
   A collection of DNS records for the same zone.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get     Gets all records in the specified zone.
@@ -530,7 +543,8 @@ Options:
                                 the command line. If an option exists in both
                                 the JSON document and the command line then the
                                 command line specified value will be used
-  -?, -h, --help                Show this message and exit.
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record zone patch --help
@@ -583,7 +597,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record zone update --help
@@ -639,7 +654,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns zone --help
@@ -651,7 +667,8 @@ Usage: oci dns zone [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new zone in the specified...
@@ -753,7 +770,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns zone delete --help
@@ -807,7 +825,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns zone get --help
@@ -839,7 +858,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns zone list --help
@@ -1034,7 +1054,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns zone update --help
@@ -1145,5 +1166,6 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 

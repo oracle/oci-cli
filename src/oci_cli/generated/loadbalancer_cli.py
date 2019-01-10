@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -14,7 +14,9 @@ from .. import custom_types  # noqa: F401
 from ..aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('lb_root_group.command_name', 'lb'), cls=CommandGroupWithAlias, help=cli_util.override('lb_root_group.help', """API for the Load Balancing Service"""), short_help=cli_util.override('lb_root_group.short_help', """Load Balancing Service API"""))
+@cli.command(cli_util.override('lb_root_group.command_name', 'lb'), cls=CommandGroupWithAlias, help=cli_util.override('lb_root_group.help', """API for the Load Balancing service. Use this API to manage load balancers, backend sets, and related items. For more
+information, see [Overview of Load Balancing](/iaas/Content/Balance/Concepts/balanceoverview.htm).
+"""), short_help=cli_util.override('lb_root_group.short_help', """Load Balancing API"""))
 @cli_util.help_option_group
 def lb_root_group():
     pass
@@ -38,7 +40,9 @@ def load_balancer_shape_group():
     pass
 
 
-@click.command(cli_util.override('certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""The configuration details of a certificate bundle. For more information on SSL certficate configuration, see [Managing SSL Certificates].""")
+@click.command(cli_util.override('certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""The configuration details of a certificate bundle. For more information on SSL certficate configuration, see [Managing SSL Certificates].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def certificate_group():
     pass
@@ -70,7 +74,9 @@ def health_checker_group():
     pass
 
 
-@click.command(cli_util.override('path_route_set_group.command_name', 'path-route-set'), cls=CommandGroupWithAlias, help="""A named set of path route rules. For more information, see [Managing Request Routing].""")
+@click.command(cli_util.override('path_route_set_group.command_name', 'path-route-set'), cls=CommandGroupWithAlias, help="""A named set of path route rules. For more information, see [Managing Request Routing].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def path_route_set_group():
     pass
@@ -90,7 +96,9 @@ def load_balancer_health_group():
     pass
 
 
-@click.command(cli_util.override('hostname_group.command_name', 'hostname'), cls=CommandGroupWithAlias, help="""A hostname resource associated with a load balancer for use by one or more listeners.""")
+@click.command(cli_util.override('hostname_group.command_name', 'hostname'), cls=CommandGroupWithAlias, help="""A hostname resource associated with a load balancer for use by one or more listeners.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def hostname_group():
     pass
@@ -108,7 +116,15 @@ def backend_health_group():
     pass
 
 
-@click.command(cli_util.override('backend_set_group.command_name', 'backend-set'), cls=CommandGroupWithAlias, help="""The configuration of a load balancer backend set. For more information on backend set configuration, see [Managing Backend Sets].""")
+@click.command(cli_util.override('rule_set_group.command_name', 'rule-set'), cls=CommandGroupWithAlias, help="""A named set of rules associated with a load balancer. Rules are objects that represent actions to apply to a listener, such as adding, altering, or removing HTTP headers.""")
+@cli_util.help_option_group
+def rule_set_group():
+    pass
+
+
+@click.command(cli_util.override('backend_set_group.command_name', 'backend-set'), cls=CommandGroupWithAlias, help="""The configuration of a load balancer backend set. For more information on backend set configuration, see [Managing Backend Sets].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def backend_set_group():
     pass
@@ -133,6 +149,7 @@ lb_root_group.add_command(load_balancer_health_group)
 lb_root_group.add_command(hostname_group)
 lb_root_group.add_command(load_balancer_policy_group)
 lb_root_group.add_command(backend_health_group)
+lb_root_group.add_command(rule_set_group)
 lb_root_group.add_command(backend_set_group)
 lb_root_group.add_command(backend_group)
 
@@ -148,6 +165,9 @@ Example: `8080`""")
 @cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to add the backend server to.
 
 Example: `example_backend_set`""")
+@cli_util.option('--weight', type=click.INT, help="""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
+
+Example: `3`""")
 @cli_util.option('--backup', type=click.BOOL, help="""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
 Example: `false`""")
@@ -157,9 +177,6 @@ Example: `false`""")
 @cli_util.option('--offline', type=click.BOOL, help="""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
 
 Example: `false`""")
-@cli_util.option('--weight', type=click.INT, help="""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
-
-Example: `3`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -168,19 +185,23 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, backup, drain, offline, weight):
+def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, weight, backup, drain, offline):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['ipAddress'] = ip_address
     details['port'] = port
+
+    if weight is not None:
+        details['weight'] = weight
 
     if backup is not None:
         details['backup'] = backup
@@ -190,9 +211,6 @@ def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if offline is not None:
         details['offline'] = offline
-
-    if weight is not None:
-        details['weight'] = weight
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_backend(
@@ -221,7 +239,6 @@ def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @backend_set_group.command(name=cli_util.override('create_backend_set.command_name', 'create'), help="""Adds a backend set to a load balancer.""")
-@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--name', required=True, help="""A friendly name for the backend set. It must be unique and it cannot be changed.
 
 Valid backend set names include only alphanumeric characters, dashes, and underscores. Backend set names cannot contain spaces. Avoid entering confidential information.
@@ -230,40 +247,42 @@ Example: `example_backend_set`""")
 @cli_util.option('--policy', required=True, help="""The load balancer policy for the backend set. To get a list of available policies, use the [ListPolicies] operation.
 
 Example: `LEAST_CONNECTIONS`""")
+@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer on which to add a backend set.""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, health_checker, name, policy, load_balancer_id, backends, session_persistence_configuration, ssl_configuration):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, ssl_configuration, session_persistence_configuration):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
-    details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
     details['name'] = name
     details['policy'] = policy
+    details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
 
     if backends is not None:
         details['backends'] = cli_util.parse_json_parameter("backends", backends)
 
-    if session_persistence_configuration is not None:
-        details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
-
     if ssl_configuration is not None:
         details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+
+    if session_persistence_configuration is not None:
+        details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_backend_set(
@@ -295,11 +314,6 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 Example: `example_certificate_bundle`""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer on which to add the certificate bundle.""")
-@cli_util.option('--ca-certificate', help="""The Certificate Authority certificate, or any interim certificate, that you received from your SSL certificate provider.
-
-Example:
-
-    -----BEGIN CERTIFICATE-----     MIIEczCCA1ugAwIBAgIBADANBgkqhkiG9w0BAQQFAD..AkGA1UEBhMCR0Ix     EzARBgNVBAgTClNvbWUtU3RhdGUxFDASBgNVBAoTC0..0EgTHRkMTcwNQYD     VQQLEy5DbGFzcyAxIFB1YmxpYyBQcmltYXJ5IENlcn..XRpb24gQXV0aG9y     aXR5MRQwEgYDVQQDEwtCZXN0IENBIEx0ZDAeFw0wMD..TUwMTZaFw0wMTAy     ...     -----END CERTIFICATE-----""")
 @cli_util.option('--passphrase', help="""A passphrase for encrypted private keys. This is needed only if you created your certificate with a passphrase.""")
 @cli_util.option('--private-key', help="""The SSL private key for your certificate, in PEM format.
 
@@ -311,6 +325,11 @@ Example:
 Example:
 
     -----BEGIN CERTIFICATE-----     MIIC2jCCAkMCAg38MA0GCSqGSIb3DQEBBQUAMIGbM..QswCQYDVQQGEwJKU     A1UECBMFVG9reW8xEDAOBgNVBAcTB0NodW8ta3UxE..TAPBgNVBAoTCEZyY     MRgwFgYDVQQLEw9XZWJDZXJ0IFN1cHBvcnQxGDAWB..gNVBAMTD0ZyYW5rN     YiBDQTEjMCEGCSqGSIb3DQEJARYUc3VwcG9ydEBmc..mFuazRkZC5jb20wH     ...     -----END CERTIFICATE-----""")
+@cli_util.option('--ca-certificate', help="""The Certificate Authority certificate, or any interim certificate, that you received from your SSL certificate provider.
+
+Example:
+
+    -----BEGIN CERTIFICATE-----     MIIEczCCA1ugAwIBAgIBADANBgkqhkiG9w0BAQQFAD..AkGA1UEBhMCR0Ix     EzARBgNVBAgTClNvbWUtU3RhdGUxFDASBgNVBAoTC0..0EgTHRkMTcwNQYD     VQQLEy5DbGFzcyAxIFB1YmxpYyBQcmltYXJ5IENlcn..XRpb24gQXV0aG9y     aXR5MRQwEgYDVQQDEwtCZXN0IENBIEx0ZDAeFw0wMD..TUwMTZaFw0wMTAy     ...     -----END CERTIFICATE-----""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -319,18 +338,16 @@ Example:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_name, load_balancer_id, ca_certificate, passphrase, private_key, public_certificate):
+def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_name, load_balancer_id, passphrase, private_key, public_certificate, ca_certificate):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['certificateName'] = certificate_name
-
-    if ca_certificate is not None:
-        details['caCertificate'] = ca_certificate
 
     if passphrase is not None:
         details['passphrase'] = passphrase
@@ -340,6 +357,9 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if public_certificate is not None:
         details['publicCertificate'] = public_certificate
+
+    if ca_certificate is not None:
+        details['caCertificate'] = ca_certificate
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_certificate(
@@ -367,12 +387,12 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @hostname_group.command(name=cli_util.override('create_hostname.command_name', 'create'), help="""Adds a hostname resource to the specified load balancer. For more information, see [Managing Request Routing].""")
-@cli_util.option('--hostname', required=True, help="""A virtual hostname. For more information about virtual hostname string construction, see [Managing Request Routing].
-
-Example: `app.example.com`""")
 @cli_util.option('--name', required=True, help="""A friendly name for the hostname resource. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_hostname_001`""")
+@cli_util.option('--hostname', required=True, help="""A virtual hostname. For more information about virtual hostname string construction, see [Managing Request Routing].
+
+Example: `app.example.com`""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to add the hostname to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -382,16 +402,17 @@ Example: `example_hostname_001`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hostname, name, load_balancer_id):
+def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, hostname, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
-    details['hostname'] = hostname
     details['name'] = name
+    details['hostname'] = hostname
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_hostname(
@@ -422,45 +443,46 @@ def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--default-backend-set-name', required=True, help="""The name of the associated backend set.
 
 Example: `example_backend_set`""")
-@cli_util.option('--name', required=True, help="""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
-
-Example: `example_listener`""")
 @cli_util.option('--port', required=True, type=click.INT, help="""The communication port for the listener.
 
 Example: `80`""")
 @cli_util.option('--protocol', required=True, help="""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
 
 Example: `HTTP`""")
+@cli_util.option('--name', required=True, help="""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
+
+Example: `example_listener`""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer on which to add a listener.""")
-@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--path-route-set-name', help="""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
 
 Example: `example_path_route_set`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help="""The names of the [rule sets] to apply to the listener.
+
+Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, name, port, protocol, load_balancer_id, connection_configuration, hostname_names, path_route_set_name, ssl_configuration):
+def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, name, load_balancer_id, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, rule_set_names):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['defaultBackendSetName'] = default_backend_set_name
-    details['name'] = name
     details['port'] = port
     details['protocol'] = protocol
-
-    if connection_configuration is not None:
-        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
+    details['name'] = name
 
     if hostname_names is not None:
         details['hostnameNames'] = cli_util.parse_json_parameter("hostname_names", hostname_names)
@@ -470,6 +492,12 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if ssl_configuration is not None:
         details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+
+    if connection_configuration is not None:
+        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
+
+    if rule_set_names is not None:
+        details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_listener(
@@ -517,45 +545,49 @@ Example: `example_load_balancer`""")
 
 Example: `100Mbps`""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of subnet [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-private', type=click.BOOL, help="""Whether the load balancer has a VCN-local (private) IP address.
+
+If \"true\", the service assigns a private IP address to the load balancer.
+
+If \"false\", the service assigns a public IP address to the load balancer.
+
+A public load balancer is accessible from the internet, depending on your VCN's [security list rules]. For more information about public and private load balancers, see [How Load Balancing Works].
+
+Example: `true`""")
+@cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help="""
+
+This option is a JSON dictionary of type dict(str, ListenerDetails).  For documentation on ListenerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/ListenerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostnames', type=custom_types.CLI_COMPLEX_TYPE, help="""
+
+This option is a JSON dictionary of type dict(str, HostnameDetails).  For documentation on HostnameDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/HostnameDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backend-sets', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON dictionary of type dict(str, BackendSetDetails).  For documentation on BackendSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON dictionary of type dict(str, CertificateDetails).  For documentation on CertificateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/CertificateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
-
-Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostnames', type=custom_types.CLI_COMPLEX_TYPE, help="""
-
-This option is a JSON dictionary of type dict(str, HostnameDetails).  For documentation on HostnameDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/HostnameDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-private', type=click.BOOL, help="""Whether the load balancer has a VCN-local (private) IP address.
-
-If \"true\", the service assigns a private IP address to the load balancer. The load balancer requires only one subnet to host both the primary and secondary load balancers. The private IP address is local to the subnet. The load balancer is accessible only from within the VCN that contains the associated subnet, or as further restricted by your security list rules. The load balancer can route traffic to any backend server that is reachable from the VCN.
-
-For a private load balancer, both the primary and secondary load balancer hosts are within the same Availability Domain.
-
-If \"false\", the service assigns a public IP address to the load balancer. A load balancer with a public IP address requires two subnets, each in a different Availability Domain. One subnet hosts the primary load balancer and the other hosts the secondary (standby) load balancer. A public load balancer is accessible from the internet, depending on your VCN's [security list rules].
-
-Example: `true`""")
-@cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help="""
-
-This option is a JSON dictionary of type dict(str, ListenerDetails).  For documentation on ListenerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/ListenerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--path-route-sets', type=custom_types.CLI_COMPLEX_TYPE, help="""
 
 This option is a JSON dictionary of type dict(str, PathRouteSetDetails).  For documentation on PathRouteSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/PathRouteSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-sets', type=custom_types.CLI_COMPLEX_TYPE, help="""
+
+This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documentation on RuleSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/RuleSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, backend_sets, certificates, defined_tags, freeform_tags, hostnames, is_private, listeners, path_route_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, is_private, listeners, hostnames, backend_sets, certificates, path_route_sets, freeform_tags, defined_tags, rule_sets):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -565,29 +597,32 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     details['shapeName'] = shape_name
     details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
 
-    if backend_sets is not None:
-        details['backendSets'] = cli_util.parse_json_parameter("backend_sets", backend_sets)
-
-    if certificates is not None:
-        details['certificates'] = cli_util.parse_json_parameter("certificates", certificates)
-
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if hostnames is not None:
-        details['hostnames'] = cli_util.parse_json_parameter("hostnames", hostnames)
-
     if is_private is not None:
         details['isPrivate'] = is_private
 
     if listeners is not None:
         details['listeners'] = cli_util.parse_json_parameter("listeners", listeners)
 
+    if hostnames is not None:
+        details['hostnames'] = cli_util.parse_json_parameter("hostnames", hostnames)
+
+    if backend_sets is not None:
+        details['backendSets'] = cli_util.parse_json_parameter("backend_sets", backend_sets)
+
+    if certificates is not None:
+        details['certificates'] = cli_util.parse_json_parameter("certificates", certificates)
+
     if path_route_sets is not None:
         details['pathRouteSets'] = cli_util.parse_json_parameter("path_route_sets", path_route_sets)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if rule_sets is not None:
+        details['ruleSets'] = cli_util.parse_json_parameter("rule_sets", rule_sets)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_load_balancer(
@@ -633,6 +668,7 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -644,6 +680,57 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     result = client.create_path_route_set(
         load_balancer_id=load_balancer_id,
         create_path_route_set_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@rule_set_group.command(name=cli_util.override('create_rule_set.command_name', 'create'), help="""Creates a new rule set associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
+@cli_util.option('--name', required=True, help="""The name for this set of rules. It must be unique and it cannot be changed. Avoid entering confidential information.
+
+Example: `example_rule_set`""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'load_balancer', 'class': 'list[Rule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'load_balancer', 'class': 'list[Rule]'}})
+@cli_util.wrap_exceptions
+def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, items):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['name'] = name
+    details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.create_rule_set(
+        load_balancer_id=load_balancer_id,
+        create_rule_set_details=details,
         **kwargs
     )
     if wait_for_state:
@@ -692,6 +779,7 @@ def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -743,6 +831,7 @@ def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -791,6 +880,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(certificate_name, six.string_types) and len(certificate_name.strip()) == 0:
         raise click.UsageError('Parameter --certificate-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -839,6 +929,7 @@ def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if isinstance(name, six.string_types) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -887,6 +978,7 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -929,6 +1021,7 @@ def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -978,12 +1071,64 @@ def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if isinstance(path_route_set_name, six.string_types) and len(path_route_set_name.strip()) == 0:
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
     result = client.delete_path_route_set(
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@rule_set_group.command(name=cli_util.override('delete_rule_set.command_name', 'delete'), help="""Deletes a rule set from the specified load balancer.
+
+To delete a rule from a rule set, use the [UpdateRuleSet] operation.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
+@cli_util.option('--rule-set-name', required=True, help="""The name of the rule set to delete.
+
+Example: `example_rule_set`""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(rule_set_name, six.string_types) and len(rule_set_name.strip()) == 0:
+        raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.delete_rule_set(
+        load_balancer_id=load_balancer_id,
+        rule_set_name=rule_set_name,
         **kwargs
     )
     if wait_for_state:
@@ -1028,6 +1173,7 @@ def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name
 
     if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1063,6 +1209,7 @@ def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backe
 
     if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1092,6 +1239,7 @@ def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name):
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1120,6 +1268,7 @@ def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name):
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1148,6 +1297,7 @@ def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name):
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1176,6 +1326,7 @@ def get_hostname(ctx, from_json, load_balancer_id, name):
 
     if isinstance(name, six.string_types) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1198,6 +1349,7 @@ def get_load_balancer(ctx, from_json, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1219,6 +1371,7 @@ def get_load_balancer_health(ctx, from_json, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1246,12 +1399,42 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
 
     if isinstance(path_route_set_name, six.string_types) and len(path_route_set_name.strip()) == 0:
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
     result = client.get_path_route_set(
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_set_group.command(name=cli_util.override('get_rule_set.command_name', 'get'), help="""Gets the specified set of rules.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
+@cli_util.option('--rule-set-name', required=True, help="""The name of the rule set to retrieve.
+
+Example: `example_rule_set`""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'RuleSet'})
+@cli_util.wrap_exceptions
+def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(rule_set_name, six.string_types) and len(rule_set_name.strip()) == 0:
+        raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.get_rule_set(
+        load_balancer_id=load_balancer_id,
+        rule_set_name=rule_set_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1268,6 +1451,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1289,6 +1473,7 @@ def list_backend_sets(ctx, from_json, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1316,6 +1501,7 @@ def list_backends(ctx, from_json, load_balancer_id, backend_set_name):
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1338,6 +1524,7 @@ def list_certificates(ctx, from_json, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1359,6 +1546,7 @@ def list_hostnames(ctx, from_json, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1371,10 +1559,10 @@ def list_hostnames(ctx, from_json, load_balancer_id):
 
 @load_balancer_health_group.command(name=cli_util.override('list_load_balancer_healths.command_name', 'list'), help="""Lists the summary health statuses for all load balancers in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancers to return health status information for.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1388,6 +1576,7 @@ def list_load_balancer_healths(ctx, from_json, all_pages, page_size, compartment
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1422,10 +1611,10 @@ def list_load_balancer_healths(ctx, from_json, all_pages, page_size, compartment
 
 @load_balancer_group.command(name=cli_util.override('list_load_balancers.command_name', 'list'), help="""Lists all load balancers in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancers to list.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--detail', help="""The level of detail to return for each result. Can be `full` or `simple`.
@@ -1450,6 +1639,7 @@ def list_load_balancers(ctx, from_json, all_pages, page_size, compartment_id, li
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1503,6 +1693,7 @@ def list_path_route_sets(ctx, from_json, load_balancer_id):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('load_balancer', ctx)
@@ -1515,10 +1706,10 @@ def list_path_route_sets(ctx, from_json, load_balancer_id):
 
 @load_balancer_policy_group.command(name=cli_util.override('list_policies.command_name', 'list-policies'), help="""Lists the available load balancer policies.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancer policies to list.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1532,6 +1723,7 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, p
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1566,10 +1758,10 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, p
 
 @load_balancer_protocol_group.command(name=cli_util.override('list_protocols.command_name', 'list-protocols'), help="""Lists all supported traffic protocols.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancer protocols to list.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1583,6 +1775,7 @@ def list_protocols(ctx, from_json, all_pages, page_size, compartment_id, limit, 
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1615,12 +1808,34 @@ def list_protocols(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     cli_util.render_response(result, ctx)
 
 
+@rule_set_group.command(name=cli_util.override('list_rule_sets.command_name', 'list'), help="""Lists all rule sets associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[RuleSet]'})
+@cli_util.wrap_exceptions
+def list_rule_sets(ctx, from_json, load_balancer_id):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.list_rule_sets(
+        load_balancer_id=load_balancer_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @load_balancer_shape_group.command(name=cli_util.override('list_shapes.command_name', 'list-shapes'), help="""Lists the valid load balancer shapes.""")
 @cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancer shapes to list.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1634,6 +1849,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1668,10 +1884,10 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
 
 @work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help="""Lists the work requests for a given load balancer.""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the work requests to retrieve.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1688,6 +1904,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, load_balancer_id, l
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1721,6 +1938,9 @@ def list_work_requests(ctx, from_json, all_pages, page_size, load_balancer_id, l
 
 
 @backend_group.command(name=cli_util.override('update_backend.command_name', 'update'), help="""Updates the configuration of a backend server within the specified backend set.""")
+@cli_util.option('--weight', required=True, type=click.INT, help="""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
+
+Example: `3`""")
 @cli_util.option('--backup', required=True, type=click.BOOL, help="""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
 Example: `false`""")
@@ -1730,9 +1950,6 @@ Example: `false`""")
 @cli_util.option('--offline', required=True, type=click.BOOL, help="""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
 
 Example: `false`""")
-@cli_util.option('--weight', required=True, type=click.INT, help="""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
-
-Example: `3`""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set and server.""")
 @cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the backend server.
 
@@ -1748,7 +1965,7 @@ Example: `10.0.0.3:8080`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup, drain, offline, weight, load_balancer_id, backend_set_name, backend_name):
+def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, weight, backup, drain, offline, load_balancer_id, backend_set_name, backend_name):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1758,14 +1975,15 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+    details['weight'] = weight
     details['backup'] = backup
     details['drain'] = drain
     details['offline'] = offline
-    details['weight'] = weight
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.update_backend(
@@ -1795,27 +2013,27 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @backend_set_group.command(name=cli_util.override('update_backend_set.command_name', 'update'), help="""Updates a backend set.""")
-@cli_util.option('--backends', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy', required=True, help="""The load balancer policy for the backend set. To get a list of available policies, use the [ListPolicies] operation.
 
 Example: `LEAST_CONNECTIONS`""")
+@cli_util.option('--backends', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set.""")
 @cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to update.
 
 Example: `example_backend_set`""")
-@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, backends, health_checker, policy, load_balancer_id, backend_set_name, session_persistence_configuration, ssl_configuration):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, ssl_configuration, session_persistence_configuration):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1823,22 +2041,23 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
     if not force:
-        if backends or health_checker or session_persistence_configuration or ssl_configuration:
-            if not click.confirm("WARNING: Updates to backends and health-checker and session-persistence-configuration and ssl-configuration will replace any existing values. Are you sure you want to continue?"):
+        if backends or health_checker or ssl_configuration or session_persistence_configuration:
+            if not click.confirm("WARNING: Updates to backends and health-checker and ssl-configuration and session-persistence-configuration will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+    details['policy'] = policy
     details['backends'] = cli_util.parse_json_parameter("backends", backends)
     details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
-    details['policy'] = policy
-
-    if session_persistence_configuration is not None:
-        details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
 
     if ssl_configuration is not None:
         details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+
+    if session_persistence_configuration is not None:
+        details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.update_backend_set(
@@ -1867,27 +2086,27 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 
 @health_checker_group.command(name=cli_util.override('update_health_checker.command_name', 'update'), help="""Updates the health check policy for a given load balancer and backend set.""")
-@cli_util.option('--interval-in-millis', required=True, type=click.INT, help="""The interval between health checks, in milliseconds.
-
-Example: `10000`""")
-@cli_util.option('--port', required=True, type=click.INT, help="""The backend server port against which to run the health check.
-
-Example: `8080`""")
 @cli_util.option('--protocol', required=True, help="""The protocol the health check must use; either HTTP or TCP.
 
 Example: `HTTP`""")
-@cli_util.option('--response-body-regex', required=True, help="""A regular expression for parsing the response body from the backend server.
+@cli_util.option('--port', required=True, type=click.INT, help="""The backend server port against which to run the health check.
 
-Example: `^((?!false).|\\s)*$`""")
-@cli_util.option('--retries', required=True, type=click.INT, help="""The number of retries to attempt before a backend server is considered \"unhealthy\".
-
-Example: `3`""")
+Example: `8080`""")
 @cli_util.option('--return-code', required=True, type=click.INT, help="""The status code a healthy backend server should return.
 
 Example: `200`""")
+@cli_util.option('--retries', required=True, type=click.INT, help="""The number of retries to attempt before a backend server is considered \"unhealthy\".
+
+Example: `3`""")
 @cli_util.option('--timeout-in-millis', required=True, type=click.INT, help="""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.
 
 Example: `3000`""")
+@cli_util.option('--interval-in-millis', required=True, type=click.INT, help="""The interval between health checks, in milliseconds.
+
+Example: `10000`""")
+@cli_util.option('--response-body-regex', required=True, help="""A regular expression for parsing the response body from the backend server.
+
+Example: `^((?!false).|\\s)*$`""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the health check policy to be updated.""")
 @cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the health check policy to be retrieved.
 
@@ -1903,24 +2122,25 @@ Example: `/healthcheck`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, interval_in_millis, port, protocol, response_body_regex, retries, return_code, timeout_in_millis, load_balancer_id, backend_set_name, url_path):
+def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
-    details['intervalInMillis'] = interval_in_millis
-    details['port'] = port
     details['protocol'] = protocol
-    details['responseBodyRegex'] = response_body_regex
-    details['retries'] = retries
+    details['port'] = port
     details['returnCode'] = return_code
+    details['retries'] = retries
     details['timeoutInMillis'] = timeout_in_millis
+    details['intervalInMillis'] = interval_in_millis
+    details['responseBodyRegex'] = response_body_regex
 
     if url_path is not None:
         details['urlPath'] = url_path
@@ -1974,6 +2194,7 @@ def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if isinstance(name, six.string_types) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -2022,22 +2243,25 @@ Example: `HTTP`""")
 @cli_util.option('--listener-name', required=True, help="""The name of the listener to update.
 
 Example: `example_listener`""")
-@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--path-route-set-name', help="""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
 
 Example: `example_path_route_set`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help="""The names of the [rule sets] to apply to the listener.
+
+Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'connection-configuration': {'module': 'load_balancer', 'class': 'ConnectionConfiguration'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, connection_configuration, hostname_names, path_route_set_name, ssl_configuration):
+def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, rule_set_names):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2045,9 +2269,10 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
     if not force:
-        if connection_configuration or hostname_names or ssl_configuration:
-            if not click.confirm("WARNING: Updates to connection-configuration and hostname-names and ssl-configuration will replace any existing values. Are you sure you want to continue?"):
+        if hostname_names or ssl_configuration or connection_configuration or rule_set_names:
+            if not click.confirm("WARNING: Updates to hostname-names and ssl-configuration and connection-configuration and rule-set-names will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -2055,9 +2280,6 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     details['defaultBackendSetName'] = default_backend_set_name
     details['port'] = port
     details['protocol'] = protocol
-
-    if connection_configuration is not None:
-        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
 
     if hostname_names is not None:
         details['hostnameNames'] = cli_util.parse_json_parameter("hostname_names", hostname_names)
@@ -2067,6 +2289,12 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if ssl_configuration is not None:
         details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+
+    if connection_configuration is not None:
+        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
+
+    if rule_set_names is not None:
+        details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.update_listener(
@@ -2096,45 +2324,46 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
 @load_balancer_group.command(name=cli_util.override('update_load_balancer.command_name', 'update'), help="""Updates a load balancer's configuration.""")
 @cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to update.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
-
-Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""The user-friendly display name for the load balancer. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, defined_tags, display_name, freeform_tags):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, freeform_tags, defined_tags):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
-
-    if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
         details['displayName'] = display_name
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.update_load_balancer(
@@ -2191,6 +2420,7 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
         if path_routes:
             if not click.confirm("WARNING: Updates to path-routes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -2202,6 +2432,67 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
         update_path_route_set_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@rule_set_group.command(name=cli_util.override('update_rule_set.command_name', 'update'), help="""Overwrites an existing set of rules on the specified load balancer. Use this operation to add or alter the rules in a rule set.
+
+To add a new rule to a set, the body must include both the new rule to add and the existing rules to retain.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
+@cli_util.option('--rule-set-name', required=True, help="""The name of the rule set to update.
+
+Example: `example_rule_set`""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'load_balancer', 'class': 'list[Rule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'load_balancer', 'class': 'list[Rule]'}})
+@cli_util.wrap_exceptions
+def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name, items):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(rule_set_name, six.string_types) and len(rule_set_name.strip()) == 0:
+        raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
+    if not force:
+        if items:
+            if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.update_rule_set(
+        load_balancer_id=load_balancer_id,
+        rule_set_name=rule_set_name,
+        update_rule_set_details=details,
         **kwargs
     )
     if wait_for_state:

@@ -9,7 +9,8 @@ Usage: oci network [OPTIONS] COMMAND [ARGS]...
   Networking Service CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   cpe                             An object you create when setting up an
@@ -63,7 +64,8 @@ Usage: oci network cpe [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new virtual customer-premises...
@@ -149,7 +151,8 @@ Options:
                                 the command line. If an option exists in both
                                 the JSON document and the command line then the
                                 command line specified value will be used
-  -?, -h, --help                Show this message and exit.
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cpe delete --help
@@ -174,7 +177,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cpe get --help
@@ -190,7 +194,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cpe list --help
@@ -223,7 +228,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cpe update --help
@@ -293,7 +299,8 @@ Options:
                                 the command line. If an option exists in both
                                 the JSON document and the command line then the
                                 command line specified value will be used
-  -?, -h, --help                Show this message and exit.
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect --help
@@ -321,7 +328,8 @@ Usage: oci network cross-connect [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new cross-connect.
@@ -410,7 +418,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect delete --help
@@ -452,7 +461,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect get --help
@@ -469,7 +479,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect list --help
@@ -531,7 +542,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect update --help
@@ -582,7 +594,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-group --help
@@ -608,7 +621,8 @@ Usage: oci network cross-connect-group [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new cross-connect group to use with...
@@ -663,7 +677,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-group delete --help
@@ -706,7 +721,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-group get --help
@@ -724,7 +740,8 @@ Options:
                                  exists in both the JSON document and the
                                  command line then the command line specified
                                  value will be used
-  -?, -h, --help                 Show this message and exit.
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-group list --help
@@ -784,7 +801,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-group update --help
@@ -828,7 +846,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-location --help
@@ -837,7 +856,8 @@ Usage: oci network cross-connect-location [OPTIONS] COMMAND [ARGS]...
   An individual FastConnect location.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Lists the available FastConnect locations for...
@@ -874,7 +894,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-port-speed-shape --help
@@ -883,7 +904,8 @@ Usage: oci network cross-connect-port-speed-shape [OPTIONS] COMMAND [ARGS]...
   An individual port speed level for cross-connects.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Lists the available port speeds for...
@@ -920,7 +942,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-status --help
@@ -929,7 +952,8 @@ Usage: oci network cross-connect-status [OPTIONS] COMMAND [ARGS]...
   The status of the cross-connect.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get  Gets the status of the specified...
@@ -949,7 +973,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network dhcp-options --help
@@ -977,7 +1002,8 @@ Usage: oci network dhcp-options [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new set of DHCP options for the...
@@ -1098,7 +1124,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network dhcp-options delete --help
@@ -1144,7 +1171,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network dhcp-options get --help
@@ -1160,7 +1188,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network dhcp-options list --help
@@ -1223,7 +1252,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network dhcp-options update --help
@@ -1335,7 +1365,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg --help
@@ -1356,7 +1387,8 @@ Usage: oci network drg [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new dynamic routing gateway (DRG)...
@@ -1453,7 +1485,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg delete --help
@@ -1498,7 +1531,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg get --help
@@ -1514,7 +1548,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg list --help
@@ -1546,7 +1581,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg update --help
@@ -1632,7 +1668,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg-attachment --help
@@ -1645,7 +1682,8 @@ Usage: oci network drg-attachment [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Attaches the specified DRG to the specified...
@@ -1713,7 +1751,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg-attachment delete --help
@@ -1756,7 +1795,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg-attachment get --help
@@ -1773,7 +1813,8 @@ Options:
                             command line. If an option exists in both the JSON
                             document and the command line then the command line
                             specified value will be used
-  -?, -h, --help            Show this message and exit.
+  -?, -h, --help            For detailed help on any of these individual
+                            commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg-attachment list --help
@@ -1808,7 +1849,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network drg-attachment update --help
@@ -1855,7 +1897,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network fast-connect-provider-service --help
@@ -1865,7 +1908,8 @@ Usage: oci network fast-connect-provider-service [OPTIONS] COMMAND [ARGS]...
   [FastConnect Overview].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get                             Gets the specified provider service.
@@ -1889,7 +1933,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network fast-connect-provider-service list --help
@@ -1928,7 +1973,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network fast-connect-provider-service virtual-circuit-bandwidth-shape --help
@@ -1938,7 +1984,8 @@ Usage: oci network fast-connect-provider-service virtual-circuit-bandwidth-shape
   An individual bandwidth level for virtual circuits.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Gets the list of available virtual circuit...
@@ -1979,7 +2026,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway --help
@@ -1998,7 +2046,8 @@ Usage: oci network internet-gateway [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new internet gateway for the...
@@ -2109,7 +2158,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway delete --help
@@ -2155,7 +2205,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway get --help
@@ -2171,7 +2222,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway list --help
@@ -2233,7 +2285,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway update --help
@@ -2323,7 +2376,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection --help
@@ -2343,7 +2397,8 @@ Usage: oci network ip-sec-connection [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create      Creates a new IPSec connection between the...
@@ -2464,7 +2519,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection delete --help
@@ -2514,7 +2570,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection get --help
@@ -2532,7 +2589,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection get-config --help
@@ -2550,7 +2608,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection get-status --help
@@ -2566,7 +2625,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection list --help
@@ -2601,7 +2661,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection update --help
@@ -2687,7 +2748,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway --help
@@ -2708,7 +2770,8 @@ Usage: oci network local-peering-gateway [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   connect  Connects this local peering gateway (LPG) to...
@@ -2745,7 +2808,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway create --help
@@ -2835,7 +2899,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway delete --help
@@ -2882,7 +2947,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway get --help
@@ -2902,7 +2968,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway list --help
@@ -2936,7 +3003,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway update --help
@@ -3027,7 +3095,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network nat-gateway --help
@@ -3047,7 +3116,8 @@ Usage: oci network nat-gateway [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new NAT gateway for the specified...
@@ -3138,7 +3208,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network nat-gateway delete --help
@@ -3185,7 +3256,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network nat-gateway get --help
@@ -3202,7 +3274,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network nat-gateway list --help
@@ -3264,7 +3337,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network nat-gateway update --help
@@ -3353,7 +3427,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network private-ip --help
@@ -3388,7 +3463,8 @@ Usage: oci network private-ip [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Unassigns and deletes the specified private...
@@ -3427,7 +3503,8 @@ Options:
                         line. If an option exists in both the JSON document and
                         the command line then the command line specified value
                         will be used
-  -?, -h, --help        Show this message and exit.
+  -?, -h, --help        For detailed help on any of these individual commands,
+                        enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network private-ip get --help
@@ -3446,7 +3523,8 @@ Options:
                         line. If an option exists in both the JSON document and
                         the command line then the command line specified value
                         will be used
-  -?, -h, --help        Show this message and exit.
+  -?, -h, --help        For detailed help on any of these individual commands,
+                        enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network private-ip list --help
@@ -3491,7 +3569,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network private-ip update --help
@@ -3583,7 +3662,8 @@ Options:
                                 the command line. If an option exists in both
                                 the JSON document and the command line then the
                                 command line specified value will be used
-  -?, -h, --help                Show this message and exit.
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network public-ip --help
@@ -3602,7 +3682,8 @@ Usage: oci network public-ip [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a public IP.
@@ -3730,7 +3811,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network public-ip delete --help
@@ -3785,7 +3867,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network public-ip get --help
@@ -3805,7 +3888,8 @@ Options:
                             command line. If an option exists in both the JSON
                             document and the command line then the command line
                             specified value will be used
-  -?, -h, --help            Show this message and exit.
+  -?, -h, --help            For detailed help on any of these individual
+                            commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network public-ip list --help
@@ -3885,7 +3969,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network public-ip update --help
@@ -4016,7 +4101,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection --help
@@ -4037,7 +4123,8 @@ Usage: oci network remote-peering-connection [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   connect  Connects this RPC to another one in a...
@@ -4070,11 +4157,11 @@ Options:
                                   you want to peer with.
                                   
                                   The region names that
-                                  could be used are listed here:
-                                  https://docs.us-phoenix-1.oraclecloud.com/Cont
-                                  ent/General/Concepts/regions.htm
-                                  Example: `us-
-                                  ashburn-1` [required]
+                                  could be used are listed here: https://docs
+                                  .us-phoenix-1.oraclecloud.com/Content/General/
+                                  Concepts/regions.htm
+                                  Example: `us-ashburn-1`
+                                  [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -4083,7 +4170,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection create --help
@@ -4121,7 +4209,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection delete --help
@@ -4167,7 +4256,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection get --help
@@ -4187,7 +4277,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection list --help
@@ -4221,7 +4312,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection update --help
@@ -4265,7 +4357,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network route-table --help
@@ -4284,7 +4377,8 @@ Usage: oci network route-table [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new route table for the specified...
@@ -4408,7 +4502,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network route-table delete --help
@@ -4454,7 +4549,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network route-table get --help
@@ -4470,7 +4566,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network route-table list --help
@@ -4533,7 +4630,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network route-table update --help
@@ -4650,7 +4748,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network security-list --help
@@ -4676,7 +4775,8 @@ Usage: oci network security-list [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new security list for the specified...
@@ -4823,7 +4923,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network security-list delete --help
@@ -4869,7 +4970,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network security-list get --help
@@ -4886,7 +4988,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network security-list list --help
@@ -4947,7 +5050,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network security-list update --help
@@ -5092,7 +5196,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service --help
@@ -5101,7 +5206,8 @@ Usage: oci network service [OPTIONS] COMMAND [ARGS]...
   Information about a service that is accessible through a service gateway.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets the specified service's information.
@@ -5122,7 +5228,8 @@ Options:
                      If an option exists in both the JSON document and the
                      command line then the command line specified value will be
                      used
-  -?, -h, --help     Show this message and exit.
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service list --help
@@ -5154,7 +5261,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway --help
@@ -5177,7 +5285,8 @@ Usage: oci network service-gateway [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   attach  Enables the specified service on the...
@@ -5235,7 +5344,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway create --help
@@ -5340,7 +5450,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway delete --help
@@ -5382,7 +5493,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway detach --help
@@ -5435,7 +5547,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway get --help
@@ -5452,7 +5565,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway list --help
@@ -5512,7 +5626,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service-gateway update --help
@@ -5640,7 +5755,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network subnet --help
@@ -5661,7 +5777,8 @@ Usage: oci network subnet [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new subnet in the specified VCN.
@@ -5850,7 +5967,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network subnet delete --help
@@ -5894,7 +6012,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network subnet get --help
@@ -5910,7 +6029,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network subnet list --help
@@ -5971,7 +6091,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network subnet update --help
@@ -6081,7 +6202,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vcn --help
@@ -6099,7 +6221,8 @@ Usage: oci network vcn [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new virtual cloud network (VCN).
@@ -6237,7 +6360,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vcn delete --help
@@ -6280,7 +6404,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vcn get --help
@@ -6296,7 +6421,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vcn list --help
@@ -6356,7 +6482,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vcn update --help
@@ -6441,7 +6568,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit --help
@@ -6475,7 +6603,8 @@ Usage: oci network virtual-circuit [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new virtual circuit to use with...
@@ -6616,7 +6745,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit delete --help
@@ -6661,7 +6791,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit get --help
@@ -6678,7 +6809,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit list --help
@@ -6738,7 +6870,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit update --help
@@ -6874,7 +7007,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit-public-prefix --help
@@ -6885,7 +7019,8 @@ Usage: oci network virtual-circuit-public-prefix [OPTIONS] COMMAND [ARGS]...
   the connection. For more information, see [FastConnect Overview].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   bulk-add     Adds one or more customer public IP prefixes...
@@ -6928,7 +7063,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit-public-prefix bulk-delete --help
@@ -6968,7 +7104,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit-public-prefix list --help
@@ -6991,7 +7128,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vnic --help
@@ -7017,7 +7155,8 @@ Usage: oci network vnic [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   assign-private-ip    Assigns a secondary private IP address to the...
@@ -7115,7 +7254,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vnic get --help
@@ -7132,7 +7272,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vnic unassign-private-ip --help
@@ -7158,7 +7299,8 @@ Options:
                      If an option exists in both the JSON document and the
                      command line then the command line specified value will be
                      used
-  -?, -h, --help     Show this message and exit.
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vnic update --help
@@ -7266,5 +7408,6 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 

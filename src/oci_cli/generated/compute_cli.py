@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -129,6 +129,12 @@ def app_catalog_listing_resource_version_agreements_group():
     pass
 
 
+@click.command(cli_util.override('device_group.command_name', 'device'), cls=CommandGroupWithAlias, help="""Device Path corresponding to the block devices attached to instances having a name and isAvailable flag.""")
+@cli_util.help_option_group
+def device_group():
+    pass
+
+
 @click.command(cli_util.override('console_history_group.command_name', 'console-history'), cls=CommandGroupWithAlias, help="""An instance's serial console data. It includes configuration messages that occur when the instance boots, such as kernel and BIOS messages, and is useful for checking the status of the instance or diagnosing problems. The console data is minimally formatted ASCII text.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -152,6 +158,7 @@ compute_root_group.add_command(volume_group)
 compute_root_group.add_command(instance_credentials_group)
 compute_root_group.add_command(boot_volume_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
+compute_root_group.add_command(device_group)
 compute_root_group.add_command(console_history_group)
 
 
@@ -168,6 +175,7 @@ compute_root_group.add_command(console_history_group)
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeAttachment'})
 @cli_util.wrap_exceptions
 def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, instance_id, display_name):
+
     kwargs = {}
 
     details = {}
@@ -215,6 +223,7 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}}, output_type={'module': 'core', 'class': 'VnicAttachment'})
 @cli_util.wrap_exceptions
 def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, create_vnic_details, instance_id, display_name, nic_index):
+
     kwargs = {}
 
     details = {}
@@ -255,6 +264,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @cli_util.option('--type', required=True, help="""The type of volume. The only supported value are \"iscsi\" and \"paravirtualized\".""")
 @cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--device', help="""The device name.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
@@ -265,13 +275,17 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, display_name, is_read_only):
+def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, device, display_name, is_read_only):
+
     kwargs = {}
 
     details = {}
     details['instanceId'] = instance_id
     details['type'] = type
     details['volumeId'] = volume_id
+
+    if device is not None:
+        details['device'] = device
 
     if display_name is not None:
         details['displayName'] = display_name
@@ -306,6 +320,7 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @volume_attachment_group.command(name=cli_util.override('attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help="""Attaches the specified storage volume to the specified instance.""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--device', help="""The device name.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--use-chap', type=click.BOOL, help="""Whether to use CHAP authentication for the volume attachment. Defaults to false.""")
@@ -317,12 +332,16 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, display_name, is_read_only, use_chap):
+def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, use_chap):
+
     kwargs = {}
 
     details = {}
     details['instanceId'] = instance_id
     details['volumeId'] = volume_id
+
+    if device is not None:
+        details['device'] = device
 
     if display_name is not None:
         details['displayName'] = display_name
@@ -362,6 +381,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @volume_attachment_group.command(name=cli_util.override('attach_volume_attach_paravirtualized_volume_details.command_name', 'attach-volume-attach-paravirtualized-volume-details'), help="""Attaches the specified storage volume to the specified instance.""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help="""The OCID of the volume.""")
+@cli_util.option('--device', help="""The device name.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable encryption in transit for the PV data volume attachment. Defaults to false.""")
@@ -373,12 +393,16 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, display_name, is_read_only, is_pv_encryption_in_transit_enabled):
+def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_pv_encryption_in_transit_enabled):
+
     kwargs = {}
 
     details = {}
     details['instanceId'] = instance_id
     details['volumeId'] = volume_id
+
+    if device is not None:
+        details['device'] = device
 
     if display_name is not None:
         details['displayName'] = display_name
@@ -437,6 +461,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ConsoleHistory'})
 @cli_util.wrap_exceptions
 def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -489,6 +514,7 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AppCatalogSubscription'})
 @cli_util.wrap_exceptions
 def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, listing_resource_version, oracle_terms_of_use_link, eula_link, time_retrieved, signature):
+
     kwargs = {}
 
     details = {}
@@ -559,6 +585,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
 def create_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, defined_tags, display_name, freeform_tags, image_source_details, instance_id, launch_mode):
+
     kwargs = {}
 
     details = {}
@@ -626,6 +653,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
 def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, public_key, defined_tags, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -673,6 +701,7 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, resource_version):
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.delete_app_catalog_subscription(
@@ -700,6 +729,7 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -755,6 +785,7 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -810,6 +841,7 @@ def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 
     if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -867,6 +899,7 @@ def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(boot_volume_attachment_id, six.string_types) and len(boot_volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -924,6 +957,7 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -981,6 +1015,7 @@ def detach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1042,6 +1077,7 @@ def export_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1096,6 +1132,7 @@ def export_image_export_image_via_object_storage_uri_details(ctx, from_json, wai
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1154,6 +1191,7 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1207,6 +1245,7 @@ def get_app_catalog_listing(ctx, from_json, listing_id):
 
     if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_app_catalog_listing(
@@ -1231,6 +1270,7 @@ def get_app_catalog_listing_agreements(ctx, from_json, listing_id, resource_vers
 
     if isinstance(resource_version, six.string_types) and len(resource_version.strip()) == 0:
         raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_app_catalog_listing_agreements(
@@ -1256,6 +1296,7 @@ def get_app_catalog_listing_resource_version(ctx, from_json, listing_id, resourc
 
     if isinstance(resource_version, six.string_types) and len(resource_version.strip()) == 0:
         raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_app_catalog_listing_resource_version(
@@ -1277,6 +1318,7 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
 
     if isinstance(boot_volume_attachment_id, six.string_types) and len(boot_volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_boot_volume_attachment(
@@ -1297,6 +1339,7 @@ def get_console_history(ctx, from_json, instance_console_history_id):
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_console_history(
@@ -1320,6 +1363,7 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
 
     if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
+
     kwargs = {}
     if offset is not None:
         kwargs['offset'] = offset
@@ -1344,6 +1388,7 @@ def get_image(ctx, from_json, image_id):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_image(
@@ -1364,6 +1409,7 @@ def get_instance(ctx, from_json, instance_id):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance(
@@ -1384,6 +1430,7 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
 
     if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_instance_console_connection(
@@ -1404,6 +1451,7 @@ def get_vnic_attachment(ctx, from_json, vnic_attachment_id):
 
     if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_vnic_attachment(
@@ -1424,6 +1472,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
 
     if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_volume_attachment(
@@ -1444,6 +1493,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('compute', ctx)
     result = client.get_windows_instance_initial_credentials(
@@ -1481,6 +1531,7 @@ def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1605,6 +1656,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
 def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, source_details, subnet_id, is_pv_encryption_in_transit_enabled):
+
     kwargs = {}
 
     details = {}
@@ -1696,6 +1748,7 @@ def list_app_catalog_listing_resource_versions(ctx, from_json, all_pages, page_s
 
     if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1749,6 +1802,7 @@ def list_app_catalog_listings(ctx, from_json, all_pages, page_size, limit, page,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1807,6 +1861,7 @@ def list_app_catalog_subscriptions(ctx, from_json, all_pages, page_size, compart
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1866,6 +1921,7 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1932,6 +1988,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -2005,6 +2062,7 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
@@ -2070,6 +2128,7 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if instance_id is not None:
         kwargs['instance_id'] = instance_id
@@ -2103,6 +2162,73 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
     cli_util.render_response(result, ctx)
 
 
+@device_group.command(name=cli_util.override('list_instance_devices.command_name', 'list-instance'), help="""Gets a list of all the devices for given instance. You can optionally filter results by device availability.""")
+@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@cli_util.option('--is-available', type=click.BOOL, help="""A filter to return only available devices or only used devices.""")
+@cli_util.option('--name', help="""A filter to return only devices that match the given name exactly.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Device]'})
+@cli_util.wrap_exceptions
+def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_available, name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_available is not None:
+        kwargs['is_available'] = is_available
+    if name is not None:
+        kwargs['name'] = name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_instance_devices,
+            instance_id=instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_instance_devices,
+            limit,
+            page_size,
+            instance_id=instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_instance_devices(
+            instance_id=instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @instance_group.command(name=cli_util.override('list_instances.command_name', 'list'), help="""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', help="""The name of the availability domain.
@@ -2131,6 +2257,7 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -2193,6 +2320,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -2250,6 +2378,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -2311,6 +2440,7 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -2369,6 +2499,7 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2437,6 +2568,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2506,6 +2638,7 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2587,6 +2720,7 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         if defined_tags or freeform_tags or metadata or extended_metadata:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and extended-metadata will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

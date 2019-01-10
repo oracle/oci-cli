@@ -226,7 +226,12 @@ function create_lb_with_minimum_then_add_related_resources() {
         --hostname host2.name.com \
         --name hostname2
 
-    # Now that we have our certificates, backend set and path route set, we can add a listener. We need to specify a backend set which exists (e.g. the one we made)
+    # We can create one or more rule sets to attach to the load balancer listener.
+    oci lb rule-set create --load-balancer-id $LB_ID \
+        --name ruleSetName\ 
+        --items '[{"action": "REMOVE_HTTP_REQUEST_HEADER","header": "AnyHeaderName3"},{"action": "ADD_HTTP_RESPONSE_HEADER","header": "AnyHeaderName4","value": "Any Value for Header"}]'
+
+    # Now that we have our certificates, backend set, path route set, and rule set we can add a listener. We need to specify a backend set which exists (e.g. the one we made)
     #
     # The valid values for --protocol can be found via "oci lb protocol list"
     #
@@ -240,7 +245,8 @@ function create_lb_with_minimum_then_add_related_resources() {
         --ssl-verify-depth 3 \
         --ssl-verify-peer-certificate false \
         --hostname-names '["hostname1", "hostname2"]' \
-        --path-route-set-name PathRouteSetName
+        --path-route-set-name PathRouteSetName \
+        --ruleSetNames '["ruleSetName"]'
 
     # Print out information about the load balancer
     oci lb load-balancer get --load-balancer-id $LB_ID

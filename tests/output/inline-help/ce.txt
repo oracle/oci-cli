@@ -9,7 +9,8 @@ Usage: oci ce [OPTIONS] COMMAND [ARGS]...
   Container Engine for Kubernetes CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   cluster                 A Kubernetes cluster.
@@ -27,7 +28,8 @@ Usage: oci ce cluster [OPTIONS] COMMAND [ARGS]...
   A Kubernetes cluster.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create             Create a new cluster.
@@ -108,7 +110,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster create-kubeconfig --help
@@ -130,7 +133,8 @@ Options:
                         line. If an option exists in both the JSON document and
                         the command line then the command line specified value
                         will be used
-  -?, -h, --help        Show this message and exit.
+  -?, -h, --help        For detailed help on any of these individual commands,
+                        enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster delete --help
@@ -172,7 +176,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster get --help
@@ -189,7 +194,8 @@ Options:
                      If an option exists in both the JSON document and the
                      command line then the command line specified value will be
                      used
-  -?, -h, --help     Show this message and exit.
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster list --help
@@ -225,7 +231,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster update --help
@@ -269,7 +276,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster-options --help
@@ -278,7 +286,8 @@ Usage: oci ce cluster-options [OPTIONS] COMMAND [ARGS]...
   Options for creating or updating clusters.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get  Get options available for clusters.
@@ -299,7 +308,8 @@ Options:
                             command line. If an option exists in both the JSON
                             document and the command line then the command line
                             specified value will be used
-  -?, -h, --help            Show this message and exit.
+  -?, -h, --help            For detailed help on any of these individual
+                            commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool --help
@@ -308,7 +318,8 @@ Usage: oci ce node-pool [OPTIONS] COMMAND [ARGS]...
   A pool of compute nodes attached to a cluster.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Create a new node pool.
@@ -403,7 +414,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool delete --help
@@ -445,7 +457,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool get --help
@@ -462,7 +475,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool list --help
@@ -496,7 +510,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool update --help
@@ -583,7 +598,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool-options --help
@@ -592,7 +608,8 @@ Usage: oci ce node-pool-options [OPTIONS] COMMAND [ARGS]...
   Options for creating or updating node pools.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get  Get options available for node pools.
@@ -615,7 +632,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce work-request --help
@@ -624,7 +642,8 @@ Usage: oci ce work-request [OPTIONS] COMMAND [ARGS]...
   An asynchronous work request.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   delete  Cancel a work request that has not started.
@@ -653,7 +672,8 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce work-request get --help
@@ -670,7 +690,8 @@ Options:
                           line. If an option exists in both the JSON document
                           and the command line then the command line specified
                           value will be used
-  -?, -h, --help          Show this message and exit.
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce work-request list --help
@@ -711,7 +732,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce work-request-error --help
@@ -720,7 +742,8 @@ Usage: oci ce work-request-error [OPTIONS] COMMAND [ARGS]...
   Errors related to a specific work request.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Get the errors of a work request.
@@ -741,7 +764,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce work-request-log-entry --help
@@ -750,7 +774,8 @@ Usage: oci ce work-request-log-entry [OPTIONS] COMMAND [ARGS]...
   Log entries related to a specific work request.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Get the logs of a work request.
@@ -771,5 +796,6 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 

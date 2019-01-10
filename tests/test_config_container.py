@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # A module which holds test configuration information. This is intended to be a shared space where tests
 # can figure out what kind of recording (via VCR) is being done and also so that they can take actions (e.g. waiting)

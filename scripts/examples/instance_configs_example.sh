@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 # This script provides an example of how use the instance pools CLI in terms of:
 #   - Creating an instance configuration
 #   - Launch from that instance configuration

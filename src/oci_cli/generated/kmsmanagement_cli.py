@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -51,6 +51,7 @@ The top level --endpoint parameter must be supplied for this operation.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'key-shape': {'module': 'key_management', 'class': 'KeyShape'}}, output_type={'module': 'key_management', 'class': 'Key'})
 @cli_util.wrap_exceptions
 def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, key_shape):
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -96,6 +97,7 @@ def create_key_version(ctx, from_json, key_id):
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('kms_management', ctx)
@@ -123,6 +125,7 @@ def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -168,6 +171,7 @@ def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -209,6 +213,7 @@ def get_key(ctx, from_json, key_id):
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('kms_management', ctx)
@@ -236,6 +241,7 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
 
     if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
         raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('kms_management', ctx)
@@ -269,6 +275,7 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -324,6 +331,7 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -378,6 +386,7 @@ def update_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

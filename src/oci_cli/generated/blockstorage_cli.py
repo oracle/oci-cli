@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -132,6 +132,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -191,6 +192,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
 def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs):
+
     kwargs = {}
 
     details = {}
@@ -261,6 +263,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
 @cli_util.wrap_exceptions
 def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, type):
+
     kwargs = {}
 
     details = {}
@@ -333,6 +336,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
 def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, size_in_mbs, source_details, volume_backup_id):
+
     kwargs = {}
 
     details = {}
@@ -411,6 +415,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackup'})
 @cli_util.wrap_exceptions
 def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, type):
+
     kwargs = {}
 
     details = {}
@@ -461,6 +466,7 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeBackupPolicyAssignment'})
 @cli_util.wrap_exceptions
 def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
+
     kwargs = {}
 
     details = {}
@@ -497,6 +503,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
 def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, defined_tags, display_name, freeform_tags):
+
     kwargs = {}
 
     details = {}
@@ -557,6 +564,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeGroupBackup'})
 @cli_util.wrap_exceptions
 def create_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_id, compartment_id, defined_tags, display_name, freeform_tags, type):
+
     kwargs = {}
 
     details = {}
@@ -617,6 +625,7 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -672,6 +681,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -724,6 +734,7 @@ def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -751,6 +762,7 @@ def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -806,6 +818,7 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -858,6 +871,7 @@ def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id,
 
     if isinstance(policy_assignment_id, six.string_types) and len(policy_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-assignment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -885,6 +899,7 @@ def delete_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -940,6 +955,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -992,6 +1008,7 @@ def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1014,6 +1031,7 @@ def get_boot_volume(ctx, from_json, boot_volume_id):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_boot_volume(
@@ -1034,6 +1052,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
 
     if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_boot_volume_backup(
@@ -1055,6 +1074,7 @@ def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1077,6 +1097,7 @@ def get_volume(ctx, from_json, volume_id):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume(
@@ -1097,6 +1118,7 @@ def get_volume_backup(ctx, from_json, volume_backup_id):
 
     if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume_backup(
@@ -1117,6 +1139,7 @@ def get_volume_backup_policy(ctx, from_json, policy_id):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume_backup_policy(
@@ -1138,6 +1161,7 @@ Example: `50`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeBackupPolicyAssignment]'})
 @cli_util.wrap_exceptions
 def get_volume_backup_policy_asset_assignment(ctx, from_json, asset_id, limit, page):
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1162,6 +1186,7 @@ def get_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id):
 
     if isinstance(policy_assignment_id, six.string_types) and len(policy_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-assignment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume_backup_policy_assignment(
@@ -1182,6 +1207,7 @@ def get_volume_group(ctx, from_json, volume_group_id):
 
     if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume_group(
@@ -1202,6 +1228,7 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
 
     if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('blockstorage', ctx)
     result = client.get_volume_group_backup(
@@ -1223,6 +1250,7 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1258,6 +1286,7 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if boot_volume_id is not None:
         kwargs['boot_volume_id'] = boot_volume_id
@@ -1320,6 +1349,7 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1372,6 +1402,7 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1425,6 +1456,7 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if volume_id is not None:
         kwargs['volume_id'] = volume_id
@@ -1491,6 +1523,7 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if volume_group_id is not None:
         kwargs['volume_group_id'] = volume_group_id
@@ -1558,6 +1591,7 @@ def list_volume_groups(ctx, from_json, all_pages, page_size, compartment_id, ava
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1628,6 +1662,7 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
@@ -1699,6 +1734,7 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1769,6 +1805,7 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1822,6 +1859,7 @@ def update_boot_volume_kms_key(ctx, from_json, boot_volume_id, kms_key_id, if_ma
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1868,6 +1906,7 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1938,6 +1977,7 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2008,6 +2048,7 @@ def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds,
         if defined_tags or freeform_tags or volume_ids:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and volume-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2078,6 +2119,7 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
         if defined_tags or freeform_tags:
             if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2131,6 +2173,7 @@ def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

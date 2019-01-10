@@ -10,7 +10,8 @@ Usage: oci audit [OPTIONS] COMMAND [ARGS]...
   export operations.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   config
@@ -21,7 +22,8 @@ $ oci audit config --help
 Usage: oci audit config [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get     Get the configuration
@@ -42,7 +44,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci audit config update --help
@@ -63,14 +66,16 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci audit event --help
 Usage: oci audit event [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Returns all audit events for the specified...
@@ -264,5 +269,6 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 

@@ -9,7 +9,8 @@ Usage: oci search [OPTIONS] COMMAND [ARGS]...
   Search for resources in your cloud network.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   resource       Summary representation of resources that...
@@ -22,7 +23,8 @@ Usage: oci search resource [OPTIONS] COMMAND [ARGS]...
   Summary representation of resources that matched the search criteria.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   free-text-search   Queries any and all compartments in the...
@@ -57,7 +59,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci search resource structured-search --help
@@ -89,7 +92,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci search resource-type --help
@@ -98,7 +102,8 @@ Usage: oci search resource-type [OPTIONS] COMMAND [ARGS]...
   Defines a type of resource that you can find with a search or query.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets detailed information about a resource...
@@ -119,7 +124,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci search resource-type list --help
@@ -143,5 +149,6 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
