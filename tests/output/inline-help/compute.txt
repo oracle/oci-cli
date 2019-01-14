@@ -9,11 +9,13 @@ Usage: oci compute [OPTIONS] COMMAND [ARGS]...
   Compute Service CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   boot-volume-attachment       Represents an attachment between a boot...
   console-history              An instance's serial console data.
+  device                       Device Path corresponding to the block...
   image                        A boot disk image for launching an instance.
   instance                     A compute host.
   instance-console-connection  The `InstanceConsoleConnection` API provides...
@@ -32,7 +34,8 @@ Usage: oci compute boot-volume-attachment [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   attach  Attaches the specified boot volume to the...
@@ -74,7 +77,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute boot-volume-attachment detach --help
@@ -121,7 +125,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute boot-volume-attachment get --help
@@ -141,7 +146,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute boot-volume-attachment list --help
@@ -181,7 +187,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute console-history --help
@@ -196,7 +203,8 @@ Usage: oci compute console-history [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   capture      Captures the most recent serial console data...
@@ -294,7 +302,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute console-history delete --help
@@ -336,7 +345,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute console-history get --help
@@ -357,7 +367,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute console-history get-content --help
@@ -383,7 +394,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute console-history list --help
@@ -447,7 +459,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute console-history update --help
@@ -532,7 +545,82 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute device --help
+Usage: oci compute device [OPTIONS] COMMAND [ARGS]...
+
+  Device Path corresponding to the block devices attached to instances having
+  a name and isAvailable flag.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list-instance  Gets a list of all the devices for given...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute device list-instance --help
+Usage: oci compute device list-instance [OPTIONS]
+
+  Gets a list of all the devices for given instance. You can optionally filter
+  results by device availability.
+
+Options:
+  --instance-id TEXT              The OCID of the instance. [required]
+  --is-available BOOLEAN          A filter to return only available devices or
+                                  only used devices.
+  --name TEXT                     A filter to return only devices that match the
+                                  given name exactly.
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
+                                  Example: `50`
+  --page TEXT                     For list pagination. The value of the `opc-
+                                  next-page` response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by. You can provide one sort
+                                  order (`sortOrder`). Default order for
+                                  TIMECREATED is descending. Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+                                  
+                                  **Note:** In
+                                  general, some "List" operations (for example,
+                                  `ListInstances`) let you optionally filter by
+                                  availability domain if the scope of the
+                                  resource type is within a single availability
+                                  domain. If you call one of these "List"
+                                  operations without specifying an availability
+                                  domain, the resources are grouped by
+                                  availability domain, then sorted.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`). The
+                                  DISPLAYNAME sort order is case sensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image --help
@@ -550,7 +638,8 @@ Usage: oci compute image [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a boot disk image for the specified...
@@ -717,7 +806,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image delete --help
@@ -758,7 +848,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image export --help
@@ -778,7 +869,8 @@ Usage: oci compute image export [OPTIONS] COMMAND [ARGS]...
   URLs for image import/export.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   to-object      Exports the specified image to the Oracle...
@@ -819,7 +911,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image export to-object-uri --help
@@ -849,7 +942,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image get --help
@@ -865,7 +959,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image import --help
@@ -887,7 +982,8 @@ Usage: oci compute image import [OPTIONS] COMMAND [ARGS]...
   change it. See [UpdateImage]. Avoid entering confidential information.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   from-object      Imports an exported image from the Oracle...
@@ -995,7 +1091,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image import from-object-uri --help
@@ -1098,7 +1195,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image list --help
@@ -1171,7 +1269,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image update --help
@@ -1260,7 +1359,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance --help
@@ -1280,7 +1380,8 @@ Usage: oci compute instance [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   action                     Performs one of the following power actions...
@@ -1348,7 +1449,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance attach-vnic --help
@@ -1452,7 +1554,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance detach-vnic --help
@@ -1491,7 +1594,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance get --help
@@ -1508,7 +1612,8 @@ Options:
                       If an option exists in both the JSON document and the
                       command line then the command line specified value will be
                       used
-  -?, -h, --help      Show this message and exit.
+  -?, -h, --help      For detailed help on any of these individual commands,
+                      enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance get-windows-initial-creds --help
@@ -1527,7 +1632,8 @@ Options:
                       If an option exists in both the JSON document and the
                       command line then the command line specified value will be
                       used
-  -?, -h, --help      Show this message and exit.
+  -?, -h, --help      For detailed help on any of these individual commands,
+                      enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance launch --help
@@ -1851,7 +1957,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance list --help
@@ -1918,7 +2025,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance list-vnics --help
@@ -1947,7 +2055,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance terminate --help
@@ -2000,7 +2109,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance update --help
@@ -2156,7 +2266,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance-console-connection --help
@@ -2175,7 +2286,8 @@ Usage: oci compute instance-console-connection [OPTIONS] COMMAND [ARGS]...
   tunnel necessary to start a VNC connection to the instance.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create                       Creates a new serial console connection to...
@@ -2266,7 +2378,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance-console-connection delete --help
@@ -2309,7 +2422,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance-console-connection get --help
@@ -2335,7 +2449,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance-console-connection get-plink-connection-string --help
@@ -2370,7 +2485,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance-console-connection list --help
@@ -2405,7 +2521,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic --help
@@ -2414,7 +2531,8 @@ Usage: oci compute pic [OPTIONS] COMMAND [ARGS]...
   Partner image catalog (PIC).
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   agreements    PIC listing resource version agreements.
@@ -2429,7 +2547,8 @@ Usage: oci compute pic agreements [OPTIONS] COMMAND [ARGS]...
   PIC listing resource version agreements.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get  Retrieves the agreements for a particular...
@@ -2450,7 +2569,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic listing --help
@@ -2459,7 +2579,8 @@ Usage: oci compute pic listing [OPTIONS] COMMAND [ARGS]...
   A PIC listing.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets the specified listing.
@@ -2480,7 +2601,8 @@ Options:
                      If an option exists in both the JSON document and the
                      command line then the command line specified value will be
                      used
-  -?, -h, --help     Show this message and exit.
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic listing list --help
@@ -2521,7 +2643,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic subscription --help
@@ -2530,7 +2653,8 @@ Usage: oci compute pic subscription [OPTIONS] COMMAND [ARGS]...
   A PIC subscription.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Create a subscription for listing resource...
@@ -2703,7 +2827,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic subscription delete --help
@@ -2724,7 +2849,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic subscription list --help
@@ -2780,7 +2906,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic version --help
@@ -2789,7 +2916,8 @@ Usage: oci compute pic version [OPTIONS] COMMAND [ARGS]...
   A PIC listing resource version.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets the specified listing resource version.
@@ -2811,7 +2939,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute pic version list --help
@@ -2846,7 +2975,8 @@ Options:
                            line. If an option exists in both the JSON document
                            and the command line then the command line specified
                            value will be used
-  -?, -h, --help           Show this message and exit.
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute shape --help
@@ -2856,7 +2986,8 @@ Usage: oci compute shape [OPTIONS] COMMAND [ARGS]...
   information, see [Overview of the Compute Service].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Lists the shapes that can be used to launch...
@@ -2898,7 +3029,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute vnic-attachment --help
@@ -2911,7 +3043,8 @@ Usage: oci compute vnic-attachment [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets the information for the specified VNIC...
@@ -2932,7 +3065,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute vnic-attachment list --help
@@ -2973,7 +3107,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute volume-attachment --help
@@ -2990,7 +3125,8 @@ Usage: oci compute volume-attachment [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   attach                         Attaches the specified storage volume to the...
@@ -3011,6 +3147,7 @@ Options:
   --type [iscsi|paravirtualized]  The type of volume. The only supported value
                                   are "iscsi" and "paravirtualized". [required]
   --volume-id TEXT                The OCID of the volume. [required]
+  --device TEXT                   The device name.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it cannot be changed. Avoid
                                   entering confidential information.
@@ -3038,7 +3175,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute volume-attachment attach-paravirtualized-volume --help
@@ -3050,6 +3188,7 @@ Usage: oci compute volume-attachment attach-paravirtualized-volume
 Options:
   --instance-id TEXT              The OCID of the instance. [required]
   --volume-id TEXT                The OCID of the volume. [required]
+  --device TEXT                   The device name.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it cannot be changed. Avoid
                                   entering confidential information.
@@ -3081,7 +3220,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute volume-attachment detach --help
@@ -3126,7 +3266,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute volume-attachment get --help
@@ -3143,7 +3284,8 @@ Options:
                                the command line. If an option exists in both the
                                JSON document and the command line then the
                                command line specified value will be used
-  -?, -h, --help               Show this message and exit.
+  -?, -h, --help               For detailed help on any of these individual
+                               commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute volume-attachment list --help
@@ -3186,5 +3328,6 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 

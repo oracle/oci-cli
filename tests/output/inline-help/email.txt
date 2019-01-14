@@ -9,7 +9,8 @@ Usage: oci email [OPTIONS] COMMAND [ARGS]...
   Email Delivery Service CLI
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   sender       The full information representing an approved...
@@ -22,7 +23,8 @@ Usage: oci email sender [OPTIONS] COMMAND [ARGS]...
   The full information representing an approved sender.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a sender for a tenancy in a given...
@@ -62,7 +64,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email sender delete --help
@@ -97,7 +100,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email sender get --help
@@ -113,7 +117,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email sender list --help
@@ -153,7 +158,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email suppression --help
@@ -162,7 +168,8 @@ Usage: oci email suppression [OPTIONS] COMMAND [ARGS]...
   The full information representing an email suppression.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Adds recipient email addresses to the...
@@ -189,7 +196,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email suppression delete --help
@@ -208,7 +216,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email suppression get --help
@@ -226,7 +235,8 @@ Options:
                          line. If an option exists in both the JSON document and
                          the command line then the command line specified value
                          will be used
-  -?, -h, --help         Show this message and exit.
+  -?, -h, --help         For detailed help on any of these individual commands,
+                         enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email suppression list --help
@@ -431,5 +441,6 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 

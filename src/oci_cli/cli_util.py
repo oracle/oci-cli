@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import arrow
@@ -824,11 +824,11 @@ def group_help_callback(ctx, param, value):
 
 
 '''Help option to use for commands.'''
-help_option = click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.', expose_value=False, is_eager=True, callback=help_callback)
+help_option = click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on any of these individual commands, enter <command> --help.', expose_value=False, is_eager=True, callback=help_callback)
 
 
 '''Help option to use for groups (except for oci).'''
-help_option_group = click.option('-?', '-h', '--help', is_flag=True, help='Show this message and exit.', expose_value=False, is_eager=False, callback=group_help_callback)
+help_option_group = click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on any of these individual commands, enter <command> --help.', expose_value=False, is_eager=False, callback=group_help_callback)
 
 
 def confirmation_callback(ctx, param, value):

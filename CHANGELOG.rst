@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.41 - 2019-01-10
+-------------------
+Added
+~~~~~
+* Support for passing device while attaching volume to instance in Compute service
+
+  * (``oci compute volume-attachment attach --device``)
+
+* Support for fetching devices for an instance in Compute service
+
+  * (``oci compute device list-instance``)
+
+* Support for Custom Header Rule Sets in the Load Balancer service
+
+  * (``oci lb rule-set``)
+
 2.4.40 - 2018-12-13
 -------------------
 Added
@@ -36,7 +52,7 @@ Added
 
 * Support for listing identity provider groups as part of Identity Service.
 
-  * (``oci iam identity-provider-group list``)
+  * (oci iam identity-provider-group list)
 
 Changed
 ~~~~~~~

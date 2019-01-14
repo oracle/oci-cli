@@ -70,7 +70,8 @@
             ],
             "port": 8080,
             "protocol": "HTTP",
-            "pathRouteSetName": "PathRouteSetName"
+            "pathRouteSetName": "PathRouteSetName",
+            "ruleSetNames": ["ruleSetName"]
         }
     },
     "pathRouteSets": {
@@ -84,6 +85,44 @@
                     }
                 }
            ]
+        }
+    },
+    "ruleSets": {
+        // The content here aligns with the example in the rule_sets_with_comments.json file
+        "ruleSetName": {
+            "name": "ruleSetName",
+            "items": [
+                {
+                    "action": "ADD_HTTP_REQUEST_HEADER",
+                    "header": "AnyHeaderName",
+                    "value": "Any Value for Header"        
+                  },
+                  {
+                    "action": "EXTEND_HTTP_REQUEST_HEADER_VALUE",
+                    "header": "AnyHeaderName2",
+                    "prefix": "Any String to Prepend to Header",
+                    "suffix": "Any String to Append to Header",  
+                  },
+                  {
+                    "action": "REMOVE_HTTP_REQUEST_HEADER",
+                    "header": "AnyHeaderName3"
+                  },
+                  {
+                    "action": "ADD_HTTP_RESPONSE_HEADER",
+                    "header": "AnyHeaderName4",
+                    "value": "Any Value for Header"
+                  },
+                  {
+                    "action": "EXTEND_HTTP_RESPONSE_HEADER_VALUE",
+                    "header": "AnyHeaderName5",
+                    "prefix": "Any String to Prepend to Header",
+                    "suffix": "Any String to Append to Header",        
+                  },
+                  {
+                    "action": "REMOVE_HTTP_RESPONSE_HEADER",
+                    "header": "AnyHeaderName6"
+                  }
+            ]
         }
     }
 }

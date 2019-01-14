@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -79,6 +79,7 @@ This option is a JSON list with items of type ExternalMaster.  For documentation
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
 def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, zone_type, freeform_tags, defined_tags, external_masters, compartment_id):
+
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
@@ -140,6 +141,7 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
 
     if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -179,6 +181,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
 
     if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -214,6 +217,7 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -286,6 +290,7 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
 
     if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
+
     kwargs = {}
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
@@ -364,6 +369,7 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
 
     if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
+
     kwargs = {}
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
@@ -423,6 +429,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
@@ -465,6 +472,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
@@ -537,6 +545,7 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -605,6 +614,7 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
 
     if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -653,6 +663,7 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
 
     if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -694,6 +705,7 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -742,6 +754,7 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
         if items:
             if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -795,6 +808,7 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
         if items:
             if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -846,6 +860,7 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         if freeform_tags or defined_tags or external_masters:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and external-masters will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -912,6 +927,7 @@ def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match,
         if items:
             if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

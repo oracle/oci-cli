@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -264,6 +264,7 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UserGroupMembership'})
 @cli_util.wrap_exceptions
 def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, group_id):
+
     kwargs = {}
 
     details = {}
@@ -310,6 +311,7 @@ def create_auth_token(ctx, from_json, description, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -349,6 +351,7 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Compartment'})
 @cli_util.wrap_exceptions
 def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -402,6 +405,7 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -438,6 +442,7 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
 @cli_util.wrap_exceptions
 def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, matching_rule, description):
+
     kwargs = {}
 
     details = {}
@@ -495,6 +500,7 @@ After creating the group, you need to put users in it and write policies for it.
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Group'})
 @cli_util.wrap_exceptions
 def create_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -561,6 +567,7 @@ Example: `SAML2`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
 def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, product_type, protocol, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -629,6 +636,7 @@ Example: `IDCS`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'freeform-attributes': {'module': 'identity', 'class': 'dict(str, string)'}}, output_type={'module': 'identity', 'class': 'IdentityProvider'})
 @cli_util.wrap_exceptions
 def create_identity_provider_create_saml2_identity_provider_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, product_type, metadata_url, metadata, freeform_tags, defined_tags, freeform_attributes):
+
     kwargs = {}
 
     details = {}
@@ -690,6 +698,7 @@ def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -736,6 +745,7 @@ def create_or_reset_ui_password(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.create_or_reset_ui_password(
@@ -772,6 +782,7 @@ New policies take effect typically within 10 seconds.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'statements': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Policy'})
 @cli_util.wrap_exceptions
 def create_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, statements, description, version_date, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -829,6 +840,7 @@ def create_region_subscription(ctx, from_json, region_key, tenancy_id):
 
     if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -855,6 +867,7 @@ def create_smtp_credential(ctx, from_json, description, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -887,6 +900,7 @@ def create_swift_password(ctx, from_json, description, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -923,6 +937,7 @@ def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tag
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}
@@ -967,6 +982,7 @@ Tag namespaces cannot be deleted, but they can be retired. See [Retiring Key Def
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions
 def create_tag_namespace(ctx, from_json, compartment_id, name, description, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -1015,6 +1031,7 @@ A new user has no permissions until you place the user in one or more groups (se
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
 def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -1071,6 +1088,7 @@ def delete_api_key(ctx, from_json, user_id, fingerprint, if_match):
 
     if isinstance(fingerprint, six.string_types) and len(fingerprint.strip()) == 0:
         raise click.UsageError('Parameter --fingerprint cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1100,6 +1118,7 @@ def delete_auth_token(ctx, from_json, user_id, auth_token_id, if_match):
 
     if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1128,6 +1147,7 @@ def delete_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1172,6 +1192,7 @@ def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
 
     if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1200,6 +1221,7 @@ def delete_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1255,6 +1277,7 @@ def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1310,6 +1333,7 @@ def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1366,6 +1390,7 @@ def delete_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id, i
 
     if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1394,6 +1419,7 @@ def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1450,6 +1476,7 @@ def delete_smtp_credential(ctx, from_json, user_id, smtp_credential_id, if_match
 
     if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1481,6 +1508,7 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
 
     if isinstance(swift_password_id, six.string_types) and len(swift_password_id.strip()) == 0:
         raise click.UsageError('Parameter --swift-password-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1509,6 +1537,7 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1561,6 +1590,7 @@ def get_compartment(ctx, from_json, compartment_id):
 
     if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_compartment(
@@ -1581,6 +1611,7 @@ def get_dynamic_group(ctx, from_json, dynamic_group_id):
 
     if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_dynamic_group(
@@ -1603,6 +1634,7 @@ def get_group(ctx, from_json, group_id):
 
     if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_group(
@@ -1623,6 +1655,7 @@ def get_identity_provider(ctx, from_json, identity_provider_id):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_identity_provider(
@@ -1647,6 +1680,7 @@ def get_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id):
 
     if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_idp_group_mapping(
@@ -1668,6 +1702,7 @@ def get_policy(ctx, from_json, policy_id):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_policy(
@@ -1692,6 +1727,7 @@ def get_tag(ctx, from_json, tag_namespace_id, tag_name):
 
     if isinstance(tag_name, six.string_types) and len(tag_name.strip()) == 0:
         raise click.UsageError('Parameter --tag-name cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_tag(
@@ -1713,6 +1749,7 @@ def get_tag_namespace(ctx, from_json, tag_namespace_id):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_tag_namespace(
@@ -1733,6 +1770,7 @@ def get_tenancy(ctx, from_json, tenancy_id):
 
     if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_tenancy(
@@ -1753,6 +1791,7 @@ def get_user(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_user(
@@ -1773,6 +1812,7 @@ def get_user_group_membership(ctx, from_json, user_group_membership_id):
 
     if isinstance(user_group_membership_id, six.string_types) and len(user_group_membership_id.strip()) == 0:
         raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_user_group_membership(
@@ -1793,6 +1833,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.get_work_request(
@@ -1815,6 +1856,7 @@ def list_api_keys(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_api_keys(
@@ -1835,6 +1877,7 @@ def list_auth_tokens(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_auth_tokens(
@@ -1852,6 +1895,7 @@ def list_auth_tokens(ctx, from_json, user_id):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[AvailabilityDomain]'})
 @cli_util.wrap_exceptions
 def list_availability_domains(ctx, from_json, compartment_id):
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_availability_domains(
@@ -1888,6 +1932,7 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1938,6 +1983,7 @@ def list_cost_tracking_tags(ctx, from_json, all_pages, page_size, compartment_id
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1980,6 +2026,7 @@ def list_customer_secret_keys(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_customer_secret_keys(
@@ -2004,6 +2051,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2044,6 +2092,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[FaultDomain]'})
 @cli_util.wrap_exceptions
 def list_fault_domains(ctx, from_json, compartment_id, availability_domain):
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_fault_domains(
@@ -2069,6 +2118,7 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2118,6 +2168,7 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2165,6 +2216,7 @@ def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, comp
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2217,6 +2269,7 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2265,6 +2318,7 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, li
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2307,6 +2361,7 @@ def list_region_subscriptions(ctx, from_json, tenancy_id):
 
     if isinstance(tenancy_id, six.string_types) and len(tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_region_subscriptions(
@@ -2323,6 +2378,7 @@ def list_region_subscriptions(ctx, from_json, tenancy_id):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Region]'})
 @cli_util.wrap_exceptions
 def list_regions(ctx, from_json, ):
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_regions(
@@ -2342,6 +2398,7 @@ def list_smtp_credentials(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_smtp_credentials(
@@ -2364,6 +2421,7 @@ def list_swift_passwords(ctx, from_json, user_id):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.list_swift_passwords(
@@ -2389,6 +2447,7 @@ def list_tag_namespaces(ctx, from_json, all_pages, page_size, compartment_id, pa
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2440,6 +2499,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2490,6 +2550,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if user_id is not None:
         kwargs['user_id'] = user_id
@@ -2542,6 +2603,7 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2593,6 +2655,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -2639,6 +2702,7 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
 
     if isinstance(user_group_membership_id, six.string_types) and len(user_group_membership_id.strip()) == 0:
         raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2661,6 +2725,7 @@ def reset_idp_scim_client(ctx, from_json, identity_provider_id):
 
     if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('identity', ctx)
     result = client.reset_idp_scim_client(
@@ -2687,6 +2752,7 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
 
     if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2730,6 +2796,7 @@ def update_compartment(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2790,6 +2857,7 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
 
     if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2826,6 +2894,7 @@ def update_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2886,6 +2955,7 @@ def update_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -2952,6 +3022,7 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3019,6 +3090,7 @@ def update_identity_provider_update_saml2_identity_provider_details(ctx, from_js
         if freeform_tags or defined_tags or freeform_attributes:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and freeform-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3091,6 +3163,7 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if isinstance(mapping_id, six.string_types) and len(mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3156,6 +3229,7 @@ def update_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         if statements or freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to statements and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3219,6 +3293,7 @@ def update_smtp_credential(ctx, from_json, user_id, smtp_credential_id, descript
 
     if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3257,6 +3332,7 @@ def update_swift_password(ctx, from_json, user_id, swift_password_id, descriptio
 
     if isinstance(swift_password_id, six.string_types) and len(swift_password_id.strip()) == 0:
         raise click.UsageError('Parameter --swift-password-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3301,6 +3377,7 @@ def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, i
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
 
     details = {}
@@ -3354,6 +3431,7 @@ def update_tag_namespace(ctx, from_json, force, tag_namespace_id, description, i
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
 
     details = {}
@@ -3402,6 +3480,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3462,6 +3541,7 @@ def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3524,6 +3604,7 @@ def update_user_state(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -3576,6 +3657,7 @@ def upload_api_key(ctx, from_json, user_id, key):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
     kwargs = {}
 
     details = {}

@@ -9,7 +9,8 @@ Usage: oci db [OPTIONS] COMMAND [ARGS]...
   The CLI for the Database Service.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   autonomous-data-warehouse       An Oracle Autonomous Data Warehouse.
@@ -36,7 +37,8 @@ Usage: oci db autonomous-data-warehouse [OPTIONS] COMMAND [ARGS]...
   An Oracle Autonomous Data Warehouse.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create           Creates a new Autonomous Data Warehouse.
@@ -146,7 +148,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse delete --help
@@ -188,7 +191,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse generate-wallet --help
@@ -215,7 +219,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse get --help
@@ -234,7 +239,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse list --help
@@ -280,7 +286,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse restore --help
@@ -393,7 +400,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse start --help
@@ -433,7 +441,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse stop --help
@@ -473,7 +482,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse update --help
@@ -573,7 +583,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse-backup --help
@@ -582,7 +593,8 @@ Usage: oci db autonomous-data-warehouse-backup [OPTIONS] COMMAND [ARGS]...
   An Autonomous Data Warehouse backup.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new Autonomous Data Warehouse...
@@ -624,7 +636,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse-backup get --help
@@ -644,7 +657,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse-backup list --help
@@ -694,7 +708,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database --help
@@ -703,7 +718,8 @@ Usage: oci db autonomous-database [OPTIONS] COMMAND [ARGS]...
   An Oracle Autonomous Database.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create           Creates a new Autonomous Database.
@@ -812,7 +828,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database delete --help
@@ -853,7 +870,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database generate-wallet --help
@@ -880,7 +898,8 @@ Options:
                                  exists in both the JSON document and the
                                  command line then the command line specified
                                  value will be used
-  -?, -h, --help                 Show this message and exit.
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database get --help
@@ -898,7 +917,8 @@ Options:
                                  exists in both the JSON document and the
                                  command line then the command line specified
                                  value will be used
-  -?, -h, --help                 Show this message and exit.
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database list --help
@@ -944,7 +964,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database restore --help
@@ -1055,7 +1076,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database start --help
@@ -1094,7 +1116,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database stop --help
@@ -1133,7 +1156,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database update --help
@@ -1231,7 +1255,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database-backup --help
@@ -1240,7 +1265,8 @@ Usage: oci db autonomous-database-backup [OPTIONS] COMMAND [ARGS]...
   An Autonomous Database backup.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new Autonomous Database backup for...
@@ -1281,7 +1307,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database-backup get --help
@@ -1301,7 +1328,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database-backup list --help
@@ -1349,7 +1377,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db backup --help
@@ -1361,7 +1390,8 @@ Usage: oci db backup [OPTIONS] COMMAND [ARGS]...
   see [Getting Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create  Creates a new backup in the specified...
@@ -1406,7 +1436,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db backup delete --help
@@ -1447,7 +1478,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db backup get --help
@@ -1463,7 +1495,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db backup list --help
@@ -1489,7 +1522,8 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association --help
@@ -1504,7 +1538,8 @@ Usage: oci db data-guard-association [OPTIONS] COMMAND [ARGS]...
   Tools].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create      Creates a new Data Guard association.
@@ -1530,7 +1565,8 @@ Usage: oci db data-guard-association create [OPTIONS] COMMAND [ARGS]...
   Fore more information, see [Resource Identifiers].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   from-existing-db-system  Creates a new Data Guard association using an...
@@ -1616,7 +1652,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association create with-new-db-system --help
@@ -1714,7 +1751,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association failover --help
@@ -1763,7 +1801,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association get --help
@@ -1784,7 +1823,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association list --help
@@ -1808,7 +1848,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association reinstate --help
@@ -1853,7 +1894,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association switchover --help
@@ -1901,14 +1943,15 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database --help
 Usage: oci db database [OPTIONS] COMMAND [ARGS]...
 
   An Oracle database on a bare metal or virtual machine DB system. For more
-  information, see [Bare Metal and Virtual Machine DB Systems]. To use any of
+  information, see Bare Metal and Virtual Machine DB Systems. To use any of
   the API operations, you must be authorized in an IAM policy. If you're not
   authorized, talk to an administrator. If you're an administrator who needs
   to write policies to give users access, see [Getting Started with Policies].
@@ -1916,7 +1959,8 @@ Usage: oci db database [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   create              Creates a new database in the given DB...
@@ -2017,7 +2061,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database create-from-backup --help
@@ -2058,7 +2103,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database delete --help
@@ -2076,7 +2122,8 @@ Options:
                       If an option exists in both the JSON document and the
                       command line then the command line specified value will be
                       used
-  -?, -h, --help      Show this message and exit.
+  -?, -h, --help      For detailed help on any of these individual commands,
+                      enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database get --help
@@ -2093,7 +2140,8 @@ Options:
                       If an option exists in both the JSON document and the
                       command line then the command line specified value will be
                       used
-  -?, -h, --help      Show this message and exit.
+  -?, -h, --help      For detailed help on any of these individual commands,
+                      enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database list --help
@@ -2128,7 +2176,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database patch --help
@@ -2147,7 +2196,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database restore --help
@@ -2261,7 +2311,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db database update --help
@@ -2345,7 +2396,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db external-backup-job --help
@@ -2354,7 +2406,8 @@ Usage: oci db external-backup-job [OPTIONS] COMMAND [ARGS]...
   Provides all the details that apply to an external backup job.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   complete  Changes the status of the standalone backup...
@@ -2415,7 +2468,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db external-backup-job create --help
@@ -2465,7 +2519,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db external-backup-job get --help
@@ -2487,7 +2542,8 @@ Options:
                     Options can still be provided on the command line. If
                     an option exists in both the JSON document and the command
                     line then the command line specified value will be used
-  -?, -h, --help    Show this message and exit.
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node --help
@@ -2501,7 +2557,8 @@ Usage: oci db node [OPTIONS] COMMAND [ARGS]...
   information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get         Gets information about the specified database...
@@ -2526,7 +2583,8 @@ Options:
                      If an option exists in both the JSON document and the
                      command line then the command line specified value will be
                      used
-  -?, -h, --help     Show this message and exit.
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node list --help
@@ -2562,7 +2620,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node reset --help
@@ -2601,7 +2660,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node soft-reset --help
@@ -2640,7 +2700,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node start --help
@@ -2679,7 +2740,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db node stop --help
@@ -2718,7 +2780,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch --help
@@ -2730,7 +2793,8 @@ Usage: oci db patch [OPTIONS] COMMAND [ARGS]...
   give users access, see [Getting Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets information about a specified patch...
@@ -2743,7 +2807,8 @@ Usage: oci db patch get [OPTIONS] COMMAND [ARGS]...
   Gets information about a specified patch package.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   by-database   Get patch for a given database
@@ -2765,7 +2830,8 @@ Options:
                       If an option exists in both the JSON document and the
                       command line then the command line specified value will be
                       used
-  -?, -h, --help      Show this message and exit.
+  -?, -h, --help      For detailed help on any of these individual commands,
+                      enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch get by-db-system --help
@@ -2783,7 +2849,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch list --help
@@ -2792,7 +2859,8 @@ Usage: oci db patch list [OPTIONS] COMMAND [ARGS]...
   Lists patches applicable to the requested database home.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   by-database   List patches for a given database
@@ -2813,7 +2881,8 @@ Options:
                        call. Only valid when used with --all or --limit, and
                        ignored otherwise.
   --database-id TEXT   The database [OCID]. [required]
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
   --from-json TEXT     Provide input to this command as a JSON document from a
                        file.
                        
@@ -2821,7 +2890,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch list by-db-system --help
@@ -2845,7 +2915,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch-history --help
@@ -2854,7 +2925,8 @@ Usage: oci db patch-history [OPTIONS] COMMAND [ARGS]...
   The record of a patch action on a specified target.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get   Gets the patch history details for the...
@@ -2867,7 +2939,8 @@ Usage: oci db patch-history get [OPTIONS] COMMAND [ARGS]...
   Gets the patch history details for the specified patchHistoryEntryId
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   by-database   Get patch history for a given database
@@ -2891,7 +2964,8 @@ Options:
                                  exists in both the JSON document and the
                                  command line then the command line specified
                                  value will be used
-  -?, -h, --help                 Show this message and exit.
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch-history get by-db-system --help
@@ -2911,7 +2985,8 @@ Options:
                                  exists in both the JSON document and the
                                  command line then the command line specified
                                  value will be used
-  -?, -h, --help                 Show this message and exit.
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch-history list --help
@@ -2921,7 +2996,8 @@ Usage: oci db patch-history list [OPTIONS] COMMAND [ARGS]...
   home.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   by-database   List patch history entries for a given...
@@ -2942,7 +3018,8 @@ Options:
                        call. Only valid when used with --all or --limit, and
                        ignored otherwise.
   --database-id TEXT   The database [OCID]. [required]
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
   --from-json TEXT     Provide input to this command as a JSON document from a
                        file.
                        
@@ -2950,7 +3027,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db patch-history list by-db-system --help
@@ -2974,7 +3052,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system --help
@@ -2982,19 +3061,20 @@ Usage: oci db system [OPTIONS] COMMAND [ARGS]...
 
   The Database Service supports several types of DB systems, ranging in size,
   price, and performance. For details about each type of system, see: -
-  [Exadata DB Systems] - [Bare Metal and Virtual Machine DB Systems] To use
-  any of the API operations, you must be authorized in an IAM policy. If you
-  are not authorized, talk to an administrator. If you are an administrator
-  who needs to write policies to give users access, see [Getting Started with
-  Policies]. For information about access control and compartments, see
-  [Overview of the Identity Service]. For information about availability
-  domains, see [Regions and Availability Domains]. To get a list of
-  availability domains, use the `ListAvailabilityDomains` operation in the
-  Identity Service API. **Warning:** Oracle recommends that you avoid using
-  any confidential information when you supply string values using the API.
+  Exadata DB Systems - Bare Metal and Virtual Machine DB Systems To use any of
+  the API operations, you must be authorized in an IAM policy. If you are not
+  authorized, talk to an administrator. If you are an administrator who needs
+  to write policies to give users access, see [Getting Started with Policies].
+  For information about access control and compartments, see Overview of the
+  Identity Service. For information about availability domains, see [Regions
+  and Availability Domains]. To get a list of availability domains, use the
+  `ListAvailabilityDomains` operation in the Identity Service API.
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   get                 Gets information about the specified DB...
@@ -3020,7 +3100,8 @@ Options:
                        If an option exists in both the JSON document and the
                        command line then the command line specified value will
                        be used
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system launch --help
@@ -3290,7 +3371,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system launch-from-backup --help
@@ -3513,7 +3595,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system list --help
@@ -3567,7 +3650,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system patch --help
@@ -3579,7 +3663,8 @@ Options:
   --db-system-id TEXT  The OCID of the DB System. [required]
   --patch-action TEXT  The action to perform on the patch. [required]
   --patch-id TEXT      The OCID of the patch. [required]
-  -?, -h, --help       Show this message and exit.
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
   --from-json TEXT     Provide input to this command as a JSON document from a
                        file.
                        
@@ -3631,7 +3716,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system update --help
@@ -3733,7 +3819,8 @@ Options:
                                   exists in both the JSON document and the
                                   command line then the command line specified
                                   value will be used
-  -?, -h, --help                  Show this message and exit.
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system-shape --help
@@ -3748,7 +3835,8 @@ Usage: oci db system-shape [OPTIONS] COMMAND [ARGS]...
   give users access, see [Getting Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Gets a list of the shapes that can be used to...
@@ -3780,7 +3868,8 @@ Options:
                               command line. If an option exists in both the JSON
                               document and the command line then the command
                               line specified value will be used
-  -?, -h, --help              Show this message and exit.
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db version --help
@@ -3794,7 +3883,8 @@ Usage: oci db version [OPTIONS] COMMAND [ARGS]...
   Started with Policies].
 
 Options:
-  -?, -h, --help  Show this message and exit.
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
 
 Commands:
   list  Gets a list of supported Oracle database...
@@ -3827,5 +3917,6 @@ Options:
                              command line. If an option exists in both the JSON
                              document and the command line then the command line
                              specified value will be used
-  -?, -h, --help             Show this message and exit.
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 

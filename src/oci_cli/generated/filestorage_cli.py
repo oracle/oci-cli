@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -114,6 +114,7 @@ This option is a JSON list with items of type ClientOptions.  For documentation 
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-options': {'module': 'file_storage', 'class': 'list[ClientOptions]'}}, output_type={'module': 'file_storage', 'class': 'Export'})
 @cli_util.wrap_exceptions
 def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, file_system_id, path, export_options):
+
     kwargs = {}
 
     details = {}
@@ -175,6 +176,7 @@ Example: `My file system`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
 def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -250,6 +252,7 @@ Example: `10.0.3.3`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
 def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -314,6 +317,7 @@ Example: `Sunday`""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'Snapshot'})
 @cli_util.wrap_exceptions
 def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, freeform_tags, defined_tags):
+
     kwargs = {}
 
     details = {}
@@ -366,6 +370,7 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -421,6 +426,7 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -476,6 +482,7 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -531,6 +538,7 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -581,6 +589,7 @@ def get_export(ctx, from_json, export_id):
 
     if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_export(
@@ -601,6 +610,7 @@ def get_export_set(ctx, from_json, export_set_id):
 
     if isinstance(export_set_id, six.string_types) and len(export_set_id.strip()) == 0:
         raise click.UsageError('Parameter --export-set-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_export_set(
@@ -621,6 +631,7 @@ def get_file_system(ctx, from_json, file_system_id):
 
     if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_file_system(
@@ -641,6 +652,7 @@ def get_mount_target(ctx, from_json, mount_target_id):
 
     if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_mount_target(
@@ -661,6 +673,7 @@ def get_snapshot(ctx, from_json, snapshot_id):
 
     if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
+
     kwargs = {}
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_snapshot(
@@ -703,6 +716,7 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -774,6 +788,7 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
@@ -849,6 +864,7 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -927,6 +943,7 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -997,6 +1014,7 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1061,6 +1079,7 @@ def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         if export_options:
             if not click.confirm("WARNING: Updates to export-options will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1115,6 +1134,7 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if isinstance(export_set_id, six.string_types) and len(export_set_id.strip()) == 0:
         raise click.UsageError('Parameter --export-set-id cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1180,6 +1200,7 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1245,6 +1266,7 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1307,6 +1329,7 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match

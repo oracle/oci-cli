@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import json
 import os
@@ -100,7 +100,7 @@ class TestCompute(unittest.TestCase):
              '--subnet-id', self.subnet_ocid,
              '--image-id', image_id,
              '--shape', shape,
-             '--metadata', util.remove_outer_quotes(oci_cli.core_cli_extended.compute_instance_launch_metadata_example)])
+             '--metadata', util.remove_outer_quotes(oci_cli.compute_cli_extended.compute_instance_launch_metadata_example)])
         self.instance_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
 
@@ -483,7 +483,7 @@ class TestCompute(unittest.TestCase):
 
         util.validate_response(result, json_response_expected=False)
 
-        m = re.search(oci_cli.core_cli_extended.INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX, instance_console_connection_details['data']['connection-string'])
+        m = re.search(oci_cli.compute_cli_extended.INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX, instance_console_connection_details['data']['connection-string'])
         intermediate_host = m.group(0)
 
         connection_template = 'Start-Job {{echo N | plink -ssh -N -i "{3}" -P 443 -l {1} {2} -L 5905:{0}:5905}}; sleep 5 ; plink -L 5900:localhost:5900 localhost -P 5905 -N -i "{3}" -l {1}'

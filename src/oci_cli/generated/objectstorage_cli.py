@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -104,6 +104,7 @@ def abort_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_n
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -129,6 +130,7 @@ def cancel_work_request(ctx, from_json, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -163,6 +165,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -215,6 +218,7 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -282,6 +286,7 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -338,6 +343,7 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -389,6 +395,7 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -427,6 +434,7 @@ def delete_bucket(ctx, from_json, namespace_name, bucket_name, if_match):
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -461,6 +469,7 @@ def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_m
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -492,6 +501,7 @@ def delete_object_lifecycle_policy(ctx, from_json, namespace_name, bucket_name, 
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -525,6 +535,7 @@ def delete_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
 
     if isinstance(par_id, six.string_types) and len(par_id.strip()) == 0:
         raise click.UsageError('Parameter --par-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -555,6 +566,7 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -579,6 +591,7 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def get_namespace(ctx, from_json, ):
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -599,6 +612,7 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -632,6 +646,7 @@ def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, i
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -687,6 +702,7 @@ def get_object_lifecycle_policy(ctx, from_json, namespace_name, bucket_name):
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -717,6 +733,7 @@ def get_preauthenticated_request(ctx, from_json, namespace_name, bucket_name, pa
 
     if isinstance(par_id, six.string_types) and len(par_id.strip()) == 0:
         raise click.UsageError('Parameter --par-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -740,6 +757,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
@@ -767,6 +785,7 @@ def head_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_m
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -803,6 +822,7 @@ def head_object(ctx, from_json, namespace_name, bucket_name, object_name, if_mat
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -841,6 +861,7 @@ def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartme
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -905,6 +926,7 @@ def list_multipart_upload_parts(ctx, from_json, all_pages, page_size, namespace_
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -968,6 +990,7 @@ def list_multipart_uploads(ctx, from_json, all_pages, page_size, namespace_name,
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
@@ -1026,6 +1049,7 @@ def list_objects(ctx, from_json, namespace_name, bucket_name, prefix, start, end
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if prefix is not None:
         kwargs['prefix'] = prefix
@@ -1072,6 +1096,7 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if object_name_prefix is not None:
         kwargs['object_name_prefix'] = object_name_prefix
@@ -1127,6 +1152,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1177,6 +1203,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
     if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1224,6 +1251,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
@@ -1285,6 +1313,7 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if content_length is not None:
         kwargs['content_length'] = content_length
@@ -1345,6 +1374,7 @@ def put_object_lifecycle_policy(ctx, from_json, force, namespace_name, bucket_na
         if items:
             if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1387,6 +1417,7 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -1430,6 +1461,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -1471,6 +1503,7 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
     if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
@@ -1522,6 +1555,7 @@ def update_namespace_metadata(ctx, from_json, namespace_name, default_s3_compart
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -1569,6 +1603,7 @@ def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload
 
     if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
     kwargs = {}
     if content_length is not None:
         kwargs['content_length'] = content_length

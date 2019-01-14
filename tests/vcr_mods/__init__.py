@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # Because the SDK uses a vendored version of requests and urllib3, by default VCR doesn't know how to hook into it
 # and so recording is not done properly. This module contains modifications to VCR's functionality so that

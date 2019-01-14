@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 # This script provides an example of how to create an object lifecycle policy on a bucket.
 #
 # Requirements for running this script:

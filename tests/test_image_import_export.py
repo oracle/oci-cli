@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import json
 from . import util
@@ -94,7 +94,7 @@ class TestImageImportExport(object):
         self.object_par_id = par_details['data']['id']
 
         # The access-uri in the response looks like:
-        #    /p/...../n/internalbriangustafson/b/A_CliImportExportBucket/o/test_export_1
+        #    /p/...../n/mytenancy/b/A_CliImportExportBucket/o/test_export_1
         #
         # So we need to prepend the domain only (as the URI references the object alreadt)
         object_par_access_uri = '{}{}'.format(oci.regions.endpoint_for('object_storage', config['region']), par_details['data']['access-uri'])
@@ -135,7 +135,7 @@ class TestImageImportExport(object):
     #     self.bucket_par_id = par_details['data']['id']
 
     #     # The access-uri in the response looks like:
-    #     #    /p/...../n/internalbriangustafson/b/A_CliImportExportBucket/o/
+    #     #    /p/...../n/mytenancy/b/A_CliImportExportBucket/o/
     #     #
     #     # So we need to prepend the domain and append the object name in order to put something in the bucket
     #     bucket_par_access_uri = '{}{}{}'.format(
@@ -166,7 +166,7 @@ class TestImageImportExport(object):
     #     self.object_par_id = par_details['data']['id']
 
     #     # The access-uri in the response looks like:
-    #     #    /p/...../n/internalbriangustafson/b/A_CliImportExportBucket/o/test_export_1
+    #     #    /p/...../n/mytenancy/b/A_CliImportExportBucket/o/test_export_1
     #     #
     #     # So we need to prepend the domain only (as the URI references the object alreadt)
     #     object_par_access_uri = '{}{}'.format(oci.regions.endpoint_for('object_storage', config['region']), par_details['data']['access-uri'])

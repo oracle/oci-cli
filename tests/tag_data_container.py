@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # A module which is intended to hold information on tag namespaces and tags
 # so that they can be shared across test cases. This is primarily here because the CLI
