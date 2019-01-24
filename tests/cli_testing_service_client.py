@@ -5,12 +5,20 @@
 
 import json
 import base64
+import os
 from oci._vendor import requests
 from oci_cli.cli_util import use_or_generate_request_id, make_dict_keys_camel_case, LIST_NOT_ALL_ITEMS_RETURNED_WARNING
 
-# if you are running the CLI tests inside a docker container on Mac, change SERVICE_HOSTNAME to 'docker.for.mac.localhost'
-SERVICE_HOSTNAME = 'localhost'
-SERVICE_PORT = '8090'
+TESTING_SERVICE_HOSTNAME_ENV_VAR = 'OCI_CLI_TESTING_SERVICE_HOSTNAME'
+TESTING_SERVICE_PORT_ENV_VAR = 'OCI_CLI_TESTING_SERVICE_PORT'
+
+DEFAULT_TESTING_SERVICE_HOSTNAME = 'localhost'
+DEFAULT_TESTING_SERVICE_PORT = '8090'
+
+# if you are running the CLI tests inside a docker container on Mac
+# set environment variable OCI_CLI_TESTING_SERVICE_HOSTNAME to 'docker.for.mac.localhost'
+SERVICE_HOSTNAME = os.environ.get(TESTING_SERVICE_HOSTNAME_ENV_VAR, DEFAULT_TESTING_SERVICE_HOSTNAME)
+SERVICE_PORT = os.environ.get(TESTING_SERVICE_PORT_ENV_VAR, DEFAULT_TESTING_SERVICE_PORT)
 SERVICE_PATH = 'SDKTestingService'
 SERVICE_ROOT_URL = 'http://{hostname}:{port}/{path}'.format(hostname=SERVICE_HOSTNAME, port=SERVICE_PORT, path=SERVICE_PATH)
 SERVICE_LANGUAGE = "PythonCLI"

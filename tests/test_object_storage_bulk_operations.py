@@ -5,7 +5,7 @@ import filecmp
 import json
 import pytest
 import oci
-import oci_cli
+import oci_cli_object_storage
 import os
 import random
 import shutil
@@ -58,6 +58,7 @@ def generate_test_data(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
     bulk_get_bucket_name = create_bucket_request.name
@@ -89,11 +90,13 @@ def generate_test_data(object_storage_client):
     # makedirs creates all subfolders recursively
     root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(util.random_number_string())
     bulk_put_folder_leaf = '{}/subfolder1/subfolder2/subfolder3'.format(root_bulk_put_folder)
-    os.makedirs(bulk_put_folder_leaf)
+    if not os.path.exists(bulk_put_folder_leaf):
+        os.makedirs(bulk_put_folder_leaf)
 
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
     bulk_put_bucket_name = create_bucket_request.name
@@ -131,14 +134,14 @@ def generate_test_data(object_storage_client):
 
 @util.skip_while_rerecording
 def test_normalize_object_name_path():
-    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path')
-    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path', '/')
-    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this\\is\\a\\path', '\\')
-    assert '/this/is/a/path' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this/is/a\\path', '\\')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('/this/is/a/path', '/')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this\\is\\a\\path', '\\')
+    assert '/this/is/a/path' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('\\this/is/a\\path', '\\')
 
-    assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath')
-    assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '/')
-    assert 'thisisapath' == oci_cli.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '\\')
+    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath')
+    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '/')
+    assert 'thisisapath' == oci_cli_object_storage.objectstorage_cli_extended.normalize_object_name_path_for_object_storage('thisisapath', '\\')
 
 
 @util.skip_while_rerecording
@@ -252,10 +255,12 @@ def test_get_multipart(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
     large_file_root_dir = os.path.join('tests', 'temp', 'multipart_get_large_files')
-    os.makedirs(large_file_root_dir)
+    if not os.path.exists(large_file_root_dir):
+        os.makedirs(large_file_root_dir)
     util.create_large_file(os.path.join(large_file_root_dir, '1.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '2.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '3.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
@@ -376,6 +381,7 @@ def test_bulk_put_with_multipart_params(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
     result = invoke([
@@ -564,7 +570,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
     assert parsed_result['delete-failures'] == {}
     assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
 
-    list_objects_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
+    list_objects_responses = oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
@@ -706,7 +712,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
     assert parsed_result['delete-failures'] == {}
     assert set(parsed_result['deleted-objects']) == set(parsed_dry_run_result['deleted-objects'])
 
-    list_objects_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
+    list_objects_responses = oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
@@ -767,6 +773,7 @@ def test_delete(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(random.randint(0, 1000000))
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
     invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder])
@@ -798,6 +805,7 @@ def test_bulk_operation_table_output_query(object_storage_client):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
     create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(util.random_number_string())
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
     result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--src-dir', root_bulk_put_folder, '--output', 'table', '--query', "[?action=='Uploaded'].{file: file, \"opc-content-md5\": \"opc-content-md5\"}"])
@@ -872,7 +880,7 @@ def get_object_name_from_path(path_root, full_path):
 
 
 def delete_bucket_and_all_items(object_storage_client, bucket_name):
-    list_object_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
+    list_object_responses = oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,
@@ -892,7 +900,7 @@ def delete_bucket_and_all_items(object_storage_client, bucket_name):
 
 
 def get_number_of_objects_in_bucket(object_storage_client, bucket_name):
-    list_object_responses = oci_cli.objectstorage_cli_extended.retrying_list_objects(
+    list_object_responses = oci_cli_object_storage.objectstorage_cli_extended.retrying_list_objects(
         client=object_storage_client,
         request_id=None,
         namespace=util.NAMESPACE,

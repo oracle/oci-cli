@@ -3,6 +3,7 @@
 
 import io
 import os
+import sys
 import re
 from setuptools import setup, find_packages
 
@@ -28,13 +29,13 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.1.4',
+    'oci==2.1.5',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
     'configparser==3.5.0',
-    'cryptography==2.1.4',
-    'cx_Oracle==6.2.1',
+    'cryptography==2.4.2',
+    'cx_Oracle==7.0.0',
     'httpsig_cffi==15.0.0',
     'jmespath==0.9.3',
     'python-dateutil==2.7.3',
@@ -43,7 +44,7 @@ requires = [
     'six==1.11.0',
     'terminaltables==3.1.0',
     'idna>=2.5,<2.7',
-    'pyOpenSSL==17.5.0'
+    'pyOpenSSL==18.0.0'
 ]
 
 fips_libcrypto_file = os.getenv("OCI_CLI_FIPS_LIBCRYPTO_FILE")
@@ -52,6 +53,22 @@ if fips_libcrypto_file:
     with open('src/oci_cli/oci_template.py', 'r') as template_file:
         template = template_file.read()
         ScriptWriter.template = template
+
+ALL_SERVICES_DIR = "services"
+package_dirs = {"": "src"}
+all_packages = find_packages(where="src")
+# Populating package_dirs and all_packages from directories outside of src/oci_cli
+python_cli_root_dir = "."  # absolute paths are not allowed in setup
+for spec_dir_name in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
+    if os.path.isdir(os.path.join(python_cli_root_dir, ALL_SERVICES_DIR, spec_dir_name)):
+        spec_dir_src = os.path.join(python_cli_root_dir, ALL_SERVICES_DIR, spec_dir_name, "src")
+        packages = find_packages(where=spec_dir_src)
+        for package in packages:
+            package_path = os.path.join(ALL_SERVICES_DIR, spec_dir_name, "src")
+            for pkg in package.split("."):
+                package_dirs[package] = os.path.join(package_path, pkg)
+                package_path = os.path.join(package_path, pkg)
+        all_packages.extend(packages)
 
 setup(
     name='oci-cli',
@@ -66,8 +83,8 @@ setup(
                             "create_backup_from_onprem=oci_cli.scripts.database.dbaas:create_backup_from_onprem"]
     },
     install_requires=requires,
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
+    packages=all_packages,
+    package_dir=package_dirs,
     include_package_data=True,
     license="Universal Permissive License 1.0 or Apache License 2.0",
     classifiers=[
@@ -79,5 +96,6 @@ setup(
         "License :: OSI Approved :: Universal Permissive License (UPL)",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
     ]
 )

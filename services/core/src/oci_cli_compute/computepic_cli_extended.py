@@ -1,0 +1,114 @@
+# coding: utf-8
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+
+from __future__ import print_function
+import click
+
+from oci_cli.generated import compute_cli
+
+from oci_cli import cli_util
+from oci_cli import custom_types
+from oci_cli import json_skeleton_utils
+from oci_cli.aliasing import CommandGroupWithAlias
+
+
+# We want to replace the following:
+#   oci compute app-catalog-listing get
+#   oci compute app-catalog-listing list
+#   oci compute app-catalog-listing-resource-version get
+#   oci compute app-catalog-listing-resource-version list
+#   oci compute app-catalog-listing-resource-version-agreements get-app-catalog-listing-agreements
+#   oci compute app-catalog-subscription create --oracle-terms-of-use-link
+#   oci compute app-catalog-subscription delete
+#   oci compute app-catalog-subscription list
+#
+# With these:
+#   oci compute pic listing get
+#   oci compute pic listing list
+#   oci compute pic version get
+#   oci compute pic version list
+#   oci compute pic agreements get
+#   oci compute pic subscription create --oracle-tou-link
+#   oci compute pic subscription delete
+#   oci compute pic subscription list
+
+# Disabling app_catalog commands
+compute_cli.compute_root_group.commands.pop(compute_cli.app_catalog_listing_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.app_catalog_listing_resource_version_agreements_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.app_catalog_listing_resource_version_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.app_catalog_subscription_group.name)
+
+
+@click.command('pic', cls=CommandGroupWithAlias, help="""Partner image catalog (PIC).""")
+@cli_util.help_option_group
+def pic_group():
+    pass
+
+
+@click.command('listing', cls=CommandGroupWithAlias, help="""A PIC listing.""")
+@cli_util.help_option_group
+def pic_listing_group():
+    pass
+
+
+@click.command('version', cls=CommandGroupWithAlias, help="""A PIC listing resource version.""")
+@cli_util.help_option_group
+def pic_version_group():
+    pass
+
+
+@click.command('agreements', cls=CommandGroupWithAlias, help="""PIC listing resource version agreements.""")
+@cli_util.help_option_group
+def pic_agreements_group():
+    pass
+
+
+@click.command('subscription', cls=CommandGroupWithAlias, help="""A PIC subscription.""")
+@cli_util.help_option_group
+def pic_subscription_group():
+    pass
+
+
+compute_cli.compute_root_group.add_command(pic_group)
+pic_group.add_command(pic_listing_group)
+pic_group.add_command(pic_version_group)
+pic_group.add_command(pic_agreements_group)
+pic_group.add_command(pic_subscription_group)
+
+pic_listing_group.add_command(compute_cli.list_app_catalog_listings)
+pic_listing_group.add_command(compute_cli.get_app_catalog_listing)
+pic_version_group.add_command(compute_cli.list_app_catalog_listing_resource_versions)
+pic_version_group.add_command(compute_cli.get_app_catalog_listing_resource_version)
+pic_subscription_group.add_command(compute_cli.list_app_catalog_subscriptions)
+pic_subscription_group.add_command(compute_cli.delete_app_catalog_subscription)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.get_app_catalog_listing_agreements, params_to_exclude=[])
+@pic_agreements_group.command(name='get', help=compute_cli.get_app_catalog_listing_agreements.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def get_app_catalog_listing_agreements(ctx, **kwargs):
+    ctx.invoke(compute_cli.get_app_catalog_listing_agreements, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.create_app_catalog_subscription, params_to_exclude=['oracle_terms_of_use_link', 'listing_resource_version'])
+@pic_subscription_group.command(name='create', help=compute_cli.create_app_catalog_subscription.help)
+@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--resource-version', required=True, help="""Listing Resource Version.""")
+@cli_util.option('--signature', required=True, help="""A generated signature for this listing resource version retrieved the agreements API.""")
+@cli_util.option('--oracle-tou-link', required=True, help='''Oracle Terms of Use link''')
+@cli_util.option('--eula-link', required=True, help='''EULA link''')
+@cli_util.option('--time-retrieved', required=True, type=custom_types.CLI_DATETIME, help="""Date and time the agreements were retrieved, in RFC3339 format. Example: `2018-03-20T12:32:53.532Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def create_app_catalog_subscription(ctx, **kwargs):
+    if 'oracle_tou_link' in kwargs:
+        kwargs['oracle_terms_of_use_link'] = kwargs['oracle_tou_link']
+        kwargs.pop('oracle_tou_link')
+    if 'resource_version' in kwargs:
+        kwargs['listing_resource_version'] = kwargs['resource_version']
+        kwargs.pop('resource_version')
+    ctx.invoke(compute_cli.create_app_catalog_subscription, **kwargs)
