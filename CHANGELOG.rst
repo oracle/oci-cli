@@ -6,7 +6,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-2.4.41 - 2019-01-10
+2.4.42 - 2019-01-24
+-------------------
+Added
+~~~~~
+* Support for renaming the new database when restoring a database backup to an existing dbsystem (--db-name option for ``oci db database create-from-backup``)
+
+* Support for renaming the new database when launching new dbsystem from a database backup (--db-name option for ``oci db system launch-from-backup``)
+
+  * An example on using --db-name parameter while restoring a database from backup can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/rename_database_during_backup_restore.sh>`__.
+
+* Support for calling Oracle Cloud Infrastructure services in the ``ca-toronto-1`` region (``--region ca-toronto-1``)
+
+Changed
+~~~~~~~
+* Upgraded third party module versions for requests, cx_Oracle, pyOpenSSL, and cryptography. This should improve support for Python 3.7.
+
+2.4.41 - 2019-01-14
 -------------------
 Added
 ~~~~~

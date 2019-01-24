@@ -74,7 +74,8 @@ SKIP_JSON_KEY_FORMAT_CHECK = set([
     "certificates",
     "default-backend-set-name",
     "defined-tags",
-    "freeform-tags"
+    "freeform-tags",
+    "cdbDefault"  # This is for test_database.py
 ])
 
 

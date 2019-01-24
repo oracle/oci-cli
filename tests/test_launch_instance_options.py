@@ -5,7 +5,7 @@ import json
 import unittest
 from . import test_config_container
 from . import util
-import oci_cli
+import oci_cli_compute
 
 
 IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'
@@ -159,7 +159,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
              '--shape', shape,
              '--hostname-label', hostname_label + "2",
              '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
-             '--metadata', util.remove_outer_quotes(oci_cli.compute_cli_extended.compute_instance_launch_metadata_example)])
+             '--metadata', util.remove_outer_quotes(oci_cli_compute.compute_cli_extended.compute_instance_launch_metadata_example)])
 
         assert launch_instance_result.exit_code != 0
 
@@ -234,7 +234,7 @@ class TestLaunchInstanceOptions(unittest.TestCase):
              '--shape', shape,
              '--hostname-label', hostname_label + "4",
              '--user-data-file', USER_DATA_FILE,
-             '--metadata', util.remove_outer_quotes(oci_cli.compute_cli_extended.compute_instance_launch_metadata_example)])
+             '--metadata', util.remove_outer_quotes(oci_cli_compute.compute_cli_extended.compute_instance_launch_metadata_example)])
 
         util.validate_response(launch_instance_result, expect_etag=True)
         temp_instance_ocid = util.find_id_in_response(launch_instance_result.output)

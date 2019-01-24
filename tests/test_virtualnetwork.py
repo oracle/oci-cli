@@ -7,7 +7,7 @@ import unittest
 from . import test_config_container
 from . import util
 from .test_list_filter import retrieve_list_by_field_and_check, retrieve_list_and_ensure_sorted
-import oci_cli
+import oci_cli_virtual_network
 
 
 class TestVirtualNetwork(unittest.TestCase):
@@ -70,8 +70,8 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_security_list_operations(self):
         sl_name = util.random_name('cli_test_security_list')
-        egress_rules = util.remove_outer_quotes(oci_cli.virtualnetwork_cli_extended.network_create_security_list_egress_security_rules_example)
-        ingress_rules = util.remove_outer_quotes(oci_cli.virtualnetwork_cli_extended.network_create_security_list_ingress_security_rules_example)
+        egress_rules = util.remove_outer_quotes(oci_cli_virtual_network.virtualnetwork_cli_extended.network_create_security_list_egress_security_rules_example)
+        ingress_rules = util.remove_outer_quotes(oci_cli_virtual_network.virtualnetwork_cli_extended.network_create_security_list_ingress_security_rules_example)
 
         result = self.invoke(
             ['security-list', 'create',
@@ -188,7 +188,7 @@ class TestVirtualNetwork(unittest.TestCase):
     def subtest_subnet_operations(self):
         subnet_name = util.random_name('cli_test_subnet')
         cidr_block = "10.0.0.0/16"
-        security_list_ids = util.remove_outer_quotes(oci_cli.virtualnetwork_cli_extended.network_create_subnet_security_list_ids_example.format(sl_id=self.sl_ocid))
+        security_list_ids = util.remove_outer_quotes(oci_cli_virtual_network.virtualnetwork_cli_extended.network_create_subnet_security_list_ids_example.format(sl_id=self.sl_ocid))
         subnet_dns_label = util.random_name('subnet', insert_underscore=False)
 
         result = self.invoke(
@@ -280,7 +280,7 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_dhcp_option_operations(self):
         dhcp_options_name = util.random_name('cli_test_dhcp_options')
-        options = util.remove_outer_quotes(oci_cli.virtualnetwork_cli_extended.network_create_dhcp_options_options_example)
+        options = util.remove_outer_quotes(oci_cli_virtual_network.virtualnetwork_cli_extended.network_create_dhcp_options_options_example)
 
         result = self.invoke(
             ['dhcp-options', 'create',
@@ -406,7 +406,7 @@ class TestVirtualNetwork(unittest.TestCase):
             return
 
         ipsc_name = util.random_name('cli_test_ipsc')
-        routes = util.remove_outer_quotes(oci_cli.virtualnetwork_cli_extended.network_create_ip_sec_connection_static_routes_example)
+        routes = util.remove_outer_quotes(oci_cli_virtual_network.virtualnetwork_cli_extended.network_create_ip_sec_connection_static_routes_example)
 
         result = self.invoke(
             ['ip-sec-connection', 'create',
@@ -445,7 +445,7 @@ class TestVirtualNetwork(unittest.TestCase):
     @util.log_test
     def subtest_route_table_operations(self):
         rt_name = util.random_name('cli_test_route_table')
-        rules = util.remove_outer_quotes(oci_cli.virtualnetwork_cli_extended.network_create_route_table_route_rules_example.format(ig_id=self.ig_ocid))
+        rules = util.remove_outer_quotes(oci_cli_virtual_network.virtualnetwork_cli_extended.network_create_route_table_route_rules_example.format(ig_id=self.ig_ocid))
 
         result = self.invoke(
             ['route-table', 'create',

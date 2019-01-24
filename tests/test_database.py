@@ -1,6 +1,19 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
+'''
+# These tests should now work collectively, this way:
+# export CLI_TESTS_ADMIN_PASS_PHRASE="XXXXXXXX"
+# pytest -s --enable-long-running --vcr-record-mode=none tests/test_database.py
+
+# Or individually:
+# pytest -s --enable-long-running --vcr-record-mode=none tests/test_database.py::test_list_db_systems
+db_tests="test_list_db_systems test_list_db_system_shapes test_list_db_versions test_update_db_system test_data_guard_operations test_data_guard_with_new_db test_launch_db_from_database test_create_database_from_database test_database_operations test_backup_operations test_db_node_operations test_patch_operations test_patch_history_operations test_launch_exa_db_system"
+for tfunc in ${db_tests};do
+  pytest -s --enable-long-running --vcr-record-mode=none tests/test_database.py::${tfunc}
+done
+'''
+
 import json
 import oci
 import oci_cli
@@ -31,9 +44,12 @@ DB_NODE_OPERATION_TIME = 1800  # 30 minutes
 EXISTING_DB_SYSTEM_1 = os.environ.get('OCI_CLI_EXISTING_DB_SYSTEM_1')
 EXISTING_DB_SYSTEM_2 = os.environ.get('OCI_CLI_EXISTING_DB_SYSTEM_2')
 EXISTING_VM_DB_SYSTEM = os.environ.get('OCI_CLI_EXISTING_VM_DB_SYSTEM')
+EXISTING_SUBNET = os.environ.get('OCI_CLI_EXISTING_SUBNET')
 
 # by default clean up all resources. if OCI_CLI_SKIP_CLEAN_UP_DB_RESOURCES == '1' then do not clean up resources
 SKIP_CLEAN_UP_RESOURCES = os.environ.get('OCI_CLI_SKIP_CLEAN_UP_DB_RESOURCES') == '1'
+# This is useful for some local tesing scenarios.
+ADDITIONAL_PARAMETERS = []
 
 
 @pytest.fixture(autouse=True, scope='function')
@@ -41,10 +57,7 @@ def vcr_fixture(request):
     # We are doing this b/c we have recent recordings with data for test_data_guard_with_new_db
     # from our new tenancy, but still have old recordings and for the other tests.
     # Unfortunately, at this time we don't have the proper limits to re-record the old tests.
-    if request.function.__name__ in ["test_data_guard_with_new_db", "test_launch_exa_db_system", "test_launch_db_from_database"]:
-        match_on = ['method', 'scheme', 'host', 'port']
-    else:
-        match_on = []
+    match_on = ['method', 'scheme', 'vcr_host_matcher', 'port', 'vcr_path_matcher', 'vcr_query_matcher']
     my_vcr = test_config_container.create_vcr(match_on=match_on).use_cassette('database_{name}.yml'.format(name=request.function.__name__))
     with my_vcr:
         yield
@@ -59,6 +72,14 @@ def log_test(request):
 
 @pytest.fixture(scope='module')
 def networking(runner, config_file, config_profile, network_client, request):
+    if EXISTING_SUBNET:
+        networking_dict = {}
+        networking_dict['vcn_ocid'] = ''
+        networking_dict['subnet_ocid_1'] = EXISTING_SUBNET
+        networking_dict['subnet_ocid_2'] = ''
+        yield networking_dict
+        return
+
     # create VCN
     vcn_name = util.random_name('cli_db_test_vcn')
     cidr_block = "10.0.0.0/16"
@@ -180,17 +201,20 @@ def networking(runner, config_file, config_profile, network_client, request):
 
 
 @pytest.fixture(scope='module')
-def db_systems(runner, config_file, config_profile, networking, request):
+def db_systems(runner, config_file, config_profile, networking, network_client, request):
     # allow running against existing DB systems instead of launching new ones to save time
     if EXISTING_DB_SYSTEM_1 and EXISTING_DB_SYSTEM_2:
         yield [EXISTING_DB_SYSTEM_1, EXISTING_DB_SYSTEM_2]
         return
 
     # provision DB systems
+    # Get AD of subnet
+    subnet_response = network_client.get_subnet(networking['subnet_ocid_1'])
+    print("Using subnet's AD", subnet_response.data.availability_domain)
     params = [
         'system', 'launch',
         '--admin-password', ADMIN_PASSWORD,
-        '--availability-domain', util.availability_domain(),
+        '--availability-domain', subnet_response.data.availability_domain,
         '--compartment-id', util.COMPARTMENT_ID,
         '--cpu-core-count', DB_SYSTEM_CPU_CORE_COUNT,
         '--database-edition', DB_SYSTEM_DB_EDITION,
@@ -213,10 +237,13 @@ def db_systems(runner, config_file, config_profile, networking, request):
     json_result = json.loads(result.output)
     db_system_id_1 = json_result['data']['id']
 
+    subnet_response_2 = network_client.get_subnet(networking['subnet_ocid_2'])
+    print("Using subnet's AD", subnet_response_2.data.availability_domain)
+
     params = [
         'system', 'launch',
         '--admin-password', ADMIN_PASSWORD,
-        '--availability-domain', util.second_availability_domain(),
+        '--availability-domain', subnet_response_2.data.availability_domain,
         '--compartment-id', util.COMPARTMENT_ID,
         '--cpu-core-count', DB_SYSTEM_CPU_CORE_COUNT,
         '--database-edition', DB_SYSTEM_DB_EDITION,
@@ -263,6 +290,109 @@ def db_systems(runner, config_file, config_profile, networking, request):
                 '--db-system-id', db_system_id_1,
                 '--force'
             ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            # validate that it goes into terminating state
+            params = [
+                'system', 'get',
+                '--db-system-id', db_system_id_1
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            state = json.loads(result.output)['data']['lifecycle-state']
+            assert "TERMINAT" in state
+            util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+        except Exception as error:
+            util.print_latest_exception(error)
+            success_terminating_db_systems = False
+
+        # terminate db system 2
+        try:
+            params = [
+                'system', 'terminate',
+                '--db-system-id', db_system_id_2,
+                '--force'
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            # validate that it goes into terminating state
+            params = [
+                'system', 'get',
+                '--db-system-id', db_system_id_2
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+
+            state = json.loads(result.output)['data']['lifecycle-state']
+            assert "TERMINAT" in state
+            util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_2], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+        except Exception as error:
+            util.print_latest_exception(error)
+            success_terminating_db_systems = False
+
+        assert success_terminating_db_systems
+
+
+@pytest.fixture(scope='module')
+def bm_db_system(runner, config_file, config_profile, networking, request):
+    DB_SYSTEM_SHAPE = "BM.DenseIO2.52"
+    if EXISTING_DB_SYSTEM_1:
+        yield [EXISTING_DB_SYSTEM_1]
+        return
+
+    # provision DB systems
+    params = [
+        'system', 'launch',
+        '--admin-password', ADMIN_PASSWORD,
+        '--availability-domain', util.availability_domain(),
+        '--compartment-id', util.COMPARTMENT_ID,
+        '--cpu-core-count', DB_SYSTEM_CPU_CORE_COUNT,
+        '--database-edition', DB_SYSTEM_DB_EDITION,
+        '--db-name', random_db_name(),
+        '--db-version', DB_VERSION,
+        '--display-name', util.random_name('CliDbSysDisplayName', insert_underscore=False),
+        '--hostname', util.random_name('cli-test-hostname', insert_underscore=False),
+        '--shape', DB_SYSTEM_SHAPE,
+        '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
+        '--subnet-id', networking['subnet_ocid_1'],
+        '--license-model', 'LICENSE_INCLUDED',
+        '--node-count', '1',
+        '--initial-data-storage-size-in-gb', '256'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    print(str(result.output))
+
+    json_result = json.loads(result.output)
+    db_system_id_1 = json_result['data']['id']
+
+    print("Wating for DB System to complete provisioning...")
+
+    # create db system and wait to finish
+    util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'AVAILABLE', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC)
+    print("bm_db_system: DB System provisioned successfully!")
+    yield [db_system_id_1]
+
+    # this code does not run inside the vcr_fixture because it is outside any test function
+    # thus we are explicitly creating a separate cassette for it here
+    with test_config_container.create_vcr().use_cassette('database_test_cleanup.yml'):
+        if SKIP_CLEAN_UP_RESOURCES:
+            print("Skipping clean up of DB systems and dependent resources.")
+            return
+
+        success_terminating_db_systems = True
+
+        try:
+            # terminate db system 1
+            params = [
+                'system', 'terminate',
+                '--db-system-id', db_system_id_1,
+                '--force'
+            ]
 
             result = invoke(runner, config_file, config_profile, params)
             util.validate_response(result)
@@ -276,34 +406,9 @@ def db_systems(runner, config_file, config_profile, networking, request):
             result = invoke(runner, config_file, config_profile, params)
             util.validate_response(result)
 
-            assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+            state = json.loads(result.output)['data']['lifecycle-state']
+            assert "TERMINAT" in state
             util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
-        except Exception as error:
-            util.print_latest_exception(error)
-            success_terminating_db_systems = False
-
-        # terminate db system 2
-        try:
-            params = [
-                'system', 'terminate',
-                '--db-system-id', db_system_id_2,
-                '--force'
-            ]
-
-            result = invoke(runner, config_file, config_profile, params)
-            util.validate_response(result)
-
-            # validate that it goes into terminating state
-            params = [
-                'system', 'get',
-                '--db-system-id', db_system_id_2
-            ]
-
-            result = invoke(runner, config_file, config_profile, params)
-            util.validate_response(result)
-
-            assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
-            util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_2], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
         except Exception as error:
             util.print_latest_exception(error)
             success_terminating_db_systems = False
@@ -349,8 +454,8 @@ def vm_db_system(runner, config_file, config_profile, networking, request):
 
     # create db system and wait to finish
     util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'AVAILABLE', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC)
-    print("DB System provisioned successfully!")
-    yield [db_system_id_1]
+    print("vm_db_system: DB System provisioned successfully!")
+    yield [db_system_id_1, ]
 
     # this code does not run inside the vcr_fixture because it is outside any test function
     # thus we are explicitly creating a separate cassette for it here
@@ -381,7 +486,8 @@ def vm_db_system(runner, config_file, config_profile, networking, request):
             result = invoke(runner, config_file, config_profile, params)
             util.validate_response(result)
 
-            assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+            state = json.loads(result.output)['data']['lifecycle-state']
+            assert "TERMINAT" in state
             util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
         except Exception as error:
             util.print_latest_exception(error)
@@ -400,16 +506,21 @@ def vm_database(runner, config_file, config_profile, vm_db_system):
     return get_database(runner, config_file, config_profile, vm_db_system)
 
 
+@pytest.fixture(scope='function')
+def bm_database(runner, config_file, config_profile, bm_db_system):
+    return get_database(runner, config_file, config_profile, bm_db_system)
+
+
 def get_database(runner, config_file, config_profile, db_systems):
     """Returns the OCID of the first database listed in the db_system"""
-
     params = [
         'database', 'list',
         '--compartment-id', util.COMPARTMENT_ID,
         '--db-system-id', db_systems[0]
     ]
-
+    params.extend(ADDITIONAL_PARAMETERS)
     result = invoke(runner, config_file, config_profile, params)
+    print("get_database result.output", result.output)
     util.validate_response(result)
 
     json_result = json.loads(result.output)
@@ -755,7 +866,8 @@ def test_data_guard_with_new_db(runner, config_file, config_profile, vm_database
     ]
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
-    assert json.loads(result.output)['data']['lifecycle-state'] == "TERMINATING"
+    state = json.loads(result.output)['data']['lifecycle-state']
+    assert "TERMINAT" in state
     util.wait_until(['db', 'system', 'get', '--db-system-id', peer_db_system_id], 'TERMINATED', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
     util.wait_until(['db', 'system', 'get', '--db-system-id', vm_db_system[0]], 'AVAILABLE', max_wait_seconds=DATA_GUARD_ASSOCIATION_OPERATION_TIME)
 
@@ -767,6 +879,137 @@ def test_data_guard_with_new_db(runner, config_file, config_profile, vm_database
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
     assert len(json.loads(result.output)['data']) > 0
+
+
+@util.long_running
+@pytest.mark.skip(reason="launch-from-database not implemented")
+def test_launch_db_from_database(runner, config_file, config_profile, bm_database, bm_db_system):
+
+    # There needs to be a backup created before doing launchDbSystem/createDbHome
+    # 1) Enable Auto backups
+    # 3) CreateBackup (since there is a bug in CP code. The bug has been fixed but not deployed yet.)
+    # 4) Call launch-from-database
+    shape = DB_SYSTEM_SHAPE
+    compartment_id = util.COMPARTMENT_ID
+    availability_domain = util.availability_domain()
+
+    if EXISTING_SUBNET:
+        subnet_id = EXISTING_SUBNET
+    else:
+        # Get the subnet of the existing database
+        params = ['system', 'get', '--db-system-id', bm_db_system[0]]
+        result = invoke(runner, config_file, config_profile, params)
+        subnet_id = json.loads(result.output)['data']['subnet-id']
+        params.extend(ADDITIONAL_PARAMETERS)
+
+    params = [
+        'database', 'update',
+        '--database-id', bm_database,
+        '--auto-backup-enabled', 'true',
+        '--force'
+    ]
+    params.extend(ADDITIONAL_PARAMETERS)
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    params = [
+        'backup', 'create',
+        '--database-id', bm_database,
+        '--display-name', util.random_name('CliDbBackupDisplayName', insert_underscore=False)
+    ]
+    params.extend(ADDITIONAL_PARAMETERS)
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    wait_params = ['db', 'database', 'get', '--database-id', bm_database]
+    wait_params.extend(ADDITIONAL_PARAMETERS)
+    util.wait_until(wait_params, 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
+
+    params = [
+        'system', 'launch-from-database',
+        '--admin-password', ADMIN_PASSWORD,
+        '--availability-domain', availability_domain,
+        '--compartment-id', compartment_id,
+        '--cpu-core-count', DB_SYSTEM_CPU_CORE_COUNT,
+        '--database-edition', DB_SYSTEM_DB_EDITION,
+        '--db-name', random_db_name(),
+        '--display-name', util.random_name('CliDbSysDisplayName', insert_underscore=False),
+        '--hostname', util.random_name('cli-test-hostname', insert_underscore=False),
+        '--shape', shape,
+        '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
+        '--subnet-id', subnet_id,
+        '--license-model', 'LICENSE_INCLUDED',
+        '--database-id', bm_database,
+        '--backup-tde-password', ADMIN_PASSWORD
+    ]
+    params.extend(ADDITIONAL_PARAMETERS)
+    print("launch-from-database params=", params)
+    result = invoke(runner, config_file, config_profile, params)
+    print("launch-from-database result=", str(result))
+    util.validate_response(result)
+    print(str(result.output))
+
+    json_result = json.loads(result.output)
+
+
+@util.long_running
+@pytest.mark.skip(reason="create-from-database not implemented")
+def test_create_database_from_database(runner, config_file, config_profile, bm_database, bm_db_system):
+
+    # There needs to be a backup created before doing launchDbSystem/createDbHome
+    # 1) Enable Auto backups
+    # 3) CreateBackup (since there is a bug in CP code. The bug has been fixed but not deployed yet.)
+    # 4) Call create-from-database
+    shape = DB_SYSTEM_SHAPE
+    compartment_id = util.COMPARTMENT_ID
+    availability_domain = util.availability_domain()
+
+    if EXISTING_SUBNET:
+        subnet_id = EXISTING_SUBNET
+    else:
+        # Get the subnet of the existing database
+        params = ['system', 'get', '--db-system-id', bm_db_system[0]]
+        result = invoke(runner, config_file, config_profile, params)
+        subnet_id = json.loads(result.output)['data']['subnet-id']
+        params.extend(ADDITIONAL_PARAMETERS)
+
+    params = [
+        'database', 'update',
+        '--database-id', bm_database,
+        '--auto-backup-enabled', 'true',
+        '--force'
+    ]
+    params.extend(ADDITIONAL_PARAMETERS)
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+
+    params = [
+        'backup', 'create',
+        '--database-id', bm_database,
+        '--display-name', util.random_name('CliDbBackupDisplayName', insert_underscore=False)
+    ]
+    params.extend(ADDITIONAL_PARAMETERS)
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    wait_params = ['db', 'database', 'get', '--database-id', bm_database]
+    wait_params.extend(ADDITIONAL_PARAMETERS)
+    util.wait_until(wait_params, 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
+
+    params = [
+        'database', 'create-from-database',
+        '--db-name', random_db_name(),
+        '--db-system-id', bm_db_system[0],
+        '--database-id', bm_database,
+        '--admin-password', ADMIN_PASSWORD,
+        '--backup-tde-password', ADMIN_PASSWORD
+    ]
+    params.extend(ADDITIONAL_PARAMETERS)
+    print("create-from-database params=", params)
+    result = invoke(runner, config_file, config_profile, params)
+    print("create-from-database result=", str(result))
+    util.validate_response(result)
+    print(str(result.output))
+
+    json_result = json.loads(result.output)
 
 
 @util.long_running
@@ -843,6 +1086,7 @@ def test_database_operations(runner, config_file, config_profile, db_systems):
 @util.long_running
 def test_backup_operations(runner, config_file, config_profile, db_systems, database):
     # create backup
+    print("Creating backup..")
     params = [
         'backup', 'create',
         '--database-id', database,
@@ -856,6 +1100,7 @@ def test_backup_operations(runner, config_file, config_profile, db_systems, data
     backup_id = json_result['data']['id']
 
     # get backup
+    print("Getting backup..")
     util.wait_until(['db', 'backup', 'get', '--backup-id', backup_id], 'ACTIVE', max_wait_seconds=DB_BACKUP_TIME_SEC)
 
     # list backups by database
@@ -912,6 +1157,7 @@ def test_backup_operations(runner, config_file, config_profile, db_systems, data
         '--db-system-id', db_systems[0],
         '--backup-id', backup_id,
         '--admin-password', ADMIN_PASSWORD,
+        '--db-name', 'renameDb',
         '--backup-tde-password', ADMIN_PASSWORD
     ]
 
@@ -921,8 +1167,46 @@ def test_backup_operations(runner, config_file, config_profile, db_systems, data
     db_created_from_backup = json.loads(result.output)['data']['id']
 
     util.wait_until(['db', 'database', 'get', '--database-id', db_created_from_backup], 'AVAILABLE', max_wait_seconds=DB_PROVISIONING_TIME_SEC)
+    print("Restored Database with a new database name")
+
+    params = [
+        'system', 'get',
+        '--db-system-id', db_systems[0]
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    subnet = json.loads(result.output)['data']['subnet-id']
+
+    print("Launching new Dbsystem from backup with renamed database ")
+    # Launch dbsystem
+    params_1 = [
+        'system', 'launch-from-backup',
+        '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
+        '--backup-id', backup_id,
+        '--subnet-id', subnet,
+        '--hostname', util.random_name('cli-test-hostname', insert_underscore=False),
+        '--db-name', 'renameDb',
+        '--availability-domain', util.availability_domain(),
+        '--shape', DB_SYSTEM_SHAPE,
+        '--display-name', util.random_name('CliDbSysDisplayName', insert_underscore=False),
+        '--initial-data-storage-size-in-gb', '256',
+        '--compartment-id', util.COMPARTMENT_ID,
+        '--admin-password', ADMIN_PASSWORD,
+        '--backup-tde-password', ADMIN_PASSWORD,
+        '--cpu-core-count', '4',
+        '--database-edition', DB_SYSTEM_DB_EXTREME_EDITION
+    ]
+    result = invoke(runner, config_file, config_profile, params_1)
+    util.validate_response(result)
+    dbsystem_from_backup = json.loads(result.output)['data']['id']
+    print("New dbsystem ocid:", dbsystem_from_backup)
+
+    util.wait_until(['db', 'system', 'get', '--db-system-id', dbsystem_from_backup], 'AVAILABLE', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC)
+    print("DB Systems provisioned successfully!")
 
     # delete backup
+    print("Deleting backup")
     params = [
         'backup', 'delete',
         '--backup-id', backup_id,
@@ -933,6 +1217,18 @@ def test_backup_operations(runner, config_file, config_profile, db_systems, data
     util.validate_response(result)
 
     util.wait_until(['db', 'backup', 'get', '--backup-id', backup_id], 'TERMINATED', max_wait_seconds=DB_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+
+    print("Deleting dbsystem")
+    params = [
+        'system', 'terminate',
+        '--db-system-id', dbsystem_from_backup,
+        '--force'
+    ]
+
+    result = invoke(runner, config_file, config_profile, params)
+    util.validate_response(result)
+    util.wait_until(['db', 'system', 'get', '--db-system-id', dbsystem_from_backup], 'TERMINATED',
+                    max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC)
 
 
 @util.long_running
@@ -1155,24 +1451,6 @@ def test_patch_history_operations(runner, config_file, config_profile, database,
             util.validate_response(result)
 
 
-def create_subnet(cidr_block, subnet_dns_label, vcn_ocid, network_client, availability_domain=util.availability_domain()):
-    # create subnet in first AD
-    subnet_name = util.random_name('python_sdk_test_subnet')
-    create_subnet_details = oci.core.models.CreateSubnetDetails()
-    create_subnet_details.compartment_id = util.COMPARTMENT_ID
-    create_subnet_details.availability_domain = availability_domain
-    create_subnet_details.display_name = subnet_name
-    create_subnet_details.vcn_id = vcn_ocid
-    create_subnet_details.cidr_block = cidr_block
-    create_subnet_details.dns_label = subnet_dns_label
-
-    result = network_client.create_subnet(create_subnet_details)
-    subnet_ocid = result.data.id
-    assert result.status == 200
-    oci.wait_until(network_client, network_client.get_subnet(subnet_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
-    return subnet_ocid
-
-
 def test_launch_exa_db_system(runner, config_file, config_profile, networking):
     DB_SYSTEM_SHAPE = 'Exadata.Quarter2.92'
 
@@ -1241,6 +1519,26 @@ def test_launch_exa_db_system(runner, config_file, config_profile, networking):
         success_terminating_db_systems = False
 
     assert success_terminating_db_systems
+
+
+def create_subnet(cidr_block, subnet_dns_label, vcn_ocid, network_client, availability_domain=None):
+    if availability_domain is None:
+        availability_domain = util.availability_domain()
+    # create subnet in first AD
+    subnet_name = util.random_name('python_sdk_test_subnet')
+    create_subnet_details = oci.core.models.CreateSubnetDetails()
+    create_subnet_details.compartment_id = util.COMPARTMENT_ID
+    create_subnet_details.availability_domain = availability_domain
+    create_subnet_details.display_name = subnet_name
+    create_subnet_details.vcn_id = vcn_ocid
+    create_subnet_details.cidr_block = cidr_block
+    create_subnet_details.dns_label = subnet_dns_label
+
+    result = network_client.create_subnet(create_subnet_details)
+    subnet_ocid = result.data.id
+    assert result.status == 200
+    oci.wait_until(network_client, network_client.get_subnet(subnet_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+    return subnet_ocid
 
 
 def random_db_name():

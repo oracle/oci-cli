@@ -1,7 +1,6 @@
-# You may need to run this as: 
-# pip install --trusted-host=artifactory.oci.oraclecorp.com -r requirements.txt
-# because the requirements.txt file doesn't support the --trusted-host option (https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format)
---extra-index-url https://artifactory.oci.oraclecorp.com/api/pypi/opc-public-sdk-dev-pypi-local/simple
+# Since the requirements.txt file doesn't support the --trusted-host option 
+# (https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format),
+# you may need to use the --extra-index-url option instead.
 
 appdirs==1.4.3
 arrow==0.10.0
@@ -10,27 +9,27 @@ cffi==1.9.1
 click==6.7
 configparser==3.5.0
 coverage==4.5.1
-cryptography==2.1.4
-cx_Oracle==6.2.1
+cryptography==2.4.2
+cx_Oracle==7.0.0
 httpsig-cffi==15.0.0
 idna>=2.5,<2.7
 Jinja2==2.9.6
 jmespath==0.9.3
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.1.4
+oci==2.1.5
 packaging==16.8
 pluggy==0.4.0
 py==1.4.33
 pyasn1==0.2.3
-pyOpenSSL==17.5.0
+pyOpenSSL==18.0.0
 pycparser==2.17
 pyparsing==2.2.0
 pytest==3.2.3
 pytest-cov==2.5.1
 python-dateutil==2.7.3
 pytz==2016.10
-requests==2.18.4
+requests==2.21.0
 retrying==1.3.3
 six==1.11.0
 sphinx==1.6.4
