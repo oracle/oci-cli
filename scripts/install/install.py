@@ -314,9 +314,7 @@ def get_rc_file_path():
     rc_file = rc_file or prompt_input_with_default('Enter a path to an rc file to update', default_rc_file)
     if rc_file:
         rc_file_path = os.path.realpath(os.path.expanduser(rc_file))
-        if os.path.isfile(rc_file_path):
-            return rc_file_path
-        print_status("The file '{}' could not be found.".format(rc_file_path))
+        return rc_file_path
     return None
 
 
