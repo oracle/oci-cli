@@ -276,7 +276,7 @@ def build_client(service_name, ctx):
                 raise click.BadParameter(param_hint='cert_bundle', message='Cannot find cert_bundle file: {}'.format(cert_bundle))
 
             # TODO: Update this once alternate certs are exposed in the SDK.
-            client.base_client.session.verify = ctx.obj['cert_bundle']
+            client.base_client.session.verify = cert_bundle
 
         return client
     except exceptions.InvalidPrivateKey as bad_key:
