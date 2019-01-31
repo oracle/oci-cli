@@ -2095,6 +2095,11 @@ Options:
   --backup-id TEXT                The backup OCID. [required]
   --backup-tde-password TEXT      The password to open the TDE wallet.
                                   [required]
+  --db-name TEXT                  The display name of the database to be created
+                                  from the backup. It must begin with an
+                                  alphabetic character and can contain a maximum
+                                  of eight alphanumeric characters. Special
+                                  characters are not permitted.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -3587,6 +3592,11 @@ Options:
                                   newline character to separate multiple keys.
                                   The length of the combined keys cannot exceed
                                   10,000 characters. [required]
+  --db-name TEXT                  The display name of the database to be created
+                                  from the backup. It must begin with an
+                                  alphabetic character and can contain a maximum
+                                  of eight alphanumeric characters. Special
+                                  characters are not permitted.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   

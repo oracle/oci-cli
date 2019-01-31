@@ -39,7 +39,6 @@ from .version import __version__
 
 from . import string_utils
 from . import help_text_producer
-
 from . import cli_constants
 
 try:
@@ -57,7 +56,6 @@ DISPLAY_HEADERS = {
     "opc-work-request-id",
     "opc-total-items"
 }
-
 
 OVERRIDES = {
     "audit_event_group.command_name": "event",
@@ -103,8 +101,10 @@ OVERRIDES = {
     "search_resources_free_text_search_details.command_name": "free-text-search",
     "attach_volume_attach_paravirtualized_volume_details.command_name": "attach-paravirtualized-volume",
     "generate_autonomous_data_warehouse_wallet.command_name": "generate-wallet",
-    "generate_autonomous_database_wallet.command_name": "generate-wallet"
-
+    "generate_autonomous_database_wallet.command_name": "generate-wallet",
+    "list_announcements.command_name": "list",
+    "get_announcement_user_status.command_name": "get",
+    "update_announcement_user_status.command_name": "update"
 }
 
 ROOT_COMMAND_HELP_OVERRIDES = {
