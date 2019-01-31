@@ -1,6 +1,9 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
+import traceback
+from oci.exceptions import RequestException, ConnectTimeout
+
 
 # An abstract task which can be submitted to the work pool and contains everything needed to execute the task. Implementors
 # should create a subclass that contains their specific logic in do_work_hook()
@@ -40,7 +43,7 @@ class WorkPoolTask(object):
             self._run_success_callbacks(result, self._success_callbacks)
         except Exception as e:
             self._run_error_callbacks(e, self._error_callbacks)
-            raise
+            raise e
         finally:
             self._run_callbacks(self._completion_callbacks)
 
@@ -119,5 +122,13 @@ class WorkPoolTaskErrorCallback(WorkPoolTaskCallback):
 
     def execute(self, **exec_kwargs):
         if 'exception' in exec_kwargs:
+            e = exec_kwargs['exception']
             self._kwargs['callback_exception'] = exec_kwargs['exception']
+
+            if not isinstance(e, (RequestException, ConnectTimeout)):
+                try:
+                    tb = traceback.format_exc()
+                    raise Exception(tb)
+                except Exception as inner_e:
+                    self._kwargs['callback_exception'] = inner_e
         return self._func_ref(*self._args, **self._kwargs)

@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.43 - 2019-01-31
+-------------------
+Added
+~~~~~
+* Support for Announcements Service (``oci announce``)
+
+  * An example on using the Announcements Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/announcements_service_example.sh>`__.
+
 2.4.42 - 2019-01-24
 -------------------
 Added

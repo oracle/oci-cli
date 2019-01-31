@@ -103,7 +103,19 @@ MOVED_COMMANDS = {
     ('compute-management', 'instance', 'launch-compute-instance'): ['compute-management', 'instance-configuration', 'launch-compute-instance'],
     ('compute-management', 'instance', 'list-instances'): ['compute-management', 'instance-pool', 'list-instances']
 }
-
+# This dynamically adds the generated test operation subsitutions from the extended file.
+# This will process files under the generated_test_extensions that are named "extend_test*.py".
+# If those files have a "MOVED_COMMANDS" dictionary defined in them, they will be added to the
+# MOVED_COMMANDS dictionary defined above.
+test_dir = os.path.dirname(os.path.realpath(__file__))
+test_extension_dir = os.path.join(test_dir, "generated_test_extensions")
+for extend_test_file in os.listdir(test_extension_dir):
+    if "extend_test" in extend_test_file:
+        try:
+            extend_test_module = __import__("tests.generated_test_extensions." + extend_test_file[:-3], fromlist=['MOVED_COMMANDS'])
+            MOVED_COMMANDS.update(extend_test_module.MOVED_COMMANDS)
+        except Exception:
+            pass
 
 # This global can be changed to influence what configuration data this module vends.
 target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]
