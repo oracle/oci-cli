@@ -4,10 +4,15 @@
 from oci_cli.generated import kms_service_cli, kmscrypto_cli, kmsmanagement_cli, kmsvault_cli
 from oci_cli import cli_util
 
-
 # move kms vault commands under kms management vault
 kms_service_cli.kms_service_group.commands.pop(kmsvault_cli.kms_vault_root_group.name)
 kmsmanagement_cli.kms_management_root_group.add_command(kmsvault_cli.vault_group)
+
+cli_util.rename_command(None, kmsvault_cli.kms_vault_root_group, "vault")
+cli_util.rename_command(kmsvault_cli.vault_group, kmsvault_cli.cancel_vault_deletion, "cancel-deletion")
+cli_util.rename_command(kmsvault_cli.vault_group, kmsvault_cli.schedule_vault_deletion, "schedule-deletion")
+cli_util.rename_command(kms_service_cli.kms_service_group, kmscrypto_cli.kms_crypto_root_group, "crypto")
+cli_util.rename_command(kms_service_cli.kms_service_group, kmsmanagement_cli.kms_management_root_group, "management")
 
 # remove one nested layer from crypto commands (e.g. kms crypto encrypted-data encrypt -> kms crypto encrypt)
 kmscrypto_cli.kms_crypto_root_group.commands.pop(kmscrypto_cli.encrypted_data_group.name)

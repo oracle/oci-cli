@@ -109,6 +109,14 @@ get_param(objectstorage_cli.get_preauthenticated_request, 'namespace_name').opts
 get_param(objectstorage_cli.list_preauthenticated_requests, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.list_preauthenticated_requests, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
+cli_util.rename_command(objectstorage_cli.os_root_group, objectstorage_cli.namespace_group, "ns")
+cli_util.rename_command(objectstorage_cli.namespace_group, objectstorage_cli.get_namespace_metadata, "get-metadata")
+cli_util.rename_command(objectstorage_cli.namespace_group, objectstorage_cli.update_namespace_metadata, "update-metadata")
+cli_util.rename_command(objectstorage_cli.os_root_group, objectstorage_cli.preauthenticated_request_group, "preauth-request")
+
+objectstorage_cli.os_root_group.help = "Object Storage Service CLI"
+objectstorage_cli.os_root_group.short_help = "Object Storage Service"
+
 
 @objectstorage_cli.object_group.command(name='list')
 @cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
@@ -386,6 +394,8 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
         if parallel_upload_count is not None:
             kwargs['parallel_process_count'] = parallel_upload_count
+
+        UploadManager._add_adapter_to_service_client(client, not disable_parallel_uploads, parallel_upload_count)
 
         ma = MultipartObjectAssembler(client,
                                       namespace,

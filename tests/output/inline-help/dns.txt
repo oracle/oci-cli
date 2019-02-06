@@ -15,8 +15,10 @@ Options:
                   <command> --help.
 
 Commands:
-  record  A DNS record.
-  zone    A DNS zone.
+  record                      A DNS record.
+  steering-policy             A DNS steering policy.
+  steering-policy-attachment  An attachment between a steering policy and a...
+  zone                        A DNS zone.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns record --help
@@ -658,6 +660,1125 @@ Options:
                               commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy --help
+Usage: oci dns steering-policy [OPTIONS] COMMAND [ARGS]...
+
+  A DNS steering policy.
+
+  *Warning:* Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  create  Creates a new steering policy in the...
+  delete  Deletes the specified steering policy.
+  get     Gets information about the specified steering...
+  list    Gets a list of all steering policies in the...
+  update  Updates the specified steering policy with...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy create --help
+Usage: oci dns steering-policy create [OPTIONS]
+
+  Creates a new steering policy in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The OCID of the compartment containing the
+                                  steering policy. [required]
+  --display-name TEXT             A user-friendly name for the steering policy.
+                                  Does not have to be unique, and it's
+                                  changeable. Avoid entering confidential
+                                  information. [required]
+  --template [FAILOVER|LOAD_BALANCE|ROUTE_BY_GEO|ROUTE_BY_ASN|ROUTE_BY_IP|CUSTOM]
+                                  The common pattern (or lack thereof) to which
+                                  the steering policy adheres. This value
+                                  restricts the possible configurations of
+                                  rules, but thereby supports specifically
+                                  tailored interfaces. Values other than
+                                  "CUSTOM" require the rules to begin with an
+                                  unconditional FILTER that keeps answers
+                                  contingent upon `answer.isDisabled != true`,
+                                  followed _if and only if the policy references
+                                  a health check monitor_ by an unconditional
+                                  HEALTH rule, and require the last rule to be
+                                  an unconditional LIMIT. What must precede the
+                                  LIMIT rule is determined by the template
+                                  value: - FAILOVER requires exactly an
+                                  unconditional PRIORITY rule that ranks answers
+                                  by pool.   Each answer pool must have a unique
+                                  priority value assigned to it. Answer data
+                                  must   be defined in the `defaultAnswerData`
+                                  property for the rule and the `cases` property
+                                  must not be defined. - LOAD_BALANCE requires
+                                  exactly an unconditional WEIGHTED rule that
+                                  shuffles answers   by name. Answer data must
+                                  be defined in the `defaultAnswerData` property
+                                  for the   rule and the `cases` property must
+                                  not be defined. - ROUTE_BY_GEO requires
+                                  exactly one PRIORITY rule that ranks answers
+                                  by pool using the   geographical location of
+                                  the client as a condition. Within that rule
+                                  you may only   use `query.client.geoKey` in
+                                  the `caseCondition` expressions for defining
+                                  the cases.   For each case in the PRIORITY
+                                  rule each answer pool must have a unique
+                                  priority   value assigned to it. Answer data
+                                  can only be defined within cases and
+                                  `defaultAnswerData` cannot be used in the
+                                  PRIORITY rule. - ROUTE_BY_ASN requires exactly
+                                  one PRIORITY rule that ranks answers by pool
+                                  using the   ASN of the client as a condition.
+                                  Within that rule you may only use
+                                  `query.client.asn` in the `caseCondition`
+                                  expressions for defining the cases.   For each
+                                  case in the PRIORITY rule each answer pool
+                                  must have a unique priority   value assigned
+                                  to it. Answer data can only be defined within
+                                  cases and   `defaultAnswerData` cannot be used
+                                  in the PRIORITY rule. - ROUTE_BY_IP requires
+                                  exactly one PRIORITY rule that ranks answers
+                                  by pool using the   IP subnet of the client as
+                                  a condition. Within that rule you may only use
+                                  `query.client.address` in the `caseCondition`
+                                  expressions for defining the cases.   For each
+                                  case in the PRIORITY rule each answer pool
+                                  must have a unique priority   value assigned
+                                  to it. Answer data can only be defined within
+                                  cases and   `defaultAnswerData` cannot be used
+                                  in the PRIORITY rule. - CUSTOM allows an
+                                  arbitrary configuration of rules.
+                                  
+                                  For an
+                                  existing steering policy, the template value
+                                  may be changed to any of the supported options
+                                  but the resulting policy must conform to the
+                                  requirements for the new template type or else
+                                  a Bad Request error will be returned.
+                                  [required]
+  --ttl INTEGER                   The Time To Live for responses from the
+                                  steering policy, in seconds. If not specified
+                                  during creation, a value of 30 seconds will be
+                                  used.
+  --health-check-monitor-id TEXT  The OCID of the health check monitor providing
+                                  health data about the answers of the steering
+                                  policy. A steering policy answer with `rdata`
+                                  matching a monitored endpoint will use the
+                                  health data of that endpoint. A steering
+                                  policy answer with `rdata` not matching any
+                                  monitored endpoint will be assumed healthy.
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type, or scope. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"bar-key": "value"}`
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to a namespace. Example:
+                                  `{"foo-namespace": {"bar-key": "value"}}`
+                                  This
+                                  is a complex type whose value must be valid
+                                  JSON. The value can be provided as a string on
+                                  the command line or passed in as a file using
+                                  the file://path/to/file syntax.
+                                  
+                                  The
+                                  --generate-param-json-input option can be used
+                                  to generate an example of the JSON which must
+                                  be provided. We recommend storing this example
+                                  in a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --answers COMPLEX TYPE          The set of all answers that can potentially
+                                  issue from the steering policy.
+                                  
+                                  This option
+                                  is a JSON list with items of type
+                                  SteeringPolicyAnswer.  For documentation on
+                                  SteeringPolicyAnswer please see our API
+                                  reference: https://docs.cloud.oracle.com/api/#
+                                  /en/dns/20180115/datatypes/SteeringPolicyAnswe
+                                  r.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --rules COMPLEX TYPE            The pipeline of rules that will be processed
+                                  in sequence to reduce the pool of answers to a
+                                  response for any given request.
+                                  
+                                  The first
+                                  rule receives a shuffled list of all answers,
+                                  and every other rule receives the list of
+                                  answers emitted by the one preceding it. The
+                                  last rule populates the response.
+                                  
+                                  This option
+                                  is a JSON list with items of type
+                                  SteeringPolicyRule.  For documentation on
+                                  SteeringPolicyRule please see our API
+                                  reference: https://docs.cloud.oracle.com/api/#
+                                  /en/dns/20180115/datatypes/SteeringPolicyRule.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --wait-for-state [ACTIVE|CREATING|DELETED|DELETING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy delete --help
+Usage: oci dns steering-policy delete [OPTIONS]
+
+  Deletes the specified steering policy. A `204` response indicates that the
+  delete has been successful. Deletion will fail if the policy is attached to
+  any zones.
+
+Options:
+  --steering-policy-id TEXT       The OCID of the target steering policy.
+                                  [required]
+  --if-match TEXT                 The `If-Match` header field makes the request
+                                  method conditional on the existence of at
+                                  least one current representation of the target
+                                  resource, when the field-value is `*`, or
+                                  having a current representation of the target
+                                  resource that has an entity-tag matching a
+                                  member of the list of entity-tags provided in
+                                  the field-value.
+  --if-unmodified-since TEXT      The `If-Unmodified-Since` header field makes
+                                  the request method conditional on the selected
+                                  representation's last modification date being
+                                  earlier than or equal to the date provided in
+                                  the field-value.  This field accomplishes the
+                                  same purpose as If-Match for cases where the
+                                  user agent does not have an entity-tag for the
+                                  representation.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|CREATING|DELETED|DELETING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy get --help
+Usage: oci dns steering-policy get [OPTIONS]
+
+  Gets information about the specified steering policy.
+
+Options:
+  --steering-policy-id TEXT  The OCID of the target steering policy. [required]
+  --if-none-match TEXT       The `If-None-Match` header field makes the request
+                             method conditional on the absence of any current
+                             representation of the target resource, when the
+                             field-value is `*`, or having a selected
+                             representation with an entity-tag that does not
+                             match any of those listed in the field-value.
+  --if-modified-since TEXT   The `If-Modified-Since` header field makes a GET or
+                             HEAD request method conditional on the selected
+                             representation's modification date being more
+                             recent than the date provided in the field-value.
+                             Transfer of the selected representation's data is
+                             avoided if that data has not changed.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file.
+                             
+                             Options can still be provided on the
+                             command line. If an option exists in both the JSON
+                             document and the command line then the command line
+                             specified value will be used
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy list --help
+Usage: oci dns steering-policy list [OPTIONS]
+
+  Gets a list of all steering policies in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The OCID of the compartment the resource
+                                  belongs to. [required]
+  --limit INTEGER                 The maximum number of items to return in a
+                                  page of the collection.
+  --page TEXT                     The value of the `opc-next-page` response
+                                  header from the previous "List" call.
+  --id TEXT                       The OCID of a resource.
+  --display-name TEXT             The displayName of a resource.
+  --display-name-contains TEXT    The partial displayName of a resource. Will
+                                  match any resource whose name (case-
+                                  insensitive) contains the provided value.
+  --health-check-monitor-id TEXT  Search by health check monitor OCID. Will
+                                  match any resource whose health check monitor
+                                  id matches the provided value.
+  --time-created-greater-than-or-equal-to DATETIME
+                                  An [RFC 3339] timestamp that states all
+                                  returned resources were created on or after
+                                  the indicated time.
+                                  
+                                  The following datetime
+                                  formats are supported:
+                                  
+                                  UTC with milliseconds
+                                  ***********************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ss.sssTZD
+                                  Example:
+                                  2017-09-15T20:30:00.123Z
+                                  
+                                  UTC without
+                                  milliseconds
+                                  **************************
+                                  Format: YYYY-MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T20:30:00Z
+                                  
+                                  UTC with minute
+                                  precision
+                                  **************************
+                                  Format:
+                                  YYYY-MM-DDTHH:mmTZD
+                                  Example: 2017-09-15T20:30Z
+                                  
+                                  Timezone with milliseconds
+                                  ***************************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00.456-08:00,
+                                  2017-09-15T12:30:00.456-0800
+                                  
+                                  Timezone
+                                  without milliseconds
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00-08:00,
+                                  2017-09-15T12:30:00-0800
+                                  
+                                  Timezone with
+                                  minute precision
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mmTZD
+                                  Example:
+                                  2017-09-15T12:30-08:00,
+                                  2017-09-15T12:30-0800
+                                  
+                                  Short date and time
+                                  ********************
+                                  The
+                                  timezone for this date and time will be taken
+                                  as UTC (Needs to be surrounded by single or
+                                  double quotes)
+                                  Format: 'YYYY-MM-DD HH:mm' or
+                                  "YYYY-MM-DD HH:mm"
+                                  Example: '2017-09-15 17:25'
+                                  
+                                  Date Only
+                                  *********
+                                  This date will be taken
+                                  as midnight UTC of that day
+                                  Format: YYYY-MM-DD
+                                  Example: 2017-09-15
+                                  
+                                  Epoch seconds
+                                  **************
+                                  Example: 1412195400
+  --time-created-less-than DATETIME
+                                  An [RFC 3339] timestamp that states all
+                                  returned resources were created before the
+                                  indicated time.
+                                  
+                                  The following datetime
+                                  formats are supported:
+                                  
+                                  UTC with milliseconds
+                                  ***********************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ss.sssTZD
+                                  Example:
+                                  2017-09-15T20:30:00.123Z
+                                  
+                                  UTC without
+                                  milliseconds
+                                  **************************
+                                  Format: YYYY-MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T20:30:00Z
+                                  
+                                  UTC with minute
+                                  precision
+                                  **************************
+                                  Format:
+                                  YYYY-MM-DDTHH:mmTZD
+                                  Example: 2017-09-15T20:30Z
+                                  
+                                  Timezone with milliseconds
+                                  ***************************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00.456-08:00,
+                                  2017-09-15T12:30:00.456-0800
+                                  
+                                  Timezone
+                                  without milliseconds
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00-08:00,
+                                  2017-09-15T12:30:00-0800
+                                  
+                                  Timezone with
+                                  minute precision
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mmTZD
+                                  Example:
+                                  2017-09-15T12:30-08:00,
+                                  2017-09-15T12:30-0800
+                                  
+                                  Short date and time
+                                  ********************
+                                  The
+                                  timezone for this date and time will be taken
+                                  as UTC (Needs to be surrounded by single or
+                                  double quotes)
+                                  Format: 'YYYY-MM-DD HH:mm' or
+                                  "YYYY-MM-DD HH:mm"
+                                  Example: '2017-09-15 17:25'
+                                  
+                                  Date Only
+                                  *********
+                                  This date will be taken
+                                  as midnight UTC of that day
+                                  Format: YYYY-MM-DD
+                                  Example: 2017-09-15
+                                  
+                                  Epoch seconds
+                                  **************
+                                  Example: 1412195400
+  --template TEXT                 Search by template type. Will match any
+                                  resource whose template type matches the
+                                  provided value.
+  --lifecycle-state [ACTIVE|CREATING|DELETED|DELETING]
+                                  The state of a resource.
+  --sort-by [displayName|timeCreated|template]
+                                  The field by which to sort steering policies.
+  --sort-order [ASC|DESC]         The order to sort the resources.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy update --help
+Usage: oci dns steering-policy update [OPTIONS]
+
+  Updates the specified steering policy with your new information.
+
+Options:
+  --steering-policy-id TEXT       The OCID of the target steering policy.
+                                  [required]
+  --display-name TEXT             A user-friendly name for the steering policy.
+                                  Does not have to be unique, and it's
+                                  changeable. Avoid entering confidential
+                                  information.
+  --ttl INTEGER                   The Time To Live for responses from the
+                                  steering policy, in seconds. If not specified
+                                  during creation, a value of 30 seconds will be
+                                  used.
+  --health-check-monitor-id TEXT  The OCID of the health check monitor providing
+                                  health data about the answers of the steering
+                                  policy. A steering policy answer with `rdata`
+                                  matching a monitored endpoint will use the
+                                  health data of that endpoint. A steering
+                                  policy answer with `rdata` not matching any
+                                  monitored endpoint will be assumed healthy.
+  --template [FAILOVER|LOAD_BALANCE|ROUTE_BY_GEO|ROUTE_BY_ASN|ROUTE_BY_IP|CUSTOM]
+                                  The common pattern (or lack thereof) to which
+                                  the steering policy adheres. This value
+                                  restricts the possible configurations of
+                                  rules, but thereby supports specifically
+                                  tailored interfaces. Values other than
+                                  "CUSTOM" require the rules to begin with an
+                                  unconditional FILTER that keeps answers
+                                  contingent upon `answer.isDisabled != true`,
+                                  followed _if and only if the policy references
+                                  a health check monitor_ by an unconditional
+                                  HEALTH rule, and require the last rule to be
+                                  an unconditional LIMIT. What must precede the
+                                  LIMIT rule is determined by the template
+                                  value: - FAILOVER requires exactly an
+                                  unconditional PRIORITY rule that ranks answers
+                                  by pool.   Each answer pool must have a unique
+                                  priority value assigned to it. Answer data
+                                  must   be defined in the `defaultAnswerData`
+                                  property for the rule and the `cases` property
+                                  must not be defined. - LOAD_BALANCE requires
+                                  exactly an unconditional WEIGHTED rule that
+                                  shuffles answers   by name. Answer data must
+                                  be defined in the `defaultAnswerData` property
+                                  for the   rule and the `cases` property must
+                                  not be defined. - ROUTE_BY_GEO requires
+                                  exactly one PRIORITY rule that ranks answers
+                                  by pool using the   geographical location of
+                                  the client as a condition. Within that rule
+                                  you may only   use `query.client.geoKey` in
+                                  the `caseCondition` expressions for defining
+                                  the cases.   For each case in the PRIORITY
+                                  rule each answer pool must have a unique
+                                  priority   value assigned to it. Answer data
+                                  can only be defined within cases and
+                                  `defaultAnswerData` cannot be used in the
+                                  PRIORITY rule. - ROUTE_BY_ASN requires exactly
+                                  one PRIORITY rule that ranks answers by pool
+                                  using the   ASN of the client as a condition.
+                                  Within that rule you may only use
+                                  `query.client.asn` in the `caseCondition`
+                                  expressions for defining the cases.   For each
+                                  case in the PRIORITY rule each answer pool
+                                  must have a unique priority   value assigned
+                                  to it. Answer data can only be defined within
+                                  cases and   `defaultAnswerData` cannot be used
+                                  in the PRIORITY rule. - ROUTE_BY_IP requires
+                                  exactly one PRIORITY rule that ranks answers
+                                  by pool using the   IP subnet of the client as
+                                  a condition. Within that rule you may only use
+                                  `query.client.address` in the `caseCondition`
+                                  expressions for defining the cases.   For each
+                                  case in the PRIORITY rule each answer pool
+                                  must have a unique priority   value assigned
+                                  to it. Answer data can only be defined within
+                                  cases and   `defaultAnswerData` cannot be used
+                                  in the PRIORITY rule. - CUSTOM allows an
+                                  arbitrary configuration of rules.
+                                  
+                                  For an
+                                  existing steering policy, the template value
+                                  may be changed to any of the supported options
+                                  but the resulting policy must conform to the
+                                  requirements for the new template type or else
+                                  a Bad Request error will be returned.
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type, or scope. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"bar-key": "value"}`
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to a namespace. Example:
+                                  `{"foo-namespace": {"bar-key": "value"}}`
+                                  This
+                                  is a complex type whose value must be valid
+                                  JSON. The value can be provided as a string on
+                                  the command line or passed in as a file using
+                                  the file://path/to/file syntax.
+                                  
+                                  The
+                                  --generate-param-json-input option can be used
+                                  to generate an example of the JSON which must
+                                  be provided. We recommend storing this example
+                                  in a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --answers COMPLEX TYPE          The set of all answers that can potentially
+                                  issue from the steering policy.
+                                  
+                                  This option
+                                  is a JSON list with items of type
+                                  SteeringPolicyAnswer.  For documentation on
+                                  SteeringPolicyAnswer please see our API
+                                  reference: https://docs.cloud.oracle.com/api/#
+                                  /en/dns/20180115/datatypes/SteeringPolicyAnswe
+                                  r.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --rules COMPLEX TYPE            The pipeline of rules that will be processed
+                                  in sequence to reduce the pool of answers to a
+                                  response for any given request.
+                                  
+                                  The first
+                                  rule receives a shuffled list of all answers,
+                                  and every other rule receives the list of
+                                  answers emitted by the one preceding it. The
+                                  last rule populates the response.
+                                  
+                                  This option
+                                  is a JSON list with items of type
+                                  SteeringPolicyRule.  For documentation on
+                                  SteeringPolicyRule please see our API
+                                  reference: https://docs.cloud.oracle.com/api/#
+                                  /en/dns/20180115/datatypes/SteeringPolicyRule.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --if-match TEXT                 The `If-Match` header field makes the request
+                                  method conditional on the existence of at
+                                  least one current representation of the target
+                                  resource, when the field-value is `*`, or
+                                  having a current representation of the target
+                                  resource that has an entity-tag matching a
+                                  member of the list of entity-tags provided in
+                                  the field-value.
+  --if-unmodified-since TEXT      The `If-Unmodified-Since` header field makes
+                                  the request method conditional on the selected
+                                  representation's last modification date being
+                                  earlier than or equal to the date provided in
+                                  the field-value.  This field accomplishes the
+                                  same purpose as If-Match for cases where the
+                                  user agent does not have an entity-tag for the
+                                  representation.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|CREATING|DELETED|DELETING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy-attachment --help
+Usage: oci dns steering-policy-attachment [OPTIONS] COMMAND [ARGS]...
+
+  An attachment between a steering policy and a domain. An attachment occludes
+  all records at its domain that are of a covered rtype, constructing DNS
+  responses from its steering policy rather than from those domain records. A
+  domain can have at most one attachment covering any given rtype.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  create  Creates a new attachment between a steering...
+  delete  Deletes the specified steering policy...
+  get     Gets information about the specified steering...
+  list    Lists the steering policy attachments in the...
+  update  Updates the specified steering policy...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy-attachment create --help
+Usage: oci dns steering-policy-attachment create [OPTIONS]
+
+  Creates a new attachment between a steering policy and a domain. For the
+  purposes of access control, the attachment is automatically placed into the
+  same compartment as the containing zone of the domain.
+
+Options:
+  --steering-policy-id TEXT       The OCID of the attached steering policy.
+                                  [required]
+  --zone-id TEXT                  The OCID of the attached zone. [required]
+  --domain-name TEXT              The attached domain within the attached zone.
+                                  [required]
+  --display-name TEXT             A user-friendly name for the steering policy
+                                  attachment. Does not have to be unique, and
+                                  it's changeable. Avoid entering confidential
+                                  information.
+  --wait-for-state [CREATING|ACTIVE|DELETING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy-attachment delete --help
+Usage: oci dns steering-policy-attachment delete [OPTIONS]
+
+  Deletes the specified steering policy attachment. A `204` response indicates
+  that the delete has been successful.
+
+Options:
+  --steering-policy-attachment-id TEXT
+                                  The OCID of the target steering policy
+                                  attachment. [required]
+  --if-match TEXT                 The `If-Match` header field makes the request
+                                  method conditional on the existence of at
+                                  least one current representation of the target
+                                  resource, when the field-value is `*`, or
+                                  having a current representation of the target
+                                  resource that has an entity-tag matching a
+                                  member of the list of entity-tags provided in
+                                  the field-value.
+  --if-unmodified-since TEXT      The `If-Unmodified-Since` header field makes
+                                  the request method conditional on the selected
+                                  representation's last modification date being
+                                  earlier than or equal to the date provided in
+                                  the field-value.  This field accomplishes the
+                                  same purpose as If-Match for cases where the
+                                  user agent does not have an entity-tag for the
+                                  representation.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|ACTIVE|DELETING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy-attachment get --help
+Usage: oci dns steering-policy-attachment get [OPTIONS]
+
+  Gets information about the specified steering policy attachment.
+
+Options:
+  --steering-policy-attachment-id TEXT
+                                  The OCID of the target steering policy
+                                  attachment. [required]
+  --if-none-match TEXT            The `If-None-Match` header field makes the
+                                  request method conditional on the absence of
+                                  any current representation of the target
+                                  resource, when the field-value is `*`, or
+                                  having a selected representation with an
+                                  entity-tag that does not match any of those
+                                  listed in the field-value.
+  --if-modified-since TEXT        The `If-Modified-Since` header field makes a
+                                  GET or HEAD request method conditional on the
+                                  selected representation's modification date
+                                  being more recent than the date provided in
+                                  the field-value.  Transfer of the selected
+                                  representation's data is avoided if that data
+                                  has not changed.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy-attachment list --help
+Usage: oci dns steering-policy-attachment list [OPTIONS]
+
+  Lists the steering policy attachments in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The OCID of the compartment the resource
+                                  belongs to. [required]
+  --limit INTEGER                 The maximum number of items to return in a
+                                  page of the collection.
+  --page TEXT                     The value of the `opc-next-page` response
+                                  header from the previous "List" call.
+  --id TEXT                       The OCID of a resource.
+  --display-name TEXT             The displayName of a resource.
+  --steering-policy-id TEXT       Search by steering policy OCID. Will match any
+                                  resource whose steering policy id matches the
+                                  provided value.
+  --zone-id TEXT                  Search by zone OCID. Will match any resource
+                                  whose zone id matches the provided value.
+  --domain TEXT                   Search by domain. Will match any record whose
+                                  domain (case-insensitive) equals the provided
+                                  value.
+  --domain-contains TEXT          Search by domain. Will match any record whose
+                                  domain (case-insensitive) contains the
+                                  provided value.
+  --time-created-greater-than-or-equal-to DATETIME
+                                  An [RFC 3339] timestamp that states all
+                                  returned resources were created on or after
+                                  the indicated time.
+                                  
+                                  The following datetime
+                                  formats are supported:
+                                  
+                                  UTC with milliseconds
+                                  ***********************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ss.sssTZD
+                                  Example:
+                                  2017-09-15T20:30:00.123Z
+                                  
+                                  UTC without
+                                  milliseconds
+                                  **************************
+                                  Format: YYYY-MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T20:30:00Z
+                                  
+                                  UTC with minute
+                                  precision
+                                  **************************
+                                  Format:
+                                  YYYY-MM-DDTHH:mmTZD
+                                  Example: 2017-09-15T20:30Z
+                                  
+                                  Timezone with milliseconds
+                                  ***************************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00.456-08:00,
+                                  2017-09-15T12:30:00.456-0800
+                                  
+                                  Timezone
+                                  without milliseconds
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00-08:00,
+                                  2017-09-15T12:30:00-0800
+                                  
+                                  Timezone with
+                                  minute precision
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mmTZD
+                                  Example:
+                                  2017-09-15T12:30-08:00,
+                                  2017-09-15T12:30-0800
+                                  
+                                  Short date and time
+                                  ********************
+                                  The
+                                  timezone for this date and time will be taken
+                                  as UTC (Needs to be surrounded by single or
+                                  double quotes)
+                                  Format: 'YYYY-MM-DD HH:mm' or
+                                  "YYYY-MM-DD HH:mm"
+                                  Example: '2017-09-15 17:25'
+                                  
+                                  Date Only
+                                  *********
+                                  This date will be taken
+                                  as midnight UTC of that day
+                                  Format: YYYY-MM-DD
+                                  Example: 2017-09-15
+                                  
+                                  Epoch seconds
+                                  **************
+                                  Example: 1412195400
+  --time-created-less-than DATETIME
+                                  An [RFC 3339] timestamp that states all
+                                  returned resources were created before the
+                                  indicated time.
+                                  
+                                  The following datetime
+                                  formats are supported:
+                                  
+                                  UTC with milliseconds
+                                  ***********************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ss.sssTZD
+                                  Example:
+                                  2017-09-15T20:30:00.123Z
+                                  
+                                  UTC without
+                                  milliseconds
+                                  **************************
+                                  Format: YYYY-MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T20:30:00Z
+                                  
+                                  UTC with minute
+                                  precision
+                                  **************************
+                                  Format:
+                                  YYYY-MM-DDTHH:mmTZD
+                                  Example: 2017-09-15T20:30Z
+                                  
+                                  Timezone with milliseconds
+                                  ***************************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00.456-08:00,
+                                  2017-09-15T12:30:00.456-0800
+                                  
+                                  Timezone
+                                  without milliseconds
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00-08:00,
+                                  2017-09-15T12:30:00-0800
+                                  
+                                  Timezone with
+                                  minute precision
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mmTZD
+                                  Example:
+                                  2017-09-15T12:30-08:00,
+                                  2017-09-15T12:30-0800
+                                  
+                                  Short date and time
+                                  ********************
+                                  The
+                                  timezone for this date and time will be taken
+                                  as UTC (Needs to be surrounded by single or
+                                  double quotes)
+                                  Format: 'YYYY-MM-DD HH:mm' or
+                                  "YYYY-MM-DD HH:mm"
+                                  Example: '2017-09-15 17:25'
+                                  
+                                  Date Only
+                                  *********
+                                  This date will be taken
+                                  as midnight UTC of that day
+                                  Format: YYYY-MM-DD
+                                  Example: 2017-09-15
+                                  
+                                  Epoch seconds
+                                  **************
+                                  Example: 1412195400
+  --lifecycle-state [CREATING|ACTIVE|DELETING]
+                                  The state of a resource.
+  --sort-by [displayName|timeCreated|domainName]
+                                  The field by which to sort steering policy
+                                  attachments.
+  --sort-order [ASC|DESC]         The order to sort the resources.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dns steering-policy-attachment update --help
+Usage: oci dns steering-policy-attachment update [OPTIONS]
+
+  Updates the specified steering policy attachment with your new information.
+
+Options:
+  --steering-policy-attachment-id TEXT
+                                  The OCID of the target steering policy
+                                  attachment. [required]
+  --display-name TEXT             A user-friendly name for the steering policy
+                                  attachment. Does not have to be unique, and
+                                  it's changeable. Avoid entering confidential
+                                  information.
+  --if-match TEXT                 The `If-Match` header field makes the request
+                                  method conditional on the existence of at
+                                  least one current representation of the target
+                                  resource, when the field-value is `*`, or
+                                  having a current representation of the target
+                                  resource that has an entity-tag matching a
+                                  member of the list of entity-tags provided in
+                                  the field-value.
+  --if-unmodified-since TEXT      The `If-Unmodified-Since` header field makes
+                                  the request method conditional on the selected
+                                  representation's last modification date being
+                                  earlier than or equal to the date provided in
+                                  the field-value.  This field accomplishes the
+                                  same purpose as If-Match for cases where the
+                                  user agent does not have an entity-tag for the
+                                  representation.
+  --wait-for-state [CREATING|ACTIVE|DELETING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns zone --help
 Usage: oci dns zone [OPTIONS] COMMAND [ARGS]...
 
@@ -672,7 +1793,7 @@ Options:
 
 Commands:
   create  Creates a new zone in the specified...
-  delete  Deletes the specified zone.
+  delete  Deletes the specified zone and all its...
   get     Gets information about the specified zone,...
   list    Gets a list of all zones in the specified...
   update  Updates the specified secondary zone with...
@@ -777,8 +1898,8 @@ Options:
 $ oci dns zone delete --help
 Usage: oci dns zone delete [OPTIONS]
 
-  Deletes the specified zone. A `204` response indicates that zone has been
-  successfully deleted.
+  Deletes the specified zone and all its steering policy attachments. A `204`
+  response indicates that zone has been successfully deleted.
 
 Options:
   --zone-name-or-id TEXT          The name or OCID of the target zone.

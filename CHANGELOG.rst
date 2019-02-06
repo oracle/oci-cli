@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.4.44 - 2019-02-07
+-------------------
+Added
+~~~~~
+* Connection Strings for Database Resource API in Database Service
+
+  * The following commands responses have a new attribute `connectionStrings` added to them.
+     * (``oci db database get``)
+     * (``oci db database list``)
+
+* Support for OCI DNS Traffic Management
+
+  * (``oci dns steering-policy``)
+  * (``oci dns steering-policy-attachment``)
+
+* Support for Health Check Service (``oci health-checks``)
+
+  * Ability to create and manage http health check 
+  * Ability to create and manage ping health check 
+  * Ability to list available vantage points
+  * Ability to create on demand http probe 
+
+* Support for tagging Approved Senders in the Email Service.
+
+  * (``oci email sender create --defined-tags --freeform-tags``)
+  * (``oci email sender update --defined-tags --freeform-tags``)
+
+* Support for Web Application Acceleration and Security Service (``oci waas``)
+
+  * An example on using the WAAS Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/waas_example.sh>`__.
+
+Changed
+~~~~~~~
+* Changed the behavior of kubernetes configuration download command (``oci ce cluster create-kubeconfig``) in Container Engine service as follows:
+
+  * Support for ``--overwrite`` flag while downloading kubernetes configuration. Using this flag ensures current behavior
+    of ``oci ce cluster create-kubeconfig`` command where an existing kubeconfig file is overwritten by downloaded content.
+  * Support for merging kubernetes configuration in Container Engine service. The command when used without ``--overwrite``
+    flag merges the downloaded kubeconfig with existing kubeconfig in the config file, if it exists.
+  * Support for writing kubernetes configuration to default location in Container Engine service. To support this, ``--file``
+    option in ``oci ce cluster create-kubeconfig`` command has been made optional. When not given, the default kubeconfig
+    location used is ``~/.kube/config``
+  * The details about this change are documented in (``oci ce cluster create-kubeconfig --help``)
+
 2.4.43 - 2019-01-31
 -------------------
 Added

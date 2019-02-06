@@ -57,94 +57,19 @@ DISPLAY_HEADERS = {
     "opc-total-items"
 }
 
+# Use the overrides here sparingly for situations where we do not want to create an extended file.
 OVERRIDES = {
-    "audit_event_group.command_name": "event",
     "configuration_group.command_name": "config",
-    "list_events.command_name": "list",
-    "blockstorage_root_group.command_name": "bv",
-    "compute_root_group.command_name": "compute",
-    "list_instance_pool_instances.command_name": "list-instances",
-    "ce_root_group.command_name": "ce",
-    "db_root_group.command_name": "db",
-    "db_node_group.command_name": "node",
-    "db_system_group.command_name": "system",
-    "db_system_shape_group.command_name": "system-shape",
-    "db_version_group.command_name": "version",
-    "get_console_history_content.command_name": "get-content",
-    "get_db_system_patch.command_name": "by-db-system",
-    "get_db_system_patch_history_entry.command_name": "by-db-system",
-    "get_namespace_metadata.command_name": "get-metadata",
-    "get_windows_instance_initial_credentials.command_name": "get-windows-initial-creds",
-    "kms_crypto_root_group.command_name": "crypto",
-    "kms_vault_root_group.command_name": "vault",
-    "kms_management_root_group.command_name": "management",
-    "instance_action.command_name": "action",
-    "launch_instance_configuration_compute_instance_details.command_name": "launch-compute-instance",
-    "list_db_system_patches.command_name": "by-db-system",
-    "list_db_system_patch_history_entries.command_name": "by-db-system",
-    "load_balancer_policy_group.command_name": "policy",
-    "load_balancer_protocol_group.command_name": "protocol",
-    "load_balancer_shape_group.command_name": "shape",
-    "list_crossconnect_port_speed_shapes.command_name": "list",
-    "list_protocols.command_name": "list",
-    "list_shapes.command_name": "list",
-    "list_policies.command_name": "list",
     "list_work_request_logs.command_name": "list",
-    "namespace_group.command_name": "ns",
-    "patch_history_entry_group.command_name": "patch-history",
-    "preauthenticated_request_group.command_name": "preauth-request",
-    "update_namespace_metadata.command_name": "update-metadata",
-    "virtual_network_root_group.command_name": "network",
-    "volume_backup_group.command_name": "backup",
-    "resource_summary_collection_group.command_name": "resource",
-    "search_resources_structured_search_details.command_name": "structured-search",
-    "search_resources_free_text_search_details.command_name": "free-text-search",
-    "attach_volume_attach_paravirtualized_volume_details.command_name": "attach-paravirtualized-volume",
-    "generate_autonomous_data_warehouse_wallet.command_name": "generate-wallet",
-    "generate_autonomous_database_wallet.command_name": "generate-wallet",
-    "list_announcements.command_name": "list",
-    "get_announcement_user_status.command_name": "get",
-    "update_announcement_user_status.command_name": "update"
+    "healthchecks_root_group.command_name": "health-checks",
+    "health_checks_vantage_point_group.command_name": "vantage-point"
 }
-
 ROOT_COMMAND_HELP_OVERRIDES = {
-    "compute_root_group.help": "Compute Service CLI",
-    "compute_root_group.short_help": "Compute Service",
-    "compute_management_root_group.help": "Compute Management Service CLI",
-    "compute_management_root_group.short_help": "Compute Management Service",
-    "blockstorage_root_group.help": "Block Volume Service CLI",
-    "blockstorage_root_group.short_help": "Block Volume Service",
-    "compute_root_group.help": "Compute Service CLI",
-    "compute_root_group.short_help": "Compute Service",
-    "os_root_group.help": "Object Storage Service CLI",
-    "os_root_group.short_help": "Object Storage Service",
-    "virtual_network_root_group.help": "Networking Service CLI",
-    "virtual_network_root_group.short_help": "Networking Service",
-    "email_root_group.help": "Email Delivery Service CLI",
+    "marketplace_service_group.help": "Marketplace Service CLI",
+    "marketplace_service_group.short_help": "Marketplace Service",
+    "email_root_group.help": "Email Delivery Service CLI"
 }
-
-DNS_OVERRIDES = {
-    "get_domain_records.command_name": "get",
-    "delete_domain_records.command_name": "delete",
-    "get_zone_records.command_name": "get",
-    "patch_domain_records.command_name": "patch",
-    "patch_rr_set.command_name": "patch",
-    "patch_zone_records.command_name": "patch",
-    "rr_set_group.command_name": "rrset",
-    "update_rr_set.command_name": "update",
-    "update_domain_records.command_name": "update",
-    "update_zone_records.command_name": "update"
-}
-
-KMS_OVERRIDES = {
-    "cancel_vault_deletion.command_name": "cancel-deletion",
-    "schedule_vault_deletion.command_name": "schedule-deletion"
-}
-
-OVERRIDES.update(DNS_OVERRIDES)
-OVERRIDES.update(KMS_OVERRIDES)
 OVERRIDES.update(ROOT_COMMAND_HELP_OVERRIDES)
-
 
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
 
@@ -157,6 +82,22 @@ CLOCK_SKEW_WARNING_THRESHOLD_MINUTES = 5
 MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
 
 LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports pagination and not all resources were returned.  Re-run using the --all option to auto paginate and list all resources."
+
+
+def rename_command(parent_group, command, new_name):
+    if parent_group and command.name in parent_group.commands:
+        parent_group.commands.pop(command.name)
+
+    # This is helpful for generated tests which rely on oci_cli.cli_util.override(
+    try:
+        # callback.__name__ is something like blockstorage_root_group
+        OVERRIDES[command.callback.__name__ + ".command_name"] = new_name
+    except Exception:
+        pass
+
+    command.name = new_name
+    if parent_group:
+        parent_group.add_command(command)
 
 
 # Used to format the memory usage.

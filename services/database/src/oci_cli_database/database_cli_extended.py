@@ -11,6 +11,25 @@ from oci_cli import json_skeleton_utils
 from oci_cli.generated import database_cli
 from oci_cli.aliasing import CommandGroupWithAlias
 
+# Rename some commands and groups
+cli_util.rename_command(database_cli.db_root_group, database_cli.db_node_group, "node")
+cli_util.rename_command(database_cli.db_root_group, database_cli.db_system_group, "system")
+cli_util.rename_command(database_cli.db_root_group, database_cli.db_system_shape_group, "system-shape")
+cli_util.rename_command(database_cli.db_root_group, database_cli.db_version_group, "version")
+cli_util.rename_command(database_cli.db_root_group, database_cli.patch_history_entry_group, "patch-history")
+database_cli.patch_group.commands.pop("get-db-system")
+database_cli.patch_group.commands.pop("list-db-system")
+database_cli.patch_history_entry_group.commands.pop("get-db-system")
+database_cli.patch_history_entry_group.commands.pop("list-db-system")
+
+database_cli.get_db_system_patch.name = "by-db-system"
+database_cli.get_db_system_patch_history_entry.name = "by-db-system"
+database_cli.list_db_system_patches.name = "by-db-system"
+database_cli.list_db_system_patch_history_entries.name = "by-db-system"
+
+cli_util.rename_command(database_cli.autonomous_database_group, database_cli.generate_autonomous_database_wallet, "generate-wallet")
+cli_util.rename_command(database_cli.autonomous_data_warehouse_group, database_cli.generate_autonomous_data_warehouse_wallet, "generate-wallet")
+
 
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
@@ -648,14 +667,12 @@ database_cli.db_system_group.add_command(update_db_system_extended)
 
 database_cli.patch_group.commands.pop(database_cli.get_db_home_patch.name)
 database_cli.patch_group.commands.pop(database_cli.list_db_home_patches.name)
-database_cli.patch_group.commands.pop(database_cli.get_db_system_patch.name)
 
 patch_get_group.add_command(database_cli.get_db_system_patch)
 patch_list_group.add_command(database_cli.list_db_system_patches)
 
 database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_home_patch_history_entry.name)
 database_cli.patch_history_entry_group.commands.pop(database_cli.list_db_home_patch_history_entries.name)
-database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_system_patch_history_entry.name)
 
 patch_history_get_group.add_command(database_cli.get_db_system_patch_history_entry)
 patch_history_list_group.add_command(database_cli.list_db_system_patch_history_entries)

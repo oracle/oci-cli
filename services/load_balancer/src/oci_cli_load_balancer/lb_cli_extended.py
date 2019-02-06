@@ -10,6 +10,14 @@ from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.generated import loadbalancer_cli
 
+# Rename some commands and groups
+cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_policy_group, "policy")
+cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_protocol_group, "protocol")
+cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_shape_group, "shape")
+cli_util.rename_command(loadbalancer_cli.load_balancer_policy_group, loadbalancer_cli.list_policies, "list")
+cli_util.rename_command(loadbalancer_cli.load_balancer_protocol_group, loadbalancer_cli.list_protocols, "list")
+cli_util.rename_command(loadbalancer_cli.load_balancer_shape_group, loadbalancer_cli.list_shapes, "list")
+
 
 def process_ssl_configuration_kwargs(kwargs):
     ssl_configuration = {}

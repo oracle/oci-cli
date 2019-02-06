@@ -24,12 +24,10 @@ INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\
 DEFAULT_LOCAL_VNC_PORT = 5900
 DEFAULT_SSH_PROXY_PORT = 5905
 
-
 cli.add_command(compute_cli.compute_root_group)
 
 compute_cli.compute_root_group.commands.pop(compute_cli.volume_group.name)
 compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_group.name)
-compute_cli.compute_root_group.commands.pop(compute_cli.boot_volume_group.name)
 
 # Disabling subclass commands
 compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_uri_details.name)
@@ -43,17 +41,26 @@ compute_cli.compute_root_group.add_command(compute_cli.vnic_attachment_group)
 compute_cli.compute_root_group.add_command(compute_cli.boot_volume_attachment_group)
 compute_cli.compute_root_group.add_command(compute_cli.volume_attachment_group)
 
-
 # Disabling subclass commands
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_i_scsi_volume_details.name)
 
 compute_cli.compute_root_group.add_command(compute_cli.console_history_group)
+cli_util.rename_command(compute_cli.console_history_group, compute_cli.get_console_history_content, "get-content")
 compute_cli.compute_root_group.add_command(compute_cli.instance_console_connection_group)
+cli_util.rename_command(compute_cli.instance_group, compute_cli.instance_action, "action")
+cli_util.rename_command(compute_cli.instance_credentials_group, compute_cli.get_windows_instance_initial_credentials, "get-windows-initial-creds")
+compute_cli.get_windows_instance_initial_credentials.name = "get-windows-initial-creds"
 compute_cli.instance_group.add_command(compute_cli.get_windows_instance_initial_credentials)
 compute_cli.volume_attachment_group.add_command(compute_cli.detach_volume)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.attach_vnic.name)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.detach_vnic.name)
 compute_cli.instance_console_connection_group.commands.pop(compute_cli.create_instance_console_connection.name)
+cli_util.rename_command(compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_paravirtualized_volume_details, "attach-paravirtualized-volume")
+compute_cli.compute_root_group.help = "Compute Service CLI"
+compute_cli.compute_root_group.short_help = "Compute Service"
+
+# boot volume related commands under 'oci compute' belong in boot-volume-attachment group
+compute_cli.compute_root_group.commands.pop(compute_cli.boot_volume_group.name)
 compute_cli.boot_volume_attachment_group.add_command(compute_cli.detach_boot_volume)
 
 # help for oci compute instance launch --metadata

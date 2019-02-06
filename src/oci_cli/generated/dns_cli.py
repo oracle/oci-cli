@@ -22,6 +22,12 @@ def dns_root_group():
     pass
 
 
+@click.command(cli_util.override('steering_policy_attachment_group.command_name', 'steering-policy-attachment'), cls=CommandGroupWithAlias, help="""An attachment between a steering policy and a domain. An attachment occludes all records at its domain that are of a covered rtype, constructing DNS responses from its steering policy rather than from those domain records. A domain can have at most one attachment covering any given rtype.""")
+@cli_util.help_option_group
+def steering_policy_attachment_group():
+    pass
+
+
 @click.command(cli_util.override('zone_group.command_name', 'zone'), cls=CommandGroupWithAlias, help="""A DNS zone.
 
 *Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -42,6 +48,14 @@ def record_collection_group():
     pass
 
 
+@click.command(cli_util.override('steering_policy_group.command_name', 'steering-policy'), cls=CommandGroupWithAlias, help="""A DNS steering policy.
+
+*Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def steering_policy_group():
+    pass
+
+
 @click.command(cli_util.override('records_group.command_name', 'records'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def records_group():
@@ -54,11 +68,139 @@ def zones_group():
     pass
 
 
+dns_root_group.add_command(steering_policy_attachment_group)
 dns_root_group.add_command(zone_group)
 dns_root_group.add_command(rr_set_group)
 dns_root_group.add_command(record_collection_group)
+dns_root_group.add_command(steering_policy_group)
 dns_root_group.add_command(records_group)
 dns_root_group.add_command(zones_group)
+
+
+@steering_policy_group.command(name=cli_util.override('create_steering_policy.command_name', 'create'), help="""Creates a new steering policy in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment containing the steering policy.""")
+@cli_util.option('--display-name', required=True, help="""A user-friendly name for the steering policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--template', required=True, type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help="""The common pattern (or lack thereof) to which the steering policy adheres. This value restricts the possible configurations of rules, but thereby supports specifically tailored interfaces. Values other than \"CUSTOM\" require the rules to begin with an unconditional FILTER that keeps answers contingent upon `answer.isDisabled != true`, followed _if and only if the policy references a health check monitor_ by an unconditional HEALTH rule, and require the last rule to be an unconditional LIMIT. What must precede the LIMIT rule is determined by the template value: - FAILOVER requires exactly an unconditional PRIORITY rule that ranks answers by pool.   Each answer pool must have a unique priority value assigned to it. Answer data must   be defined in the `defaultAnswerData` property for the rule and the `cases` property   must not be defined. - LOAD_BALANCE requires exactly an unconditional WEIGHTED rule that shuffles answers   by name. Answer data must be defined in the `defaultAnswerData` property for the   rule and the `cases` property must not be defined. - ROUTE_BY_GEO requires exactly one PRIORITY rule that ranks answers by pool using the   geographical location of the client as a condition. Within that rule you may only   use `query.client.geoKey` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_ASN requires exactly one PRIORITY rule that ranks answers by pool using the   ASN of the client as a condition. Within that rule you may only use   `query.client.asn` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_IP requires exactly one PRIORITY rule that ranks answers by pool using the   IP subnet of the client as a condition. Within that rule you may only use   `query.client.address` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - CUSTOM allows an arbitrary configuration of rules.
+
+For an existing steering policy, the template value may be changed to any of the supported options but the resulting policy must conform to the requirements for the new template type or else a Bad Request error will be returned.""")
+@cli_util.option('--ttl', type=click.INT, help="""The Time To Live for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
+@cli_util.option('--health-check-monitor-id', help="""The OCID of the health check monitor providing health data about the answers of the steering policy. A steering policy answer with `rdata` matching a monitored endpoint will use the health data of that endpoint. A steering policy answer with `rdata` not matching any monitored endpoint will be assumed healthy.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--answers', type=custom_types.CLI_COMPLEX_TYPE, help="""The set of all answers that can potentially issue from the steering policy.
+
+This option is a JSON list with items of type SteeringPolicyAnswer.  For documentation on SteeringPolicyAnswer please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyAnswer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The pipeline of rules that will be processed in sequence to reduce the pool of answers to a response for any given request.
+
+The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
+
+This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}}, output_type={'module': 'dns', 'class': 'SteeringPolicy'})
+@cli_util.wrap_exceptions
+def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, template, ttl, health_check_monitor_id, freeform_tags, defined_tags, answers, rules):
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['template'] = template
+
+    if ttl is not None:
+        details['ttl'] = ttl
+
+    if health_check_monitor_id is not None:
+        details['healthCheckMonitorId'] = health_check_monitor_id
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if answers is not None:
+        details['answers'] = cli_util.parse_json_parameter("answers", answers)
+
+    if rules is not None:
+        details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.create_steering_policy(
+        create_steering_policy_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_steering_policy') and callable(getattr(client, 'get_steering_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_steering_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_attachment_group.command(name=cli_util.override('create_steering_policy_attachment.command_name', 'create'), help="""Creates a new attachment between a steering policy and a domain. For the purposes of access control, the attachment is automatically placed into the same compartment as the containing zone of the domain.""")
+@cli_util.option('--steering-policy-id', required=True, help="""The OCID of the attached steering policy.""")
+@cli_util.option('--zone-id', required=True, help="""The OCID of the attached zone.""")
+@cli_util.option('--domain-name', required=True, help="""The attached domain within the attached zone.""")
+@cli_util.option('--display-name', help="""A user-friendly name for the steering policy attachment. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicyAttachment'})
+@cli_util.wrap_exceptions
+def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, zone_id, domain_name, display_name):
+
+    kwargs = {}
+
+    details = {}
+    details['steeringPolicyId'] = steering_policy_id
+    details['zoneId'] = zone_id
+    details['domainName'] = domain_name
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.create_steering_policy_attachment(
+        create_steering_policy_attachment_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_steering_policy_attachment') and callable(getattr(client, 'get_steering_policy_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_steering_policy_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
@@ -199,7 +341,125 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('delete_zone.command_name', 'delete'), help="""Deletes the specified zone. A `204` response indicates that zone has been successfully deleted.""")
+@steering_policy_group.command(name=cli_util.override('delete_steering_policy.command_name', 'delete'), help="""Deletes the specified steering policy. A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones.""")
+@cli_util.option('--steering-policy-id', required=True, help="""The OCID of the target steering policy.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, if_match, if_unmodified_since):
+
+    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    client = cli_util.build_client('dns', ctx)
+    result = client.delete_steering_policy(
+        steering_policy_id=steering_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_steering_policy') and callable(getattr(client, 'get_steering_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_steering_policy(steering_policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_attachment_group.command(name=cli_util.override('delete_steering_policy_attachment.command_name', 'delete'), help="""Deletes the specified steering policy attachment. A `204` response indicates that the delete has been successful.""")
+@cli_util.option('--steering-policy-attachment-id', required=True, help="""The OCID of the target steering policy attachment.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, if_match, if_unmodified_since):
+
+    if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    client = cli_util.build_client('dns', ctx)
+    result = client.delete_steering_policy_attachment(
+        steering_policy_attachment_id=steering_policy_attachment_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_steering_policy_attachment') and callable(getattr(client, 'get_steering_policy_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_steering_policy_attachment(steering_policy_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('delete_zone.command_name', 'delete'), help="""Deletes the specified zone and all its steering policy attachments. A `204` response indicates that zone has been successfully deleted.""")
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -415,6 +675,60 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
     cli_util.render_response(result, ctx)
 
 
+@steering_policy_group.command(name=cli_util.override('get_steering_policy.command_name', 'get'), help="""Gets information about the specified steering policy.""")
+@cli_util.option('--steering-policy-id', required=True, help="""The OCID of the target steering policy.""")
+@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicy'})
+@cli_util.wrap_exceptions
+def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_modified_since):
+
+    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    if if_modified_since is not None:
+        kwargs['if_modified_since'] = if_modified_since
+    client = cli_util.build_client('dns', ctx)
+    result = client.get_steering_policy(
+        steering_policy_id=steering_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_attachment_group.command(name=cli_util.override('get_steering_policy_attachment.command_name', 'get'), help="""Gets information about the specified steering policy attachment.""")
+@cli_util.option('--steering-policy-attachment-id', required=True, help="""The OCID of the target steering policy attachment.""")
+@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help="""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicyAttachment'})
+@cli_util.wrap_exceptions
+def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id, if_none_match, if_modified_since):
+
+    if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    if if_modified_since is not None:
+        kwargs['if_modified_since'] = if_modified_since
+    client = cli_util.build_client('dns', ctx)
+    result = client.get_steering_policy_attachment(
+        steering_policy_attachment_id=steering_policy_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @zones_group.command(name=cli_util.override('get_zone.command_name', 'get'), help="""Gets information about the specified zone, including its creation date, zone type, and serial.""")
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
@@ -517,6 +831,163 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
     else:
         result = client.get_zone_records(
             zone_name_or_id=zone_name_or_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_group.command(name=cli_util.override('list_steering_policies.command_name', 'list'), help="""Gets a list of all steering policies in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--id', help="""The OCID of a resource.""")
+@cli_util.option('--display-name', help="""The displayName of a resource.""")
+@cli_util.option('--display-name-contains', help="""The partial displayName of a resource. Will match any resource whose name (case-insensitive) contains the provided value.""")
+@cli_util.option('--health-check-monitor-id', help="""Search by health check monitor OCID. Will match any resource whose health check monitor id matches the provided value.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--template', help="""Search by template type. Will match any resource whose template type matches the provided value.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help="""The state of a resource.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "template"]), help="""The field by which to sort steering policies.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[SteeringPolicySummary]'})
+@cli_util.wrap_exceptions
+def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, display_name, display_name_contains, health_check_monitor_id, time_created_greater_than_or_equal_to, time_created_less_than, template, lifecycle_state, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if health_check_monitor_id is not None:
+        kwargs['health_check_monitor_id'] = health_check_monitor_id
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if template is not None:
+        kwargs['template'] = template
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('dns', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_steering_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_steering_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_steering_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_attachment_group.command(name=cli_util.override('list_steering_policy_attachments.command_name', 'list'), help="""Lists the steering policy attachments in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--id', help="""The OCID of a resource.""")
+@cli_util.option('--display-name', help="""The displayName of a resource.""")
+@cli_util.option('--steering-policy-id', help="""Search by steering policy OCID. Will match any resource whose steering policy id matches the provided value.""")
+@cli_util.option('--zone-id', help="""Search by zone OCID. Will match any resource whose zone id matches the provided value.""")
+@cli_util.option('--domain', help="""Search by domain. Will match any record whose domain (case-insensitive) equals the provided value.""")
+@cli_util.option('--domain-contains', help="""Search by domain. Will match any record whose domain (case-insensitive) contains the provided value.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""The state of a resource.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "domainName"]), help="""The field by which to sort steering policy attachments.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[SteeringPolicyAttachmentSummary]'})
+@cli_util.wrap_exceptions
+def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, display_name, steering_policy_id, zone_id, domain, domain_contains, time_created_greater_than_or_equal_to, time_created_less_than, lifecycle_state, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if steering_policy_id is not None:
+        kwargs['steering_policy_id'] = steering_policy_id
+    if zone_id is not None:
+        kwargs['zone_id'] = zone_id
+    if domain is not None:
+        kwargs['domain'] = domain
+    if domain_contains is not None:
+        kwargs['domain_contains'] = domain_contains
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('dns', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_steering_policy_attachments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_steering_policy_attachments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_steering_policy_attachments(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -830,6 +1301,155 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
         update_rr_set_details=details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_group.command(name=cli_util.override('update_steering_policy.command_name', 'update'), help="""Updates the specified steering policy with your new information.""")
+@cli_util.option('--steering-policy-id', required=True, help="""The OCID of the target steering policy.""")
+@cli_util.option('--display-name', help="""A user-friendly name for the steering policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--ttl', type=click.INT, help="""The Time To Live for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
+@cli_util.option('--health-check-monitor-id', help="""The OCID of the health check monitor providing health data about the answers of the steering policy. A steering policy answer with `rdata` matching a monitored endpoint will use the health data of that endpoint. A steering policy answer with `rdata` not matching any monitored endpoint will be assumed healthy.""")
+@cli_util.option('--template', type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help="""The common pattern (or lack thereof) to which the steering policy adheres. This value restricts the possible configurations of rules, but thereby supports specifically tailored interfaces. Values other than \"CUSTOM\" require the rules to begin with an unconditional FILTER that keeps answers contingent upon `answer.isDisabled != true`, followed _if and only if the policy references a health check monitor_ by an unconditional HEALTH rule, and require the last rule to be an unconditional LIMIT. What must precede the LIMIT rule is determined by the template value: - FAILOVER requires exactly an unconditional PRIORITY rule that ranks answers by pool.   Each answer pool must have a unique priority value assigned to it. Answer data must   be defined in the `defaultAnswerData` property for the rule and the `cases` property   must not be defined. - LOAD_BALANCE requires exactly an unconditional WEIGHTED rule that shuffles answers   by name. Answer data must be defined in the `defaultAnswerData` property for the   rule and the `cases` property must not be defined. - ROUTE_BY_GEO requires exactly one PRIORITY rule that ranks answers by pool using the   geographical location of the client as a condition. Within that rule you may only   use `query.client.geoKey` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_ASN requires exactly one PRIORITY rule that ranks answers by pool using the   ASN of the client as a condition. Within that rule you may only use   `query.client.asn` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_IP requires exactly one PRIORITY rule that ranks answers by pool using the   IP subnet of the client as a condition. Within that rule you may only use   `query.client.address` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - CUSTOM allows an arbitrary configuration of rules.
+
+For an existing steering policy, the template value may be changed to any of the supported options but the resulting policy must conform to the requirements for the new template type or else a Bad Request error will be returned.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--answers', type=custom_types.CLI_COMPLEX_TYPE, help="""The set of all answers that can potentially issue from the steering policy.
+
+This option is a JSON list with items of type SteeringPolicyAnswer.  For documentation on SteeringPolicyAnswer please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyAnswer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The pipeline of rules that will be processed in sequence to reduce the pool of answers to a response for any given request.
+
+The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
+
+This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}}, output_type={'module': 'dns', 'class': 'SteeringPolicy'})
+@cli_util.wrap_exceptions
+def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, display_name, ttl, health_check_monitor_id, template, freeform_tags, defined_tags, answers, rules, if_match, if_unmodified_since):
+
+    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or answers or rules:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and answers and rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if ttl is not None:
+        details['ttl'] = ttl
+
+    if health_check_monitor_id is not None:
+        details['healthCheckMonitorId'] = health_check_monitor_id
+
+    if template is not None:
+        details['template'] = template
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if answers is not None:
+        details['answers'] = cli_util.parse_json_parameter("answers", answers)
+
+    if rules is not None:
+        details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.update_steering_policy(
+        steering_policy_id=steering_policy_id,
+        update_steering_policy_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_steering_policy') and callable(getattr(client, 'get_steering_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_steering_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@steering_policy_attachment_group.command(name=cli_util.override('update_steering_policy_attachment.command_name', 'update'), help="""Updates the specified steering policy attachment with your new information.""")
+@cli_util.option('--steering-policy-attachment-id', required=True, help="""The OCID of the target steering policy attachment.""")
+@cli_util.option('--display-name', help="""A user-friendly name for the steering policy attachment. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicyAttachment'})
+@cli_util.wrap_exceptions
+def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, display_name, if_match, if_unmodified_since):
+
+    if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.update_steering_policy_attachment(
+        steering_policy_attachment_id=steering_policy_attachment_id,
+        update_steering_policy_attachment_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_steering_policy_attachment') and callable(getattr(client, 'get_steering_policy_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_steering_policy_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except Exception as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

@@ -1,0 +1,58 @@
+[
+  {
+    /*
+     * The first rule in a LOAD_BALANCE policy template is a FILTER rule that only keeps answers
+     * that do not have their isDisabled property set to true. Answers without an isDisable property
+     * defined are kept.
+     */
+    "ruleType": "FILTER",
+    "defaultAnswerData": [
+      {
+        "answerCondition": "answer.isDisabled != true",
+        "shouldKeep": true
+      }
+    ]
+  },
+  /*
+   * If we need to remove answers for unhealthy hosts then we would define a health check monitor
+   * for the policy using the healthCheckMonitorId property in the steering policy details and the
+   * next rule would be a HEALTH rule:
+   * {
+   *   "ruleType": "HEALTH"
+   * },
+   */
+  {
+    /*
+     * The next rule in a LOAD_BALANCE policy template is a WEIGHTED rule where we define the
+     * weights for each answer by the answer's name property to determine how often an answer will
+     * be at the beginning of the list of answers in response to a DNS query. This rule is the main
+     * point of a LOAD_BALANCE policy.
+     *
+     * In this example, we want to return Server 1 first in the list three times as often as Server
+    * 2.
+     */
+    "ruleType": "WEIGHTED",
+    "defaultAnswerData": [
+      {
+        "answerCondition": "answer.name == 'Server 1'",
+        "value": 75
+      },
+      {
+        "answerCondition": "answer.name == 'Server 2'",
+        "value": 25
+      },
+      {
+        "answerCondition": "answer.name == 'Server 3'",
+        "value": 1
+      }
+    ]
+  },
+  {
+    /*
+     * The final rule in a LOAD_BALANCE policy template is a LIMIT rule that limits the number of
+     * answers returned in the response to a DNS query.
+     */
+    "ruleType": "LIMIT",
+    "defaultCount": 1
+  }
+]
