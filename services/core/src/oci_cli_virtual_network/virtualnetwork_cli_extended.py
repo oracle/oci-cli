@@ -12,8 +12,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 
-
-cli.add_command(virtualnetwork_cli.virtual_network_root_group)
+cli_util.rename_command(cli, virtualnetwork_cli.virtual_network_root_group, "network")
 
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_config_group.name)
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_status_group.name)
@@ -31,6 +30,10 @@ virtualnetwork_cli.get_ip_sec_connection_device_config.name = 'get-config'
 virtualnetwork_cli.get_ip_sec_connection_device_status.name = 'get-status'
 virtualnetwork_cli.ip_sec_connection_group.add_command(virtualnetwork_cli.get_ip_sec_connection_device_config)
 virtualnetwork_cli.ip_sec_connection_group.add_command(virtualnetwork_cli.get_ip_sec_connection_device_status)
+cli_util.rename_command(virtualnetwork_cli.cross_connect_port_speed_shape_group, virtualnetwork_cli.list_crossconnect_port_speed_shapes, "list")
+
+virtualnetwork_cli.virtual_network_root_group.help = "Networking Service CLI"
+virtualnetwork_cli.virtual_network_root_group.short_help = "Networking Service"
 
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""

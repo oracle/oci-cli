@@ -121,11 +121,15 @@ Usage: oci ce cluster create-kubeconfig [OPTIONS]
 
 Options:
   --cluster-id TEXT     The OCID of the cluster. [required]
-  --file FILENAME       The name of the file that will receive the response
-                        data, or '-' to write to STDOUT. [required]
   --token-version TEXT  The version of the kubeconfig token.
   --expiration INTEGER  The desired expiration, in seconds, to use for the
                         kubeconfig token.
+  --file PATH           The name of the file that will be updated with response
+                        data, or '-' to write to STDOUT. [default:
+                        ~/.kube/config]
+  --overwrite           Overwrites the contents of kubeconfig file specified
+                        using --file option or kubeconfig file at default
+                        location if --file is not used.
   --from-json TEXT      Provide input to this command as a JSON document from a
                         file.
                         

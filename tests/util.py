@@ -79,29 +79,9 @@ SKIP_JSON_KEY_FORMAT_CHECK = set([
 ])
 
 
-# this allows generated tests to look up operations that have been moved in code in the CLI
+# This allows generated tests to look up operations that have been moved in code in the CLI.
+# It is populated by the code that follows.
 MOVED_COMMANDS = {
-    ('iam', 'user_group_membership', 'add'): ['iam', 'group', 'add-user'],
-    ('kms', 'crypto', 'encrypted_data', 'encrypt'): ['kms', 'crypto', 'encrypt'],
-    ('kms', 'crypto', 'decrypted_data', 'decrypt'): ['kms', 'crypto', 'decrypt'],
-    ('kms', 'crypto', 'generated_key', 'generate-data-encryption-key'): ['kms', 'crypto', 'generate-data-encryption-key'],
-    ('kms', 'vault', 'cancel-deletion'): ['kms', 'management', 'vault', 'cancel-deletion'],
-    ('kms', 'vault', 'schedule-deletion'): ['kms', 'management', 'vault', 'schedule-deletion'],
-    ('kms', 'vault', 'get'): ['kms', 'management', 'vault', 'get'],
-    ('kms', 'vault', 'create'): ['kms', 'management', 'vault', 'create'],
-    ('kms', 'vault', 'list'): ['kms', 'management', 'vault', 'list'],
-    ('kms', 'vault', 'delete'): ['kms', 'management', 'vault', 'delete'],
-    ('kms', 'vault', 'update'): ['kms', 'management', 'vault', 'update'],
-    ('compute', 'app_catalog_listing', 'get'): ['compute', 'pic', 'listing', 'get'],
-    ('compute', 'app_catalog_listing', 'list'): ['compute', 'pic', 'listing', 'list'],
-    ('compute', 'app_catalog_listing_resource_version', 'get'): ['compute', 'pic', 'version', 'get'],
-    ('compute', 'app_catalog_listing_resource_version', 'list'): ['compute', 'pic', 'version', 'list'],
-    ('compute', 'app_catalog_listing_resource_version_agreements', 'get-app-catalog-listing-agreements'): ['compute', 'pic', 'agreements', 'get'],
-    ('compute', 'app_catalog_subscription', 'create'): ['compute', 'pic', 'subscription', 'create'],
-    ('compute', 'app_catalog_subscription', 'delete'): ['compute', 'pic', 'subscription', 'delete'],
-    ('compute', 'app_catalog_subscription', 'list'): ['compute', 'pic', 'subscription', 'list'],
-    ('compute-management', 'instance', 'launch-compute-instance'): ['compute-management', 'instance-configuration', 'launch-compute-instance'],
-    ('compute-management', 'instance', 'list-instances'): ['compute-management', 'instance-pool', 'list-instances']
 }
 # This dynamically adds the generated test operation subsitutions from the extended file.
 # This will process files under the generated_test_extensions that are named "extend_test*.py".

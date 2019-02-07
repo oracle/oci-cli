@@ -10,6 +10,7 @@ from timeit import default_timer as timer
 import click
 import sys
 
+cli_util.rename_command(audit_cli.audit_root_group, audit_cli.audit_event_group, "event")
 audit_cli.configuration_group.commands.pop(audit_cli.update_configuration.name)
 audit_cli.audit_event_group.commands.pop(audit_cli.list_events.name)
 
@@ -36,7 +37,7 @@ def update_configuration(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(audit_cli.list_events, params_to_exclude=[])
-@audit_cli.audit_event_group.command(name=cli_util.override('list_events.command_name', 'list-events'), help=audit_cli.list_events.help)
+@audit_cli.audit_event_group.command(name='list', help=audit_cli.list_events.help)
 @cli_util.option('--skip-deserialization', 'skip_deserialization', is_flag=True, help="""Skips deserializing service response into python sdk response models and returns as plain JSON object.""")
 @cli_util.option('--stream-output', 'stream_output', is_flag=True, help="""Print output to stdout as it is fetched so the full response is not stored in memory. This only works with --all.""")
 @click.pass_context

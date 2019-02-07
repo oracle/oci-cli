@@ -31,6 +31,7 @@ Commands:
   delete  Deletes an approved sender for a tenancy in a...
   get     Gets an approved sender for a given...
   list    Gets a collection of approved sender email...
+  update  Replaces the set of tags for a sender with...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email sender create --help
@@ -39,6 +40,46 @@ Usage: oci email sender create [OPTIONS]
   Creates a sender for a tenancy in a given compartment.
 
 Options:
+  -c, --compartment-id TEXT       The OCID of the compartment that contains the
+                                  sender. [required]
+  --email-address TEXT            The email address of the sender. [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -53,9 +94,6 @@ Options:
                                   whether the resource to see if it has reached
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
-  -c, --compartment-id TEXT       The OCID of the compartment that contains the
-                                  sender. [required]
-  --email-address TEXT            The email address of the sender. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -133,8 +171,12 @@ Options:
   --email-address TEXT            The email address of the approved sender.
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous GET request.
-  --limit INTEGER                 The maximum number of items to return in a
-                                  paginated GET request.
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. `1` is the minimum,
+                                  `1000` is the maximum. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
   --sort-by [TIMECREATED|EMAILADDRESS]
                                   The field to sort by. The `TIMECREATED` value
                                   returns the list in in descending order by
@@ -150,6 +192,81 @@ Options:
   --page-size INTEGER             When fetching results, the number of results
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci email sender update --help
+Usage: oci email sender update [OPTIONS]
+
+  Replaces the set of tags for a sender with the tags provided. If either
+  freeform or defined tags are omitted, the tags for that set remain the same.
+  Each set must include the full set of tags for the sender, partial updates
+  are not permitted. For more information about tagging, see [Resource Tags].
+
+Options:
+  --sender-id TEXT                The unique OCID of the sender. [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|ACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file.
                                   
@@ -182,6 +299,9 @@ $ oci email suppression create --help
 Usage: oci email suppression create [OPTIONS]
 
   Adds recipient email addresses to the suppression list for a tenancy.
+  Addresses added to the suppression list via the API are denoted as "MANUAL"
+  in the `reason` field. *Note:* All email addresses added to the suppression
+  list are normalized to include only lowercase letters.
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment to contain the
@@ -416,8 +536,12 @@ Options:
                                   Example: 1412195400
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous GET request.
-  --limit INTEGER                 The maximum number of items to return in a
-                                  paginated GET request.
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. `1` is the minimum,
+                                  `1000` is the maximum. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
   --sort-by [TIMECREATED|EMAILADDRESS]
                                   The field to sort by. The `TIMECREATED` value
                                   returns the list in in descending order by

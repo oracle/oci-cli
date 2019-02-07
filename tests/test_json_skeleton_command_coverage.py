@@ -67,9 +67,6 @@ def test_all_commands_generate_skeleton():
         result = util.invoke_command(full_command)
         assert result.exit_code == 0
         try:
-            # Sanity check that there are no errors
-            assert 'error' not in result.output.lower()
-
             parsed_output = json.loads(result.output)
             if parsed_output == {} and cmd not in COMMANDS_WITH_NO_PARAMS:
                 commands_with_bad_json.append(cmd)

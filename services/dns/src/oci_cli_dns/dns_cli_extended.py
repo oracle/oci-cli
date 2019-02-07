@@ -54,18 +54,18 @@ dns_cli.zone_group.add_command(dns_cli.get_zone)
 dns_cli.zone_group.add_command(dns_cli.list_zones)
 
 # zone records
-zone.add_command(dns_cli.get_zone_records)
-zone.add_command(dns_cli.patch_zone_records)
-zone.add_command(dns_cli.update_zone_records)
+cli_util.rename_command(zone, dns_cli.get_zone_records, "get")
+cli_util.rename_command(zone, dns_cli.patch_zone_records, "patch")
+cli_util.rename_command(zone, dns_cli.update_zone_records, "update")
 
 # domain records
-domain.add_command(dns_cli.patch_domain_records)
-domain.add_command(dns_cli.update_domain_records)
-domain.add_command(dns_cli.get_domain_records)
-domain.add_command(dns_cli.delete_domain_records)
+cli_util.rename_command(domain, dns_cli.patch_domain_records, "patch")
+cli_util.rename_command(domain, dns_cli.update_domain_records, "update")
+cli_util.rename_command(domain, dns_cli.get_domain_records, "get")
+cli_util.rename_command(domain, dns_cli.delete_domain_records, "delete")
 
 # rrset
-rrset.add_command(dns_cli.update_rr_set)
+cli_util.rename_command(rrset, dns_cli.update_rr_set, "update")
 rrset.add_command(dns_cli.get_rr_set)
 rrset.add_command(dns_cli.patch_rr_set)
 rrset.add_command(dns_cli.delete_rr_set)
