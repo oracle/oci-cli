@@ -54,7 +54,8 @@ DISPLAY_HEADERS = {
     "etag",
     "opc-next-page",
     "opc-work-request-id",
-    "opc-total-items"
+    "opc-total-items",
+    "opc-next-cursor"
 }
 
 # Use the overrides here sparingly for situations where we do not want to create an extended file.
@@ -198,7 +199,7 @@ def build_client(service_name, ctx):
         #
         # TODO: Potentially integrate with a specific --vault-endpoint parameter or find a way to translate a vault
         # (e.g. a vault's OCID) to the relevant endpoint
-        if service_name in ['kms_crypto', 'kms_management']:
+        if service_name in ['kms_crypto', 'kms_management', 'stream']:
             kwargs['service_endpoint'] = ctx.obj.get('endpoint')
 
         try:

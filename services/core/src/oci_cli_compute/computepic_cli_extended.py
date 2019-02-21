@@ -4,7 +4,7 @@
 from __future__ import print_function
 import click
 
-from oci_cli.generated import compute_cli
+from oci_cli_compute.generated import compute_cli
 
 from oci_cli import cli_util
 from oci_cli import custom_types

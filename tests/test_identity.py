@@ -578,7 +578,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         for t in tag_data_container.tags:
             tag_names_to_values[t.name] = 'update_policy {} 1'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
-            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            os.path.join('tests', 'temp', 'defined_tags_identity.json'),
             tag_data_container.tag_namespace,
             tag_names_to_values
         )
@@ -587,7 +587,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
             'policy', 'update',
             '--policy-id', policy_ocid,
             '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
-            '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_identity.json',
             '--force'
         ])
         self.validate_response(result)
@@ -615,7 +615,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
 
         tag_names_to_values.pop(tag_data_container.tags[1].name)
         tag_data_container.write_defined_tags_to_file(
-            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            os.path.join('tests', 'temp', 'defined_tags_identity.json'),
             tag_data_container.tag_namespace,
             tag_names_to_values
         )
@@ -623,7 +623,7 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
             'policy', 'update',
             '--policy-id', policy_ocid,
             '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
-            '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_identity.json',
             '--force'
         ])
         self.validate_response(result)

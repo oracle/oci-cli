@@ -8,7 +8,7 @@ import six  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
-from oci_cli.generated import loadbalancer_cli
+from oci_cli_load_balancer.generated import loadbalancer_cli
 
 # Rename some commands and groups
 cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_policy_group, "policy")

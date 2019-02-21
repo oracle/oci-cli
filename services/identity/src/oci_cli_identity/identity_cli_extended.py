@@ -5,7 +5,7 @@ from __future__ import print_function
 import click
 import six
 import sys
-from oci_cli.generated import identity_cli
+from oci_cli_identity.generated import identity_cli
 from oci_cli import cli_util
 from oci_cli import cli_exceptions
 from oci_cli import custom_types

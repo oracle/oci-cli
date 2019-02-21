@@ -121,6 +121,23 @@ class TestCompute(unittest.TestCase):
         result = self.invoke(['compute', 'instance', 'get', '--instance-id', self.instance_ocid])
         util.validate_response(result, expect_etag=True)
 
+        result = self.invoke(
+            ['compute', 'instance', 'launch',
+             '--compartment-id', util.COMPARTMENT_ID,
+             '--availability-domain', util.availability_domain(),
+             '--display-name', instance_name + "_2",
+             '--fault-domain', fault_domain,
+             '--subnet-id', self.subnet_ocid,
+             '--image-id', image_id,
+             '--shape', shape,
+             '--metadata',
+             util.remove_outer_quotes(oci_cli_compute.compute_cli_extended.compute_instance_launch_metadata_example),
+             '--wait-for-state', 'RUNNING',
+             '--max-wait-seconds', '20',
+             '--wait-interval-seconds', '5'])
+        self.instance_ocid_2 = util.find_id_in_response(result.output[result.output.index('{'):])
+        assert result.exit_code != 0
+
     @util.log_test
     def subtest_windows_instance_operations(self):
         instance_name = util.random_name('cli_test_instance')
@@ -550,7 +567,7 @@ class TestCompute(unittest.TestCase):
         for t in tag_data_container.tags:
             tag_names_to_values[t.name] = 'somevalue {}'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
-            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            os.path.join('tests', 'temp', 'defined_tags_compute.json'),
             tag_data_container.tag_namespace,
             tag_names_to_values
         )
@@ -560,7 +577,7 @@ class TestCompute(unittest.TestCase):
             '--instance-id', self.instance_ocid,
             '--ssh-public-key-file', util.SSH_AUTHORIZED_KEYS_FILE,
             '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
-            '--defined-tags', 'file://tests/temp/defined_tags_1.json'
+            '--defined-tags', 'file://tests/temp/defined_tags_compute.json'
         ])
         util.validate_response(result)
         instance_console_connection_details = json.loads(result.output)
@@ -585,6 +602,10 @@ class TestCompute(unittest.TestCase):
         if hasattr(self, 'instance_ocid'):
             print("Deleting instance " + self.instance_ocid)
             result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.instance_ocid, '--force'])
+            util.validate_response(result)
+        if hasattr(self, 'instance_ocid_2'):
+            print("Deleting instance " + self.instance_ocid_2)
+            result = self.invoke(['compute', 'instance', 'terminate', '--instance-id', self.instance_ocid_2, '--force'])
             util.validate_response(result)
 
     @util.log_test
@@ -612,6 +633,15 @@ class TestCompute(unittest.TestCase):
             try:
                 print("Checking instance terminated " + self.instance_ocid)
                 util.wait_until(['compute', 'instance', 'get', '--instance-id', self.instance_ocid], 'TERMINATED',
+                                max_wait_seconds=1200, succeed_if_not_found=True)
+            except Exception as error:
+                util.print_latest_exception(error)
+                error_count = error_count + 1
+
+        if hasattr(self, 'instance_ocid_2'):
+            try:
+                print("Checking instance 2 terminated " + self.instance_ocid_2)
+                util.wait_until(['compute', 'instance', 'get', '--instance-id', self.instance_ocid_2], 'TERMINATED',
                                 max_wait_seconds=1200, succeed_if_not_found=True)
             except Exception as error:
                 util.print_latest_exception(error)

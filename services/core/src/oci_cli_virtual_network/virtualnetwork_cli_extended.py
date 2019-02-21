@@ -5,7 +5,7 @@ from __future__ import print_function
 import click
 import sys
 
-from oci_cli.generated import virtualnetwork_cli
+from oci_cli_virtual_network.generated import virtualnetwork_cli
 
 from oci_cli.cli_root import cli
 from oci_cli import cli_util

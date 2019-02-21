@@ -254,8 +254,7 @@ Options:
                              Example: 1412195400
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous list query.
-  --all                      Fetches all pages of results. If you provide this
-                             option, then you cannot provide the --limit option.
+  --all                      Fetches all pages of results.
   --skip-deserialization     Skips deserializing service response into python
                              sdk response models and returns as plain JSON
                              object.

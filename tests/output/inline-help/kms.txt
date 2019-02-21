@@ -235,12 +235,47 @@ Options:
                                   then passing it back in via the file://
                                   syntax.
                                    [required]
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to namespaces. Example:
+                                  `{"foo-namespace": {"bar-key": "foo-value"}}`
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type, or scope. Exists
+                                  for cross-compatibility only. Example: `{"bar-
+                                  key": "value"}`
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [CREATING|ENABLING|ENABLED|DISABLING|DISABLED|DELETING|DELETED|PENDING_DELETION|SCHEDULING_DELETION|CANCELLING_DELETION]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -282,7 +317,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -324,7 +361,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -405,17 +444,50 @@ Options:
 $ oci kms management key update --help
 Usage: oci kms management key update [OPTIONS]
 
-  Updates the properties of a key. Specifically, you can only update the
-  `displayName` property. Furthermore, the key must in an `ACTIVE` or
-  `CREATING` state.
+  Updates the properties of a key. Specifically, you can update the
+  `displayName` , `freeformTags`, and `definedTags` properties. Furthermore,
+  the key must in an `ACTIVE` or `CREATING` state.
 
   The top level --endpoint parameter must be supplied for this operation.
 
 Options:
   --key-id TEXT                   The OCID of the key. [required]
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to namespaces. Example:
+                                  `{"foo-namespace": {"bar-key": "foo-value"}}`
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --display-name TEXT             A user-friendly name for the key. It does not
                                   have to be unique, and it is changeable. Avoid
                                   entering confidential information.
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type, or scope. Exists
+                                  for cross-compatibility only. Example: `{"bar-
+                                  key": "value"}`
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -423,12 +495,16 @@ Options:
                                   resource. The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
   --wait-for-state [CREATING|ENABLING|ENABLED|DISABLING|DISABLED|DELETING|DELETED|PENDING_DELETION|SCHEDULING_DELETION|CANCELLING_DELETION]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -583,7 +659,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -623,12 +701,47 @@ Options:
                                   vault stores the key with different degrees of
                                   isolation and has different options and
                                   pricing. [required]
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to namespaces. Example:
+                                  `{"foo-namespace": {"bar-key": "foo-value"}}`
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type, or scope. Exists
+                                  for cross-compatibility only. Example: `{"bar-
+                                  key": "value"}`
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED|PENDING_DELETION|SCHEDULING_DELETION|CANCELLING_DELETION]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -802,7 +915,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -826,15 +941,48 @@ Options:
 $ oci kms management vault update --help
 Usage: oci kms management vault update [OPTIONS]
 
-  Updates the properties of a vault. Specifically, you can only update the
-  `displayName` property. Furthermore, the vault must be in an `ACTIVE` or
-  `CREATING` state.
+  Updates the properties of a vault. Specifically, you can update the
+  `displayName` , `freeformTags`, and `definedTags` properties. Furthermore,
+  the vault must be in an `ACTIVE` or `CREATING` state.
 
 Options:
   --vault-id TEXT                 The OCID of the vault. [required]
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to namespaces. Example:
+                                  `{"foo-namespace": {"bar-key": "foo-value"}}`
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --display-name TEXT             A user-friendly name for the vault. It does
                                   not have to be unique, and it is changeable.
                                   Avoid entering confidential information.
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type, or scope. Exists
+                                  for cross-compatibility only. Example: `{"bar-
+                                  key": "value"}`
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -842,12 +990,16 @@ Options:
                                   resource. The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED|PENDING_DELETION|SCHEDULING_DELETION|CANCELLING_DELETION]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.

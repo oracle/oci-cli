@@ -13,30 +13,33 @@
 #
 #  oci kms management vault create --compartment-id $COMPARTMENT_ID --display-name $VAULT_NAME --vault-type VIRTUAL_PRIVATE --wait-for-state ACTIVE
 #
-# Here are some parameters that need to be specified first:
 #
-#   * COMPARTMENT_ID: The OCID of the compartment where KMS resources will be created
-#   * VAULT_NAME_NEW: A new name for the Vault
-#   * KEY_NAME: A user friendly name of Key
-#   * KEY_NAME_NEW: A new name for the Key
-#   * KEY_SHAPE: The shape of the Key. An example: '{"algorithm":"AES","length":"16"}'
-#   * PLAINTEXT: The Base64-Encoded plaintext that will be encrypted
+# If you wish to create a new vault with tag associated, append the following optional argument:
 #
+#  oci kms management vault create --compartment-id $COMPARTMENT_ID --display-name $VAULT_NAME --vault-type VIRTUAL_PRIVATE
+#   --freeform-tags $FREEFORM_TAG_PAIR --defined-tags $DEFINED_TAG_PAIR --wait-for-state ACTIVE
+# where you can provide one or multiple key value pairs as JSON format in --freeform-tags and --defined-tags.
+#
+# Here are the environment variables that need to be populated before running this script:
+#    export COMPARTMENT_ID = # <The OCID of the compartment where KMS resources will be created>
+#    export VAULT_NAME_NEW = # <A new name for the Vault>
+#    export KEY_NAME = # <A user friendly name of Key>
+#    export KEY_NAME_NEW = # <A new name for the Key>
+#    export KEY_SHAPE = # <The shape of the Key. An example: '{"algorithm":"AES","length":"16"}'>
+#    export PLAINTEXT = # <The Base64-Encoded plaintext that will be encrypted>
+#    export FREEFORM_TAG_PAIR = # <optional freeform tag key value pair for resource creation API>
+#    export FREEFORM_TAG_NEW_PAIR = # <optional different freeform tag key value pair for resource update API to append tag to existing resource>
+#    export DEFINED_TAG_PAIR = # <optional defined tag namespace and key value pairs for resource creation API>
 # Requirements for running this script:
 #   - OCI CLI v2.4.31 or later (you can check this by running oci --version)
 #   - Please make sure the user and tenancy used by the CLI have the appropriate permissions for these operations
 
 set -e
 
-# Fill up the values of the following parameters
-VAULT_OCID=""
-COMPARTMENT_ID=""
-VAULT_NAME_NEW=""
-KEY_NAME=""
-KEY_NAME_NEW=""
-# Use this one by default or replace with yours
-KEY_SHAPE='{"algorithm":"AES","length":"16"}'
-PLAINTEXT=""
+if [[ -z "$FREEFORM_TAG_PAIR" || -z "$FREEFORM_TAG_NEW_PAIR" || -z "$DEFINED_TAG_PAIR" || -z "$VAULT_OCID" || -z "$COMPARTMENT_ID" || -z "$VAULT_NAME_NEW" || -z "$KEY_NAME" || -z "$KEY_NAME_NEW" || -z "$KEY_SHAPE" || -z "$PLAINTEXT" ]];then
+echo "FREEFORM_TAG_PAIR, FREEFORM_TAG_NEW_PAIR, DEFINED_TAG_PAIR, VAULT_OCID, COMPARTMENT_ID, VAULT_NAME_NEW, KEY_NAME, KEY_NAME_NEW, KEY_SHAPE, PLAINTEXT must be defined in the environment. "
+exit 1
+fi
 
 # KMS Vault Operations
 echo ""
@@ -50,9 +53,11 @@ oci kms management vault get --vault-id $VAULT_OCID
 MANAGEMENT_ENDPOINT=$(oci kms management vault get --vault-id $VAULT_OCID --query 'data."management-endpoint"' --raw-output)
 CRYPTO_ENDPOINT=$(oci kms management vault get --vault-id $VAULT_OCID --query 'data."crypto-endpoint"' --raw-output)
 
-# Update the display name of the Vault
+# Update the display name and tags of the Vault
+# to reset tags you can specify empty list Eg) --freeform-tags '{}' --defined-tags '{}'
 echo "Updating display name of Vault with OCID: $VAULT_OCID"
-oci kms management vault update --vault-id $VAULT_OCID --display-name $VAULT_NAME_NEW
+oci kms management vault update --vault-id $VAULT_OCID --display-name $VAULT_NAME_NEW --freeform-tags FREEFORM_TAG_NEW_PAIR --defined-tags $DEFINED_TAG_PAIR
+
 
 # List all Vaults in the compartment
 echo "Listing all Vaults in the compartment with OCID: $COMPARTMENT_ID"
@@ -83,6 +88,9 @@ echo " "
 echo "Creating Key in Vault: $VAULT_OCID"
 KEY_OCID=$(oci kms management key create --compartment-id $COMPARTMENT_ID --display-name $KEY_NAME --key-shape $KEY_SHAPE --query 'data.id' --raw-output --endpoint $MANAGEMENT_ENDPOINT) --wait-for-state ENABLED
 echo "Wait a bit for Key creation to complete"
+
+# Create another new key in the vault above that has freeform and defined tags associated to it
+oci kms management key create --compartment-id $COMPARTMENT_ID --display-name $KEY_NAME --key-shape $KEY_SHAPE --freeform-tags $FREEFORM_TAG_PAIR --defined-tags $DEFINED_TAG_PAIR
 
 # Retrieve the details of the Key
 echo "Retrieving KMS Key, OCID: $KEY_OCID"
@@ -116,9 +124,9 @@ oci kms management key enable --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT
 echo "Wait a bit for Key to be enabled"
 sleep 30
 
-# Update the display name of the Key
-echo "Updating DisplayName of Key with OCID: $KEY_OCID"
-oci kms management key update --key-id $KEY_OCID --display-name $KEY_NAME_NEW --endpoint $MANAGEMENT_ENDPOINT
+# Update the display name and tags of the Key
+echo "Updating DisplayName and tags of Key with OCID: $KEY_OCID"
+oci kms management key update --key-id $KEY_OCID --display-name $KEY_NAME_NEW --freeform-tags $FREEFORM_TAG_NEW_PAIR --defined-tags $DEFINED_TAG_PAIR --endpoint $MANAGEMENT_ENDPOINT
 
 echo " "
 echo "===========================================  KMS Crypto Operations (oci kms crypto)  ==========================================="

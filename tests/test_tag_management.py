@@ -54,7 +54,7 @@ def apply_tags_to_tag_namespace(tag_namespace_id):
         tag_data_container.tags[0].name: 'tag_ns_mgmt {}'.format(util.random_number_string())
     }
     tag_data_container.write_defined_tags_to_file(
-        os.path.join('tests', 'temp', 'defined_tags_1.json'),
+        os.path.join('tests', 'temp', 'defined_tags_mgmt.json'),
         tag_data_container.tag_namespace,
         tag_names_to_values
     )
@@ -66,7 +66,7 @@ def apply_tags_to_tag_namespace(tag_namespace_id):
         'iam', 'tag-namespace', 'update',
         '--tag-namespace-id', tag_namespace_id,
         '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
-        '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+        '--defined-tags', 'file://tests/temp/defined_tags_mgmt.json',
         '--force'
     ])
     util.validate_response(result)
@@ -96,7 +96,7 @@ def apply_tags_to_tag_namespace(tag_namespace_id):
         tag_data_container.tags[1].name: 'tag_ns_mgmt update {}'.format(util.random_number_string())
     }
     tag_data_container.write_defined_tags_to_file(
-        os.path.join('tests', 'temp', 'defined_tags_1.json'),
+        os.path.join('tests', 'temp', 'defined_tags_mgmt.json'),
         tag_data_container.tag_namespace,
         tag_names_to_values
     )
@@ -106,7 +106,7 @@ def apply_tags_to_tag_namespace(tag_namespace_id):
         'iam', 'tag-namespace', 'update',
         '--tag-namespace-id', tag_namespace_id,
         '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
-        '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+        '--defined-tags', 'file://tests/temp/defined_tags_mgmt.json',
         '--force'
     ])
     util.validate_response(result)
@@ -158,7 +158,7 @@ def apply_tags_to_tag(tag_namespace_id, tag_name):
     for t in tag_data_container.tags:
         tag_names_to_values[t.name] = 'tag_mgmt {}'.format(util.random_number_string())
     tag_data_container.write_defined_tags_to_file(
-        os.path.join('tests', 'temp', 'defined_tags_1.json'),
+        os.path.join('tests', 'temp', 'defined_tags_mgmt.json'),
         tag_data_container.tag_namespace,
         tag_names_to_values
     )
@@ -171,7 +171,7 @@ def apply_tags_to_tag(tag_namespace_id, tag_name):
         '--tag-namespace-id', tag_namespace_id,
         '--tag-name', tag_name,
         '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
-        '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+        '--defined-tags', 'file://tests/temp/defined_tags_mgmt.json',
         '--force'
     ])
     util.validate_response(result)
@@ -203,7 +203,7 @@ def apply_tags_to_tag(tag_namespace_id, tag_name):
     # Overwrite with different tags
     tag_names_to_values.pop(tag_data_container.tags[0].name)
     tag_data_container.write_defined_tags_to_file(
-        os.path.join('tests', 'temp', 'defined_tags_1.json'),
+        os.path.join('tests', 'temp', 'defined_tags_mgmt.json'),
         tag_data_container.tag_namespace,
         tag_names_to_values
     )
@@ -214,7 +214,7 @@ def apply_tags_to_tag(tag_namespace_id, tag_name):
         '--tag-namespace-id', tag_namespace_id,
         '--tag-name', tag_name,
         '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
-        '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+        '--defined-tags', 'file://tests/temp/defined_tags_mgmt.json',
         '--force'
     ])
     util.validate_response(result)
