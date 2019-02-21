@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-2.5.0 - 2019-02-21
+2.5.1 - 2019-02-21
 ------------------
 Added
 ~~~~~
@@ -21,6 +21,8 @@ Added
 Changed
 ~~~~~~~
 * Support for regional subnets, which you can create by omitting the ``availability-domain`` option in the ``oci network subnet create`` command.
+
+* [Breaking] Removed 'followup' field from response for ``oci announce announcements get|list``
 
 Fixed
 ~~~~~
