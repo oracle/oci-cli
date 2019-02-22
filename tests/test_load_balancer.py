@@ -635,7 +635,7 @@ def test_load_balancer_tagging(runner, config_file, config_profile, vcn_and_subn
         for t in tag_data_container.tags:
             tag_names_to_values[t.name] = 'somevalue {}'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
-            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            os.path.join('tests', 'temp', 'defined_tags_lb.json'),
             tag_data_container.tag_namespace,
             tag_names_to_values
         )
@@ -649,7 +649,7 @@ def test_load_balancer_tagging(runner, config_file, config_profile, vcn_and_subn
             '--shape-name', '100Mbps',
             '--subnet-ids', '["{}","{}"]'.format(subnet_ocid_1, subnet_ocid_2),
             '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_2.json',
-            '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+            '--defined-tags', 'file://tests/temp/defined_tags_lb.json',
             '--wait-for-state', 'SUCCEEDED',
             '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS
         ]
@@ -724,7 +724,7 @@ def test_load_balancer_tagging(runner, config_file, config_profile, vcn_and_subn
             for t in tag_data_container.tags:
                 tag_names_to_values[t.name] = 'newvalue {}'.format(t.name)
             tag_data_container.write_defined_tags_to_file(
-                os.path.join('tests', 'temp', 'defined_tags_1.json'),
+                os.path.join('tests', 'temp', 'defined_tags_lb.json'),
                 tag_data_container.tag_namespace,
                 tag_names_to_values
             )
@@ -734,7 +734,7 @@ def test_load_balancer_tagging(runner, config_file, config_profile, vcn_and_subn
                 'load-balancer', 'update',
                 '--load-balancer-id', id,
                 '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
-                '--defined-tags', 'file://tests/temp/defined_tags_1.json',
+                '--defined-tags', 'file://tests/temp/defined_tags_lb.json',
                 '--wait-for-state', 'SUCCEEDED',
                 '--force'
             ]

@@ -2,7 +2,8 @@
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
-from oci_cli.generated import audit_cli
+
+from oci_cli_audit.generated import audit_cli
 from oci_cli import cli_util
 from oci_cli import custom_types
 from oci_cli import json_skeleton_utils

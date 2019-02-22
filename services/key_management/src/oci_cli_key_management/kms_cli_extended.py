@@ -1,7 +1,10 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
-from oci_cli.generated import kms_service_cli, kmscrypto_cli, kmsmanagement_cli, kmsvault_cli
+from oci_cli_key_management.generated import kms_service_cli
+from oci_cli_kms_management.generated import kmsmanagement_cli
+from oci_cli_kms_crypto.generated import kmscrypto_cli
+from oci_cli_kms_vault.generated import kmsvault_cli
 from oci_cli import cli_util
 
 # move kms vault commands under kms management vault

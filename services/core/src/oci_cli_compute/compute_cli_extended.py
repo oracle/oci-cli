@@ -9,7 +9,7 @@ import re
 import six
 import sys
 
-from oci_cli.generated import compute_cli
+from oci_cli_compute.generated import compute_cli
 
 from oci import wait_until
 from oci.exceptions import ServiceError

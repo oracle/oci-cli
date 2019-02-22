@@ -857,7 +857,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -911,7 +913,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1352,7 +1356,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1415,7 +1421,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1469,7 +1477,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1758,7 +1768,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1872,7 +1884,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1929,7 +1943,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2270,7 +2286,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.

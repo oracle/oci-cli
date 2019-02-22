@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.1 - 2019-02-21
+------------------
+Added
+~~~~~
+* Tagging support for Key Management (``--freeform-tags`` and ``--defined-tags`` option for ``oci kms management vault/key create/update``)
+
+  * An example on using KMS tagging can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
+
+* Support for Oracle Streaming Service. (``oci streaming``)
+
+  * An example on using the Streaming Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/streaming_example.sh>`__.
+
+Changed
+~~~~~~~
+* Support for regional subnets, which you can create by omitting the ``availability-domain`` option in the ``oci network subnet create`` command.
+
+* [Breaking] Removed 'followup' field from response for ``oci announce announcements get|list``
+
+Fixed
+~~~~~
+* [Breaking] Aborting a multipart upload using CLI now returns an error code of 1 if the upload-id does not exist. Earlier it would return 0.
+
+* [Breaking] CLI commands providing an option of wait-for-state will now set a return code of 2 in case of timeout. This differs from the earlier behavior when it would set a return code of 0. Similarly for any other error during the wait-for-state, a return code of 1 will be returned.
+
+* Help text for Announcements Service (``oci announce``)
+
+
 2.4.44 - 2019-02-07
 -------------------
 Added

@@ -36,9 +36,10 @@ def using_vcr_with_mock_responses():
 
 
 def create_vcr(**kwargs):
+    location = kwargs.get('cassette_library_dir', 'tests/fixtures/cassettes')
     vcr_to_use = vcr.VCR(
         serializer='yaml',
-        cassette_library_dir='tests/fixtures/cassettes',
+        cassette_library_dir=location,
         record_mode=vcr_mode
     )
 

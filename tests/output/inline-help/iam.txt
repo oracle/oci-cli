@@ -127,6 +127,7 @@ Usage: oci iam auth-token list [OPTIONS]
 
 Options:
   --user-id TEXT    The OCID of the user. [required]
+  --all             Fetches all pages of results.
   --from-json TEXT  Provide input to this command as a JSON document from a
                     file.
                     
@@ -195,6 +196,7 @@ Options:
                              the tenancy is simply the root compartment). If not
                              provided, this parameter will use the tenancy from
                              the config file.
+  --all                      Fetches all pages of results.
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file.
                              
@@ -317,7 +319,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -360,7 +364,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -545,7 +552,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -660,6 +669,7 @@ Usage: oci iam customer-secret-key list [OPTIONS]
 
 Options:
   --user-id TEXT    The OCID of the user. [required]
+  --all             Fetches all pages of results.
   --from-json TEXT  Provide input to this command as a JSON document from a
                     file.
                     
@@ -775,7 +785,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -817,7 +829,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -915,7 +929,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -966,6 +982,7 @@ Options:
                               the tenancy is simply the root compartment).
                               [required]
   --availability-domain TEXT  The name of the availibilityDomain. [required]
+  --all                       Fetches all pages of results.
   --from-json TEXT            Provide input to this command as a JSON document
                               from a file.
                               
@@ -1108,7 +1125,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1150,7 +1169,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1341,7 +1362,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1610,7 +1633,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1653,7 +1678,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1833,6 +1860,7 @@ Usage: oci iam region list [OPTIONS]
   Lists all the regions offered by Oracle Cloud Infrastructure.
 
 Options:
+  --all             Fetches all pages of results.
   --from-json TEXT  Provide input to this command as a JSON document from a
                     file.
                     
@@ -1896,6 +1924,7 @@ Usage: oci iam region-subscription list [OPTIONS]
 Options:
   --tenancy-id TEXT  The OCID of the tenancy. If not provided, this parameter
                      will use the tenancy from the config file.
+  --all              Fetches all pages of results.
   --from-json TEXT   Provide input to this command as a JSON document from a
                      file.
                      
@@ -2026,6 +2055,7 @@ Usage: oci iam smtp-credential list [OPTIONS]
 
 Options:
   --user-id TEXT    The OCID of the user. [required]
+  --all             Fetches all pages of results.
   --from-json TEXT  Provide input to this command as a JSON document from a
                     file.
                     
@@ -2700,6 +2730,7 @@ Usage: oci iam user api-key list [OPTIONS]
 
 Options:
   --user-id TEXT    The OCID of the user. [required]
+  --all             Fetches all pages of results.
   --from-json TEXT  Provide input to this command as a JSON document from a
                     file.
                     
@@ -2846,7 +2877,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2888,7 +2921,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3095,6 +3130,7 @@ Usage: oci iam user swift-password list [OPTIONS]
 
 Options:
   --user-id TEXT    The OCID of the user. [required]
+  --all             Fetches all pages of results.
   --from-json TEXT  Provide input to this command as a JSON document from a
                     file.
                     
@@ -3239,7 +3275,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3290,7 +3328,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3333,7 +3373,9 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state.
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.

@@ -155,7 +155,7 @@ function DownloadAndRunPythonExeInstaller($InstallDir, $Version) {
 
     # Do a 'passive' install of Python which will not require any user interaction but will pop up a progress window
     # Options documented here: https://docs.python.org/3/using/windows.html#installing-without-ui
-    $Args = "/passive PrependPath=0 Include_test=0 Include_tcltk=0 Include_launcher=0 Include_symbols=0 DefaultJustForMeTargetDir=" + $InstallDir
+    $Args = "/passive PrependPath=0 Include_test=0 Include_tcltk=0 Include_launcher=0 Include_symbols=0 DefaultJustForMeTargetDir=`"$InstallDir`""
     $Process = Start-Process -FilePath $PythonInstallerExe -ArgumentList $Args -Wait -PassThru
     if ($Process.ExitCode -ne 0) {
         Write-Error "Failed to install Python. On some systems installing Python can require running the script as an Administrator. More detailed information can be found in the Python installation logs in $env:LOCALAPPDATA\Temp"
@@ -249,8 +249,8 @@ Try {
             }
         }
 
-        # (e.g. C:\Users\{USER}\Python\)
-        $InstallDir = (Get-ChildItem Env:\USERPROFILE).Value + "\Python\"
+        # (e.g. C:\Users\{USER}\Python)
+        $InstallDir = Join-Path (Get-ChildItem Env:\USERPROFILE).Value "Python"
 
         # use MSI installer for python 2.7.x on Windows Server 2008 SP 0
         $OsInfo = Get-WMIObject Win32_OperatingSystem -ComputerName $env:COMPUTERNAME
@@ -268,7 +268,7 @@ Try {
     $PythonInstallScriptPath = [System.IO.Path]::GetTempFileName()
     LogOutput "Downloading install script to $PythonInstallScriptPath"
     DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
-    $ArgumentList = $PythonInstallScriptPath
+    $ArgumentList = "`"$PythonInstallScriptPath`""
     if ($AcceptAllDefaults) {
         $ArgumentList = "$ArgumentList --accept-all-defaults"
     }

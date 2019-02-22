@@ -5,8 +5,6 @@ import os
 import pkgutil
 CLIENT_MAP = {}
 MODULE_TO_TYPE_MAPPINGS = {}
-# This import populates CLIENT_MAP and MODULE_TO_TYPE_MAPPINGS
-import oci_cli.generated_client_mappings  # noqa: F401,E402
 
 # Import client mappings from platformization directories.
 # This imports the generated client_mappings which populates CLIENT_MAP and MODULE_TO_TYPE_MAPPINGS.

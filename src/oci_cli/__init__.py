@@ -37,7 +37,6 @@ if os.path.isdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
 from .cli_root import cli  # noqa: F401,E402
 from .custom_types import cli_datetime  # noqa: F401,E402
 from .custom_types import cli_from_json  # noqa: F401,E402
-from .generated import *   # noqa: F401,F403,E402
 
 # Import generated and extended code from platformization directories.
 # This has to be done after importing cli_root
@@ -47,7 +46,7 @@ for importer, modname, ispkg in pkgutil.iter_modules(path=None):
         service_name = oci_cli_module_name[8:]
         oci_cli_module = __import__(oci_cli_module_name)
         service_dir = oci_cli_module.__path__[0]
-        generated_module = service_name + "_cli"
+        generated_module = service_name.replace('_', '') + "_cli"
         if os.path.isdir(os.path.join(service_dir, 'generated')) and os.path.isfile(os.path.join(service_dir, 'generated', generated_module + ".py")):
             __import__(oci_cli_module_name + ".generated." + generated_module)
 

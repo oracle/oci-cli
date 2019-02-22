@@ -60,7 +60,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -163,7 +166,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -263,7 +269,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -401,7 +410,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -444,7 +456,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -585,7 +600,10 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state.
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -761,6 +779,7 @@ Usage: oci ce work-request-error list [OPTIONS]
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment. [required]
   --work-request-id TEXT     The OCID of the work request. [required]
+  --all                      Fetches all pages of results.
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file.
                              
@@ -793,6 +812,7 @@ Usage: oci ce work-request-log-entry list [OPTIONS]
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment. [required]
   --work-request-id TEXT     The OCID of the work request. [required]
+  --all                      Fetches all pages of results.
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file.
                              

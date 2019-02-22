@@ -20,7 +20,7 @@ from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
-from oci_cli.generated import objectstorage_cli
+from oci_cli_object_storage.generated import objectstorage_cli
 from oci_cli import cli_util
 
 OBJECT_LIST_PAGE_SIZE = 100
@@ -1465,9 +1465,8 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
             if response.status == 200:
                 if not click.confirm("WARNING: Are you sure you want to permanently remove this incomplete upload?"):
                     ctx.abort()
-        except exceptions.ServiceError as e:
-            if e.status != 404:
-                raise
+        except exceptions.ServiceError:
+            raise
 
     render_response(client.abort_multipart_upload(namespace, bucket_name, object_name, upload_id), ctx)
 

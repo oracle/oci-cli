@@ -289,7 +289,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
         for t in tag_data_container.tags:
             tag_names_to_values[t.name] = 'somevalue {}'.format(t.name)
         tag_data_container.write_defined_tags_to_file(
-            os.path.join('tests', 'temp', 'defined_tags_1.json'),
+            os.path.join('tests', 'temp', 'defined_tags_ip.json'),
             tag_data_container.tag_namespace,
             tag_names_to_values
         )
@@ -299,7 +299,7 @@ class TestSecondaryPrivateIp(unittest.TestCase):
             'network', 'vnic', 'assign-private-ip',
             '--vnic-id', vnic_id,
             '--freeform-tags', 'file://tests/resources/tagging/freeform_tags_1.json',
-            '--defined-tags', 'file://tests/temp/defined_tags_1.json'
+            '--defined-tags', 'file://tests/temp/defined_tags_ip.json'
         ])
         private_ip_data = json.loads(result.output)['data']
         expected_freeform = {'tagOne': 'value1', 'tag_Two': 'value two'}
