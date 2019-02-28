@@ -53,6 +53,18 @@ oci iam tag-namespace list -c $COMPARTMENT_ID --all
 echo "Listing tag namespaces in tenancy and sub-compartments"
 oci iam tag-namespace list -c $TENANCY_ID --include-subcompartments true --all
 
+# We can move the tag namespace from one compartment to root compartment
+echo "Moving tag namespace from current compartment to root compartment"
+oci iam tag-namespace change-compartment --tag-namespace-id $TAG_NAMESPACE_ID --compartment-id $TENANCY_ID
+
+# We can retrieve namespaces after the move
+echo "Getting tag namespace after the move"
+oci iam tag-namespace get --tag-namespace-id $TAG_NAMESPACE_ID
+
+# We can move the tag namespace back to original compartment
+echo "Moving tag namespace back to original compartment"
+oci iam tag-namespace change-compartment --tag-namespace-id $TAG_NAMESPACE_ID --compartment-id $COMPARTMENT_ID
+
 # Listing tag namespace from tenancy
 echo "Listing cost tracking tags in tenancy"
 oci iam tag list-cost-tracking -c $TENANCY_ID

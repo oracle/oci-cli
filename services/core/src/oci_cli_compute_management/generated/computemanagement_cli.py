@@ -47,6 +47,67 @@ compute_management_root_group.add_command(instance_group)
 compute_management_root_group.add_command(instance_configuration_group)
 
 
+@instance_pool_group.command(name=cli_util.override('attach_load_balancer.command_name', 'attach'), help="""Attach load balancer to the instance pool.""")
+@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The OCID of the load balancer to attach to the pool.""")
+@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set on the load balancer to add instances to.""")
+@cli_util.option('--port', required=True, type=click.INT, help="""The port value to use when creating the backend set.""")
+@cli_util.option('--vnic-selection', required=True, help="""Indicates which vnic on each instance in the pool should be used to associate with the load balancer. possible values are \"PrimaryVnic\" or the displayName of one of the secondary VNICs on the instance configuration that is associated to the instance pool.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePool'})
+@cli_util.wrap_exceptions
+def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, load_balancer_id, backend_set_name, port, vnic_selection, if_match):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['loadBalancerId'] = load_balancer_id
+    details['backendSetName'] = backend_set_name
+    details['port'] = port
+    details['vnicSelection'] = vnic_selection
+
+    client = cli_util.build_client('compute_management', ctx)
+    result = client.attach_load_balancer(
+        instance_pool_id=instance_pool_id,
+        attach_load_balancer_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance_pool(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @instance_configuration_group.command(name=cli_util.override('create_instance_configuration.command_name', 'create'), help="""Creates an instance configuration""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -99,15 +160,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancers', type=custom_types.CLI_COMPLEX_TYPE, help="""The load balancers to attach to the instance pool.
+
+This option is a JSON list with items of type AttachLoadBalancerDetails.  For documentation on AttachLoadBalancerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AttachLoadBalancerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags):
+def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers):
 
     kwargs = {}
 
@@ -125,6 +189,9 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if load_balancers is not None:
+        details['loadBalancers'] = cli_util.parse_json_parameter("load_balancers", load_balancers)
 
     client = cli_util.build_client('compute_management', ctx)
     result = client.create_instance_pool(
@@ -178,6 +245,63 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
         instance_configuration_id=instance_configuration_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_group.command(name=cli_util.override('detach_load_balancer.command_name', 'detach'), help="""Detach a load balancer from the instance pool.""")
+@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
+@cli_util.option('--load-balancer-id', required=True, help="""The OCID of the load balancer to detach from the pool.""")
+@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set on the load balancer to detach from the pool.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePool'})
+@cli_util.wrap_exceptions
+def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, load_balancer_id, backend_set_name, if_match):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['loadBalancerId'] = load_balancer_id
+    details['backendSetName'] = backend_set_name
+
+    client = cli_util.build_client('compute_management', ctx)
+    result = client.detach_load_balancer(
+        instance_pool_id=instance_pool_id,
+        detach_load_balancer_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance_pool(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
