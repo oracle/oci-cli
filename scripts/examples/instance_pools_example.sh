@@ -3,8 +3,9 @@
 # This script provides an example of how use the instance pools CLI in terms of:
 #   - Creating an instance config to be used for pool
 #   - Creating an instance pool
-#   - Listing instance pools
-#   - Stopping instance pool
+#   - Listing instance pool instances
+#   - Attaching a load balancer to the pool
+#   - Updating instance pool size
 #   - Terminating instance pool
 #
 # For more help with specific instance pool commands with, see:
@@ -14,13 +15,45 @@
 #   - OCI CLI v2.4.33 or later (you can check this by running oci --version)
 #   - jq (https://stedolan.github.io/jq/) for JSON querying and manipulation of CLI output. This may be a useful utility in general
 #     and may help cater to scenarios which can't be wholly addressed by the --query option in the CLI
+# Environment variables need to be set:
+#   - COMPARTMENT_ID - Your compartment OCID
+#   - AD - the AD where the pool will be spun up (the pool in this example only spans a single AD)
+#   - SUBNET_ID - the subnet ocid in the AD above
+#   - IMAGE_ID - the image ID to use for instances
+#   - LOAD_BALANCER_ID - The load balancer ID to use for the pool.
+#   - BACKEND_SET_NAME - The backendset name in the load balancer that is being attached.
 
-set -e 
+set -e
 
-COMPARTMENT_ID=""  # Your compartment OCID
-AD="" # the AD where the pool will be spun up (the pool in this example only spans a single AD)
-SUBNET_ID="" # the subnet ocid in the AD above
-IMAGE_ID="" # the image ID to use for instances
+if [[ -z "$COMPARTMENT_ID" ]]; then
+    echo "COMPARTMENT_ID must be defined in your environment"
+    exit 1
+fi
+
+if [[ -z "$AD" ]]; then
+    echo "AD must be defined in your environment"
+    exit 1
+fi
+
+if [[ -z "$SUBNET_ID" ]]; then
+    echo "SUBNET_ID must be defined in your environment"
+    exit 1
+fi
+
+if [[ -z "$IMAGE_ID" ]]; then
+    echo "IMAGE_ID must be defined in your environment"
+    exit 1
+fi
+
+if [[ -z "$LOAD_BALANCER_ID" ]]; then
+    echo "LOAD_BALANCER_ID must be defined in your environment"
+    exit 1
+fi
+
+if [[ -z "$BACKEND_SET_NAME" ]]; then
+    echo "BACKEND_SET_NAME must be defined in your environment"
+    exit 1
+fi
 
 INSTANCE_DETAILS_FILE_LOCATION="./instance_pools_example/instance_details_template.json"
 PLACEMENT_CONFIG_FILE_LOCATION="./instance_pools_example/placement_details_template.json"
@@ -49,7 +82,11 @@ INSTANCE_POOL_ID=$(oci compute-management instance-pool create --compartment-id 
 echo "Created instance pool with id $INSTANCE_POOL_ID"
 
 echo "Listing instance pool instances for pool $INSTANCE_POOL_ID"
-oci compute-management instance-pool list-instances --instance-pool-id $INSTANCE_POOL_ID
+oci compute-management instance-pool list-instances --compartment-id $COMPARTMENT_ID --instance-pool-id $INSTANCE_POOL_ID
+
+echo "Attaching load balancer to instance pool $INSTANCE_POOL_ID"
+oci compute-management instance-pool attach-lb --instance-pool-id "$INSTANCE_POOL_ID" --load-balancer-id $LOAD_BALANCER_ID --backend-set-name $BACKEND_SET_NAME --port 80 --vnic-selection PrimaryVnic
+echo "Attach in progress."
 
 echo "Setting the instance pool $INSTANCE_POOL_ID size to 2 "
 oci compute-management instance-pool update --instance-pool-id $INSTANCE_POOL_ID --size 2
@@ -61,4 +98,4 @@ echo "Terminating instance pool $INSTANCE_POOL_ID"
 oci compute-management instance-pool terminate --instance-pool-id $INSTANCE_POOL_ID --force --wait-for-state TERMINATED
 
 echo "Deleting instance config $INSTANCE_CONFIG_ID"
-oci compute-management instance-configuration delete --instance-configuration-id INSTANCE_CONFIG_ID --force
+oci compute-management instance-configuration delete --instance-configuration-id $INSTANCE_CONFIG_ID --force

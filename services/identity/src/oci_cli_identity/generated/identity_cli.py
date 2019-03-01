@@ -20,6 +20,72 @@ def iam_root_group():
     pass
 
 
+@click.command(cli_util.override('fault_domain_group.command_name', 'fault-domain'), cls=CommandGroupWithAlias, help="""A Fault Domain is a logical grouping of hardware and infrastructure within an Availability Domain that can become unavailable in its entirety either due to hardware failure such as Top-of-rack (TOR) switch failure or due to planned software maintenance such as security updates that reboot your instances.""")
+@cli_util.help_option_group
+def fault_domain_group():
+    pass
+
+
+@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of the IAM Service] and also [Setting Up Your Tenancy].
+
+To place a resource in a compartment, simply specify the compartment ID in the \"Create\" request object when initially creating the resource. For example, to launch an instance into a particular compartment, specify that compartment's OCID in the `LaunchInstance` request. You can't move an existing resource from one compartment to another.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def compartment_group():
+    pass
+
+
+@click.command(cli_util.override('smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""Simple Mail Transfer Protocol (SMTP) credentials are needed to send email through Email Delivery. The SMTP credentials are used for SMTP authentication with the service. The credentials never expire. A user can have up to 2 SMTP credentials at a time.
+
+**Note:** The credential set is always an Oracle-generated SMTP user name and password pair; you cannot designate the SMTP user name or the SMTP password.
+
+For more information, see [Managing User Credentials].""")
+@cli_util.help_option_group
+def smtp_credential_group():
+    pass
+
+
+@click.command(cli_util.override('scim_client_credentials_group.command_name', 'scim-client-credentials'), cls=CommandGroupWithAlias, help="""The OAuth2 client credentials.""")
+@cli_util.help_option_group
+def scim_client_credentials_group():
+    pass
+
+
+@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  \"Defined tags\" must be set up in your tenancy before you can apply them to resources. For more information, see [Managing Tags and Tag Namespaces].""")
+@cli_util.help_option_group
+def tag_group():
+    pass
+
+
+@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of the IAM Service].
+
+If you're federating with an identity provider (IdP), you need to create mappings between the groups defined in the IdP and groups you define in the IAM service. For more information, see [Identity Providers and Federation]. Also see [IdentityProvider] and [IdpGroupMapping].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def group_group():
+    pass
+
+
+@click.command(cli_util.override('policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of the IAM Service]. If you're new to policies, see [Getting Started with Policies].
+
+The word \"policy\" is used by people in different ways:
+
+  * An individual statement written in the policy language   * A collection of statements in a single, named \"policy\" document (which has an Oracle Cloud ID (OCID) assigned to it)   * The overall body of policies your organization uses to control access to resources
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.""")
+@cli_util.help_option_group
+def policy_group():
+    pass
+
+
 @click.command(cli_util.override('tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A managed container for defined tags. A tag namespace is unique in a tenancy. A tag namespace can't be deleted. For more information, see [Managing Tags and Tag Namespaces].""")
 @cli_util.help_option_group
 def tag_namespace_group():
@@ -60,21 +126,15 @@ def tenancy_group():
     pass
 
 
-@click.command(cli_util.override('fault_domain_group.command_name', 'fault-domain'), cls=CommandGroupWithAlias, help="""A Fault Domain is a logical grouping of hardware and infrastructure within an Availability Domain that can become unavailable in its entirety either due to hardware failure such as Top-of-rack (TOR) switch failure or due to planned software maintenance such as security updates that reboot your instances.""")
-@cli_util.help_option_group
-def fault_domain_group():
-    pass
-
-
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
-@cli_util.help_option_group
-def work_request_group():
-    pass
-
-
 @click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
 @cli_util.help_option_group
 def user_group_membership_group():
+    pass
+
+
+@click.command(cli_util.override('mfa_totp_device_group.command_name', 'mfa-totp-device'), cls=CommandGroupWithAlias, help="""A `MfaTotpDevice` is an Mfa Totp device that the user can use to authenticate with OCI (Leslie will add more details here)""")
+@cli_util.help_option_group
+def mfa_totp_device_group():
     pass
 
 
@@ -117,38 +177,6 @@ def api_key_group():
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def region_subscription_group():
-    pass
-
-
-@click.command(cli_util.override('compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of the IAM Service] and also [Setting Up Your Tenancy].
-
-To place a resource in a compartment, simply specify the compartment ID in the \"Create\" request object when initially creating the resource. For example, to launch an instance into a particular compartment, specify that compartment's OCID in the `LaunchInstance` request. You can't move an existing resource from one compartment to another.
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
-@cli_util.help_option_group
-def compartment_group():
-    pass
-
-
-@click.command(cli_util.override('smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""Simple Mail Transfer Protocol (SMTP) credentials are needed to send email through Email Delivery. The SMTP credentials are used for SMTP authentication with the service. The credentials never expire. A user can have up to 2 SMTP credentials at a time.
-
-**Note:** The credential set is always an Oracle-generated SMTP user name and password pair; you cannot designate the SMTP user name or the SMTP password.
-
-For more information, see [Managing User Credentials].""")
-@cli_util.help_option_group
-def smtp_credential_group():
-    pass
-
-
-@click.command(cli_util.override('scim_client_credentials_group.command_name', 'scim-client-credentials'), cls=CommandGroupWithAlias, help="""The OAuth2 client credentials.""")
-@cli_util.help_option_group
-def scim_client_credentials_group():
-    pass
-
-
-@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  \"Defined tags\" must be set up in your tenancy before you can apply them to resources. For more information, see [Managing Tags and Tag Namespaces].""")
-@cli_util.help_option_group
-def tag_group():
     pass
 
 
@@ -202,52 +230,68 @@ def user_group():
     pass
 
 
-@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of the IAM Service].
-
-If you're federating with an identity provider (IdP), you need to create mappings between the groups defined in the IdP and groups you define in the IAM service. For more information, see [Identity Providers and Federation]. Also see [IdentityProvider] and [IdpGroupMapping].
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
-@cli_util.help_option_group
-def group_group():
-    pass
-
-
-@click.command(cli_util.override('policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of the IAM Service]. If you're new to policies, see [Getting Started with Policies].
-
-The word \"policy\" is used by people in different ways:
-
-  * An individual statement written in the policy language   * A collection of statements in a single, named \"policy\" document (which has an Oracle Cloud ID (OCID) assigned to it)   * The overall body of policies your organization uses to control access to resources
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.""")
-@cli_util.help_option_group
-def policy_group():
-    pass
-
-
+iam_root_group.add_command(fault_domain_group)
+iam_root_group.add_command(work_request_group)
+iam_root_group.add_command(compartment_group)
+iam_root_group.add_command(smtp_credential_group)
+iam_root_group.add_command(scim_client_credentials_group)
+iam_root_group.add_command(tag_group)
+iam_root_group.add_command(group_group)
+iam_root_group.add_command(policy_group)
 iam_root_group.add_command(tag_namespace_group)
 iam_root_group.add_command(availability_domain_group)
 iam_root_group.add_command(customer_secret_key_group)
 iam_root_group.add_command(idp_group_mapping_group)
 iam_root_group.add_command(tenancy_group)
-iam_root_group.add_command(fault_domain_group)
-iam_root_group.add_command(work_request_group)
 iam_root_group.add_command(user_group_membership_group)
+iam_root_group.add_command(mfa_totp_device_group)
 iam_root_group.add_command(identity_provider_group)
 iam_root_group.add_command(identity_provider_group_group)
 iam_root_group.add_command(ui_password_group)
 iam_root_group.add_command(api_key_group)
 iam_root_group.add_command(region_subscription_group)
-iam_root_group.add_command(compartment_group)
-iam_root_group.add_command(smtp_credential_group)
-iam_root_group.add_command(scim_client_credentials_group)
-iam_root_group.add_command(tag_group)
 iam_root_group.add_command(dynamic_group_group)
 iam_root_group.add_command(region_group)
 iam_root_group.add_command(auth_token_group)
 iam_root_group.add_command(swift_password_group)
 iam_root_group.add_command(user_group)
-iam_root_group.add_command(group_group)
-iam_root_group.add_command(policy_group)
+
+
+@mfa_totp_device_group.command(name=cli_util.override('activate_mfa_totp_device.command_name', 'activate'), help="""Activate the specified MFA TOTP device for the user.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
+@cli_util.option('--totp-token', help="""The Totp token for MFA.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'MfaTotpDeviceSummary'})
+@cli_util.wrap_exceptions
+def activate_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, totp_token, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(mfa_totp_device_id, six.string_types) and len(mfa_totp_device_id.strip()) == 0:
+        raise click.UsageError('Parameter --mfa-totp-device-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if totp_token is not None:
+        details['totpToken'] = totp_token
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.activate_mfa_totp_device(
+        user_id=user_id,
+        mfa_totp_device_id=mfa_totp_device_id,
+        mfa_totp_token=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @user_group_membership_group.command(name=cli_util.override('add_user_to_group.command_name', 'add'), help="""Adds the specified user to the specified group and returns a `UserGroupMembership` object with its own OCID.
@@ -298,6 +342,37 @@ def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tag_namespace_group.command(name=cli_util.override('change_tag_namespace_compartment.command_name', 'change-tag-namespace-compartment'), help="""Moves the specified tag namespace to the specified compartment within the same tenancy.
+
+To move the tag namespace, you must have the manage tag-namespaces permission on both compartments. For more information about IAM policies, see [Details for IAM].
+
+Moving a tag namespace moves all the tag key definitions contained in the tag namespace.""")
+@cli_util.option('--tag-namespace-id', required=True, help="""The OCID of the tag namespace.""")
+@cli_util.option('--compartment-id', required=True, help="""The Oracle Cloud ID (OCID) of the destination compartment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartment_id):
+
+    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.change_tag_namespace_compartment(
+        tag_namespace_id=tag_namespace_id,
+        change_tag_namespace_compartment_detail=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -577,7 +652,7 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @cli_util.option('--product-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IDCS", "ADFS"]), help="""The identity provider service or product. Supported identity providers are Oracle Identity Cloud Service (IDCS) and Microsoft Active Directory Federation Services (ADFS).
 
 Example: `IDCS`""")
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help="""The protocol used for federation.
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAML2", "ADFS"]), help="""The protocol used for federation.
 
 Example: `SAML2`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -758,6 +833,52 @@ def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_idp_group_mapping(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@mfa_totp_device_group.command(name=cli_util.override('create_mfa_totp_device.command_name', 'create'), help="""Create a new MFA TOTP device for the user. A user can only create one MFA TOTP device.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'MfaTotpDevice'})
+@cli_util.wrap_exceptions
+def create_mfa_totp_device(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_mfa_totp_device(
+        user_id=user_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_mfa_totp_device') and callable(getattr(client, 'get_mfa_totp_device')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_mfa_totp_device(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1481,6 +1602,36 @@ def delete_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id, i
     cli_util.render_response(result, ctx)
 
 
+@mfa_totp_device_group.command(name=cli_util.override('delete_mfa_totp_device.command_name', 'delete'), help="""Delete the specified MFA TOTP device for the specified user.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(mfa_totp_device_id, six.string_types) and len(mfa_totp_device_id.strip()) == 0:
+        raise click.UsageError('Parameter --mfa-totp-device-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_mfa_totp_device(
+        user_id=user_id,
+        mfa_totp_device_id=mfa_totp_device_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @policy_group.command(name=cli_util.override('delete_policy.command_name', 'delete'), help="""Deletes the specified policy. The deletion takes effect typically within 10 seconds.""")
 @cli_util.option('--policy-id', required=True, help="""The OCID of the policy.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1667,6 +1818,60 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
+@mfa_totp_device_group.command(name=cli_util.override('generate_totp_seed.command_name', 'generate-totp-seed'), help="""Generate seed for the MFA TOTP device""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'MfaTotpDevice'})
+@cli_util.wrap_exceptions
+def generate_totp_seed(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, mfa_totp_device_id, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(mfa_totp_device_id, six.string_types) and len(mfa_totp_device_id.strip()) == 0:
+        raise click.UsageError('Parameter --mfa-totp-device-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.generate_totp_seed(
+        user_id=user_id,
+        mfa_totp_device_id=mfa_totp_device_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_mfa_totp_device') and callable(getattr(client, 'get_mfa_totp_device')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_mfa_totp_device(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @compartment_group.command(name=cli_util.override('get_compartment.command_name', 'get'), help="""Gets the specified compartment's information.
 
 This operation does not return a list of all the resources inside the compartment. There is no single API operation that does that. Compartments can contain multiple types of resources (instances, block storage volumes, etc.). To find out what's in a compartment, you must call the \"List\" operation for each resource type and specify the compartment's OCID as a query parameter in the request. For example, call the [ListInstances] operation in the Cloud Compute Service or the [ListVolumes] operation in Cloud Block Storage.""")
@@ -1776,6 +1981,32 @@ def get_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id):
     result = client.get_idp_group_mapping(
         identity_provider_id=identity_provider_id,
         mapping_id=mapping_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@mfa_totp_device_group.command(name=cli_util.override('get_mfa_totp_device.command_name', 'get'), help="""Get the specified MFA TOTP device for the specified user.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'MfaTotpDeviceSummary'})
+@cli_util.wrap_exceptions
+def get_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(mfa_totp_device_id, six.string_types) and len(mfa_totp_device_id.strip()) == 0:
+        raise click.UsageError('Parameter --mfa-totp-device-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_mfa_totp_device(
+        user_id=user_id,
+        mfa_totp_device_id=mfa_totp_device_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1980,7 +2211,7 @@ def list_auth_tokens(ctx, from_json, all_pages, user_id):
 
 
 @availability_domain_group.command(name=cli_util.override('list_availability_domains.command_name', 'list'), help="""Lists the availability domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. Note that the order of the results returned can change if availability domains are added or removed; therefore, do not create a dependency on the list order.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2007,7 +2238,7 @@ The parameter `accessLevel` specifies whether to return only those compartments 
 The parameter `compartmentIdInSubtree` applies only when you perform ListCompartments on the tenancy (root compartment). When set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ANY.
 
 See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["ANY", "ACCESSIBLE"]), help="""Valid values are `ANY` and `ACCESSIBLE`. Default is `ANY`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). For the compartments on which the user indirectly has INSPECT permissions, a restricted set of fields is returned.
@@ -2062,7 +2293,7 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
 
 
 @tag_group.command(name=cli_util.override('list_cost_tracking_tags.command_name', 'list-cost-tracking'), help="""Lists all the tags enabled for cost-tracking in the specified tenancy. For information about cost-tracking tags, see [Using Cost-tracking Tags].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2131,7 +2362,7 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
 
 
 @dynamic_group_group.command(name=cli_util.override('list_dynamic_groups.command_name', 'list'), help="""Lists the dynamic groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2178,7 +2409,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
 
 
 @fault_domain_group.command(name=cli_util.override('list_fault_domains.command_name', 'list'), help="""Lists the Fault Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--availability-domain', required=True, help="""The name of the availibilityDomain.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2199,7 +2430,7 @@ def list_fault_domains(ctx, from_json, all_pages, compartment_id, availability_d
 
 
 @group_group.command(name=cli_util.override('list_groups.command_name', 'list'), help="""Lists the groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2297,7 +2528,7 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
 
 @identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help="""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--protocol', required=True, help="""The protocol used for federation. Allowed values are: SAML2""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2396,10 +2627,68 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
     cli_util.render_response(result, ctx)
 
 
+@mfa_totp_device_group.command(name=cli_util.override('list_mfa_totp_devices.command_name', 'list'), help="""Lists the MFA TOTP devices for the specified user. The returned object contains the device's OCID, but not the seed. The seed is returned only upon creation or when we regenerate MFA seed for the device.""")
+@cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[MfaTotpDeviceSummary]'})
+@cli_util.wrap_exceptions
+def list_mfa_totp_devices(ctx, from_json, all_pages, page_size, user_id, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_mfa_totp_devices,
+            user_id=user_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_mfa_totp_devices,
+            limit,
+            page_size,
+            user_id=user_id,
+            **kwargs
+        )
+    else:
+        result = client.list_mfa_totp_devices(
+            user_id=user_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @policy_group.command(name=cli_util.override('list_policies.command_name', 'list'), help="""Lists the policies in the specified compartment (either the tenancy or another of your compartments). See [Where to Get the Tenancy's OCID and User's OCID].
 
 To determine which policies apply to a particular group or compartment, you must view the individual statements inside all your policies. There isn't a way to automatically obtain that information via the API.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2531,7 +2820,7 @@ def list_swift_passwords(ctx, from_json, all_pages, user_id):
 
 
 @tag_namespace_group.command(name=cli_util.override('list_tag_namespaces.command_name', 'list'), help="""Lists the tag namespaces in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--include-subcompartments', type=click.BOOL, help="""An optional boolean parameter indicating whether to retrieve all tag namespaces in subcompartments. If this parameter is not specified, only the tag namespaces defined in the specified compartment are retrieved.""")
@@ -2633,7 +2922,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
 @user_group_membership_group.command(name=cli_util.override('list_user_group_memberships.command_name', 'list'), help="""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
 
 - You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list. - Although`userId` and `groupId` are not indvidually required, you must set one of them.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--user-id', help="""The OCID of the user.""")
 @cli_util.option('--group-id', help="""The OCID of the group.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -2686,7 +2975,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 
 
 @user_group.command(name=cli_util.override('list_users.command_name', 'list'), help="""Lists the users in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--identity-provider-id', help="""The id of the identity provider.""")
@@ -2739,7 +3028,7 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
 
 
 @work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help="""Lists the work requests in compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--resource-identifier', help="""The identifier of the resource the work request affects.""")

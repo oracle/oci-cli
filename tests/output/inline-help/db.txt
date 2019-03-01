@@ -28,7 +28,7 @@ Commands:
   patch-history                   The record of a patch action on a specified...
   system                          The Database Service supports several types...
   system-shape                    The shape of the DB system.
-  version                         The Oracle database software version.
+  version                         The Oracle Database software version.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse --help
@@ -1672,8 +1672,10 @@ Options:
                                   ASYNC. [required]
   --creation-type TEXT            Specifies whether to create the peer database
                                   in an existing DB system or in a new DB
-                                  system. Use either "ExistingDbSystem" or
-                                  "NewDbSystem." [required]
+                                  system. `ExistingDbSystem` is not supported
+                                  for creating Data Guard associations for
+                                  virtual machine DB system databases.
+                                  [required]
   --peer-db-system-id TEXT        The OCID of the DB System to create the
                                   standby database on. [required]
   --from-json TEXT                Provide input to this command as a JSON
@@ -1755,8 +1757,10 @@ Options:
                                   ASYNC. [required]
   --creation-type TEXT            Specifies whether to create the peer database
                                   in an existing DB system or in a new DB
-                                  system. Use either "ExistingDbSystem" or
-                                  "NewDbSystem." [required]
+                                  system. `ExistingDbSystem` is not supported
+                                  for creating Data Guard associations for
+                                  virtual machine DB system databases.
+                                  [required]
   --display-name TEXT             The user-friendly name for the DB System to
                                   create the standby database on. It does not
                                   have to be unique. [required]
@@ -3251,6 +3255,49 @@ Options:
                                   systems and 2-node RAC DB systems require
                                   ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
                                   [required]
+  --fault-domains COMPLEX TYPE    A fault domain is a grouping of hardware and
+                                  infrastructure within an availability domain.
+                                  fault domains let you distribute your
+                                  instances so that they are not on the same
+                                  physical hardware within a single availability
+                                  domain. A hardware failure or maintenance that
+                                  affects one fault domain does not affect DB
+                                  systems in other fault domains.
+                                  
+                                  If you do not
+                                  specify the fault domain, the system selects
+                                  one for you. To change the fault domain for a
+                                  DB system, terminate it and launch a new DB
+                                  system in the preferred fault domain.
+                                  
+                                  If the
+                                  node count is greater than 1, you can specify
+                                  which fault domains these nodes will be
+                                  distributed into. The system assigns your
+                                  nodes automatically to the fault domains you
+                                  specify so that no fault domain contains more
+                                  than one node.
+                                  
+                                  To get a list of fault
+                                  domains, use the [ListFaultDomains] operation
+                                  in the Identity and Access Management Service
+                                  API.
+                                  
+                                  Example: `FAULT-DOMAIN-1`
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             The user-friendly name for the DB system. The
                                   name does not have to be unique.
   --backup-subnet-id TEXT         The [OCID] of the backup network subnet the DB
@@ -3524,6 +3571,49 @@ Options:
                                   systems and 2-node RAC DB systems require
                                   ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
                                   [required]
+  --fault-domains COMPLEX TYPE    A fault domain is a grouping of hardware and
+                                  infrastructure within an availability domain.
+                                  fault domains let you distribute your
+                                  instances so that they are not on the same
+                                  physical hardware within a single availability
+                                  domain. A hardware failure or maintenance that
+                                  affects one fault domain does not affect DB
+                                  systems in other fault domains.
+                                  
+                                  If you do not
+                                  specify the fault domain, the system selects
+                                  one for you. To change the fault domain for a
+                                  DB system, terminate it and launch a new DB
+                                  system in the preferred fault domain.
+                                  
+                                  If the
+                                  node count is greater than 1, you can specify
+                                  which fault domains these nodes will be
+                                  distributed into. The system assigns your
+                                  nodes automatically to the fault domains you
+                                  specify so that no fault domain contains more
+                                  than one node.
+                                  
+                                  To get a list of fault
+                                  domains, use the [ListFaultDomains] operation
+                                  in the Identity and Access Management Service
+                                  API.
+                                  
+                                  Example: `FAULT-DOMAIN-1`
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             The user-friendly name for the DB system. The
                                   name does not have to be unique.
   --backup-subnet-id TEXT         The [OCID] of the backup network subnet the DB
@@ -3947,7 +4037,7 @@ Options:
 $ oci db version --help
 Usage: oci db version [OPTIONS] COMMAND [ARGS]...
 
-  The Oracle database software version.
+  The Oracle Database software version.
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -3959,13 +4049,13 @@ Options:
                   <command> --help.
 
 Commands:
-  list  Gets a list of supported Oracle database...
+  list  Gets a list of supported Oracle Database...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db version list --help
 Usage: oci db version list [OPTIONS]
 
-  Gets a list of supported Oracle database versions.
+  Gets a list of supported Oracle Database versions.
 
 Options:
   -c, --compartment-id TEXT  The compartment [OCID]. [required]

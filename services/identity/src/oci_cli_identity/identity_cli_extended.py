@@ -20,6 +20,8 @@ identity_cli.iam_root_group.commands.pop(identity_cli.api_key_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.swift_password_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.ui_password_group.name)
 
+cli_util.rename_command(identity_cli.tag_namespace_group, identity_cli.change_tag_namespace_compartment, 'change-compartment')
+
 identity_cli.user_group.add_command(identity_cli.api_key_group)
 identity_cli.user_group.add_command(identity_cli.swift_password_group)
 identity_cli.user_group.add_command(identity_cli.ui_password_group)

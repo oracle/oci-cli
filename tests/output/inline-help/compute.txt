@@ -1867,6 +1867,18 @@ Options:
                                   Mg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i
                                   6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl my
                                   public key"}'
+  --agent-config COMPLEX TYPE     This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --source-details COMPLEX TYPE   Use this parameter to specify whether a boot
                                   volume or an image should be used to launch a
                                   new instance.
@@ -2182,6 +2194,22 @@ Options:
                                   
                                   Example:
                                   `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --agent-config COMPLEX TYPE     Instance agent configuration options to choose
+                                  for updating the instance
                                   This is a complex
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command

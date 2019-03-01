@@ -21,6 +21,7 @@ Commands:
   fault-domain             A Fault Domain is a logical grouping of...
   group                    A collection of users who all need the same...
   identity-provider-group  A group created in an identity provider that...
+  mfa-totp-device          A `MfaTotpDevice` is an Mfa Totp device that...
   policy                   A document that specifies the type of access...
   region                   A localized geographic area, such as Phoenix,...
   region-subscription      An object that represents your tenancy's...
@@ -192,8 +193,8 @@ Usage: oci iam availability-domain list [OPTIONS]
   do not create a dependency on the list order.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the parent compartment (remember that
-                             the tenancy is simply the root compartment). If not
+  -c, --compartment-id TEXT  The OCID of the compartment (remember that the
+                             tenancy is simply the root compartment). If not
                              provided, this parameter will use the tenancy from
                              the config file.
   --all                      Fetches all pages of results.
@@ -439,10 +440,10 @@ Usage: oci iam compartment list [OPTIONS]
   See [Where to Get the Tenancy's OCID and User's OCID].
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the parent compartment (remember
-                                  that the tenancy is simply the root
-                                  compartment). If not provided, this parameter
-                                  will use the tenancy from the config file.
+  -c, --compartment-id TEXT       The OCID of the compartment (remember that the
+                                  tenancy is simply the root compartment). If
+                                  not provided, this parameter will use the
+                                  tenancy from the config file.
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
   --limit INTEGER                 The maximum number of items to return in a
@@ -879,8 +880,8 @@ Usage: oci iam dynamic-group list [OPTIONS]
   User's OCID].
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the parent compartment (remember that
-                             the tenancy is simply the root compartment). If not
+  -c, --compartment-id TEXT  The OCID of the compartment (remember that the
+                             tenancy is simply the root compartment). If not
                              provided, this parameter will use the tenancy from
                              the config file.
   --page TEXT                The value of the `opc-next-page` response header
@@ -978,8 +979,8 @@ Usage: oci iam fault-domain list [OPTIONS]
   Get the Tenancy's OCID and User's OCID].
 
 Options:
-  -c, --compartment-id TEXT   The OCID of the parent compartment (remember that
-                              the tenancy is simply the root compartment).
+  -c, --compartment-id TEXT   The OCID of the compartment (remember that the
+                              tenancy is simply the root compartment).
                               [required]
   --availability-domain TEXT  The name of the availibilityDomain. [required]
   --all                       Fetches all pages of results.
@@ -1221,8 +1222,8 @@ Usage: oci iam group list [OPTIONS]
   root compartment). See [Where to Get the Tenancy's OCID and User's OCID].
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the parent compartment (remember that
-                             the tenancy is simply the root compartment). If not
+  -c, --compartment-id TEXT  The OCID of the compartment (remember that the
+                             tenancy is simply the root compartment). If not
                              provided, this parameter will use the tenancy from
                              the config file.
   --page TEXT                The value of the `opc-next-page` response header
@@ -1424,6 +1425,225 @@ Options:
                                command line specified value will be used
   -?, -h, --help               For detailed help on any of these individual
                                commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device --help
+Usage: oci iam mfa-totp-device [OPTIONS] COMMAND [ARGS]...
+
+  A `MfaTotpDevice` is an Mfa Totp device that the user can use to
+  authenticate with OCI (Leslie will add more details here)
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  activate            Activate the specified MFA TOTP device for...
+  create              Create a new MFA TOTP device for the user.
+  delete              Delete the specified MFA TOTP device for the...
+  generate-totp-seed  Generate seed for the MFA TOTP device
+  get                 Get the specified MFA TOTP device for the...
+  list                Lists the MFA TOTP devices for the specified...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device activate --help
+Usage: oci iam mfa-totp-device activate [OPTIONS]
+
+  Activate the specified MFA TOTP device for the user.
+
+Options:
+  --user-id TEXT             The OCID of the user. [required]
+  --mfa-totp-device-id TEXT  The OCID of the MFA TOTP device. [required]
+  --totp-token TEXT          The Totp token for MFA.
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file.
+                             
+                             Options can still be provided on the
+                             command line. If an option exists in both the JSON
+                             document and the command line then the command line
+                             specified value will be used
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device create --help
+Usage: oci iam mfa-totp-device create [OPTIONS]
+
+  Create a new MFA TOTP device for the user. A user can only create one MFA
+  TOTP device.
+
+Options:
+  --user-id TEXT                  The OCID of the user. [required]
+  --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device delete --help
+Usage: oci iam mfa-totp-device delete [OPTIONS]
+
+  Delete the specified MFA TOTP device for the specified user.
+
+Options:
+  --user-id TEXT             The OCID of the user. [required]
+  --mfa-totp-device-id TEXT  The OCID of the MFA TOTP device. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --force                    Perform deletion without prompting for
+                             confirmation.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file.
+                             
+                             Options can still be provided on the
+                             command line. If an option exists in both the JSON
+                             document and the command line then the command line
+                             specified value will be used
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device generate-totp-seed --help
+Usage: oci iam mfa-totp-device generate-totp-seed [OPTIONS]
+
+  Generate seed for the MFA TOTP device
+
+Options:
+  --user-id TEXT                  The OCID of the user. [required]
+  --mfa-totp-device-id TEXT       The OCID of the MFA TOTP device. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device get --help
+Usage: oci iam mfa-totp-device get [OPTIONS]
+
+  Get the specified MFA TOTP device for the specified user.
+
+Options:
+  --user-id TEXT             The OCID of the user. [required]
+  --mfa-totp-device-id TEXT  The OCID of the MFA TOTP device. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file.
+                             
+                             Options can still be provided on the
+                             command line. If an option exists in both the JSON
+                             document and the command line then the command line
+                             specified value will be used
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam mfa-totp-device list --help
+Usage: oci iam mfa-totp-device list [OPTIONS]
+
+  Lists the MFA TOTP devices for the specified user. The returned object
+  contains the device's OCID, but not the seed. The seed is returned only upon
+  creation or when we regenerate MFA seed for the device.
+
+Options:
+  --user-id TEXT                The OCID of the user. [required]
+  --page TEXT                   The value of the `opc-next-page` response header
+                                from the previous "List" call.
+  --limit INTEGER               The maximum number of items to return in a
+                                paginated "List" call.
+  --sort-by [TIMECREATED|NAME]  The field to sort by. You can provide one sort
+                                order (`sortOrder`). Default order for
+                                TIMECREATED is descending. Default order for
+                                NAME is ascending. The NAME sort order is case
+                                sensitive.
+                                
+                                **Note:** In general, some "List"
+                                operations (for example, `ListInstances`) let
+                                you optionally filter by Availability Domain if
+                                the scope of the resource type is within a
+                                single Availability Domain. If you call one of
+                                these "List" operations without specifying an
+                                Availability Domain, the resources are grouped
+                                by Availability Domain, then sorted.
+  --sort-order [ASC|DESC]       The sort order to use, either ascending (`ASC`)
+                                or descending (`DESC`). The NAME sort order is
+                                case sensitive.
+  --all                         Fetches all pages of results. If you provide
+                                this option, then you cannot provide the --limit
+                                option.
+  --page-size INTEGER           When fetching results, the number of results to
+                                fetch per call. Only valid when used with --all
+                                or --limit, and ignored otherwise.
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file.
+                                
+                                Options can still be provided on
+                                the command line. If an option exists in both
+                                the JSON document and the command line then the
+                                command line specified value will be used
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam policy --help
@@ -1730,9 +1950,8 @@ Usage: oci iam policy list [OPTIONS]
   way to automatically obtain that information via the API.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the parent compartment (remember that
-                             the tenancy is simply the root compartment).
-                             [required]
+  -c, --compartment-id TEXT  The OCID of the compartment (remember that the
+                             tenancy is simply the root compartment). [required]
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
   --limit INTEGER            The maximum number of items to return in a
@@ -2242,9 +2461,8 @@ Usage: oci iam tag list-cost-tracking [OPTIONS]
   information about cost-tracking tags, see [Using Cost-tracking Tags].
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the parent compartment (remember that
-                             the tenancy is simply the root compartment).
-                             [required]
+  -c, --compartment-id TEXT  The OCID of the compartment (remember that the
+                             tenancy is simply the root compartment). [required]
   --page TEXT                The value of the `opc-next-page` response header
                              from the previous "List" call.
   --limit INTEGER            The maximum number of items to return in a
@@ -2380,12 +2598,41 @@ Options:
                   <command> --help.
 
 Commands:
-  create      Create new tagNamespace in a compartment
-  get         Get a tagNamespaces information
-  list        List the tagNamespaces in a compartment
-  reactivate  Reactivate namespace (only)
-  retire      Retire namespace and its tags and rules
-  update      Updates the specified tagNamespace
+  change-compartment  Moves the specified tag namespace to the...
+  create              Create new tagNamespace in a compartment
+  get                 Get a tagNamespaces information
+  list                List the tagNamespaces in a compartment
+  reactivate          Reactivate namespace (only)
+  retire              Retire namespace and its tags and rules
+  update              Updates the specified tagNamespace
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tag-namespace change-compartment --help
+Usage: oci iam tag-namespace change-compartment [OPTIONS]
+
+  Moves the specified tag namespace to the specified compartment within the
+  same tenancy.
+
+  To move the tag namespace, you must have the manage tag-namespaces
+  permission on both compartments. For more information about IAM policies,
+  see [Details for IAM].
+
+  Moving a tag namespace moves all the tag key definitions contained in the
+  tag namespace.
+
+Options:
+  --tag-namespace-id TEXT    The OCID of the tag namespace. [required]
+  -c, --compartment-id TEXT  The Oracle Cloud ID (OCID) of the destination
+                             compartment. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file.
+                             
+                             Options can still be provided on the
+                             command line. If an option exists in both the JSON
+                             document and the command line then the command line
+                             specified value will be used
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag-namespace create --help
@@ -2490,9 +2737,9 @@ Usage: oci iam tag-namespace list [OPTIONS]
   Lists the tag namespaces in the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the parent compartment (remember
-                                  that the tenancy is simply the root
-                                  compartment). [required]
+  -c, --compartment-id TEXT       The OCID of the compartment (remember that the
+                                  tenancy is simply the root compartment).
+                                  [required]
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous "List" call.
   --limit INTEGER                 The maximum number of items to return in a
@@ -2969,9 +3216,9 @@ Usage: oci iam user list [OPTIONS]
   compartment). See [Where to Get the Tenancy's OCID and User's OCID].
 
 Options:
-  -c, --compartment-id TEXT    The OCID of the parent compartment (remember that
-                               the tenancy is simply the root compartment). If
-                               not provided, this parameter will use the tenancy
+  -c, --compartment-id TEXT    The OCID of the compartment (remember that the
+                               tenancy is simply the root compartment). If not
+                               provided, this parameter will use the tenancy
                                from the config file.
   --page TEXT                  The value of the `opc-next-page` response header
                                from the previous "List" call.
@@ -3438,8 +3685,8 @@ Usage: oci iam work-request list [OPTIONS]
   Lists the work requests in compartment.
 
 Options:
-  -c, --compartment-id TEXT   The OCID of the parent compartment (remember that
-                              the tenancy is simply the root compartment).
+  -c, --compartment-id TEXT   The OCID of the compartment (remember that the
+                              tenancy is simply the root compartment).
                               [required]
   --page TEXT                 The value of the `opc-next-page` response header
                               from the previous "List" call.

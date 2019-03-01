@@ -476,7 +476,6 @@ class TestCompute(unittest.TestCase):
         self.assertIsNotNone(instance_console_connection_details['data']['lifecycle-state'])
         self.assertEquals(self.instance_ocid, instance_console_connection_details['data']['instance-id'])
         self.assertIsNotNone(instance_console_connection_details['data']['fingerprint'])
-        self.assertEquals(util.COMPARTMENT_ID, instance_console_connection_details['data']['compartment-id'])
 
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
         parsed_result = json.loads(result.output)

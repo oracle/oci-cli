@@ -6,6 +6,66 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.2 - 2019-02-28
+------------------
+Added
+~~~~~
+* Support for OCI Monitoring Service
+
+  * (``oci monitoring``)
+  * An example using monitoring alarms can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/monitoring_alarm_example.sh>`__.
+  * An example using monitoring metrics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/monitoring_metrics_example.sh>`__.
+
+* Support for Resource Manager service
+
+  * (``oci resource-manager``)
+  * An example of using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/resource_manager_example.sh>`__
+
+* Support for Notification service
+
+  * (``oci ons``)
+  * An example of using notification subscriptions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/notification_subscription_example.sh>`__
+  * An example of using notification topics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/notification_topic_example.sh>`__
+
+* Support for Auto Scaling Configurations as part of Compute Autoscaling Service
+
+  * (``oci autoscaling configuration create``)
+  * (``oci autoscaling configuration delete``)
+  * (``oci autoscaling configuration get``)
+  * (``oci autoscaling configuration list``)
+  * (``oci autoscaling configuration update``)
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/autoscaling_example.sh>`__.
+
+* Support for Auto Scaling Policies as part of Compute Autoscaling Service
+
+  * (``oci autoscaling policy create``)
+  * (``oci autoscaling policy delete``)
+  * (``oci autoscaling policy get``)
+  * (``oci autoscaling policy list``)
+  * (``oci autoscaling policy update``)
+
+* Support to specify fault domains in Database system launch in Database service.
+
+   * (``oci db system launch --fault-domains``)
+   * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_dbsystem_example.sh>`__.
+
+* Support for Load Balancers for Instance Pools
+
+    * (``oci compute-management instance-pool attach-lb``)
+    * (``oci compute-management instance-pool detach-lb``)
+    * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/instance_pools_example.sh>`__.
+
+* Support for change Tag Namespace Compartment as a part of the Identity Service
+
+  * (``oci iam tag-namespace change-compartment``)
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
+
+* Support for instance launch with agent configuration for enabling monitoring and retrieving agent configuration
+ 
+  * (``oci compute instance launch --agent-config``) 
+  * (``oci compute instance update --agent-config``)
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/compute_agent_enable_disable_example.sh>`__
+
 2.5.1 - 2019-02-21
 ------------------
 Added

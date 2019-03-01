@@ -1,0 +1,424 @@
+# coding: utf-8
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+
+from __future__ import print_function
+import click
+import oci  # noqa: F401
+import six  # noqa: F401
+import sys  # noqa: F401
+from oci_cli import cli_util
+from oci_cli import json_skeleton_utils
+from oci_cli import custom_types  # noqa: F401
+from oci_cli.aliasing import CommandGroupWithAlias
+from oci_cli_ons.generated import ons_service_cli
+
+
+@click.command(cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane'), cls=CommandGroupWithAlias, help=cli_util.override('notification_data_plane_root_group.help', """Use the Notification API to broadcast messages to distributed components by topic, using a publish-subscribe pattern.
+For information about managing topics, subscriptions, and messages, see [Notification Overview](/iaas/Content/Notification/Concepts/notificationoverview.htm).
+"""), short_help=cli_util.override('notification_data_plane_root_group.short_help', """Notification API"""))
+@cli_util.help_option_group
+def notification_data_plane_root_group():
+    pass
+
+
+@click.command(cli_util.override('publish_result_group.command_name', 'publish-result'), cls=CommandGroupWithAlias, help="""The response to a PublishMessage call.""")
+@cli_util.help_option_group
+def publish_result_group():
+    pass
+
+
+@click.command(cli_util.override('subscription_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help="""The subscription's configuration.""")
+@cli_util.help_option_group
+def subscription_group():
+    pass
+
+
+@click.command(cli_util.override('update_subscription_details_group.command_name', 'update-subscription-details'), cls=CommandGroupWithAlias, help="""The configuration details for updating the subscription.""")
+@cli_util.help_option_group
+def update_subscription_details_group():
+    pass
+
+
+@click.command(cli_util.override('confirmation_result_group.command_name', 'confirmation-result'), cls=CommandGroupWithAlias, help="""The confirmation result.""")
+@cli_util.help_option_group
+def confirmation_result_group():
+    pass
+
+
+@click.command(cli_util.override('string_group.command_name', 'string'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def string_group():
+    pass
+
+
+ons_service_cli.ons_service_group.add_command(notification_data_plane_root_group)
+notification_data_plane_root_group.add_command(publish_result_group)
+notification_data_plane_root_group.add_command(subscription_group)
+notification_data_plane_root_group.add_command(update_subscription_details_group)
+notification_data_plane_root_group.add_command(confirmation_result_group)
+notification_data_plane_root_group.add_command(string_group)
+
+
+@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help="""Creates a subscription for the specified topic.""")
+@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic for the subscription.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment for the subscription.""")
+@cli_util.option('--protocol', required=True, help="""The protocol to use for delivering messages. Valid values: EMAIL, HTTPS.""")
+@cli_util.option('--endpoint', required=True, help="""The endpoint of the subscription. Valid values depend on the protocol. For EMAIL, only an email address is valid. For HTTPS, only a PagerDuty URL is valid. A URL cannot exceed 512 characters. Avoid entering confidential information.""")
+@cli_util.option('--metadata', help="""Metadata for the subscription. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "ACTIVE", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ons', 'class': 'Subscription'})
+@cli_util.wrap_exceptions
+def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, topic_id, compartment_id, protocol, endpoint, metadata, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['topicId'] = topic_id
+    details['compartmentId'] = compartment_id
+    details['protocol'] = protocol
+    details['endpoint'] = endpoint
+
+    if metadata is not None:
+        details['metadata'] = metadata
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.create_subscription(
+        create_subscription_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_subscription') and callable(getattr(client, 'get_subscription')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_subscription(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subscription_group.command(name=cli_util.override('delete_subscription.command_name', 'delete'), help="""Deletes the specified subscription.""")
+@cli_util.option('--subscription-id', required=True, help="""The [OCID] of the subscription to delete.""")
+@cli_util.option('--if-match', help="""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "ACTIVE", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscription_id, if_match):
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.delete_subscription(
+        subscription_id=subscription_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_subscription') and callable(getattr(client, 'get_subscription')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_subscription(subscription_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@confirmation_result_group.command(name=cli_util.override('get_confirm_subscription.command_name', 'get-confirm-subscription'), help="""Gets the confirmation details for the specified subscription.""")
+@cli_util.option('--id', required=True, help="""The subscription ID.""")
+@cli_util.option('--token', required=True, help="""The subscription confirmation token.""")
+@cli_util.option('--protocol', required=True, help="""The subscription protocol. Valid values: EMAIL, HTTPS.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ons', 'class': 'ConfirmationResult'})
+@cli_util.wrap_exceptions
+def get_confirm_subscription(ctx, from_json, id, token, protocol):
+
+    if isinstance(id, six.string_types) and len(id.strip()) == 0:
+        raise click.UsageError('Parameter --id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.get_confirm_subscription(
+        id=id,
+        token=token,
+        protocol=protocol,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subscription_group.command(name=cli_util.override('get_subscription.command_name', 'get'), help="""Gets the specified subscription's configuration information.""")
+@cli_util.option('--subscription-id', required=True, help="""The [OCID] of the subscription to retrieve.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ons', 'class': 'Subscription'})
+@cli_util.wrap_exceptions
+def get_subscription(ctx, from_json, subscription_id):
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.get_subscription(
+        subscription_id=subscription_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@string_group.command(name=cli_util.override('get_unsubscription.command_name', 'get-unsubscription'), help="""Gets the unsubscription details for the specified subscription.""")
+@cli_util.option('--id', required=True, help="""The [OCID] of the subscription to unsubscribe from.""")
+@cli_util.option('--token', required=True, help="""The subscription confirmation token.""")
+@cli_util.option('--protocol', required=True, help="""The subscription protocol. Valid values: EMAIL, HTTPS.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_unsubscription(ctx, from_json, id, token, protocol):
+
+    if isinstance(id, six.string_types) and len(id.strip()) == 0:
+        raise click.UsageError('Parameter --id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.get_unsubscription(
+        id=id,
+        token=token,
+        protocol=protocol,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subscription_group.command(name=cli_util.override('list_subscriptions.command_name', 'list'), help="""Lists the subscriptions in the specified compartment or topic.""")
+@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment.""")
+@cli_util.option('--topic-id', help="""Return all subscriptions that are subscribed to the given topic OCID. Either this query parameter or the compartmentId query parameter must be set.""")
+@cli_util.option('--page', help="""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ons', 'class': 'list[SubscriptionSummary]'})
+@cli_util.wrap_exceptions
+def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, topic_id, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if topic_id is not None:
+        kwargs['topic_id'] = topic_id
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('notification_data_plane', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subscriptions,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subscriptions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subscriptions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@publish_result_group.command(name=cli_util.override('publish_message.command_name', 'publish-message'), help="""Publishes a message to the specified topic. For more information about publishing messages, see [Publishing Messages].""")
+@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic.""")
+@cli_util.option('--body', required=True, help="""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
+@cli_util.option('--title', help="""The title of the message to be published. Avoid entering confidential information.""")
+@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help="""Type of message body in the request. Default value: JSON.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ons', 'class': 'PublishResult'})
+@cli_util.wrap_exceptions
+def publish_message(ctx, from_json, topic_id, body, title, message_type):
+
+    if isinstance(topic_id, six.string_types) and len(topic_id.strip()) == 0:
+        raise click.UsageError('Parameter --topic-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if message_type is not None:
+        kwargs['message_type'] = message_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['body'] = body
+
+    if title is not None:
+        details['title'] = title
+
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.publish_message(
+        topic_id=topic_id,
+        message_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subscription_group.command(name=cli_util.override('resend_subscription_confirmation.command_name', 'resend-subscription-confirmation'), help="""Resends the confirmation details for the specified subscription.""")
+@cli_util.option('--id', required=True, help="""The [OCID] of the subscription to resend the confirmation for.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ons', 'class': 'Subscription'})
+@cli_util.wrap_exceptions
+def resend_subscription_confirmation(ctx, from_json, id):
+
+    if isinstance(id, six.string_types) and len(id.strip()) == 0:
+        raise click.UsageError('Parameter --id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.resend_subscription_confirmation(
+        id=id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@update_subscription_details_group.command(name=cli_util.override('update_subscription.command_name', 'update-subscription'), help="""Updates the specified subscription's configuration.""")
+@cli_util.option('--subscription-id', required=True, help="""The [OCID] of the subscription to update.""")
+@cli_util.option('--delivery-policy', type=custom_types.CLI_COMPLEX_TYPE, help="""The delivery policy of the subscription. Stored as a JSON string.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'delivery-policy': {'module': 'ons', 'class': 'DeliveryPolicy'}, 'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'delivery-policy': {'module': 'ons', 'class': 'DeliveryPolicy'}, 'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ons', 'class': 'UpdateSubscriptionDetails'})
+@cli_util.wrap_exceptions
+def update_subscription(ctx, from_json, force, subscription_id, delivery_policy, freeform_tags, defined_tags, if_match):
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+    if not force:
+        if delivery_policy or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to delivery-policy and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if delivery_policy is not None:
+        details['deliveryPolicy'] = cli_util.parse_json_parameter("delivery_policy", delivery_policy)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.update_subscription(
+        subscription_id=subscription_id,
+        update_subscription_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
