@@ -22,6 +22,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 from oci_cli_object_storage.generated import objectstorage_cli
 from oci_cli import cli_util
+from mimetypes import guess_type
 
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
@@ -317,7 +318,11 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
 
     if content_type is not None:
-        kwargs['content_type'] = content_type
+        #If content type is set to auto, then the CLI will guess the content type of the file
+        if content_type == 'auto':
+            kwargs['content_type'], _ = guess_type(name)
+        else:
+            kwargs['content_type'] = content_type
 
     if content_language is not None:
         kwargs['content_language'] = content_language
@@ -492,6 +497,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     """
     # there is existing retry logic for bulk_put so we don't want the Python SDK level retries to interfere / overlap with that
     ctx.obj['no_retry'] = True
+    auto_content_type = False
 
     if include and exclude:
         raise click.UsageError('The --include and --exclude parameters cannot both be provided')
@@ -515,7 +521,11 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     if metadata is not None:
         base_kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
     if content_type is not None:
-        base_kwargs['content_type'] = content_type
+        # If content type is set to auto, then the CLI will guess the content type of the file
+        if content_type == 'auto':
+            auto_content_type = True
+        else:
+            base_kwargs['content_type'] = content_type
     if content_language is not None:
         base_kwargs['content_language'] = content_language
     if content_encoding is not None:
@@ -564,6 +574,10 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
 
             if object_prefix:
                 object_name = '{}{}'.format(object_prefix, object_name)
+
+            #If content type is set to auto, then the CLI will guess the content type of the file
+            if auto_content_type:
+                base_kwargs['content_type'], _ = guess_type(object_name)
 
             try:
                 if not overwrite:
