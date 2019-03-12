@@ -1,0 +1,177 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListPolicies&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:18 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=ListPolicies&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq","limit":10}}]'}
+    headers:
+      Content-Length: ['177']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:18 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="UfG26tsIfw2iN4hairNyUHs4uyow3CONFHJwwe6wHKQA+jcZnudXWcpSUpuwtB2l/IO4kmfyvx0XL9P2zT8FJtKowJm42Ja4FUFq0Eqr2j+8dPLd7mJ9B9zGX+tmrQ/n2symTZPSI1Few8nQdKYXhzEMwL3iYXNuSHMI1Eox8fAvKrp9R1cctb2VMt1N9HqNdRlYgadgAHlXbkiJ4bJPLDL136DGXWya/xj7j6KmCcOKFMdIBLpGQIoM9mnZf/cvroLbpj4vt4NgTx7WbGClELXcbqOcKuIFlSf+uGnyxZHng/eCivE0+bhEpwQYBBgw1ciUHBFMvcNB+6dH/zeBrQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:18 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [0E19EFFEB9694823BD46B72250B6AFC2]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/policies/?limit=10&compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: "[ {\n  \"statements\" : [ \"ALLOW SERVICE objectstorage-us-phoenix-1\
+        \ TO MANAGE objects IN TENANCY\" ],\n  \"id\" : \"ocid1.policy.oc1..aaaaaaaajwgu4xicei4ddwm5demzikwgby62elj73scno3gfdmmeubima4oq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"CasperCrossRegionCopy\",\n  \"description\" : \"Allow Object\
+        \ Copy to work\",\n  \"timeCreated\" : \"2018-08-30T22:04:04.075Z\",\n  \"\
+        freeformTags\" : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"\
+        ACTIVE\"\n}, {\n  \"statements\" : [ \"allow service OKE to manage all-resources\
+        \ in tenancy\" ],\n  \"id\" : \"ocid1.policy.oc1..aaaaaaaaxcfz76xk7wv2f4zgve3imdjmd6le2rpfqsn7kteib6ws7nwa2yla\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"OkePolicies\",\n  \"description\" : \"Policies for the container\
+        \ engine\",\n  \"timeCreated\" : \"2018-06-21T21:35:51.614Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n},\
+        \ {\n  \"statements\" : [ \"Allow group PythonCLITestGroup to manage all-resources\
+        \ on compartment PythonCLITestCompartment\", \"Allow group PythonCLITestGroup\
+        \ to use tag-namespaces in compartment PythonCLITestCompartment\", \"Allow\
+        \ group PythonCLITestGroup to manage all-resources on compartment PythonCliCompartmentRenameTest-10000\"\
+        \ ],\n  \"id\" : \"ocid1.policy.oc1..aaaaaaaaj3niszauune7e3uystuz5vteti6dtk423ofdc4sf6qq5rsyvt64a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"PythonCLITestUserPolicy\",\n  \"description\" : \"Policy\
+        \ to allow test users to execute test cases.\",\n  \"timeCreated\" : \"2018-06-19T17:30:20.029Z\"\
+        ,\n  \"freeformTags\" : { },\n  \"definedTags\" : { },\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}, {\n  \"statements\" : [ \"ALLOW GROUP Administrators to\
+        \ manage all-resources IN TENANCY\" ],\n  \"id\" : \"ocid1.policy.oc1..aaaaaaaajw5kanrrra3byupgakwscgwoz3ffbgojea23opvkrmncxm4fxb7q\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"Tenant Admin Policy\",\n  \"description\" : \"Tenant Admin\
+        \ Policy\",\n  \"timeCreated\" : \"2018-06-11T17:32:48.257Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n},\
+        \ {\n  \"statements\" : [ \"Allow group Administrators to manage all-resources\
+        \ on compartment PythonCLITestCompartment\" ],\n  \"versionDate\" : \"2018-08-23\"\
+        ,\n  \"id\" : \"ocid1.policy.oc1..aaaaaaaa2pox4nwbyefp74a43sr73efa37hr2pyugqosmmgm6tjdbijyn56q\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"TestPolicy\",\n  \"description\" : \"test policy, ok to\
+        \ remove\",\n  \"timeCreated\" : \"2018-08-23T15:29:50.237Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['2761']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:18 GMT']
+      opc-limit: ['10']
+      opc-next-page: [AAAAAAAAAAGRfk-_9LvvkqGYP2PTz0wpZQmoQdoAxz-Dqi_ytRsWxK8ZJQnas5RmY2l_VwhSuI9D_ZTAqiqAR9fhnC34tb_HeFBW1bOb9NDJDTLeUGf0NldvCVEo_wNqksnqeIrSJe8xqwN9U0tK7fJi8A-rdcwleyfeTek-d5xFyKEqxRGoZUcEFP37pVHHB-1AMS9PucqOguck5jT33Z0donFm-sUfBTMCB_ll-9uo__UAeCyUUgbtC4K6enP8q951OSxRbgdotPYexQ4Rz_6T_A2JCjUv3ObPnTZ1Ql-mux2F7DqORmM0wUn5mAUtWjK18dbzroRnZnVF5IQhvfmF7bC9fsscS9eX2EYOxrVHNM4gfuC4onXekE_pesDjxc-nXDZr-caf94OHfvb_DCVR7ESK9DQErP1NRVC9FVfLpl49H7mTJOfT9vGfPgTruJSoB2cT7-VvXyPBZnAs439kNIwW8-bwJoe4-v3m1RqFk-DwWwufDtte2bI0984SzK1jXgdTBijwa8PVvLlAkXBnbGXINjdTdjHEUAHDssAFdJ9Q-A_Pbz3kVgLSBXy_hwEs8K7TJL0lDiJV]
+      opc-request-id: [0E19EFFEB9694823BD46B72250B6AFC2/2B24FE493626DC04F856DC75FC5823C4/A88A8B7527A62FDF1DD15592015996A6]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="kf5bnTSG9snSRjbMuEgJfiO3QR0iNyC5/xjUh2uRc6JCjMw4YasgK429Qqc0wGpXsRDhJEBgC8tqsynpQf0zNvgftLMuWLkJMGHnhJk7Lsi82D3VkqfUC0KQMqpZC7DvdXRvY6tB+p/J7AjnfFm6awCQJJC29yvaewO6cWovZzu3DIPIcxPza/i57+H8u3r/9sTPWU/6bLb7L1O3nCmdjxfL4NCk7AUPtfhFVpUr7g8eRZN2sHhBq11FwP3s61ip5wzIKXPysIynIKkZ9TklIFd3vNtRB8f3sTCtszvLBh5vHrY1OTfHCBrPJFWbo86S5a3Dy3Sqt+IxH4fYUBo7fw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:19 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [93BC4B9745C64EEDA022C42BD247A3D4]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/policies/?limit=5&page=AAAAAAAAAAGRfk-_9LvvkqGYP2PTz0wpZQmoQdoAxz-Dqi_ytRsWxK8ZJQnas5RmY2l_VwhSuI9D_ZTAqiqAR9fhnC34tb_HeFBW1bOb9NDJDTLeUGf0NldvCVEo_wNqksnqeIrSJe8xqwN9U0tK7fJi8A-rdcwleyfeTek-d5xFyKEqxRGoZUcEFP37pVHHB-1AMS9PucqOguck5jT33Z0donFm-sUfBTMCB_ll-9uo__UAeCyUUgbtC4K6enP8q951OSxRbgdotPYexQ4Rz_6T_A2JCjUv3ObPnTZ1Ql-mux2F7DqORmM0wUn5mAUtWjK18dbzroRnZnVF5IQhvfmF7bC9fsscS9eX2EYOxrVHNM4gfuC4onXekE_pesDjxc-nXDZr-caf94OHfvb_DCVR7ESK9DQErP1NRVC9FVfLpl49H7mTJOfT9vGfPgTruJSoB2cT7-VvXyPBZnAs439kNIwW8-bwJoe4-v3m1RqFk-DwWwufDtte2bI0984SzK1jXgdTBijwa8PVvLlAkXBnbGXINjdTdjHEUAHDssAFdJ9Q-A_Pbz3kVgLSBXy_hwEs8K7TJL0lDiJV&compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: '[ ]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['3']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:19 GMT']
+      opc-limit: ['5']
+      opc-request-id: [93BC4B9745C64EEDA022C42BD247A3D4/CC2CB271B225D2C7182F56036A427EA2/124FAD2159130556CD6762C75ACEEA5D]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"85F4BD36B2C54A9AA20E2ACD646D0B66\",
+      \"items\": [{\"definedTags\": {}, \"id\": \"ocid1.policy.oc1..aaaaaaaajwgu4xicei4ddwm5demzikwgby62elj73scno3gfdmmeubima4oq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"CasperCrossRegionCopy\", \"description\": \"Allow Object Copy to
+      work\", \"timeCreated\": \"2018-08-30T22:04:04.075000+00:00\", \"statements\":
+      [\"ALLOW SERVICE objectstorage-us-phoenix-1 TO MANAGE objects IN TENANCY\"],
+      \"versionDate\": null, \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null,
+      \"freeformTags\": {}}, {\"definedTags\": {}, \"id\": \"ocid1.policy.oc1..aaaaaaaaxcfz76xk7wv2f4zgve3imdjmd6le2rpfqsn7kteib6ws7nwa2yla\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"OkePolicies\", \"description\": \"Policies for the container engine\",
+      \"timeCreated\": \"2018-06-21T21:35:51.614000+00:00\", \"statements\": [\"allow
+      service OKE to manage all-resources in tenancy\"], \"versionDate\": null, \"lifecycleState\":
+      \"ACTIVE\", \"inactiveStatus\": null, \"freeformTags\": {}}, {\"definedTags\":
+      {}, \"id\": \"ocid1.policy.oc1..aaaaaaaaj3niszauune7e3uystuz5vteti6dtk423ofdc4sf6qq5rsyvt64a\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"PythonCLITestUserPolicy\", \"description\": \"Policy to allow test
+      users to execute test cases.\", \"timeCreated\": \"2018-06-19T17:30:20.029000+00:00\",
+      \"statements\": [\"Allow group PythonCLITestGroup to manage all-resources on
+      compartment PythonCLITestCompartment\", \"Allow group PythonCLITestGroup to
+      use tag-namespaces in compartment PythonCLITestCompartment\", \"Allow group
+      PythonCLITestGroup to manage all-resources on compartment PythonCliCompartmentRenameTest-10000\"],
+      \"versionDate\": null, \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null,
+      \"freeformTags\": {}}, {\"definedTags\": {}, \"id\": \"ocid1.policy.oc1..aaaaaaaajw5kanrrra3byupgakwscgwoz3ffbgojea23opvkrmncxm4fxb7q\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"Tenant Admin Policy\", \"description\": \"Tenant Admin Policy\",
+      \"timeCreated\": \"2018-06-11T17:32:48.257000+00:00\", \"statements\": [\"ALLOW
+      GROUP Administrators to manage all-resources IN TENANCY\"], \"versionDate\":
+      null, \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null, \"freeformTags\":
+      {}}, {\"definedTags\": {}, \"id\": \"ocid1.policy.oc1..aaaaaaaa2pox4nwbyefp74a43sr73efa37hr2pyugqosmmgm6tjdbijyn56q\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"TestPolicy\", \"description\": \"test policy, ok to remove\", \"timeCreated\":
+      \"2018-08-23T15:29:50.237000+00:00\", \"statements\": [\"Allow group Administrators
+      to manage all-resources on compartment PythonCLITestCompartment\"], \"versionDate\":
+      \"2018-08-23T00:00:00+00:00\", \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\":
+      null, \"freeformTags\": {}}]}", "requestJson": "{\"limit\": 10, \"compartmentId\":
+      \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"}",
+      "containerId": "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.ListPoliciesRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ListPoliciesResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['3465']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:19 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,88 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetNamespace&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 06 Sep 2018 00:20:03 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0194&apiName=GetNamespace&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"e43568d3-fd98-4615-9e44-517265c8b53d","request":{}}]'}
+    headers:
+      Content-Length: ['69']
+      Content-Type: [application/json]
+      Date: ['Thu, 06 Sep 2018 00:20:04 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="D5dYraWX18I6x/wg8kYRi9fMPqxMCOIGk9lk9dDzt9ZBFYfOs4eq8Yn4qPbr36zLF4AY69zENUUT1HTaIoZak6O/zGj52fLEAuJx6AlkRaWJ7slKx+gu3tJf3k5jTdMgyqbxCrvvdNLgWIWF+BxKwFjBuTLIdS0UNgl8W2KQ3i8w0ALEk7lDHtnh2OiB6v6fn/gHaGK8CLgDm8pmiSqMJb3HO/v8GpA8rgm1v/ZIu/QW/nZ6RJ8/jRVPfvRGfpmy+ecNOwmXUlwFIPj6xEx1N/7lfjquVxxEOImetCjDgy+I4DDlq5s9B6sFk1QeH3XJSJjAip7HtZ7Gs2d5UNZKJw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 06 Sep 2018 00:20:04 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-client-request-id: [44BF8F408EC1436D9CAD80A39B1845A2]
+      opc-request-id: [84784699316747108859419532B62DDB]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/
+  response:
+    body: {string: '"dex-us-phx-cli-1"'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['18']
+      Content-Type: [application/json]
+      Date: ['Thu, 06 Sep 2018 00:20:04 GMT']
+      opc-client-request-id: [44BF8F408EC1436D9CAD80A39B1845A2]
+      opc-request-id: [b873909d-1b32-ca1c-25d6-6106fddfe2eb]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9A7683B597A24540A498E8CE2B8BAA45\",
+      \"string\": \"dex-us-phx-cli-1\"}", "requestJson": "{}", "containerId": "e43568d3-fd98-4615-9e44-517265c8b53d",
+      "requestClass": "com.oracle.bmc.objectstorage.requests.GetNamespaceRequest",
+      "responseClass": "com.oracle.bmc.objectstorage.responses.GetNamespaceResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['343']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0194&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 06 Sep 2018 00:20:04 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

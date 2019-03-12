@@ -1,0 +1,106 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=healthchecks&apiName=UpdateHttpMonitor
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:18 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=healthchecks&apiName=UpdateHttpMonitor&lang=PythonCLI&sessionId=0759
+  response:
+    body: {string: '[{"containerId":"388318f1-e536-43a4-b6c5-b62571a4e225","request":{"monitorId":"ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq","updateHttpMonitorDetails":{"targets":["__STS0759_8752.com"],"displayName":"__STS0759_8200","intervalInSeconds":60,"isEnabled":false,"freeformTags":{"tag1":"value1.__STS0759_6854","tag2":"value2.__STS0759_6854"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0759_7583","testing_service_tag_02":"tag5.__STS0759_7583","testing_service_tag_03":"tag6.__STS0759_7583"}}}}}]'}
+    headers:
+      Content-Length: ['567']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:18 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"targets": ["__STS0759_8752.com"], "displayName": "__STS0759_8200", "intervalInSeconds":
+      60, "isEnabled": false, "freeformTags": {"tag1": "value1.__STS0759_6854", "tag2":
+      "value2.__STS0759_6854"}, "definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_01":
+      "tag4.__STS0759_7583", "testing_service_tag_02": "tag5.__STS0759_7583", "testing_service_tag_03":
+      "tag6.__STS0759_7583"}}}'
+    headers:
+      Content-Length: ['393']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="hZwwFjpXeIuWJfYkFdenkYvTrDLmhlmji2TsE1vIMTljloWYmHg60Mqsvuxy6KPxWK/bmZpp9HpGelMTZJHWCcDlweVWawgF6oyWddOWloRdt3mIOQ8lzlGl4paRdajM9EcoyOOt6SRcbwHZhL7ofnxwP5TMj+bBvAN030U/gaFTvW20rF3Xlw4AbnREn4ao9g4vdBXSDZNAT2QNVlPoOnANKvC7x2Kas6GAz11sRelF8CmWmkvJdFtZZoq0ynqxO6DhQ5lC1T0tpizZliWbXhvrSwc6f0Mrs0q/JxBdVQNlcy85Bmr4myyWlOANvBmUeiPsnOsFerz2xKpTAr4rBA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 02 Feb 2019 03:15:20 GMT']
+      host: [healthchecks.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.653]
+      opc-request-id: [FCDA137F6CAC48BDADD7F1053182FA0D]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.653 (python 3.6.5; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.44]
+      x-content-sha256: [Oyojybdzt3msrsRFYyU9aNTxwLI1nUZun2n5aQvAfKs=]
+    method: PUT
+    uri: https://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpMonitors/ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq
+  response:
+    body: {string: '{"id":"ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq","resultsUrl":"http://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpProbeResults/ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq","compartmentId":"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca","protocol":"HTTP","targets":["__STS0759_8752.com"],"vantagePointNames":["azr-iad1","goo-chs","aws-fra"],"port":80,"timeoutInSeconds":60,"method":"HEAD","path":"/","headers":{},"displayName":"__STS0759_8200","intervalInSeconds":60,"isEnabled":false,"freeformTags":{"tag1":"value1.__STS0759_6854","tag2":"value2.__STS0759_6854"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0759_7583","testing_service_tag_02":"tag5.__STS0759_7583","testing_service_tag_03":"tag6.__STS0759_7583"}}}'}
+    headers:
+      Content-Length: ['883']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:21 GMT']
+      ETag: ['"fe2dc82fd7d104b3cebbbb22bf2b06c1"']
+      opc-request-id: [FCDA137F6CAC48BDADD7F1053182FA0D/10FBEAF61DCE16856C45A66BB95F0336/2D2ADF7C47C9C7F9B43A96C77D0BD275]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "388318f1-e536-43a4-b6c5-b62571a4e225", "requestClass":
+      "com.oracle.bmc.healthchecks.requests.UpdateHttpMonitorRequest", "requestJson":
+      "{\"monitorId\": \"ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq\",
+      \"updateHttpMonitorDetails\": {\"targets\": [\"__STS0759_8752.com\"], \"displayName\":
+      \"__STS0759_8200\", \"intervalInSeconds\": 60, \"isEnabled\": false, \"freeformTags\":
+      {\"tag1\": \"value1.__STS0759_6854\", \"tag2\": \"value2.__STS0759_6854\"},
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0759_7583\", \"testing_service_tag_02\": \"tag5.__STS0759_7583\",
+      \"testing_service_tag_03\": \"tag6.__STS0759_7583\"}}}}", "responseJson": "{\"etag\":
+      \"\\\"fe2dc82fd7d104b3cebbbb22bf2b06c1\\\"\", \"httpMonitor\": {\"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0759_7583\", \"testing_service_tag_02\": \"tag5.__STS0759_7583\",
+      \"testing_service_tag_03\": \"tag6.__STS0759_7583\"}}, \"displayName\": \"__STS0759_8200\",
+      \"freeformTags\": {\"tag1\": \"value1.__STS0759_6854\", \"tag2\": \"value2.__STS0759_6854\"},
+      \"headers\": {}, \"id\": \"ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq\",
+      \"intervalInSeconds\": 60, \"isEnabled\": false, \"method\": \"HEAD\", \"path\":
+      \"/\", \"port\": 80, \"protocol\": \"HTTP\", \"resultsUrl\": \"http://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpProbeResults/ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq\",
+      \"targets\": [\"__STS0759_8752.com\"], \"timeoutInSeconds\": 60, \"vantagePointNames\":
+      [\"azr-iad1\", \"goo-chs\", \"aws-fra\"]}, \"opcRequestId\": \"0AF7D7E821204D73915215A89E9BFC98\"}",
+      "responseClass": "com.oracle.bmc.healthchecks.responses.UpdateHttpMonitorResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1958']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0759&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:25 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

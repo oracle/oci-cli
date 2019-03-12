@@ -1,0 +1,101 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=GetExadataIormConfig&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 20:10:53 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0095&apiName=GetExadataIormConfig&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ebde7a10-ecf1-4115-819f-a599568c1d50","request":{"dbSystemId":"ocid1.dbsystem.oc1.phx.abyhqljtbpxvhyadcfahddath7mxcidhd76uhou4rbuyik6tgatr73ksxjbq"}}]'}
+    headers:
+      Content-Length: ['167']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 20:10:54 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="RKvplS/sPtgvMK8jJoDTseLmXqGcG2rcR9nSn/WAYgNPOOd53Fc09ZYJ+dgcmlyCBzVi3snvY0QzVrpEwP8L7wGvsRdMx7dKKdVXUpOgism7uu2jJhxoZHs1z5ohjBTRnHrOki994HbpS7WHOLXf6R3FieNdFaD4soxZg5wUSW6ujjYam8KqlysJUIgHu4X4PNXGMpi4Y74h1h5GGdo5J8dHFTsedLoSyZCuAKU56RL/zfnY0QIuzPig3oc9rlJpR3+bY/o6GmRXtDv80HHwSE3amSvKHGGZvoGvdaag/IvIcMwZSje3kSl3dapQ0/8NAmdZ7YdaeyOR5RoRI9mADA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 20:13:13 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [3ACC64EA3763431793DBF3C592148FA8]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljtbpxvhyadcfahddath7mxcidhd76uhou4rbuyik6tgatr73ksxjbq/ExadataIormConfig
+  response:
+    body: {string: "{\n  \"dbPlans\" : [ {\n    \"dbName\" : \"default\",\n    \"\
+        flashCacheLimit\" : null,\n    \"share\" : null\n  }, {\n    \"dbName\" :\
+        \ \"fakedb1\",\n    \"flashCacheLimit\" : null,\n    \"share\" : null\n  },\
+        \ {\n    \"dbName\" : \"fakedb2\",\n    \"flashCacheLimit\" : null,\n    \"\
+        share\" : null\n  }, {\n    \"dbName\" : \"fakedb3\",\n    \"flashCacheLimit\"\
+        \ : null,\n    \"share\" : null\n  }, {\n    \"dbName\" : \"fakedb4\",\n \
+        \   \"flashCacheLimit\" : null,\n    \"share\" : null\n  }, {\n    \"dbName\"\
+        \ : \"fakedb5\",\n    \"flashCacheLimit\" : null,\n    \"share\" : null\n\
+        \  } ],\n  \"lifecycleDetails\" : null,\n  \"lifecycleState\" : \"DISABLED\"\
+        ,\n  \"objective\" : \"AUTO\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['598']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 20:13:14 GMT']
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [3ACC64EA3763431793DBF3C592148FA8/F04DDAB78D64FD3493CF268E1AF5AEE5/BB37D601F27461C8A3F47C2FD330566D]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9AB989A4BACF4654ABC55E5C64693435\",
+      \"exadataIormConfig\": {\"lifecycleDetails\": null, \"dbPlans\": [{\"flashCacheLimit\":
+      null, \"dbName\": \"default\", \"share\": null}, {\"flashCacheLimit\": null,
+      \"dbName\": \"fakedb1\", \"share\": null}, {\"flashCacheLimit\": null, \"dbName\":
+      \"fakedb2\", \"share\": null}, {\"flashCacheLimit\": null, \"dbName\": \"fakedb3\",
+      \"share\": null}, {\"flashCacheLimit\": null, \"dbName\": \"fakedb4\", \"share\":
+      null}, {\"flashCacheLimit\": null, \"dbName\": \"fakedb5\", \"share\": null}],
+      \"objective\": \"AUTO\", \"lifecycleState\": \"DISABLED\"}}", "requestJson":
+      "{\"dbSystemId\": \"ocid1.dbsystem.oc1.phx.abyhqljtbpxvhyadcfahddath7mxcidhd76uhou4rbuyik6tgatr73ksxjbq\"}",
+      "containerId": "ebde7a10-ecf1-4115-819f-a599568c1d50", "requestClass": "com.oracle.bmc.database.requests.GetExadataIormConfigRequest",
+      "responseClass": "com.oracle.bmc.database.responses.GetExadataIormConfigResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['971']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0095&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 20:13:15 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

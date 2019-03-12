@@ -1,0 +1,182 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GenerateDataEncryptionKey&serviceName=keymanagement&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 01 Dec 2018 00:27:38 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0926&apiName=GenerateDataEncryptionKey&serviceName=keymanagement&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"2f3f8a55-7c81-42df-b0f4-1a067c255e95","request":{"generateKeyDetails":{"includePlaintextKey":true,"keyId":"ocid1.key.oc1.phx.avnybakjaafna.abyhqljtbd6cayyrn3xxfu5oiw7nxjz56sctypkrepipypbnrfjhi7cw3haa","keyShape":{"algorithm":"AES","length":32}}}},{"containerId":"ef3c486c-3598-4856-8209-417897d2a675","request":{"generateKeyDetails":{"includePlaintextKey":true,"keyId":"ocid1.key.oc1.phx.avnybakjaafna.abyhqljtbd6cayyrn3xxfu5oiw7nxjz56sctypkrepipypbnrfjhi7cw3haa","keyShape":{"algorithm":"AES","length":32}}}}]'}
+    headers:
+      Content-Length: ['527']
+      Content-Type: [application/json]
+      Date: ['Sat, 01 Dec 2018 00:27:38 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/endpoint?lang=PythonCLI&sessionId=0926&apiName=GenerateDataEncryptionKey&serviceName=keymanagement&clientName=KmsCryptoClient
+  response:
+    body: {string: 'https://avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com'}
+    headers:
+      Content-Length: ['61']
+      Content-Type: [text/plain]
+      Date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"keyShape": {"length": 32, "algorithm": "AES"}, "includePlaintextKey":
+      true, "keyId": "ocid1.key.oc1.phx.avnybakjaafna.abyhqljtbd6cayyrn3xxfu5oiw7nxjz56sctypkrepipypbnrfjhi7cw3haa"}'
+    headers:
+      Content-Length: ['182']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="m9at6N4a5xgHFz0wUdNjtUv+Wmo2Ji7HUvKrfrggVW/BwdiWs3UMsJln1/eixvu6v9C0gOE7AbmF3vZTsC3VkksUrkKu34vhSCqUoIP8fDBSdbCc0jXs3+NZamUnvGL7mjY/Q7gCuSXtW3l014sFPRouoljV3EwVoIyGvk8XbjSDfDS554DSd9hJB1rJz9JaxslYXz5lgBCSBV86T2tFFFj0SvdOwpG288Qst1k3C8qDshp6nPJJHJODKYIOfDl0eb3NIi1CCDX95JVj/HAWbb345Wt5zQ4tbAuVABloFtnrocZNIkktyq1+rqRYwpgbU55vFmk3dxqTyOtSzAoHqQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      host: [avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.3+preview.1.515]
+      opc-request-id: [2267631CB00844D7B9B4623871891170]
+      user-agent: [Oracle-PythonSDK/2.1.3+preview.1.515 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.40+preview.1]
+      x-content-sha256: [qwzOHycbj8ZZGXC8790uDD+G9bHmU0RX9GQB5EIqyEA=]
+    method: POST
+    uri: https://avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com/20180608/generateDataEncryptionKey
+  response:
+    body: {string: "{\n  \"ciphertext\" : \"IWk+n+exYZyrAHnTDRTv/QR5TDR6s2b/JKAXWksOd1E2860Z9xUXm1fKE82Od0O9nje24xzA0BLZkP0ts9EV1OowmnhzNwAAAAA=\"\
+        ,\n  \"plaintext\" : \"oIcTvrbhLMSfWPClyY2rL4mJxa1TLlx/ixdxsuRFccw=\",\n \
+        \ \"plaintextChecksum\" : \"3376099594\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, no-transform, must-revalidate']
+      Content-Length: ['225']
+      Content-Type: [application/json]
+      Date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      opc-request-id: [2267631CB00844D7B9B4623871891170/BDB16E0B2E24A739205C748EE0B43573/9776AB0137B7B336AFF83651D0CD9BDB]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"B4405DE421BA4E67BBB113477DC78E81\",
+      \"generatedKey\": {\"plaintext\": \"oIcTvrbhLMSfWPClyY2rL4mJxa1TLlx/ixdxsuRFccw=\",
+      \"plaintextChecksum\": \"3376099594\", \"ciphertext\": \"IWk+n+exYZyrAHnTDRTv/QR5TDR6s2b/JKAXWksOd1E2860Z9xUXm1fKE82Od0O9nje24xzA0BLZkP0ts9EV1OowmnhzNwAAAAA=\"}}",
+      "requestJson": "{\"generateKeyDetails\": {\"keyShape\": {\"length\": 32, \"algorithm\":
+      \"AES\"}, \"keyId\": \"ocid1.key.oc1.phx.avnybakjaafna.abyhqljtbd6cayyrn3xxfu5oiw7nxjz56sctypkrepipypbnrfjhi7cw3haa\",
+      \"includePlaintextKey\": true}}", "containerId": "2f3f8a55-7c81-42df-b0f4-1a067c255e95",
+      "requestClass": "com.oracle.bmc.keymanagement.requests.GenerateDataEncryptionKeyRequest",
+      "responseClass": "com.oracle.bmc.keymanagement.responses.GenerateDataEncryptionKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['801']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0926&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/endpoint?lang=PythonCLI&sessionId=0926&apiName=GenerateDataEncryptionKey&serviceName=keymanagement&clientName=KmsCryptoClient
+  response:
+    body: {string: 'https://avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com'}
+    headers:
+      Content-Length: ['61']
+      Content-Type: [text/plain]
+      Date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"keyShape": {"length": 32, "algorithm": "AES"}, "includePlaintextKey":
+      true, "keyId": "ocid1.key.oc1.phx.avnybakjaafna.abyhqljtbd6cayyrn3xxfu5oiw7nxjz56sctypkrepipypbnrfjhi7cw3haa"}'
+    headers:
+      Content-Length: ['182']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="m9at6N4a5xgHFz0wUdNjtUv+Wmo2Ji7HUvKrfrggVW/BwdiWs3UMsJln1/eixvu6v9C0gOE7AbmF3vZTsC3VkksUrkKu34vhSCqUoIP8fDBSdbCc0jXs3+NZamUnvGL7mjY/Q7gCuSXtW3l014sFPRouoljV3EwVoIyGvk8XbjSDfDS554DSd9hJB1rJz9JaxslYXz5lgBCSBV86T2tFFFj0SvdOwpG288Qst1k3C8qDshp6nPJJHJODKYIOfDl0eb3NIi1CCDX95JVj/HAWbb345Wt5zQ4tbAuVABloFtnrocZNIkktyq1+rqRYwpgbU55vFmk3dxqTyOtSzAoHqQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      host: [avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.3+preview.1.515]
+      opc-request-id: [8204DFBA1F7044C99DD50564BF1A0AA8]
+      user-agent: [Oracle-PythonSDK/2.1.3+preview.1.515 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.40+preview.1]
+      x-content-sha256: [qwzOHycbj8ZZGXC8790uDD+G9bHmU0RX9GQB5EIqyEA=]
+    method: POST
+    uri: https://avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com/20180608/generateDataEncryptionKey
+  response:
+    body: {string: "{\n  \"ciphertext\" : \"IXc6eNyo6TlWAHHxGHqqy0WCXnFcBbU6wkyygmXsWCD6b2m6It8PQpbgoOMuNyipYZgwPRK3iengVeXsII35AZf2q7faFwAAAAA=\"\
+        ,\n  \"plaintext\" : \"pETDYocAwx7NpEEnZZxkSYJdUpf1CF2/g5nLdNSk2wg=\",\n \
+        \ \"plaintextChecksum\" : \"2494648458\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, no-transform, must-revalidate']
+      Content-Length: ['225']
+      Content-Type: [application/json]
+      Date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      opc-request-id: [8204DFBA1F7044C99DD50564BF1A0AA8/4389DE6B4C86866D0A5D37FDF698DD34/C696E7ABCED9E36AD3FC8F69A4017507]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"A8748913F9454679A741B572367DF451\",
+      \"generatedKey\": {\"plaintext\": \"pETDYocAwx7NpEEnZZxkSYJdUpf1CF2/g5nLdNSk2wg=\",
+      \"plaintextChecksum\": \"2494648458\", \"ciphertext\": \"IXc6eNyo6TlWAHHxGHqqy0WCXnFcBbU6wkyygmXsWCD6b2m6It8PQpbgoOMuNyipYZgwPRK3iengVeXsII35AZf2q7faFwAAAAA=\"}}",
+      "requestJson": "{\"generateKeyDetails\": {\"keyShape\": {\"length\": 32, \"algorithm\":
+      \"AES\"}, \"keyId\": \"ocid1.key.oc1.phx.avnybakjaafna.abyhqljtbd6cayyrn3xxfu5oiw7nxjz56sctypkrepipypbnrfjhi7cw3haa\",
+      \"includePlaintextKey\": true}}", "containerId": "ef3c486c-3598-4856-8209-417897d2a675",
+      "requestClass": "com.oracle.bmc.keymanagement.requests.GenerateDataEncryptionKeyRequest",
+      "responseClass": "com.oracle.bmc.keymanagement.responses.GenerateDataEncryptionKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['801']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0926&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 01 Dec 2018 00:27:41 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

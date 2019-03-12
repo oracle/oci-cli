@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListNodePools&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:17:28 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=ListNodePools&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba","clusterId":"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd","name":"__STS0242_9440","limit":10,"page":"1"}}]'}
+    headers:
+      Content-Length: ['313']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:17:28 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="LLOJaQgRT+x+JGTpb+S37RwV3m+AeOgecHlmeScfiv00B27TPAbYojCIPsPEmSPTViuHR5M1Op/2GNf8xn6xD4gq2wJaWGGpXH8ZVymE9TwxVHY++6LSu8UXjyLoGQRkkMungJA3ahPwUb6+pzJdcqcbow0xOnpHTcL1pAwjUa/kJajdUeKnSkRHTHZfPxTYyhQJ5KMIFqOauoPndRHRqvs5YFr+M4yzcY++Ql4V8GtEbjzKLXCVmMI2WK3EY16QJdol9UEF8QXRghT5E5+JYrKahAFWsqLo5w8R+JdzmtKlU2b5JrgwroKV+BTNuecJxDa1JAGA7SltXYWNBRyaUw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 21:17:28 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [EE015B68AE414AA982C34E5982CD0A60]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+    method: GET
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/nodePools?page=1&limit=10&name=__STS0242_9440&clusterId=ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd&compartmentId=ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba
+  response:
+    body: {string: '[]'}
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:17:29 GMT']
+      Opc-Request-Id: [EE015B68AE414AA982C34E5982CD0A60/D86F6FF422444A85A9F5F9765A4028E8/4FEAFB1B05BE4B9BAEF01B3B4D525B3E]
+      Uri: [/20180222/nodePools]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.13.0, 10.237.16.128']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.16.128:52394']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"FADCBA2D4296434EB7BFA9B9BB9E75DC\",
+      \"items\": []}", "requestJson": "{\"name\": \"__STS0242_9440\", \"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"clusterId\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"page\": \"1\", \"limit\": 10}", "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b",
+      "requestClass": "com.oracle.bmc.containerengine.requests.ListNodePoolsRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.ListNodePoolsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['601']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:17:29 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

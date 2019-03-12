@@ -33,3 +33,8 @@ cli_util.override_command_short_help_and_help(kmsvault_cli.vault_group, "A logic
 cli_util.override_command_short_help_and_help(kmsmanagement_cli.kms_management_root_group, "Operations for managing keys and vaults.")
 cli_util.override_command_short_help_and_help(kmscrypto_cli.kms_crypto_root_group, "Operations for performing data encryption, decryption and generation of data encryption keys.")
 cli_util.override_command_short_help_and_help(kms_service_cli.kms_service_group, "Key Management Service")
+
+# TODO: Potentially integrate with a specific --vault-endpoint parameter or find a way to translate a vault
+# (e.g. a vault's OCID) to the relevant endpoint
+cli_util.SERVICES_REQUIRING_ENDPOINTS.append("kms_crypto")
+cli_util.SERVICES_REQUIRING_ENDPOINTS.append("kms_management")

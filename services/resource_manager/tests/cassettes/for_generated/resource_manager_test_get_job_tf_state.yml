@@ -1,0 +1,89 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetJobTfState&serviceName=resourcemanager&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:14:22 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0456&apiName=GetJobTfState&serviceName=resourcemanager&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ab27a9d4-0356-4ec9-97a6-0001f20a74f4","request":{"jobId":"ocid1.ormjob.oc1..aaaaaaaaprsijjratpdekaconjapoeyzfgoz5gwlekld7ga7hkqzrol4krhq"}}]'}
+    headers:
+      Content-Length: ['157']
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:14:22 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/octet-stream]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaaz3i3ludxpa5x7gyqsidwftngdyzdjtu3wdnsmls4ojedyzxtdqzq/ec:28:a8:ff:92:ef:cb:59:30:c2:43:f7:44:4b:dc:d9",signature="OKAU8onj2BTSvyyLTGybnNrWoDi/RHyYhBAyls1qMgB+T1X4lEJxyoJK8y+FYS/9cox2jP+9aebOKa1fbs4KumyZrJ+2cda8smccSY54eVQ4Yk+4qkX50vUyTeo+/H5crEqMi7yjAUStDXRM6T2sacc5csO4/9ua0b0FAAnLW7KSeN2yVhUXdDBBvBfg8le6Kyhu7KWiNhBOa52JKRy5vzx5qKlgWtJG+gNV+qIM3HMlEVVSGYE6hzcuXtLu+jG6l8fYnePfMs28CrMJVLt3Jic4sHuVTawgfVP9cBhE8uMwGTrs6HhZxkME9AMfS98rnjHRuqCiGuV0GPIWdGv8LQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 25 Jan 2019 22:14:23 GMT']
+      host: [resourcemanager.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.634]
+      opc-request-id: [645B78A7E6BC4751839BDAAFD35831F6]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.634 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.42+preview.1]
+    method: GET
+    uri: https://resourcemanager.us-phoenix-1.oraclecloud.com/20180917/jobs/ocid1.ormjob.oc1..aaaaaaaaprsijjratpdekaconjapoeyzfgoz5gwlekld7ga7hkqzrol4krhq/tfState
+  response:
+    body: {string: ''}
+    headers:
+      Cache-Control: ['no-cache, no-store, must-revalidate']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/octet-stream]
+      Date: ['Fri, 25 Jan 2019 22:14:23 GMT']
+      Pragma: [no-cache]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains;]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-XSS-Protection: [1; mode=block]
+      opc-request-id: [645B78A7E6BC4751839BDAAFD35831F6/5183EAEADCE8BCB18E68634AE1BDCD41/A9EF3B82DA4E9362885EC2720AE7BBE7]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"contentLength\": 0, \"opcRequestId\": \"5D0A00D7E25447DEBCAF6C441796D78D\",
+      \"inputStream\": \"\"}", "requestJson": "{\"jobId\": \"ocid1.ormjob.oc1..aaaaaaaaprsijjratpdekaconjapoeyzfgoz5gwlekld7ga7hkqzrol4krhq\"}",
+      "containerId": "ab27a9d4-0356-4ec9-97a6-0001f20a74f4", "requestClass": "com.oracle.bmc.resourcemanager.requests.GetJobTfStateRequest",
+      "responseClass": "com.oracle.bmc.resourcemanager.responses.GetJobTfStateResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['453']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0456&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:14:23 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,106 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreatePolicy&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Jun 2018 20:16:32 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=CreatePolicy&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"fbdc040f-47f1-4791-b39a-debc8b563dc9","request":{"createPolicyDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq","name":"__STS0242_2826","statements":["Allow
+        group SDKIntegrationTestGroup manage all-resources on compartment JavaSDKTestCompartment"],"description":"__STS0242_5981"},"opcRetryToken":"6f8bafec-a068-45d4-85c2-880dbfe7af47"}}]'}
+    headers:
+      Content-Length: ['412']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 20:16:32 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"compartmentId": "ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq",
+      "name": "__STS0242_2826", "description": "__STS0242_5981", "statements": ["Allow
+      group SDKIntegrationTestGroup manage all-resources on compartment JavaSDKTestCompartment"]}'
+    headers:
+      Content-Length: ['273']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="KWeOmrORRt6EJzsNYg/Acv8C8YrLhySEcEhyTYhiH3aMS/az/Jb1yez37GTCaIltND/Cer7QNvMHoYdKqXR9TZb4QScZygZx9Bevcz0r/XkBoBLHmydAVTnIG4VzLquCpnhv6ZQc+0qB7M/D/T2R3yqU9fHmcDwhONSc7IU9cHGzSH7NDNlzSTicWY6rrryAknJZLSFXUiKfXX8mSA4jMioE8UTP4Ms9fL2S9zSsSTBPsjAV3Dqxe4zzHx8otMjoBbxMTMxWgdgJGEcWs7pBg9WzVDHgPsBDLCE/vduQGYambot6K/CVJDWnGIakbVVS5xfURpJEj/VnYTAxiGFoBw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 20:16:32 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [476727804A224832B8D89F052D974A54]
+      opc-retry-token: [zU3A1lM79Kl2R03Kj2Y72nJF2By0nD]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.24+preview.1]
+      x-content-sha256: [sAhMwDfkRLzBkNUP8isDvlivAnCtOlJTHGnHqUwdP8Y=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/policies/
+  response:
+    body: {string: "{\n  \"statements\" : [ \"Allow group SDKIntegrationTestGroup\
+        \ manage all-resources on compartment JavaSDKTestCompartment\" ],\n  \"id\"\
+        \ : \"ocid1.policy.oc1..aaaaaaaatv3rcoztnwrsdletqyvl7ntmrzgbdwznqx7vfibx3x2bzm6tblhq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq\"\
+        ,\n  \"name\" : \"__STS0242_2826\",\n  \"description\" : \"__STS0242_5981\"\
+        ,\n  \"timeCreated\" : \"2018-06-20T20:16:32.490Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['504']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 20:16:32 GMT']
+      ETag: [ce242eb395983c266a795dff71f25bab80935cc8]
+      Location: ['http://identity.us-phoenix-1.oraclecloud.com/20160918/policies/ocid1.policy.oc1..aaaaaaaatv3rcoztnwrsdletqyvl7ntmrzgbdwznqx7vfibx3x2bzm6tblhq']
+      opc-request-id: [476727804A224832B8D89F052D974A54/8F92C08E732FABEE1EC25B86CBAE3DAE/D76B15C495812B690A4576D2349C177E]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"policy\": {\"definedTags\": {}, \"id\": \"ocid1.policy.oc1..aaaaaaaatv3rcoztnwrsdletqyvl7ntmrzgbdwznqx7vfibx3x2bzm6tblhq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq\",
+      \"name\": \"__STS0242_2826\", \"description\": \"__STS0242_5981\", \"timeCreated\":
+      \"2018-06-20T20:16:32.490000+00:00\", \"statements\": [\"Allow group SDKIntegrationTestGroup
+      manage all-resources on compartment JavaSDKTestCompartment\"], \"versionDate\":
+      null, \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null, \"freeformTags\":
+      {}}, \"opcRequestId\": \"A38BAB52153B4DD28BCD306E98D897ED\", \"etag\": \"ce242eb395983c266a795dff71f25bab80935cc8\"}",
+      "requestJson": "{\"createPolicyDetails\": {\"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq\",
+      \"name\": \"__STS0242_2826\", \"description\": \"__STS0242_5981\", \"statements\":
+      [\"Allow group SDKIntegrationTestGroup manage all-resources on compartment JavaSDKTestCompartment\"]},
+      \"opcRetryToken\": \"6f8bafec-a068-45d4-85c2-880dbfe7af47\"}", "containerId":
+      "fbdc040f-47f1-4791-b39a-debc8b563dc9", "requestClass": "com.oracle.bmc.identity.requests.CreatePolicyRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.CreatePolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1304']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Jun 2018 20:16:32 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

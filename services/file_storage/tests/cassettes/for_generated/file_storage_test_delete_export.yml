@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=filestorage&apiName=DeleteExport
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 22 Oct 2018 13:55:30 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0012&serviceName=filestorage&apiName=DeleteExport
+  response:
+    body: {string: !!python/unicode '[{"containerId":"f466d099-b85b-4dfe-8af5-96c180fe8694","request":{"exportId":"ocid1.export.oc1.phx.aaaaaby27vezcuaiobuhqllqojxwiotqnb4c2ylefuzqaaaa"}}]'}
+    headers:
+      content-length: ['151']
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:55:30 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="tYPFfdxrblQbiaNosA2/KRjvfzpnDM2EdA+bYB1ZbxOXIw01cQOaKIRMLJnl6so96JP/7uXs6zSKe45WSmjt93GLMWKKwYNxOYYEDJoY19eO5rlCJQEvWTGOPVo7HLaF9KMp6ITh4LIlddIaQmUJWcZ3wft17yMhX/ssUJct4egEFkgXBMitg+Aq5DnJRRsPlmwamvROxUBl5Ut64QxIVHPRGyfRbwjvHCrHm49J5Fz67DGFyVcR2d4l2bpX20Tm+O3NhenL+lPLjQNTabXl/0+JzB7hpVFDT4h/aaKfqSePU33sTWkkgheiR/wP6ZKPeKSUZ6S0IpF9ZETLr7vsdQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:55:57 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
+      opc-request-id: [BE1AECF768D742CC81E8B45BEFEBF972]
+      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.34+preview.1]
+    method: DELETE
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/exports/ocid1.export.oc1.phx.aaaaaby27vezcuaiobuhqllqojxwiotqnb4c2ylefuzqaaaa
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [keep-alive]
+      date: ['Mon, 22 Oct 2018 13:55:58 GMT']
+      opc-request-id: [BE1AECF768D742CC81E8B45BEFEBF972/BCE3E33C4416A89DFA81787892816F4E/EA502094E753024A8C6806DD939E72FA]
+    status: {code: 204, message: No Content}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"78FE75A5A7284E5DBB863A2DA9C0998C\"}",
+      "responseClass": "com.oracle.bmc.filestorage.responses.DeleteExportResponse",
+      "containerId": "f466d099-b85b-4dfe-8af5-96c180fe8694", "requestJson": "{\"exportId\":
+      \"ocid1.export.oc1.phx.aaaaaby27vezcuaiobuhqllqojxwiotqnb4c2ylefuzqaaaa\"}",
+      "requestClass": "com.oracle.bmc.filestorage.requests.DeleteExportRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['392']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0012
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 22 Oct 2018 13:55:58 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

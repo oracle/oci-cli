@@ -1,0 +1,27 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="n32nBZ8s8iYqNW4HGg4jikuraJ788RysgJGbKOJRyzpeXNBX1aC36JnZb/8H0DPx+r2kYCHSUO3z51DTfsgFS1N/xPa7ZoYKZNVmBHyQDEIH8ZvZBW9qn7z0KJ7a3nhzfGRHHK8YzieafkWYTYyufF383CPCQ8XSlmiia8UdPGSdpH3QlR96pBjL4FG2fqgSriNCoQY/0adyFhJFJlD6ReifxSrFkPemwKRnm7D9DSCsGz0cxgoILNZ8N62CHxwTy4k+RafJEYjqWr4YEZW3ygfBs43qVIhLUT35A8TzTgtLTAgDsl+UETGyciRIFaIoBLIC71WmP2/y1gMCSFbQPw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:12:55 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [B08E03D91F824424BF1960AB19A71BA8]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerPolicies?compartmentId=ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca
+  response:
+    body: {string: '[{"name":"ROUND_ROBIN"},{"name":"LEAST_CONNECTIONS"},{"name":"IP_HASH"}]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['72']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:12:55 GMT']
+      opc-request-id: [B08E03D91F824424BF1960AB19A71BA8/581D82FFF2CC402953D44B4BB263AE5B/F2D755471C1AA6AFD6B99A86E56DA160]
+    status: {code: 200, message: OK}
+version: 1

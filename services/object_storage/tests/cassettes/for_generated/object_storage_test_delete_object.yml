@@ -1,0 +1,90 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteObject&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 06 Sep 2018 00:19:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0194&apiName=DeleteObject&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"e43568d3-fd98-4615-9e44-517265c8b53d","request":{"namespaceName":"dex-us-phx-cli-1","bucketName":"__STS0194_4920","objectName":"__STS0194_2897"}}]'}
+    headers:
+      Content-Length: ['163']
+      Content-Type: [application/json]
+      Date: ['Thu, 06 Sep 2018 00:19:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="dAXrdBv+AnihZLGOXHpA8M1GMOZsyGLCx0hKFWHbwR6F3b1tt6EGsaA2sO+RoSW5uDaK0AAoG0vLANjo4BWiy5ahbllJJ9TBXjXt+g5Wck14Jd1JOOfsGCQBTWiWGgE3ItF4aAa6Cj7J5WyjOqTUhwn9hEBXGNofoEBMcVDOjh3QULxwXxeZQZkkUMxoftWDdD+GLEZQ4O9hUaaK0JeBmkuTRpDicxmqpCrrJYuB4M88ZP42fxre0M7/Q8Fjhe30r91ATXcxUVo/j7kfhPNs7cnny9dI19YNXnL1ZEq05cyrb8X32NFONHdhF5td3XOiqWXKKJ9ja/a2fQ3WT3mPcg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 06 Sep 2018 00:20:00 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-client-request-id: [5290F05BB3F34A329EEE5CAA65C87F21]
+      opc-request-id: [94E2C1BD9A8745A8937F4C280BD56BF2]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: DELETE
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/__STS0194_4920/o/__STS0194_2897
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Last-Modified,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Date: ['Thu, 06 Sep 2018 00:20:01 GMT']
+      Last-Modified: ['Thu, 06 Sep 2018 00:20:01 GMT']
+      opc-client-request-id: [5290F05BB3F34A329EEE5CAA65C87F21]
+      opc-request-id: [35918303-b15c-7ba1-24bd-3738330facec]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"8923E873DED14E37BCE6EE222DC49007\"}",
+      "requestJson": "{\"objectName\": \"__STS0194_2897\", \"bucketName\": \"__STS0194_4920\",
+      \"namespaceName\": \"dex-us-phx-cli-1\"}", "containerId": "e43568d3-fd98-4615-9e44-517265c8b53d",
+      "requestClass": "com.oracle.bmc.objectstorage.requests.DeleteObjectRequest",
+      "responseClass": "com.oracle.bmc.objectstorage.responses.DeleteObjectResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['420']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0194&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 06 Sep 2018 00:20:01 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

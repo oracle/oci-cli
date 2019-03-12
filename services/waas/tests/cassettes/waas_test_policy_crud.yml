@@ -1,0 +1,260 @@
+interactions:
+- request:
+    body: '{"domain": "cli-domain396491.oci.example.com", "compartmentId": "ocid1.compartment.oc1..aaaaaaaamzcvp4dfoesnp3dus7ipqa34hyrazxejqttpyctbuaxbny6l6esq",
+      "origins": {"primary": {"uri": "cli-domain742623.origin.oci.example.com", "httpPort":
+      80}}}'
+    headers:
+      Content-Length: ['242']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="JLq2a3VuoPAZK+aQXPVA3W6VV1NwN+lqkDPBirmO1yB6B9k4lG5FR+XIPNhOfXWFAEA74Qdd1Vtq/zjB+lFddoyYNqHJ0MHMGete2pQ/vrJ8UL8UsqVYWenIgkmyrIGPOCv5c++IPYS2GnR2KQdVHdfm554m6xlZFbV7D2RxHG5AhlTucgGGmOMb3iiQFo/dEvdzk7UgU/Nqhzlu+b/FmWTFRJ0in/5N84ROK3b76jhty+nkmOzqBxTx5TuOreAkGYuIjAYz0HhQLCq68KqlhKgw6MI4Ad7CSGHma9xPpB1VQS/KjZMmi/rE5KJ+LBxVynIrOH/+/draUuYbj3fw1Q==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:02 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [44F9B729AB25445CAA813EC1BEE418E2]
+      opc-retry-token: [6PVuWL1kqEpjCdXDTZ3MkrJvJiz3P8]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+      x-content-sha256: [fuhsWlzK11RyfXrzJ9BYRtkug9OgIdJST4UgMKwkmrk=]
+    method: POST
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [text/html]
+      Date: ['Mon, 04 Feb 2019 22:45:08 GMT']
+      Etag: ['2019-02-04T22:45:07.785Z']
+      Opc-Request-Id: [44F9B729AB25445CAA813EC1BEE418E2/3096226409954d6d7d4783876a1f0428/014e2d2512b0805e6425dd9324b14f16]
+      Opc-Work-Request-Id: [ocid1.waasworkrequest.oc1..aaaaaaaapkj6gr7de4s5h6cvy5zvddzvwimqwfvkksubywz354tub7yizwmq]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Zen-Fury: [5821ed8b917931ff1c3ca0dd90719161109f787f]
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="JHTWwdjUozg/HVCFwPK+LXg34SJOTGzjTORNrqNJXl6b3YF5cLDZDKp7sv13jRGFm1niBSz2c29lLELlX0HBu2k9Be8zOJw/rsvpHsUXnSuGRLwvPoC4IQN+WS7nnKoYMy8r7llceHg4fhyGY+r4D062jwWBIYZwI2/8l0PgwzMqHeUsn5f6lBJEzDC0mzLqAWjAFWsglmZQlm5yLl8YTXV3/7td9wJSiCxTVQaRF/WUegTQUGNSetihsa/SrxWS7PkQKObFFfLFTuGkIP4F+PO5GZGg01Z/A+LpEdr0bTVWAOHI95Dp4DKMbQ3stHBA3BsYul9s/rNWQn/wrXhzmg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:08 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [5CC7E674577C4D858CC5832A9C9DB2A8]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/workRequests/ocid1.waasworkrequest.oc1..aaaaaaaapkj6gr7de4s5h6cvy5zvddzvwimqwfvkksubywz354tub7yizwmq
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA62SXW/bIBiF7/czuE4dfzvLneVlUqVJi9ZM01ZNFYY3CYkNGLAJrvrfB2q6rtvt
+        uHw44tE59iMiopdYmR64uaVojQRhNIn+oJEgSRTh6+lnMsmc7gVoLjM66orJAWf50Sk8X+A0GCMd
+        Me2ILy13ZVeCHtACgVJCabS+/7lA7FVjMdZWqLOCYQT9l0qeT+VBVRRyXRxLMrliniidJ8v6we6n
+        81mPrbNzVuRmbCvHZtsHVScOV5GQoLBhgu+cBO9svmzq3ebhW13fPWw/f7ptvvu4zxDfsvGFOzA+
+        Fi+QAi1Gj8M7jwiTf974ECpxw4y74lDkN/uqmEfLNE5WSZKUy3C5FR0jDPTytbgMyL3trHraZ5xX
+        uTIDpFzzy3jou3IqbGaKLGstbXkpDupkqKADsMoyjMKkwbxnoN5M+98MT35NbbAZ/SKobprN9nkD
+        w3qoCQFpIHxU3/j9TZzexPkuTdd5sY6rqFqtflyTHxln+hiSfOy6Z3Zn/G/2gp7e/QL5wbbIkAIA
+        AA==
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 22:45:09 GMT']
+      Opc-Request-Id: [5CC7E674577C4D858CC5832A9C9DB2A8/3a6c8c6e31d32f4f603d3248adcf84d8/4be75afcb1ab8d24696bd0eea9166560]
+      Retry-After: ['90']
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Cdn: [Served-By-Zenedge]
+      X-Zen-Fury: [9f4264b6983c07e2d3160287142d1b76fd23aa93]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="U2vVliKDv+UEoVSRKgieyZyvSyUQsdqvfYGlBK5ZAHDRo6wfeh/zwfJADGnhDwqk1JctbCfRdi2APHfw5ZQCad8v5mQpCDcmGPPssNPbjwURIJM8cyJZsf9uiScUsT5WV0Uy0vbxMndSm0yf0g4G6D4plC2ZDLrwi9azRq+ZmTYg/eY3HOl2c7Ok1nVTWC6aMc6NVM9iti/tJLPeEpR/jX9CTZQH2LMhYhl1lwYagEtPj1AJUVuczDQUo+tNFW28taRM2C3xzc7jHEqxJgwv6LKljwlY+Sn77UeA3xfzaGNx4BSSqTHMb3hOHlNN7cyd/QhnaUDPoaebYP5IqEz4aA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:09 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [06E08F153A834C8A8D5793ECE67F0A54]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies/ocid1.waaspolicy.oc1..aaaaaaaarmdm3nn74rtqe2nsnxugml6v5w3t533bwdbn6ogrjtdodqei7wia
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2WQzU7DMBCE7zyGz2mU2k5Cc0OAgAtCgIQE4rC13XaR/2I7tAH13XFaJED45PWO
+        xt/MJwEpMaGzoC+cAbSRdHbQuiDCGQ8hGWXTjSQdcQLlvPz1WjoxL0v4PuZDvHsuV05F65kcYou+
+        B8Y3Y4CPnXrrU/KjSMsBdks7NrpRsScFkRi9hvEWjMp/PAHEO6dRjLSaLypacUp5XbWT8ECXNULj
+        7DiwRcMX84yBpdqB8VpNeFmLP7zb7OgPjn9xg5GGWdvykHpFbbS7YW10815vWaoZW27l0jZuHd6S
+        dLJX2G4RsrPGlRKj0OohQZqIz+8vzx5vbq/yzgVcH/r7JD6ggTBOVzHE5My1AqlC3r28FmSTq7hz
+        IZHutDpO8ThyzgoyBPyTsuW0oaw8uv8Lu98XJKFR50FloCn31NysorOKP1La8bqr2rI9rZ/J/uQL
+        1GzyR+4BAAA=
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 22:45:09 GMT']
+      Opc-Request-Id: [06E08F153A834C8A8D5793ECE67F0A54/a1dc7e7153f75dd977f5eaf7b9b10633/ecdafe340bfacf896c75d556d00de69d]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Cdn: [Served-By-Zenedge]
+      X-Zen-Fury: [289de9364c71f3e38b4760275ebb974db3058f03]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="u3k6tdJK9z0+v0TU8uqH1mGNv0Xrn2ZnkLYJ9MrNDouAt+TFSf0wMSsFoNMquRFthG5KrF8lRMg3B3lPLUlCNQuJHnPxPcn3elq10rWKI1Ac/K1/hDalA0pFlsX7gFsZgRJKKnLguYaB4RDJLAFDE9aoJwjTOp9VX20BU75qZ5Al21Ikaqc/1Q7h0sc0HsovsYzOEhIJmWg+Kr76K+hFsdMVcgazDPzWPe6BTKq3hSfZJIjUMGfpqmOy28ctIp+81S/N2qKC3KW/itTq6BToPawn/rMYTW0xqS2HS+au/8cZ4avp+94NuSegfiDw1ui6KO+oRbo1rP/P37lF0cvyuA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:11 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [31F4CB46FF4544DBBE33DE7B56894832]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies/ocid1.waaspolicy.oc1..aaaaaaaarmdm3nn74rtqe2nsnxugml6v5w3t533bwdbn6ogrjtdodqei7wia
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2WQzU7DMBCE7zyGz2mU2k5Cc0OAgAtCgIQE4rC13XaR/2I7tAH13XFaJED45PWO
+        xt/MJwEpMaGzoC+cAbSRdHbQuiDCGQ8hGWXTjSQdcQLlvPz1WjoxL0v4PuZDvHsuV05F65kcYou+
+        B8Y3Y4CPnXrrU/KjSMsBdks7NrpRsScFkRi9hvEWjMp/PAHEO6dRjLSaLypacUp5XbWT8ECXNULj
+        7DiwRcMX84yBpdqB8VpNeFmLP7zb7OgPjn9xg5GGWdvykHpFbbS7YW10815vWaoZW27l0jZuHd6S
+        dLJX2G4RsrPGlRKj0OohQZqIz+8vzx5vbq/yzgVcH/r7JD6ggTBOVzHE5My1AqlC3r28FmSTq7hz
+        IZHutDpO8ThyzgoyBPyTsuW0oaw8uv8Lu98XJKFR50FloCn31NysorOKP1La8bqr2rI9rZ/J/uQL
+        1GzyR+4BAAA=
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 22:45:11 GMT']
+      Opc-Request-Id: [31F4CB46FF4544DBBE33DE7B56894832/3826196dd9209616f3f6a194f1da3a1c/98e99bb65cd250fe2e54e0dcfd78cadb]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Cdn: [Served-By-Zenedge]
+      X-Zen-Fury: [22d87b4f28c29ed265a422bc65437c71c8c9b785]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="i3rpH5//KDbA51YuCKg/fa+89Y8+5CQwYdbMCuHDmZp5dILaas6CqGcKFGep5GIJtNViNRd4zkRN9PHenbm7VkZSlBxpDyV3ciuHaXS98PVuW+TQFlqpH/fZwTpy/ex2xMRcDvzX4emMwATsG5rSrGO69WfVFr5sap8GdMu1XIqwtAsLtC2lr/Ku5oLUkQiF9xfJwGpMLZDR/nwWTI2BPK0brpnFyW1T6/MJvBduXI3NsUmYWEkCVwLgAnTV2sHeb6gzE+Z9RaBF2xVZ2ronmTmYENkK/TgGoe/nurLuQ3DVYAV2RKbHJSX9yyByn4m9NKhIqhOHlwnEfgnCD4KiRg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:13 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [7B6645A18B9D495C9EBE6D75FF946A6C]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies/ocid1.waaspolicy.oc1..aaaaaaaarmdm3nn74rtqe2nsnxugml6v5w3t533bwdbn6ogrjtdodqei7wia
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2WQzU7DMBCE7zyGz2mU2k5Cc0OABBeEBAIJxGFrm3Yr/8V2aAPqu+O0SFDhk9c7
+        Gn8zXwSkxITOgr5yBtBG0tlB64IIZzyEZJRNt5J0xAmU8/LPa+nEvCzh55hP8eG5fHcqWs/kEFv0
+        PTC+HgN87tSmT8mPIi0H2C3t2OhGxZ4URGL0GsY7MCr/8QwQ751GMdJqvqhoxSnlddVOwgNd1giN
+        s+PAFg1fzDMGlmoHxms14WUt/vJus6M/OJ7iBiMNs7blIfWK2mh3w8ro5qPeslQzttzKpW3cKmyS
+        dLJX2G4RsrPGdyVGodVDgjQRX1w+3j5d540LuDq090V8QANhnK5iiMmZGwVShbx7fSvIOhdx70Ii
+        3Xl1nOJx5JwVZAh4krHltKGsPLr/i7rfFyShUZdBZZwp9dTbrKKzij9S2vG6q9qyPa9fyP7sG0aO
+        JvrsAQAA
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 22:45:14 GMT']
+      Opc-Request-Id: [7B6645A18B9D495C9EBE6D75FF946A6C/82a913391e7a4ce82786422bf20adbc9/cfe624b5cbf2f11894bf6336b1e19659]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Cdn: [Served-By-Zenedge]
+      X-Zen-Fury: [22d87b4f28c29ed265a422bc65437c71c8c9b785]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="w1PthxXDBb4YK3RiFcvGsvmmXYlBHePwmZKNDaQq4nAD2MFyESHcDx3R1NkIdrB3Kxewad0tmBIOhQfpaP36B8a9Q2LOEmnX568rRzGrBL1BzHJu7n22L4/3ScsOMnkjNS3IFYdL4huR8EPa/nVV+ZIgIkD8QvG055/bqmpQ4i27TYkfK6vK/ghiWUodpUl0eytxmq2Go7EHGgBDbrDTq5vy4SsumO99WY6gj2M4S52OqSxVWCINYQn8nQHzyxBuGzh6agOA41nVtPUngqOl/27/ey+CTbHCrfU5KHWs6g4NXUQ05vtoPEJZ1NbWHV+XVNCd58fi9cdA+EEB2UXlKg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:14 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [C5E8F1D95163402782F9CAE53950990E]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies?compartmentId=ocid1.compartment.oc1..aaaaaaaamzcvp4dfoesnp3dus7ipqa34hyrazxejqttpyctbuaxbny6l6esq
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA83VTY+dNhQG4H1+xl1nkD/xhV2UVNVsokidNlKjLowx2ICxDQYDVf57fTuVmlFG
+        WZDNZYc5OufVI+vw5e+LsMbxKRg5hsf6Ul6s0DXMvjnNrIBZxv97zCFWR+rGynl0uF5mpp3nmKh9
+        4scmOx+C20WoFr5V454PuZz95e2l1rMb+P6RG5lmfOZ8/mQHLXYEYAEQIAgRCtit0Bqux1QjBv3w
+        /IKLnBQwxdCZ3Lhxg7zFS7X6/7wxdXT/dnwZdzK1wePIyBS8ROM8bktrhnylEQeKcRXrasxtO3Wh
+        trWXmkXNU+dBN1LsYpC/BR5uid+9f3r845f0JWgj308ynd6G3+I/APQAyBNCJaElYBm70j8vX9/e
+        kSxG6HXZKyQMk3OyeVf3oXbEz4JGRKnlU0fCbqyjh/ZsDr6qVC51aOq2m6nst3CLe1IWlwhlsLgv
+        2aRH6bey2zaHGTACt4IVLNE152zJvE6NQ5hQytXoYj9o1k8RKyEWvo6Wdsuh0SI131Tl68Hr/VXb
+        3z99ePf0+PHXH+rCkrCS0qwg8I50ISSAkBf39lkX5WxjBQLndbcohR0q2RplGmSdJKtvKacEj7Sf
+        W+pzo6zVOg5i6b0wuHMndeETJCUgJUFZURR3pYtITl7s22fdIgcbYuAndKsYxd6HalNjr1XTo2NY
+        D7dyp3YTw4Jw05um323uRyUoaVsUz+umzZCn65tdQX5XuhAQ8NpmgHgr0n/uvK5fDoEHvcdGeTNF
+        S2PLEremYTPdujf9VOlFuYYrR0ODRpsCnNaFt7sLaJaT6z3pAoiuEH6vm/bFhggozuviLno5KKks
+        95KRNHLeRIxSHgqHfbVrb0euPNNdT8m0mmMdTusCWKJrCWEGGE66f735Bz+wvrGMCQAA
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 22:45:15 GMT']
+      Opc-Request-Id: [C5E8F1D95163402782F9CAE53950990E/697ebf2dcb5fae8dd769f4e2b6f4f08c/24e66d747493b11177ec50cd211a4bfb]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Cdn: [Served-By-Zenedge]
+      X-Zen-Fury: [289de9364c71f3e38b4760275ebb974db3058f03]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="imw3S4GmCdfGQ+SyTe/OzAMOya1iPcdlA4v18169x3IDMSK84gDeXUDThAkRdS+Eb45/yxT9Pel1UIR6rjbNVEvtnBjF2si+Gn6dyBehUVEx5a80oDiMgvaQbSeGEK2gpQgun2aA8w3SlAEXpriBiivrVUH2uTtnCInGwRrhiDyeEuFE83GOCSwJ2iluvK3Wzvt2S2FpT1Xz3+n128tck0SsT3eL6C1FLBHHSmONCaytT99nSBHzNSJ+QqJ3goGAOWZ43Bgs7YseLzR5rECMMq5dfssSbdOPKx2BTzUbIOpsmC30jtl3+p0GiS3xAOAwspWawi7LpwD/WlS9mGnKQg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 22:45:15 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [DC85EE8CEF6D45A7B1ACBDFD790683A4]
+      opc-retry-token: [dMadczXWZoTvvb5mzECara0R8jPPXe]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: DELETE
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies/ocid1.waaspolicy.oc1..aaaaaaaarmdm3nn74rtqe2nsnxugml6v5w3t533bwdbn6ogrjtdodqei7wia
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [text/html]
+      Date: ['Mon, 04 Feb 2019 22:45:18 GMT']
+      Opc-Request-Id: [DC85EE8CEF6D45A7B1ACBDFD790683A4/8c35a0ac02e1fbcd729bba40730edc6c/1538ee323f25b2e5fbf33b0fdcc335de]
+      Opc-Work-Request-Id: [ocid1.waasworkrequest.oc1..aaaaaaaar5ckgd2ixgvj6oktsu2vwkwo74qxmjumes4qiizjdnvjtdiydrzq]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Zen-Fury: [9f4264b6983c07e2d3160287142d1b76fd23aa93]
+    status: {code: 202, message: Accepted}
+version: 1

@@ -1,0 +1,98 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreateAuthToken&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:53:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=CreateAuthToken&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"createAuthTokenDetails":{"description":"__STS0277_8150"},"userId":"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa","opcRetryToken":"7d916ea3-7f47-42ec-a15d-286523844424"}}]'}
+    headers:
+      Content-Length: ['269']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:53:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"description": "__STS0277_8150"}'
+    headers:
+      Content-Length: ['33']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="WvEzN0hVzkjdz8RDMtEwwTTYoC74W2jAT2xobtEsz6iNd4pKSqhBgHCNvXIxzp174G2KpAuTyHx1gKIjinAoQuePQoZV9fphZcXsgRAC5LVOkpkn8Zo16O1UfPNC0hrJnR1WBJNPe1Btgf4JGywaJMZ9SHtSQQ1xGTZ1/7cyi8ZYDAUejH5QWY0Pkgv57OMKIUNHvavJ5w6MbN/3Y3wGvnh2L7ypZesV9onJ/lwYtqJ9dOGzNQjmeaebxtL6bcvUCtCLRtPawiy0HU26ru0bUDo3c7y4H92/TDxPerGm1wmn2UU6K0yTv8O8p4EQLzHtk/7dDMeeEDeBByX5tQb7WQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:53:55 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [B7EF15E8144041AB80B582908CCC3813]
+      opc-retry-token: [R5pdzEBARYV42kddgGYWyAZJ6nu77k]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [aH8B8gpfHVd4XDsyZehWl5afxWaA154W7xjwXTwMTdM=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa/authTokens/
+  response:
+    body: {string: "{\n  \"id\" : \"ocid1.credential.oc1..aaaaaaaai5xhxikusgsriyzfy72evegwr4olnxit6nuaif2gp5vpyid3453a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"description\" : \"__STS0277_8150\",\n  \"timeCreated\" : \"2018-09-04T17:53:55.986Z\"\
+        ,\n  \"userId\" : \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\"\
+        ,\n  \"lifecycleState\" : \"ACTIVE\",\n  \"token\" : \"k5S8(1Q(IeSx}0das4R9\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['442']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:53:56 GMT']
+      ETag: [a733a9f1b05cdda8d5fe7dd0587885725e192b0f]
+      opc-request-id: [B7EF15E8144041AB80B582908CCC3813/36DA01B5BFA8F484D1923BE13092BC07/24780AE8D3E2B62B0207B80CA8724CDE]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"634E60C190CD46B9A58DFD1335E46C53\",
+      \"authToken\": {\"id\": \"ocid1.credential.oc1..aaaaaaaai5xhxikusgsriyzfy72evegwr4olnxit6nuaif2gp5vpyid3453a\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"description\": \"__STS0277_8150\", \"inactiveStatus\": null, \"timeExpires\":
+      null, \"token\": \"k5S8(1Q(IeSx}0das4R9\", \"lifecycleState\": \"ACTIVE\", \"timeCreated\":
+      \"2018-09-04T17:53:55.986000+00:00\"}, \"etag\": \"a733a9f1b05cdda8d5fe7dd0587885725e192b0f\"}",
+      "requestJson": "{\"createAuthTokenDetails\": {\"description\": \"__STS0277_8150\"},
+      \"userId\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"opcRetryToken\": \"7d916ea3-7f47-42ec-a15d-286523844424\"}", "containerId":
+      "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.CreateAuthTokenRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.CreateAuthTokenResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['998']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:53:56 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

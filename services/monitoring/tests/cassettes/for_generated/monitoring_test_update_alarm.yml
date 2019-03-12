@@ -1,0 +1,138 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=monitoring&apiName=UpdateAlarm
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:22 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=monitoring&apiName=UpdateAlarm&lang=PythonCLI&sessionId=0337
+  response:
+    body: {string: '[{"containerId":"a6a84ed4-c389-47e3-91eb-36422672c51b","request":{"alarmId":"ocid1.alarm.oc1.phx.aaaaaaaaqlnoghixatdpbvfw5qojodsosnhysltt5vr6zo7i2ltmw5r4p42q","updateAlarmDetails":{"displayName":"Monitoring_Integration_Test_Alarm_0337","compartmentId":"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq","metricCompartmentId":"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq","namespace":"oci_telemetry","query":"RequestCount[1m].sum()
+        > 0","resolution":"1m","severity":"ERROR","suppression":{"description":"Suppress
+        the alarm","timeSuppressFrom":"2019-02-22T15:55:24.263Z","timeSuppressUntil":"2019-02-23T15:55:24.263Z"},"isEnabled":true,"freeformTags":{"tag1":"value1.__STS0337_8424","tag2":"value2.__STS0337_8424"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0337_9462","testing_service_tag_02":"tag5.__STS0337_9462","testing_service_tag_03":"tag6.__STS0337_9462"}}}}}]'}
+    headers:
+      Content-Length: ['971']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:22 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "Monitoring_Integration_Test_Alarm_0337", "compartmentId":
+      "ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq",
+      "metricCompartmentId": "ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq",
+      "namespace": "oci_telemetry", "query": "RequestCount[1m].sum() > 0", "resolution":
+      "1m", "severity": "ERROR", "suppression": {"description": "Suppress the alarm",
+      "timeSuppressFrom": "2019-02-22T15:55:24.263Z", "timeSuppressUntil": "2019-02-23T15:55:24.263Z"},
+      "isEnabled": true, "freeformTags": {"tag1": "value1.__STS0337_8424", "tag2":
+      "value2.__STS0337_8424"}, "definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_01":
+      "tag4.__STS0337_9462", "testing_service_tag_02": "tag5.__STS0337_9462", "testing_service_tag_03":
+      "tag6.__STS0337_9462"}}}'
+    headers:
+      Content-Length: ['823']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq/ocid1.user.oc1..aaaaaaaa6srah3qsdcznyzb5uvradoid5a5tpbz22yj6vywbrnj45xf5sv3a/ea:97:59:7d:bc:75:53:5e:0f:9c:c2:fc:46:e3:ad:e4",signature="EmHmcRiEovkJynCYWt1aLmsLC8q75MBKTKjYpqEkJzqkCNdv2GenazWyD5mcxAlZSbTSsENGamQUSOv0Qy8PzIMtkTU+wEEr9cG0B+wdnoomP0Jca2py5ewlDVeenqmczEWt0N5mNpwiDsPWQi79hj7VEu3bA+kJKXHQL5MVQtldBGjXVBhQBwMWZGNj5VUjJ6tJ6v3HmjSUZswWzUNTXrE2uQRM0n1mNhsKD1K8EucioweCVEv3Lbtn2ealJpKWmvxGDGzsmlhjphQw79U4IdEWVjPAkkKhgEcb55QLOXf3HgB2Rf1AbfZ9vL8+OOMaS9CyQJt85LUPsO/zTBrp9g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 22 Feb 2019 15:55:25 GMT']
+      host: [telemetry.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1.700]
+      opc-request-id: [122C05EE0D6E4646AAADB605F642DACA]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1.700 (python 3.7.2; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+      x-content-sha256: [VeSiETxw1ffClAeNFdHOUwO/91Gm9oAU022tyURqe8o=]
+    method: PUT
+    uri: https://telemetry.us-phoenix-1.oraclecloud.com/20180401/alarms/ocid1.alarm.oc1.phx.aaaaaaaaqlnoghixatdpbvfw5qojodsosnhysltt5vr6zo7i2ltmw5r4p42q
+  response:
+    body: {string: "{\n  \"id\" : \"ocid1.alarm.oc1.phx.aaaaaaaaqlnoghixatdpbvfw5qojodsosnhysltt5vr6zo7i2ltmw5r4p42q\"\
+        ,\n  \"displayName\" : \"Monitoring_Integration_Test_Alarm_0337\",\n  \"compartmentId\"\
+        \ : \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\"\
+        ,\n  \"metricCompartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\"\
+        ,\n  \"metricCompartmentIdInSubtree\" : false,\n  \"namespace\" : \"oci_telemetry\"\
+        ,\n  \"query\" : \"RequestCount[1m].sum() > 0\",\n  \"resolution\" : \"1m\"\
+        ,\n  \"pendingDuration\" : \"PT1M\",\n  \"severity\" : \"ERROR\",\n  \"body\"\
+        \ : null,\n  \"destinations\" : [ \"ocid1.onstopic.oc1.phx.aaaaaaaar6ymir2igg5liynqys63baulsxv2bdwafikdfkxqofxrwws6trpq\"\
+        \ ],\n  \"repeatNotificationDuration\" : null,\n  \"suppression\" : {\n  \
+        \  \"description\" : \"Suppress the alarm\",\n    \"timeSuppressFrom\" : \"\
+        2019-02-22T15:55:24.263Z\",\n    \"timeSuppressUntil\" : \"2019-02-23T15:55:24.263Z\"\
+        \n  },\n  \"isEnabled\" : true,\n  \"freeformTags\" : {\n    \"tag1\" : \"\
+        value1.__STS0337_8424\",\n    \"tag2\" : \"value2.__STS0337_8424\"\n  },\n\
+        \  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"testing_service_tag_01\"\
+        \ : \"tag4.__STS0337_9462\",\n      \"testing_service_tag_02\" : \"tag5.__STS0337_9462\"\
+        ,\n      \"testing_service_tag_03\" : \"tag6.__STS0337_9462\"\n    }\n  },\n\
+        \  \"lifecycleState\" : \"ACTIVE\",\n  \"timeCreated\" : \"2019-02-22T15:55:23.945Z\"\
+        ,\n  \"timeUpdated\" : \"2019-02-22T15:55:25.442Z\"\n}"}
+    headers:
+      Content-Length: ['1381']
+      Content-Type: [application/json]
+      Date: ['Fri, 22 Feb 2019 15:55:25 GMT']
+      opc-request-id: [122C05EE0D6E4646AAADB605F642DACA/D2A07B7CF71EC1A2F38F8C5F376AFF26/E768B0CEDCF2D282D8C5D3179E63328A]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "a6a84ed4-c389-47e3-91eb-36422672c51b", "requestClass":
+      "com.oracle.bmc.monitoring.requests.UpdateAlarmRequest", "requestJson": "{\"alarmId\":
+      \"ocid1.alarm.oc1.phx.aaaaaaaaqlnoghixatdpbvfw5qojodsosnhysltt5vr6zo7i2ltmw5r4p42q\",
+      \"updateAlarmDetails\": {\"displayName\": \"Monitoring_Integration_Test_Alarm_0337\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\",
+      \"metricCompartmentId\": \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\",
+      \"namespace\": \"oci_telemetry\", \"query\": \"RequestCount[1m].sum() > 0\",
+      \"resolution\": \"1m\", \"severity\": \"ERROR\", \"suppression\": {\"description\":
+      \"Suppress the alarm\", \"timeSuppressFrom\": \"2019-02-22T15:55:24.263Z\",
+      \"timeSuppressUntil\": \"2019-02-23T15:55:24.263Z\"}, \"isEnabled\": true, \"freeformTags\":
+      {\"tag1\": \"value1.__STS0337_8424\", \"tag2\": \"value2.__STS0337_8424\"},
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0337_9462\", \"testing_service_tag_02\": \"tag5.__STS0337_9462\",
+      \"testing_service_tag_03\": \"tag6.__STS0337_9462\"}}}}", "responseJson": "{\"alarm\":
+      {\"body\": null, \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\",
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0337_9462\", \"testing_service_tag_02\": \"tag5.__STS0337_9462\",
+      \"testing_service_tag_03\": \"tag6.__STS0337_9462\"}}, \"destinations\": [\"ocid1.onstopic.oc1.phx.aaaaaaaar6ymir2igg5liynqys63baulsxv2bdwafikdfkxqofxrwws6trpq\"],
+      \"displayName\": \"Monitoring_Integration_Test_Alarm_0337\", \"freeformTags\":
+      {\"tag1\": \"value1.__STS0337_8424\", \"tag2\": \"value2.__STS0337_8424\"},
+      \"id\": \"ocid1.alarm.oc1.phx.aaaaaaaaqlnoghixatdpbvfw5qojodsosnhysltt5vr6zo7i2ltmw5r4p42q\",
+      \"isEnabled\": true, \"lifecycleState\": \"ACTIVE\", \"metricCompartmentId\":
+      \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\",
+      \"metricCompartmentIdInSubtree\": false, \"namespace\": \"oci_telemetry\", \"pendingDuration\":
+      \"PT1M\", \"query\": \"RequestCount[1m].sum() > 0\", \"repeatNotificationDuration\":
+      null, \"resolution\": \"1m\", \"severity\": \"ERROR\", \"suppression\": {\"description\":
+      \"Suppress the alarm\", \"timeSuppressFrom\": \"2019-02-22T15:55:24.263000+00:00\",
+      \"timeSuppressUntil\": \"2019-02-23T15:55:24.263000+00:00\"}, \"timeCreated\":
+      \"2019-02-22T15:55:23.945000+00:00\", \"timeUpdated\": \"2019-02-22T15:55:25.442000+00:00\"},
+      \"opcRequestId\": \"C066DF6691764206B93DCA087702BEA5\"}", "responseClass": "com.oracle.bmc.monitoring.responses.UpdateAlarmResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2710']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0337&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:25 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

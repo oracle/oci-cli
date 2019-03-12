@@ -1,0 +1,2326 @@
+interactions:
+- request:
+    body: '{"displayName": "cli_lb_vcr", "shapeName": "100Mbps", "compartmentId":
+      "ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca",
+      "subnetIds": ["ocid1.subnet.oc1.phx.aaaaaaaazbia3oeql2bkfn5oqkvhb7hek6j5sfleq777mls3fcpjfkocnayq",
+      "ocid1.subnet.oc1.phx.aaaaaaaaah4l4mfszsd2clf5elvnrym3t44yp3y74p574np6gjlovhtappxq"]}'
+    headers:
+      Content-Length: ['342']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="G86Qr0dtaB8pXrMC52h2eevUAevLrLCq8KGtzw8yIhMib9e/LqHopGwUKu2tDqFlZI6AKCwrbYGBsFeMa0mYACl0HyGXl97Gsv4mEHQQiYo6n34WTbp1OetTKaeujvwjweY65wsmVzi9ALMwYSR2nZDjp0CxgFqi2U9+UNlAK0dZdZeqVfr9TLvTgrBtQ1e+FPPkc7D5dGPkQn5wnHfWqU0MQQMcttRNsonuEaEAXrzfoXEY+IeKu3KwAXlRqtfVqDxoMQPw4xp7cOgZUEf9wPUPHQ5Aqm/XfV3gAFRdtbEU5g313lK04VOnAXG/pTNY3TWSAyt8eOz4CRZ68aSwJg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:12:55 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7622D93F9090499D8A7EF8FEE54432D8]
+      opc-retry-token: [3g8PIxPD3rTvekPLT7GbGN65iPucTv]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [PZ5B0PiyEl7CqruKRloBZQ9/jeCcgftngwROTedA1tY=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:12:56 GMT']
+      opc-request-id: [7622D93F9090499D8A7EF8FEE54432D8/A9EECC56CD82CEB1692FDC9B9175A909/E5A33E2A2265D466F32BE78CF515C13D]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="iikecbpngULe85xFb7QS8TUMIvpKEdK8mXlX4cY9BlvYn8wU8WYkNarMfJ0aVa0id3U+8CPipg5kkrTokjGXyOmU7AdvCzcIDyegVc7HaX1tkse7qWbEMzyGMs7tGlunp0LNp7rSXtUtKH9EDr6sBtQoUaPkFNodUwsn4JrlPwZ3Wjc05213xP8v3m2sj0Yv3xMgn/hGjYLrx1+T3YvMYxlDzRDWGH4F79ESs8yodV4YleyYKNAugtu+9nbYsYGc56T9oOraPKLQKlatRmZf6ZH50CbgGBNvf4+bh5BW1UVeU+HZSSiDdvjBlDIu8r8mb9SFAXHEUiCZFMZDKbt4bA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:12:56 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:12:56.021Z\",\n  \"type\" : \"CreateLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:12:56 GMT']
+      ETag: ['-167600898']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2/370D32425FBBF80AC4D81808021223A9/95A610449D53A47D3FD2BB85370E68F4]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="uNpa55ngn0NWgwmQEcHMUjMCMMwsA48bDZ9OhJnFvwYJYqb1Wn79JACJKQgs11GzszGquFIZbKROJxehrZpi1Qsznk/sOT1yO3xPmLZAbHm6OBRvrs+x79NGSC0XWyJF05inp1BlZ4v+0GYoqDzjnH/nWWxv7qeeBKWFfeg+n7qxoFCSbb0UX66ocVhAYvjvYL216jQmDgLh92UiGgha7+Noa9lobME/d7bE4tk6X5RUjrHUptQmQqxnq974mGq207MW2aIrQKvMJEWpicdpf1zKrCHutQA/B2b82DKVWO82qba8n3F3lee29IDa9+/kU7u0tP6yPzr8Dv4uhQgcvg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:12:57 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:12:56.021Z\",\n  \"type\" : \"CreateLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:12:58 GMT']
+      ETag: ['-167600898']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2/ED7628B93C795C3669917B4780AB1091/1781452735435140AD21F922BAAAF060]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="QjAu8RjSaTOVnqYoVeZGM5m0x46jciUakA8don+HrncBebhLBJxySLO5/ZWBjUn+/ZVn8fwGRi56JjxSpCwy9lIu3tOPne/qXZVkm+9dSMfMYPOp5W2Ux1nYmgR0qjqbqfSmKTFzVBgRWoFvRa+rO/6/Fs/laB8y11ZVe8I9HcsKqL+p3n7We8NYFmoFGL407xv2c1AR9bk6nZSWLHEd2uKgO7Mjw4UrljmfBNJmieNQz95WRQgaIV7wzhtuteNkgV+lcUt3ZitYCX88Jph5lP3NSTSlLgGua8OCVo4xIAiI76aCRleJSYUoeDVRdow8rZR9v9qc99if93Prb0Owow==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:00 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:12:56.021Z\",\n  \"type\" : \"CreateLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:00 GMT']
+      ETag: ['-1402768645']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2/EA21E1C93B7EC174EACC4F81492C346B/7C770BD0D30855D625B5A57338D3F6BF]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="BgMTC+OLbCAmtWcSudK9zlQHR95gThZJgZAYPxjXG1FGzEn2gdZDYWuLzgo1Xjadmk/FlfxxB45VecBXdtH//21YrRxVr8rmf41j3rVD1vOdc0YJuthoOTu3ASjPLGq1qV530maW4rMEIaqp32FaFfHJJ7EJnvP65C9D/buOsmrgXvZsZ4JvArpvIt4Dv/w5KDWFXncKG8eE3EmynasURbhBZqYu7ZllCJSposcm7cr3hUk8AyB9+NE79wRjA99PD1PVcTnzfEd64LGMMF/O2EzHEo7cnPNIoCg3pYK2tOz5BlNgvlS+aSqTENpYbRb3qdCz6c5cgOGGeGQXhG6yUg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:04 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:12:56.021Z\",\n  \"type\" : \"CreateLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:05 GMT']
+      ETag: ['-1402768645']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2/83AA4B8C9E2055E33AD711D1D2E2B210/BBECA66FEC52F92428295E34502E3F03]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="che2l7xTPmXNWQTKkVeVCDwzmT6MB12Hx1FWVFSa2zE0ZaDFXvx3qpVZ+C5wK2t1VtbXuLOC2IGJ2SJvxXz3Ql/4Os0qg1gN0kuNpju3+BFljIRuHiTbw8WYDbopl24hqLpWGA9s4o2V9kxWb8Frv7JY6ltVE6oUlDHTbQg4O2gU0U4EemSJbOwgMP170uewHEm7xKPLH3NK7KrQgcKw5uHABPOyl/3y7+2xCiFbkJfRsWoDgRCvh9cvpNX/Qo4Q9KMcd7Q/ptRXuCkPuwoVh6NZmiR462PVqb0eEOwU/dmIT+UC+KX2xcVkD47/zfZaqvyIG//+uI2HDP486NAB4g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:13 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:12:56.021Z\",\n  \"type\" : \"CreateLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['365']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:13 GMT']
+      ETag: ['-1587502330']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2/3BF3CA61688FE14C68518EF0A74A58C5/8C3C5C780F19D17CA294977468E45934]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="KwxsMad48eTWEkC7vYsutgI3pbsTv+nOxhOa5CDr+gB7TDQmkRi8w+Fs19Nh85spTKSuLh2xsssg4aKh7YltFTj+fMIq4kffzHo1lsvHYptmZxlXn6w2L2JgyMcAmias1xoqrntioxR/rcqU75dFxB/AxRUaXSGDoaCT0aL7/3XXUg/d4QTUeLzG2cR6ijPX8QDBjQ68qbex0FZauDHIzEqdwSnY9OksdF+ZdQsQd+j7lSqD1a1KmHEx6UJuCwFqTeY5XgItoVIn+ERQMqJRbWQYnpM51xy5Em1bt+v/2TKZH0XsP23fcUMALPOwd4kjd0sOGH/CMiBwRQLPoQ4Zgg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:29 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"97c7a67a-cabe-44c0-8bbe-bd4451e6fd4c\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"CreateLoadBalancerWorkflow\\\",\\n  \\\"\
+        type\\\" : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatf2gmp3zhx2tyxgqvrqfmlhj5j5fyjgi2oze4reenowmfg3wwefq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:12:56.021Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:13:22.060Z\",\n  \"type\" : \"CreateLoadBalancer\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['840']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:30 GMT']
+      ETag: ['960564657']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7C3BE5ACE19B4EE5860D327B45E6F8C2/E20FBDA01BCA4CD88C4E1B2821B6E036/3B927C07225EB8D90F073DEFDD294941]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="g4QvcU2HLy8t6tRbXqdFz3YTKziYizbkbGo9EbFU4Ltgvz699YWRivgOlTeLHsePJ2gDFTP6QfbqCoNsZgHtlzs8Cuz2cpTsPdUBk5i1ZPCmWDE5/AnggWuzEa9RYUfaD4srFaOkxfPlvEqjR9Ell//oWqXUSRHyVQ65N+JgoiGO8YrYTplsd+JJLfvF+LbCTp+AVNf7LjQUfILGj8M2+RVp2kJJotJXC9YKcoCWahZQoAeUydXk9xMomuaiOB67UX6gL40camm+nujT78PamFkq67QVjPbyMlvDaaIvZvkeAgUQOQA72aDsAT8a1j5i0dT0bdqvt0HKCr7FUZPtRg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:30 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F4B9EBED51734473BBCCE46A4245CC04]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq
+  response:
+    body: {string: "{\n  \"backendSets\" : { },\n  \"certificates\" : { },\n  \"compartmentId\"\
+        \ : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"cli_lb_vcr\",\n  \"freeformTags\"\
+        \ : { },\n  \"hostnames\" : { },\n  \"id\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"ipAddresses\" : [ {\n    \"ipAddress\" : \"129.146.18.8\",\n    \"\
+        isPublic\" : true\n  } ],\n  \"isPrivate\" : false,\n  \"lifecycleState\"\
+        \ : \"ACTIVE\",\n  \"listeners\" : { },\n  \"pathRouteSets\" : { },\n  \"\
+        shapeName\" : \"100Mbps\",\n  \"subnetIds\" : [ \"ocid1.subnet.oc1.phx.aaaaaaaazbia3oeql2bkfn5oqkvhb7hek6j5sfleq777mls3fcpjfkocnayq\"\
+        , \"ocid1.subnet.oc1.phx.aaaaaaaaah4l4mfszsd2clf5elvnrym3t44yp3y74p574np6gjlovhtappxq\"\
+        \ ],\n  \"timeCreated\" : \"2018-07-11T17:12:56.021Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['804']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:31 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4B9EBED51734473BBCCE46A4245CC04/04A02CCBE2D6A2F80B7E674A1EB54AD4/4ACD1919969FE7535DEA52DCBE93F8EF]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"policy": "ROUND_ROBIN", "sessionPersistenceConfiguration": {"cookieName":
+      "*", "disableFallback": false}, "name": "cli_lb_backend_set_vcr", "healthChecker":
+      {"returnCode": 200, "protocol": "HTTP", "intervalInMillis": 60000, "urlPath":
+      "/healthcheck"}}'
+    headers:
+      Content-Length: ['253']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="alzGWHq9sNJR+RskiHulXeRt+wd7Qvb0ng89KemeoycukxXCyjH7rMCxG+e/w3WPy8/VVaemN3TpXxJMkAW6OSf7BqZ/couuA0R1MELDeBfc4c7k4cjv8gdqocNDBWa+a7C6Jf21q5uxcqEi73AjBFaKG+kG0OjL5QGZvuSXJ8L2iRVBOnnS/SA/L4MucXqVu6F2MME6FIviEWAydhuzhvslhfspHoPF0JlE020y17GGfKn/kE5WZT8BkkuM9kgxs6llH+gvSmBLke9TlNJqkDNaAA7vkKb5+ZNaAcioEwWBnn0mR6yLhSvLhLyDpxKtnomy8W8k1jOBjMDlQS2CiA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:31 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [D344663663414F0C97FAD0DEE3924F07]
+      opc-retry-token: [MbbbkbXYHmlU6tcOuWXByng5R6UIZa]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [HKatd4NdFEENQfsFJ+RUAR8Rq/0QH9AkG6K4MsesfpI=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/backendSets
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:33 GMT']
+      opc-request-id: [D344663663414F0C97FAD0DEE3924F07/8B7E18C5C8C0135F2E761079E47807FA/E8A154AA558BD8CF75F907EC70A97FFB]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="lP+XIehank+SzayQ92CtmdeXro8em68qjHOzjvzAwYVcnAcgXxfg9S+JjRSlHt7KwlBUQ8UYZ4jMO1Lj7b0T3LJQAGvGSqA2jHWdvNGsBg8DW2uq3Teastyew45zTuPIRSnKFLn1uCU7k0rZHRpylTeT8LxJYJnv/nRGg1zG3v8Hlyi1Zat9TGRn4U0MKBbsgvqaxJNrg00O5if2i1QG+JWvZjoPcX8ZUZlFveKZRVWx011WGQYS/69lvf8dqu0EC0S6FoNQt+xSXLP7jGebeU7O2vpeHN82V6z4d48mPeEeGnWgXtvjX09He786R/Pb66VCrxgurqjBUJEIFXSbsQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:33 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:33.485Z\",\n  \"type\" : \"CreateBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:35 GMT']
+      ETag: ['2017925423']
+      Vary: [Accept-Encoding]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5/76645E4DDC5CD125C3AE18EA63DBE8E5/FC05BA19F180916E62D1976CF2EED36F]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="fcVS/kYNIoklh/B97lW+F1hC3B/I2Xvuo1xuNRL7jwPyB4GK+m4XfTTHCGJ5C28Tn5V6sCQUrWVEQ3gmlhicA3hg1m2uOAegIvwUiceqKc05DgkAA7GLKZDj2Wdul4MYQK/qzgWmcsxsW43PGyvyXUxs9f+j0uaMyA1f0ms1LCzFEYNU4OCNpzugoDLKCsgwlmmoP6Wh8xR/7s4EFTDs4u+oYKU/Xgi0wapYkTm5Bdi05mQjK7Uo9GFVT22TL3TTxQLUh9Y5AmeUpl/jnoJBbhsV1AU9M6V1pmR1avjoI47ybFjS0re/bUHTYvBXW4IXrvcC9huBTlFJIJl+YykZAA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:36 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:33.485Z\",\n  \"type\" : \"CreateBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:36 GMT']
+      ETag: ['2017925423']
+      Vary: [Accept-Encoding]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5/13EF08EBE6EE28D611E4D1E29CD67954/D24BE1A9B0761E9F17942D96EE9C105D]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="XLDdnRsFKmvf71k0NkgGwPZZiN8aedbRmRmvpnFB6nNLRKyL8uwQ2oyYWGSktAM0mTbLCt0mElBSami+RSqkYew8bWOrjIUTfFPYoCjlnZUKHsQnnEhMcEjbW3NI5Ef1W5uhPkcsTPcpG7P937HoU4m2u8dtz6CshgZZ1p1BhVae+NlOTZ2x3XIgP4RrBGraC6bsH0FpX/TmY317eV2PcrFgOz7q1zybpAwK5aV0IrDg5NhhlEkY1t+c2Uk/wVVx15FCzeAC6drLZc4qCSlEETLEO0146cTY75e0ah9LnbF4LAhAUXRxecdkmSv3Vn9o6VvLrsGU6LD4IUaE/orxAQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:38 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:33.485Z\",\n  \"type\" : \"CreateBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:39 GMT']
+      ETag: ['-597157107']
+      Vary: [Accept-Encoding]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5/B82905D6EF66F7BAD0F214551107AAD8/72363A5C180FA3E4C837349EC22DC0BA]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="patHITEOwmd6BZz8fts8VCf+Uo/E3U3W0BjFwkkgexhZgeCpyBGahjBA05sA+jtXFtr/LJ/tSXb2RGL9hdmtjQiSawWNgDTgVS+KmSYRJQiatVNHcySpnRuBqEbxLPGBwIStEOmNggjYCU8KrZUvgbNuD8eb8jogQm1h+q+uGBoEt4y7DLWyzOmmZZjcpSzAanHBvu2ny0ruLgv88ijI8q5jfTatguxzneE5nEkXBY8WfKCrPDkE60jMhetxjLj3gKp7NPEOcbPHAELuRqCiBvG0n8jAc5+hhfZWw9N3ZZ50L40EG8ktnCPiEuVT58lmToNVfWdiIAQVQYcJtIWirw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:43 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:33.485Z\",\n  \"type\" : \"CreateBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['363']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:45 GMT']
+      ETag: ['-1610548832']
+      Vary: [Accept-Encoding]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5/78270F412A6D1C3B6184096F2AE7AABC/19D458B77BD0EFB6FA103EAA997B4B7B]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="X58M0nytLSxswc47p/zdwx+e76IIBjhDP9oE1ExwuR+1S+Zzq1m9DTNzH4xjdyfPTSQazTybPbf3wovdsGO+DO0KH5/9mT55wpH5DDEuWtfXDX6SPoxLS+aOGzHUbYXWf1CtpxUSI7lYToqOOnHK6F1kcXQ4skGskNzvaUw63EQ5vpgjyBKDQvjdIINOOBeLUgUOFO0rm9+jafd5S3ByWe+VYVjE0giqBBhHxNWMgRhIVUneMBwhfjImDYj6cz5rsIBau1i1m3fho/PviK3UHf28x0FV4ncFhM2ElTQPqcKVvpecy/DFssi7ZcJ3wlm8fREiYq/uwL71SztuZNAtZg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:53 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n\\\"eventId\\\" : \\\"193ae7a6-a345-4f9a-9afa-54d245ccfc6f\\\
+        \",\\n\\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n\\\"workflowName\\\" : \\\"AddBackendSetWorkflow\\\",\\n\\\"type\\\"\
+        \ : \\\"SUCCESS\\\",\\n\\\"message\\\" : \\\"OK\\\",\\n\\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaatd4aqretltajwxcqyeehczq4xx6md3orvx673ckfutwaeknx74cq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:13:33.485Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:13:50.971Z\",\n  \"type\" : \"CreateBackendSet\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['821']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:54 GMT']
+      ETag: ['-301242345']
+      Vary: [Accept-Encoding]
+      opc-request-id: [B856ED5DCD1046F0874193E4AEDFBCA5/3922AE08200EEA3A12A64CE944C39468/FD9048B102E67FC6A79C07B758AF4988]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"ipAddress": "10.0.0.10", "port": 80, "weight": 3}'
+    headers:
+      Content-Length: ['51']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="r2KQSZKKUgRnTekFkYsYudEdZ2wzTWgfDPr5Py0JQPnjLxZaCGBLDyd5cCuoLI61lOooiUTW6HKuGs1thwwYTuwbyLnakSV4fHUGTntYwcCxCgUd1q2wFCHQI1FYT4rOv2iVeIff/VHrLeGvfchKEGn3iE3M2cXOhPMKV5LY+G/6/Fpb0aMr1mwdMaTReZjRtfnlKoO5VemIMqeasKD0qFBcSmGCAlCjUcfxDGRl57cY9lBneMAAFg8c6/riqxO+ippf9/2IqK0KhUMGl6tf+iJwjoyvDPm2dndbZTdvlSIJ0vFpF8Ly6JrVAXE2vsFX3z45qVKMejYXPLV0r0Q4lw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:54 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [CC25659F1FF24B4DB866C8863A3BDDF0]
+      opc-retry-token: [o9nr2FGeiRWdwt9tASYAvHbLXh9Kdn]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [X53WBXFsJtKy6EQIjSQScRdBDMhSwAqIyoCU/oPxCbU=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/backendSets/cli_lb_backend_set_vcr/backends
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:54 GMT']
+      opc-request-id: [CC25659F1FF24B4DB866C8863A3BDDF0/46CDBFF971FFB272FC72CDB8CD6B4DB3/51A0B09360377E4E79161C13910FBFE4]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="TSh6hpIgrM8J9pGaq6JWQCQpcgBt6+t7EmcupYm22fygH7xkZ7LvbS6sd6eO9pPoboLOoFD5U7Eh/1IRq7/wYISrAn/wCMWIqqROQuxrKxIPCBtTZpeyF8VIPb+SJUZ/smk0m8EzZcTLJ9x+aFO50b/jL3CuLI2esLSlqGRO+HAj8rIDiS2mXqdBCWOMv8aLvgLYgKTqYNmGGmwt+RO83h099Mte98/DN9PR4Ea1zyIZxKvWJnPAS6YS2Dlr/AtvpvJvdabToidsd9lXAJFbPQLfn4RzaABEGKovkBjR4WbVViVQjq151iI2xHt5v6Lo3IvChmqSgR9kb0WryGRl/g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:54 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:54.682Z\",\n  \"type\" : \"CreateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:55 GMT']
+      ETag: ['116444762']
+      Vary: [Accept-Encoding]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9/19A0BF70EAA83E5B757E6BD938205440/E814CB6F7C714C06EA2443B5FBE10A3F]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="j9qZODXAHw2QGawjjPkHLPrvQJG0atKXBmVliH1VL54yEijUuzPOcEL4K4WK6CuxStKm86/Y7zhA9cEKEl0JoBUpcNJhQw/MHtmZydtfJtO/lTN0+7joFatqNk1hxY7YpthvR4GyD5k8zYav0qFhB4vC/83VDoYoFBnvFqwpkn2xLyHrBhQJQBwdbSqEw9qYGRqsnqxwFThDZbEUh6ad2paXkg5Y0n1GLEGezgqira2TDgBovMLjajfH4sAw8xmK4/Ad68LcIxreNM9W9zxAV6kGZOd7JlvBxzPH5HjjFmkxtY88b1hM+sjC8YdeEgv5w1he0CO7sVs/8XZB8/ba0g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:56 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:54.682Z\",\n  \"type\" : \"CreateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:13:57 GMT']
+      ETag: ['1796329528']
+      Vary: [Accept-Encoding]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9/FB457CDB7FEA929DB47C4B06207A68F2/D0C1BA7730C786D562A0AD6F337C0519]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="IfObfDZQqssiyZ+o3hGXHY2hlJuc2oo0U5HOcE+iIRbds8aAavThSySIwxd2mRRiZQPCKVFtdj2IqZgo41OklZzHsa0Stng+NYDQUNnJRTJrEC/xHOPQ3cdFqYIneiEwMJt05PKwOM6SeRXwYLlhoYiDRVmMnsuquK3tMe7pEVoJY9Fs0nlhLDVxTtb/ZYvF1hFCqHTMujYjE3goinEy/Br/38lMLkyEw0KW9gEFe07y9QLDtyI5f5rledRcbKsdA1KMorHKwtASHolqxPDa1JpPQ6IfH6T6M1sgQNRjN3kQ7xJzo6ZkHzK8IGOsUovZMIjIA+OQ8fTVI1Yp6qCVjQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:13:59 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:54.682Z\",\n  \"type\" : \"CreateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:00 GMT']
+      ETag: ['116444762']
+      Vary: [Accept-Encoding]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9/4ADD1D25A97E8E14B5C418256F10A044/AF16615C0E0FC4738847460C2A261158]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="Dlp5sFzaGx2Jcdjtfj6WfRM0/Bj3OBpga0qygy5susbRQ9MhxUUqP3gW2pWAPA3BvjB3S5I5rpXbeFuPUnfmkQLQ+vi2BAnPaZHyJbtLBQkai0vYcWzBRWbul4z6xFUe0grTHCFgNZ2X1xYcsuayFmtPxE9Ha5Nzt/Hza0Ef06Gc3PyE2XjQgCj3+WJtHMiF5Omt5lL+JYD/oCMCif5VHX2mLaUDJPAWGyw8vc53p8o1OK0srEjmMr+vpKsLuMEtpzG2fWI5kYLD/ovhfHHfsR5cWIRm0sIK99QfXRuM1H0xKKdeswcQv3Ub8nT1BCvl5RqK8IFJyobi6kDCXDZYrw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:04 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:13:54.682Z\",\n  \"type\" : \"CreateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:05 GMT']
+      ETag: ['782937803']
+      Vary: [Accept-Encoding]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9/C59D508BFA38612A775B37238FACCD4D/9FD438BD701192A800ECB680CB68ED7E]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="QnZP7WQI8OE31Ny1WS/2Itazz5d+Bwjnl0psHhYgFhNvB4Xj3CJeRcqb37z2R5pvtxWnaONC9cBK6wiCTN7GWrqUvtYAUgOyYpvNXYKZXl5L3j89f7+AHShdYNpShq2xllmO/aHcOfNsdpEHcjbwTxY7TwYndGnRfIk79ZynfJNqIBGdyOY4F5MuS4Ss2/p0e9k0Kh2JN3DmApdopCHqCIcbRO9Y9WJN8DyBH3+OZHVnEx0FEyry1xXcSfnYmJIIFyg/hwixPaDqTfK5gBid8H+4N2INbvigV4eplspHokMq0Shn2ujRhIrEP4o3SGK1u24K+rdgmP8X4m0xblnjuA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:13 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"97c979d6-d3f6-4983-b232-d95e813024c6\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"AddBackendWorkflow\\\",\\n  \\\"type\\\"\
+        \ : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaahqc2rjs47tlfynw2gsklqzs57vqp2er2japgag2uumbtbaur4j4a\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:13:54.682Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:14:13.191Z\",\n  \"type\" : \"CreateBackend\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['827']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:14 GMT']
+      ETag: ['-1034421846']
+      Vary: [Accept-Encoding]
+      opc-request-id: [9F60092A9EEE4E519A7F9E77AEC22AF9/57D0CF57006777267B32447575C76933/37C98BF76DB8A33CAF3C5E59AFA92BD0]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"offline": true, "drain": false, "backup": false, "weight": 2}'
+    headers:
+      Content-Length: ['63']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="JracvNbsUDC1uhYEPTnXi4MK3rbDwA30bcIVxy8JPI947hByypvCKj5BypjYPD73LxkblPiC5y9C8cRABfl+ASNJCpOOVA0OEvskdz/+bNvMhRS/uOMf2aS6kqjZUx7StziM3WG9TiKb7b7nJ9yrjE6po1AyoS0JPtruqGFNr3jE6vUOasEm+PR3x/itdn/zyLXK5eIvbv8AQeaKpUL3hxcJU0kqwJjWl1W7xBLxyNRIg2/NiqhWaV5C6xZBclADEKHDtObCr9Y1ZFRKRprCXdYMQkTzS3+9586TdUFBDkL30SI1KIUWSNmw+QO+XTdPZ0ldgVmq6nI1M14gGHOfZg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:14 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [4C607BE252E74668A90E1378092D6572]
+      opc-retry-token: [axBeUTB8swstbxiBit3ixRNmjXFIgc]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [dvky3b+H3UzvDfT+54jvJEiuFaWKiEOB/Q7lHVhGzyQ=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/backendSets/cli_lb_backend_set_vcr/backends/10.0.0.10%3A80
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:15 GMT']
+      opc-request-id: [4C607BE252E74668A90E1378092D6572/35D39657A314CA6E940771F86E74C5FC/2A8F97501AE111C0CDCE02333732A75C]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="cwrGWr6FW88l+UNwAsb5SxUXl85nFp2nrsSRdZt19HJgDBINfpVudnzwie1IQdibh01mTwW02W/BM7wNsHHf2Q3j7uYVX0DjojPiyr/j/l3hPL/iJ70gF33XCGbC4AuNJHrWmIpY1iTnFDhPGaJ/z/uoeF41hLhiNUukN3qzbcmEsQKsO0wzGNa6UBLKG6UKerk0O0BDXp7QlHUDxToE0DCrMteRa8OzOCSA1KjBsK/WFAzxirfPE637jmY41fLi1qXJNa7sm/9VLERhyvIx65gtqY+EwMMmNabgLszqIo24+WOf5hKNElwPOQ+AwP8eRmoTJDXwxANpjVduCsORQw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:15 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:14.993Z\",\n  \"type\" : \"UpdateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:16 GMT']
+      ETag: ['-1529516098']
+      Vary: [Accept-Encoding]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD/C4CF995C760960BE0D21E8E5EA9131FE/987DAD843D79499B4CD7C43B58657C37]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="G+RLAJJxCqBi7woKVrmnpHUK4q+pH9PAo0PwVUFKIXuZsoyvdXj1VFYnO1M1AgCKbXj6ac9SCkxBnGI5G0Qe7tGtvZsr4NDIuxxy2mk23rDLGBEptuP8UARxkAJNJ6fYLbisien9luVg1fkYXcJfZ8p7XIdgAeSVpzadcXdNFZyHwXji/WuTNxIQtt9NSZbl+Rv8NwbmwFGpTJbgeAs3HQFc/uA2ZCEqzQ99JF3nMQ0Oijgfm11daTmNTzzAjOZ9Dqj7Fqfl/RgF68LIEUK1NMHuwymbCGwWfP5WgAPGXpJdFY6V90cz1dBisaeVugnNU487DfjNZUr6h9Z23VTeqw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:17 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:14.993Z\",\n  \"type\" : \"UpdateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:18 GMT']
+      ETag: ['150368668']
+      Vary: [Accept-Encoding]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD/01B032B0D1FFEA6E08EFB1485D5AD10D/72FC2066D6F8F5E73E6373DD67FB5060]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="RLwNN+d5sumo3E1WEbugG5WdX7xGsDZKVpTkGt13jimeSBVv5Ned/oTOydjhTe6mIThZbqZPOMD7blq52N0+aPXDzmXCKH8DtF0DpfYAklA27Tgk6+N18vmLztR6PRbnX9nwS6266Y1i0YP95yiap9z8QJ5rMvBln8/hj7pQ7aqONcF3/6Us7jMuEVxBwnBbHFbg7PCqvzcHyOuPgH8jAUpIRvC9ZYoknQJTAkRuGez8VcVKnq5JNvuYDiuK6cbZvjsJwRPiDrlGBFLh5C/giTHZPGBrffOgiU0kCUHhquAQcx/60G19z4qIpJhP+jtK4JGQ+SDCLVQwGnAYobBnKw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:20 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:14.993Z\",\n  \"type\" : \"UpdateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:22 GMT']
+      ETag: ['-1529516098']
+      Vary: [Accept-Encoding]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD/54D09ABD96439A433F5E6593E89447D5/112B5AC5F1E6900E0AE2420B84F3E9FE]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="iY38XKwLo3nMcFSyvXZBXPEBqsaOECLq0QWNw4/XEf5Qe+iL1N4mtmn6KSwsYtrlxcVAUAq+PcdACXTk/RRv2e8ACtCsCvDzMZQ0b7+nXCV/TSYfbRjZj3QlVDHqDIL/iTbLsci6f7tb3YzanzYdBZxnKuzXxwXa/rwwMqKOL7+G4y0hOedItUCOnoeQ4ySMJ0vfkwqBvnSZx8HLPzp0CKvOzG0f3d4RrlhLBMU35t24giblYWpKd4l7HTHc8vC8m156wW+dMc217CsXwlaiY0jL25353Y9DKfzeTJBUPDl5WpiLkXQlnfFlGwRnlBU6Ow72N3l9B7c8tLXhC9Od9w==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:26 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:14.993Z\",\n  \"type\" : \"UpdateBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:27 GMT']
+      ETag: ['-863023057']
+      Vary: [Accept-Encoding]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD/ADCE5155E30366D23589CF786FA0288A/9A7C29E8F29DF53399DB328445981C92]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="CZYuVJGk4ysTkNGx5yfupEyXSc10MbLrwyr9jrvop7jxJjo27e//67nEZlmS2lDqDPUDRtP69Ir46dSjWkumosKYcW+LwvO2r+ZqTTF0UUWittqxxKLmWW6lv7oLOfS3YL87Sz48N+Om1HXivfg0n3wajXzMMY3mliTg597tLt83lyr77c8n60l6XsOn+eE12SiiIh7osC63cdsvSPn0Z3VqRY4eON1bZB/MozdeTRI3mhrSlxO/Op2W8ZDHoPyqgmYhVuvZYgh6061DSIXTs2YZ/8InB9bfSEcjPK0ue4/isF3JDbHR5c/zPAiVnYMiEcwHEEg26RjZMDCsMcjfyA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:35 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"d2900067-ff51-498b-bd0f-94abb103fd2b\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"PutBackendWorkflow\\\",\\n  \\\"type\\\"\
+        \ : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa3qmapovevbmizahuqfquhggaiwtfu3ryt654ejimoibwvf7exooq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:14:14.993Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:14:29.261Z\",\n  \"type\" : \"UpdateBackend\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['827']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:36 GMT']
+      ETag: ['-384543431']
+      Vary: [Accept-Encoding]
+      opc-request-id: [488F57E14B22469591CB7FA6FC22A1CD/55B575963DFD4C38564D43D086123CDB/C30483EE1C63B55D19E0FB18B895C819]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="S51YfeiUbVvFGOzzuT6lpuSXUf+83TNXprgFtHGbe4TxzsGrXG1GOB0NLwppY/TSA1O6kCszdKVpolBM9C3zookl8lPy00Tn1LcEZIFvx4n74vrV4Nl2pH5JwTQsIcLSAWJA/ja3X5Zyw/KqNPnuYmMD/negOm2KteRCI6jlZiaM7e43MawaDPpYUmlzoyqgktUiRDjUbchsnQibpp7o1AYTRDyWqdO8B9fBnTO3anqcSQ4L6BE7ua+xxFBibCtD/IcuekyGelj47hZbbD4ryrWDMYuPkoHTtFn5jkhyTDtvz1VBZ1TYfBIGsESZk58jWIHGlBRWEXznxC+6mQAa8A==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:36 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [44959A1E242E4905A228728167ACFDE6]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/backendSets/cli_lb_backend_set_vcr/backends/10.0.0.10%3A80
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:37 GMT']
+      opc-request-id: [44959A1E242E4905A228728167ACFDE6/1DCF954E7C5712FB64CBC0C47804CFD6/520B9085EA41E6157165C4ED393DF5D6]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="ozQsurZJEaZkBj/K4QfPV0PQ42GPoe8CncZKwOpaIBiPH49T5NnmdayAHEydV4lsqgdLXw++ajGUYwvJ+M1ug7BlnHdxCreQ7FkXtYYJKuM5r0NdMkVdrOyZAxOGZPfql7BKN17DxH5bmtusLQDo8x26bG4+/wB+6vlwm48wAs5PXmu7v7Hl/L01nwLSSV//ErJsmYTQ+scjfD+ezKBNzI+SJMlYq3ITtGnvFJSkRFhh364zGS4oSLgxhNjpldYNDiTfTY9VZinwupyYRa7IOCScZLxz/bQ8n2ZmtmpTANCJqaz2gnU2frmjkE+5qz+D1m6rR6QtZ6oh94KxCRtgGg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:37 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:37.293Z\",\n  \"type\" : \"DeleteBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:38 GMT']
+      ETag: ['94109947']
+      Vary: [Accept-Encoding]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A/4448DA78F38099AF16A480D2514DA0AB/07F6F1C1BA23EDB1FBB61A0595587573]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="B8UJyQeQ4nJrY5sEzaIdpIqmkPZnhh0XKke6buQinh72SqHuISvhEtAiLcN2NJgQ/2XcUj5bZj5B2VwAkf3NcjQZgGYEQX/+T+nXdI8qOwz5xTfrzp1vfXDYSF6mzyQ8SZpBSdOK8Fdid/dcU877JVmxoQumapk3XG91eDXmxSBKZ4JKjlrsexizavTeTjzNn6YLheey2zdh9z+JDGeVcWPmDTGJRKFxpGKhudn9R8+mtpqGI+RKAbgzHn9qZJtImGLb4h3gw4kwXJov1wM/xjUm8RuIOVrVacnLhxihM8YvTw0QsKyRpWWWv6enoWl0LIXTGCGW4sQEuZm5f3qZwg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:39 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:37.293Z\",\n  \"type\" : \"DeleteBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:40 GMT']
+      ETag: ['1773994713']
+      Vary: [Accept-Encoding]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A/544BE66C99EBD4FC3D9FB839A7097A69/F85EB15615384E1C6F59764F56D4360A]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="l+kfcnsc3wT9HX09pjZka6isd0ACdyaqPyA2Wcfg+HkC+oJx6+k30XWcmDFDJbYtpk6eA4/8BuOVTHODcpDfAn6X4exwTk0KOBjvJtgBiFYOyTbvfuf4qkItby8vSA/9ZLgxbsjCw2I5urDpBLYFtKQBZNkB6vsvwjNEMdJQkYkgZ+2gp6zqNIY8egnepAvgaxIxF1wGzSMBW/iksvS8SQ7OCEm7U8+5KPJMx1MH4HElv/tK38tJhttTaPr47XE5WObM5oJoLqhhDSVCauPfiAvYEs8XreX/pg9nDffS1aDyBfRGXyszdyGNapMq4D+vkWLTnnLqOOLUApYQ3bH4ig==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:42 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:37.293Z\",\n  \"type\" : \"DeleteBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['357']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:43 GMT']
+      ETag: ['1773994713']
+      Vary: [Accept-Encoding]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A/EA5D7B780BBFAD488595A11FA3781A24/922133D34758FD3ACA6F3AA74999B052]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="m5nlm1ulpadZYbip86Tts4JSqsn70YJqVBvantOE++0vA4uTdsF3eB+/9sY8nRhNaPpPgRinpoOz3OS7428arfjKyNQKhuG9Cbe3qB5LGhKjaFYjn2hcAql+nm8mrj2CKqlvVZwLQ0E18JgSIyBGc8x57ewNUDahPhpFuU8Y8M2cJXFcaD6WR5VG/kR5FOcUkQEI7GvLG0rmAlq6Dh+1XmUEN4GpqiGFq+7NomAXQ1aIUu3GA1OcQ3zfJ4mVFuxRX65Xt7HMkMaUZ148OGh+JL/HSsG02OC9wl18QG9Tj9qmUlJQk4oQqjICNFuV2PCblWVQx6oVmH1qSbrGM4gvzw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:47 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:37.293Z\",\n  \"type\" : \"DeleteBackend\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:48 GMT']
+      ETag: ['-320584453']
+      Vary: [Accept-Encoding]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A/D61305F79A7A6431A27A3AEB3DE6AAFA/4E7F105C3586CED2D7B6475AF922491C]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="bv3ZBLIU7eRX6cMOH/5I70PtG+UrweXSQeQr4Fx1QQooygCletOr3xxtkPAum3zIRHD2jCJbIRBe5t6VFo/iRgDqddsrja+l2n28vOYMJtYGPdDYm6J8o2mrT85Pks4ZyEFi0inmlZTquVspl2HkOUIf6PEGA2k3AvtcVbjsZrs+5O/sZDrl5pnSd5ISwgzKb7jnRGtPfySmdpKD05UyAtXcJxmaikHz0giHCEzKntrMNGN4nqqIN150/O0b0y7wpsOiShDuGeHZmtJUFvwtU6Usy68LDYVBQ1gqrkdQVPUKSmeeTLP+RqpGRbBtbucBN+QM6wrKW3jN0W3fg7zu1w==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:56 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"f980e0c6-e73f-450e-b737-7d5e2a9857cb\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"RemoveBackendWorkflow\\\",\\n  \\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaia57p2um2qweex7pyfhil3ivlorqdyew47j7mos7jt4maqvhoxga\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:14:37.293Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:14:49.312Z\",\n  \"type\" : \"DeleteBackend\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['830']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:57 GMT']
+      ETag: ['-1731841319']
+      Vary: [Accept-Encoding]
+      opc-request-id: [71BDE45EB4DA4543BD5A71FB897BD68A/B8E8BD8F549BF217D4AEC0BBE3F3B644/A89743D1E53DB186E93C9AD7DE7ACF85]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "cli_listener_vcr", "defaultBackendSetName": "cli_lb_backend_set_vcr",
+      "protocol": "HTTP", "port": 8080}'
+    headers:
+      Content-Length: ['113']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="uaF+kCj6uWMC3gRlzHQAW12RgbkTMfJOcq/qY1nLXMJuhHPhPQy1CVztLdRWKlSc9xMIcGxVE9KrVJysbEGG3mnlW4zw57fBN+UAfvvTkWS1qTftrWB8o6ZyPic6wT+N1T5O3204ofSFii9aPyPi1s4GHXXRTAEnvZ6VdyCI/+GeZWFor8vg2N7v5onO6grL2qHHYPg2Qb+Pgjz5GEqq8Lu9irfW6t2fSbRCcYo1kkKFjhks2CkbRNkHLx5r8cAgU0OBFwJMdQ5cKmKEO1bxHOPXzfxYz6vIZQSmi36xXLInpr3oKrl0/EX9eFoCpW7HwSEz5/6B0geAJqI5bRrqQw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:57 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [3229A89A068845879C2ECC3DD3BC6E18]
+      opc-retry-token: [oZDhSxrZqV47tNnKW8kHUwacDj5inl]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [whbFDZJq77TOOVrBRGjF44vZcJ+CqViOZqa/1VEZq1c=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/listeners
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:57 GMT']
+      opc-request-id: [3229A89A068845879C2ECC3DD3BC6E18/7F21D692C105D925401946E8655F8109/50376DB20480EC5F13FF05CDF2663814]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="UQ8Yv2/cUj5xBN5nXJvE3z0bXVYzE6d5NTH1BxcZfGRJYz/HyChCs1wOLEhM0xFkGtJOAF/nMIomBg3B9yWkCeFiWyHC9e8ojFhYQ8kr7hqvnLmcKUPjDV1gt8o3ibb0x7sbQdOD/Vznsmc7yukpFv2zSa2pC34QZ3R7WSANB4phRt19rw/zFJYrHbXofpnWT3Nt4BFhcdzRf9bEF3Ct+9xliwwdJ5vt2+z75BFWc8etggj8iTtjiCB0y6eJYuQUndT9FpY5wzHjMn92nQhIG8GdSTZowO30XeS/G+GgN7fA0PYW/8DiBNA/wZ69zeOXaCaeRDrITbf3S+KIPSBZUw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:57 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:57.798Z\",\n  \"type\" : \"CreateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:14:58 GMT']
+      ETag: ['1621339556']
+      Vary: [Accept-Encoding]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591/4AAFDD2C8AD32C3E93C57308E1F1706A/B04EEBE85368F18C5385391BEA6A5DAF]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="EaEetKt7StgMsRiQ00vkSTY3map2dTN/pW01jbrs+7oqFSE2O7vr9TVcSfvf7j7zgLZaafs6f+5afcH8ZUMrVvdBUo9J7RYQQNbx7fDblBXCp3R9fCAj4evcu4xT2KJxHJRHbpmy7wzHdsqNYTMb3rR4duAjDKtcWQdvQ0VDsf+P3kB/8BVhfofrbgYu7l4Tx6kBBrdC4nNabsL49sm26YZkVX0xzK+NR/q3WtAGbeo8TqvNEYRTS/0trgvKKSTQp6npSg+UmxrMz3rewm1uReGI5sa36HUxDMJAYdccuffyybE/5P5EN4I45lTe420b6870RnOtYTsVH4BQh+Suqw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:14:59 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:57.798Z\",\n  \"type\" : \"CreateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:01 GMT']
+      ETag: ['-993742974']
+      Vary: [Accept-Encoding]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591/FE6381DD0A2D93CD28E38E124CAA24AC/C258E3F40848AE5B8B8CB97E5BCBF88C]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="Cz10y0tctvKc5ORYcwlQE8A8ZSzjsB8641kQj04WNxNmgdgBp1xPkkXUeSvv1CNL2RgHbBFZR0dDQ86edIXO7lh7dzjKebLRvjK10jCYarggaRQWd8GKi1V9zPKa0Ov9np0fb80RO1ONqPzg37aCRx1/6qLKDfU3BwWU8Q3GPYxp25gCypwJYkYhFM511xINPjbpTeKQmqgKUBuZ3Q2dCz15HGuTwO18YZLrF9rl+ZYCUoeZQW54tSY0GLnN3Uq18dmjzKBKbv7QeouctMP+qCI/JqUR37vyITAgPgD4qzjesFTeFglmSad86jq12PeFi66gXV5do28OnQjdsW/2gg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:03 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:57.798Z\",\n  \"type\" : \"CreateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:04 GMT']
+      ETag: ['-993742974']
+      Vary: [Accept-Encoding]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591/125E06E4873448B98C9A1EFA402325F1/1588AAF92D10E71350A4A752DADE1B02]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="GPNV6CbsUSGogK1AjKKCC6drgxEzLnW1/B9sYAZJ2yVCogjC6wdE2kqFn7GmB6yE9J2XuWnuv/9pxqv15fDswyoI0ULDiXVP+68/QzOmh4EI72iSlNGU4aqJJLvrQPyf/PDPjnfkGASRHf9iCsU+2smcWpO8SQ0t1O9f21UJ2Gt+MW3L16cZwfuxCJQttUkw0SbNRffbOkC7yTxe7fxkgU5EIVV2ITLDi4qFFAcc7+xy9Nw5WCAsrbGPGibHNUNDP7sTD+FeWq9Oykl1l/elaU85gc+G52XD7ZivVdL68xgBbDJYj5lE7BNijjXcRPtAs13GoN/l9CwzcB33rOiUQw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:08 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:14:57.798Z\",\n  \"type\" : \"CreateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:09 GMT']
+      ETag: ['-2007134699']
+      Vary: [Accept-Encoding]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591/3C43D5C0F05B3F6646E527911B115969/42A5DD128563A7D188D7D469EC24218A]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="CiwVJ0XDcRbP2QkLvQaHH098FhcybMYvHlRuiSEOKIpE3EkPLOhxq46Zd4hnzx1+s4RbG8fbbVi+p3+RSmCeOoxrKI3LzXfRHb4hxAamC1pRmZprt//l+yyB5yLABiTB2wNxdxRxhwI1huFnLnij6RGLBgJL1mWPvpKsyFv+uBRKEPevQXrcE7A8t6klShVnEv1kDC44YuTeHeNgE1aImpM1y/tS3Q9iS6zSnxnMwhp6iTTygAjZ7EKZCIeemL/6rnac/h2sn3L8VE/UichAHCOvn+aMJZe/2wDyGaAuT53aLTuvIrihAMKz+ykLqS1Z0rhMM2QUBF1rQkZjsihR6A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:17 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n\\\"eventId\\\" : \\\"3ecf3473-f00f-4d10-8ee1-906adb4e0ca7\\\
+        \",\\n\\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n\\\"workflowName\\\" : \\\"AddListenerWorkflow\\\",\\n\\\"type\\\" :\
+        \ \\\"SUCCESS\\\",\\n\\\"message\\\" : \\\"OK\\\",\\n\\\"workRequestId\\\"\
+        \ : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa7il3kg5otwcspb7creutgitwy26hpjnjg7x5tbvlnwva4m4lqkzq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:14:57.798Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:15:14.876Z\",\n  \"type\" : \"CreateListener\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['817']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:18 GMT']
+      ETag: ['555311445']
+      Vary: [Accept-Encoding]
+      opc-request-id: [43054CE2A07444B99A209FFD6E4FD591/C4DBD7F7A5A54080CD6B0CFC3BFDB1E3/8C71B6FA0F0CB7C82AE317ED12029FDF]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"defaultBackendSetName": "cli_lb_backend_set_vcr", "protocol": "HTTP",
+      "port": 8080}'
+    headers:
+      Content-Length: ['85']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="j5PgSiyTGvp9lxrwtbnLGCorY+nJPIpXR13x/LGiaORRJznYDfaZcwV9I4DwaK2qNoM8D9VMDluV9d4o7tqwk1vADCGpjdgOsu8TFEHlmGq+NweysLcW3pr1zGcCjKvrzTPX7ffZeKE9224xknfLh2ccuo42J6DsbyNvb1vVckFr9F+zTfkCMe+AyKcroFyeTm/2/G/0Pe2Ldw+lvIqUelSagsZO71JnB11DXQk3nq0En384i/Ovjv9Fb9xHQIGfOiTciu/aWiGucXm8a4XyRGv32vMxD6AOcce5P6dRXYj84E4WsaFLpL7ucUvLaz3FM6Ozs8JzGbliX3AjB3JGeQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:18 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F7AE7E700363453FA8BFDE173E5AE0AD]
+      opc-retry-token: [adYSJXp2ybtKe0zHPzB1VrC4vVOBL8]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [EYEpgLmLABqQOBNYnjnEQiHGaEil/SoRcfpgMk80oYk=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/listeners/cli_listener_vcr
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:18 GMT']
+      opc-request-id: [F7AE7E700363453FA8BFDE173E5AE0AD/085DA1856700B672741BC598BD8033BE/550C5F2D7C5B2021AE94CD9D67C7FD5C]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="BPCAWtlu3uLbJkoTrvEEa81tXm72TIf5FvjNUtXzsysTNhki+8uauMEO1lb5uNzd4RqpxrzX86vQIn36lZ5mf0c6vCY9RmYb19zuj8Ea2/AjC2BS0xNPAFcJ92ga63cUdQ0HQX//ORHnYwqgDYNiqdTbeq2BC0KpY/54+x32ApxfonvKablofJklUns5BPp4f35/YI3A9aobLWHHe4aaPMGDReA39zLC6E1e0VbeSOgkdY+pYVMWJLgC64Kf82bdG/WV+0njwn1PMTTrzmsiaVSiHid7CPK65Xn0f9P8dtb7lZOg1OF4uktHeFdi+ioBkG4fckdJ9/5DNCyQlVYmxA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:18 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:18.942Z\",\n  \"type\" : \"UpdateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:20 GMT']
+      ETag: ['-273498076']
+      Vary: [Accept-Encoding]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D/0497FC49D0AAB74B7DD32A6A3F129940/A2ED6D812E9545536579C6A579F48C08]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="GCI067+MnYid5kj4cpFqv4azYdhRYvzmx6+CoEmn2tdzrZTTRj3XgE8kXIUSMDmXW0COg0vHPXFVPSf1EO+mIQ/sIbKn5E52uEK7asJF8Y5rqCg4U219rU2cli9F0uwolF5mIutyaSDv5unA4AOpC3qzJANaBUypcn275jJBm+rt2Fruny43AI4N06ty1qJWPEAKN+Aky5eO5PtBwwugNolrUb52SXarEV9cV/3J9i/8PryrxvI2jMD+ujCxI6SFgyW6GlU6Q8bBwySEKJjcLamvmiy0yUsl2/xHB87kMH2x5bSufJXzUi/nuN2wb3MH1ppeLYvbzlO5BS9SZ9JKoA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:21 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:18.942Z\",\n  \"type\" : \"UpdateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:23 GMT']
+      ETag: ['2015591775']
+      Vary: [Accept-Encoding]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D/7044F0716DD7CAB005F2E5905014945B/883EA4A867A52A8DB320E87E5E78C402]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="b2tJaKKWHGyyHOPN/sEAY6L93pKBdrokVZQwmapFudomAebKdIT2TKWEFpoTcuXRJERB66KgdHzATSD/Jfeg6MLB+DkKzyVMNq/yEACO6TChRNnyPN9bT5hYuIis9is/isin64SiTjYCNhdFYuE1ON4btIhJACDfxky6FQyb8eJZXb9oH84nm3tY97xyN8f4MC+99uq7Wl4W7b6Slqxc5pofhcF5rq4vgMJS6M7u+dF0xhNtFlyyNiikwAtAATMhXwt9BZApwyha96K2mOuaEvLdUT5x5UPbEEcjb7WMEekHmy1uu0kq7mpI+lc11c54gvRtnDcAEiqgqUquHK7+LA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:25 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:18.942Z\",\n  \"type\" : \"UpdateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:26 GMT']
+      ETag: ['-273498076']
+      Vary: [Accept-Encoding]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D/735982759B5062777EF8FC2A67880B20/83DFECB7708DF9A2354836B74AC4FDB1]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="osi+uaXRYmgn/7+nXc4XRL+E2n86oJsg8FWTqVQibHx1aoOoNI1fECqr+qGw0KNbLOU8Tw+F88hOAk837kvO0Fqo4Xl5bESpbPfYUERIQZBmxQO0GL7MvUsm88CCmB38x5U6lp46l/C6lPLFN9X3R5DLi3/IWOsytj30Y1PxEFiFmRVi6NL+42NVNPyO1v9Z4EmJL/GM6MmOeVZRRr2BOhEThVTjamCGqZsZwSrHknnODBV1PEQTsksMLXKw5DsYYg0qKtfz0Z8/zjUzKVlqUDWPI2nux9wziNUai7VsGtyo/ELiACcAfVkfeXc2fRqScNgj4Iv2KKg4HiidJm+yeg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:30 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:18.942Z\",\n  \"type\" : \"UpdateListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:31 GMT']
+      ETag: ['-8853794']
+      Vary: [Accept-Encoding]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D/1557825688F08ECA42A4A15ADA8676CB/A144E4E1FF7A6C76CC511259C50C7C96]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="QwpPJNq9ooLmn3haG4+0QR5AlAcwHYnNx8QZPyX4VXerJ9H0caMWS37C9FdK9Z8iN+5iE1IU2J08M8oFRXwqZQJnNl9BKqsWMDjFY4TpGI2/4jDBKI78KAlXAxXJ9gf4o8JXSGViRf7Sb4IEzo+dM9we4AzlMG9nueEJFiFfB+WNei/mPF8fUsbfwKSNbpCqzBVyidVohwZGkYLjCdExSbefWpfcjRWmqR3A+iN2dfYY8T+L3MkY83U+X3YMXbInNoFzOVG062oU5zTHvcJa8vl2Mkio/CIMTyz6jUC5aG/ofIQXs8Li/HM4RA7UtsOSNa3k6vCwiur2uBnnU3KnXQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:39 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"159ba4a7-b03b-4f4e-9dd1-b150708be47a\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"PutListenerWorkflow\\\",\\n  \\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4zgnisyllktijaez4j6qfziyzeyomh5ag6p3y7stnigxzjokjn5a\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:15:18.942Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:15:36.901Z\",\n  \"type\" : \"UpdateListener\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['829']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:40 GMT']
+      ETag: ['645221868']
+      Vary: [Accept-Encoding]
+      opc-request-id: [A438D1F5E1754F58B84B2CBBF6503B4D/7C95095F36F773263BBFF13832423DF8/97A7974F79C325AFCCE90ED412C276DC]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="l/oipuE5p9DZkABy9As3pWMaddAmP8uesdn2wrx+3z9VhONXgoTxA3qjkcTuDQvYLbWH6PgUfJz6T3AFB4xUhPsDjqsyRoqMP8UTP9zTyf+wckIxfPgJZxcbeFQfV1n2wbiZhRbXAnad4pz4JS35sZFgth0jWwy+EcpA5AB7Zdzj3arGbVAWzqKNdDWvRBK9MhtC8jD13XT06qA6HV8aTRKYf/OIf8JA23dRQPKBydl5FWM7Gf5mWnIEP+Ggr05T+QvWnCrUZJXK8ZdeXMhbyz65c2M4E+tDxIjQNS568PklabFB982Yg8WVa92DH5t82b9J7214vKtKTcgOEY8MPA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:40 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2BFF5068308E415FB367691F3D867D82]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/listeners/cli_listener_vcr
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:41 GMT']
+      opc-request-id: [2BFF5068308E415FB367691F3D867D82/03CF6BBAE22D50F908371D677A31935E/88118D3F4489336E1F003A4C56BFD98A]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="d602nhe9j3Nckd7wb4kF7xTwjoLGOI6WG4fAdLV/uqUJUGWTK0D1SxjcfA+fYADyqIG4DVjMVvne20OMvUhr53pstjn4bG7jcBckooUSoztrGTvs3yoQF/U1vB6wgGc6mSsPY1w161Ti6wPtz3ZUovnwqkqnUBgrgoi581pAG45FAS6O+mr2+TzheSZiG2jVMLpqKcHQ/5LnvJNVn2qp0o7umLRHRqJPwfR8DN16OngPVnA4e9pi+Yhm5X+DqV9sGNJ+a36r+F2DMyM0d3UexsOC9oBS2w7VcRY6g7v0itS8mp529GNhKZwv/7DTFsRkNMEv8aB1sl3RaHikxy0lGQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:41 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:41.458Z\",\n  \"type\" : \"DeleteListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:42 GMT']
+      ETag: ['-1795486258']
+      Vary: [Accept-Encoding]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758/69D01AAE52CD70B3200F0947416A7D97/7195F4BB986A8FB7913B79D2133C8040]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="kXbGW9DdoHdZBTKqMSveg5untNrtnwJhsICd1uI6MibC78v6W/XO+66hWin/Fs0L0bQWRXN8tOd4LTjJ8wWA3w+CG3D80/lQhMbOj8HHDn90lWxDzb37hEuF566o0WPU0TYOmM1koixAcMX4e+HSPLNIyYTJJPsXNiHwl+DBnLl3JJGOUvlFEpHX66+Q4rpEHThHoMPjLIHOUjpCmicdqxNZcjIsGi0u0IZI1KHWcFE1o7S6dck4xzRMXhIBlfhoVm08HwEc/DIbzWkeWNwKCdUtZ8rNTBeVI4mpHI/gYDT3YfTdoJjW66tljfrxW0MtsdtBygburOKgqCma2hXkCg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:43 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:41.458Z\",\n  \"type\" : \"DeleteListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:45 GMT']
+      ETag: ['-1795486258']
+      Vary: [Accept-Encoding]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758/AADF7B88728C9CEF9845A626667E7B8C/513195777CDE4A593848CA0E9A639BF4]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="c4E+v5RFZEd3hXeR8JdRlm41G9eKc5NM37Rsia1ZS5zLdQHEFWmbN7OcPmb1/s2l9Z9sL8LrFVHMLMMl2IdHdx8dIAMTBGXZFPnZefAO/JJhmSpJBvwwmyeVsblXXArf+BIcL+WUrRzlpLDap3j/RuK2+8+Vp23eD6YXhjS6LD/A5962o+xhbyhRb8OI76xKp6UxPWFQvEqyHrSmt9omXV0cFYs7FUD3ZcPs+c212srXDPsUaMdRXqJHmAE9uDv+lVsCOtRarkG51q2Zio0xE7Of4jyiGa/En08MzxCkGXfrcTywDojkvo4x8WDrTNC0N1oxtHC/QmWwloLtoFHecQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:47 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:41.458Z\",\n  \"type\" : \"DeleteListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['358']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:48 GMT']
+      ETag: ['-1795486258']
+      Vary: [Accept-Encoding]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758/2B8EC555B6CF0F12BE246C855B069670/BA06BDB295B94F4325551A127DA43CB4]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="ABuODgjFjyb+fTllXLY1/PbSyKUBD+yBN9CjiwOOqdHdayciR8Gl6bzZ+Qw5mgaGhgeeYyP9BY4gMH8CSFE2GxaSxfRT/t1c9bB3UTp9vpIQb/u1sVxTCQbXwkP0ABW9S3a8z8ihoiWirqcO6168xUuYNSLy6XEnEXUUrx1UTyA2dFz4NBW/h777UQvtKwdj+wJ6edsntY8A8dte1EghMU+Dah6eJYnQceIyM/xBqwvQF+iWHNd5SQpKpGxgFV3HRtULH6MdY1e+bKU0IE60Lq7szn4QasUN0bjdsC4RMG7/8cVtxiLLxFwCv/RzYQs4Z5GMBito55j61sCCmWFotw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:15:52 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:15:41.458Z\",\n  \"type\" : \"DeleteListener\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:15:53 GMT']
+      ETag: ['404901872']
+      Vary: [Accept-Encoding]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758/F0D71E37301A33B6CC4A2AA5D0B5815D/3F4C50E848B1F37A6CAAA47957F4F8A1]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="qWqLEOhaD3YceFCRtahuxkbEvODexsqtgbfTXEmnecAvN8P0dxFnCZN8s2r/wiWRomyWAUZULLjMv56FMAIKzHF9VPc7wwV6EVX7nqFJ1RqK37eGYYcLZRhof0nU9GoLNDL1jU9nrengKUySq4Gg5BykMAOBCT3rEcmvqxVxxeC4RbDQsJHyRJDUgLJGUT9U1cOai3FdMDB1FNWyGR7N5on5Yin8EXF89twlCo0dUhYIT4b1rgWkIVIWoDkgU8O91nL0jyoAMhFT4DbX2ioxkElSvZ8hxPupmtLugbsz1DxTMGQ9q1b+YL9jT3DmMP2+oYM3kKhndXSxCbKp8sGdkA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:01 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"55b99cca-f67c-40cf-bb36-4a790e88e396\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"RemoveListenerWorkflow\\\",\\n  \\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaadunkh2xzfxvabvuoyddqkxqbuz7yxdo7hvjsa5ncfivxojt3mqza\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:15:41.458Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:15:57.972Z\",\n  \"type\" : \"DeleteListener\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['832']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:02 GMT']
+      ETag: ['-1034841237']
+      Vary: [Accept-Encoding]
+      opc-request-id: [68A2CFB4CB8C4144BE3DD119514A7758/141AEB8CB0911F359D95D154B5726B5C/4A057CE9945465A232E8E4E8CE133A6C]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="m1Af8Sw9hdpuvanZs1eI6stnoo1T3zbN2sNTOKvY3bTWlQ0R1FmPAXWUV0+fPKPfHntIIXE7WXQqkA1Z9tntdglEkNm1L5OLoF8FXWePqBNganM1GUPVzVRI8O9n1B8puHuRQyXx4GMWRl6ZuK0I3dWz8YWtawh/FkivlZxs90DEhEGMqsiGWUCu0dOhWo/A7a37gdXEH8kGPJjQY9/jKMv4ZU8y6Y6EdUv2IDBMbvnPrqyfmw4EOmT+o3azMc7dmKXiwqyeUmWNYbtUpWOUOlaBrIY8EZ4prkSdU3eGGuSIQv2y7wC3sFyHMT8zVxHx1Naar7MSzq6z0tq0f8BxZA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:02 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [9F14AFD5B4EF40C3989660558E939050]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/backendSets/cli_lb_backend_set_vcr
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:03 GMT']
+      opc-request-id: [9F14AFD5B4EF40C3989660558E939050/E53010BBD8137239AA98C7ABE0F6079F/266189F4312AD0C15510C8E0CB91A4D3]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="qlfkR92FtbDlpcUwgCKObrAuTkoNYlI9ILm/53eCNCGF4A4y99QNG2Z55NaM0rckZipy9s7iHObFRco0268iIcIC58pOcuvWRxB1hOPCBcvammqtpXFjdx8vCIdvCCKfKLybEqoRPAbZ02H+I4uKZHnuFpPZwiDr187nNXF0D4tNeIGC2ZZ80IFaAwzVd+sp1Ytko4PYoboZbmcaN67U8GkVuqoZ1/SuJzekya1vSULz97uz0S2t1pqTSrVEv2pQNHvTHupzbqc0hh+aSnj7YLqb2RVD4YJiRqKwzyBjpsz9JwRMmLZVfm+zIL1V7/2mdmwX6bBtc2emk/EwluxG/A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:03 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:03.007Z\",\n  \"type\" : \"DeleteBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:03 GMT']
+      ETag: ['-1991952319']
+      Vary: [Accept-Encoding]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233/74D4C1FD26B37A4A45836C3BE6974B84/C50795398E31116C6E8BD0473E1DAE7E]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="HhA1PVoiqwA6gjVp6v1WK/QtmMlBKB32tVdtAUj5bgV/aDy/zVy6IJqlfWuGQmc1duiKMqY+NbeK7JMt9LmEBubhdTTk1qhG848roLcRkw9gR/qNCvbXvCYg4i1Az3NjSm3Ac6nJ8U8vQwlRokKmsw5/OVDBiQ5K3/ucjIwDnxJ/1bevbtUyokpYpuS4zTSr6CA1wJEUkBwXf8SREIHfEcg/aHBmIUaResq17oRw1tGhPXnFOfaIZNn5uMwbZ8Mx92ZVyvili7no4/HVvU/NKudPJgm1Zj/ZFw7Q+dqSjJL8a3jBa8gSg1rWinmMCDZ5i43KLp6pojgnjuYBlaopFA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:04 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:03.007Z\",\n  \"type\" : \"DeleteBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:05 GMT']
+      ETag: ['-1991952319']
+      Vary: [Accept-Encoding]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233/B86A29DC47C752A27C290C75EF30F162/DB67CD9849597CD4C5DAC22636942BC2]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="juL/hV5RVIFuHgUdHGsOarDPM2LIFLQial8FgrDhPWWKTb4c0jnVawwDezGs/yuNIbh5BTahFYC3C/j7/5ewshS1YxXHBnNja2GLE1LThT9vSP2xE8N24pWnESZq4daXgDLllD9Fc/a45j1UdUaa0a83VSxSkwO0LcI4hHzWZ6GBNBsRqwYuVGnHv8jWi2gI2IDEQICBmDwuPSeJ1b5e8IDWjQmh65yukuLxcn3C7s3gK/WR+ipbldHkomQsUT5MNOgHHilzJ4aQ0ZD8GQGy+sI13z8dEsDYXbqR3ZW8URuCunH3UHe/16BUa8GrYIvbbp4FznwZ7A8In7oeaFxYWQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:07 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:03.007Z\",\n  \"type\" : \"DeleteBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['360']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:07 GMT']
+      ETag: ['-312067553']
+      Vary: [Accept-Encoding]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233/05F8619BFC5B2F6D8AF554B4CD798B0C/B30B2D10D4566732BE1EABA822F92756]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="rQm03EyWKoZDPp68IDW837ZIasrAduqRZQGNBCFqhBdjjeqEqWSC+hH0EsuX0dWkVVUNhkEnIlXh4b+2Mr5O3VRzckTGbVOo0TaxWiZXeoxkl6Z+LZUam3ho2OBKBLIFMzA3HTPN4WWWdJrZL3N9p3Vuh6smaN8nykfwCcDQWGffFbVI6hCKtJvcmfVvVFKLz59MiAOPYhpnnS7Pr9qk/LP64KvXb7A+ggL5NRQLqLV0RFlS/X2BvLnmolMsMLRetybTyn37pN57RXyZm4iUEduNd4rHflb3jcYbdX1ggRaQqFXeYPbdGbdfGfJGolCNcj5CkhilUtFAB9mjOzxIfQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:11 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:03.007Z\",\n  \"type\" : \"DeleteBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['363']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:13 GMT']
+      ETag: ['-1325459278']
+      Vary: [Accept-Encoding]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233/3DFCCDD88B22A15C4AF8CE671E5A61A9/8370F95B0A7F89EE467677997F237D15]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="QGEXBl7XmDuFD24/6UsTsILt2x/BlVrRzflOTzP7SHz2MxZkMEhM5jKPJM3WXTmB4HpIAZ2clCV9CsU3YMfKd/+VqM8CDR0pssjTw5LRTufZlxon+vZPxq3EfGorPOZceJPzbN+HMrfbPkJaYUeTyydolGdK1FulATEywBen0ewOJy4OStrCdCWq6lEBWIMrcSRkADBRFbZQcFegQ832V916BZXaeQ2W2zXzfwKUKBQpg89Ub2fU4G8glRO0xmQq+vGk1HFHOOpP2+JjLUk5LKjPCtD84tTTTFv/9kPuKq4Eb21JAI74C4xmY1Fguyt8YoLW1i9k8Bis6iXVrqgzlg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:21 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:03.007Z\",\n  \"type\" : \"DeleteBackendSet\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['363']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:21 GMT']
+      ETag: ['-1325459278']
+      Vary: [Accept-Encoding]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233/79EA4F8C806F18AC16DC2EACE473ADC1/540544DFA63E80E1444C6AA0A6D2BAE7]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="BKf29hmtZeJBFy2RiQYh2vuWBy4597t9DT46++CJDqdUL0VDP7gQtcsXwjTahTnzi3FWhotqo1Udj79t9YyKl1UFo9X6Wl0vMbW0rU8dF5UBqNomWq3LWrcqG5oqdTuKa5KzrzfEHwaZCngLDb5nbTvWmJb+WJa3awWsTb0WXljte6ZAjrSrsmvOYSW89/niehJNILexm6GgVaWDQXHWZi7LbrVQT24aE2E8sVTfQj52dKgGhdzXVNgXBuGXrM5/SDwi936+P5zdT0nPoTuRVWlOMdoCAdrlhMF/hG0/bQejp6pucK93TODt5GbCCcZe0cTRi5fFlDBxhJ7uu1YdPQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:37 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n\\\"eventId\\\" : \\\"85960c90-f10e-4809-8123-689c34a365d1\\\
+        \",\\n\\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n\\\"workflowName\\\" : \\\"RemoveBackendSetWorkflow\\\",\\n\\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n\\\"message\\\" : \\\"OK\\\",\\n\\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaaufr3yh3nrwdvbwxz2ulo5yz7sb6vj7yjsvyaashoahb66jerhwtq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:16:03.007Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:16:22.299Z\",\n  \"type\" : \"DeleteBackendSet\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['824']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:38 GMT']
+      ETag: ['289973729']
+      Vary: [Accept-Encoding]
+      opc-request-id: [C9B7815C051F48ECAA2A243C56832233/D0B4BFBAD5958C984243F148CC7E73B6/A457871F0B0AFB7A3BD2ADEFA90D2795]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"caCertificate": "-----BEGIN CERTIFICATE-----\nMIIDTDCCAjSgAwIBAgIUMlWfS9xcefn1OV9+nH2KEbjnl94wDQYJKoZIhvcNAQEL\nBQAwUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAldBMRAwDgYDVQQHDAdTZWF0dGxl\nMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMMC2NvbXBhbnkuY29tMB4XDTE4MDcx\nMTE3MDgxOVoXDTE4MDcyMTE3MDgxOVowUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgM\nAldBMRAwDgYDVQQHDAdTZWF0dGxlMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMM\nC2NvbXBhbnkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1rjO\nufDTRv4fYhr1DDjCce7gXFvFfxN1B/tDRafSCgPoMSn0NeCorlRSBMPTjV34G0Po\nF7AyKt6h60ncgYOnza8NNcEDaIhHypNFzr23kQ6jta5isJrRnu+2oK8syCh7Z3tn\n52UMIkNnoCTXmC8CreV/JixfOFwnZ/ZeS12thdWAHeN3f8Kzvj+5AFmKnSuJfVvr\njsJcYSVxRQVJp7MstEz2p3pY5MYHKUeK1+o4BPhxH9Hq2TWFeHxj2vWpoEZDyFC8\nUzPNgDjGWrdNRVNqGq8QWA9fT9OqNYtnAVOlhlSX/etlpiwNqUjXxcWaeQZQYHmp\nwyqSlKf1qBrtFsj2PQIDAQABoxgwFjAUBgNVHREEDTALgglsb2NhbGhvc3QwDQYJ\nKoZIhvcNAQELBQADggEBALMdBAYkoPNLHXzJSMYp8ST9svw1Li52UQZX5HNUGVjR\n/4uzrV2FtTsq3xhbvD0/8nJ3ViI2Oj7XwhvCQMGWrs+Qu2Hg7i6MpKuLgZEotn9W\nhapUemoG2qbXCxa56kXU4CPayKG9kpK3OoaidUQna7bWVNhrCWcgTC6Tn0yl7+ZU\n6JisQ2YM05kNe86P5CGGJVReRI3E0QRaPfRANoOjWAMW/PI0lIpRUdZAxE/sH1W3\nuYbIsnnUqQ/yGXk3yn2+YsuLu4KNdp0tlEk4x7a0JPjsWBvO/4OZEF5QzR4nlrEQ\nquxGP4CXFJ0t3dWbMgfZw+gqRlqBPXa+3KiDYPDeg8E=\n-----END
+      CERTIFICATE-----\n", "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nProc-Type:
+      4,ENCRYPTED\nDEK-Info: AES-256-CBC,2277117AD91F310FACF5A82665BD295C\n\n4s6GZd2TGhJKX7lRvJyExMid00QCtxE8RUpQrJbVq2Uvgt08SvjTxCmW1f/egq+x\nzd2sffTiPFDxqivw8Xe5R+RmkNQLlv9TxnyN2eMXntvZ9ChkfyTdlEyCqQIgqxJE\nf/MCHUuK/H4jCj7zZuDJbj5DlqkzLcFN17TTkHSH7ShurwzQWv/3vTCQ2/sTSriL\nfsgIYHXZ1JKPXQrAHOB/4if9cA3tl+c0F5lpQZNmJD/QiLcqpLf3JG/IoEMxVwLq\nyESHhm7EdskpG67FbnLZkU21aQQAS8w7PlopYvZ+J5LQb/2icuf/oVke4kyoijB4\nH527BulLQVEXVZrjDi4HqWQlIB93YlSMZhoGY15fiCsf8M6polXFgEkS50M/JELq\naJAPGgWVjkU1E3vf4gkAI8CifT04jfpti1pPGacSj41mipVz2+bTopDKTXJydAXc\nBUxZPs+sVZre+lOX6KcW35QAHheEmywh+SX+NrD5UTdsfWrCh+1rzlF5MRbi0nz/\npBsRV0TrOqXOrKdyHcv03iMcWy4SgzorKEOS5LmMZXZLpNIBzD6fq7vPNLv/WtT+\nbIOyQIc3ozA5qQ9pIY2aAJJNWuUszyxugRJY54gk9LUba3YndZ1/y7MSxGRQMMxM\n1ozc0Uy5geiEpjZti9o6a4xe+I2IBCogQTr6ziA7n/2EnndkujQkwqg+V2TPm1Vp\nXbW1uiLwzXY7xmMqRQNWK4JUjBHF5FE3MQNJEfI0cHuzIUEPK5h/lchFeWfdgQY8\nvq8KamCl0Ly0ROkkrLj3fTa67qrFRnuPdD2o7YcsbWWJsV4A2q/v6Tq9scQE/Cf3\n2gpMwC0o6ymnKkDcFXbRnDL/Bpn0Iua5wSZv3PVmbnTiP2QWXYDJ1XVaL2PNEXoi\nLh4g2vA/O4M54XRERkVvLGFpg1Q6gOfRFEkYObcK1JLlZCMuw7UdPh0l2hsYocug\nzf88u//MHPzzASkPWRKovgFs+xSRn+7r5S7rlix800m/9GTQfxEJ9WYRtuxngXTj\naIsNOpp4M8YCgCsAa7RrToJxNQPmwPy13UgGrUbYkHNo+aa0DgdzkPFW52HXBOBh\ndENfuzx9hq0ABqNtqrfV2Ao868A8ei85nOu01A2EFhnmMeUC2AXhtb3Gyk8bgORV\n1cx14yz/8+clgFKtZRaWIuDYbDI5mtUJAi18qiAqaKaCMSMDzIiAohraen48qKRo\ntjq/mDg304DTRgnvn9lNV16n05gVfSu2qFmL/53ZC282hde74GZNuo+FoVZR4+8s\nbdRTprRENj10vtoFdOwmx+Xoap0ei2RUXQyL7bQD8bOgoeRuuNnvGzcNqi+wto8V\nXnCGszo32CAvlC9oOFCPZPxKTs9MfRJo6c9YUjJes/S1nNbehZGE3jFqCHsH9mZO\nYQjCOd7z0krfCP8tHN8B/KuwOZCJDJBWWMtJgu0V7nqHuh9EcJWmVnbwpZTvOIjt\nNqlD4aW6H7ZRk1Kjaq4jGCgbd4wMPobVvenTDiZJ+1Zr0PndomVyrSvhcmEXSLIN\nLdvL2jUx2eIqsx2QSeLozUyXl996yX/kb45ok0IJL1j+MiElsF2xnY+FrLWeEzmY\n-----END
+      RSA PRIVATE KEY-----\n", "certificateName": "cli_lb_certificate_vcr", "publicCertificate":
+      "-----BEGIN CERTIFICATE-----\nMIIDTDCCAjSgAwIBAgIUMlWfS9xcefn1OV9+nH2KEbjnl94wDQYJKoZIhvcNAQEL\nBQAwUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAldBMRAwDgYDVQQHDAdTZWF0dGxl\nMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMMC2NvbXBhbnkuY29tMB4XDTE4MDcx\nMTE3MDgxOVoXDTE4MDcyMTE3MDgxOVowUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgM\nAldBMRAwDgYDVQQHDAdTZWF0dGxlMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMM\nC2NvbXBhbnkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1rjO\nufDTRv4fYhr1DDjCce7gXFvFfxN1B/tDRafSCgPoMSn0NeCorlRSBMPTjV34G0Po\nF7AyKt6h60ncgYOnza8NNcEDaIhHypNFzr23kQ6jta5isJrRnu+2oK8syCh7Z3tn\n52UMIkNnoCTXmC8CreV/JixfOFwnZ/ZeS12thdWAHeN3f8Kzvj+5AFmKnSuJfVvr\njsJcYSVxRQVJp7MstEz2p3pY5MYHKUeK1+o4BPhxH9Hq2TWFeHxj2vWpoEZDyFC8\nUzPNgDjGWrdNRVNqGq8QWA9fT9OqNYtnAVOlhlSX/etlpiwNqUjXxcWaeQZQYHmp\nwyqSlKf1qBrtFsj2PQIDAQABoxgwFjAUBgNVHREEDTALgglsb2NhbGhvc3QwDQYJ\nKoZIhvcNAQELBQADggEBALMdBAYkoPNLHXzJSMYp8ST9svw1Li52UQZX5HNUGVjR\n/4uzrV2FtTsq3xhbvD0/8nJ3ViI2Oj7XwhvCQMGWrs+Qu2Hg7i6MpKuLgZEotn9W\nhapUemoG2qbXCxa56kXU4CPayKG9kpK3OoaidUQna7bWVNhrCWcgTC6Tn0yl7+ZU\n6JisQ2YM05kNe86P5CGGJVReRI3E0QRaPfRANoOjWAMW/PI0lIpRUdZAxE/sH1W3\nuYbIsnnUqQ/yGXk3yn2+YsuLu4KNdp0tlEk4x7a0JPjsWBvO/4OZEF5QzR4nlrEQ\nquxGP4CXFJ0t3dWbMgfZw+gqRlqBPXa+3KiDYPDeg8E=\n-----END
+      CERTIFICATE-----\n", "passphrase": "secret!"}'
+    headers:
+      Content-Length: ['4378']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="Cr65YAdjVHSXQzsZKm6grEV31LUOznQx22YKBjzAW82NKQbmqHydEUzlDNkmToUZHGzFI0xUrtMh6e1s9Vq1XUjsX1Bsy+XdwtmVMMyZAPV0EmMqsV6yTstvs6g4IKAZwsFRtb75k5H5ZGP7KFrugQEczd25m+yDnLonWgij+eCgpYTNX3YNIoegOjzeq0LsYKJ7toqW5UjOjE4PFd/A0nCMFcjJJY87SGd4kzNPjPMAwyOfRw+NvDcvYOFmow6dPZvKNCsz9TvdcMt8HZUTbOLwEQNJCyTxwMixmCWRnT3yKtcDo6W2RwHBhCboIRV/UN2nqHsCUho+IqiYHIcQXg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:38 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [7C2E48A5A4344AAA9A5F2E33C3DE780F]
+      opc-retry-token: [gxJ5AQbBCBs0K1yM3rPkxe14CHeA2O]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+      x-content-sha256: [MJ0qs1zJzPv4EEzR6iCBEMItHmmoip7ATpYVAUu5Fi0=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/certificates
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:39 GMT']
+      opc-request-id: [7C2E48A5A4344AAA9A5F2E33C3DE780F/EE6BC7253D0A8E0864B2CBE88CC9BAF8/F45C02E79D7EFE571A5453412D130DA3]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="uKmZxCS3tlNLenvfBXbscfwPKs5LqwhfJ1JTb7hjvoBu5EyxtDkYHTRjGhusHt+q2vB6qkWD5BCfnJ3k0+S4xj++C9jCmoNF1EqJIg4/V+UNlFVurAUrWULkJI7Loe7O3/kQcJr8WtHKI/TANIvoCYr7qCrlCSw7spDo8hBAUe15heb5TQPv5WIepJBuZ3DLdvWPikmA/2yO+WwJf9Ltick1unYsdnAUZPJwoT7O6o119z2ObxRDRnTgV98qOo+nt2Zzp/5G4MpnU7h7j7kRUewqOqhgEPFgu5m4zJRghXUnKBVLwVB/BJP1FmgaiZVxdKcnG/NmwzreumHuegHxJg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:39 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:39.797Z\",\n  \"type\" : \"CreateCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:41 GMT']
+      ETag: ['2043806510']
+      Vary: [Accept-Encoding]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC/1175BC71107D8D3257C1DD43F752B1C3/FFA6FDA65B2CB36A74A5AF15B3258FD5]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="nQRwu7nCR8XDMK1NTf7lqwfeGi5dswBVVJ6yEWb+w2xGggfo1Bmwj0tndWpWA7lbkwNskgmRtSsMHrBdKtyRQHzemo+on6+vcMjRkw+v6WRNxYbNo8j37w0WKTpO0KPOp06anGtdprUmPhqiOWScSpGf+Fw11elMkU0cNvDll+6d6JGP+MX0UcGVMe0jmz/OIXRDHx4utYrMz6PpCtjPzwjPZ/v3fnhYmfPgv8NfgAndyhmEgRJG6NblLym8bopyjs+VakX6A/jlwtpoVEi097jaUYcspEdSCYPdljaDObWDwRuyfxfALnjOYMMx1r0BbDXRKNUqeOQupaZcwDHTsg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:42 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:39.797Z\",\n  \"type\" : \"CreateCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:43 GMT']
+      ETag: ['2043806510']
+      Vary: [Accept-Encoding]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC/DDF20A3AA91CEBFB4B3D1FE46A4E88CD/75BB369F5BED678709BA67CEC907B4D7]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="p7RITyQ/0KjGcCpENTtlPf/npyLo6MRrHGHT0mVkxLmpgR1ldiHYq+kr2AyIogICnebfx/wC03RSBDlNb0GWRB6pC9WO/51T9iGyte1uRdRUDH1tjzKKQUUDVF2GLiUGV4AVqoTqY5uueYtLvK0NSyx9xsfcW9CW6agPyz6+HToZp/cHdTB2UtLb+sKeC9zkyLG0rXONRIoELHlMVmzng9R0lQLW86QLvWy49tTaq36Fq4cAE39lkrBZCiGIFnhNtyOd/l6DiMtCY9KaxSzehbdbSi4VSrs2v69iXr9UimrChmELkHerU01keSbWgdo3tXys6WMb0tL7lEYQO9jD/w==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:45 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:39.797Z\",\n  \"type\" : \"CreateCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:46 GMT']
+      ETag: ['2043806510']
+      Vary: [Accept-Encoding]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC/B5D8ABD6BE5B34B193170A2A94F7412F/603CC1EEC70C30D8E9B43D56348D326A]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="L/36AHFmftQgcA0bsX4dqhnK8+KlyrjEisLy4mXDa4ETYwjH/CEU8SdwQcOn2AU8VGzBeQJqusyaYKckJP2sVvvq3JK1LeEUeeQEZxMq1jXVvRDiCZnnQD7vnR6sJnEJ/8ZwjwuSH9JCs/R5Qq3v4tBpJMorbObdAjx2LGPWv/Sr2GDmCt+f4975SNajaCJlanJcteBbrsZPJDFnhVf7spn/1lN1q7vUFlo5lEaMmqZAGSpggp7Jpxzkqkyoye/ClJNvSsDd/re3C3LeHs2jKC+XgxoCElX8JoRR33uD3Qa+/vqruPXa3AMFPFvMKNjbFD7/4WsPk6P8hCHuQHA0yA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:16:50 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:16:39.797Z\",\n  \"type\" : \"CreateCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['364']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:16:52 GMT']
+      ETag: ['1030414785']
+      Vary: [Accept-Encoding]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC/6A8FB6F9D392714FA4042FA8F2F47813/FFD4498D39257E7AFE3A49BC2C8FC71E]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="rCwr4ll24z6BrA9QIXgNe0GrjL5xB3kh6hK0uS06RbrHcUd6Zij7ZAePqKZrrzIl+3gZ0BIvCrGsfYIlucxCvOZjURLM9CukSIcAkbMN9RFfkHtF+ISToRLZnwXZagWiew0T4w19JOFy/WfFfpcaZLEbxr3McnnFKs8+oxOgfB6RiZlH7CxLAAzV/L0CSULT6wzwk44lRyHDScjYjDBD1GR229YzYqpyaxUs5l/1UInp8YTqs1iLOVtc6hn643x3kZgLhZbULS0vsWKfS4pBgt2RMjw1g0yt5BnF+TMwElrZvqRkEPjlBAEm8y2iTl1Pz5GVCK5/oi+NsS7TZkuQNg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:00 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n  \\\"eventId\\\" : \\\"e7ff6df3-a59d-4e31-b8ff-a5d30b8e1c6c\\\
+        \",\\n  \\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n  \\\"workflowName\\\" : \\\"AddCertificateWorkflow\\\",\\n  \\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n  \\\"message\\\" : \\\"OK\\\",\\n  \\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaa4koknx4ppk5z2blwhgus34ui6yczy6tft2brge5juknahfwyktzq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:16:39.797Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:16:56.895Z\",\n  \"type\" : \"CreateCertificate\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['835']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:02 GMT']
+      ETag: ['-1154116239']
+      Vary: [Accept-Encoding]
+      opc-request-id: [CD75199812BA4E1D82728C0ADE28D8BC/F298BEACA5239C3533C68C8353A43BC7/DFAED7B4B2E791030341B1755CC95B66]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="qGIZhdqU3Ox6q7rrsMKI3jZVm8cQik4xJ0FHhUvuN87thqM5tksy7hvpyXAiVRTx07wksAT62DOTE9dAqzHsuwm4H4aC2xtxFut+pahnwuyfWt+8897VE045QWNLOE4dH0kQ82TNvFRBdSCpwifXq6qriW5C78UJjQLu1M1mau93LbRXleIQYlatER9yFPZV00e0+vce+T1/pPYBsowU1xxPQfRAQMT2RTxWKavxjBTRYhZQPt9OlE07LiIcV3nRWVNLXVxespMA5LHE9Grk6x38lbj4lwqAQH4x6zgkS/dhj89q6+qB8tRaY5nVgtjXZ+IscFoqnSJAssEFKoTDwQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:02 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [935514789774419184A10B7D93D746C4]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq/certificates/cli_lb_certificate_vcr
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:02 GMT']
+      opc-request-id: [935514789774419184A10B7D93D746C4/E1321A824B803146C9B9075CFAB0E71E/1B6D3159949992687B583CA870896AF5]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="npKVyZxITdMCWJ2u90dUjk4QU39m2NfAyZgI/srj2r51hMsbe1hm8pisitqpSj+WwBx0R5GSgweZmMGten0Wt/vJeu9hRnyHPB+0+2XysD8ldKvUi2jtCAsjKyznCHj3o8swgbq8dM15NlHtMzEhT4yx4VhLTWL3u+LERrnlsBUxxPDabUf/uQsyXceF8QoT/Risk6QzIuCC8WeV0kAeeOqiKAF6IojorvBLxJQZBbOB3JIHztg/ut/ZuM1CwiSXf6OcyGqLky9L16Fe+HaUMeZ6dOqozLPUGGOci8siZ9WHm/9szkdxBwicYo14iPYPwFLiER6V66zXC4K2NFwWQg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:02 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:02.852Z\",\n  \"type\" : \"DeleteCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:03 GMT']
+      ETag: ['-1679924209']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5/B2E55F755FF76B77222A20E7F7D531A0/CEB68EAE86634EE4F22DB4E3DD732767]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="sA+1Y1GgQ0tL9TJXgUpevBBvfPDOQcSEl4V7B2esccrbCKJHZaG6ShdQgc2l8kF5DX9hUAlE0xf/Hjk386F8yG9g0hFYZWmO6I8ap/dY6F8ah4g8KQRDf/ueRTSvg9IG+XOKVlB9NqjyZmd5OxTt+3eDbuTrCQbGrchkb7JWdOVZGXB8Egm83hB5/cxnz8ONv9aai5IGROgIosfFclAT2jhUDBSNCaAQzvvdYcV3rVIVFuIXN0amfnUy6hycmTYIcqkM3OzQIao43KkyGjuYO+4d9Fg+hA230j5OXfDg/k/ERnjGvE+zE0LwQ5srVsCYT1J2qfPNkF3U1qWCeYuM2w==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:04 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:02.852Z\",\n  \"type\" : \"DeleteCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:05 GMT']
+      ETag: ['-1679924209']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5/198D90F420583CA8EADA8187E33AF2C3/3D91B3610BD470EDF9D902AC6C8E3600]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="K6IDywSnYCsZ0fZBt3/G2xCqb3DhWb1sceOsojxUzrwlA0pHEc73Ku7bc5P8dCJ1qke623LaIV7utxougCnUuPFfjc42HrrnS3pOds2Qc5EJLhEk61KpI0ewuPjLOZ//Jb2b/EFT/2dyU8ZqL6J4yXmnNJ8XtnL9u2Hu4LbLVptmGpZaCbbTDpYowOsiM9oHGBNXgKBboNHjMCzH/XaMFZa1pJzzRb1CT+8ahN4bS6X0v2pv58GZx6d0ss7bnNFr4tmWWnHs4fn9DaPqSskt4ltq724qaVVGxJkutPwaK6uBo0yLeqEQm7ABIhlCtZUBXzQMBgnH3k4pOQpO074KdA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:07 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:02.852Z\",\n  \"type\" : \"DeleteCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['361']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:08 GMT']
+      ETag: ['-1679924209']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5/2299A4DF74135F5069D5306F81C6B497/20AAF0D4FEEF46E26A4FFF68CF3A3BF1]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="qwwGlb7plGUX0G34PPmxXzIS8nKsNbluje7+UbZOSafdLao9+PgTKI3O+jhE0l6qdlQKIorGIdKOcAe40YipfQ22CGm6YezugZ93xU8tuUUfzF5sU6WmWdUFPJ6mP7gg6W1co9G3zJFv8HA8oPXpdxLU1uQXXS8ix7XBHVRgrUwi+GxSocEOxc9p1o1a14RgCQHxXExS8tsYC7NN74nLy60pRQzcfGceDHXuXYNTIhNOrPJrwRZ6smUkAJ4CcBluIh5+c6KdJeYfb0E23x6BxmJcwG/XdPJ92JLEjyJN9CTevciJBe3aNEuRELEQDkO+XtYxS2CrsYqTLJqjd/phYw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:12 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:02.852Z\",\n  \"type\" : \"DeleteCertificate\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['364']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:13 GMT']
+      ETag: ['590597518']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5/B059FBCDC737C7D095883EC586B0BD57/F80A110CFAAB0CFEF51BBFD578A086E9]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="qBPLa38LoVNlwSWuHwkVVzpTaZ/YCLttJ2jEyfOE9oOgbtERJJweaTF0Sl5Zx/n0so4PaSZurS60AUCF5GOR4wEjef7N0pUgeqXrJM8BHWhuHwMgLukxryvV+tbuLd+pyOPPIxn9yMvAaFgbn57SxiyjuQLhfzaLhan0lNrtOHGCPNK6X6Kzch4Msq4ZBMx5zSynrXGfAW0j6Z8HeyN77wVQTuv8F3CgleuK5biUt07v/VoYpeZcrhKZVZm3fEhI5zpgDmdugmb5N6KTC7HAjPIuDBeqwKcvVF1ghdPenYqRY0pB2XmsA2wKk0sqddf1IfkKXNQ6EluIumxJacncdw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:21 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n\\\"eventId\\\" : \\\"302a6ea5-a8ce-48c2-99ab-ce94e2872d27\\\
+        \",\\n\\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n\\\"workflowName\\\" : \\\"RemoveCertificateWorkflow\\\",\\n\\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n\\\"message\\\" : \\\"OK\\\",\\n\\\"workRequestId\\\
+        \" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaagzfzh43inuv2lufqnzdmt6rduheyyvin5tqc3venmeceqhpzd4xq\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:17:02.852Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:17:17.136Z\",\n  \"type\" : \"DeleteCertificate\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['826']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:22 GMT']
+      ETag: ['1816721118']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4AB0FAED91C4C3E9E254CF3D66B4CA5/2C949B910E4448CAF641A2E4E68749F1/B3798CB41AE2DFA5C03AEEDEE6099445]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="FU3f+u50sDCxLIwkzuEVZ80kHoZOttXRzze6O0BL1aKvOsyjpsK/bkhMVP9JNQt3MNPXvj+Gf3I7mk46T4YXnxwBr7SVHcD8AfRzM36eWoXYaPxngTDlcQ7kVWfBQV1AyY5kgCW0mFclcOQwgMpKfginfykG2/R2USUsXm7v+AZUeTmYmakGAqUqyluIJtEvZ+wCcRRylATLuBqP171TNb+ldzFhwnNZzjXlzkyLFFbKtqeWZSJYUH4VFOrUQKGNTsiFU2F4MyhDdOzRjdrswkkZ8Mk/9DUAzYXf9PzJeuLKK0hRo5w6GGFeEPLyuMrbEB549Bjo2K3ox3LUzWihTw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:22 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [A3F8F21C13AD4699A8806EBC727A1237]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:23 GMT']
+      opc-request-id: [A3F8F21C13AD4699A8806EBC727A1237/139B116328AAE15E93B3B2F4FAA81401/BF82CBDBEDFBFC7E72B8A42583DA6754]
+      opc-work-request-id: [ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea]
+    status: {code: 204, message: No Content}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="f0FMmgI3B2Z001MEmLdR7oGC1nHuurx5lQYgxJiyPhQLa4wUFHZGgEJ3VQwoDPto5pl5RPP/R1mMVE/KeN8v0Ssnsi6qA5g0+voGcwZhvTmFcYkeIP7Lg0gRClTY5jnNjMP+OPMGc3f3xGkNoK1m3vajuT9JQAn2HsQ7ZEQrdxwohF1lTO0gx/7d7BANh6bXUhMHTuOMabplObPnwfQSSJnDh3RL4fdTz4zesSNw49RMKJydQsvE2T7m7Xn5315BkCiu+RkiAc5G5FTRbOUUlY+iyIOeOu3g7KbNV2XtH17A/j0P0yZzTGSDRf0jWa5YVlUA5eoc0Vf0fLBbpjv+Zw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:23 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:23.297Z\",\n  \"type\" : \"DeleteLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:25 GMT']
+      ETag: ['760766359']
+      Vary: [Accept-Encoding]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69/3B9B7FAD1FD26654ED49D0CDA1894762/B17B2E4D05955F61810E8A6C021CF3D9]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="jVvF5WhCaCrLj+EDK/kxatJ7ySYZM1MudnwjLmSJ8f6axVx/9hMwGwxS7bWeXlFbbYsZCG/agoddn+ZJmhqpBkfqwz2Tp5TCZyicKZNmW979zFSUU6ob8UQkQJTK5sWJNJFhKNjKlAGspd9Hdkj/9haVk920SC02mAHIrMwzsdXruHhpF3t93XFX25clKR+dRe7Ll4HZ2ctxEu4E7c41W5kuH/bfcz0ywLwrlMAFWRrIKKgY3Lzaqweg7HrPv6YXrf9L3vkQCMuW2yiohJXxkkMvi4dpXQJ563WjAh/6yQqzD19VXCbsvQRelEFuPU5IpX4gBgaypFbZqe3f+ieDlQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:26 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:23.297Z\",\n  \"type\" : \"DeleteLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:27 GMT']
+      ETag: ['-1245111086']
+      Vary: [Accept-Encoding]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69/21C3C3BF082F5A8E98DFFDB25C201DD2/66FFA708CD9B644D76F2D7B37EC4A286]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="b5VDrrHWCcKaoKZktuiRSBP6LS8Ts3mOmQrPgwmm/w2RddAP5V3c0kIVyVLNCudU3VrE9dvGWixbRhf/gr7H90yaA22qu7XpJpX/dCEkxdoPaNYuWacKpD5jAkBIG4rgSinjbtwp4kCGMTVjoTaU+A7rDKKty0zxeCoXm769QZeN2UrygBxxWaPzWnv0ScOjMUtGHjID6cJjwtgCVeGwz8cvDqZfumvyOaqqUC03WA9LE053Nwt9oqzIJwnNwZdMYyxpig+3RGJnoEIdoPB7lUSL5IWCiQ1lfzxYQvuHhbhkldowczBsPyDDY7Ez8+67QxfzdejDs/gBvmnjgHYpMw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:29 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\"\
+        ,\n  \"lifecycleState\" : \"ACCEPTED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:23.297Z\",\n  \"type\" : \"DeleteLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['362']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:29 GMT']
+      ETag: ['-1245111086']
+      Vary: [Accept-Encoding]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69/18B0E92026CD3F4D14553EBE45215D87/15992C3A6B57825832E19206C5E75774]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="PXbm6ir/Mzkk0e+SXSvW44ilcAEBflE+4TqOVqOAdIP/pLc7NVeCq70nerNFlEGP4rZzD3ZlKugsjkUPd62AfqmYzN+svQOHXpwO0y8X38SW+JOy3vY+Tfim3T4yYEtRwopCBOBYg7+EQ0rpjczJizqMyBaQ/r7mhyecTmaAZKQG1WuBylmRSSll8vPPyCyuckFixaTPiTeMdSkr2Bf7PBiIC1VLFrEutqcoOJ+4z6uusfUa3BWwJ/raAHJlg+NOctYFcqRZvKtBzIYDeSoMGjyrp3wEMGjK2ducDF4Y0muc5kg7wsAAz7GSYxUJdBeYMJagsX5vq1KwVvB8g+/IWA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:34 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:23.297Z\",\n  \"type\" : \"DeleteLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['365']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:34 GMT']
+      ETag: ['1025410641']
+      Vary: [Accept-Encoding]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69/90C96A0873DD117F9D067FCEBC9FACB7/77DDF06B6432FD08F6344E2DFA23AC23]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="EnL9Iz+OGdPYRwNivs8aqcsO+E7zv+aAUqmSE1wqwKexjEQJIXtFYhwY8y1cdrglssirPYursLQizW8PLCohlqnbKDwDFJmXf6OdDs7nGK7XxNjMPynkzMSdwM9Qb9CPWL75+N5wdn6mtrbLwLU6V6LrNF9sYo3Cy6DPlSVWD7vGoezXS0b0xyPBOpcKEhBYOCVBNmJg5KgnLSibrUCA5L+ohv7AfJwTca5GOFMFCR5DUM9Eo+pxko/ILSl9Ls81hy2fG6vhZzVHHn2ZwyvuFmFKi3QKloIp4OQy1ZDtzAXwHiVN8rJA3V9/crzIL3gLaM9F/d9lqcTyfyWoXZpt/g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:42 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\"\
+        ,\n  \"lifecycleState\" : \"IN_PROGRESS\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"timeAccepted\" : \"2018-07-11T17:17:23.297Z\",\n  \"type\" : \"DeleteLoadBalancer\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['365']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:17:43 GMT']
+      ETag: ['1155950597']
+      Vary: [Accept-Encoding]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69/EE5CB11946419B757C99858D1C928197/C5632E460C66AFA43B7FBB530733E182]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="nKxMfRG1QoQ7c9bm5i9i5wqNIYal2u3K1iQNljDc0H0sMhxn/SR11PPtrFXMmEa88qK/w8ESP63GSYHubllAvZxw5t7l4kBX1RBK/F7wy5LKWWiP26YhLsYxP9vjZy48c+SZ5EtxusrUQNYicKWrtp/TASopq5xJB7ojgy6W5yjXc6p1TQG03hn6C5Guexj5GevQZhfmiAMSMhf/bcW9rHbtU/rSxYNEXx56Pw/wEOuLWDhBwcko8S+UgHxOfr63gY33fLVHnoXSu/4RMBYLduOygn9zAzykiwRb7ynmkGDM9gDAOFrIXJZ3cP23frjqHOVBGpzjSpPzcB3GdXoDYQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:17:59 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancerWorkRequests/ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea
+  response:
+    body: {string: "{\n  \"errorDetails\" : [ ],\n  \"id\" : \"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\"\
+        ,\n  \"lifecycleState\" : \"SUCCEEDED\",\n  \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\"\
+        ,\n  \"message\" : \"{\\n\\\"eventId\\\" : \\\"0e611c5a-d649-4dc8-999e-b1cf06e69367\\\
+        \",\\n\\\"loadBalancerId\\\" : \\\"ocid1.loadbalancer.oc1.phx.aaaaaaaakuaccmeros2doo4lvvtdwnzgkb5mcyyfrhboewow7hx7a3ufv2kq\\\
+        \",\\n\\\"workflowName\\\" : \\\"DeleteLoadBalancerWorkflow\\\",\\n\\\"type\\\
+        \" : \\\"SUCCESS\\\",\\n\\\"message\\\" : \\\"Load balancer removed successfully.\\\
+        \",\\n\\\"workRequestId\\\" : \\\"ocid1.loadbalancerworkrequest.oc1.phx.aaaaaaaajad7rswpoo5eg7s337cqp6vvvfvvskm372ewbjzzxo7pstxvlhea\\\
+        \"\\n}\",\n  \"timeAccepted\" : \"2018-07-11T17:17:23.297Z\",\n  \"timeFinished\"\
+        \ : \"2018-07-11T17:17:47.830Z\",\n  \"type\" : \"DeleteLoadBalancer\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['861']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:18:00 GMT']
+      ETag: ['1420437217']
+      Vary: [Accept-Encoding]
+      opc-request-id: [2B8ACD419D0B4172BCCF01E50CF43F69/EC1DBE023367CE89F2A502D20ACDDC3C/9E31D7A77612B0CB4BFD9AE3B51BFC1A]
+    status: {code: 200, message: OK}
+version: 1

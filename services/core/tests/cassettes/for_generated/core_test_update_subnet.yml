@@ -1,0 +1,128 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=core&apiName=UpdateSubnet
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 19:23:20 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=core&apiName=UpdateSubnet&lang=PythonCLI&sessionId=0864
+  response:
+    body: {string: '[{"containerId":"7dd0d36b-bf93-48c7-a2c7-fe75d527b6f4","request":{"subnetId":"ocid1.subnet.oc1.sea.aaaaaaaadaxcmfn4cnltnz3t5t4tw76prrjdtzi7wkq24nn7qa4omung4pna","updateSubnetDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0864_587","testing_service_tag_02":"tag5.__STS0864_587","testing_service_tag_03":"tag6.__STS0864_587"}},"dhcpOptionsId":"ocid1.dhcpoptions.oc1.sea.aaaaaaaa443n7jayntlxevvaxmc37vlog7qaox4rws2jhmhdjmm54hvwhv4a","displayName":"__STS0864_5649","freeformTags":{"tag1":"value1.__STS0864_4068","tag2":"value2.__STS0864_4068"},"routeTableId":"ocid1.routetable.oc1.sea.aaaaaaaagltpi6ki27iratqgqrmpueej7lhml2cwxjvtvqw2h472j5ythalq","securityListIds":["ocid1.securitylist.oc1.sea.aaaaaaaablf7nwzqb7kqikpezrcr5movv5ogw4g4332ih3qgifl5eirfdk2a"]}}}]'}
+    headers:
+      Content-Length: ['800']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 19:23:20 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_01":
+      "tag4.__STS0864_587", "testing_service_tag_02": "tag5.__STS0864_587", "testing_service_tag_03":
+      "tag6.__STS0864_587"}}, "dhcpOptionsId": "ocid1.dhcpoptions.oc1.sea.aaaaaaaa443n7jayntlxevvaxmc37vlog7qaox4rws2jhmhdjmm54hvwhv4a",
+      "displayName": "__STS0864_5649", "freeformTags": {"tag1": "value1.__STS0864_4068",
+      "tag2": "value2.__STS0864_4068"}, "routeTableId": "ocid1.routetable.oc1.sea.aaaaaaaagltpi6ki27iratqgqrmpueej7lhml2cwxjvtvqw2h472j5ythalq",
+      "securityListIds": ["ocid1.securitylist.oc1.sea.aaaaaaaablf7nwzqb7kqikpezrcr5movv5ogw4g4332ih3qgifl5eirfdk2a"]}'
+    headers:
+      Content-Length: ['634']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.region1..aaaaaaaazsovefh234vzf2uzikvgww5it55mivn22oysjvska6jgcuftuwca/ocid1.user.region1..aaaaaaaacauegcgszuvr4wtzpl7ik7km3c2uk3ujh6trzihs3t5umbvdp4da/ad:46:ab:66:f3:52:44:9b:85:bf:13:58:35:3d:33:4d",signature="t8QB9JG9MzVLBahLjlojQmEX65sfcHMDzFKUVjQ/k+JxhBAubYEejszoqg/Dbd79rY6hB5tPVG9/IsTxYcrWdjjEtIsXcLdbMk7uD4IAcb296FxLPBT58MWrNyqe2w+zVLKJMI2V0dUNwVz/Qc3K9+0uH3x5zHIKSkeqkm1ftnY7sQ2I26QoEAGdkIcrWCONcaIdo8Dqmy/M9iQ8AECMkMifDvZl/WEjh/4f36cWNaScv7olAyCQTJKtCOiQrHtzBngWM2dA72d811+P+M7B364hIWPYDmmcSth0s7rg3WnNTzMc9/s/ko27JnuoSOENMEONChmzC0TiUZnz3cg+yg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 11 Sep 2018 19:23:30 GMT']
+      host: [iaas.r1.oracleiaas.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1]
+      opc-request-id: [ECC6E005EAA14E03A99D205DA879964D]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1 (python 3.7.0; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [LvB9vzxo+SlP2eKyfr2/iLwbYCmw4HwWHlJcsYn3EQA=]
+    method: PUT
+    uri: https://iaas.r1.oracleiaas.com/20160918/subnets/ocid1.subnet.oc1.sea.aaaaaaaadaxcmfn4cnltnz3t5t4tw76prrjdtzi7wkq24nn7qa4omung4pna
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"EGbl:SEA-AD-1\",\n  \"cidrBlock\"\
+        \ : \"10.0.0.0/16\",\n  \"compartmentId\" : \"ocid1.compartment.region1..aaaaaaaa44yqnrre26bdey7bbur3vw5xnv6vz7hfgltjbb5xkimorvvsro7a\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0864_587\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0864_587\",\n      \"testing_service_tag_03\" : \"tag6.__STS0864_587\"\
+        \n    }\n  },\n  \"dhcpOptionsId\" : \"ocid1.dhcpoptions.oc1.sea.aaaaaaaa443n7jayntlxevvaxmc37vlog7qaox4rws2jhmhdjmm54hvwhv4a\"\
+        ,\n  \"displayName\" : \"__STS0864_5649\",\n  \"freeformTags\" : {\n    \"\
+        tag1\" : \"value1.__STS0864_4068\",\n    \"tag2\" : \"value2.__STS0864_4068\"\
+        \n  },\n  \"id\" : \"ocid1.subnet.oc1.sea.aaaaaaaadaxcmfn4cnltnz3t5t4tw76prrjdtzi7wkq24nn7qa4omung4pna\"\
+        ,\n  \"lifecycleState\" : \"AVAILABLE\",\n  \"prohibitPublicIpOnVnic\" : false,\n\
+        \  \"routeTableId\" : \"ocid1.routetable.oc1.sea.aaaaaaaagltpi6ki27iratqgqrmpueej7lhml2cwxjvtvqw2h472j5ythalq\"\
+        ,\n  \"securityListIds\" : [ \"ocid1.securitylist.oc1.sea.aaaaaaaablf7nwzqb7kqikpezrcr5movv5ogw4g4332ih3qgifl5eirfdk2a\"\
+        \ ],\n  \"timeCreated\" : \"2018-09-11T19:23:23.369Z\",\n  \"vcnId\" : \"\
+        ocid1.vcn.oc1.sea.aaaaaaaa45sjxa4wwdiedmvo4rpt2uq4ehskk2zjgdacywygufisacklgqda\"\
+        ,\n  \"virtualRouterIp\" : \"10.0.0.1\",\n  \"virtualRouterMac\" : \"00:00:17:C9:FA:56\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1272']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 19:23:30 GMT']
+      ETag: [909c7de8]
+      opc-request-id: [ECC6E005EAA14E03A99D205DA879964D/5543D080FE485289E345BE7B68DBE790/1CF5F9880CAA402CBDF9E3C6B52B7059]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "7dd0d36b-bf93-48c7-a2c7-fe75d527b6f4", "requestClass":
+      "com.oracle.bmc.core.requests.UpdateSubnetRequest", "requestJson": "{\"subnetId\":
+      \"ocid1.subnet.oc1.sea.aaaaaaaadaxcmfn4cnltnz3t5t4tw76prrjdtzi7wkq24nn7qa4omung4pna\",
+      \"updateSubnetDetails\": {\"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_01\": \"tag4.__STS0864_587\", \"testing_service_tag_02\":
+      \"tag5.__STS0864_587\", \"testing_service_tag_03\": \"tag6.__STS0864_587\"}},
+      \"dhcpOptionsId\": \"ocid1.dhcpoptions.oc1.sea.aaaaaaaa443n7jayntlxevvaxmc37vlog7qaox4rws2jhmhdjmm54hvwhv4a\",
+      \"displayName\": \"__STS0864_5649\", \"freeformTags\": {\"tag1\": \"value1.__STS0864_4068\",
+      \"tag2\": \"value2.__STS0864_4068\"}, \"routeTableId\": \"ocid1.routetable.oc1.sea.aaaaaaaagltpi6ki27iratqgqrmpueej7lhml2cwxjvtvqw2h472j5ythalq\",
+      \"securityListIds\": [\"ocid1.securitylist.oc1.sea.aaaaaaaablf7nwzqb7kqikpezrcr5movv5ogw4g4332ih3qgifl5eirfdk2a\"]}}",
+      "responseJson": "{\"etag\": \"909c7de8\", \"subnet\": {\"availabilityDomain\":
+      \"EGbl:SEA-AD-1\", \"cidrBlock\": \"10.0.0.0/16\", \"compartmentId\": \"ocid1.compartment.region1..aaaaaaaa44yqnrre26bdey7bbur3vw5xnv6vz7hfgltjbb5xkimorvvsro7a\",
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0864_587\", \"testing_service_tag_02\": \"tag5.__STS0864_587\",
+      \"testing_service_tag_03\": \"tag6.__STS0864_587\"}}, \"dhcpOptionsId\": \"ocid1.dhcpoptions.oc1.sea.aaaaaaaa443n7jayntlxevvaxmc37vlog7qaox4rws2jhmhdjmm54hvwhv4a\",
+      \"displayName\": \"__STS0864_5649\", \"dnsLabel\": null, \"freeformTags\": {\"tag1\":
+      \"value1.__STS0864_4068\", \"tag2\": \"value2.__STS0864_4068\"}, \"id\": \"ocid1.subnet.oc1.sea.aaaaaaaadaxcmfn4cnltnz3t5t4tw76prrjdtzi7wkq24nn7qa4omung4pna\",
+      \"isLearningEnabled\": null, \"lifecycleState\": \"AVAILABLE\", \"prohibitPublicIpOnVnic\":
+      false, \"routeTableId\": \"ocid1.routetable.oc1.sea.aaaaaaaagltpi6ki27iratqgqrmpueej7lhml2cwxjvtvqw2h472j5ythalq\",
+      \"securityListIds\": [\"ocid1.securitylist.oc1.sea.aaaaaaaablf7nwzqb7kqikpezrcr5movv5ogw4g4332ih3qgifl5eirfdk2a\"],
+      \"subnetDomainName\": null, \"timeCreated\": \"2018-09-11T19:23:23.369000+00:00\",
+      \"vcnId\": \"ocid1.vcn.oc1.sea.aaaaaaaa45sjxa4wwdiedmvo4rpt2uq4ehskk2zjgdacywygufisacklgqda\",
+      \"virtualRouterIp\": \"10.0.0.1\", \"virtualRouterMac\": \"00:00:17:C9:FA:56\",
+      \"vlanTag\": null}, \"opcRequestId\": \"E05316DAA0B6417AB2C1D80632CD2609\"}",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateSubnetResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2485']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0864&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 19:23:30 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1
+

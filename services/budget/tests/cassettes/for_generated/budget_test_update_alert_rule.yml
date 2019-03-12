@@ -1,0 +1,104 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=budget&apiName=UpdateAlertRule
+  response:
+    body: {string: !!python/unicode true}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:31 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0673&serviceName=budget&apiName=UpdateAlertRule
+  response:
+    body: {string: !!python/unicode '[{"containerId":"1180089e-e6f5-4504-9acb-f04829492524","request":{"budgetId":"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq","alertRuleId":"ocid1.alertrule.oc1..aaaaaaaaevx3v7inhkyls5ex4nvsziink7bii3vux4sddb3fowto2hwjr5jq","updateAlertRuleDetails":{"displayName":"__STS0673_331","type":"FORECAST","threshold":150,"thresholdType":"PERCENTAGE","description":"__STS0673_5087"}}}]'}
+    headers:
+      content-length: ['409']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:32 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"threshold": 150.0, "thresholdType": "PERCENTAGE", "type":
+      "FORECAST", "displayName": "__STS0673_331", "description": "__STS0673_5087"}'
+    headers:
+      Content-Length: ['136']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaae65zouabl37jpbbtil2vzvehmmwfissg7zgom6zeta3wbmdrrwiq/ocid1.user.oc1..aaaaaaaaob2fwxfjim7fgeex573hij7wue7soxgddarko3tna2ocll4mwheq/e9:01:60:92:3b:81:c5:ff:f6:4d:6d:36:8f:1d:4b:ec",signature="Y5Ais5Qa89pMRe5AXjLdxSiqGfre2GP4ELsyfG3YY5kKmALfAchi79RwmQxosCUxyTzW75RKmwM4PW3JXbJ6UdRHjEPvMdgqsvMYXF5kXeqmNGhy8tYhOnkHbEBoGPhdCNirMCadifV6ClJ+t0c8LeTR2yX9Ren6s7CrAqHe8L04El8Wda7LiVKW/lMhSIQFEYU1vdB5O9qapxvS+0ZvBQdYiIyVFQEadR1gGVXo656W8GjiwEEkKdj6sA39wJmgdZGpcwuMLYnB/lz0Iznni1iBUF8U+pK2MhdFf/OJv+YCXiU1huTK10aig9XtKXUSls8M202IvfMT/sZOxQ/oNg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:32 GMT']
+      host: [usage.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [2B551F630E434853AEE0A3451D24456C]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.2+preview.1]
+      x-content-sha256: [!!python/unicode 0k1AYkWylckGM+fw6Rr4QxS68JNk6TZ3yRr2q5u5iGs=]
+    method: PUT
+    uri: https://usage.us-phoenix-1.oci.oraclecloud.com/20190111/budgets/ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq/alertRules/ocid1.alertrule.oc1..aaaaaaaaevx3v7inhkyls5ex4nvsziink7bii3vux4sddb3fowto2hwjr5jq
+  response:
+    body: {string: !!python/unicode "{\n  \"id\" : \"ocid1.alertrule.oc1..aaaaaaaaevx3v7inhkyls5ex4nvsziink7bii3vux4sddb3fowto2hwjr5jq\",\n
+        \ \"budgetId\" : \"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq\",\n
+        \ \"displayName\" : \"__STS0673_331\",\n  \"type\" : \"FORECAST\",\n  \"threshold\"
+        : 1.5E+2,\n  \"thresholdType\" : \"PERCENTAGE\",\n  \"lifecycleState\" : \"ACTIVE\",\n
+        \ \"message\" : \"Alert threshold has been hit\",\n  \"description\" : \"__STS0673_5087\",\n
+        \ \"version\" : 2,\n  \"recipients\" : \"plat_compartments_us_grp@oracle.com\",\n
+        \ \"timeCreated\" : \"2019-02-28T23:01:29.865Z\",\n  \"timeUpdated\" : \"2019-02-28T23:01:32.579Z\",\n
+        \ \"freeformTags\" : { },\n  \"definedTags\" : { }\n}"}
+    headers:
+      connection: [keep-alive]
+      content-length: ['634']
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:32 GMT']
+      opc-request-id: [2B551F630E434853AEE0A3451D24456C/9FA7C226B9F8110502F5C6573C101BD3/8A318D25BF9861E9F1AB47002F1E89D0]
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"alertRule\": {\"displayName\": \"__STS0673_331\",
+      \"timeCreated\": \"2019-02-28T23:01:29.865000+00:00\", \"recipients\": \"plat_compartments_us_grp@oracle.com\",
+      \"freeformTags\": {}, \"definedTags\": {}, \"budgetId\": \"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq\",
+      \"lifecycleState\": \"ACTIVE\", \"version\": 2, \"timeUpdated\": \"2019-02-28T23:01:32.579000+00:00\",
+      \"threshold\": 150.0, \"thresholdType\": \"PERCENTAGE\", \"message\": \"Alert
+      threshold has been hit\", \"type\": \"FORECAST\", \"id\": \"ocid1.alertrule.oc1..aaaaaaaaevx3v7inhkyls5ex4nvsziink7bii3vux4sddb3fowto2hwjr5jq\",
+      \"description\": \"__STS0673_5087\"}, \"opcRequestId\": \"D86D4F89320F45C3B4B6C049671FF2EB\"}",
+      "responseClass": "com.oracle.bmc.budget.responses.UpdateAlertRuleResponse",
+      "containerId": "1180089e-e6f5-4504-9acb-f04829492524", "requestJson": "{\"alertRuleId\":
+      \"ocid1.alertrule.oc1..aaaaaaaaevx3v7inhkyls5ex4nvsziink7bii3vux4sddb3fowto2hwjr5jq\",
+      \"budgetId\": \"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq\",
+      \"updateAlertRuleDetails\": {\"threshold\": 150, \"type\": \"FORECAST\", \"thresholdType\":
+      \"PERCENTAGE\", \"displayName\": \"__STS0673_331\", \"description\": \"__STS0673_5087\"}}",
+      "requestClass": "com.oracle.bmc.budget.requests.UpdateAlertRuleRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1352']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0673
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:32 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

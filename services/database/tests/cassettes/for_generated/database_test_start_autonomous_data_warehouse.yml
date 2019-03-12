@@ -1,0 +1,106 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=StartAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 22:43:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0659&apiName=StartAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"c264f3ff-d6ed-48b5-8ee6-41f3b7932649","request":{"autonomousDataWarehouseId":"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrcf4da7a2gx6k6d4s5bbuo3ls63ksdibzs7br3oluaqvhji6m3ria"}}]'}
+    headers:
+      Content-Length: ['194']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 22:43:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="RtUsBx2W2fd5/lBgrUbwzewrmjGbwbRkUkcWVIqLjgQgzOrr2cuKJYS31M6RMvHyHwVR/KiD/nRmfrfhhi3ZU56HeMezf1GQN5FbyJE6SqGB0lHi/oHlXNAdYLweqd6S7RHXREC6Sgx/xcJnvAnk1AhaO4EqIjICDGLDXnxvlR4+td2CWYVfVJff8sK9J8Q1mMFhFF2IGahZvYYTHN8YmXcCwf0bbdrLE6S52gy6DuvLYYxHvGKNXRMtk9xJjg38M7rwy98cjT+Joh76CIC4QvtIw63GEJcjlvwKmipjj0unUu/oBK7LnIJRMELex/LW7RZOA45psZMy4B8z8qCFqg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 05 Sep 2018 22:50:21 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [3CB34240CD6247D99BA257E6C764A577]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=]
+    method: POST
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousDataWarehouses/ocid1.autonomousdwdatabase.oc1.phx.abyhqljrcf4da7a2gx6k6d4s5bbuo3ls63ksdibzs7br3oluaqvhji6m3ria/actions/start
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"connectionStrings\" : {\n    \"high\" : \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0659119_high.adwc.oraclecloud.com\"\
+        ,\n    \"low\" : \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0659119_low.adwc.oraclecloud.com\"\
+        ,\n    \"medium\" : \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0659119_medium.adwc.oraclecloud.com\"\
+        \n  },\n  \"cpuCoreCount\" : 1,\n  \"dataStorageSizeInTBs\" : 1,\n  \"dbName\"\
+        \ : \"a0659119\",\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0659_7236\"\
+        ,\n  \"freeformTags\" : { },\n  \"id\" : \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrcf4da7a2gx6k6d4s5bbuo3ls63ksdibzs7br3oluaqvhji6m3ria\"\
+        ,\n  \"licenseModel\" : \"BRING_YOUR_OWN_LICENSE\",\n  \"lifecycleDetails\"\
+        \ : null,\n  \"lifecycleState\" : \"STARTING\",\n  \"serviceConsoleUrl\" :\
+        \ \"https://adwc.uscom-west-1.oraclecloud.com/console/index.html?tenant_name=OCID1.TENANCY.OC1..AAAAAAAA3VI3FT3YI3SQ4NHIQL4NVBZJZ6GIPBN72H7WERL6NJS6XSQ4WGDQ&database_name=A0659119&service_type=ADW\"\
+        ,\n  \"timeCreated\" : \"2018-09-05T22:43:08.091Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1100']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 22:50:21 GMT']
+      ETag: [bf10c919]
+      opc-request-id: [3CB34240CD6247D99BA257E6C764A577/F25D3AF36798EEA8417DFBA852B035D9/7D8C59A5C3B3A11EA3CE276AAEBBE1E3]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"47E8D9D648694612A1C25C2322B59F12\",
+      \"etag\": \"bf10c919\", \"autonomousDataWarehouse\": {\"definedTags\": {}, \"serviceConsoleUrl\":
+      \"https://adwc.uscom-west-1.oraclecloud.com/console/index.html?tenant_name=OCID1.TENANCY.OC1..AAAAAAAA3VI3FT3YI3SQ4NHIQL4NVBZJZ6GIPBN72H7WERL6NJS6XSQ4WGDQ&database_name=A0659119&service_type=ADW\",
+      \"lifecycleDetails\": null, \"displayName\": \"__STS0659_7236\", \"cpuCoreCount\":
+      1, \"dataStorageSizeInTbs\": 1, \"timeCreated\": \"2018-09-05T22:43:08.091000+00:00\",
+      \"lifecycleState\": \"STARTING\", \"id\": \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrcf4da7a2gx6k6d4s5bbuo3ls63ksdibzs7br3oluaqvhji6m3ria\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"freeformTags\": {}, \"licenseModel\": \"BRING_YOUR_OWN_LICENSE\", \"connectionStrings\":
+      {\"high\": \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0659119_high.adwc.oraclecloud.com\",
+      \"low\": \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0659119_low.adwc.oraclecloud.com\",
+      \"medium\": \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0659119_medium.adwc.oraclecloud.com\"},
+      \"dbName\": \"a0659119\"}}", "requestJson": "{\"autonomousDataWarehouseId\":
+      \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrcf4da7a2gx6k6d4s5bbuo3ls63ksdibzs7br3oluaqvhji6m3ria\"}",
+      "containerId": "c264f3ff-d6ed-48b5-8ee6-41f3b7932649", "requestClass": "com.oracle.bmc.database.requests.StartAutonomousDataWarehouseRequest",
+      "responseClass": "com.oracle.bmc.database.responses.StartAutonomousDataWarehouseResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1615']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0659&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 22:50:21 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

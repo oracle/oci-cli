@@ -1,0 +1,124 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ListSenders&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 14:00:03 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=ListSenders&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","opcRequestId":"stsListSenders","limit":10}}]'}
+    headers:
+      Content-Length: ['213']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 14:00:04 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="Ujg903kIfjqgyIGrrv29JPEWtoSCR6HiaIq3/Ts+JTBSnvL2RtEvlK25Kb1zCDrmXA3708979ieSmrb2gcCV8DaNvMpCAFHomHWOEYvE1diBqLed0oUGRLr2juBgNLHCzXvp1MZ0RsDNiurK+hJQcni9QoPjrKBdRFigvCjZGY3MLm1n170cd6obu3rAKk+A8MCEWLTwF8oH5SxLmh0l7OSGfYMmDjNTMZKr0n7+KOa+18C8sR8V7diEfT4KP1cqc9NWTIVxxhs5xBdmu9KJaGbqtp/ETiRSUVDZah6Qx9kYhHO8vkFGacCw4fiH9f6YOkoKECVc8JYLBslJe95rqQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 01 Feb 2019 14:00:04 GMT']
+      host: [email.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
+      opc-request-id: [39CA1DEBDA034F59AE2638CFEAF94A5F]
+      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43]
+    method: GET
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/senders?limit=10&compartmentId=ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla
+  response:
+    body: {string: '[{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_6057","testing_service_tag_02":"tag5.__STS0106_6057","testing_service_tag_03":"tag6.__STS0106_6057"}},"freeformTags":{"tag1":"value1.__STS0106_9862","tag2":"value2.__STS0106_9862"},"emailAddress":"__sts0106_6565@test.oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaadeg2kbh5dwzlg3jfg4zd3ukt4pk7xw3epfitj52tjervqq7qwmoa","lifecycleState":"CREATING","timeCreated":"2019-02-01T13:59:19.307Z"},{"definedTags":{},"freeformTags":{"Department":"Finance"},"emailAddress":"sender@oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaaxpqb27f2zxwkxevkaxwznxawyvogcj5qudqouavnx2pjtysikb7a","lifecycleState":"ACTIVE","timeCreated":"2018-09-28T19:07:54.957Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"john@test.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaaz5xdhxhxbteqwh2qta3i4hdngwhg5y6xnmvaz44o6p54w74ojfda","lifecycleState":"CREATING","timeCreated":"2018-08-02T15:04:06.692Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"rajesh.kuttan@oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaadtfa6aaszbstvsiq3vk4ht6ule35ek5bprcjak77fhicfmo7oxpa","lifecycleState":"ACTIVE","timeCreated":"2018-06-20T18:47:44.932Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"test-user-testing@oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaa3qt3jxicvec7kaeisc32zery6tc5nz4bjffvngmu4nn5ngeo3ona","lifecycleState":"ACTIVE","timeCreated":"2018-06-04T18:35:58.612Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"jojo-testing@oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaayswelewxx44flwkpt6vgk7aiwkl525wu22o3zyo6lwwyhfs3aaea","lifecycleState":"ACTIVE","timeCreated":"2018-06-04T17:28:21.682Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"support@zenedge.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaa7eo7tqfpcjlhvvz32renmrv4p5qfipkm3k34o7yp2s5tcuxw26lq","lifecycleState":"ACTIVE","timeCreated":"2018-05-30T14:32:23.722Z"},{"definedTags":{},"freeformTags":{"bar1":"baz","foo1":"bar"},"emailAddress":"pamela.signingapp@dyn-blackhole.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaaf7iidtvocdbkuolofpc47dj6pcbmippdknvuthxnbwq3bokh7dsa","lifecycleState":"ACTIVE","timeCreated":"2018-04-25T17:46:00.214Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"testmarch15@oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaaynthvgtjvadmn4dpd2vxx4v5f5anznewpfeozixseadjpxmkv5aq","lifecycleState":"ACTIVE","timeCreated":"2018-03-15T14:51:41.598Z"},{"definedTags":null,"freeformTags":null,"emailAddress":"jack_testing@example.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaazcs2smsotzcmtk56qxun64orylwdioiy2lzmypg7njsofuchmnea","lifecycleState":"ACTIVE","timeCreated":"2018-02-21T17:58:19.409Z"}]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-prev-page, opc-next-page, opc-page-count,
+          ops-total-items, opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['2707']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 14:00:11 GMT']
+      X-Application-Context: [application]
+      opc-next-page: [MQkwCTIwCTIwMTgtMDItMjFUMTc6NTg6MTkuNDA5WglqYWNrX3Rlc3RpbmdAZXhhbXBsZS5jb20JMg]
+      opc-page-count: ['2']
+      opc-request-id: [39CA1DEBDA034F59AE2638CFEAF94A5F/13EBF47F18500E1DADE7DB796D96E331/876FF6A86079ECC969C479B2A1BF1095]
+      opc-total-items: ['12']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"BEDD14CEC695469B826AA433AFEE975C\",
+      \"opcNextPage\": \"MQkwCTIwCTIwMTgtMDItMjFUMTc6NTg6MTkuNDA5WglqYWNrX3Rlc3RpbmdAZXhhbXBsZS5jb20JMg\",
+      \"items\": [{\"definedTags\": {\"testingServiceTagNs001\": {\"testingServiceTag03\":
+      \"tag6.__STS0106_6057\", \"testingServiceTag01\": \"tag4.__STS0106_6057\", \"testingServiceTag02\":
+      \"tag5.__STS0106_6057\"}}, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaadeg2kbh5dwzlg3jfg4zd3ukt4pk7xw3epfitj52tjervqq7qwmoa\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0106_9862\", \"tag1\": \"value1.__STS0106_9862\"},
+      \"emailAddress\": \"__sts0106_6565@test.oracle.com\", \"timeCreated\": \"2019-02-01T13:59:19.307000+00:00\",
+      \"lifecycleState\": \"CREATING\"}, {\"definedTags\": {}, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaaxpqb27f2zxwkxevkaxwznxawyvogcj5qudqouavnx2pjtysikb7a\",
+      \"freeformTags\": {\"department\": \"Finance\"}, \"emailAddress\": \"sender@oracle.com\",
+      \"timeCreated\": \"2018-09-28T19:07:54.957000+00:00\", \"lifecycleState\": \"ACTIVE\"},
+      {\"definedTags\": null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaaz5xdhxhxbteqwh2qta3i4hdngwhg5y6xnmvaz44o6p54w74ojfda\",
+      \"freeformTags\": null, \"emailAddress\": \"john@test.com\", \"timeCreated\":
+      \"2018-08-02T15:04:06.692000+00:00\", \"lifecycleState\": \"CREATING\"}, {\"definedTags\":
+      null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaadtfa6aaszbstvsiq3vk4ht6ule35ek5bprcjak77fhicfmo7oxpa\",
+      \"freeformTags\": null, \"emailAddress\": \"rajesh.kuttan@oracle.com\", \"timeCreated\":
+      \"2018-06-20T18:47:44.932000+00:00\", \"lifecycleState\": \"ACTIVE\"}, {\"definedTags\":
+      null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaa3qt3jxicvec7kaeisc32zery6tc5nz4bjffvngmu4nn5ngeo3ona\",
+      \"freeformTags\": null, \"emailAddress\": \"test-user-testing@oracle.com\",
+      \"timeCreated\": \"2018-06-04T18:35:58.612000+00:00\", \"lifecycleState\": \"ACTIVE\"},
+      {\"definedTags\": null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaayswelewxx44flwkpt6vgk7aiwkl525wu22o3zyo6lwwyhfs3aaea\",
+      \"freeformTags\": null, \"emailAddress\": \"jojo-testing@oracle.com\", \"timeCreated\":
+      \"2018-06-04T17:28:21.682000+00:00\", \"lifecycleState\": \"ACTIVE\"}, {\"definedTags\":
+      null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaa7eo7tqfpcjlhvvz32renmrv4p5qfipkm3k34o7yp2s5tcuxw26lq\",
+      \"freeformTags\": null, \"emailAddress\": \"support@zenedge.com\", \"timeCreated\":
+      \"2018-05-30T14:32:23.722000+00:00\", \"lifecycleState\": \"ACTIVE\"}, {\"definedTags\":
+      {}, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaaf7iidtvocdbkuolofpc47dj6pcbmippdknvuthxnbwq3bokh7dsa\",
+      \"freeformTags\": {\"foo1\": \"bar\", \"bar1\": \"baz\"}, \"emailAddress\":
+      \"pamela.signingapp@dyn-blackhole.com\", \"timeCreated\": \"2018-04-25T17:46:00.214000+00:00\",
+      \"lifecycleState\": \"ACTIVE\"}, {\"definedTags\": null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaaynthvgtjvadmn4dpd2vxx4v5f5anznewpfeozixseadjpxmkv5aq\",
+      \"freeformTags\": null, \"emailAddress\": \"testmarch15@oracle.com\", \"timeCreated\":
+      \"2018-03-15T14:51:41.598000+00:00\", \"lifecycleState\": \"ACTIVE\"}, {\"definedTags\":
+      null, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaazcs2smsotzcmtk56qxun64orylwdioiy2lzmypg7njsofuchmnea\",
+      \"freeformTags\": null, \"emailAddress\": \"jack_testing@example.com\", \"timeCreated\":
+      \"2018-02-21T17:58:19.409000+00:00\", \"lifecycleState\": \"ACTIVE\"}], \"opcTotalItems\":
+      \"12\"}", "requestJson": "{\"opcRequestId\": \"stsListSenders\", \"limit\":
+      10, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\"}",
+      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.ListSendersRequest",
+      "responseClass": "com.oracle.bmc.email.responses.ListSendersResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['3731']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 14:00:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

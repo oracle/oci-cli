@@ -1,0 +1,92 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CancelWorkRequest&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:09:57 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0459&apiName=CancelWorkRequest&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"b7cd566d-bc04-4119-85ac-2512798df317","request":{"workRequestId":"2c1126c8-24e2-4a49-82a4-792fa4814b97"}}]'}
+    headers:
+      Content-Length: ['123']
+      Content-Type: [application/json]
+      Date: ['Thu, 20 Sep 2018 18:09:57 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/c1:4c:5d:54:33:96:03:4e:54:2f:5f:ec:c9:36:90:8e",signature="m8knjOowurk2sEys27sr4ZcIkW86LMiOCf0caNchH4bT1F5zHvwH69094u/OVgq54zIkFJCgohFhmUz9xMRICXlb7kL/acpAMTZWIo9TkEnTPzn2ytpXhJnGP1iQRyxBh23I64QUAgtJYgIi/o0ayCN5VzirfVAkuYOYRALxQ4NHQUouoglQgLMbcya+SIZQA79TvYbbu08H3iF8sHePmnHAOXTMtlTi56IZT0WAEPEtli2eVnVppcdVZapQ3U/zKnEq1CSsERs8Hd0tW5+ovUqhc+Sbyl9vX/FO1gRVDxSKU/G2wJvu8KIWgxGbsCbYmNiTadifBQnE2OOcL/J6Sg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 20 Sep 2018 18:09:58 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.342]
+      opc-client-request-id: [AE11FEF3075F46628CDA4B9CD86D8705]
+      opc-request-id: [8DDDCC1842E64D6F91313729C186EB67]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.342 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+    method: DELETE
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/workRequests/2c1126c8-24e2-4a49-82a4-792fa4814b97
+  response:
+    body: {string: '{"code":"NotCancelable","message":"Work request 2c1126c8-24e2-4a49-82a4-792fa4814b97
+        is in COMPLETED state."}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['109']
+      Content-Type: [application/json]
+      Date: ['Thu, 20 Sep 2018 18:09:59 GMT']
+      opc-client-request-id: [AE11FEF3075F46628CDA4B9CD86D8705]
+      opc-request-id: [d67739b1-d4d8-7a6b-13aa-ff81451793c6]
+    status: {code: 409, message: Conflict}
+- request:
+    body: '{"requestJson": "{\"workRequestId\": \"2c1126c8-24e2-4a49-82a4-792fa4814b97\"}",
+      "errorJson": "{\"statusCode\": 409, \"opcRequestId\": \"d67739b1-d4d8-7a6b-13aa-ff81451793c6\",
+      \"code\": \"NotCancelable\", \"message\": \"Work request 2c1126c8-24e2-4a49-82a4-792fa4814b97
+      is in COMPLETED state.\"}", "containerId": "b7cd566d-bc04-4119-85ac-2512798df317",
+      "requestClass": "com.oracle.bmc.objectstorage.requests.CancelWorkRequestRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['435']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0459&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:09:59 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

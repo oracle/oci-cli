@@ -1,0 +1,112 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateNatGateway&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Mon, 05 Nov 2018 21:18:17 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0697&apiName=UpdateNatGateway&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"5796b41a-badd-492d-90fd-483bc3b9566b","request":{"natGatewayId":"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a","updateNatGatewayDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0697_8460","testing_service_tag_02":"tag5.__STS0697_8460","testing_service_tag_03":"tag6.__STS0697_8460"}},"displayName":"__STS0697_5276","freeformTags":{"tag1":"value1.__STS0697_8448","tag2":"value2.__STS0697_8448"},"blockTraffic":true}}}]'}
+    headers:
+      Content-Length: ['517']
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Nov 2018 21:18:17 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
+      "tag5.__STS0697_8460", "testing_service_tag_01": "tag4.__STS0697_8460", "testing_service_tag_03":
+      "tag6.__STS0697_8460"}}, "displayName": "__STS0697_5276", "blockTraffic": true,
+      "freeformTags": {"tag2": "value2.__STS0697_8448", "tag1": "value1.__STS0697_8448"}}'
+    headers:
+      Content-Length: ['335']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaac2vk7nbkf7trfhr6vdxh6fve5ukhrv3hne233ngsdtui4pu3pagq/ocid1.user.oc1..aaaaaaaalomidn5dlsespicybohxhbjhqzhsodvi2uvrtvm2bghkb5iqbgdq/27:f0:c2:91:86:1a:8e:69:d9:3d:d6:f1:c1:92:45:2f",signature="iTBduPQxBV3b9iMbgnX0bgm//LnK5Dn8pOiJB/UlEa+H0lG0Qnc6MJe+8VJ0pLCKmMHB4f+Vy9wA+OcZOIW0865DvTrwSHlSGfwzwLWY0L+jP1Gsj/dNWd9Ma/Pfy76iKd2sEsqu35ROiDsiVx2IyafMRFghEbli5ezDepeUYO4qdQFlG0gaq1aXdShs9FFTY/sQh2Pg/HgFjIvV1Rieto5vEwqEAXlsGWFQsVLOeNzd+q1+uAxR2dfpvWzyPPKaDBxUBeT64qUu7mbKZa2Houni3knYfMwB10lP9/aqWZDeITU4JEQKD/rlDV9RGpWDyc8BqsuSLnKCl0TIgYiN5A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 05 Nov 2018 21:18:23 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7]
+      opc-request-id: [BF220938D03F49AD8E598681DB79B8FB]
+      user-agent: [Oracle-PythonSDK/2.0.7 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.38]
+      x-content-sha256: [nrsluKGg93KUHRC9llxt6LkGE2SPlIHnuJNvbUOz/6c=]
+    method: PUT
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/natGateways/ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0697_8460\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0697_8460\",\n      \"testing_service_tag_03\" : \"tag6.__STS0697_8460\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0697_5276\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0697_8448\",\n    \"tag2\" : \"value2.__STS0697_8448\"\
+        \n  },\n  \"id\" : \"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a\"\
+        ,\n  \"blockTraffic\" : true,\n  \"lifecycleState\" : \"AVAILABLE\",\n  \"\
+        natIp\" : \"129.213.172.235\",\n  \"timeCreated\" : \"2018-11-05T21:18:21.363Z\"\
+        ,\n  \"vcnId\" : \"ocid1.vcn.oc1.iad.aaaaaaaa5n7ifkil5vrn4hzuuln7hinf36gwivsh3jjbkvik2efymgm2whtq\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [UTF-8]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Nov 2018 21:18:23 GMT']
+      ETag: ['3346073']
+      opc-request-id: [BF220938D03F49AD8E598681DB79B8FB/4FC3775064B6B578C543797175858236/47901235CBD1492DE9EAEA4DDEBCF518]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"E677DE35584C40229C2D81D6DFE49396\",
+      \"natGateway\": {\"natIp\": \"129.213.172.235\", \"id\": \"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0697_8448\", \"tag1\": \"value1.__STS0697_8448\"},
+      \"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaa5n7ifkil5vrn4hzuuln7hinf36gwivsh3jjbkvik2efymgm2whtq\",
+      \"displayName\": \"__STS0697_5276\", \"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_02\": \"tag5.__STS0697_8460\", \"testing_service_tag_01\":
+      \"tag4.__STS0697_8460\", \"testing_service_tag_03\": \"tag6.__STS0697_8460\"}},
+      \"timeCreated\": \"2018-11-05T21:18:21.363000+00:00\", \"lifecycleState\": \"AVAILABLE\",
+      \"blockTraffic\": true}, \"etag\": \"3346073\"}", "requestJson": "{\"updateNatGatewayDetails\":
+      {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\":
+      \"tag6.__STS0697_8460\", \"testing_service_tag_01\": \"tag4.__STS0697_8460\",
+      \"testing_service_tag_02\": \"tag5.__STS0697_8460\"}}, \"displayName\": \"__STS0697_5276\",
+      \"blockTraffic\": true, \"freeformTags\": {\"tag2\": \"value2.__STS0697_8448\",
+      \"tag1\": \"value1.__STS0697_8448\"}}, \"natGatewayId\": \"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a\"}",
+      "containerId": "5796b41a-badd-492d-90fd-483bc3b9566b", "requestClass": "com.oracle.bmc.core.requests.UpdateNatGatewayRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateNatGatewayResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1636']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0697&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Mon, 05 Nov 2018 21:18:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

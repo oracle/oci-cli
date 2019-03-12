@@ -1,0 +1,34 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="quvEkKAY6zTzLGX7B4Y5aaiyKWJzxZD+SmTFhauSpS1paaod0EBd4WF4+aCtpY3GP7VZ1gTfiwMIU473qftC0GHrkr5l3eW2Eq9B8eHEebMKv9GNsDaidOxYWLO4g190HUTrTeWZ/DFrc/Y6EY196MYnAZiQH/31FNQ+1qz8GoobK7AhlACvrV7ExVyXd8KvkSS/UwK+gUFgN4uUAQuuo3MEWdEYWrKHfCQwoo7RtwOop7UG0ZRtyJbtxR+dpRLBg2I+6QyxK6Fw+E02r1qNza+Iid0Ctxg1TXF2vj1UQx0cyW22h7uyQ5oflrBuP9/DgMSDaDOsYkvUqeWeb96gbA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 23 Oct 2018 23:04:27 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7+preview.1.437]
+      opc-client-request-id: [9BFB31A058CA4C49887F2E8B02A1ACC0]
+      opc-request-id: [C09CF7E7796045AB96B98F9FFDA4F5F9]
+      user-agent: [Oracle-PythonSDK/2.0.7+preview.1.437 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.36+preview.1]
+    method: GET
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/ObjectStorageBulkGetTest_10000/o?limit=1000&fields=name%2Csize&prefix=batman
+  response:
+    body: {string: '{"objects":[]}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['14']
+      Content-Type: [application/json]
+      Date: ['Tue, 23 Oct 2018 23:04:30 GMT']
+      opc-client-request-id: [9BFB31A058CA4C49887F2E8B02A1ACC0]
+      opc-request-id: [fc3ffb90-3540-99aa-9b19-64442acea87d]
+    status: {code: 200, message: OK}
+version: 1

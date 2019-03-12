@@ -11,8 +11,8 @@ import six
 import os
 import yaml
 
-
 DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
+cli_util.rename_command(containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs, "list")
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.create_cluster, params_to_exclude=['options'],

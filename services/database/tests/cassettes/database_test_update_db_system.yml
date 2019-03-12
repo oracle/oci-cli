@@ -1,0 +1,648 @@
+interactions:
+- request:
+    body: '{"cpuCoreCount": 6, "sshPublicKeys": ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl
+      my public key"]}'
+    headers:
+      Content-Length: ['436']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="ltbv0+GGeoZJ2oo3I7rcPZAUrmLM+Ga/Mel22u0ywwXQ4M0i8e+wXFeDvxMQG4xXoqj5P/VcYOGW/cqKQlXS9gjWSiDQeiCNkEGqf4x2FH/s0CFIiydfGJ/x8O8z5ETY0tlwyV+ngBRjKs7G+osk5LONFY7Dcc8S56IscXtffL/xQIyIXB4lZ4/ynA4evHKWxOyKvsIwLAxyDTez+x/cy/z89/FCuZFf7YzD2hBX3tIdOjVHciTZK6sfBVBuwuntgIV/Kz0RwzDzk6AmlU8tZpYSXMG3aGquaPT34YrkmSs2HsoCix1R/dMz979SLCU3vIzx3SraFuAri3GNHl94Lw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:06:28 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [1DFE780924454A378FAF4268B89C24E6]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+      x-content-sha256: [u87yxzhZRSmel7Xb83ubFsWLoi55xsAcOns0V73OCVc=]
+    method: PUT
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:06:29 GMT']
+      ETag: [2a21f0ed]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [1DFE780924454A378FAF4268B89C24E6/A1B43FA7CE8CD0D420D9CBC3FBF91851/68440DB7CEFE55F5026AB9FAE367BC5A]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="goC1Z9/OXNXJVW+/bN5aChwShztv4tJ2fMJXf+VXPGtyIafbbcG4U0DTWpkutVJHwFaG/zthb65kPNYjHQnyB7y3N+ETN+P1AvT9ZfAcS7FOdGVd8qXXjnR02hRrngOLFoyLVIrhhzZZKOFtNp8bhCYMwwm/v4xVW3lxqH+rAG+RkwoamjWsXo3n2LIY6LKdCWVau1LTbucnXRIpkvUbSQI40LXvKeENOeZnso0SZafEVkY6SIHkhWdeLj5dTIfH/2IeqecdOQYx4iT8RPMIij/lJC0qYU2iSlF7zkbrhbkdu/WR3vNr7W2LJMcWWL8TCsFjUBjIeZI97jyp5ghPjw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:06:29 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [56EB8E357CD64299A414679D1F5AA4C5]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:06:30 GMT']
+      ETag: [2a21f0ed]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [56EB8E357CD64299A414679D1F5AA4C5/1CD3A602DC9B0C246BF903CD495210D5/0ABCD30CE6752F145684F4B7F4AD67D4]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="nVeDfqQnj3+TxVyFJZFAEqvTNYo0PXXaCzj3l49MhhoqFUoyKBEIx18Be9lMK88Bw+KafJcQDhIq2ky1Ed+iQtVHjOcM89VXos5Y14bd3+NPaVddcD6ILgVrG2KpHQFakf9y+Ji3OAQVpO2j8ZhIW0KAAd0n40kSJigGP6lbdNZDa11/CduUp+8W27H80POc4XUnd9tcyVrMc1xZ/QFTqyS05Z05HnLIkbjUDQk4bE8iEIvpKXw2DDERAnDgmEgSopE1kpkbIlPv2E2zQWWfhwBW1m1svRkTzelV4LPr3BLtzClMO/ZUWC1okIHgjXB1BxslgeaA8iXXh+9QUrPEXw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:06:31 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [BBF58AB5BB2F437B96E8D5BF63E83243]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:06:31 GMT']
+      ETag: [2a21f0ed]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [BBF58AB5BB2F437B96E8D5BF63E83243/30146DA6CD4E1759425C5ACFD6C01F98/BB861D3B6CD15852FE619A993250C4AB]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="EGbi/Blutjtxwjiw4OL4F33ZnrkQUfeBWg3tQ155qad9Zw2rH/nI6z888WaB+4Tk87EnYXhXXcHlCRZhmnzIH+1lrSZhDcgEz35c5pNLv6pwKCIMM+4PLZUNbx8H5tmXGfQBIcvBF8JHfgmXLAodxH9jD2vmNSgWt4aF9ftOAf81NtpUruiMWvRnI8aFJU57vI+2/cyoLlkusCnSNCn+c/pd0+NS0wxOeJp0eZZBCPCIeadLo0lCdQCdbfPc0dZSbbDaFMeFORsxTymH0WS9Lm9n7Pg925B+BxbSt1MFdIaG4HO7minD0AJbtGMDN1oNNLcI5HgMsu2ow1Wy3LmrCQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:06:33 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [38E019EB22BC4C8FA87C9A73ACE369F4]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:06:34 GMT']
+      ETag: [2a21f0ed]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [38E019EB22BC4C8FA87C9A73ACE369F4/96334BB538775692C1FFF2DC9C276F38/4B9978E4BAC0BAEB35F48F762594AD78]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="ixSklzupArBUAwDK63wZWy+eUa9mWWMGWjpR2/bUjKIXIqPlffzmX+v3MF1f9voPUg/tcV4Oq0c1HnjkOBq3PGxzKfBe3+9aigU/JuxqYuMbG6mNryoyPDOzFxobYCxCMH8fceHp3cjslHLy8NsPdv3BO0T/E+grgeQE0p9DtkNPb8C9Wj/6jSadQ36v7DDzT+7Tnbcq/H6yxSwiyjVzneVNCBriKcsfBKw1sMS9AeFiivgTBZ0/hBoEnl/xdNAl+6sfNdxWQWwSBHTht46o65V6BC6lo91vF0bPNwex1z2tljGtoiW7TL15pcd40/MmbRw94XdgtUTmDPP/emQkRA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:06:38 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [323525379CF94283BE666A94A6782BBE]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:06:38 GMT']
+      ETag: [2a21f0ed]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [323525379CF94283BE666A94A6782BBE/2F34D0BA5E2AF58EBE5311A5B070F032/AC5DF4F45406592965835F24E66B8F02]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="NJ8BL02NFhrnTk/lNDVyG+38a1+cGPWkbaRTfaiXYYpjY9FP0vKI5eAeNT3boAFt6myLT5Q32pcQ9alSukNT3NrWVrBkUDWXMGk8RmI4ZPaefdJ7xFnKZFzGYbwMrN19R5C3c1Mt4iEtswdiqp0o2F3CvyiYLT8VL4BrsfGgHgLI4e6khn9++gVf/6CKypjDpQTyyAJIlojyvRwPP03kGsQy+5NV00E8VYXZsoyE/9iqvankHBbfoP5jnRrzp9nTEJEDD+RsEB9k8MFHkbZL/efbTbNqFsdayow6NcolFMbWk/DE0S2T4+11iFAjocqAOwyGZ+VOLD/Clcp+jh4KwQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:06:46 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [8EA989F0809F42569DC8AACCD30380EB]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:06:47 GMT']
+      ETag: [2a21f0ed]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [8EA989F0809F42569DC8AACCD30380EB/D849FAB7D5FA804136E9F256809B8773/0755CCC47D6388D8C9F0658EDF9A32A1]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="RM1mP5/gtGHR4NE+NPvK6MWc3cuhALrk5M+B7EL5c0IhUHxcUmxMt4cD6rMI66MlV0K75pKKTLdvaa87e6trp45+ZD+2YZ/f2PYgLG5YkCFGsG58gX4Yju3HmhqEL3AZ9dkAOCQuzC/M86dHgVWEfRkivd4v5LwynsYuHKnc9hJ/txl4xTOxOecKDAY5fYxAV1LE8jOOhTme+/aoRu9Wtvz+MnskfCj/T5kUBmXJAcwD9HAPaKk9AalA8iSLrcXUUOzzmBQM/E4ekFT42ssBA5Sr3n7+2MltYEvc/uAzamCn1zB5Q+kM/TuWibSaH+MO+LZjmS/8Wg5KTKhE+CnMmg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:07:02 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [221AB2E2085B40D6B1327D2EF18FDB5C]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 4,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:07:02 GMT']
+      ETag: [2a21f0ed]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [221AB2E2085B40D6B1327D2EF18FDB5C/EC9986CCECAC3032ED1458478F43EA04/7F14EB535FAC259BECFBAD9BDF34C60A]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="hskLLyCqnBEVNwfINJP+98FZfhIcAqjg9ms8ALAmjBS6MwW0QAgdvU4ZbxGvvx/hk7nf/5jBT/Omh3/mal7zsWwmmYFaiMzsK0fkYeYZEO1Zevn/PZC+fHx9lAZ3cLiFWKJEMwy/LjX4k7+dkQ7zLNnWlC1eFzCS3dTv5sAqz3ThqQgATS/d5Nfi+JreufYwQlQS0KqH7FP/X/zcucM9Q0rGhpgqHA+/S5V5cfnZJDAqiZCJ+dLWn4y2uwP+3cI/wBK15XCW29gZcalQ2VFQTTyV2WBVO9oU4ukpql9w9RPryvQsb7vxrPHwXTsPqvhfXR9rfHyiWEV+OkWGgA5qTw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:07:17 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [26DD5CB44C8A4915A76538E5E2A11938]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:07:18 GMT']
+      ETag: [dfe16dad]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [26DD5CB44C8A4915A76538E5E2A11938/88A17960C8214EF3E31C076543A77953/1A15E76324294332850AE202CFF05B56]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="G1TkftC0KCwA0kgwWaqMgy8rLtRZPYVhAw42x4/K511pZZQfrBJw4ulbgAvUwwM83fYvRkPjSRAUo8jqzhry6tgzNxXsBDek0IyCSbcGLS/7xVJcg53sDi0gaEfLFcFWA4OYZsQpVvTxOjIPoc1tcxL5IEkRGqqCyF3pW1D/XjAW2+IuIzCyxMcjoK0kKN36vpYAjU2ZhYklVHc0KfpZqY+tT/zsVT9Y7xN84p5X4X2Wce+2q3JC48SV/c1LPuLPOelqejMdLjQM5BpTdpmgHZQM44u8LI340/0xOEi21zgE0oYFByIGw55X4Mfv7iaozPBrIF/SfKUaUP3SEZWDTA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:07:33 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [CA12B3A319DD468B886955334B231678]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:07:34 GMT']
+      ETag: [dfe16dad]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [CA12B3A319DD468B886955334B231678/05A24499D7260A8B20C7E082A524A2C9/A2FCB06AAA170CC7CCF389E781571699]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="o9UHE/qxp/u6eg06e89lv1BBazz+GWSG9hR+i7VjUXo5oXUI0Jzpownrm53djLza8rGK3Uu/lw8aS/qsP6SrD18fzpkrkoaX158wpV+rzakbv1L8UIhh7mpvDqZmTS+7TvcoN/Gmqp9IoCZfGFvZua+8jheuAG75X7hj0IZJRwGi8OFemskAIxRy7OoUzOKtB8kzlcJZj8t0ZriarPVEQXYKtOcaduf4Ki2uzDgaEc362GIHvhYWlcApgwCKO0+mSv5UO6T7v7Rfulw1Xlmkq0KrotFE79RS9NZqEK4lkMgUIzmk9/Nb3MG/aJWuGOM8HjQ2aQsyPxuCB+gGMdW9+g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:07:49 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [383E7CD04A404CC7A2A420AB7DAB7836]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:07:49 GMT']
+      ETag: [3ccea61d]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [383E7CD04A404CC7A2A420AB7DAB7836/E61CAFA856A099C62674E5C332CA0521/86A4B4C7901B1041C66EA24CC751B673]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="dE9Xq4NWxUaz0WlouWWS89SXbId1TQHpPuZLuZKkHDf4RF2/2uFJJQ9qRxInaYxKWPDunyyI+WxJgk7oBo2lwEifMxv2YfIGgIdMhwcayXxLLQik79s+siJFWgIr9RAGJD7m1hMsWE/9rr5EaAQAy6wjZxRAYH9Mfhl/ohdztMcaFZA4a598Gc2cHJmisahVMQjp509yCAXJuBMm6o9Bxp9XHOZUMH5GjFFiGAsYOEh6Nax4uPXgjja42NfgzymwflWYaanWv7ZDZ4qYvALjjA6GG6fAeV+L1xK7poTpWSqksGzbbh6GJL0N++YWXHx960BJ9YCJN0iiaf9rc9ibzg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:08:04 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [CB0EAA86808340238B69E9E6454F5C64]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:08:05 GMT']
+      ETag: [3ccea61d]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [CB0EAA86808340238B69E9E6454F5C64/1B7FA69FA3A9DE649797F84ECD60E0BA/F1BB6A0840900D1080F47400021F08F9]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="nPpy6hkShwtigaHxcjlwlarftLRG2YOhDd1eFRC6ZfJsv8i1JJLzTOU39IUbRXvZiBhrliMxIT3Ux7/8APj0wm8ymXDcsGjeKw/GzqD87/9F9Z6xqbw1dU8POcIOquu0qS3hMZuVBxqerUJ0MD7Wm6HX6TiFE5IlhpqcE9TRZcD+tf4pDSza35VTUblVTF2/a8mK3PNyerdHAw2iD5aPa2T4rlJK12Z50dw/ojqFqZpdMtJT1nXwU+t7iL6onggxU32whQHJsp/vLxbWEzS2UvxnIBHb7EG/KlCeZbBlrZGyBYTviB5s/4Vq7so3aZButsikGhPccUTTk7L/+yPCHw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:08:20 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [ED928B854028463B98616AF666505DF8]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"UPDATING\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1758']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:08:21 GMT']
+      ETag: [3ccea61d]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [ED928B854028463B98616AF666505DF8/05E3B7497968FAB73AFF2D849E835747/61E075C81264FCDBC63E88FD0F48FE0A]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="EYJStAJhCTdadV0Cgu+u8FcqameJPJK+t0vTCToLg4HHkKOuaoL4iCp9aaVd577MyHIV8zPyHZXbrMx31bl4xoujBXmP4bzxq+lvMJWD6HIhsWXvX4/lJpVY9QZJ5s10cOFfdB/uJ+mUVjfC8CyBc+WN87CcD5p+AfrCHfTm3H3iEzmflKfxXUeKWZfZl71shCFb/l/+GdDOVUl8z5BMIZsL+vvZh9WTzkJtweGtV7t67xF+ZhwSMtPmrvi8P4HXCCI6zYsuR7XJ7/eldo6UE+mJWbY8fu8kuOefNSoKz9brFBhD1sjxGs58JEEt5MhtZt5oc00aSoymtsFsZ5TyCg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:08:36 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [E7AF420887464496B43C207A5210999C]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"AVAILABLE\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1759']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:08:36 GMT']
+      ETag: [592332d3]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [E7AF420887464496B43C207A5210999C/0AAE6302B2B4E52907B9F770ED2E9C51/F91E152EC8637A88D6F7699755D83A6B]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="EYJStAJhCTdadV0Cgu+u8FcqameJPJK+t0vTCToLg4HHkKOuaoL4iCp9aaVd577MyHIV8zPyHZXbrMx31bl4xoujBXmP4bzxq+lvMJWD6HIhsWXvX4/lJpVY9QZJ5s10cOFfdB/uJ+mUVjfC8CyBc+WN87CcD5p+AfrCHfTm3H3iEzmflKfxXUeKWZfZl71shCFb/l/+GdDOVUl8z5BMIZsL+vvZh9WTzkJtweGtV7t67xF+ZhwSMtPmrvi8P4HXCCI6zYsuR7XJ7/eldo6UE+mJWbY8fu8kuOefNSoKz9brFBhD1sjxGs58JEEt5MhtZt5oc00aSoymtsFsZ5TyCg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sun, 24 Feb 2019 10:08:36 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1]
+      opc-host-serial: [FakeHostSerial]
+      opc-request-id: [37962D4D0E3949F0B4C2FD74D1CD33DC]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq
+  response:
+    body: {string: "{\n  \"availabilityDomain\" : \"Iocq:PHX-AD-1\",\n  \"backupSubnetId\"\
+        \ : null,\n  \"clusterName\" : null,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"cpuCoreCount\" : 6,\n  \"dataStoragePercentage\" : 80,\n  \"dataStorageSizeInGBs\"\
+        \ : null,\n  \"databaseEdition\" : \"ENTERPRISE_EDITION\",\n  \"definedTags\"\
+        \ : { },\n  \"diskRedundancy\" : \"HIGH\",\n  \"displayName\" : \"CliDbSysDisplayNamevcr\"\
+        ,\n  \"domain\" : \"subnetvcr1.vcnvcr.oraclevcn.com\",\n  \"faultDomains\"\
+        \ : [ \"fault-domain-1\" ],\n  \"freeformTags\" : { },\n  \"hostname\" : \"\
+        cli-test-hostnamevcr\",\n  \"id\" : \"ocid1.dbsystem.oc1.phx.abyhqljrlq7ch76mhrdk6n4pzmfz2gtgp4smf6st32euxmai6cw3eu2dmwxq\"\
+        ,\n  \"iormConfigCache\" : null,\n  \"lastPatchHistoryEntryId\" : \"ocid1.dbpatchhistory.oc1.phx.abyhqljr25zb6lc6bhc6mqgr6rxyg6wnvusbboyex5mmitybfm4hsubtrh4q\"\
+        ,\n  \"licenseModel\" : \"LICENSE_INCLUDED\",\n  \"lifecycleDetails\" : null,\n\
+        \  \"lifecycleState\" : \"AVAILABLE\",\n  \"listenerPort\" : 1521,\n  \"nodeCount\"\
+        \ : null,\n  \"recoStorageSizeInGB\" : null,\n  \"scanDnsRecordId\" : null,\n\
+        \  \"scanIpIds\" : null,\n  \"shape\" : \"BM.DenseIO2.52\",\n  \"sparseDiskgroup\"\
+        \ : null,\n  \"sshPublicKeys\" : [ \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl\
+        \ my public key\" ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaasev24snconment4xg32rzmuwlqz27j26ouz75dwribie42e2lddq\"\
+        ,\n  \"timeCreated\" : \"2019-02-24T10:05:36.431Z\",\n  \"timeZone\" : \"\
+        UTC\",\n  \"version\" : \"12.2.0.1.170117\",\n  \"vipIds\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1759']
+      Content-Type: [application/json]
+      Date: ['Sun, 24 Feb 2019 10:08:37 GMT']
+      ETag: [592332d3]
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [37962D4D0E3949F0B4C2FD74D1CD33DC/88FE41127197AB32891032DEC6DFE1AA/F74EACAE677FA3C15E6D611F91A50FB0]
+    status: {code: 200, message: OK}
+version: 1

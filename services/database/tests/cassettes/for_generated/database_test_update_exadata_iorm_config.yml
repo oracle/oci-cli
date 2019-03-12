@@ -1,0 +1,104 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateExadataIormConfig&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 20:17:43 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0590&apiName=UpdateExadataIormConfig&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ebde7a10-ecf1-4115-819f-a599568c1d50","request":{"dbSystemId":"ocid1.dbsystem.oc1.phx.abyhqljtom2jmk3obebgodhmjcl36keljnk24x6ehs4bh5y6jwham6efbopq","exadataIormConfigUpdateDetails":{"objective":"BALANCED","dbPlans":[{"dbName":"default","share":5}]}}}]'}
+    headers:
+      Content-Length: ['268']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 20:17:44 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"objective": "BALANCED", "dbPlans": [{"dbName": "default", "share": 5}]}'
+    headers:
+      Content-Length: ['73']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="Sm27dQ89JaQG6ZHmDjQlPupnpkrxqkROuehNuQqaik11S8flJGYO5eKTd/MoaANQTHEkdv7gzeQaarjm/xtZhYXVNo1PYuz97lwXmO+w02to6FlSssChxst6jJfL+3VQ5oQshWQ2nNjY9avi7A60yP+Xe+0TyPOBlQAtZm7s7yrjeaZlnlVp0SmvWKH/UFvdKlwp9j0UnFwTUEHLBNWR89e0Al+sTzKybbx+0z56y9Sww4G19JQyp04ZYPn9iPc1Kjg7hKAjsznhMuJPwWlgP2P9cE+ypj2qXRfvEdIKzi8xBaXxYXk1drwFq1r5dsDcBTCH8ERn84C8YFD2xrUzqA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 20:20:03 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [48A54157205D4CAEB56B8D30B3D4F8C5]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+      x-content-sha256: [Gd4fEm+dfx7DlMCv5CHIzFNcgzv5cVs1wsljq4RBA/4=]
+    method: PUT
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystems/ocid1.dbsystem.oc1.phx.abyhqljtom2jmk3obebgodhmjcl36keljnk24x6ehs4bh5y6jwham6efbopq/ExadataIormConfig
+  response:
+    body: {string: "{\n  \"dbPlans\" : [ {\n    \"dbName\" : \"default\",\n    \"\
+        flashCacheLimit\" : \"-\",\n    \"share\" : 5\n  }, {\n    \"dbName\" : \"\
+        fakedb1\",\n    \"flashCacheLimit\" : null,\n    \"share\" : null\n  }, {\n\
+        \    \"dbName\" : \"fakedb2\",\n    \"flashCacheLimit\" : null,\n    \"share\"\
+        \ : null\n  }, {\n    \"dbName\" : \"fakedb3\",\n    \"flashCacheLimit\" :\
+        \ null,\n    \"share\" : null\n  }, {\n    \"dbName\" : \"fakedb4\",\n   \
+        \ \"flashCacheLimit\" : null,\n    \"share\" : null\n  }, {\n    \"dbName\"\
+        \ : \"fakedb5\",\n    \"flashCacheLimit\" : null,\n    \"share\" : null\n\
+        \  } ],\n  \"lifecycleDetails\" : \"IORM Plans are being updated...\",\n \
+        \ \"lifecycleState\" : \"UPDATING\",\n  \"objective\" : \"BALANCED\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['627']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 20:20:05 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [48A54157205D4CAEB56B8D30B3D4F8C5/95F842051FBCA9E47E0FE56814C9859C/14EFEBCAB5035442FC3E7F9D5BA19973]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"C9899816D1B54D218C64D59E0CC87AF0\",
+      \"exadataIormConfig\": {\"lifecycleDetails\": \"IORM Plans are being updated...\",
+      \"dbPlans\": [{\"flashCacheLimit\": \"-\", \"dbName\": \"default\", \"share\":
+      5}, {\"flashCacheLimit\": null, \"dbName\": \"fakedb1\", \"share\": null}, {\"flashCacheLimit\":
+      null, \"dbName\": \"fakedb2\", \"share\": null}, {\"flashCacheLimit\": null,
+      \"dbName\": \"fakedb3\", \"share\": null}, {\"flashCacheLimit\": null, \"dbName\":
+      \"fakedb4\", \"share\": null}, {\"flashCacheLimit\": null, \"dbName\": \"fakedb5\",
+      \"share\": null}], \"objective\": \"BALANCED\", \"lifecycleState\": \"UPDATING\"}}",
+      "requestJson": "{\"dbSystemId\": \"ocid1.dbsystem.oc1.phx.abyhqljtom2jmk3obebgodhmjcl36keljnk24x6ehs4bh5y6jwham6efbopq\",
+      \"exadataIormConfigUpdateDetails\": {\"objective\": \"BALANCED\", \"dbPlans\":
+      [{\"share\": 5, \"dbName\": \"default\"}]}}", "containerId": "ebde7a10-ecf1-4115-819f-a599568c1d50",
+      "requestClass": "com.oracle.bmc.database.requests.UpdateExadataIormConfigRequest",
+      "responseClass": "com.oracle.bmc.database.responses.UpdateExadataIormConfigResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1133']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0590&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 20:20:06 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

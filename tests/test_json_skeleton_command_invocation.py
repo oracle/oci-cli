@@ -78,7 +78,7 @@ def prepare_input_file_folder():
 
     with open(os.path.join(INPUT_FILE_FOLDER, 'list_buckets.json'), 'w') as f:
         with test_config_container.create_vcr().use_cassette(
-                'object_storage_namespace_get.yml'):
+                'json_skeleton_command_invocation_object_storage_namespace_get.yml'):
             # Grab the Object Storage namespace
             result = invoke(['os', 'ns', 'get'])
             util.validate_response(result)

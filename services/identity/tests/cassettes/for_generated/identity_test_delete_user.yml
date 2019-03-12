@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteUser&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=DeleteUser&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"userId":"ocid1.user.oc1..aaaaaaaauizep3r6vzubpzljpxvchjf574nlq4igeigps5t4ussqoukw7j3a"}}]'}
+    headers:
+      Content-Length: ['156']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="v4EJ0382UNfy+AYt7rmrE177jOF+jdEZUCB0N9k7hLJ19CmWmGl30QEV/3ABedlKPh4yosUKWu2UVtPJi45662g1dT501R6CA40lQJIBEzL8da22XrXvjpJ2Uz5rhXFnxX3/PMNJ1Q8wk+Vzz5fZSIPUi8dWXIr5tAhujKy6SsS3cpBYoUmB0/RNTbvE+AC8I7FpkjGQvGgevqTT/QqxV0vyNsHqoR6WvA/4u60+jtafG5gflxSn/sE29RJ6wj+CLkTqko6j4rH4fIvoX5h21xRCcdmcFyhVAaxKH/ZyAkMwJXCAHVll1x4EbEIgZ1zfKAemQuolhZdeni5pksqozg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:08 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [D5CC1EEDACAE45BDAFFE57B58DE1868B]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: DELETE
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/ocid1.user.oc1..aaaaaaaauizep3r6vzubpzljpxvchjf574nlq4igeigps5t4ussqoukw7j3a
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:09 GMT']
+      opc-request-id: [D5CC1EEDACAE45BDAFFE57B58DE1868B/A95939CE1D9E498D5B402712E38CD1FC/9434453BC03A5516F6D567F2EAB3B3C5]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"7EAAD00E1B1342C384A6E7CD111E2E47\"}",
+      "requestJson": "{\"userId\": \"ocid1.user.oc1..aaaaaaaauizep3r6vzubpzljpxvchjf574nlq4igeigps5t4ussqoukw7j3a\"}",
+      "containerId": "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.DeleteUserRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.DeleteUserResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['387']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:09 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

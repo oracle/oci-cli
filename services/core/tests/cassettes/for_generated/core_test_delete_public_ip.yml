@@ -1,0 +1,135 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeletePublicIp&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:03 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0866&apiName=DeletePublicIp&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"583f55da-13de-4064-809a-5a1de4932eb8","request":{"publicIpId":"ocid1.publicip.oc1.phx.aaaaaaaadnxlzueofpt6fus2grt7rpehdibvpsbtfujxjfnk4fkvdrpt37va"}},{"containerId":"a4e5d165-c413-4c3d-aead-87c28628a53b","request":{"publicIpId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}}]'}
+    headers:
+      Content-Length: ['276']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:03 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="fvINw+oZ20RqTblsfUiot0qhsmZ6auFviYLErzHoHGiVa+4cr79qVZ4lOp3S3g8zKCBCiDWgAT3ZtyldxvOWJkSYkYwjJUzdg7hC/5L61EyKeTOYEcQEVydBpLPJIjX9zMuKpd6j3zUFFdcNkyHxKePL2ieKZDkk+rP0oab2H2HuUEInr1l8dwQr8/XUhO/GpAPJPvcnuGO1pNCX3Lfg+OXXJdYul6L3eqGosZEjbnEDy1Nz4OxonVmCYH0wAnrBIXEdvPrjOZynz3Bk8Q2+Ll1gMbwdihUK2Gl1wNmmi1bcCNSny/2qCiZy9jMV0U8TBX6gr/tRZJDvvYGifxl48g==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Jun 2018 00:22:05 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [53F1104F9CC64FAE8B5E6E587A24EAFF]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/publicIps/ocid1.publicip.oc1.phx.aaaaaaaadnxlzueofpt6fus2grt7rpehdibvpsbtfujxjfnk4fkvdrpt37va
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:06 GMT']
+      opc-request-id: [53F1104F9CC64FAE8B5E6E587A24EAFF/6A36EB14C530068CA6EFF96D285B40E0/87A1D9C928524F7195B98B93B90E82BD]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"C1BDA3DF6AA5463E8BABB01A2104E751\"}",
+      "requestJson": "{\"publicIpId\": \"ocid1.publicip.oc1.phx.aaaaaaaadnxlzueofpt6fus2grt7rpehdibvpsbtfujxjfnk4fkvdrpt37va\"}",
+      "containerId": "583f55da-13de-4064-809a-5a1de4932eb8", "requestClass": "com.oracle.bmc.core.requests.DeletePublicIpRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeletePublicIpResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['398']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0866&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:06 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="ZA/79//M+G+NakW1xoPZl8EvH5ufIdBBte47/IY5lELygL6BQaJ4X/2bu35Gnsm4++pxQyrFUs60zB1UGVeBh94Z68MGAEy38Ph1jDl5ujidNCkiJFFC7zfKubzQfnSzrFgSAGGN7KxbPmCQjXFe2W4GCgfrKsufkHblySPR2ozst76oNTNQoU+CMKev1KYTgUZfqztoL95RrAFRggl3XiZtNEBvkrx2DLCJ33A4yOuMyQCF+BrmY7GLATco53l5880O/P5pZvmR6cEIrwNcz77JS8+bJgPMjhRZlF3fLd0Kg7X5LSul0CUsD0UTotxKHnMFtr1v/U+9fyvejZmt3g==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Jun 2018 00:22:09 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [4745456C34F7410AB18003D1CA98297B]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/publicIps/ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  response:
+    body: {string: "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n  \"message\" :\
+        \ \"Either Public IP with ID ABCDEFGHIJKLMNOPQRSTUVWXYZ does not exist or\
+        \ you are not authorized to access it.\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['164']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:09 GMT']
+      opc-request-id: [4745456C34F7410AB18003D1CA98297B/FA4697451991AAF5DD6BFC8D7359B7AC/5C24E679B3DC4DCC8D7D80A68098B81D]
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"requestJson": "{\"publicIpId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"}", "errorJson":
+      "{\"statusCode\": 404, \"opcRequestId\": \"4745456C34F7410AB18003D1CA98297B/FA4697451991AAF5DD6BFC8D7359B7AC/5C24E679B3DC4DCC8D7D80A68098B81D\",
+      \"code\": \"NotAuthorizedOrNotFound\", \"message\": \"Either Public IP with
+      ID ABCDEFGHIJKLMNOPQRSTUVWXYZ does not exist or you are not authorized to access
+      it.\"}", "containerId": "a4e5d165-c413-4c3d-aead-87c28628a53b", "requestClass":
+      "com.oracle.bmc.core.requests.DeletePublicIpRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['516']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0866&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

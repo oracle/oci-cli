@@ -1,0 +1,96 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=monitoring&apiName=GetAlarmHistory
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:17 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=monitoring&apiName=GetAlarmHistory&lang=PythonCLI&sessionId=0337
+  response:
+    body: {string: '[{"containerId":"a6a84ed4-c389-47e3-91eb-36422672c51b","request":{"alarmId":"ocid1.alarm.oc1.phx.aaaaaaaatk2xsd6p352vvxwi7bcdqo3y4tlaie3yni3eywjvlnosco3muq6q","limit":10}}]'}
+    headers:
+      Content-Length: ['172']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:17 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq/ocid1.user.oc1..aaaaaaaa6srah3qsdcznyzb5uvradoid5a5tpbz22yj6vywbrnj45xf5sv3a/ea:97:59:7d:bc:75:53:5e:0f:9c:c2:fc:46:e3:ad:e4",signature="mxcCj/HC6JLBz9QZoALBBtAOsaDiziDmEtw94gDPXnJ5xJwHvOYShI2iB1fAYJ0KmX66aeIlJk02YroHNWszhw2jhLwCU8n5gMFN7mkds/Ok9ig1k92ORSPvDkghmcQJ7PVus6AJuiOPXzl38H37CSukK+j8daQr8LaUfx9166C9b1auNCCQ+G5IgacUEFUOD8iuvyUUrIij54rmMZxGUd+y/8pNocC+mBOm30FcCzEmjFwSVI7EqOmqeHVhdt08SAQXwIhk9LEKTmBhDKXsRXKlxW8i9/LpCmqV4CkoOs7kHbIiXfOdQYPPgjauAIKuqj6PUpI/nz5cvnZBzzPW1Q==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 22 Feb 2019 15:55:18 GMT']
+      host: [telemetry.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1.700]
+      opc-request-id: [03B1B6D7761C4941B0294A8E9DF0D6D3]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1.700 (python 3.7.2; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://telemetry.us-phoenix-1.oraclecloud.com/20180401/alarms/ocid1.alarm.oc1.phx.aaaaaaaatk2xsd6p352vvxwi7bcdqo3y4tlaie3yni3eywjvlnosco3muq6q/history?limit=10
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAK2Ou1LDMBBF+3zFjuvEY8lxAPcUGQoaV2EoFHtJFvSwJfk1mfw7sggV0KFq5+xd
+        3XNZASRCCqv2TQIlJKamhqWRpKZmaXueUnF7/oNPrtm1ecGHYRrp7lg3ncnnrZeCMJ815TiP74PU
+        xtUmV32365L10kDuUYujxNjhbY+RovaW0C3sBS6BBOZ6pYSdo0t1Rogm4LzwCOTg+Sl+GIKeFAas
+        2hjlGXvYZHzDecWKsihKdp9uOTv8SFeWTie0Xya6lzLsr+vf2veaPAl56x7FUg59azTUFoWnMJg3
+        8N+O/+n1x1l2SBZbeF1dPwHKYzcvuAEAAA==
+    headers:
+      Content-Encoding: [gzip]
+      Content-Length: ['253']
+      Content-Type: [application/json]
+      Date: ['Fri, 22 Feb 2019 15:55:18 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [03B1B6D7761C4941B0294A8E9DF0D6D3/093C4AC6EB1BFF546754E0C30E7A4934/09ADF48BC001EF34E57E78C130B92AFC]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "a6a84ed4-c389-47e3-91eb-36422672c51b", "requestClass":
+      "com.oracle.bmc.monitoring.requests.GetAlarmHistoryRequest", "requestJson":
+      "{\"alarmId\": \"ocid1.alarm.oc1.phx.aaaaaaaatk2xsd6p352vvxwi7bcdqo3y4tlaie3yni3eywjvlnosco3muq6q\",
+      \"limit\": 10}", "responseJson": "{\"alarmHistoryCollection\": {\"alarmId\":
+      \"ocid1.alarm.oc1.phx.aaaaaaaatk2xsd6p352vvxwi7bcdqo3y4tlaie3yni3eywjvlnosco3muq6q\",
+      \"entries\": [{\"summary\": \"The alarm state is OK\", \"timestamp\": \"2019-02-22T15:55:18.421000+00:00\",
+      \"timestampTriggered\": null}, {\"summary\": \"Initial state was OK upon creation
+      of the alarm\", \"timestamp\": \"2019-02-22T15:55:18.421000+00:00\", \"timestampTriggered\":
+      \"2019-02-22T15:55:18.420000+00:00\"}], \"isEnabled\": true}, \"opcRequestId\":
+      \"FDB9E2349A014B57B2D95A76395FA6A6\"}", "responseClass": "com.oracle.bmc.monitoring.responses.GetAlarmHistoryResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['894']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0337&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:18 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

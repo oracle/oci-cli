@@ -1,0 +1,95 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateCluster&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:20:59 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=UpdateCluster&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"clusterId":"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd","updateClusterDetails":{"name":"__STS0242_753"}}}]'}
+    headers:
+      Content-Length: ['213']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:20:59 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "__STS0242_753"}'
+    headers:
+      Content-Length: ['25']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="nHth2zxa0aub90Ehqe68aNjSOAnbkrEz9xuI01aHCO124ev3WP6NxlNYhHEB05dhpDWy3dXWbro7rbJw3UdCgNMjN+bCbeDazG2Fs1mEr3bDW2MS8jf9Mj6Kz97peZy7Wedk7vtcfGrkuU3FMY8U90RY2Mn2POB15fSmoXR1+WC3KlEPOHnEM9LVTx+pOfgusc+f51anm4/vGQ5kXoC7aFF9siygQtJnK2UFLlhlYn9Hv39L+CTK/bxTwHfGEJNfr9bA+uo1huD2O8x5zNBNpN5mMdHWTxX8P7Vv8nrrq8K7FnFbVvnO6+avAvZotfZ3JZxBimWEemjtTm0zN85+IA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 21:21:00 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [D3E7014B1D2043E89897DF13BE408412]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+      x-content-sha256: [DtgDHSMaNu3/LXho7AR8MjGOlfzBFD8ctavMceQgJsM=]
+    method: PUT
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/clusters/ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Length: ['0']
+      Date: ['Fri, 03 Aug 2018 21:21:01 GMT']
+      Opc-Request-Id: [D3E7014B1D2043E89897DF13BE408412/D52EF186A25E4D80B43A2C518542F252/ED565C79B52A481489791E0F7F392ED3]
+      Opc-Work-Request-Id: [ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae3tgzbrgjtdkyjwgmytknjzgbrtmobxmq4tambrgwrdgntfgntd]
+      Uri: [/20180222/clusters/_id_]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.43.0, 10.237.49.241']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.49.241:52053']
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"D0547AF049344DA1BAD960895AC821F9\",
+      \"opcWorkRequestId\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae3tgzbrgjtdkyjwgmytknjzgbrtmobxmq4tambrgwrdgntfgntd\"}",
+      "requestJson": "{\"updateClusterDetails\": {\"name\": \"__STS0242_753\"}, \"clusterId\":
+      \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}",
+      "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass": "com.oracle.bmc.containerengine.requests.UpdateClusterRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.UpdateClusterResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['595']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:21:01 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

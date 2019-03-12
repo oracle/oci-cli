@@ -1,0 +1,108 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=budget&apiName=CreateAlertRule
+  response:
+    body: {string: !!python/unicode true}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:25 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0673&serviceName=budget&apiName=CreateAlertRule
+  response:
+    body: {string: !!python/unicode '[{"containerId":"1180089e-e6f5-4504-9acb-f04829492524","request":{"budgetId":"ocid1.budget.oc1..aaaaaaaazgydsyevdoi2re2za4kwobem63xlpl3e2m243yo62d3ti6d2vfna","createAlertRuleDetails":{"displayName":"__STS0673_5552","description":"__STS0673_8209","type":"ACTUAL","threshold":12345,"thresholdType":"ABSOLUTE","recipients":"plat_compartments_us_grp@oracle.com","message":"Alert
+        threshold has been hit"},"opcRetryToken":"a188a794-44a9-4dd6-ba23-ebf01087baca"}}]'}
+    headers:
+      content-length: ['457']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:25 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"displayName": "__STS0673_5552", "description": "__STS0673_8209",
+      "recipients": "plat_compartments_us_grp@oracle.com", "thresholdType": "ABSOLUTE",
+      "threshold": 12345.0, "message": "Alert threshold has been hit", "type": "ACTUAL"}'
+    headers:
+      Content-Length: ['231']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaae65zouabl37jpbbtil2vzvehmmwfissg7zgom6zeta3wbmdrrwiq/ocid1.user.oc1..aaaaaaaaob2fwxfjim7fgeex573hij7wue7soxgddarko3tna2ocll4mwheq/e9:01:60:92:3b:81:c5:ff:f6:4d:6d:36:8f:1d:4b:ec",signature="luA2HZmXi8v4FspCAPH/gn2ksmz4oeDAa6wYFwckp2GSve2swcX2Jgnh65s+qdnzLFMmhXg9zlGC+rkiTtUOv+GD8Ny+H8Kek9Szxm7P8CiTyNYH8mbsfpx07dX/N0FC/j4zhlVCN7+HKB14TK1IhDGD8IXJrnSfx9ttPyrPYGagRdKwjUCQU48oWuUy4UDY9+OftvyZzn4r/xeYXJgOw+KIXldIXR1BtVUIkwhFY1zVDsZDZDMwrQVKnB63sOvOeQkGs342rfHXwURH6btm23taZC2bCg7Uw92ti33emOySCiyC2rjWKRIPSciaVn9ycC4fhQ7T7DP862W8nZMiIg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:26 GMT']
+      host: [usage.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [B87CC3D508C54A6D86BF3C388AA32FB7]
+      opc-retry-token: [O1778m5NNBgj1U99LbG0w88UHbcUhK]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.2+preview.1]
+      x-content-sha256: [!!python/unicode SN3/Im8x9LaYKdagOwiWgFyvh+PTOI5accKlACc6jiY=]
+    method: POST
+    uri: https://usage.us-phoenix-1.oci.oraclecloud.com/20190111/budgets/ocid1.budget.oc1..aaaaaaaazgydsyevdoi2re2za4kwobem63xlpl3e2m243yo62d3ti6d2vfna/alertRules
+  response:
+    body: {string: !!python/unicode "{\n  \"id\" : \"ocid1.alertrule.oc1..aaaaaaaa6iicn2ssv5ynlexmqcsyimw55ph5qogug67gi33lzsjzbqgmn5bq\",\n
+        \ \"budgetId\" : \"ocid1.budget.oc1..aaaaaaaazgydsyevdoi2re2za4kwobem63xlpl3e2m243yo62d3ti6d2vfna\",\n
+        \ \"displayName\" : \"__STS0673_5552\",\n  \"type\" : \"ACTUAL\",\n  \"threshold\"
+        : 12345,\n  \"thresholdType\" : \"ABSOLUTE\",\n  \"lifecycleState\" : \"ACTIVE\",\n
+        \ \"message\" : \"Alert threshold has been hit\",\n  \"description\" : \"__STS0673_8209\",\n
+        \ \"version\" : 1,\n  \"recipients\" : \"plat_compartments_us_grp@oracle.com\",\n
+        \ \"timeCreated\" : \"2019-02-28T23:01:26.349Z\",\n  \"timeUpdated\" : \"2019-02-28T23:01:26.349Z\",\n
+        \ \"freeformTags\" : { },\n  \"definedTags\" : { }\n}"}
+    headers:
+      connection: [keep-alive]
+      content-length: ['630']
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:26 GMT']
+      etag: [df42d193ea8fa0f2e69b79223299a755d7de9ec584147ab8a50541b824471e2a]
+      opc-request-id: [B87CC3D508C54A6D86BF3C388AA32FB7/E596D9EE14B0437F61C45A758036F22B/BA8CF05C8765E7220B796C2E1B68E80F]
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"alertRule\": {\"displayName\": \"__STS0673_5552\",
+      \"timeCreated\": \"2019-02-28T23:01:26.349000+00:00\", \"recipients\": \"plat_compartments_us_grp@oracle.com\",
+      \"freeformTags\": {}, \"definedTags\": {}, \"budgetId\": \"ocid1.budget.oc1..aaaaaaaazgydsyevdoi2re2za4kwobem63xlpl3e2m243yo62d3ti6d2vfna\",
+      \"lifecycleState\": \"ACTIVE\", \"version\": 1, \"timeUpdated\": \"2019-02-28T23:01:26.349000+00:00\",
+      \"threshold\": 12345.0, \"thresholdType\": \"ABSOLUTE\", \"message\": \"Alert
+      threshold has been hit\", \"type\": \"ACTUAL\", \"id\": \"ocid1.alertrule.oc1..aaaaaaaa6iicn2ssv5ynlexmqcsyimw55ph5qogug67gi33lzsjzbqgmn5bq\",
+      \"description\": \"__STS0673_8209\"}, \"etag\": \"df42d193ea8fa0f2e69b79223299a755d7de9ec584147ab8a50541b824471e2a\",
+      \"opcRequestId\": \"A96DA8F16F194B87AEA9A8EC288AF431\"}", "responseClass": "com.oracle.bmc.budget.responses.CreateAlertRuleResponse",
+      "containerId": "1180089e-e6f5-4504-9acb-f04829492524", "requestJson": "{\"createAlertRuleDetails\":
+      {\"displayName\": \"__STS0673_5552\", \"description\": \"__STS0673_8209\", \"recipients\":
+      \"plat_compartments_us_grp@oracle.com\", \"thresholdType\": \"ABSOLUTE\", \"threshold\":
+      12345, \"message\": \"Alert threshold has been hit\", \"type\": \"ACTUAL\"},
+      \"opcRetryToken\": \"a188a794-44a9-4dd6-ba23-ebf01087baca\", \"budgetId\": \"ocid1.budget.oc1..aaaaaaaazgydsyevdoi2re2za4kwobem63xlpl3e2m243yo62d3ti6d2vfna\"}",
+      "requestClass": "com.oracle.bmc.budget.requests.CreateAlertRuleRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1491']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0673
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:26 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

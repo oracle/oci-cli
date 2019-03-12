@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListNatGateways&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Mon, 05 Nov 2018 21:18:54 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0050&apiName=ListNatGateways&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"5796b41a-badd-492d-90fd-483bc3b9566b","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq","vcnId":"ocid1.vcn.oc1.iad.aaaaaaaa4rowacc4rj2eiw5dicgao7nu3deurdtmk76vgscfqgirzhqqow4a","limit":10,"displayName":"__STS0050_3733"}}]'}
+    headers:
+      Content-Length: ['301']
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Nov 2018 21:18:54 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaac2vk7nbkf7trfhr6vdxh6fve5ukhrv3hne233ngsdtui4pu3pagq/ocid1.user.oc1..aaaaaaaalomidn5dlsespicybohxhbjhqzhsodvi2uvrtvm2bghkb5iqbgdq/27:f0:c2:91:86:1a:8e:69:d9:3d:d6:f1:c1:92:45:2f",signature="F7aGgiPySLYTwk16Jc39S0YCXSeO7p3yEOVwwEjHPLvo5HhzFi+pqGmnrECfPS0nTzj5k32//xO/bo5YZq8G/WoWTU24YcO3o2HzOQHtuKAjmCpzDj8+md6fJ4/yXJI4NFTxVq5VPVfkVFNLZrlly0lEhVOT51Jr7sTA2bvEF3M1VfYhPAj89rt3W9yk+udrG6xNc8/mSVVqMu5Iq+2QoSuRIxo6eBGbvTABxe2GfMDGLUK6cvSr0PoZWG0rW3M2vXVnAq7VH7yKur6qznw6vEs+ie/HLcPJXSTSuKM9R1+9ov2AjOZWcg/PGEodfjlGYdDhAzLKR4Px2N8DU/fNMw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 05 Nov 2018 21:18:55 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7]
+      opc-request-id: [3E92B3A9F793496DB93DAF1D57FEEE07]
+      user-agent: [Oracle-PythonSDK/2.0.7 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.38]
+    method: GET
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/natGateways?vcnId=ocid1.vcn.oc1.iad.aaaaaaaa4rowacc4rj2eiw5dicgao7nu3deurdtmk76vgscfqgirzhqqow4a&displayName=__STS0050_3733&limit=10&compartmentId=ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Nov 2018 21:18:55 GMT']
+      opc-request-id: [3E92B3A9F793496DB93DAF1D57FEEE07/6BD170ADB3AF395E7842A586AA7AFDB0/DF78D2925C13D230B8C073053865EB76]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"761772D8F0554D20AE2E2669466B0C34\",
+      \"items\": []}", "requestJson": "{\"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaa4rowacc4rj2eiw5dicgao7nu3deurdtmk76vgscfqgirzhqqow4a\",
+      \"limit\": 10, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq\",
+      \"displayName\": \"__STS0050_3733\"}", "containerId": "5796b41a-badd-492d-90fd-483bc3b9566b",
+      "requestClass": "com.oracle.bmc.core.requests.ListNatGatewaysRequest", "responseClass":
+      "com.oracle.bmc.core.responses.ListNatGatewaysResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['565']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0050&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Mon, 05 Nov 2018 21:18:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

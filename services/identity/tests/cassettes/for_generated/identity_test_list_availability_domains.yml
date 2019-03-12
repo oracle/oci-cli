@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListAvailabilityDomains&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:14 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=ListAvailabilityDomains&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq"}}]'}
+    headers:
+      Content-Length: ['166']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:14 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="gXa19Wb7Jf1S62FKhrQVd504gFdwdp6qh1d/h/l/0giIF+fTNzfXuP/yX28I2Gr++1+g7PPXQrB2gwNm4PulWV9k6FhJPSCy6iNt39jFvC67XYHm+0Zu9WeT+RNqzSC/i92ZuyTra9e2qzydH05hp5B7php+GTU2Hl83ET72hvsyxxSgDnYzhMIDW13H81I5Du+JrmlKChJ1yE6pPK3NioSFJg2OvCUGpCiwiTzIQScixyoMyhPC7VDH2j0kSvjinh0V8JqfsA/a65wCu8hl/BMrcXbASUGLiOhgZ4T1u57F8n54domhrndp2lTfvoojMaR3b8eBaP6RUcBa8yrrIA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:14 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [06C97C321C64498383AAD152994EC1B6]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/availabilityDomains/?compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: "[ {\n  \"id\" : \"ocid1.availabilitydomain.oc1..aaaaaaaac7uydq54rcymamzauv5pd23qk2g2vqlrfu5jd3y6i6qxpvvzkf7a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"Iocq:PHX-AD-1\"\n}, {\n  \"id\" : \"ocid1.availabilitydomain.oc1..aaaaaaaakemzo4ywaynz573sk4jpvwuqi7vmcuxajxfv4jjj2pthez3j2hbq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"Iocq:PHX-AD-2\"\n}, {\n  \"id\" : \"ocid1.availabilitydomain.oc1..aaaaaaaaupx7ga46w4xbb3fnkoh7rtyumacyb3ek6bw7bt3qff3mgt3mbrlq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"Iocq:PHX-AD-3\"\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['716']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:14 GMT']
+      opc-request-id: [06C97C321C64498383AAD152994EC1B6/71EE9F720E5729B2E11894D8CFAAC3D7/7D508583192B99C06B29149994EFE554]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"769AA276E209472CB810502215C68FE7\",
+      \"items\": [{\"id\": \"ocid1.availabilitydomain.oc1..aaaaaaaac7uydq54rcymamzauv5pd23qk2g2vqlrfu5jd3y6i6qxpvvzkf7a\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"Iocq:PHX-AD-1\"}, {\"id\": \"ocid1.availabilitydomain.oc1..aaaaaaaakemzo4ywaynz573sk4jpvwuqi7vmcuxajxfv4jjj2pthez3j2hbq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"Iocq:PHX-AD-2\"}, {\"id\": \"ocid1.availabilitydomain.oc1..aaaaaaaaupx7ga46w4xbb3fnkoh7rtyumacyb3ek6bw7bt3qff3mgt3mbrlq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"Iocq:PHX-AD-3\"}]}", "requestJson": "{\"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"}",
+      "containerId": "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.ListAvailabilityDomainsRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ListAvailabilityDomainsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1153']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:14 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

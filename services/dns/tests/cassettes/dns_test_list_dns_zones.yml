@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="YV69MLJK3r97v4850Agv+IqpcIKKens05jLiUUbPHw+99NQ/GdlQisdDfnCAPURJn1ivEo8sHN8uMsVjr8wOpZlE3yK71hNbxfcmSYiH3m9TVzt80yWRO3KOI0oY5b+Nwxii1REzKZ92nXzbLqinVSLKEcrMIi/G6q/HCwDCNjXTNBDbIJa323YJoKgfkQ5hwP1qewXTYkGCjzfQ1yedazc32EbJE6XqT6S77SNKPVW0l6HtKvtt6rwOm5Q8Ibbq98aNqR7hmjB16d2G7kHhjYFNf/SHnTjgKJScMvBnBDmyvg0nDxn7PC5nu2LsVIGVc7leKPSKJ/3Tyf9M7KF7oA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 25 Jun 2018 18:01:37 GMT']
+      host: [dns.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.128]
+      opc-request-id: [9CFD8C459FE84B81AC72B6269FD0B3A7]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.128 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://dns.us-phoenix-1.oraclecloud.com/20180115/zones?compartmentId=ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAG2QUU/DIBSF3/0ZPK+0tMBm35bFhz2YmLmYqDELA2rJ2sKAznXG/+5FTfTB+3jP
+        Od/l8PyOLnbQ28lpVKO7zfp2uXlEMzSIPi3UEJK8q2jJ6TWWtgct6K4BrY3RhTrPwYPHkLnW6sGc
+        M4KtF7LTsrOjSom8LMiiIITlCRXyf5nR9HrltYhaATolsoJnJduSRV2QmrAnMJ20D8YOYCBfz/BG
+        dKgmMwQMJ3zs9RDXKW+lUQT/2WIrCcbiZ/bN3HlXHc+HsT8cTiVnrp0Yt4YqfqTNvvPnNrxNr6fx
+        UkV2DGyUAg6aXzR0yFKJby5VgjGpBC1VQ/kC+JI0lGnF5hXncw3ZzjRaTvAt9xE6Ame52q4fbtDH
+        y9UnRYIgN4MBAAA=
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Length: ['296']
+      Content-Type: [application/json]
+      Date: ['Mon, 25 Jun 2018 18:01:39 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [9CFD8C459FE84B81AC72B6269FD0B3A7/105E16073C7D4E3C82FA48BC7BBEC16F/BD502047353040DABE6969A44A8AE71F]
+      opc-total-items: ['1']
+    status: {code: 200, message: OK}
+version: 1

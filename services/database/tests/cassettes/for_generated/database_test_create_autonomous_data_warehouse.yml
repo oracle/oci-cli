@@ -1,0 +1,103 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreateAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 22:34:11 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0659&apiName=CreateAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"c264f3ff-d6ed-48b5-8ee6-41f3b7932649","request":{"createAutonomousDataWarehouseDetails":{"adminPassword":"DBaaS12345_#","compartmentId":"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca","cpuCoreCount":1,"dataStorageSizeInTBs":1,"dbName":"a0659372","displayName":"__STS0659_7069"},"opcRetryToken":"f74a787c-c031-488a-9ad4-7310b59496a1"}}]'}
+    headers:
+      Content-Length: ['390']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 22:34:11 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"cpuCoreCount": 1, "compartmentId": "ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca",
+      "displayName": "__STS0659_7069", "dataStorageSizeInTBs": 1, "dbName": "a0659372",
+      "adminPassword": "DBaaS12345_#"}'
+    headers:
+      Content-Length: ['238']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="kpM6lIpURv3KnG96tHYOLiFZ+XTb76/+OaHnrKXzPCab6tUrF4Q2ypA0LI2Q2NbeWHXDjtFK3lqJGfRFNztPC/Zd/8AM1L++y+FiydMiW5/sO7U296RZSDVyKPQe7aFWeG3sZsLgxq9TgVI9TNw/J0fuN2aCDZlIWVZ8x5PR380U0Orgx+XPxLzMuz/SrH15MPiZMr5hELswvcw16AHcDPI9kGAEK3EnKz6O/9V2MUXxXEit5WNvNE67UEaBy3kRYWOQQhY+WzfhotkMJjD67eML7wd2HxMYnF0VLws7m7iqHJ7CCTEjPqzVY010wCc2oyAB7qPU4NEc6XHkq60qMQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 05 Sep 2018 22:34:12 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [D1535D5B725C4554B4BEBE9A632B522E]
+      opc-retry-token: [o4x1hmnpFPrLHydgNZKZfVYNbw3NcU]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [JjrUoN8QSn7oc703ieP6A597njwV/RT2IUhHuLoUrHs=]
+    method: POST
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousDataWarehouses
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"connectionStrings\" : null,\n  \"cpuCoreCount\" : 1,\n  \"dataStorageSizeInTBs\"\
+        \ : 1,\n  \"dbName\" : \"a0659372\",\n  \"definedTags\" : { },\n  \"displayName\"\
+        \ : \"__STS0659_7069\",\n  \"freeformTags\" : { },\n  \"id\" : \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrsfyo2mzbjuglc75fik66j47cmjlfipwb3kzymfg2n3em5amusiea\"\
+        ,\n  \"licenseModel\" : \"BRING_YOUR_OWN_LICENSE\",\n  \"lifecycleDetails\"\
+        \ : null,\n  \"lifecycleState\" : \"PROVISIONING\",\n  \"serviceConsoleUrl\"\
+        \ : null,\n  \"timeCreated\" : \"2018-09-05T22:34:12.718Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['594']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 22:34:12 GMT']
+      ETag: ['74751170']
+      opc-request-id: [D1535D5B725C4554B4BEBE9A632B522E/E620E065275016460B3054132538834C/FF3A54A1CB80260B3463DDA82E3BDF23]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"C43815A8F8F24A6FA615E7774D2C9918\",
+      \"etag\": \"74751170\", \"autonomousDataWarehouse\": {\"definedTags\": {}, \"serviceConsoleUrl\":
+      null, \"lifecycleDetails\": null, \"displayName\": \"__STS0659_7069\", \"cpuCoreCount\":
+      1, \"dataStorageSizeInTbs\": 1, \"timeCreated\": \"2018-09-05T22:34:12.718000+00:00\",
+      \"lifecycleState\": \"PROVISIONING\", \"id\": \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrsfyo2mzbjuglc75fik66j47cmjlfipwb3kzymfg2n3em5amusiea\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"freeformTags\": {}, \"licenseModel\": \"BRING_YOUR_OWN_LICENSE\", \"connectionStrings\":
+      null, \"dbName\": \"a0659372\"}}", "requestJson": "{\"createAutonomousDataWarehouseDetails\":
+      {\"cpuCoreCount\": 1, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"displayName\": \"__STS0659_7069\", \"dataStorageSizeInTBs\": 1, \"dbName\":
+      \"a0659372\", \"adminPassword\": \"DBaaS12345_#\"}, \"opcRetryToken\": \"f74a787c-c031-488a-9ad4-7310b59496a1\"}",
+      "containerId": "c264f3ff-d6ed-48b5-8ee6-41f3b7932649", "requestClass": "com.oracle.bmc.database.requests.CreateAutonomousDataWarehouseRequest",
+      "responseClass": "com.oracle.bmc.database.responses.CreateAutonomousDataWarehouseResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1347']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0659&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 22:34:12 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

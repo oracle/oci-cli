@@ -1,0 +1,165 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateSender&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:57:56 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=CreateSender&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"createSenderDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"__sts0106_7525@test.oracle.com","freeformTags":{"tag1":"value1.__STS0106_5645","tag2":"value2.__STS0106_5645"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_406","testing_service_tag_02":"tag5.__STS0106_406","testing_service_tag_03":"tag6.__STS0106_406"}}},"opcRequestId":"stsCreateSender"}},{"containerId":"ac2177aa-761a-4784-9a8a-73aa8955f22f","request":{"createSenderDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"","freeformTags":{"tag1":"value1.__STS0106_1879","tag2":"value2.__STS0106_1879"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_3706","testing_service_tag_02":"tag5.__STS0106_3706","testing_service_tag_03":"tag6.__STS0106_3706"}}},"opcRequestId":"stsCreateSender"}}]'}
+    headers:
+      Content-Length: ['1050']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 13:57:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
+      "tag5.__STS0106_406", "testing_service_tag_01": "tag4.__STS0106_406", "testing_service_tag_03":
+      "tag6.__STS0106_406"}}, "emailAddress": "__sts0106_7525@test.oracle.com", "compartmentId":
+      "ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla",
+      "freeformTags": {"tag2": "value2.__STS0106_5645", "tag1": "value1.__STS0106_5645"}}'
+    headers:
+      Content-Length: ['431']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="vxPkoStTLLoQyLkDYEmJ2/eC9EMW1Bi7tjj0233SwHdbtk+6SX6E5pu/zvWg6m5n7lok6QIGtUbaKe88O3x/Z8dshIOK09p3ByLGkYpxFeduJEj/6JlkkeDR44Fu5bUEoacIo0sQxW0c4GSTDrBwVVCJwqQ33PtZAvXUk+Bx6utmIfnyUa8V1VwLOT0dOt9pju9tBXVlKblpzYseWmg/YqnUGm2eELpfnZpFGrQGVbJxaatRFgQ0dfYUI439sllxgVv5Zhk4yTFD90LQKVkwyyankfq4ocXt0+VRbr3zJgH8pEXDdyfWQYN0LJTVFTNx67vdYShPphgHRebdFz/aig==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 01 Feb 2019 13:58:00 GMT']
+      host: [email.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
+      opc-request-id: [DA26D20E5A03493B8696E5BC2DAEEFE9]
+      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43]
+      x-content-sha256: [b3UVQ/J3z30W8dmg1+BRQpy1x4TnS5baPKofcMaf4xo=]
+    method: POST
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/senders
+  response:
+    body: {string: '{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_406","testing_service_tag_02":"tag5.__STS0106_406","testing_service_tag_03":"tag6.__STS0106_406"}},"freeformTags":{"tag1":"value1.__STS0106_5645","tag2":"value2.__STS0106_5645"},"emailAddress":"__sts0106_7525@test.oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa","lifecycleState":"CREATING","timeCreated":"2019-02-01T13:58:06.509Z","isSpf":false,"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla"}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Length: ['592']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 13:58:16 GMT']
+      X-Application-Context: [application]
+      opc-request-id: [DA26D20E5A03493B8696E5BC2DAEEFE9/BBFF7F8F68683B30FC53ADBC48E4D640/5BED4E57D29976EA5916D90BBA0AAE66]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9D1089A6566F41D8987A8E3F0D327A25\",
+      \"sender\": {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_02\":
+      \"tag5.__STS0106_406\", \"testing_service_tag_01\": \"tag4.__STS0106_406\",
+      \"testing_service_tag_03\": \"tag6.__STS0106_406\"}}, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\",
+      \"isSpf\": false, \"timeCreated\": \"2019-02-01T13:58:06.509000+00:00\", \"emailAddress\":
+      \"__sts0106_7525@test.oracle.com\", \"freeformTags\": {\"tag2\": \"value2.__STS0106_5645\",
+      \"tag1\": \"value1.__STS0106_5645\"}, \"lifecycleState\": \"CREATING\"}}", "requestJson":
+      "{\"opcRequestId\": \"stsCreateSender\", \"createSenderDetails\": {\"definedTags\":
+      {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\": \"tag6.__STS0106_406\",
+      \"testing_service_tag_01\": \"tag4.__STS0106_406\", \"testing_service_tag_02\":
+      \"tag5.__STS0106_406\"}}, \"emailAddress\": \"__sts0106_7525@test.oracle.com\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0106_5645\", \"tag1\": \"value1.__STS0106_5645\"}}}",
+      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.CreateSenderRequest",
+      "responseClass": "com.oracle.bmc.email.responses.CreateSenderResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1508']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:58:17 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
+      "tag5.__STS0106_3706", "testing_service_tag_01": "tag4.__STS0106_3706", "testing_service_tag_03":
+      "tag6.__STS0106_3706"}}, "emailAddress": "", "compartmentId": "ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla",
+      "freeformTags": {"tag2": "value2.__STS0106_1879", "tag1": "value1.__STS0106_1879"}}'
+    headers:
+      Content-Length: ['404']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="ljPJIW6S8SHG2SLjHRglg3/lx3mXHKNZ/yehdXNha7L3eh4Xtl852+bbQNVuxIxzdUN/oUrYitt0dyyFAPgbMZqLs1jt/+GWbUkjXetvz5fdTjX+lsG2Cq9RXw+mD5rw5e9F/8eDs7jRZVJdguPfhpK3r82Cfi6oPK2eLRRlVx9rILJY82xRbWLegV1u+9JvCeBSO9pg5RpLHTdR9I6nLiSx+526dqxNc402qRvL/x1RRMSRqj8wbCu4DhEBc/nntXxcwJaePwuIF1pT6VsyIMol9wmD9IsPsm85jeUEE9gWv1OMBjICKMDFNY146KxHZ0I3ACQHVqzDcDXXrIO83A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 01 Feb 2019 13:58:17 GMT']
+      host: [email.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
+      opc-request-id: [D330005E5253449E838C2958EAADFABB]
+      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43]
+      x-content-sha256: [S9CXbyHOGA9Yk3xlwGqmO/uV34erTh8vY3OpVX2tPkk=]
+    method: POST
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/senders
+  response:
+    body: {string: '{"code":"InvalidParameter","message":"compartmentId and emailAddress
+        should be valid.","errormsg":"compartmentId and emailAddress should be valid."}'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Content-Length: ['148']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 13:58:19 GMT']
+      X-Application-Context: [application]
+      errormsg: [compartmentId and emailAddress should be valid.]
+      opc-request-id: [D330005E5253449E838C2958EAADFABB/5AB48EE4F9B8DD35D4B522A4C775BEF1/14D20D1184189D619FCC1BFB61592BAB]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"opcRequestId\": \"stsCreateSender\", \"createSenderDetails\":
+      {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\":
+      \"tag6.__STS0106_3706\", \"testing_service_tag_01\": \"tag4.__STS0106_3706\",
+      \"testing_service_tag_02\": \"tag5.__STS0106_3706\"}}, \"emailAddress\": \"\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0106_1879\", \"tag1\": \"value1.__STS0106_1879\"}}}",
+      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"D330005E5253449E838C2958EAADFABB/5AB48EE4F9B8DD35D4B522A4C775BEF1/14D20D1184189D619FCC1BFB61592BAB\",
+      \"code\": \"InvalidParameter\", \"message\": \"compartmentId and emailAddress
+      should be valid.\"}", "containerId": "ac2177aa-761a-4784-9a8a-73aa8955f22f",
+      "requestClass": "com.oracle.bmc.email.requests.CreateSenderRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['905']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0106&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:58:20 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

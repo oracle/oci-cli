@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=healthchecks&apiName=ListHealthChecksVantagePoints
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:05 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=healthchecks&apiName=ListHealthChecksVantagePoints&lang=PythonCLI&sessionId=0759
+  response:
+    body: {string: '[{"containerId":"388318f1-e536-43a4-b6c5-b62571a4e225","request":{"limit":10,"name":"__STS0759_4666","displayName":"__STS0759_8709"}}]'}
+    headers:
+      Content-Length: ['134']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:05 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="IgZFF7mZp3MA0JWJnukl+cA2C0kUSmyOeqqk3/P3gXfs32gg8wuzcHI3MDhi/vnHlTfJaLeFHMtmNsg3M1JVcXn4sJNgMIIrMMaYXI70MPiH7j9C+m2vQU3m3W4UxnMAPJLBECsDBW7auw7H7XEM+0518CBsV75VWd2Lc138Xu40EkJAm5mxFpMIXIreisy76PpZ9LpxQvuUKEReu9QgTum59USKCxQ0qee5l0fzyGYg+dxWNZhECANnxeR/D3KVu3jC1HnbVBwUqDFB9Izfz7xx6CwokA3lYTT1CsBn9IajP1Fz0PtwdqM2GRwHdpqb3U9eXL331M8z+Oq8O6PYcQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 02 Feb 2019 03:15:05 GMT']
+      host: [healthchecks.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.653]
+      opc-request-id: [1539CB16B37B423AB583F2DD2706B3D5]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.653 (python 3.6.5; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://healthchecks.us-phoenix-1.oraclecloud.com/20180501/vantagePoints?limit=10&name=__STS0759_4666&displayName=__STS0759_8709
+  response:
+    body: {string: '[]'}
+    headers:
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:05 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [1539CB16B37B423AB583F2DD2706B3D5/0FC601DAF23D14DF7219E95073D56482/6A7D8A091D0F435346B9BC3C63B9DE0D]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "388318f1-e536-43a4-b6c5-b62571a4e225", "requestClass":
+      "com.oracle.bmc.healthchecks.requests.ListHealthChecksVantagePointsRequest",
+      "requestJson": "{\"limit\": 10, \"name\": \"__STS0759_4666\", \"displayName\":
+      \"__STS0759_8709\"}", "responseJson": "{\"items\": [], \"opcRequestId\": \"EACF0BA0D10D43BABC41785B6FE551D3\"}",
+      "responseClass": "com.oracle.bmc.healthchecks.responses.ListHealthChecksVantagePointsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['436']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0759&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:07 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

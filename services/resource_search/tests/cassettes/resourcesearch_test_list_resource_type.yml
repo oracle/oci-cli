@@ -1,0 +1,720 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="eP1wJM51OjqmBC0qcx0NPQMI0ajhanWUpHn0ZacCW8PhNl4MxkPBYdbqL6cR/3ZZ48JymFujcKurZNcuYFsX6Z33LzhKS/jLgWGkUdrpYC9I07ZgyDdsU2aUa1wOgo8UwcTlMr27a/snXyQMQMP1P6jomFrtM3MCuyDJNiykyMDsrdCsMu7ygrghl9KRSB086QDyTnTAV2F9C87ARhNTVHUUvOKXiYKgc/FTtX/mhby0rQz65XmT4ngy6EhX4Sv4TON+Ni7Pjgxox3LID049ckyBTKEmo0jMkCZtRz4LPgazJvodqPZU7QlsXiSSYMYDQcO0Vf3Ko+LftMDbaL7eJw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 19 Jul 2018 07:20:28 GMT']
+      host: [query.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4+preview.1.176]
+      opc-request-id: [F4A4355D194E47D78615F2B29B8E6762]
+      user-agent: [Oracle-PythonSDK/1.4.4+preview.1.176 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.28+preview.1]
+    method: GET
+    uri: https://query.us-phoenix-1.oraclecloud.com/20180409/resourceTypes
+  response:
+    body: {string: "[ {\n  \"name\" : \"Vcn\",\n  \"fields\" : [ {\n    \"fieldType\"\
+        \ : \"OBJECT\",\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" :\
+        \ true,\n    \"objectProperties\" : [ {\n      \"fieldType\" : \"STRING\"\
+        ,\n      \"fieldName\" : \"freeformTags.value\",\n      \"isArray\" : false,\n\
+        \      \"objectProperties\" : null\n    }, {\n      \"fieldType\" : \"STRING\"\
+        ,\n      \"fieldName\" : \"freeformTags.key\",\n      \"isArray\" : false,\n\
+        \      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\" : \"\
+        STRING\",\n    \"fieldName\" : \"displayName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"definedTags\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"cidrBlock\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        dnsLabel\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n \
+        \ }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"vcnDomainName\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"Group\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"description\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        name\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n\
+        \    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"inactiveStatus\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"User\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"description\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        name\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n\
+        \    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"inactiveStatus\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"Instance\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"imageId\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"\
+        timeMaintenanceRebootDue\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        region\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  },\
+        \ {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"shape\",\n   \
+        \ \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n  \"\
+        name\" : \"Compartment\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"description\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        name\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n\
+        \    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"inactiveStatus\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"VolumeBackup\",\n  \"fields\" : [ {\n    \"fieldType\" : \"\
+        OBJECT\",\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n\
+        \    \"objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n     \
+        \ \"fieldName\" : \"freeformTags.value\",\n      \"isArray\" : false,\n  \
+        \    \"objectProperties\" : null\n    }, {\n      \"fieldType\" : \"STRING\"\
+        ,\n      \"fieldName\" : \"freeformTags.key\",\n      \"isArray\" : false,\n\
+        \      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\" : \"\
+        STRING\",\n    \"fieldName\" : \"displayName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"definedTags\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"INTEGER\"\
+        ,\n    \"fieldName\" : \"sizeInMBs\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"\
+        uniqueSizeInMBs\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"uniqueSizeInGBs\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"volumeId\",\n   \
+        \ \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"INTEGER\",\n    \"fieldName\" : \"sizeInGBs\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  } ]\n}, {\n  \"name\" : \"SecurityList\"\
+        ,\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\"\
+        \ : \"freeformTags\",\n    \"isArray\" : true,\n    \"objectProperties\" :\
+        \ [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"freeformTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"freeformTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"displayName\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\",\n    \"\
+        isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\" : \"\
+        STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\" :\
+        \ false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"egressSecurityRules\",\n    \"isArray\" : true,\n \
+        \   \"objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"\
+        fieldName\" : \"egressSecurityRules.protocol\",\n      \"isArray\" : false,\n\
+        \      \"objectProperties\" : null\n    }, {\n      \"fieldType\" : \"OBJECT\"\
+        ,\n      \"fieldName\" : \"egressSecurityRules.icmpOptions\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : [ {\n        \"fieldType\" : \"INTEGER\"\
+        ,\n        \"fieldName\" : \"egressSecurityRules.icmpOptions.code\",\n   \
+        \     \"isArray\" : false,\n        \"objectProperties\" : null\n      },\
+        \ {\n        \"fieldType\" : \"INTEGER\",\n        \"fieldName\" : \"egressSecurityRules.icmpOptions.type\"\
+        ,\n        \"isArray\" : false,\n        \"objectProperties\" : null\n   \
+        \   } ]\n    }, {\n      \"fieldType\" : \"OBJECT\",\n      \"fieldName\"\
+        \ : \"egressSecurityRules.tcpOptions\",\n      \"isArray\" : false,\n    \
+        \  \"objectProperties\" : [ {\n        \"fieldType\" : \"OBJECT\",\n     \
+        \   \"fieldName\" : \"egressSecurityRules.tcpOptions.destinationPortRange\"\
+        ,\n        \"isArray\" : false,\n        \"objectProperties\" : [ {\n    \
+        \      \"fieldType\" : \"INTEGER\",\n          \"fieldName\" : \"egressSecurityRules.tcpOptions.destinationPortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"egressSecurityRules.tcpOptions.destinationPortRange.max\",\n       \
+        \   \"isArray\" : false,\n          \"objectProperties\" : null\n        }\
+        \ ]\n      }, {\n        \"fieldType\" : \"OBJECT\",\n        \"fieldName\"\
+        \ : \"egressSecurityRules.tcpOptions.sourcePortRange\",\n        \"isArray\"\
+        \ : false,\n        \"objectProperties\" : [ {\n          \"fieldType\" :\
+        \ \"INTEGER\",\n          \"fieldName\" : \"egressSecurityRules.tcpOptions.sourcePortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"egressSecurityRules.tcpOptions.sourcePortRange.max\",\n          \"\
+        isArray\" : false,\n          \"objectProperties\" : null\n        } ]\n \
+        \     } ]\n    }, {\n      \"fieldType\" : \"OBJECT\",\n      \"fieldName\"\
+        \ : \"egressSecurityRules.udpOptions\",\n      \"isArray\" : false,\n    \
+        \  \"objectProperties\" : [ {\n        \"fieldType\" : \"OBJECT\",\n     \
+        \   \"fieldName\" : \"egressSecurityRules.udpOptions.sourcePortRange\",\n\
+        \        \"isArray\" : false,\n        \"objectProperties\" : [ {\n      \
+        \    \"fieldType\" : \"INTEGER\",\n          \"fieldName\" : \"egressSecurityRules.udpOptions.sourcePortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"egressSecurityRules.udpOptions.sourcePortRange.max\",\n          \"\
+        isArray\" : false,\n          \"objectProperties\" : null\n        } ]\n \
+        \     }, {\n        \"fieldType\" : \"OBJECT\",\n        \"fieldName\" : \"\
+        egressSecurityRules.udpOptions.destinationPortRange\",\n        \"isArray\"\
+        \ : false,\n        \"objectProperties\" : [ {\n          \"fieldType\" :\
+        \ \"INTEGER\",\n          \"fieldName\" : \"egressSecurityRules.udpOptions.destinationPortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"egressSecurityRules.udpOptions.destinationPortRange.max\",\n       \
+        \   \"isArray\" : false,\n          \"objectProperties\" : null\n        }\
+        \ ]\n      } ]\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"egressSecurityRules.destination\",\n      \"isArray\" : false,\n   \
+        \   \"objectProperties\" : null\n    }, {\n      \"fieldType\" : \"BOOLEAN\"\
+        ,\n      \"fieldName\" : \"egressSecurityRules.isStateless\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\"\
+        \ : \"OBJECT\",\n    \"fieldName\" : \"ingressSecurityRules\",\n    \"isArray\"\
+        \ : true,\n    \"objectProperties\" : [ {\n      \"fieldType\" : \"OBJECT\"\
+        ,\n      \"fieldName\" : \"ingressSecurityRules.udpOptions\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : [ {\n        \"fieldType\" : \"OBJECT\"\
+        ,\n        \"fieldName\" : \"ingressSecurityRules.udpOptions.destinationPortRange\"\
+        ,\n        \"isArray\" : false,\n        \"objectProperties\" : [ {\n    \
+        \      \"fieldType\" : \"INTEGER\",\n          \"fieldName\" : \"ingressSecurityRules.udpOptions.destinationPortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"ingressSecurityRules.udpOptions.destinationPortRange.max\",\n      \
+        \    \"isArray\" : false,\n          \"objectProperties\" : null\n       \
+        \ } ]\n      }, {\n        \"fieldType\" : \"OBJECT\",\n        \"fieldName\"\
+        \ : \"ingressSecurityRules.udpOptions.sourcePortRange\",\n        \"isArray\"\
+        \ : false,\n        \"objectProperties\" : [ {\n          \"fieldType\" :\
+        \ \"INTEGER\",\n          \"fieldName\" : \"ingressSecurityRules.udpOptions.sourcePortRange.max\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"ingressSecurityRules.udpOptions.sourcePortRange.min\",\n          \"\
+        isArray\" : false,\n          \"objectProperties\" : null\n        } ]\n \
+        \     } ]\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"ingressSecurityRules.protocol\",\n      \"isArray\" : false,\n     \
+        \ \"objectProperties\" : null\n    }, {\n      \"fieldType\" : \"BOOLEAN\"\
+        ,\n      \"fieldName\" : \"ingressSecurityRules.isStateless\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"ingressSecurityRules.source\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"OBJECT\",\n      \"fieldName\" : \"ingressSecurityRules.tcpOptions\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : [ {\n        \"\
+        fieldType\" : \"OBJECT\",\n        \"fieldName\" : \"ingressSecurityRules.tcpOptions.destinationPortRange\"\
+        ,\n        \"isArray\" : false,\n        \"objectProperties\" : [ {\n    \
+        \      \"fieldType\" : \"INTEGER\",\n          \"fieldName\" : \"ingressSecurityRules.tcpOptions.destinationPortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"ingressSecurityRules.tcpOptions.destinationPortRange.max\",\n      \
+        \    \"isArray\" : false,\n          \"objectProperties\" : null\n       \
+        \ } ]\n      }, {\n        \"fieldType\" : \"OBJECT\",\n        \"fieldName\"\
+        \ : \"ingressSecurityRules.tcpOptions.sourcePortRange\",\n        \"isArray\"\
+        \ : false,\n        \"objectProperties\" : [ {\n          \"fieldType\" :\
+        \ \"INTEGER\",\n          \"fieldName\" : \"ingressSecurityRules.tcpOptions.sourcePortRange.min\"\
+        ,\n          \"isArray\" : false,\n          \"objectProperties\" : null\n\
+        \        }, {\n          \"fieldType\" : \"INTEGER\",\n          \"fieldName\"\
+        \ : \"ingressSecurityRules.tcpOptions.sourcePortRange.max\",\n          \"\
+        isArray\" : false,\n          \"objectProperties\" : null\n        } ]\n \
+        \     } ]\n    }, {\n      \"fieldType\" : \"OBJECT\",\n      \"fieldName\"\
+        \ : \"ingressSecurityRules.icmpOptions\",\n      \"isArray\" : false,\n  \
+        \    \"objectProperties\" : [ {\n        \"fieldType\" : \"INTEGER\",\n  \
+        \      \"fieldName\" : \"ingressSecurityRules.icmpOptions.type\",\n      \
+        \  \"isArray\" : false,\n        \"objectProperties\" : null\n      }, {\n\
+        \        \"fieldType\" : \"INTEGER\",\n        \"fieldName\" : \"ingressSecurityRules.icmpOptions.code\"\
+        ,\n        \"isArray\" : false,\n        \"objectProperties\" : null\n   \
+        \   } ]\n    } ]\n  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\"\
+        \ : \"vcnId\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  } ]\n}, {\n  \"name\" : \"IdentityProvider\",\n  \"fields\" : [ {\n   \
+        \ \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"freeformTags\",\n   \
+        \ \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"freeformTags.value\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"freeformTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\"\
+        \ : \"STRING\",\n    \"fieldName\" : \"displayName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"definedTags\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"description\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        productType\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"name\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"inactiveStatus\",\n    \"\
+        isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"STRING\",\n    \"fieldName\" : \"protocol\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  } ]\n}, {\n  \"name\" : \"Image\",\n \
+        \ \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"\
+        freeformTags\",\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"freeformTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"freeformTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"displayName\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\",\n    \"\
+        isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\" : \"\
+        STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\" :\
+        \ false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"baseImageId\",\n    \"isArray\" : false,\n    \"\
+        objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"\
+        fieldName\" : \"operatingSystem\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"BOOLEAN\",\n    \"fieldName\" : \"\
+        createImageAllowed\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        operatingSystemVersion\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  } ]\n}, {\n  \"name\" : \"ConsoleHistory\",\n  \"fields\" : [\
+        \ {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"freeformTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"freeformTags.value\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"freeformTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\"\
+        \ : \"STRING\",\n    \"fieldName\" : \"displayName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"definedTags\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"instanceId\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  } ]\n}, {\n  \"name\" : \"RouteTable\",\n  \"fields\" : [ {\n\
+        \    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"freeformTags\",\n\
+        \    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"freeformTags.value\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"freeformTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\"\
+        \ : \"STRING\",\n    \"fieldName\" : \"displayName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"definedTags\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"routeRules\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"IDENTIFIER\",\n      \"fieldName\" : \"routeRules.networkEntityId\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"routeRules.destination\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"routeRules.destinationType\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"vcnId\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"Volume\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"INTEGER\"\
+        ,\n    \"fieldName\" : \"sizeInMBs\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"\
+        sizeInGBs\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  } ]\n}, {\n  \"name\" : \"Bucket\",\n  \"fields\" : [ {\n    \"fieldType\"\
+        \ : \"OBJECT\",\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" :\
+        \ true,\n    \"objectProperties\" : [ {\n      \"fieldType\" : \"STRING\"\
+        ,\n      \"fieldName\" : \"freeformTags.value\",\n      \"isArray\" : false,\n\
+        \      \"objectProperties\" : null\n    }, {\n      \"fieldType\" : \"STRING\"\
+        ,\n      \"fieldName\" : \"freeformTags.key\",\n      \"isArray\" : false,\n\
+        \      \"objectProperties\" : null\n    } ]\n  }, {\n    \"fieldType\" : \"\
+        STRING\",\n    \"fieldName\" : \"displayName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n\
+        \    \"fieldName\" : \"definedTags\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"createdBy\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        storageTier\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"namespace\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"publicAccessType\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"Database\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"ncharacterSet\",\n    \"isArray\" : false,\n    \"\
+        objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n \
+        \   \"fieldName\" : \"dbSystemId\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" :\
+        \ \"dbHomeId\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"dbUniqueName\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"dbVersion\",\n    \"\
+        isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"STRING\",\n    \"fieldName\" : \"dbName\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"dbWorkload\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        pdbName\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  },\
+        \ {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"characterSet\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  } ]\n}, {\n\
+        \  \"name\" : \"Subnet\",\n  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\"\
+        ,\n    \"fieldName\" : \"freeformTags\",\n    \"isArray\" : true,\n    \"\
+        objectProperties\" : [ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.value\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    }, {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\"\
+        \ : \"freeformTags.key\",\n      \"isArray\" : false,\n      \"objectProperties\"\
+        \ : null\n    } ]\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\"\
+        \ : \"displayName\",\n    \"isArray\" : false,\n    \"objectProperties\" :\
+        \ null\n  }, {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\"\
+        \ : false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"securityListIds\",\n    \"isArray\" : true,\n   \
+        \ \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"BOOLEAN\",\n\
+        \    \"fieldName\" : \"prohibitPublicIpOnVnic\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"subnetDomainName\",\n    \"isArray\" : false,\n   \
+        \ \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n \
+        \   \"fieldName\" : \"virtualRouterMac\",\n    \"isArray\" : false,\n    \"\
+        objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"\
+        fieldName\" : \"cidrBlock\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"\
+        dnsLabel\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n \
+        \ }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"vcnId\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"routeTableId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"dhcpOptionsId\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"IP\",\n    \"fieldName\" : \"virtualRouterIp\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  } ]\n}, {\n  \"name\" : \"DbSystem\",\n\
+        \  \"fields\" : [ {\n    \"fieldType\" : \"OBJECT\",\n    \"fieldName\" :\
+        \ \"freeformTags\",\n    \"isArray\" : true,\n    \"objectProperties\" : [\
+        \ {\n      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"freeformTags.value\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n\
+        \      \"fieldType\" : \"STRING\",\n      \"fieldName\" : \"freeformTags.key\"\
+        ,\n      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"displayName\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"OBJECT\",\n    \"fieldName\" : \"definedTags\",\n    \"\
+        isArray\" : true,\n    \"objectProperties\" : [ {\n      \"fieldType\" : \"\
+        STRING\",\n      \"fieldName\" : \"definedTags.key\",\n      \"isArray\" :\
+        \ false,\n      \"objectProperties\" : null\n    }, {\n      \"fieldType\"\
+        \ : \"STRING\",\n      \"fieldName\" : \"definedTags.namespace\",\n      \"\
+        isArray\" : false,\n      \"objectProperties\" : null\n    }, {\n      \"\
+        fieldType\" : \"STRING\",\n      \"fieldName\" : \"definedTags.value\",\n\
+        \      \"isArray\" : false,\n      \"objectProperties\" : null\n    } ]\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"lifecycleState\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"compartmentId\",\n\
+        \    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"STRING\",\n    \"fieldName\" : \"availabilityDomain\",\n \
+        \   \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"DATETIME\",\n    \"fieldName\" : \"timeLastIndexed\",\n  \
+        \  \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"DATETIME\",\n    \"fieldName\" : \"timeCreated\",\n    \"isArray\" :\
+        \ false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        IDENTIFIER\",\n    \"fieldName\" : \"identifier\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"scanDnsRecordId\",\n    \"isArray\" : false,\n  \
+        \  \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"vipIds\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"\
+        cpuCoreCount\",\n    \"isArray\" : false,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"dataStorageSizeInGBs\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"version\",\n    \"isArray\"\
+        \ : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        STRING\",\n    \"fieldName\" : \"diskRedundancy\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"subnetId\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" :\
+        \ \"vnicIds\",\n    \"isArray\" : true,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"databaseEdition\"\
+        ,\n    \"isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n   \
+        \ \"fieldType\" : \"STRING\",\n    \"fieldName\" : \"domain\",\n    \"isArray\"\
+        \ : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"\
+        STRING\",\n    \"fieldName\" : \"hostname\",\n    \"isArray\" : false,\n \
+        \   \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"STRING\",\n\
+        \    \"fieldName\" : \"clusterName\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" :\
+        \ \"scanIpIds\",\n    \"isArray\" : true,\n    \"objectProperties\" : null\n\
+        \  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" : \"backupVnicIds\"\
+        ,\n    \"isArray\" : true,\n    \"objectProperties\" : null\n  }, {\n    \"\
+        fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"listenerPort\",\n    \"\
+        isArray\" : false,\n    \"objectProperties\" : null\n  }, {\n    \"fieldType\"\
+        \ : \"STRING\",\n    \"fieldName\" : \"shape\",\n    \"isArray\" : false,\n\
+        \    \"objectProperties\" : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\"\
+        ,\n    \"fieldName\" : \"dbNodeIds\",\n    \"isArray\" : true,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"INTEGER\",\n    \"fieldName\" : \"\
+        dataStoragePercentage\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  }, {\n    \"fieldType\" : \"IDENTIFIER\",\n    \"fieldName\" :\
+        \ \"backupSubnetId\",\n    \"isArray\" : false,\n    \"objectProperties\"\
+        \ : null\n  } ]\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 19 Jul 2018 07:20:28 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F4A4355D194E47D78615F2B29B8E6762/FCB84F764A95A39CE3B4EA404DCB22F3/F17649137260494A86383AD2F69867B4]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,137 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListWorkRequests&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:20:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=ListWorkRequests&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba","clusterId":"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd","limit":10}}]'}
+    headers:
+      Content-Length: ['278']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:20:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="djzkIcEI74rOyH6K3Z4LwMAj+rOhkXNWL0Ht7TzOv8OSjqlg/ewVqMLa8wJHKFJFSt5PWzqVqdSA4qHiVmpeM41jH3tDOCAYVZkZNNNoJhxgDIqNDyKK4W9f2j0BvgtjosMKEVQtt7YrGfzF2yuedsgj6A0qYy/VtJlOB5F2i4f3QkHsX4MD6NX/yFUIxY3fxdfODt1E3jMfiwpAXmqkBsIrSJo3VHEZuBTkBBJViv0dEqpSlgqiCkw8Hjsnp/eSpgAzq0lhNZtmQyE0PAUDzhLICppn/aZSkSySq6d/E15HwKpLoTklDgrf4vN4QyV1PmqaImzZs2+HSoEZFt9XWQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 21:20:07 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [FFECF92A8F3A415892C68AFB1274BA2E]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+    method: GET
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/workRequests?limit=10&clusterId=ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd&compartmentId=ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/+yXS2/cNhSF9/4Vg1k7zuhlu7MLbBUoYNSBH5sEQSE+dEWNLjlDXlkmi/z3grKV
+        OnDdqEkaoOjMZgDyAOfy8vAj9f5gsfj9YLFYLJZKLNeLpeFKJEe86x1J6wZjN1bueunoyPDkaNvc
+        H1XTT6YDogAodgMPgqP05EzroXBiF4QE6YFjJ3Gww8a3PfaZWB4+eJmttBUpo2/8Vkbbs4vb65vy
+        6rezq/LNTTnJHFXUuzh/fXt2Vpbn5fk0xQ1uK0soNf3ytPA/h8eCP1Ubtgwp7S1v7F1DmVYyO3Ht
+        xtWF87UttK1D2+U9pV2oj48L7zJWTV5WOtNbLmMl78ehqWnjdMU/W8m4gqnOUSA1KfKT4LG3TwVK
+        REmtpH22Bc/bXjuQKFjDSEgfBvAZgM8Y9BkhkgRLwAMJ4DsyRgDcOfG8mFurotXraaNf/wumj54f
+        x/8Pj70khfIN53JLcty2dJWcvlqdvlplN+lqXfy0TrN3yyfaa6rsi9LiM+nPSivXPNcm69XJepW+
+        iwV9PPymwJPy1kJhyWEmG2YJsA1QW0DNqKniAWAEgxMbHXxT5cOLgf/18rx8e3l58X9IvDZCbo3p
+        vhT5SfcXnc+JY1cjZoCaONxZUrHz0pPyXQ0ygDKCo7YCQ9vj3Y5ezny0eWtMN4X++9pOqT/8Utuu
+        yos9KL4OFOOJTlZzQPEgPZkPiuT0O4Aih422Hut482Uy3oxGBwsqFybmps8BAyMccmGw7aH3L9+M
+        n0BxXl6U/21QPKxgD4o9KH4oKNLj2aDIs/mgiNpvBoUn58MOWhKomWuqQIDEgZEwmt3HcW46AYMD
+        joJBPgcU+xfFHFCkwD3VMWaIHY9vOG7YPbY7Qk8MZUYmUI06JaNZD3n4m8z/A1B8he0eFD8CFEm6
+        TtN5oEjS+aCI2sdPj4MPfwQAAP//umrlbW4PAAA=
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Encoding: [gzip]
+      Content-Length: ['713']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:20:08 GMT']
+      Opc-Request-Id: [FFECF92A8F3A415892C68AFB1274BA2E/DBAC35F717A54F7D860F64FD8603E88E/0C9E9019C8284BADB5B8EC4A4BE0E26B]
+      Uri: [/20180222/workRequests]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.26.0, 10.237.41.58']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.41.58:54760']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"0660AD7017F5465D910BA9FAEF064BEA\",
+      \"items\": [{\"id\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2wmmdgg5qwczdcmeytsojyg5sdqzdegeygcmlemwrwkyjumu3d\",
+      \"timeAccepted\": \"2018-08-03T20:59:23+00:00\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"timeStarted\": \"2018-08-03T20:59:25+00:00\", \"operationType\": \"CLUSTER_CREATE\",
+      \"timeFinished\": \"2018-08-03T21:07:02+00:00\", \"status\": \"SUCCEEDED\",
+      \"resources\": [{\"identifier\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"entityType\": \"cluster\", \"actionType\": \"CREATED\", \"entityUri\": \"/clusters/ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}]},
+      {\"id\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2tiyrrg5rtsm3ehbrtgmjzgfrgmnbthaytsobtgwsdknzyha4w\",
+      \"timeAccepted\": \"2018-08-03T21:07:10+00:00\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"timeStarted\": \"2018-08-03T21:07:17+00:00\", \"operationType\": \"NODEPOOL_CREATE\",
+      \"timeFinished\": \"2018-08-03T21:07:18+00:00\", \"status\": \"SUCCEEDED\",
+      \"resources\": [{\"identifier\": \"ocid1.nodepool.oc1.phx.aaaaaaaaae4tcmlfmm3gmntcgvrtimjzgeytiylfgezgiodcmnrdmzjumvqt\",
+      \"entityType\": \"nodepool\", \"actionType\": \"CREATED\", \"entityUri\": \"/nodePools/ocid1.nodepool.oc1.phx.aaaaaaaaae4tcmlfmm3gmntcgvrtimjzgeytiylfgezgiodcmnrdmzjumvqt\"},
+      {\"identifier\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"entityType\": \"cluster\", \"actionType\": \"RELATED\", \"entityUri\": \"/clusters/ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}]},
+      {\"id\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae4gknrymfrwky3emeytonzrgi4doylfgu4gmzbtmw4domjuguyd\",
+      \"timeAccepted\": \"2018-08-03T21:07:26+00:00\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"timeStarted\": \"2018-08-03T21:07:43+00:00\", \"operationType\": \"NODEPOOL_DELETE\",
+      \"timeFinished\": \"2018-08-03T21:07:43+00:00\", \"status\": \"SUCCEEDED\",
+      \"resources\": [{\"identifier\": \"ocid1.nodepool.oc1.phx.aaaaaaaaae4tcmlfmm3gmntcgvrtimjzgeytiylfgezgiodcmnrdmzjumvqt\",
+      \"entityType\": \"nodepool\", \"actionType\": \"DELETED\", \"entityUri\": \"/nodePools/ocid1.nodepool.oc1.phx.aaaaaaaaae4tcmlfmm3gmntcgvrtimjzgeytiylfgezgiodcmnrdmzjumvqt\"},
+      {\"identifier\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"entityType\": \"cluster\", \"actionType\": \"RELATED\", \"entityUri\": \"/clusters/ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}]},
+      {\"id\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaeytsyzqgjtdmnbshaztgmtcgbtdonbxgjtdcoldgwsgcmdbg4yd\",
+      \"timeAccepted\": \"2018-08-03T21:12:22+00:00\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"timeStarted\": \"2018-08-03T21:12:43+00:00\", \"operationType\": \"NODEPOOL_CREATE\",
+      \"timeFinished\": \"2018-08-03T21:12:42+00:00\", \"status\": \"SUCCEEDED\",
+      \"resources\": [{\"identifier\": \"ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd\",
+      \"entityType\": \"nodepool\", \"actionType\": \"CREATED\", \"entityUri\": \"/nodePools/ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd\"},
+      {\"identifier\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"entityType\": \"cluster\", \"actionType\": \"RELATED\", \"entityUri\": \"/clusters/ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}]}]}",
+      "requestJson": "{\"limit\": 10, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"clusterId\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}",
+      "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass": "com.oracle.bmc.containerengine.requests.ListWorkRequestsRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.ListWorkRequestsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['4300']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:20:08 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

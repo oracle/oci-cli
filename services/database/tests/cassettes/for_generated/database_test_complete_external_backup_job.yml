@@ -1,0 +1,100 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CompleteExternalBackupJob&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 02 Oct 2018 22:09:26 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0543&apiName=CompleteExternalBackupJob&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"21a598ae-8909-4f63-88b5-d6b595245187","request":{"backupId":"ocid1.dbbackup.oc1.phx.abyhqljs5hp6tmogtcqxjvxbg7kjoh5cpb7unlct6nnlbqxhr5bbvdao7kxq","completeExternalBackupJobDetails":{"cfBackupHandle":"nlongterm_example_db_3829144951_16s6pt5b_1_1_20170614_946664619","dataSize":834,"redoSize":3090,"spfBackupHandle":"nlongterm_example_db_36495879761_185h5yuu_1_2_20170614_946665678","sqlPatches":["123","456","789"],"tdeWalletPath":"https://swiftobjectstorage.us-phoenix-1.oraclecloud.com/v1/dbbackupphx/itGZ2mBqkEVCjf3xNWLK/tdeWallet.tar.gz"},"opcRetryToken":"85037ddf-c22f-48bd-b85c-b76f14a71911"}}]'}
+    headers:
+      Content-Length: ['616']
+      Content-Type: [application/json]
+      Date: ['Tue, 02 Oct 2018 22:09:26 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"redoSize": 3090, "dataSize": 834, "spfBackupHandle": "nlongterm_example_db_36495879761_185h5yuu_1_2_20170614_946665678",
+      "sqlPatches": ["123", "456", "789"], "cfBackupHandle": "nlongterm_example_db_3829144951_16s6pt5b_1_1_20170614_946664619",
+      "tdeWalletPath": "https://swiftobjectstorage.us-phoenix-1.oraclecloud.com/v1/dbbackupphx/itGZ2mBqkEVCjf3xNWLK/tdeWallet.tar.gz"}'
+    headers:
+      Content-Length: ['373']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="WbDS72NkVnzrle6mqxF/EtG8BN08343iSlp4sj+dERWK1wV4tIt2ASRMeUif6uUpf+NlnNcOJLOu5RDp420tXN8Uz0Rurdw/dXwoqa6pNwWFx8Muvo8yFW7fFHiTgZ4IemNYBASI4QQcSOwUfvyii1EHr92W/u66YdcMjEB6yfYWZBiBXgkee7aDpKZMnIOVAoQJQEwBLjz5REcKs5PjScoTF2nNnpiLrqtvHUSknS5nha91qE9p2PIJHDKadjQPmjD6JbdQ7rQH0FHr4f6FWMVI5GBomfShnBmjXJkYzY94bcMjqQhGJ99fYF9IQGMnUByFpa+8MLJJL7izJz1Mgw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 02 Oct 2018 22:10:09 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.355]
+      opc-request-id: [F4A30F5C0F334CB4BFDAF30FFDA632B9]
+      opc-retry-token: [eV0ac5LgVyepTxnm7fbyej5AdmsRnB]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.355 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [SWEaOGFbqxvaeNziDOkF2Vg0Mmj1ce8QxeLHuYLFj0Y=]
+    method: POST
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/externalBackupJobs/ocid1.dbbackup.oc1.phx.abyhqljs5hp6tmogtcqxjvxbg7kjoh5cpb7unlct6nnlbqxhr5bbvdao7kxq/actions/complete
+  response:
+    body: {string: "{\n  \"backupId\" : \"ocid1.dbbackup.oc1.phx.abyhqljs5hp6tmogtcqxjvxbg7kjoh5cpb7unlct6nnlbqxhr5bbvdao7kxq\"\
+        ,\n  \"bucketName\" : null,\n  \"provisioning\" : false,\n  \"swiftPassword\"\
+        \ : null,\n  \"swiftPath\" : null,\n  \"tag\" : null,\n  \"userName\" : null\n\
+        }"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['238']
+      Content-Type: [application/json]
+      Date: ['Tue, 02 Oct 2018 22:10:10 GMT']
+      ETag: [4049553e]
+      opc-request-id: [F4A30F5C0F334CB4BFDAF30FFDA632B9/F8C476568AF6B06BE7E08335610A5F60/6B30161BF4457B58261166B7975AE4F1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"1E5C5DBA5E59445E8A0786F68EADEACC\",
+      \"etag\": \"4049553e\", \"externalBackupJob\": {\"userName\": null, \"bucketName\":
+      null, \"swiftPath\": null, \"backupId\": \"ocid1.dbbackup.oc1.phx.abyhqljs5hp6tmogtcqxjvxbg7kjoh5cpb7unlct6nnlbqxhr5bbvdao7kxq\",
+      \"swiftPassword\": null, \"provisioning\": false, \"tag\": null}}", "requestJson":
+      "{\"backupId\": \"ocid1.dbbackup.oc1.phx.abyhqljs5hp6tmogtcqxjvxbg7kjoh5cpb7unlct6nnlbqxhr5bbvdao7kxq\",
+      \"completeExternalBackupJobDetails\": {\"redoSize\": 3090, \"spfBackupHandle\":
+      \"nlongterm_example_db_36495879761_185h5yuu_1_2_20170614_946665678\", \"tdeWalletPath\":
+      \"https://swiftobjectstorage.us-phoenix-1.oraclecloud.com/v1/dbbackupphx/itGZ2mBqkEVCjf3xNWLK/tdeWallet.tar.gz\",
+      \"sqlPatches\": [\"123\", \"456\", \"789\"], \"cfBackupHandle\": \"nlongterm_example_db_3829144951_16s6pt5b_1_1_20170614_946664619\",
+      \"dataSize\": 834}, \"opcRetryToken\": \"85037ddf-c22f-48bd-b85c-b76f14a71911\"}",
+      "containerId": "21a598ae-8909-4f63-88b5-d6b595245187", "requestClass": "com.oracle.bmc.database.requests.CompleteExternalBackupJobRequest",
+      "responseClass": "com.oracle.bmc.database.responses.CompleteExternalBackupJobResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1204']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0543&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 02 Oct 2018 22:10:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

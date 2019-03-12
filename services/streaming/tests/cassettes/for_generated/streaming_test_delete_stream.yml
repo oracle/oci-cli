@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteStream&serviceName=streaming&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 30 Nov 2018 01:38:29 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0018&apiName=DeleteStream&serviceName=streaming&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"785c68dc-b366-4986-b035-7373122dc4c1","request":{"streamId":"ocid1.stream.oc1.phx.aaaaaaaa4imqms5mnur7bakpjfky6pzxettkpxre4po7lkf33ymkfbiu6suq"}}]'}
+    headers:
+      Content-Length: ['163']
+      Content-Type: [application/json]
+      Date: ['Fri, 30 Nov 2018 01:38:29 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaajqjeaxdh4zukw7ugptutjucry4k2ilpaixh5uxoc6uzqutxvl3ba/ocid1.user.oc1..aaaaaaaawaebmr4g53c7jk2kc4c7zccvqkyhw4o7ueyhxquw3x6wkbgsk4tq/b3:8c:98:d8:75:1a:38:9e:6d:6d:49:3d:9f:6c:12:bf",signature="QxUXkO2+tO4JE+5bszIR2cjI64If/Ins+YEIrK3W+Bfrq5k+qTdqhdrXIo3RMhpJ4R/+T90w0inh7pzr5BCYFnzrnMePBSD/rAlXz1JyjmqnIP/3NhonPPcF7X4/t9eW596hjlrVofHqxRRUhvq7FBCGMvInADJarXuDhBHGVVmXv4nnKsrB/TKPhnmMsOBDkp2+YUaQqN+DHZfTjkF9l0o3WBrE3WxscP9nu9xgZvBmOBH6Ia6/PrQiVfpHN1CngLMMHoyPc1nO64GhBAVLx7qtEuRibRMhLOLj/m44+/fYFo7jNx+CJzoMg2yvDmsFc35H329LCWH3ca85guooCQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 30 Nov 2018 01:38:46 GMT']
+      host: [streams.us-phoenix-1.streaming.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.2+preview.1.596]
+      opc-request-id: [04E3DA8B639B4CFDBB2449CD93E7D317]
+      user-agent: [Oracle-PythonSDK/2.1.2+preview.1.596 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.39+preview.1]
+    method: DELETE
+    uri: https://streams.us-phoenix-1.streaming.oci.oraclecloud.com/20180418/streams/ocid1.stream.oc1.phx.aaaaaaaa4imqms5mnur7bakpjfky6pzxettkpxre4po7lkf33ymkfbiu6suq
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Fri, 30 Nov 2018 01:38:47 GMT']
+      Strict-Transport-Security: [max-age=15768000]
+      opc-request-id: [04E3DA8B639B4CFDBB2449CD93E7D317/08703B436FAEC9B3F85559272A99943F/FE694EF7E0AA653627A60CE0C36C7870]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"1450AEFC2E154A1284554E34904BF996\"}",
+      "requestJson": "{\"streamId\": \"ocid1.stream.oc1.phx.aaaaaaaa4imqms5mnur7bakpjfky6pzxettkpxre4po7lkf33ymkfbiu6suq\"}",
+      "containerId": "785c68dc-b366-4986-b035-7373122dc4c1", "requestClass": "com.oracle.bmc.streaming.requests.DeleteStreamRequest",
+      "responseClass": "com.oracle.bmc.streaming.responses.DeleteStreamResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['400']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0018&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 30 Nov 2018 01:38:47 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

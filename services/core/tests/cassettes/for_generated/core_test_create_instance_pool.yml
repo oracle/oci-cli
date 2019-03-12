@@ -1,0 +1,126 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateInstancePool&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 00:44:52 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0938&apiName=CreateInstancePool&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0d9995f3-d5f4-4126-ab84-d99fd17caeae","request":{"createInstancePoolDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya","definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0938_8986","testing_service_tag_02":"tag5.__STS0938_8986","testing_service_tag_03":"tag6.__STS0938_8986"}},"displayName":"__STS0938_6364","freeformTags":{"tag1":"value1.__STS0938_235","tag2":"value2.__STS0938_235"},"instanceConfigurationId":"ocid1.instanceconfiguration.oc1.phx.aaaaaaaaagzk3kiher3pybgeeyoww3xvun25ltfl2njfjn4pvguxq5z45lpa","placementConfigurations":[{"availabilityDomain":"GlXO:PHX-AD-3","primarySubnetId":"ocid1.subnet.oc1.phx.aaaaaaaapd64rohjmtzsy6qf7rf3hxhoowpi37m53ljviwsy5kwfxaagbkjq"}],"size":1},"opcRetryToken":"6cc082f4-aae9-443a-a330-21f01c383a67"}}]'}
+    headers:
+      Content-Length: ['854']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 00:44:54 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
+      "tag5.__STS0938_8986", "testing_service_tag_01": "tag4.__STS0938_8986", "testing_service_tag_03":
+      "tag6.__STS0938_8986"}}, "compartmentId": "ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya",
+      "size": 1, "freeformTags": {"tag2": "value2.__STS0938_235", "tag1": "value1.__STS0938_235"},
+      "displayName": "__STS0938_6364", "placementConfigurations": [{"availabilityDomain":
+      "GlXO:PHX-AD-3", "primarySubnetId": "ocid1.subnet.oc1.phx.aaaaaaaapd64rohjmtzsy6qf7rf3hxhoowpi37m53ljviwsy5kwfxaagbkjq"}],
+      "instanceConfigurationId": "ocid1.instanceconfiguration.oc1.phx.aaaaaaaaagzk3kiher3pybgeeyoww3xvun25ltfl2njfjn4pvguxq5z45lpa"}'
+    headers:
+      Content-Length: ['727']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaeoyapgtdcnhbomoi7d6sesv3rl2n6c6pxozdd73dsszomknbnsia/ocid1.user.oc1..aaaaaaaaf4xpc64kldjum6klyq4wngd4phz6cvwbbptbzhqbl4ho75apyttq/ea:af:af:07:17:e0:56:be:9f:30:09:76:a6:cf:20:fc",signature="QfoWeQIMhKWExOnbrd6O8T9Y+HQh9D/YHRj1N03ldaE2f0/dI0/xOZ+KArkQ+Ty5syu5c6UuGRT5Z5/HxOjC19lAIXqFlkuiFRad2kwfA3/temMpKnswzuT9sfjwubi84VogX5g7YY+aW9MA23S0XWkp6AdEPr5QxwdF5dkaBbnU5qFeyAGbi+BhvmeXuEtX+1g/O32ZDrm/vmJubsRVPrOWtsOWUEeFRqw7JokJb9S3vfsId4obcNdklbIOH6RYBBFPgalVCv/XxfPD+GmzklY0i/59qJzpwh03DASsaJI6IogqjWFpBGT0ZHw3IdCvrSwpoVQee4xTchxNnaJNAA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 21 Feb 2019 00:45:03 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7+preview.1.681]
+      opc-request-id: [89C23E51A8AD4A4B86E09015C54C9D65]
+      opc-retry-token: [FkXm94g3baD1un8NCnA3kwQonwy83a]
+      user-agent: [Oracle-PythonSDK/2.1.7+preview.1.681 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+      x-content-sha256: [hwljXy0zcC5qfJMyPAgu6tXRYwKtSQXzyzyaQlIbvH0=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/instancePools
+  response:
+    body: {string: "{\n  \"id\" : \"ocid1.instancepool.oc1.phx.aaaaaaaamr7gohbgjm4idcid2drre7ihquevdkhysjxa4qmcmal5r7gi46ya\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0938_8986\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0938_8986\",\n      \"testing_service_tag_03\" : \"tag6.__STS0938_8986\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0938_6364\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0938_235\",\n    \"tag2\" : \"value2.__STS0938_235\"\
+        \n  },\n  \"instanceConfigurationId\" : \"ocid1.instanceconfiguration.oc1.phx.aaaaaaaaagzk3kiher3pybgeeyoww3xvun25ltfl2njfjn4pvguxq5z45lpa\"\
+        ,\n  \"lifecycleState\" : \"PROVISIONING\",\n  \"placementConfigurations\"\
+        \ : [ {\n    \"availabilityDomain\" : \"GlXO:PHX-AD-3\",\n    \"primarySubnetId\"\
+        \ : \"ocid1.subnet.oc1.phx.aaaaaaaapd64rohjmtzsy6qf7rf3hxhoowpi37m53ljviwsy5kwfxaagbkjq\"\
+        \n  } ],\n  \"size\" : 1,\n  \"timeCreated\" : \"2019-02-21T00:45:06.446Z\"\
+        ,\n  \"loadBalancers\" : [ ],\n  \"timeStateUpdated\" : \"2019-02-21T00:45:06.446Z\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1075']
+      Content-Type: [application/json]
+      Date: ['Thu, 21 Feb 2019 00:45:07 GMT']
+      ETag: [2912eee5bc3b109b919c1274d5bf44c76cb5115ada548995e74bc03ff8d7c808]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [89C23E51A8AD4A4B86E09015C54C9D65/DC0FA2F04D6E23A9E806291D785A7524/50A1551F9A77D9EF69B3DDB349F62F75]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"E21E4A8813EC432A9756E5C2C9121378\",
+      \"etag\": \"2912eee5bc3b109b919c1274d5bf44c76cb5115ada548995e74bc03ff8d7c808\",
+      \"instancePool\": {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_02\":
+      \"tag5.__STS0938_8986\", \"testing_service_tag_01\": \"tag4.__STS0938_8986\",
+      \"testing_service_tag_03\": \"tag6.__STS0938_8986\"}}, \"id\": \"ocid1.instancepool.oc1.phx.aaaaaaaamr7gohbgjm4idcid2drre7ihquevdkhysjxa4qmcmal5r7gi46ya\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\",
+      \"size\": 1, \"instanceConfigurationId\": \"ocid1.instanceconfiguration.oc1.phx.aaaaaaaaagzk3kiher3pybgeeyoww3xvun25ltfl2njfjn4pvguxq5z45lpa\",
+      \"loadBalancers\": [], \"displayName\": \"__STS0938_6364\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0938_235\", \"tag1\": \"value1.__STS0938_235\"}, \"lifecycleState\":
+      \"PROVISIONING\", \"timeCreated\": \"2019-02-21T00:45:06.446000+00:00\", \"placementConfigurations\":
+      [{\"availabilityDomain\": \"GlXO:PHX-AD-3\", \"secondaryVnicSubnets\": null,
+      \"primarySubnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaapd64rohjmtzsy6qf7rf3hxhoowpi37m53ljviwsy5kwfxaagbkjq\"}]}}",
+      "requestJson": "{\"createInstancePoolDetails\": {\"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_03\": \"tag6.__STS0938_8986\", \"testing_service_tag_01\":
+      \"tag4.__STS0938_8986\", \"testing_service_tag_02\": \"tag5.__STS0938_8986\"}},
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\",
+      \"size\": 1, \"freeformTags\": {\"tag2\": \"value2.__STS0938_235\", \"tag1\":
+      \"value1.__STS0938_235\"}, \"displayName\": \"__STS0938_6364\", \"placementConfigurations\":
+      [{\"availabilityDomain\": \"GlXO:PHX-AD-3\", \"primarySubnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaapd64rohjmtzsy6qf7rf3hxhoowpi37m53ljviwsy5kwfxaagbkjq\"}],
+      \"instanceConfigurationId\": \"ocid1.instanceconfiguration.oc1.phx.aaaaaaaaagzk3kiher3pybgeeyoww3xvun25ltfl2njfjn4pvguxq5z45lpa\"},
+      \"opcRetryToken\": \"6cc082f4-aae9-443a-a330-21f01c383a67\"}", "containerId":
+      "0d9995f3-d5f4-4126-ab84-d99fd17caeae", "requestClass": "com.oracle.bmc.core.requests.CreateInstancePoolRequest",
+      "responseClass": "com.oracle.bmc.core.responses.CreateInstancePoolResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2298']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0938&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 00:45:08 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

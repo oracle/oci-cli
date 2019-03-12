@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=monitoring&apiName=DeleteAlarm
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:14 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=monitoring&apiName=DeleteAlarm&lang=PythonCLI&sessionId=0337
+  response:
+    body: {string: '[{"containerId":"a6a84ed4-c389-47e3-91eb-36422672c51b","request":{"alarmId":"ocid1.alarm.oc1.phx.aaaaaaaapwvqppaxrlw34iqi2vcur5ickxtsddybkgipziwmipk3e4jbi6yq"}}]'}
+    headers:
+      Content-Length: ['161']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:14 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq/ocid1.user.oc1..aaaaaaaa6srah3qsdcznyzb5uvradoid5a5tpbz22yj6vywbrnj45xf5sv3a/ea:97:59:7d:bc:75:53:5e:0f:9c:c2:fc:46:e3:ad:e4",signature="McSRPsyq0XVc+q7gTtAn8MixrxIRzXSgrAtM67O9d3jyJHXPkqkF9YULINPtqfSaxB3F+nVBzbk9prSlMX1ofSD43P2bPmtWcN2ks/KIWGhqAuSycnJdUYaDLr/dWk4Hx//7Tl/mTHZgXA6GmdWDfP/Fx8v9UvUYCFrheV6afSMyolydlfoQc5hq1gZpauNvSO7+uVkgrGb8hql3K2CxYctFOQQ8Ib5VOOuV0UyV7/eiLzsaHoD+nQshJoj4gHK2kNUV81LUwS+zhKtCZoUhENcl4jtcdV5qkue/KWhDsGT8aX7Oa/CbRty3cdWUj06REln5ovNAAoR6bV/jDHOYQA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 22 Feb 2019 15:55:15 GMT']
+      host: [telemetry.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1.700]
+      opc-request-id: [E787F6278AFF4C0AA69BDB38D929B91E]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1.700 (python 3.7.2; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: DELETE
+    uri: https://telemetry.us-phoenix-1.oraclecloud.com/20180401/alarms/ocid1.alarm.oc1.phx.aaaaaaaapwvqppaxrlw34iqi2vcur5ickxtsddybkgipziwmipk3e4jbi6yq
+  response:
+    body: {string: ''}
+    headers:
+      Date: ['Fri, 22 Feb 2019 15:55:16 GMT']
+      opc-request-id: [E787F6278AFF4C0AA69BDB38D929B91E/19A9CEF689637F39D3B8BE559BB58093/7F2EEB14607B64E54D44CA2D0B53383C]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"containerId": "a6a84ed4-c389-47e3-91eb-36422672c51b", "requestClass":
+      "com.oracle.bmc.monitoring.requests.DeleteAlarmRequest", "requestJson": "{\"alarmId\":
+      \"ocid1.alarm.oc1.phx.aaaaaaaapwvqppaxrlw34iqi2vcur5ickxtsddybkgipziwmipk3e4jbi6yq\"}",
+      "responseJson": "{\"opcRequestId\": \"F92FAC0FE6924A739C733237B516E60D\"}",
+      "responseClass": "com.oracle.bmc.monitoring.responses.DeleteAlarmResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['398']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0337&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:16 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

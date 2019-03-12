@@ -1,0 +1,111 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateSteeringPolicy&serviceName=dns&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:58:02 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0945&apiName=UpdateSteeringPolicy&serviceName=dns&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"2836af7a-7995-448e-8965-71752f3e8e1e","request":{"steeringPolicyId":"ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f","updateSteeringPolicyDetails":{"displayName":"__STS0945_4128","ttl":42}}}]'}
+    headers:
+      Content-Length: ['215']
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:58:02 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "__STS0945_4128", "ttl": 42}'
+    headers:
+      Content-Length: ['44']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q/ocid1.user.oc1..aaaaaaaan6hnk4feurapwnp2hignfmye2fnscqkor5ocetjlbjlunbmxdgia/17:e9:1b:88:96:1b:50:75:51:65:0b:2d:57:51:09:fc",signature="pgji3ArHDejEo1BuD8ixCZj6zZApWoAOl0M/8zrKcXi2436F1wcnmK17H+FCXMbAq1VhaKAQeM4jtG0kDM3HsVcrQWAan9mUYcIcwUcA8qcpOFtqzD0rEf5UmHeZ1K5djehnFYEUH0kT80ykTw22BLsMJNTHAVPJFSkh5v3raCHtohIE8mUTxuYn0H4v+h0N4Yu2oODKZLR9I5BbVhjwCHiIUlcffgP26TK2B9AryQJdY87o58KEbgmkuDdRZ+3aGYVrjdG/8GoXmKwSV2NeRqrYq5djvEcpjri2ExuY4T6Ky3HvjksslA/W8kM+nPwOJLnsIlpfiK+M15zofVOdPw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 25 Jan 2019 22:58:04 GMT']
+      host: [dns.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.5]
+      opc-request-id: [7BDC1303E41D43D386ABBDF7BB9FB898]
+      user-agent: [Oracle-PythonSDK/2.1.5 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.42]
+      x-content-sha256: [rQgjJliZfWtUb60fvNN1vQzmfnLadEZNgYA1x83lE8c=]
+    method: PUT
+    uri: https://dns.us-phoenix-1.oraclecloud.com/20180115/steeringPolicies/ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f
+  response:
+    body: {string: '{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q","displayName":"__STS0945_4128","ttl":42,"freeformTags":{},"definedTags":{},"answers":[{"name":"Server
+        1","rtype":"A","rdata":"1.2.3.4"},{"name":"Server 2","rtype":"A","rdata":"5.6.7.8"},{"name":"Server
+        3","rtype":"A","rdata":"9.10.11.12","isDisabled":true}],"rules":[{"ruleType":"FILTER","defaultAnswerData":[{"answerCondition":"answer.isDisabled
+        != true","shouldKeep":true}]},{"ruleType":"WEIGHTED","defaultAnswerData":[{"answerCondition":"answer.name
+        == ''Server 1''","value":75},{"answerCondition":"answer.name == ''Server 2''","value":25},{"answerCondition":"answer.name
+        == ''Server 3''","value":1}]},{"ruleType":"LIMIT","defaultCount":1}],"self":"https://dns.us-phoenix-1.oraclecloud.com/20180115/steeringPolicies/ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f","id":"ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f","timeCreated":"2019-01-25T22:58:04Z","lifecycleState":"ACTIVE","template":"LOAD_BALANCE"}
+
+'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1018']
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:58:07 GMT']
+      ETag: ['"1#application/json"']
+      opc-request-id: [7BDC1303E41D43D386ABBDF7BB9FB898/0BD16E955C9D408CBB9710D693C71132/B2197F6A312740ECB6AD5D43CA546842]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"5F132E617B39496197AE6C170279E188\",
+      \"etag\": \"\\\"1#application/json\\\"\", \"steeringPolicy\": {\"definedTags\":
+      {}, \"ttl\": 42, \"healthCheckMonitorId\": null, \"displayName\": \"__STS0945_4128\",
+      \"answers\": [{\"rtype\": \"A\", \"isDisabled\": null, \"pool\": null, \"name\":
+      \"Server 1\", \"rdata\": \"1.2.3.4\"}, {\"rtype\": \"A\", \"isDisabled\": null,
+      \"pool\": null, \"name\": \"Server 2\", \"rdata\": \"5.6.7.8\"}, {\"rtype\":
+      \"A\", \"isDisabled\": true, \"pool\": null, \"name\": \"Server 3\", \"rdata\":
+      \"9.10.11.12\"}], \"freeformTags\": {}, \"lifecycleState\": \"ACTIVE\", \"-self\":
+      \"https://dns.us-phoenix-1.oraclecloud.com/20180115/steeringPolicies/ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f\",
+      \"id\": \"ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f\", \"compartmentId\":
+      \"ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q\",
+      \"timeCreated\": \"2019-01-25T22:58:04+00:00\", \"template\": \"LOAD_BALANCE\",
+      \"rules\": [{\"cases\": null, \"defaultAnswerData\": [{\"answerCondition\":
+      \"answer.isDisabled != true\", \"shouldKeep\": true}], \"ruleType\": \"FILTER\",
+      \"description\": null}, {\"cases\": null, \"defaultAnswerData\": [{\"answerCondition\":
+      \"answer.name == ''Server 1''\", \"value\": 75}, {\"answerCondition\": \"answer.name
+      == ''Server 2''\", \"value\": 25}, {\"answerCondition\": \"answer.name == ''Server
+      3''\", \"value\": 1}], \"ruleType\": \"WEIGHTED\", \"description\": null}, {\"cases\":
+      null, \"defaultCount\": 1, \"ruleType\": \"LIMIT\", \"description\": null}]}}",
+      "requestJson": "{\"updateSteeringPolicyDetails\": {\"displayName\": \"__STS0945_4128\",
+      \"ttl\": 42}, \"steeringPolicyId\": \"ocid1.dnspolicy.oc1..342409df57604006b50160853b62b31f\"}",
+      "containerId": "2836af7a-7995-448e-8965-71752f3e8e1e", "requestClass": "com.oracle.bmc.dns.requests.UpdateSteeringPolicyRequest",
+      "responseClass": "com.oracle.bmc.dns.responses.UpdateSteeringPolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1985']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0945&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:58:07 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

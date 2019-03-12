@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.3 - 2019-03-12
+------------------
+Added
+~~~~~
+* Support DbSystem timezone on provisioning API.
+
+  * (``oci db system launch --time-zone``)
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_exadata_sparse_example.sh>`__.
+
+* DbWorkload Type Introduced for Autonomous Database Create Request.
+
+  * (``oci db autonomous-database create --db-workload``)
+  * (``oci db autonomous-database list --db-workload``)
+
+* Support for enabling I/O Resource Management (IORM) feature for Exadata Database Systems
+
+  * (``oci db system get-exadata-iorm-config``)
+  * (``oci db system update-exadata-iorm-config``)
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_exadata_iorm_example.sh>`__.
+
+* Support for Tag Default feature as a part of the Identity Service
+
+  * (``oci iam tag-default``)
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
+
+* Support for email on user accounts in the Identity Service
+
+  * (``oci iam user create --email``)
+  * (``oci iam user update --email``)
+
+* Support for OCI Budget Service.
+
+  * (``oci budgets budget create``)
+  * (``oci budgets budget delete``)
+  * (``oci budgets budget get``)
+  * (``oci budgets budget list``)
+  * (``oci budgets budget update``)
+  * (``oci budgets alert-rule create``)
+  * (``oci budgets alert-rule delete``)
+  * (``oci budgets alert-rule get``)
+  * (``oci budgets alert-rule list``)
+  * (``oci budgets alert-rule update``)
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/budget_example.sh>`__.
+
 2.5.2 - 2019-02-28
 ------------------
 Added
@@ -676,7 +720,7 @@ Added
 * Support for tagging
 
   * Tags and tag namespaces can be managed via the 'oci iam tag-namespace' and 'oci iam tag' commands
-  * Operations which support applying tags will have --defined-tags and --freeform-tags options. Check the help dump (https://github.com/oracle/oci-cli/blob/master/tests/output/inline_help_dump.txt) for resources which support tags. A general list of taggable resources can also be found in: https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/taggingoverview.htm#Taggable
+  * Operations which support applying tags will have --defined-tags and --freeform-tags options. Check the help dump (https://github.com/oracle/oci-cli/blob/master/tests/output/inline_help_dump.txt) for resources which support tags. A general list of taggable resources can also be found in: https://docs.cloud.oracle.com/Content/Identity/Concepts/taggingoverview.htm#Taggable
   * An example of using tagging can be found at https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh
 
 * Support for bringing your own custom image for emulation mode virtual machines in Compute Service (--launch-mode parameter on create image)

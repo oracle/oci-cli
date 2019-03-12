@@ -42,6 +42,12 @@ def compartment_group():
     pass
 
 
+@click.command(cli_util.override('authentication_policy_group.command_name', 'authentication-policy'), cls=CommandGroupWithAlias, help="""Authentication policy, currently set for the given compartment""")
+@cli_util.help_option_group
+def authentication_policy_group():
+    pass
+
+
 @click.command(cli_util.override('smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""Simple Mail Transfer Protocol (SMTP) credentials are needed to send email through Email Delivery. The SMTP credentials are used for SMTP authentication with the service. The credentials never expire. A user can have up to 2 SMTP credentials at a time.
 
 **Note:** The credential set is always an Oracle-generated SMTP user name and password pair; you cannot designate the SMTP user name or the SMTP password.
@@ -132,7 +138,7 @@ def user_group_membership_group():
     pass
 
 
-@click.command(cli_util.override('mfa_totp_device_group.command_name', 'mfa-totp-device'), cls=CommandGroupWithAlias, help="""A `MfaTotpDevice` is an Mfa Totp device that the user can use to authenticate with OCI (Leslie will add more details here)""")
+@click.command(cli_util.override('mfa_totp_device_group.command_name', 'mfa-totp-device'), cls=CommandGroupWithAlias, help="""Users can enable multi-factor authentication (MFA) for their own user accounts. After MFA is enabled, the user is prompted for a time-based one-time password (TOTP) to authenticate before they can sign in to the Console. To enable multi-factor authentication, the user must register a mobile device with a TOTP authenticator app installed. The registration process creates the `MfaTotpDevice` object. The registration process requires interaction with the Console and cannot be completed programmatically. For more information, see [Managing Multi-Factor Authentication].""")
 @cli_util.help_option_group
 def mfa_totp_device_group():
     pass
@@ -220,6 +226,16 @@ def swift_password_group():
     pass
 
 
+@click.command(cli_util.override('tag_default_group.command_name', 'tag-default'), cls=CommandGroupWithAlias, help="""A document that specifies a default value for a Tag Definition for all resource types created in a Compartment.
+
+Tag Defaults are inherited by child compartments. This means that if you set a Tag Default on the root Compartment for a tenancy, all resources are guaranteed to be created with the referenced Tag Definition applied.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.""")
+@cli_util.help_option_group
+def tag_default_group():
+    pass
+
+
 @click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], [SwiftPassword] and [AuthToken]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
 
 These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service. They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure Console via an identity provider. For more information, see [Identity Providers and Federation].
@@ -233,6 +249,7 @@ def user_group():
 iam_root_group.add_command(fault_domain_group)
 iam_root_group.add_command(work_request_group)
 iam_root_group.add_command(compartment_group)
+iam_root_group.add_command(authentication_policy_group)
 iam_root_group.add_command(smtp_credential_group)
 iam_root_group.add_command(scim_client_credentials_group)
 iam_root_group.add_command(tag_group)
@@ -254,10 +271,11 @@ iam_root_group.add_command(dynamic_group_group)
 iam_root_group.add_command(region_group)
 iam_root_group.add_command(auth_token_group)
 iam_root_group.add_command(swift_password_group)
+iam_root_group.add_command(tag_default_group)
 iam_root_group.add_command(user_group)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('activate_mfa_totp_device.command_name', 'activate'), help="""Activate the specified MFA TOTP device for the user.""")
+@mfa_totp_device_group.command(name=cli_util.override('activate_mfa_totp_device.command_name', 'activate'), help="""Activates the specified MFA TOTP device for the user. Activation requires manual interaction with the Console.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
 @cli_util.option('--totp-token', help="""The Totp token for MFA.""")
@@ -847,7 +865,7 @@ def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('create_mfa_totp_device.command_name', 'create'), help="""Create a new MFA TOTP device for the user. A user can only create one MFA TOTP device.""")
+@mfa_totp_device_group.command(name=cli_util.override('create_mfa_totp_device.command_name', 'create'), help="""Creates a new MFA TOTP device for the user. A user can have one MFA TOTP device.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1131,6 +1149,58 @@ def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tag
     cli_util.render_response(result, ctx)
 
 
+@tag_default_group.command(name=cli_util.override('create_tag_default.command_name', 'create'), help="""Creates a new Tag Default in the specified Compartment for the specified Tag Definition.""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the Compartment. The Tag Default will apply to any resource contained in this Compartment.""")
+@cli_util.option('--tag-definition-id', required=True, help="""The OCID of the Tag Definition. The Tag Default will always assign a default value for this Tag Definition.""")
+@cli_util.option('--value', required=True, help="""The default value for the Tag Definition. This will be applied to all resources created in the Compartment.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tag_definition_id, value):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['tagDefinitionId'] = tag_definition_id
+    details['value'] = value
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_tag_default(
+        create_tag_default_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_default(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @tag_namespace_group.command(name=cli_util.override('create_tag_namespace.command_name', 'create'), help="""Creates a new tag namespace in the specified compartment.
 
 You must specify the compartment ID in the request object (remember that the tenancy is simply the root compartment).
@@ -1189,6 +1259,7 @@ A new user has no permissions until you place the user in one or more groups (se
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the tenancy containing the user.""")
 @cli_util.option('--name', required=True, help="""The name you assign to the user during creation. This is the user's login for the Console. The name must be unique across all users in the tenancy and cannot be changed.""")
 @cli_util.option('--description', required=True, help="""The description you assign to the user during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--email', help="""The email you assign to the user. Has to be unique across the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1199,7 +1270,7 @@ A new user has no permissions until you place the user in one or more groups (se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, email, freeform_tags, defined_tags):
 
     kwargs = {}
 
@@ -1207,6 +1278,9 @@ def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     details['compartmentId'] = compartment_id
     details['name'] = name
     details['description'] = description
+
+    if email is not None:
+        details['email'] = email
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1602,7 +1676,7 @@ def delete_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id, i
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('delete_mfa_totp_device.command_name', 'delete'), help="""Delete the specified MFA TOTP device for the specified user.""")
+@mfa_totp_device_group.command(name=cli_util.override('delete_mfa_totp_device.command_name', 'delete'), help="""Deletes the specified MFA TOTP device for the specified user.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1756,6 +1830,69 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@tag_default_group.command(name=cli_util.override('delete_tag_default.command_name', 'delete'), help="""Deletes the the specified Tag Default.""")
+@cli_util.option('--tag-default-id', required=True, help="""The OCID of the Tag Default.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, if_match):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_tag_default(
+        tag_default_id=tag_default_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_tag_default(tag_default_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @user_group.command(name=cli_util.override('delete_user.command_name', 'delete'), help="""Deletes the specified user. The user must not be in any groups.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1818,7 +1955,7 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('generate_totp_seed.command_name', 'generate-totp-seed'), help="""Generate seed for the MFA TOTP device""")
+@mfa_totp_device_group.command(name=cli_util.override('generate_totp_seed.command_name', 'generate-totp-seed'), help="""Generate seed for the MFA TOTP device.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help="""The OCID of the MFA TOTP device.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1869,6 +2006,27 @@ def generate_totp_seed(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@authentication_policy_group.command(name=cli_util.override('get_authentication_policy.command_name', 'get'), help="""Gets the authentication policy for the given tenancy. You must specify your tenant\u2019s OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'AuthenticationPolicy'})
+@cli_util.wrap_exceptions
+def get_authentication_policy(ctx, from_json, compartment_id):
+
+    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+        raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_authentication_policy(
+        compartment_id=compartment_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2054,6 +2212,27 @@ def get_tag(ctx, from_json, tag_namespace_id, tag_name):
     result = client.get_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tag_default_group.command(name=cli_util.override('get_tag_default.command_name', 'get'), help="""Retrieves the specified Tag Default.""")
+@cli_util.option('--tag-default-id', required=True, help="""The OCID of the Tag Default.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def get_tag_default(ctx, from_json, tag_default_id):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_tag_default(
+        tag_default_id=tag_default_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2627,7 +2806,7 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('list_mfa_totp_devices.command_name', 'list'), help="""Lists the MFA TOTP devices for the specified user. The returned object contains the device's OCID, but not the seed. The seed is returned only upon creation or when we regenerate MFA seed for the device.""")
+@mfa_totp_device_group.command(name=cli_util.override('list_mfa_totp_devices.command_name', 'list'), help="""Lists the MFA TOTP devices for the specified user. The returned object contains the device's OCID, but not the seed. The seed is returned only upon creation or when the IAM service regenerates the MFA seed for the device.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
@@ -2816,6 +2995,61 @@ def list_swift_passwords(ctx, from_json, all_pages, user_id):
         user_id=user_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@tag_default_group.command(name=cli_util.override('list_tag_defaults.command_name', 'list'), help="""Lists the Tag Defaults for Tag Definitions in the specified Compartment.""")
+@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--id', help="""A filter to only return resources that match the specified OCID exactly.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--tag-definition-id', help="""The OCID of the Tag Definition.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[TagDefaultSummary]'})
+@cli_util.wrap_exceptions
+def list_tag_defaults(ctx, from_json, all_pages, page_size, page, limit, id, compartment_id, tag_definition_id, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if id is not None:
+        kwargs['id'] = id
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if tag_definition_id is not None:
+        kwargs['tag_definition_id'] = tag_definition_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_tag_defaults,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_tag_defaults,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_tag_defaults(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3155,6 +3389,43 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
         user_id=user_id,
         auth_token_id=auth_token_id,
         update_auth_token_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@authentication_policy_group.command(name=cli_util.override('update_authentication_policy.command_name', 'update'), help="""Updates authentication policy for the specified tenancy""")
+@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
+@cli_util.option('--password-policy', type=custom_types.CLI_COMPLEX_TYPE, help="""Password policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'password-policy': {'module': 'identity', 'class': 'PasswordPolicy'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'password-policy': {'module': 'identity', 'class': 'PasswordPolicy'}}, output_type={'module': 'identity', 'class': 'AuthenticationPolicy'})
+@cli_util.wrap_exceptions
+def update_authentication_policy(ctx, from_json, force, compartment_id, password_policy, if_match):
+
+    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+        raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+    if not force:
+        if password_policy:
+            if not click.confirm("WARNING: Updates to password-policy will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if password_policy is not None:
+        details['passwordPolicy'] = cli_util.parse_json_parameter("password_policy", password_policy)
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_authentication_policy(
+        compartment_id=compartment_id,
+        update_authentication_policy_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3837,6 +4108,62 @@ def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, i
     cli_util.render_response(result, ctx)
 
 
+@tag_default_group.command(name=cli_util.override('update_tag_default.command_name', 'update'), help="""Updates the the specified Tag Default. You can presently update the following fields: `value`.""")
+@cli_util.option('--tag-default-id', required=True, help="""The OCID of the Tag Default.""")
+@cli_util.option('--value', required=True, help="""The default value for the Tag Definition. This will be applied to all resources created in the Compartment.""")
+@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, value, if_match):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['value'] = value
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_tag_default(
+        tag_default_id=tag_default_id,
+        update_tag_default_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_default(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @tag_namespace_group.command(name=cli_util.override('update_tag_namespace.command_name', 'update'), help="""Updates the the specified tag namespace. You can't update the namespace name.
 
 Updating `isRetired` to 'true' retires the namespace and all the tag definitions in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate tag definitions. To reactivate the tag definitions, you must reactivate each one indvidually *after* you reactivate the namespace, using [UpdateTag]. For more information about retiring tag namespaces, see [Retiring Key Definitions and Namespace Definitions].
@@ -3890,6 +4217,7 @@ def update_tag_namespace(ctx, from_json, force, tag_namespace_id, description, i
 @user_group.command(name=cli_util.override('update_user.command_name', 'update'), help="""Updates the description of the specified user.""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
 @cli_util.option('--description', help="""The description you assign to the user. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--email', help="""The email you assign to the user. Has to be unique across the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3902,7 +4230,7 @@ def update_tag_namespace(ctx, from_json, force, tag_namespace_id, description, i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, description, freeform_tags, defined_tags, if_match):
+def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, description, email, freeform_tags, defined_tags, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
@@ -3919,6 +4247,9 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if description is not None:
         details['description'] = description
+
+    if email is not None:
+        details['email'] = email
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

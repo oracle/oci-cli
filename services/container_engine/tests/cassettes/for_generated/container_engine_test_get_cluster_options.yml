@@ -1,0 +1,93 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetClusterOptions&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:11:25 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=GetClusterOptions&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"clusterOptionId":"all"}}]'}
+    headers:
+      Content-Length: ['92']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:11:25 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="PFJx15smazhAGGDL6Vq9Ey+eKbBnK65uD0id5EwqD1SnvrpDmgbKYgz/OrfSWuseYwzV1H7BFnBek+/8Y24Adc23XNjz0wKwqNadH7tHe+HiI73RMZoksNdVQi/jTT0swO9c9AXET7Uy01BVi0Al2xAXvJGb/7+S1l4d3o9vfHnxvwtv9x2lGo2LN4inLot9kraEFAT0QA5P13u0/FqC+rvQ1JX0bKgrBkNO4in7rtH6JoKRRkpBB6AddW+mB4a+eQnvEu5MUPvZpyfPhjtFJH+EX0wNRtOWKJea1cBbYBP7jfu6h92k9kLth+H+dXB3MAxr2bXlxtbS2O4eEyUKBw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 21:11:25 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [F1F8247137564198B1BDD2B44613ED52]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+    method: GET
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/clusterOptions/all
+  response:
+    body: {string: "{\n  \"kubernetesVersions\": [\n    \"v1.8.11\",\n    \"v1.9.7\"\
+        ,\n    \"v1.10.3\"\n  ]\n}"}
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Length: ['76']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:11:26 GMT']
+      Opc-Request-Id: [F1F8247137564198B1BDD2B44613ED52/32E778A7D366479FAB354EA94DCFBE92/0AD90D31CE6F4816ACE129D7C060F338]
+      Uri: [/20180222/clusterOptions/_id_]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.57.0, 10.237.16.128']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.16.128:32862']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"A11613BBCCEB429580C965A3599FF18F\",
+      \"clusterOptions\": {\"kubernetesVersions\": [\"v1.8.11\", \"v1.9.7\", \"v1.10.3\"]}}",
+      "requestJson": "{\"clusterOptionId\": \"all\"}", "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b",
+      "requestClass": "com.oracle.bmc.containerengine.requests.GetClusterOptionsRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.GetClusterOptionsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['437']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:11:26 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

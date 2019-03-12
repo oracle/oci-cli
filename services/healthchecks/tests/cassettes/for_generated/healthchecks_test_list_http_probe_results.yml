@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=healthchecks&apiName=ListHttpProbeResults
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=healthchecks&apiName=ListHttpProbeResults&lang=PythonCLI&sessionId=0759
+  response:
+    body: {string: '[{"containerId":"388318f1-e536-43a4-b6c5-b62571a4e225","request":{"probeConfigurationId":"ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq","limit":10}}]'}
+    headers:
+      Content-Length: ['188']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="W7zfwNFmso/75u6iYthfh7DP7P0vZ7G2m1Q6Npcoq6c8hXRRIqmEznj1Sk46IgnwNW9UwtD+sqhtoxMejHYDS2S8Hz+MRTimjb3s8MBF0KBi+bkCpe0T6CeLvdNaHClDrXZjp+xYcJweBcVNhw7cReEawiL3GcA6QOa/+TLdASzSTUq5tVhFwjxuZAwtNDOjXl0UhCkYvRVp3HmjYR9T2YuhUIIz9l1qpoQSq7EtTYTa85jfiOSSTy0FcvbG2l6NluWN+UOZUGLDlBQavIVVOj9O3w67+Y8A/21+Oy2KrDRbQxm4R84WH1UksqDbJ3Cmn4ELx/oD0wujMjB/eFI5gA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 02 Feb 2019 03:15:13 GMT']
+      host: [healthchecks.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.653]
+      opc-request-id: [7F920175D7034964941D3BFC40F11214]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.653 (python 3.6.5; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpProbeResults/ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq?limit=10
+  response:
+    body: {string: '[]'}
+    headers:
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:13 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [7F920175D7034964941D3BFC40F11214/F4C65A9EA219C0E647C1B4D51475CB06/228ECAF6B05D58C79A99CED7968E9C60]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "388318f1-e536-43a4-b6c5-b62571a4e225", "requestClass":
+      "com.oracle.bmc.healthchecks.requests.ListHttpProbeResultsRequest", "requestJson":
+      "{\"probeConfigurationId\": \"ocid1.httpmonitor.oc1..aaaaaaaalx6jhy23rnin2dfqanxyyxru5d5exccdbwj3k6lsb7m64clrnwpq\",
+      \"limit\": 10}", "responseJson": "{\"items\": [], \"opcRequestId\": \"F70D3E73B9FF419CA762775FDC320175\"}",
+      "responseClass": "com.oracle.bmc.healthchecks.responses.ListHttpProbeResultsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['466']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0759&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:14 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

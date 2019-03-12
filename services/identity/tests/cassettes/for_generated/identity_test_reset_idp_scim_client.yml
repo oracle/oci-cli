@@ -1,0 +1,145 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ResetIdpScimClient&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 20 Nov 2018 01:22:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0668&apiName=ResetIdpScimClient&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"217dbefd-19e6-4fbf-ba40-022652e320bc","request":{"identityProviderId":"ocid1.saml2idp.oc1..aaaaaaaaohosnjabjd3c43adn37oahvb7xpymdbzrng2mnyc2rsaat4fwdtq"}},{"containerId":"6d1c3cb1-e0b0-4c61-a7ae-38d081416918","request":{"identityProviderId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}}]'}
+    headers:
+      Content-Length: ['289']
+      Content-Type: [application/json]
+      Date: ['Tue, 20 Nov 2018 01:22:07 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaamnzhx57hnazri3k2cirjnvavlszuwrdkn7hcs34vegl4hsduqmxq/ocid1.user.oc1..aaaaaaaaniwbo5qchpjtbbkza3ddjsvr2nxanvulvleyschadcnkyrqiyudq/40:91:67:62:8b:43:0c:9e:6f:e0:51:64:91:2b:6d:37",signature="Tb5FTfAS4iQMh20GCp/1TULIeTihQKAZWz6cH1qyPhUn7L3QtFKGklzdOYYJofKIR9i4AFkZXgy1sultcuBMLN4PcBok9ooBZXfKzDyEZ+w/wff4GpY0DxVbmUKG0bTqq0lvwnd9jUZUu8XQ9yPk7kSM7ldiAioJjCHKLxqFWaQMmI9v26muMTZafZ8kvufAxs1u8Snxcj3sCALc44wobzw6hYT0k38r7U0e3SGy+sqik07nNHhkR3BFVVzreVOM2w/1bfBW51DWTaP7D53btbWE4K76GrG+yf1oPPA/X830vHkaDaG+kKspQLrJNtQyUQCKGzCez6floeaYDk5Jhw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 20 Nov 2018 01:22:08 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.1+0.103.selfservice]
+      opc-request-id: [A6B3B3886D564639AD68699DC738B375]
+      user-agent: [Oracle-PythonSDK/2.1.1+0.103.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.38]
+      x-content-sha256: [47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/identityProviders/ocid1.saml2idp.oc1..aaaaaaaaohosnjabjd3c43adn37oahvb7xpymdbzrng2mnyc2rsaat4fwdtq/actions/resetScimClient/
+  response:
+    body: {string: "{\n  \"clientId\" : \"ocid1.saml2idp.oc1..aaaaaaaaohosnjabjd3c43adn37oahvb7xpymdbzrng2mnyc2rsaat4fwdtq\"\
+        ,\n  \"clientSecret\" : \"ng7VeIyOD0c5MC5YKHE+C9E8/RAi9RaGthKUzvqoewBvY2lkMS50ZW5hbmN5Lm9jMS4uYWFhYWFhYWFtbnpoeDU3aG5henJpM2syY2lyam52YXZsc3p1d3Jka243aGNzMzR2ZWdsNGhzZHVxbXhx\"\
+        \n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, must-revalidate']
+      Connection: [keep-alive]
+      Content-Length: ['272']
+      Content-Type: [application/json]
+      Date: ['Tue, 20 Nov 2018 01:22:12 GMT']
+      Pragma: [no-cache]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [A6B3B3886D564639AD68699DC738B375/75CBE1D0516DB7312B58DD9A69A074E4/C6E36E2D127D2C030894708C00A04536]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"53D524C468DC42D38EEE0BE3EEB66C76\",
+      \"scimClientCredentials\": {\"clientSecret\": \"ng7VeIyOD0c5MC5YKHE+C9E8/RAi9RaGthKUzvqoewBvY2lkMS50ZW5hbmN5Lm9jMS4uYWFhYWFhYWFtbnpoeDU3aG5henJpM2syY2lyam52YXZsc3p1d3Jka243aGNzMzR2ZWdsNGhzZHVxbXhx\",
+      \"clientId\": \"ocid1.saml2idp.oc1..aaaaaaaaohosnjabjd3c43adn37oahvb7xpymdbzrng2mnyc2rsaat4fwdtq\"}}",
+      "requestJson": "{\"identityProviderId\": \"ocid1.saml2idp.oc1..aaaaaaaaohosnjabjd3c43adn37oahvb7xpymdbzrng2mnyc2rsaat4fwdtq\"}",
+      "containerId": "217dbefd-19e6-4fbf-ba40-022652e320bc", "requestClass": "com.oracle.bmc.identity.requests.ResetIdpScimClientRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ResetIdpScimClientResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['720']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0668&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 20 Nov 2018 01:22:09 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaamnzhx57hnazri3k2cirjnvavlszuwrdkn7hcs34vegl4hsduqmxq/ocid1.user.oc1..aaaaaaaaniwbo5qchpjtbbkza3ddjsvr2nxanvulvleyschadcnkyrqiyudq/40:91:67:62:8b:43:0c:9e:6f:e0:51:64:91:2b:6d:37",signature="UyPkcekitpbwWmi+SUJVwbUerlTJvsoactuomdwbRbrfafYIoFbSXHYv24RcAux8ash6AyBiVTnm2GAl78gs97HcMvygfx+rrUfiohWRmow54ImHCvlQEjJSRBIgP+a7+k4TAPY2vf0GemRvcHxuC1MZlIrUddQ5KlgggOn8ZQ1YQQWw0o24z/7xQT6HlZIGkzpJgmbY0zKGdJOrY2fucXSxdCyFj7Q2SEWNg9vvl8pHkCmT0T9zlzuqdTXD4i3UYrpOfrVJvu+gEOQ/IlW0O9YeAdTn39Z+BKmP+pXD4nlN4t5rNLjMrIVAXK2oJNZEdtYzRlzL3qTHdZgPa85SEw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 20 Nov 2018 01:22:09 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.1+0.103.selfservice]
+      opc-request-id: [56CEABE064CF4DA8B6762097A7EE6D1E]
+      user-agent: [Oracle-PythonSDK/2.1.1+0.103.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.38]
+      x-content-sha256: [47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/identityProviders/ABCDEFGHIJKLMNOPQRSTUVWXYZ/actions/resetScimClient/
+  response:
+    body: {string: "{\n  \"code\" : \"InvalidParameter\",\n  \"message\" : \"Invalid\
+        \ parameter 'identityProviderId'\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, must-revalidate']
+      Connection: [keep-alive]
+      Content-Length: ['89']
+      Content-Type: [application/json]
+      Date: ['Tue, 20 Nov 2018 01:22:12 GMT']
+      Pragma: [no-cache]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [56CEABE064CF4DA8B6762097A7EE6D1E/EF6567F2A7A95411CADE31C32C9D6F6A/D17BFF6C4542F4F8DEB94B9562BEA8D3]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"identityProviderId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"}",
+      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"56CEABE064CF4DA8B6762097A7EE6D1E/EF6567F2A7A95411CADE31C32C9D6F6A/D17BFF6C4542F4F8DEB94B9562BEA8D3\",
+      \"code\": \"InvalidParameter\", \"message\": \"Invalid parameter ''identityProviderId''\"}",
+      "containerId": "6d1c3cb1-e0b0-4c61-a7ae-38d081416918", "requestClass": "com.oracle.bmc.identity.requests.ResetIdpScimClientRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['457']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0668&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 20 Nov 2018 01:22:09 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

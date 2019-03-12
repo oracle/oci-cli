@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteAutoScalingConfiguration&serviceName=autoscaling&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:19:13 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0657&apiName=DeleteAutoScalingConfiguration&serviceName=autoscaling&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"51dc3a45-a054-4b21-9417-d441dd360663","request":{"autoScalingConfigurationId":"ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaanw7ytvlbh7r645l3rwp4itm5pkagtnoc5ijxstvdsb4nrkh54xgq"}}]'}
+    headers:
+      Content-Length: ['199']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:19:14 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaeoyapgtdcnhbomoi7d6sesv3rl2n6c6pxozdd73dsszomknbnsia/ocid1.user.oc1..aaaaaaaaf4xpc64kldjum6klyq4wngd4phz6cvwbbptbzhqbl4ho75apyttq/ea:af:af:07:17:e0:56:be:9f:30:09:76:a6:cf:20:fc",signature="MdO9wd6YrmKLrFhWeleewSFfH8K0hOkPGrMrMnHtWRPmcZhDYtVn3wv9kLFeXkhHTvdgFet1/kFxEN5EgEhGQfTLiWV0p+fpLnjFf2O3WslZvLwvYQTsqmBvaqKT4G5EaFdseae/9Gm7fWq+xU/M+Ityup15XKW+zy+4s6oYq+GDNCDBpUSlZFzSX3X/k7osWRVOwCjtRg1LeLhYz6c+BAoYwtEVpglD4VAjwihL19azKgeNtpXuT4lQdmgJpoh/+5hAVE0BBmSLIF/QvZRhFSmlNxmkzdzFPIQmcu5gXkrppeKNdZlUfO8ZyVsRPkyd2c90ZDE79AvUmAKLd1UaoA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Sat, 09 Feb 2019 02:19:16 GMT']
+      host: [autoscaling.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7+preview.1.681]
+      opc-request-id: [02FC50D3BC7F4BBEB05407C071744022]
+      user-agent: [Oracle-PythonSDK/2.1.7+preview.1.681 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: DELETE
+    uri: https://autoscaling.us-phoenix-1.oci.oraclecloud.com/20181001/autoScalingConfigurations/ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaanw7ytvlbh7r645l3rwp4itm5pkagtnoc5ijxstvdsb4nrkh54xgq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Date: ['Sat, 09 Feb 2019 02:19:21 GMT']
+      opc-request-id: [02FC50D3BC7F4BBEB05407C071744022/78226B6F3270ABB6CEEA636DF9A304BB/119715EE975947CFFD4F824C2661CACC]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"ED5BB932462D40A8943CA742A51B618A\"}",
+      "requestJson": "{\"autoScalingConfigurationId\": \"ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaanw7ytvlbh7r645l3rwp4itm5pkagtnoc5ijxstvdsb4nrkh54xgq\"}",
+      "containerId": "51dc3a45-a054-4b21-9417-d441dd360663", "requestClass": "com.oracle.bmc.autoscaling.requests.DeleteAutoScalingConfigurationRequest",
+      "responseClass": "com.oracle.bmc.autoscaling.responses.DeleteAutoScalingConfigurationResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['476']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0657&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:19:22 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

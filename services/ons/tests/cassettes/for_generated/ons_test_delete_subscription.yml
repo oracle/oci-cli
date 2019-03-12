@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=ons&apiName=DeleteSubscription
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 12 Feb 2019 05:31:54 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=ons&apiName=DeleteSubscription&lang=PythonCLI&sessionId=0943
+  response:
+    body: {string: '[{"containerId":"259071e3-755f-4c6e-8ac7-6a6d23d2e7a1","request":{"subscriptionId":"ocid1.onssubscription.oc1.phx.aaaaaaaav5aki5fn6pxetfnr6fhb46gxxxyc42kr3yrh5hcn2qcptapt3coq"}}]'}
+    headers:
+      Content-Length: ['178']
+      Content-Type: [text/plain]
+      Date: ['Tue, 12 Feb 2019 05:31:54 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="aHAkUw6CV0Bucc9a1/1YPERijYGt4YuNSW/K7FDTJLgnSJPOUtIVIYLLa+5GaIOk+7c4uOne2smfBiPnL6oKEbCZf0K1RXFlJVD0UPAl0KyvLuHoAH0gKI3J2xfcH2vKqVR3I/kGvq/QKH/GQfI7D1TE7UmaE7aRysoAfoqpVQ760d4TWXtUPP37zhXYAa0WkbMhiH/bMkocD3m2YzZvvKZ0115bXbLmUyyzqXYYKD4pf00gbtuAhf4lJQiMDl7i1Wr1qbLedxFwWujyomkWaWsdspx7cNRpAL9LI7BNz5eCO+q+wNgUlvI6iLeMvXpa3KCHBdZL6A0/ktHnrzRjsQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 05:31:57 GMT']
+      host: [notification.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.3+preview.1.528]
+      opc-request-id: [2F5990D599664A028D715B69A0ADC7ED]
+      user-agent: [Oracle-PythonSDK/2.1.3+preview.1.528 (python 3.6.2; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.40+preview.1]
+    method: DELETE
+    uri: https://notification.us-phoenix-1.oraclecloud.com/20181201/subscriptions/ocid1.onssubscription.oc1.phx.aaaaaaaav5aki5fn6pxetfnr6fhb46gxxxyc42kr3yrh5hcn2qcptapt3coq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Date: ['Tue, 12 Feb 2019 05:31:57 GMT']
+      opc-request-id: [2F5990D599664A028D715B69A0ADC7ED/7603D2399C52BB674DD3F7808D4BB0B0/98A9AE070881EE2646EAE11DA9A9232D]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"containerId": "259071e3-755f-4c6e-8ac7-6a6d23d2e7a1", "requestClass":
+      "com.oracle.bmc.ons.requests.DeleteSubscriptionRequest", "requestJson": "{\"subscriptionId\":
+      \"ocid1.onssubscription.oc1.phx.aaaaaaaav5aki5fn6pxetfnr6fhb46gxxxyc42kr3yrh5hcn2qcptapt3coq\"}",
+      "responseJson": "{\"opcRequestId\": \"F7A11235C90542CCACC084E2C93FBF44\"}",
+      "responseClass": "com.oracle.bmc.ons.responses.DeleteSubscriptionResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['415']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0943&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 12 Feb 2019 05:31:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1
