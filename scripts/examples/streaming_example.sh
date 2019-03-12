@@ -37,7 +37,7 @@ fi
 # Note that we're waiting for the state to become active before the command succeeds.
 STREAM_FILE=$(mktemp)
 echo "Creating a stream, and storing metadata in $STREAM_FILE"
-oci streaming stream-admin stream create \
+oci streaming admin stream create \
     --compartment-id ${COMPARTMENT_ID} \
     --name demo-stream \
     --partitions 1 \
@@ -50,7 +50,7 @@ STREAM_ID=$(cat ${STREAM_FILE} | jq -r ".data.id")
 #########################################################
 # Get a stream
 echo "Getting stream $STREAM_ID"
-oci streaming stream-admin stream get \
+oci streaming admin stream get \
     --stream-id ${STREAM_ID}
 
 
@@ -59,7 +59,7 @@ oci streaming stream-admin stream get \
 # You can also view all the streams in a compartment.
 # It is often useful to filter by lifecycle-state or name.
 echo "Listing all active streams in compartment $COMPARTMENT_ID"
-oci streaming stream-admin stream list \
+oci streaming admin stream list \
     --compartment-id ${COMPARTMENT_ID} \
     --lifecycle-state ACTIVE \
     --all
@@ -100,7 +100,7 @@ oci streaming stream message put \
 # Consuming from a stream
 # Cursors describe a location in the stream, and are used to traverse the stream.
 echo "Creating a partition-0 cursor at the trim horizon."
-CURSOR=$(oci streaming stream cursor create \
+CURSOR=$(oci streaming stream cursor create-cursor \
     --endpoint ${MESSAGE_ENDPOINT} \
     --stream-id ${STREAM_ID} \
     --partition 0 \
@@ -125,7 +125,7 @@ cat ${RESPONSE_FILE} | jq -r ".data[] | .value" | base64 -d
 #########################################################
 # Deleting the stream
 echo "Deleting the stream $STREAM_ID"
-oci streaming stream-admin stream delete \
+oci streaming admin stream delete \
     --stream-id ${STREAM_ID} \
     --force \
     --wait-for-state DELETED

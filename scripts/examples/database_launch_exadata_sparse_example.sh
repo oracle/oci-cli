@@ -24,6 +24,7 @@ SPARSE_DISKGROUP=""
 ADMIN_PASSWORD="DBaaS12345_#"
 DB_NAME="testdb"
 DB_VERSION="12.2.0.1"
+TIME_ZONE="US/Pacific"
 SSH_KEYS_FILE=""
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
@@ -34,7 +35,7 @@ echo 'Create DB System with Exadata shape...'
 LAUNCH_DBSYSTEM=$(oci db system launch -c $COMPARTMENT_ID --availability-domain $AVAILABILITY_DOMAIN --subnet-id $SUBNET_ID \
                     --shape $DBSYSTEM_SHAPE --hostname $HOSTNAME --cpu-core-count $CPU --database-edition $DB_EDITION \
                     --display-name $DISPLAY_NAME --backup-subnet-id $BACKUP_SUBNET_ID --sparse-diskgroup $SPARSE_DISKGROUP \
-                    --admin-password $ADMIN_PASSWORD --db-name $DB_NAME --db-version $DB_VERSION --ssh-authorized-keys-file $SSH_KEYS_FILE) 
+                    --admin-password $ADMIN_PASSWORD --db-name $DB_NAME --db-version $DB_VERSION --time-zone $TIME_ZONE --ssh-authorized-keys-file $SSH_KEYS_FILE)
 
 DBSYSTEM_ID=$(jq -r '.data.id' <<< "$LAUNCH_DBSYSTEM")
 

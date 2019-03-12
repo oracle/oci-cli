@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=filestorage&apiName=DeleteSnapshot
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 22 Oct 2018 13:56:12 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0012&serviceName=filestorage&apiName=DeleteSnapshot
+  response:
+    body: {string: !!python/unicode '[{"containerId":"f466d099-b85b-4dfe-8af5-96c180fe8694","request":{"snapshotId":"ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaakhbs4dipawxa4tpmq5ha2dyfvqwiljt"}}]'}
+    headers:
+      content-length: ['163']
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:56:12 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="Re3rhF+MpN10+kuW8SvFMllQVhIlHNNs3aWJ3jQJYM4OJVAa3xWaW9tw1wzPVRjpqCILSC5kaWUaPVzRi+1lH2JKtH+q1WMA8evl/ky+BVKJqzkDI5W+ZXah8eveUCrVNbw3p9o3nbZravAnqI6M2qnSi7vda1PtRD1vdsEx/xHmhi/iw6mVsHOFQ3a6+MtynVUBKfOj25H42y0/RdlO2ySDobPS/mz49httervoSL4aW++hQt4/mcj+Wc6At7qa7bV6DcjPpxFv+ixAj6GMkza1MxrUB9Ks3UOAc9hifOXV9EsHQwoj34robP1EeihlYyQ7pDFMgrt9EWwq4jyJaQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:56:17 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
+      opc-request-id: [79371F2443124910896BB550E00A623B]
+      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.34+preview.1]
+    method: DELETE
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/snapshots/ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaakhbs4dipawxa4tpmq5ha2dyfvqwiljt
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [keep-alive]
+      date: ['Mon, 22 Oct 2018 13:56:19 GMT']
+      opc-request-id: [79371F2443124910896BB550E00A623B/C5B9A078A12CAC8BA1076D442C5B22DF/ADA26234D07A2F3B3939A20F592DFDE6]
+    status: {code: 204, message: No Content}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"62FA099B7A324A0AAE1A7A6839F325A6\"}",
+      "responseClass": "com.oracle.bmc.filestorage.responses.DeleteSnapshotResponse",
+      "containerId": "f466d099-b85b-4dfe-8af5-96c180fe8694", "requestJson": "{\"snapshotId\":
+      \"ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaakhbs4dipawxa4tpmq5ha2dyfvqwiljt\"}",
+      "requestClass": "com.oracle.bmc.filestorage.requests.DeleteSnapshotRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['408']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0012
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 22 Oct 2018 13:56:19 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

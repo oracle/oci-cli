@@ -1,0 +1,113 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetNodePool&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:12:17 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=GetNodePool&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"nodePoolId":"ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd"}}]'}
+    headers:
+      Content-Length: ['167']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:12:17 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="hw3zLkQPDW3W80DcQl7w2sAIddVnko++mgA3II8D56fYRuvNH70qvnQQuKWLqVjMDip1BSHV/0SQqUjUEtEzJ+tG/oQmAtIdO2DWJ8pclEExCLwZYYh6fibV2Ns4zufuW5YioOmG8wT5+hH/YaJbQberh6kFKgp9KaODzH3PX4zWhJzHthsaOBlqxA+kx33Zzb7Q7KzO06K0t8eQODt+/ggODjH9eFHPnTq4sSZf4G2vy2erSJzV7Bw1QCibtaHr3pqC7K/qzYpX0HYbr+UGClQvI2df1+BUSRBukKm5a4Ob0sLnxdD/EKnetTw1pLAO20iYZkhW3ewdqcTUdCqE3A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 21:12:53 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [74F799E4559F47B697600D253011BF29]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+    method: GET
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/nodePools/ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/4RRy27bOhDd+ysErW+E2DIl3PxB0DQN4CKbIgj4GFKU+JDIoWWq6L8Xtpw2bRbl
+        jjNn5jzm+6YoSi3Ku6L0XItt5byA0XtTeb6txu5U0bcHO8UzShVQWWu4kkFxz062n9BmZBZq9AtK
+        63boHUtqv4jyv/N6Ry2cCV5fD18Pt7v97vX/fdusPe7tSANacHj/TsW78kXILxXLyCzuUuBdOHZY
+        Ow11G/shShKzDMQFufRmn3BnFtk0JMea0SuTSREh/MGylj5alVGBFaxjKCAvs8q1UrlmKtVoLcI5
+        Ar6gUHxC74VSx3i1OiQGwQFCfIYQtXdnsuO22t5W9TUML+DeUgXvhehz4YOMNDK5EEk6cYQ+GUtN
+        l1mjvAZvkjFqGJP1gR1PZh6on5WJZvqL5PEa/ZdAuYGbB+3S6aat9r9hh46OF8jz5+qA1AkaxPYN
+        oJ1GTc2jF/BAGZhY3hXfXi6tGLunxIzmnyCfx9eBKVGHGvMThENiDrC8K7Yr/vK9F5cVm6Io3ryv
+        jY83qMVsCWl93xJLfaBkNn2d88lAdgOZ9hmN6OPRR9t2s9WdFOuh/7XYAGmBNgaFGkY1T5K0Nk5a
+        wsz6qYU287px2M6dNWRw1qeGTOWmKF42P34GAAD//5ykZuEtAwAA
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Encoding: [gzip]
+      Content-Length: ['495']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:12:54 GMT']
+      Etag: [c20008a4216c37d07d0d9403945e414abd54174441e78d6c33b22e49175923ab]
+      Opc-Request-Id: [74F799E4559F47B697600D253011BF29/B5560543C7944B739AB3D75312612665/3DA14F73AEA84F6AA6E6D11F54B8D735]
+      Uri: [/20180222/nodePools/_id_]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.32.0, 10.237.41.58']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.41.58:39918']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9F423A0D51E24F6B80D9949C274F62C1\",
+      \"etag\": \"c20008a4216c37d07d0d9403945e414abd54174441e78d6c33b22e49175923ab\",
+      \"nodePool\": {\"sshPublicKey\": \"\", \"name\": \"__STS0242_9476\", \"nodeShape\":
+      \"VM.Standard1.4\", \"kubernetesVersion\": \"v1.10.3\", \"quantityPerSubnet\":
+      1, \"nodeImageName\": \"Oracle-Linux-7.4\", \"id\": \"ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"subnetIds\": [\"ocid1.subnet.oc1.phx.aaaaaaaaa3dwm557oj75maora5wlj3yyxleynk5q4ytldjsvosm7hwmihfda\",
+      \"ocid1.subnet.oc1.phx.aaaaaaaale57ea6ltdgkpgwqf57msqifewbjq7e7yc36nt7whml5knmou65q\"],
+      \"nodeImageId\": \"ocid1.image.oc1.phx.aaaaaaaaupbfz5f5hdvejulmalhyb6goieolullgkpumorbvxlwkaowglslq\",
+      \"clusterId\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"initialNodeLabels\": [], \"nodes\": null}}", "requestJson": "{\"nodePoolId\":
+      \"ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd\"}",
+      "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass": "com.oracle.bmc.containerengine.requests.GetNodePoolRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.GetNodePoolResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1348']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:12:54 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

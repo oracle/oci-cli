@@ -72,13 +72,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -122,13 +140,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -143,13 +179,31 @@ Options:
                                   The OCID of the boot volume attachment.
                                   [required]
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -185,12 +239,29 @@ Options:
                               fetch per call. Only valid when used with --all or
                               --limit, and ignored otherwise.
   --from-json TEXT            Provide input to this command as a JSON document
-                              from a file.
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
                               
-                              Options can still be provided on the
-                              command line. If an option exists in both the JSON
-                              document and the command line then the command
-                              line specified value will be used
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
   -?, -h, --help              For detailed help on any of these individual
                               commands, enter <command> --help.
 
@@ -301,13 +372,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -346,13 +435,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -368,13 +475,31 @@ Options:
   --instance-console-history-id TEXT
                                   The OCID of the console history. [required]
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -395,13 +520,31 @@ Options:
   --offset INTEGER                Offset of the snapshot data to retrieve.
   --length INTEGER                Length of the snapshot data to retrieve.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -460,13 +603,31 @@ Options:
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -548,13 +709,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -622,13 +801,31 @@ Options:
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -811,13 +1008,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -855,13 +1070,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -919,12 +1152,30 @@ Options:
   --name TEXT              The name which will be given to the exported image
                            object. [required]
   --from-json TEXT         Provide input to this command as a JSON document from
-                           a file.
+                           a file using the file://path-to/file syntax.
                            
-                           Options can still be provided on the command
-                           line. If an option exists in both the JSON document
-                           and the command line then the command line specified
-                           value will be used
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
   -?, -h, --help           For detailed help on any of these individual
                            commands, enter <command> --help.
 
@@ -950,12 +1201,27 @@ Options:
                     if the etag you provide matches the resource's current etag
                     value.
   --uri TEXT        The Object Storage URL to export the image to. [required]
-  --from-json TEXT  Provide input to this command as a JSON document from a
-                    file.
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
                     
-                    Options can still be provided on the command line. If
-                    an option exists in both the JSON document and the command
-                    line then the command line specified value will be used
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
   -?, -h, --help    For detailed help on any of these individual commands, enter
                     <command> --help.
 
@@ -967,12 +1233,27 @@ Usage: oci compute image get [OPTIONS]
 
 Options:
   --image-id TEXT   The OCID of the image. [required]
-  --from-json TEXT  Provide input to this command as a JSON document from a
-                    file.
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
                     
-                    Options can still be provided on the command line. If
-                    an option exists in both the JSON document and the command
-                    line then the command line specified value will be used
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
   -?, -h, --help    For detailed help on any of these individual commands, enter
                     <command> --help.
 
@@ -1098,13 +1379,31 @@ Options:
                                   Exported Oracle images are QCOW2. Only
                                   monolithic images are supported.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1202,13 +1501,31 @@ Options:
                                   Exported Oracle images are QCOW2. Only
                                   monolithic images are supported.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1276,13 +1593,31 @@ Options:
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1368,13 +1703,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1460,13 +1813,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1565,13 +1936,31 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1605,13 +1994,31 @@ Options:
   --force                         Perform deletion without prompting for
                                   confirmation.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -1624,12 +2031,28 @@ Usage: oci compute instance get [OPTIONS]
 Options:
   --instance-id TEXT  The OCID of the instance. [required]
   --from-json TEXT    Provide input to this command as a JSON document from a
-                      file.
+                      file using the file://path-to/file syntax.
                       
-                      Options can still be provided on the command line.
-                      If an option exists in both the JSON document and the
-                      command line then the command line specified value will be
-                      used
+                      The
+                      --generate-full-command-json-input option can be used to
+                      generate a sample json file to be used with this command
+                      option. The key names are pre-populated and match the
+                      command option names (converted to camelCase format, e.g.
+                      compartment-id --> compartmentId), while the values of the
+                      keys need to be populated by the user before using the
+                      sample file as an input to this command. For any command
+                      option that accepts multiple values, the value of the key
+                      can be a JSON array.
+                      
+                      Options can still be provided on the
+                      command line. If an option exists in both the JSON
+                      document and the command line then the command line
+                      specified value will be used.
+                      
+                      For examples on usage of
+                      this option, please see our "using CLI with advanced JSON
+                      options" link: https://docs.cloud.oracle.com/iaas/Content/
+                      API/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help      For detailed help on any of these individual commands,
                       enter <command> --help.
 
@@ -1644,12 +2067,28 @@ Usage: oci compute instance get-windows-initial-creds [OPTIONS]
 Options:
   --instance-id TEXT  The OCID of the instance. [required]
   --from-json TEXT    Provide input to this command as a JSON document from a
-                      file.
+                      file using the file://path-to/file syntax.
                       
-                      Options can still be provided on the command line.
-                      If an option exists in both the JSON document and the
-                      command line then the command line specified value will be
-                      used
+                      The
+                      --generate-full-command-json-input option can be used to
+                      generate a sample json file to be used with this command
+                      option. The key names are pre-populated and match the
+                      command option names (converted to camelCase format, e.g.
+                      compartment-id --> compartmentId), while the values of the
+                      keys need to be populated by the user before using the
+                      sample file as an input to this command. For any command
+                      option that accepts multiple values, the value of the key
+                      can be a JSON array.
+                      
+                      Options can still be provided on the
+                      command line. If an option exists in both the JSON
+                      document and the command line then the command line
+                      specified value will be used.
+                      
+                      For examples on usage of
+                      this option, please see our "using CLI with advanced JSON
+                      options" link: https://docs.cloud.oracle.com/iaas/Content/
+                      API/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help      For detailed help on any of these individual commands,
                       enter <command> --help.
 
@@ -1846,27 +2285,24 @@ Options:
   --metadata COMPLEX TYPE         Custom metadata key/value pairs that you
                                   provide, such as the SSH public key required
                                   to connect to the instance. For more info see
-                                  documentation: https://docs.us-phoenix-1.oracl
-                                  ecloud.com/api/#/en/iaas/20160918/requests/Lau
-                                  nchInstanceDetails. This must be provided in
-                                  JSON format.
+                                  documentation: https://docs.cloud.oracle.com/a
+                                  pi/#/en/iaas/20160918/requests/LaunchInstanceD
+                                  etails. This must be provided in JSON format.
+                                  Note: user_data and ssh_authorized_keys can
+                                  instead be specified using the parameters
+                                  --user-data-file and --ssh-authorized-keys-
+                                  file.
                                   
-                                  Note: user_data and
-                                  ssh_authorized_keys can instead be specified
-                                  using the parameters --user-data-file and
-                                  --ssh-authorized-keys-file.
-                                  
-                                  Example:
-                                  '{"ssh_authorized_keys": "ssh-rsa AAAAB3NzaC1y
-                                  c2EAAAADAQABAAABAQDbVpuGODmhsRZOLWNgm0aEYUoWID
-                                  SPNWHmg2M6mZpmZNHfiNfx2dSofxUpKOiu5S8Th52AuAHS
-                                  mkzNe6lXBO9wxnjOvkowe1mAleRTEl8zPI8Jkz6HrmJCzH
-                                  EtS04kC4bx+tXRZhIfRq1uGaPcriKyquTnQs52Ahoxgw5v
-                                  dXXQMwxWZLAcyaP01JrZwcUqPlB/GRiBFSTj0E/AIiVW3A
-                                  PNME5HjreOd/djjPRpvWu7AUpOqskG38kr8lhxo1hJifqe
-                                  Mg5W7cQsecTLJHgTDAPJD68ujM93jdzV2llIXwR1zyl80i
-                                  6c3lDLyLgUrCLM0R1xex/zITTdT6/Z84buS/Xl my
-                                  public key"}'
+                                  Example: '{"ssh_authorized_keys": "ssh-
+                                  rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbVpuGODmhsR
+                                  ZOLWNgm0aEYUoWIDSPNWHmg2M6mZpmZNHfiNfx2dSofxUp
+                                  KOiu5S8Th52AuAHSmkzNe6lXBO9wxnjOvkowe1mAleRTEl
+                                  8zPI8Jkz6HrmJCzHEtS04kC4bx+tXRZhIfRq1uGaPcriKy
+                                  quTnQs52Ahoxgw5vdXXQMwxWZLAcyaP01JrZwcUqPlB/GR
+                                  iBFSTj0E/AIiVW3APNME5HjreOd/djjPRpvWu7AUpOqskG
+                                  38kr8lhxo1hJifqeMg5W7cQsecTLJHgTDAPJD68ujM93jd
+                                  zV2llIXwR1zyl80i6c3lDLyLgUrCLM0R1xex/zITTdT6/Z
+                                  84buS/Xl my public key"}'
   --agent-config COMPLEX TYPE     This is a complex type whose value must be
                                   valid JSON. The value can be provided as a
                                   string on the command line or passed in as a
@@ -1964,9 +2400,9 @@ Options:
                                   'ssh_authorized_keys' field of the --metadata
                                   parameter. Populating both values in the same
                                   call will result in an error. For more info
-                                  see documentation: https://docs.us-phoenix-1.o
-                                  raclecloud.com/api/#/en/iaas/20160918/requests
-                                  /LaunchInstanceDetails.
+                                  see documentation: https://docs.cloud.oracle.c
+                                  om/api/#/en/iaas/20160918/requests/LaunchInsta
+                                  nceDetails.
   --source-boot-volume-id TEXT    The OCID of the boot volume used to boot the
                                   instance. This is a shortcut for specifying a
                                   boot volume source via the --source-details
@@ -1982,13 +2418,31 @@ Options:
                                   provided, you cannot provide the --source-
                                   details or --source-boot-volume-id parameters.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2050,13 +2504,31 @@ Options:
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2081,12 +2553,28 @@ Options:
                        call. Only valid when used with --all or --limit, and
                        ignored otherwise.
   --from-json TEXT     Provide input to this command as a JSON document from a
-                       file.
+                       file using the file://path-to/file syntax.
                        
-                       Options can still be provided on the command line.
-                       If an option exists in both the JSON document and the
-                       command line then the command line specified value will
-                       be used
+                       The
+                       --generate-full-command-json-input option can be used to
+                       generate a sample json file to be used with this command
+                       option. The key names are pre-populated and match the
+                       command option names (converted to camelCase format, e.g.
+                       compartment-id --> compartmentId), while the values of
+                       the keys need to be populated by the user before using
+                       the sample file as an input to this command. For any
+                       command option that accepts multiple values, the value of
+                       the key can be a JSON array.
+                       
+                       Options can still be
+                       provided on the command line. If an option exists in both
+                       the JSON document and the command line then the command
+                       line specified value will be used.
+                       
+                       For examples on usage
+                       of this option, please see our "using CLI with advanced
+                       JSON options" link: https://docs.cloud.oracle.com/iaas/Co
+                       ntent/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help       For detailed help on any of these individual commands,
                        enter <command> --help.
 
@@ -2136,13 +2624,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2311,13 +2817,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2425,13 +2949,31 @@ Options:
                                   authenticate the serial console connection
                                   [required]
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2471,13 +3013,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2498,13 +3058,31 @@ Options:
                                   The OCID of the intance console connection
                                   [required]
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2534,13 +3112,31 @@ Options:
                                   tunnel.  This may be any open port on your
                                   local machine.  Default is 5905.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2571,12 +3167,28 @@ Options:
                              fetch per call. Only valid when used with --all or
                              --limit, and ignored otherwise.
   --from-json TEXT           Provide input to this command as a JSON document
-                             from a file.
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
                              
-                             Options can still be provided on the
-                             command line. If an option exists in both the JSON
-                             document and the command line then the command line
-                             specified value will be used
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help             For detailed help on any of these individual
                              commands, enter <command> --help.
 
@@ -2619,12 +3231,30 @@ Options:
   --listing-id TEXT        The OCID of the listing. [required]
   --resource-version TEXT  Listing Resource Version. [required]
   --from-json TEXT         Provide input to this command as a JSON document from
-                           a file.
+                           a file using the file://path-to/file syntax.
                            
-                           Options can still be provided on the command
-                           line. If an option exists in both the JSON document
-                           and the command line then the command line specified
-                           value will be used
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
   -?, -h, --help           For detailed help on any of these individual
                            commands, enter <command> --help.
 
@@ -2651,12 +3281,24 @@ Usage: oci compute pic listing get [OPTIONS]
 Options:
   --listing-id TEXT  The OCID of the listing. [required]
   --from-json TEXT   Provide input to this command as a JSON document from a
-                     file.
+                     file using the file://path-to/file syntax.
                      
-                     Options can still be provided on the command line.
-                     If an option exists in both the JSON document and the
-                     command line then the command line specified value will be
-                     used
+                     The --generate-
+                     full-command-json-input option can be used to generate a
+                     sample json file to be used with this command option. The
+                     key names are pre-populated and match the command option
+                     names (converted to camelCase format, e.g. compartment-id
+                     --> compartmentId), while the values of the keys need to be
+                     populated by the user before using the sample file as an
+                     input to this command. For any command option that accepts
+                     multiple values, the value of the key can be a JSON array.
+                     Options can still be provided on the command line. If an
+                     option exists in both the JSON document and the command
+                     line then the command line specified value will be used.
+                     For examples on usage of this option, please see our "using
+                     CLI with advanced JSON options" link: https://docs.cloud.or
+                     acle.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                     Options
   -?, -h, --help     For detailed help on any of these individual commands,
                      enter <command> --help.
 
@@ -2693,12 +3335,30 @@ Options:
                            per call. Only valid when used with --all or --limit,
                            and ignored otherwise.
   --from-json TEXT         Provide input to this command as a JSON document from
-                           a file.
+                           a file using the file://path-to/file syntax.
                            
-                           Options can still be provided on the command
-                           line. If an option exists in both the JSON document
-                           and the command line then the command line specified
-                           value will be used
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
   -?, -h, --help           For detailed help on any of these individual
                            commands, enter <command> --help.
 
@@ -2877,12 +3537,28 @@ Options:
                              Example: 1412195400
                                  [required]
   --from-json TEXT           Provide input to this command as a JSON document
-                             from a file.
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
                              
-                             Options can still be provided on the
-                             command line. If an option exists in both the JSON
-                             document and the command line then the command line
-                             specified value will be used
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help             For detailed help on any of these individual
                              commands, enter <command> --help.
 
@@ -2899,12 +3575,28 @@ Options:
   --force                    Perform deletion without prompting for
                              confirmation.
   --from-json TEXT           Provide input to this command as a JSON document
-                             from a file.
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
                              
-                             Options can still be provided on the
-                             command line. If an option exists in both the JSON
-                             document and the command line then the command line
-                             specified value will be used
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help             For detailed help on any of these individual
                              commands, enter <command> --help.
 
@@ -2955,13 +3647,31 @@ Options:
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -2989,12 +3699,30 @@ Options:
   --listing-id TEXT        The OCID of the listing. [required]
   --resource-version TEXT  Listing Resource Version. [required]
   --from-json TEXT         Provide input to this command as a JSON document from
-                           a file.
+                           a file using the file://path-to/file syntax.
                            
-                           Options can still be provided on the command
-                           line. If an option exists in both the JSON document
-                           and the command line then the command line specified
-                           value will be used
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
   -?, -h, --help           For detailed help on any of these individual
                            commands, enter <command> --help.
 
@@ -3025,12 +3753,30 @@ Options:
                            per call. Only valid when used with --all or --limit,
                            and ignored otherwise.
   --from-json TEXT         Provide input to this command as a JSON document from
-                           a file.
+                           a file using the file://path-to/file syntax.
                            
-                           Options can still be provided on the command
-                           line. If an option exists in both the JSON document
-                           and the command line then the command line specified
-                           value will be used
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
   -?, -h, --help           For detailed help on any of these individual
                            commands, enter <command> --help.
 
@@ -3079,12 +3825,29 @@ Options:
                               fetch per call. Only valid when used with --all or
                               --limit, and ignored otherwise.
   --from-json TEXT            Provide input to this command as a JSON document
-                              from a file.
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
                               
-                              Options can still be provided on the
-                              command line. If an option exists in both the JSON
-                              document and the command line then the command
-                              line specified value will be used
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
   -?, -h, --help              For detailed help on any of these individual
                               commands, enter <command> --help.
 
@@ -3115,12 +3878,28 @@ Usage: oci compute vnic-attachment get [OPTIONS]
 Options:
   --vnic-attachment-id TEXT  The OCID of the VNIC attachment. [required]
   --from-json TEXT           Provide input to this command as a JSON document
-                             from a file.
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
                              
-                             Options can still be provided on the
-                             command line. If an option exists in both the JSON
-                             document and the command line then the command line
-                             specified value will be used
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help             For detailed help on any of these individual
                              commands, enter <command> --help.
 
@@ -3157,12 +3936,29 @@ Options:
                               fetch per call. Only valid when used with --all or
                               --limit, and ignored otherwise.
   --from-json TEXT            Provide input to this command as a JSON document
-                              from a file.
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
                               
-                              Options can still be provided on the
-                              command line. If an option exists in both the JSON
-                              document and the command line then the command
-                              line specified value will be used
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
   -?, -h, --help              For detailed help on any of these individual
                               commands, enter <command> --help.
 
@@ -3226,13 +4022,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -3273,13 +4087,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -3321,13 +4153,31 @@ Options:
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file.
+                                  document from a file using the file://path-
+                                  to/file syntax.
                                   
-                                  Options can still be
-                                  provided on the command line. If an option
-                                  exists in both the JSON document and the
-                                  command line then the command line specified
-                                  value will be used
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
 
@@ -3340,12 +4190,29 @@ Usage: oci compute volume-attachment get [OPTIONS]
 Options:
   --volume-attachment-id TEXT  The OCID of the volume attachment. [required]
   --from-json TEXT             Provide input to this command as a JSON document
-                               from a file.
+                               from a file using the file://path-to/file syntax.
+                               The --generate-full-command-json-input option can
+                               be used to generate a sample json file to be used
+                               with this command option. The key names are pre-
+                               populated and match the command option names
+                               (converted to camelCase format, e.g. compartment-
+                               id --> compartmentId), while the values of the
+                               keys need to be populated by the user before
+                               using the sample file as an input to this
+                               command. For any command option that accepts
+                               multiple values, the value of the key can be a
+                               JSON array.
                                
-                               Options can still be provided on
-                               the command line. If an option exists in both the
+                               Options can still be provided on the
+                               command line. If an option exists in both the
                                JSON document and the command line then the
-                               command line specified value will be used
+                               command line specified value will be used.
+                               
+                               For
+                               examples on usage of this option, please see our
+                               "using CLI with advanced JSON options" link: http
+                               s://docs.cloud.oracle.com/iaas/Content/API/SDKDoc
+                               s/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help               For detailed help on any of these individual
                                commands, enter <command> --help.
 
@@ -3384,12 +4251,29 @@ Options:
                               fetch per call. Only valid when used with --all or
                               --limit, and ignored otherwise.
   --from-json TEXT            Provide input to this command as a JSON document
-                              from a file.
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
                               
-                              Options can still be provided on the
-                              command line. If an option exists in both the JSON
-                              document and the command line then the command
-                              line specified value will be used
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
   -?, -h, --help              For detailed help on any of these individual
                               commands, enter <command> --help.
 

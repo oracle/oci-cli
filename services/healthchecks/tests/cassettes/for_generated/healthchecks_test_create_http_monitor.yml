@@ -1,0 +1,109 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=healthchecks&apiName=CreateHttpMonitor
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:14:09 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=healthchecks&apiName=CreateHttpMonitor&lang=PythonCLI&sessionId=0759
+  response:
+    body: {string: '[{"containerId":"388318f1-e536-43a4-b6c5-b62571a4e225","request":{"createHttpMonitorDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca","targets":["__STS0759_8777.com"],"protocol":"HTTP","displayName":"__STS0759_1168","intervalInSeconds":60,"isEnabled":true,"freeformTags":{"tag1":"value1.__STS0759_1579","tag2":"value2.__STS0759_1579"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0759_6151","testing_service_tag_02":"tag5.__STS0759_6151","testing_service_tag_03":"tag6.__STS0759_6151"}}},"opcRetryToken":"fd3b758e-8078-40ff-9b36-d76d9b2863cf"}}]'}
+    headers:
+      Content-Length: ['643']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:14:09 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"compartmentId": "ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca",
+      "targets": ["__STS0759_8777.com"], "protocol": "HTTP", "displayName": "__STS0759_1168",
+      "intervalInSeconds": 60, "isEnabled": true, "freeformTags": {"tag1": "value1.__STS0759_1579",
+      "tag2": "value2.__STS0759_1579"}, "definedTags": {"testing_service_tag_ns_001":
+      {"testing_service_tag_01": "tag4.__STS0759_6151", "testing_service_tag_02":
+      "tag5.__STS0759_6151", "testing_service_tag_03": "tag6.__STS0759_6151"}}}'
+    headers:
+      Content-Length: ['516']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="QGJDx69UVRqh8x3cHYa3NSHkaSjZb6wBaJyMuflkchLuOScxxeYqL9Mokfe5o32BMF3nUHqAuF4sIxEWdOSVqSvFwc/sFkkJENmAQTWWIz7tRIjwVKVYl/0UZZF0hIYt0wicDq6InW2PzrERpuNYkclJSvQDmneeGwxqEkb1J9fGOacCP+RlM5dzNs14JPDOhu1XpvvgyMyaMvzvOKshC1+uMgEsA9f1yuAy9xXGcDRmec91Vz88tmB6GUKMr3Vp7GEe8jNEmxsCJKFX+focHI1fFTIlIU1M2sdA1id5IPlpgH4buRoXTg5lEHX/ZOtnDggvOZNaZBbktWAUWTic2Q==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 02 Feb 2019 03:14:11 GMT']
+      host: [healthchecks.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.653]
+      opc-request-id: [C78B2D57C0FB487EBA145E2136AB2DD0]
+      opc-retry-token: [1GdoEgf3hcgdKBpWMrm4HyloGnFSZp]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.653 (python 3.6.5; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.44]
+      x-content-sha256: [VVvyINoDEY83XCsSskhO7jQib27QXUpuc8R5GFM8wZ8=]
+    method: POST
+    uri: https://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpMonitors
+  response:
+    body: {string: '{"id":"ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a","resultsUrl":"http://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpProbeResults/ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a","compartmentId":"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca","protocol":"HTTP","targets":["__STS0759_8777.com"],"vantagePointNames":["azr-ord","goo-chs","aws-pdx"],"port":80,"timeoutInSeconds":60,"method":"HEAD","path":"/","headers":{},"displayName":"__STS0759_1168","intervalInSeconds":60,"isEnabled":true,"freeformTags":{"tag1":"value1.__STS0759_1579","tag2":"value2.__STS0759_1579"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0759_6151","testing_service_tag_02":"tag5.__STS0759_6151","testing_service_tag_03":"tag6.__STS0759_6151"}}}'}
+    headers:
+      Content-Length: ['881']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:14:12 GMT']
+      ETag: ['"d6251dbd023968f43156193c92b828b5"']
+      Location: ['http://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpMonitorsocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a']
+      opc-request-id: [C78B2D57C0FB487EBA145E2136AB2DD0/4E93F886363D657DC15083A4263E3F84/EE7279D80E1C6C32C0C421E459E7CC2B]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "388318f1-e536-43a4-b6c5-b62571a4e225", "requestClass":
+      "com.oracle.bmc.healthchecks.requests.CreateHttpMonitorRequest", "requestJson":
+      "{\"createHttpMonitorDetails\": {\"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"targets\": [\"__STS0759_8777.com\"], \"protocol\": \"HTTP\", \"displayName\":
+      \"__STS0759_1168\", \"intervalInSeconds\": 60, \"isEnabled\": true, \"freeformTags\":
+      {\"tag1\": \"value1.__STS0759_1579\", \"tag2\": \"value2.__STS0759_1579\"},
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0759_6151\", \"testing_service_tag_02\": \"tag5.__STS0759_6151\",
+      \"testing_service_tag_03\": \"tag6.__STS0759_6151\"}}}, \"opcRetryToken\": \"fd3b758e-8078-40ff-9b36-d76d9b2863cf\"}",
+      "responseJson": "{\"etag\": \"\\\"d6251dbd023968f43156193c92b828b5\\\"\", \"httpMonitor\":
+      {\"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0759_6151\", \"testing_service_tag_02\": \"tag5.__STS0759_6151\",
+      \"testing_service_tag_03\": \"tag6.__STS0759_6151\"}}, \"displayName\": \"__STS0759_1168\",
+      \"freeformTags\": {\"tag1\": \"value1.__STS0759_1579\", \"tag2\": \"value2.__STS0759_1579\"},
+      \"headers\": {}, \"id\": \"ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a\",
+      \"intervalInSeconds\": 60, \"isEnabled\": true, \"method\": \"HEAD\", \"path\":
+      \"/\", \"port\": 80, \"protocol\": \"HTTP\", \"resultsUrl\": \"http://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpProbeResults/ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a\",
+      \"targets\": [\"__STS0759_8777.com\"], \"timeoutInSeconds\": 60, \"vantagePointNames\":
+      [\"azr-ord\", \"goo-chs\", \"aws-pdx\"]}, \"opcRequestId\": \"52B44C38810A4A9DB8A46B2AE15ADB55\"}",
+      "responseClass": "com.oracle.bmc.healthchecks.responses.CreateHttpMonitorResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2044']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0759&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:14:19 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

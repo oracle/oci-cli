@@ -31,20 +31,20 @@ generate_oci_config_instructions = """
 
 
     \b
-    https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/apisigningkey.htm#Other
+    https://docs.cloud.oracle.com/Content/API/Concepts/apisigningkey.htm#Other
 
 
     Region:
 
 
     \b
-    https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm
+    https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm
 
     General config documentation:
 
 
     \b
-    https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm
+    https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm
 
     \n
 
@@ -55,7 +55,7 @@ upload_public_key_instructions = """
     If you haven't already uploaded your public key through the console, follow the instructions on the page linked below in the section 'How to upload the public key':
 
     \b
-    https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/apisigningkey.htm#How2
+    https://docs.cloud.oracle.com/Content/API/Concepts/apisigningkey.htm#How2
 
     \n
 """
@@ -504,7 +504,7 @@ def validate_fingerprint(fingerprint):
 
 def validate_region(region):
     if not is_region(region):
-        click.echo("Unrecognized region: {}. Valid regions can be found here: https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm".format(region))
+        click.echo("Unrecognized region: {}. Valid regions can be found here: https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm".format(region))
         if not click.confirm("Continue with unrecognized region? (Enter 'n' to re-enter region)"):
             return None
 
@@ -521,7 +521,7 @@ def process_config_filename(filename):
 
 def validate_ocid(ocid, pattern):
     if not pattern.match(ocid):
-        raise click.BadParameter("Invalid OCID format. Instructions to find OCIDs: https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/apisigningkey.htm#Other")
+        raise click.BadParameter("Invalid OCID format. Instructions to find OCIDs: https://docs.cloud.oracle.com/Content/API/Concepts/apisigningkey.htm#Other")
 
     return ocid
 

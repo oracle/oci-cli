@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=healthchecks&apiName=GetPingMonitor
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:14:53 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=healthchecks&apiName=GetPingMonitor&lang=PythonCLI&sessionId=0759
+  response:
+    body: {string: '[{"containerId":"388318f1-e536-43a4-b6c5-b62571a4e225","request":{"monitorId":"ocid1.pingmonitor.oc1..aaaaaaaacgi4edvdr6znf7ufoqigf6atjahsojxhemmhsq6zqb2i4l3nnflq"}}]'}
+    headers:
+      Content-Length: ['166']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:14:53 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="mOTtUFSwuKKoAUheNMr20AGgHHj4Nl0S7uBNSF/Hybj6Qx35yfpcG244xu2bYdFcath1Ag+uIXYmuZ43A4eX8hXnHjdVYzC8ooy6ZEPgVsXFOdHRgGPoplWqhFgb1f1FCu0z32pd8jX1UlA0g20H3oOdMbamNrVLLm1LvLG356PBAT8NMkKgEWnW09Drh1NNxlsm/aEmxorFbiCfWudLhoEhol6kZRAwxBHgLFuMTmbmw3Taiu2SrfuKb0uf9Z196mFdk8bc15vpYl5aua7jHk+B5AwSuOIwgLJ4FlrLuwYpr88Qr2ivk/MthSRm7ZZ42z8tf7vluDDweLd+Yn2fJg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 02 Feb 2019 03:15:02 GMT']
+      host: [healthchecks.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.653]
+      opc-request-id: [952DBD7B500C4B278F7CD5BFCA5B4BA2]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.653 (python 3.6.5; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://healthchecks.us-phoenix-1.oraclecloud.com/20180501/pingMonitors/ocid1.pingmonitor.oc1..aaaaaaaacgi4edvdr6znf7ufoqigf6atjahsojxhemmhsq6zqb2i4l3nnflq
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAALVRS4/TMBD+Lz63eSddel1x6AFU0eWEUOQ4k8Rbx5P4kW276n9n0gJdKlbigk/W
+        fE+PX5ms2ZqhkHUcDFK3PWrp0AQo4iDgP49oZQb1VJvipJuVb3CUbVNw98w7i8+HDvq+s2NxGqtE
+        ZirVulEjWzAD1itnvxpFEZ1zwzoMO+DKdaIDsbeBt8uhQ9DysIwDNFwoEAp9HQjswySKH6I8isO5
+        1tZgBV+ufuH/aUuZAzeuB+02t528mf6ZUjWrwQzpeNj7fr+fkiIfumNeoMzqYsyaSplDZ1+O7eRP
+        qctHm3vBKWUw6FDgvJHN46ctTRw3LTjL1t9YWe6edtEq/1CmaZzM2ez7gk1cO97CFqV2n3kPFyo/
+        mWXtK9K3iEtRNXTjL/YyI82AxrH1Q0T2sgf0bqN3IFDXJC5oWks7KH6c7ajJLTfO0oycKAnMxNWd
+        StqPmlcKaD3OeFiwxgA0aPon3hLlld7SxuRHSg9xcLNdRVl0eWqb/IKTe/hMraCRGurfbmAdfXJp
+        qYsUUJK81LaMovg9dEbmlOyNeZIX+Zz9N3pypef/SE+v9OKefj6ffwAIhy66SQMAAA==
+    headers:
+      Content-Encoding: [gzip]
+      Content-Length: ['448']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:15:03 GMT']
+      ETag: ['"96a80aca9d88c50e6200318e4b6ecda7--gzip"']
+      Vary: [Accept-Encoding]
+      opc-request-id: [952DBD7B500C4B278F7CD5BFCA5B4BA2/CB1CE4A2131E437E7FF50A70CDFCF4EC/9F355ED0F04474E3920A1F2BBD0353AC]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "388318f1-e536-43a4-b6c5-b62571a4e225", "requestClass":
+      "com.oracle.bmc.healthchecks.requests.GetPingMonitorRequest", "requestJson":
+      "{\"monitorId\": \"ocid1.pingmonitor.oc1..aaaaaaaacgi4edvdr6znf7ufoqigf6atjahsojxhemmhsq6zqb2i4l3nnflq\"}",
+      "responseJson": "{\"etag\": \"\\\"96a80aca9d88c50e6200318e4b6ecda7--gzip\\\"\",
+      \"pingMonitor\": {\"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0759_2565\", \"testing_service_tag_02\": \"tag5.__STS0759_2565\",
+      \"testing_service_tag_03\": \"tag6.__STS0759_2565\"}}, \"displayName\": \"__STS0759_1434\",
+      \"freeformTags\": {\"tag1\": \"value1.__STS0759_7040\", \"tag2\": \"value2.__STS0759_7040\"},
+      \"id\": \"ocid1.pingmonitor.oc1..aaaaaaaacgi4edvdr6znf7ufoqigf6atjahsojxhemmhsq6zqb2i4l3nnflq\",
+      \"intervalInSeconds\": 60, \"isEnabled\": true, \"port\": 80, \"protocol\":
+      \"ICMP\", \"resultsUrl\": \"http://healthchecks.us-phoenix-1.oraclecloud.com/20180501/pingProbeResults/ocid1.pingmonitor.oc1..aaaaaaaacgi4edvdr6znf7ufoqigf6atjahsojxhemmhsq6zqb2i4l3nnflq\",
+      \"targets\": [\"__STS0759_3312.com\"], \"timeoutInSeconds\": 60, \"vantagePointNames\":
+      [\"azr-dub\", \"goo-cbf\", \"aws-dub\"]}, \"opcRequestId\": \"73F73E2A4334434DA656691B29C4EA17\"}",
+      "responseClass": "com.oracle.bmc.healthchecks.responses.GetPingMonitorResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1437']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0759&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:15:05 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

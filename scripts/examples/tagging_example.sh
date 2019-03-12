@@ -4,15 +4,36 @@
 #
 #   - Managing tag namespaces and tags by performing create, read (get/list) and update operations on them
 #   - Applying tags to resources
+#   - Managing tag defaults by performing create, read (get/list), update and delete operations on them
 #
 # Requirements for running this script:
-#   - OCI CLI v2.4.14 or later (you can check this by running oci --version)
+#   - OCI CLI v2.4.43 or later (you can check this by running oci --version)
 #   - jq (https://stedolan.github.io/jq/) for JSON querying and manipulation of CLI output. This may be a useful utility in general
 #     and may help cater to scenarios which can't be wholly addressed by the --query option in the CLI
 
-TENANCY_ID=""  # Your tenancy ID
-COMPARTMENT_ID=""  # Your compartment OCID
-TAG_NAMESPACE_NAME="cli_example_tag_ns1" # As of the time of writing, upper case characters aren't allowed in the namespace name
+# Please provide values for the following env variables:
+# TENANCY_ID
+# COMPARTMENT_ID
+# TAG_NAMESPACE_NAME
+
+set -e
+
+if [[ -z "$TENANCY_ID" ]]; then
+    echo "TENANCY_ID must be defined in the environment. "
+    exit 1
+fi
+
+if [[ -z "$COMPARTMENT_ID" ]]; then
+    echo "COMPARTMENT_ID must be defined in the environment. "
+    exit 1
+fi
+
+if [[ -z "$TAG_NAMESPACE_NAME" ]]; then
+    echo "TAG_NAMESPACE_NAME must be defined in the environment. "
+    exit 1
+fi
+
+TEMP_DIR="scripts/temp/"
 
 ##########################################################
 # Tag namespace and tag create, read/list and update
@@ -134,11 +155,11 @@ sleep 15
 # line but it is generally easier to pass these in from files; this also avoids having to escape text on the command
 # line. In the below examples, we show how to pass the input as files via the file:// syntax for JSON parameters.
 #
-# More information on tagging can be found here: https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/resourcetags.htm
+# More information on tagging can be found here: https://docs.cloud.oracle.com/Content/General/Concepts/resourcetags.htm
 #
 # Resources in the CLI which accept tags will have --freeform-tags and --defined-tags parameters. Consult the CLI
 # help (https://github.com/oracle/oci-cli/blob/master/tests/output/inline_help_dump.txt) or the generic tag
-# reference (https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/taggingoverview.htm#Taggable) to
+# reference (https://docs.cloud.oracle.com/Content/Identity/Concepts/taggingoverview.htm#Taggable) to
 # see what resources can accept tags
 ##########################################################
 
@@ -165,7 +186,8 @@ sleep 15
 # }
 #
 # Note, also, that in this input we use tag namespace names and tag names rather than OCIDs
-mkdir scripts/temp
+rm -rf $TEMP_DIR
+mkdir -p $TEMP_DIR
 echo "{\"$TAG_NAMESPACE_NAME\": {\"$TAG_ONE_NAME\": \"some tag value\", \"$TAG_TWO_NAME\": \"other value 55\"}}" >> scripts/temp/defined_tags_1.json
 
 # Note that we pass the JSON  via the file:// syntax. Also, the defined_tags_1.json file references the namespace and
@@ -175,7 +197,7 @@ echo "Creating VCN with tags"
 CREATED_VCN_WITH_TAGS=$(oci network vcn create \
 -c $COMPARTMENT_ID --display-name cli_tagging_example \
 --cidr-block 10.0.0.0/16 --dns-label clitagex \
---freeform-tags file://scripts/tagging_example/freeform_tags_1.json \
+--freeform-tags file://scripts/examples/tagging_example/freeform_tags_1.json \
 --defined-tags file://scripts/temp/defined_tags_1.json \
 --wait-for-state AVAILABLE 2>/dev/null)
 jq -r '.' <<< "$CREATED_VCN_WITH_TAGS"
@@ -195,7 +217,7 @@ echo "{\"$TAG_NAMESPACE_NAME\": {\"$TAG_ONE_NAME\": \"some different value\"}}" 
 echo "Update VCN and replace its current tags with different tags"
 oci network vcn update --vcn-id $VCN_ID \
     --defined-tags file://scripts/temp/defined_tags_2.json \
-    --freeform-tags file://scripts/tagging_example/freeform_tags_2.json \
+    --freeform-tags file://scripts/examples/tagging_example/freeform_tags_2.json \
     --force
 
 # If we know that the tags from one resource need to be applied to another resource, we can extract those 
@@ -254,7 +276,7 @@ echo "Updating resource with merged defined tags"
 oci network vcn update --vcn-id $VCN_ID --defined-tags file://scripts/temp/defined_tags_merged.json --force
 
 oci network vcn get --vcn-id $VCN_ID | jq -r '.data."freeform-tags"' > scripts/temp/freeform_tags_current.json
-jq -s '.[0] * .[1]' scripts/temp/freeform_tags_current.json scripts/tagging_example/freeform_tags_1.json > scripts/temp/freeform_tags_merged.json
+jq -s '.[0] * .[1]' scripts/temp/freeform_tags_current.json scripts/examples/tagging_example/freeform_tags_1.json > scripts/temp/freeform_tags_merged.json
 
 echo "Updating resource with merged freeform tags"
 oci network vcn update --vcn-id $VCN_ID --freeform-tags file://scripts/temp/freeform_tags_merged.json --force
@@ -275,5 +297,43 @@ oci iam tag-namespace retire --tag-namespace-id $TAG_NAMESPACE_ID
 
 echo "Listing tags in the namespace to confirm they have been retired"
 oci iam tag list --tag-namespace-id $TAG_NAMESPACE_ID --all
+
+echo "Reactivating tag namespace"
+oci iam tag-namespace reactivate --tag-namespace-id $TAG_NAMESPACE_ID
+
+##########################################################
+# Tag defaults create, read/list, update and delete
+##########################################################
+
+echo "Creating Tag to use with Tag Default"
+TAG_DEFAULT_SAMPLE_TAG_NAME="cli_tag_default_sample_tag"
+CREATED_SAMPLE_TAG=$(oci iam tag create --tag-namespace-id $TAG_NAMESPACE_ID --name $TAG_DEFAULT_SAMPLE_TAG_NAME --description "A sample tag for tag default feature")
+TAG_DEFAULT_SAMPLE_TAG_ID=$(jq -r '.data.id' <<< "$CREATED_SAMPLE_TAG")
+echo "Tag OCID: ${TAG_DEFAULT_SAMPLE_TAG_ID}"
+
+echo "Wait for 30 seconds till tag cli_tag_default_sample_tag is available"
+sleep 30
+
+echo "Creating Tag Default"
+TAG_DEFAULT_VALUE="tag-default-value"
+CREATED_TAG_DEFAULT=$(oci iam tag-default create --compartment-id $COMPARTMENT_ID --tag-definition-id $TAG_DEFAULT_SAMPLE_TAG_ID --value $TAG_DEFAULT_VALUE)
+TAG_DEFAULT_ID=$(jq -r '.data.id' <<< "$CREATED_TAG_DEFAULT")
+echo "Tag Default OCID: ${TAG_DEFAULT_ID}"
+
+echo "Listing Tag Defaults"
+oci iam tag-default list --compartment-id $COMPARTMENT_ID
+
+echo "Updating Tag Default"
+TAG_DEFAULT_UPDATED_VALUE="updated-value"
+oci iam tag-default update --tag-default-id $TAG_DEFAULT_ID --value $TAG_DEFAULT_UPDATED_VALUE
+
+echo "Getting updated Tag Default"
+oci iam tag-default get --tag-default-id $TAG_DEFAULT_ID
+
+echo "Deleting Tag Default"
+oci iam tag-default delete --tag-default-id $TAG_DEFAULT_ID
+
+echo "Cleaning up test data"
+rm -rf $TEMP_DIR
 
 echo "DONE"

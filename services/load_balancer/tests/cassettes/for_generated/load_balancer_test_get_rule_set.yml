@@ -1,0 +1,144 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=GetRuleSet&serviceName=loadbalancer&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Dec 2018 19:03:20 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0741&apiName=GetRuleSet&serviceName=loadbalancer&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"39c1792f-bab0-4cf1-bbc2-3898204d561d","request":{"loadBalancerId":"ocid1.loadbalancer.oc1.phx.aaaaaaaa2aewbpzc7sfv5ucfkewmp2deijyfku6s2oxualgnvvg7cbipl4oq","ruleSetName":"__STS0741_4941"}},{"containerId":"d5cda4d5-e4cd-4ce9-b2ea-4e0b64e63820","request":{"loadBalancerId":"ocid1.loadbalancer.oc1.phx.aaaaaaaa2aewbpzc7sfv5ucfkewmp2deijyfku6s2oxualgnvvg7cbipl4oq","ruleSetName":"__STS0741_4941"}}]'}
+    headers:
+      Content-Length: ['411']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Dec 2018 19:03:20 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaoenym3gwluc4hhsofqcdluhfh4xjnl3bnjnzfpq57duxmv4nm4qa/ocid1.user.oc1..aaaaaaaanxgpsb236sgq6b4aszon22yjbe5udkj3anbjkn572xymo5ou4aka/1b:0c:31:9d:64:af:16:75:84:bc:eb:54:cf:70:50:cf",signature="Fy54/b0/kB6jAdi4JvxDVK5bv8d1meP2VcwIGYksYNv8k2hyBW+ESQhaoUQyLRZZejEaqLkeTzziiFOP3x1NC3LlEJaTiZGxjd2CdPwOCstz85RxWlQGraHNLGNeXh1MkGUNdOcvkc0YYqxGgSYeuk6tvv/xZhrFN6ocX+uhPxadrvWxy/vN7CJa5SF7ufzmyw6FV8Bgyn3OaMaIjo4VSnP30j1j33P/fvhRCwJRLyrxuzWDheA7wWwHx1aopKWf0hZNZKfSyBuiZWVMALR2uorVfK5aEmDQD0COyH4BHYg1goOpiRTexsc4WgWiMTKe5sZF5NaTR6pkSBXKfdPlwQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 05 Dec 2018 19:03:22 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.3+preview.1.515]
+      opc-request-id: [0B668EB01FC14F029169C7D6E9C8C99F]
+      user-agent: [Oracle-PythonSDK/2.1.3+preview.1.515 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.40+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaa2aewbpzc7sfv5ucfkewmp2deijyfku6s2oxualgnvvg7cbipl4oq/ruleSets/__STS0741_4941
+  response:
+    body: {string: "{\n  \"items\" : [ {\n    \"action\" : \"ADD_HTTP_REQUEST_HEADER\"\
+        ,\n    \"header\" : \"header\",\n    \"value\" : \"value\"\n  } ],\n  \"name\"\
+        \ : \"__STS0741_4941\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['143']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Dec 2018 19:03:20 GMT']
+      ETag: ['-806843603']
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [0B668EB01FC14F029169C7D6E9C8C99F/18C26767CCFD405C531EACC433829805/6ED704BBA1497338231B42CCEE260E07]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"28C6437E8D904BCC9CA51489FFD00A3E\",
+      \"etag\": \"-806843603\", \"ruleSet\": {\"items\": [{\"action\": \"ADD_HTTP_REQUEST_HEADER\",
+      \"header\": \"header\", \"value\": \"value\"}], \"name\": \"__STS0741_4941\"}}",
+      "requestJson": "{\"ruleSetName\": \"__STS0741_4941\", \"loadBalancerId\": \"ocid1.loadbalancer.oc1.phx.aaaaaaaa2aewbpzc7sfv5ucfkewmp2deijyfku6s2oxualgnvvg7cbipl4oq\"}",
+      "containerId": "39c1792f-bab0-4cf1-bbc2-3898204d561d", "requestClass": "com.oracle.bmc.loadbalancer.requests.GetRuleSetRequest",
+      "responseClass": "com.oracle.bmc.loadbalancer.responses.GetRuleSetResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['624']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0741&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Dec 2018 19:03:22 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaoenym3gwluc4hhsofqcdluhfh4xjnl3bnjnzfpq57duxmv4nm4qa/ocid1.user.oc1..aaaaaaaanxgpsb236sgq6b4aszon22yjbe5udkj3anbjkn572xymo5ou4aka/1b:0c:31:9d:64:af:16:75:84:bc:eb:54:cf:70:50:cf",signature="Fy54/b0/kB6jAdi4JvxDVK5bv8d1meP2VcwIGYksYNv8k2hyBW+ESQhaoUQyLRZZejEaqLkeTzziiFOP3x1NC3LlEJaTiZGxjd2CdPwOCstz85RxWlQGraHNLGNeXh1MkGUNdOcvkc0YYqxGgSYeuk6tvv/xZhrFN6ocX+uhPxadrvWxy/vN7CJa5SF7ufzmyw6FV8Bgyn3OaMaIjo4VSnP30j1j33P/fvhRCwJRLyrxuzWDheA7wWwHx1aopKWf0hZNZKfSyBuiZWVMALR2uorVfK5aEmDQD0COyH4BHYg1goOpiRTexsc4WgWiMTKe5sZF5NaTR6pkSBXKfdPlwQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 05 Dec 2018 19:03:22 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.3+preview.1.515]
+      opc-request-id: [8D652FFAD457457AB5A3DE2529D9A3CC]
+      user-agent: [Oracle-PythonSDK/2.1.3+preview.1.515 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.40+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaa2aewbpzc7sfv5ucfkewmp2deijyfku6s2oxualgnvvg7cbipl4oq/ruleSets/__STS0741_4941
+  response:
+    body: {string: "{\n  \"items\" : [ {\n    \"action\" : \"ADD_HTTP_REQUEST_HEADER\"\
+        ,\n    \"header\" : \"header\",\n    \"value\" : \"value\"\n  } ],\n  \"name\"\
+        \ : \"__STS0741_4941\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['143']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Dec 2018 19:03:21 GMT']
+      ETag: ['-806843603']
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [8D652FFAD457457AB5A3DE2529D9A3CC/9EEBD4EB03ECA1548804C5ED1387B0AC/6D7938FF754DC5C8227ACBCDA74254E2]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"E04251F5FA72410293EC41094FD8379D\",
+      \"etag\": \"-806843603\", \"ruleSet\": {\"items\": [{\"action\": \"ADD_HTTP_REQUEST_HEADER\",
+      \"header\": \"header\", \"value\": \"value\"}], \"name\": \"__STS0741_4941\"}}",
+      "requestJson": "{\"ruleSetName\": \"__STS0741_4941\", \"loadBalancerId\": \"ocid1.loadbalancer.oc1.phx.aaaaaaaa2aewbpzc7sfv5ucfkewmp2deijyfku6s2oxualgnvvg7cbipl4oq\"}",
+      "containerId": "d5cda4d5-e4cd-4ce9-b2ea-4e0b64e63820", "requestClass": "com.oracle.bmc.loadbalancer.requests.GetRuleSetRequest",
+      "responseClass": "com.oracle.bmc.loadbalancer.responses.GetRuleSetResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['624']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0741&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Dec 2018 19:03:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

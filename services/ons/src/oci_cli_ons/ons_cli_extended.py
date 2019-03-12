@@ -52,21 +52,17 @@ def message_group():
 
 # Re-work notification control plane commands
 notificationcontrolplane_cli.notification_topic_group.add_command(notificationcontrolplane_cli.delete_topic)
-notificationcontrolplane_cli.notification_topic_group.name = "topic"
-ons_service_cli.ons_service_group.add_command(notificationcontrolplane_cli.notification_topic_group)
+cli_util.rename_command(ons_service_cli.ons_service_group, notificationcontrolplane_cli.notification_topic_group, "topic")
 ons_service_cli.ons_service_group.commands.pop(notificationcontrolplane_cli.notification_control_plane_root_group.name)
 
 # Re-work notification data plane commands
-notificationdataplane_cli.update_subscription.name = "update"
-notificationdataplane_cli.subscription_group.add_command(notificationdataplane_cli.update_subscription)
-notificationdataplane_cli.get_confirm_subscription.name = "confirm"
-notificationdataplane_cli.subscription_group.add_command(notificationdataplane_cli.get_confirm_subscription)
-notificationdataplane_cli.get_unsubscription.name = "unsubscribe"
-notificationdataplane_cli.subscription_group.add_command(notificationdataplane_cli.get_unsubscription)
+cli_util.rename_command(notificationdataplane_cli.subscription_group, notificationdataplane_cli.update_subscription, "update")
+cli_util.rename_command(notificationdataplane_cli.subscription_group, notificationdataplane_cli.get_confirm_subscription, "confirm")
+cli_util.rename_command(notificationdataplane_cli.subscription_group, notificationdataplane_cli.get_unsubscription, "unsubscribe")
+cli_util.rename_command(notificationdataplane_cli.subscription_group, notificationdataplane_cli.resend_subscription_confirmation, "resend-confirmation")
 ons_service_cli.ons_service_group.add_command(notificationdataplane_cli.subscription_group)
 ons_service_cli.ons_service_group.add_command(message_group)
-notificationdataplane_cli.publish_message.name = "publish"
-message_group.add_command(notificationdataplane_cli.publish_message)
+cli_util.rename_command(message_group, notificationdataplane_cli.publish_message, "publish")
 ons_service_cli.ons_service_group.commands.pop(notificationdataplane_cli.notification_data_plane_root_group.name)
 
 cli_util.rename_command(notificationcontrolplane_cli.notification_topic_group, notificationcontrolplane_cli.create_topic, "create")

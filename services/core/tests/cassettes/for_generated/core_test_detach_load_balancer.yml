@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DetachLoadBalancer&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Feb 2019 23:57:56 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0077&apiName=DetachLoadBalancer&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0d9995f3-d5f4-4126-ab84-d99fd17caeae","request":{"instancePoolId":"ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa","detachLoadBalancerDetails":{"loadBalancerId":"ocid1.loadbalancer.oc1.phx.aaaaaaaainrcz6pf7aw7rprn2mkafu5euwm4i64kwytfbf7smtwncbxkvkha","backendSetName":"__STS0077_7838"},"opcRetryToken":"a2206c98-da09-4a82-9ec5-f63a2b4ed2b9"}}]'}
+    headers:
+      Content-Length: ['401']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Feb 2019 23:58:03 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"loadBalancerId": "ocid1.loadbalancer.oc1.phx.aaaaaaaainrcz6pf7aw7rprn2mkafu5euwm4i64kwytfbf7smtwncbxkvkha",
+      "backendSetName": "__STS0077_7838"}'
+    headers:
+      Content-Length: ['145']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaeoyapgtdcnhbomoi7d6sesv3rl2n6c6pxozdd73dsszomknbnsia/ocid1.user.oc1..aaaaaaaaf4xpc64kldjum6klyq4wngd4phz6cvwbbptbzhqbl4ho75apyttq/ea:af:af:07:17:e0:56:be:9f:30:09:76:a6:cf:20:fc",signature="iPdwwt3aL0cSekho2wF7G4Nv0p4kNxAbtOvt0ikqJ0C9xQF8ccxBXPy7xxYno2Yi61IPo3ZM1wPCDMxA/VqKYa2y7rs4k/gVmwm0XDeO4f8u+Ej2yHj3ZSO8V1PdR3PXoCISEPyhHwfzQAsmBOeW3z8m4/Xk4JxrgYX/IXsHlJdEkXdy+wzrmREE6VPuTn2pTIroCaSxQYdujn9/Y2/uPQOSwnYRwKzpclOolAmeY+coC1neGpLl9bQq6slxkgsGQ4ZA3VIjKNxiD8Xpduk6vziQ7a5vo+CODFHC6wghztACTuKTaRjR+HuwVt5ftVlRttIlron356sm9Isj1w6frw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Feb 2019 23:58:05 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7+preview.1.681]
+      opc-request-id: [61E4585A2AE94EF3A309728E89ED0667]
+      opc-retry-token: [pRx4cDxJewSPtQJwTRRs4gnFKsUrNh]
+      user-agent: [Oracle-PythonSDK/2.1.7+preview.1.681 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+      x-content-sha256: [LZ7u2YkGo8C/0LFkBC1GBDRRSi5eaTLN6HvPD+A1/Ow=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/instancePools/ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa/actions/detachLoadBalancer
+  response:
+    body: {string: "{\n  \"id\" : \"ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0077_4487\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0077_4487\",\n      \"testing_service_tag_03\" : \"tag6.__STS0077_4487\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0077_7050\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0077_5098\",\n    \"tag2\" : \"value2.__STS0077_5098\"\
+        \n  },\n  \"instanceConfigurationId\" : \"ocid1.instanceconfiguration.oc1.phx.aaaaaaaayc5o2fii7cb4ldmyc5uhehqoie5prwps3c5i2ghya5xz3dvn7r2a\"\
+        ,\n  \"lifecycleState\" : \"RUNNING\",\n  \"placementConfigurations\" : [\
+        \ {\n    \"availabilityDomain\" : \"GlXO:PHX-AD-3\",\n    \"primarySubnetId\"\
+        \ : \"ocid1.subnet.oc1.phx.aaaaaaaas3keozoqddjov5r73cyhlnee3xsbpwrbjlgsvqlyc2ubpie5bbea\"\
+        \n  } ],\n  \"size\" : 1,\n  \"timeCreated\" : \"2019-02-20T23:45:00.680Z\"\
+        ,\n  \"loadBalancers\" : [ {\n    \"id\" : \"ocid1.loadbalancerattachment.oc1.phx.aaaaaaaa4e6gadweeorbva6bx57o6f4qaeocv36yazgakfzc7i365bhhlgkq\"\
+        ,\n    \"instancePoolId\" : \"ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa\"\
+        ,\n    \"loadBalancerId\" : \"ocid1.loadbalancer.oc1.phx.aaaaaaaainrcz6pf7aw7rprn2mkafu5euwm4i64kwytfbf7smtwncbxkvkha\"\
+        ,\n    \"backendSetName\" : \"__STS0077_7838\",\n    \"port\" : 80,\n    \"\
+        vnicSelection\" : \"primaryvnic\",\n    \"lifecycleState\" : \"DETACHING\"\
+        \n  } ],\n  \"timeStateUpdated\" : \"2019-02-20T23:51:45.957Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1548']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Feb 2019 23:58:12 GMT']
+      ETag: [531351f60d8c6b2face6e8d1a1eadd8a39f74e4db0dbb4e911ca6cfbef224048]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [61E4585A2AE94EF3A309728E89ED0667/9663990C9E5CCA2BE5B443181F36B030/614875B35D365D5D054E7A3A07019EC0]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"70AC50FA759E4222B741AAE8A4F71A63\",
+      \"etag\": \"531351f60d8c6b2face6e8d1a1eadd8a39f74e4db0dbb4e911ca6cfbef224048\",
+      \"instancePool\": {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_02\":
+      \"tag5.__STS0077_4487\", \"testing_service_tag_01\": \"tag4.__STS0077_4487\",
+      \"testing_service_tag_03\": \"tag6.__STS0077_4487\"}}, \"id\": \"ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\",
+      \"size\": 1, \"instanceConfigurationId\": \"ocid1.instanceconfiguration.oc1.phx.aaaaaaaayc5o2fii7cb4ldmyc5uhehqoie5prwps3c5i2ghya5xz3dvn7r2a\",
+      \"loadBalancers\": [{\"id\": \"ocid1.loadbalancerattachment.oc1.phx.aaaaaaaa4e6gadweeorbva6bx57o6f4qaeocv36yazgakfzc7i365bhhlgkq\",
+      \"loadBalancerId\": \"ocid1.loadbalancer.oc1.phx.aaaaaaaainrcz6pf7aw7rprn2mkafu5euwm4i64kwytfbf7smtwncbxkvkha\",
+      \"vnicSelection\": \"primaryvnic\", \"backendSetName\": \"__STS0077_7838\",
+      \"lifecycleState\": \"DETACHING\", \"port\": 80, \"instancePoolId\": \"ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa\"}],
+      \"displayName\": \"__STS0077_7050\", \"freeformTags\": {\"tag2\": \"value2.__STS0077_5098\",
+      \"tag1\": \"value1.__STS0077_5098\"}, \"lifecycleState\": \"RUNNING\", \"timeCreated\":
+      \"2019-02-20T23:45:00.680000+00:00\", \"placementConfigurations\": [{\"availabilityDomain\":
+      \"GlXO:PHX-AD-3\", \"secondaryVnicSubnets\": null, \"primarySubnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaas3keozoqddjov5r73cyhlnee3xsbpwrbjlgsvqlyc2ubpie5bbea\"}]}}",
+      "requestJson": "{\"detachLoadBalancerDetails\": {\"loadBalancerId\": \"ocid1.loadbalancer.oc1.phx.aaaaaaaainrcz6pf7aw7rprn2mkafu5euwm4i64kwytfbf7smtwncbxkvkha\",
+      \"backendSetName\": \"__STS0077_7838\"}, \"opcRetryToken\": \"a2206c98-da09-4a82-9ec5-f63a2b4ed2b9\",
+      \"instancePoolId\": \"ocid1.instancepool.oc1.phx.aaaaaaaacy5piatrrlfhqd22fyhcfynmptpyx45en35rmmzedgnohkkrztoa\"}",
+      "containerId": "0d9995f3-d5f4-4126-ab84-d99fd17caeae", "requestClass": "com.oracle.bmc.core.requests.DetachLoadBalancerRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DetachLoadBalancerResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2246']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0077&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Feb 2019 23:58:17 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

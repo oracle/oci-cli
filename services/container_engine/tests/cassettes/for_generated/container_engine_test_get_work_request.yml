@@ -1,0 +1,107 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetWorkRequest&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:14:58 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=GetWorkRequest&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"workRequestId":"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2wmmdgg5qwczdcmeytsojyg5sdqzdegeygcmlemwrwkyjumu3d"}}]'}
+    headers:
+      Content-Length: ['181']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:14:58 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="V5QOE+8EC0htZ+98rH2L/STKoxJfeDK64+LrSUNOZbDCXQ+Wnc6Kl7HpHg65k1AZld1bycgOum1xw5UR4LUmr4u10qO/Wl2Ebfwygacjkzc7u8VhkLaUCSGAYA8m+jOC0UaaGnKmySevTABQbsTLiLJ+hJ7SOezCBtW/pe1A2ze7Wtb1LmDhZH6/6OipeXV6M5+PI7wP+w2vZGwm8jjfGKqS3EjCvRg1EycMlMtDHkt+A0RElz44RA+QcLX3NGYrukHI1xYpTGYz6CYxykfrGKVEOqh+zvzekg5AOUl0DVjY97yEwzZjE2f9TNbueMtxQpL65MFyadhFgNDOyGiylA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 21:14:59 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [A2A833DC2C77453FB2EC6E42BE060722]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+    method: GET
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/workRequests/ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2wmmdgg5qwczdcmeytsojyg5sdqzdegeygcmlemwrwkyjumu3d
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/7SRwW+bMBTG7/krLM5rSvBoO25VyqRJOzXJpdM0gf0wTmIMz89lpur/PgFLmy3a
+        cRw4+Puk30/fe1kwFmkZZSyyQsvVUhy9I0DXWzwgdB4cLa1YLdv657I4fZD0xkil0q4XgxQGAjm7
+        Dyp1shskKAhKmCOYHvtD2HvjuYw+jCTbAhakbbMNLYzQ9dfdZps//lg/5vfbfC45Ksi7Md3s1us8
+        f8gf5kBY0xZIBhr6cq78/jypvnkObWko8ShqfK6JNxr4rdsfXJW6UGHaYDXsjx89JcehurlJg+Nl
+        MZMQnPUoYLT4tmCMsZfpz1hUiD/8J+/Zb4qhIU3hFP9e8z3WcixUGvBi8suZK6fAyLIuSUIYehW4
+        UoGXynMyhkAhKTGQVKIja6VSz07+LbJDPYKuT2e9/g/Iifi6YOz7tB1pA/dCQEswHSmJV3dX8d1V
+        zLdJnKWfsoQ/RW/NDRX4z2J6VvysG+3qy+Yqi2+zOHmKFq+/AgAA//8uywEazQIAAA==
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Encoding: [gzip]
+      Content-Length: ['391']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 21:15:00 GMT']
+      Etag: [d8c088957a452962a4d10ec0cafb9313087d162b18c2bf2afe1ad280c32de323]
+      Opc-Request-Id: [A2A833DC2C77453FB2EC6E42BE060722/C5CB048D281945C9A578CEFBC9356BEF/3F210DD493E74E67B01DCFA3EC7A458D]
+      Uri: [/20180222/workRequests/_id_]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.9.0, 10.237.16.128']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.16.128:41717']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"workRequest\": {\"id\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2wmmdgg5qwczdcmeytsojyg5sdqzdegeygcmlemwrwkyjumu3d\",
+      \"timeAccepted\": \"2018-08-03T20:59:23+00:00\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"timeStarted\": \"2018-08-03T20:59:25+00:00\", \"operationType\": \"CLUSTER_CREATE\",
+      \"timeFinished\": \"2018-08-03T21:07:02+00:00\", \"status\": \"SUCCEEDED\",
+      \"resources\": [{\"identifier\": \"ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\",
+      \"entityType\": \"cluster\", \"actionType\": \"CREATED\", \"entityUri\": \"/clusters/ocid1.cluster.oc1.phx.aaaaaaaaafsgemdbhbtdeyzwgy3ggy3bgu3tmmtegrtgcztdgcqtoodggvsd\"}]},
+      \"opcRequestId\": \"6246B85A32D34EE19A0E975B9D6A49F6\", \"etag\": \"d8c088957a452962a4d10ec0cafb9313087d162b18c2bf2afe1ad280c32de323\"}",
+      "requestJson": "{\"workRequestId\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2wmmdgg5qwczdcmeytsojyg5sdqzdegeygcmlemwrwkyjumu3d\"}",
+      "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass": "com.oracle.bmc.containerengine.requests.GetWorkRequestRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.GetWorkRequestResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1255']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 21:15:00 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

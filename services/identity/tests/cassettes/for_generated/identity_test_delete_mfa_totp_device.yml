@@ -1,0 +1,144 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=identity&apiName=DeleteMfaTotpDevice
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 02:04:14 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0996&serviceName=identity&apiName=DeleteMfaTotpDevice
+  response:
+    body: {string: !!python/unicode '[{"containerId":"0961ea99-50d2-4af4-8d0e-44a5b0875529","request":{"userId":"ocid1.user.region1..aaaaaaaapgpkonpxd67hmmrt357kh5t2n4aqhoplh5hp5nvl2nyfyozoo7zq","mfaTotpDeviceId":"ocid1.credential.region1..aaaaaaaaonbc4tnnjlyl2mtg5ranly7lvflf5gh6pzh7a7vegqldtq2u7o7q"}},{"containerId":"c0badb01-f7d3-41f7-9dce-1bcb5a686481","request":{"userId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","mfaTotpDeviceId":"ocid1.credential.region1..aaaaaaaaonbc4tnnjlyl2mtg5ranly7lvflf5gh6pzh7a7vegqldtq2u7o7q"}}]'}
+    headers:
+      content-length: ['479']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 02:04:15 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.region1..aaaaaaaamgn7ki7mktitfmtvpiuq6f6rjupv5tazu4czraym2fh7dyahkm5a/ocid1.user.region1..aaaaaaaanxbis5dkepuqu36tth3xbqoh3tr7jt7y7tfzieieuni73k7cwkaa/7e:97:1c:d6:4f:38:52:37:7e:1d:4c:9e:6c:1c:88:ef",signature="jMjp/zdr2EhIFxE6vePr2gEBOyGqbbCSgNZyUlLqBQP8hS+osQBf1gAxsuvMDPQznrjtzxQiZF5YFt7BKRDJPUcBAPy5Yq5Wn74mBhYCvAeoGjIEcWh0nNWVXHpN3YH0svTx/8GLg6wG6rIDb+bhfOE5v46QRu3SwWMd9yjuQFkae5VRN2neV/8/2GWmTyejoZ7y9tD1OWfeDW5JRK4tXuIh04ElMAaCpSkDJUI4jWIyGndh2RlPbVKMAPIEFOJgkKnnXAV5DCJjg5dtrVx3EPugTf54MR4+MLqWy4Ay+6YxT5zLJusOZI1kmrkjYVBqK6jTXkGJetOh425RRPMfHQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 02:04:17 GMT']
+      host: [identity.r1.oracleiaas.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.648]
+      opc-request-id: [E0C1C7B770C24946B2C4CC577C5F9557]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.648 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43+preview.1]
+    method: DELETE
+    uri: https://identity.r1.oracleiaas.com/20160918/users/ocid1.user.region1..aaaaaaaapgpkonpxd67hmmrt357kh5t2n4aqhoplh5hp5nvl2nyfyozoo7zq/mfaTotpDevices/ocid1.credential.region1..aaaaaaaaonbc4tnnjlyl2mtg5ranly7lvflf5gh6pzh7a7vegqldtq2u7o7q
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 02:04:18 GMT']
+      opc-request-id: [E0C1C7B770C24946B2C4CC577C5F9557/EDC5927EDC5ADCB05086205B50A1D976/25166E2D566D10F75F53DC9E26082152]
+      pragma: [no-cache]
+      x-content-type-options: [nosniff]
+    status: {code: 204, message: No Content}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"6311EFAAB2E44D6FAD1C7CA911A0F7F9\"}",
+      "responseClass": "com.oracle.bmc.identity.responses.DeleteMfaTotpDeviceResponse",
+      "containerId": "0961ea99-50d2-4af4-8d0e-44a5b0875529", "requestJson": "{\"userId\":
+      \"ocid1.user.region1..aaaaaaaapgpkonpxd67hmmrt357kh5t2n4aqhoplh5hp5nvl2nyfyozoo7zq\",
+      \"mfaTotpDeviceId\": \"ocid1.credential.region1..aaaaaaaaonbc4tnnjlyl2mtg5ranly7lvflf5gh6pzh7a7vegqldtq2u7o7q\"}",
+      "requestClass": "com.oracle.bmc.identity.requests.DeleteMfaTotpDeviceRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['522']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0996
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 02:04:19 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.region1..aaaaaaaamgn7ki7mktitfmtvpiuq6f6rjupv5tazu4czraym2fh7dyahkm5a/ocid1.user.region1..aaaaaaaanxbis5dkepuqu36tth3xbqoh3tr7jt7y7tfzieieuni73k7cwkaa/7e:97:1c:d6:4f:38:52:37:7e:1d:4c:9e:6c:1c:88:ef",signature="K2UOZFMxCpgN3KALtuR4RhO2AhxbduSMRazLe85DCtdzNZFY34MJWi5qUbnBbJJUh1PPEpDQSxmgCFHJ9awumfLfFz5LIcJGwMlT4jJA5JM5geWivZav/ESCMAC9FDysVM3yvZVpgHBIzUbY2A+n753kLvLrEI2ckd3YlFeHpWu4/Prw8os2KDm0vwXbcus6f09hAawcoQEVfS700TvFyQ+7mAXEr7noakNhRHIJFnbqI6sMxxhhdSinJUuHXdQa0MU8vtjmjTC9TpuleW9SHjBeax8mD/oQ4XVgQWdDuPz6Vkjm3DzKksaJ6E9LwykAPvBZviQWC2A8afvBLJnKTA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 02:04:19 GMT']
+      host: [identity.r1.oracleiaas.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.648]
+      opc-request-id: [8D0D65604C824201BAACF38146D6AE1D]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.648 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43+preview.1]
+    method: DELETE
+    uri: https://identity.r1.oracleiaas.com/20160918/users/ABCDEFGHIJKLMNOPQRSTUVWXYZ/mfaTotpDevices/ocid1.credential.region1..aaaaaaaaonbc4tnnjlyl2mtg5ranly7lvflf5gh6pzh7a7vegqldtq2u7o7q
+  response:
+    body: {string: !!python/unicode "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n\
+        \  \"message\" : \"Authorization failed or requested resource not found\"\n\
+        }"}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['110']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 02:04:21 GMT']
+      opc-request-id: [8D0D65604C824201BAACF38146D6AE1D/650E562CC9342F24C1F4D165193929AD/CD8CA214723A04409DB37915AF2BE6EA]
+      pragma: [no-cache]
+      x-content-type-options: [nosniff]
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"errorJson": "{\"message\": \"Authorization failed or
+      requested resource not found\", \"code\": \"NotAuthorizedOrNotFound\", \"opcRequestId\":
+      \"8D0D65604C824201BAACF38146D6AE1D/650E562CC9342F24C1F4D165193929AD/CD8CA214723A04409DB37915AF2BE6EA\",
+      \"statusCode\": 404}", "containerId": "c0badb01-f7d3-41f7-9dce-1bcb5a686481",
+      "requestJson": "{\"userId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"mfaTotpDeviceId\":
+      \"ocid1.credential.region1..aaaaaaaaonbc4tnnjlyl2mtg5ranly7lvflf5gh6pzh7a7vegqldtq2u7o7q\"}",
+      "requestClass": "com.oracle.bmc.identity.requests.DeleteMfaTotpDeviceRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['580']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?lang=PythonCLI&sessionId=0996
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 02:04:21 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

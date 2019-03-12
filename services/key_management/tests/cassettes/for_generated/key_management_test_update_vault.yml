@@ -1,0 +1,155 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateVault&serviceName=keymanagement&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 31 Aug 2018 19:28:03 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0294&apiName=UpdateVault&serviceName=keymanagement&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"dafc7ebf-84fd-44c6-a40d-ce1d2f2aa3c5","request":{"vaultId":"ocid1.vault.oc1.phx.avnybakjaafna.abyhqljswc5wb7nn6pdehcvzn7s2r5yfwanl2nr6x64bny55rq3ofrdg3e7q","updateVaultDetails":{"displayName":"KMS
+        integrations - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03"}}},{"containerId":"0ade0d6d-c0f2-4386-a94d-c0eb5db4d921","request":{"vaultId":"ocid1.vault.region1.sea.afnxza26aag4s.abzwkljswhzpc4bousva6miz4dvphxovg4wnxnofopi4adpbs5pzkmpdlqeb","updateVaultDetails":{"displayName":"KMS
+        integrations - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03"}}}]'}
+    headers:
+      Content-Length: ['569']
+      Content-Type: [application/json]
+      Date: ['Fri, 31 Aug 2018 19:28:03 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "KMS integrations - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03"}'
+    headers:
+      Content-Length: ['87']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa343rmve2t2ibyb2qbzxjhuoqig2nlcsnubbmcbwgjalab3f3xhiq/ocid1.user.oc1..aaaaaaaaveq5qztnskf3v3hdckqoe64ip7phex4vpdq574wiicnxurodjdxa/e3:f1:39:f4:ba:28:12:86:bb:2f:90:27:4f:c5:cb:b7",signature="qE2EyB8Nsya6DJc9LyaTe1kYkMYZVKVSwXSDhokKtuvvuoemPdMDvYMZpEtCm9ODQ7V7JKE6eN4Ou7aFlhByIMn6cc2K0nYsyScG0PG2/ZFcP7xsgJ79d3erwxCKcs9b/sTHp/vKdr1sgW8q9WJ7Ama8+gbFH5VZw/2XbWwPaYg13HNYbCdqYCkjO69rSbkgZMsrqs3Rt3H0EGaeOJSLEijE+LuIKc3Qw0enQ+Ni8SgoT8pqTNjG1XwuXKZFJ8LbV3FR4ZtuLftKFOLnmKy4bc8vsQ6j1/Nt/2bRJk442Y8FznxkfV9JHYDLssiLc/a9xNhr3ZGA2jgDR8hhO9XfUw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 31 Aug 2018 19:28:24 GMT']
+      host: [kms.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3+preview.1.436]
+      opc-request-id: [54D002C8879848EC96ED5CD730D35ED7]
+      user-agent: [Oracle-PythonSDK/2.0.3+preview.1.436 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.32+preview.1]
+      x-content-sha256: [D+ck8GEy1D5vAmzJ2hrKgCUk+nXJB+yt2cuLDZNF36k=]
+    method: PUT
+    uri: https://kms.us-phoenix-1.oraclecloud.com/20180608/vaults/ocid1.vault.oc1.phx.avnybakjaafna.abyhqljswc5wb7nn6pdehcvzn7s2r5yfwanl2nr6x64bny55rq3ofrdg3e7q
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa343rmve2t2ibyb2qbzxjhuoqig2nlcsnubbmcbwgjalab3f3xhiq\"\
+        ,\n  \"cryptoEndpoint\" : \"https://avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com\"\
+        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"KMS integrations - DO NOT\
+        \ DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03\",\n  \"freeformTags\" : { },\n\
+        \  \"id\" : \"ocid1.vault.oc1.phx.avnybakjaafna.abyhqljswc5wb7nn6pdehcvzn7s2r5yfwanl2nr6x64bny55rq3ofrdg3e7q\"\
+        ,\n  \"lifecycleState\" : \"ACTIVE\",\n  \"managementEndpoint\" : \"https://avnybakjaafna-management.kms.us-phoenix-1.oraclecloud.com\"\
+        ,\n  \"timeCreated\" : \"2018-08-24T22:06:01.744Z\",\n  \"timeOfDeletion\"\
+        \ : null,\n  \"vaultType\" : \"VIRTUAL_PRIVATE\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, no-transform, must-revalidate']
+      Content-Length: ['668']
+      Content-Type: [application/json]
+      Date: ['Fri, 31 Aug 2018 19:28:25 GMT']
+      ETag: [8313999ef88339b8c90194ed4fd5490d1241aa29]
+      opc-request-id: [54D002C8879848EC96ED5CD730D35ED7/D796BED9309211C19B64BFC730E2D2CB/8DE9A2F7C6E54C35A8143ABAA52E52E8]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"vault\": {\"definedTags\": {}, \"id\": \"ocid1.vault.oc1.phx.avnybakjaafna.abyhqljswc5wb7nn6pdehcvzn7s2r5yfwanl2nr6x64bny55rq3ofrdg3e7q\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa343rmve2t2ibyb2qbzxjhuoqig2nlcsnubbmcbwgjalab3f3xhiq\",
+      \"managementEndpoint\": \"https://avnybakjaafna-management.kms.us-phoenix-1.oraclecloud.com\",
+      \"vaultType\": \"VIRTUAL_PRIVATE\", \"freeformTags\": {}, \"displayName\": \"KMS
+      integrations - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03\", \"cryptoEndpoint\":
+      \"https://avnybakjaafna-crypto.kms.us-phoenix-1.oraclecloud.com\", \"timeCreated\":
+      \"2018-08-24T22:06:01.744000+00:00\", \"lifecycleState\": \"ACTIVE\", \"timeOfDeletion\":
+      null}, \"opcRequestId\": \"D44F0DAA7EA54B5BAFAA45A0C3D0AB29\", \"etag\": \"8313999ef88339b8c90194ed4fd5490d1241aa29\"}",
+      "requestJson": "{\"updateVaultDetails\": {\"displayName\": \"KMS integrations
+      - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03\"}, \"vaultId\": \"ocid1.vault.oc1.phx.avnybakjaafna.abyhqljswc5wb7nn6pdehcvzn7s2r5yfwanl2nr6x64bny55rq3ofrdg3e7q\"}",
+      "containerId": "dafc7ebf-84fd-44c6-a40d-ce1d2f2aa3c5", "requestClass": "com.oracle.bmc.keymanagement.requests.UpdateVaultRequest",
+      "responseClass": "com.oracle.bmc.keymanagement.responses.UpdateVaultResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1281']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0294&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 31 Aug 2018 19:28:18 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "KMS integrations - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03"}'
+    headers:
+      Content-Length: ['87']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa343rmve2t2ibyb2qbzxjhuoqig2nlcsnubbmcbwgjalab3f3xhiq/ocid1.user.oc1..aaaaaaaaveq5qztnskf3v3hdckqoe64ip7phex4vpdq574wiicnxurodjdxa/e3:f1:39:f4:ba:28:12:86:bb:2f:90:27:4f:c5:cb:b7",signature="Bl6qmj6/46E9pnnzJPH8aXCuiLp5uj9QPOm1mTKHRrNRptC/UrBgvCsBXGY2SQLcAF+KTf6pkNtIdIfzsJTkTywvAXYgZvXUFjFACNTLxmTtpR4B/DSNwoYHzC3M8duIMMk+l/D36s+Mizei85H/BCJ4zlgMDTgY88BOG5JdQn4gWN9DRUGpTUlIg+4RH2p3CCCzlnV2maye0ad46Wd5vWlukrnDPcrlzCV70JaIhane2qf3U2w6AXXZxARikjMMUyIWdSQGC9pDsajgKCqmejxY+HK+Jl40TNuERPDFX3GxJnDeLaW+juP7RG9F73AGfiTz6GTg2KC5Sujk+7c98A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 31 Aug 2018 19:28:25 GMT']
+      host: [kms.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3+preview.1.436]
+      opc-request-id: [EAF885BE0AA24B859382D3DDE92DAB34]
+      user-agent: [Oracle-PythonSDK/2.0.3+preview.1.436 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.32+preview.1]
+      x-content-sha256: [D+ck8GEy1D5vAmzJ2hrKgCUk+nXJB+yt2cuLDZNF36k=]
+    method: PUT
+    uri: https://kms.us-phoenix-1.oraclecloud.com/20180608/vaults/ocid1.vault.region1.sea.afnxza26aag4s.abzwkljswhzpc4bousva6miz4dvphxovg4wnxnofopi4adpbs5pzkmpdlqeb
+  response:
+    body: {string: "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n  \"message\" :\
+        \ \"Vault does not exist or you are not authorized to access it.\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, no-transform, must-revalidate']
+      Content-Length: ['118']
+      Content-Type: [application/json]
+      Date: ['Fri, 31 Aug 2018 19:28:26 GMT']
+      opc-request-id: [EAF885BE0AA24B859382D3DDE92DAB34/CC5064082F5507E2D7865AC5568C6418/DB36880AEDF43BB1C0F524A01F8F8584]
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"requestJson": "{\"updateVaultDetails\": {\"displayName\": \"KMS integrations
+      - DO NOT DELETEc27d7fde-aeda-4c46-b7b7-18eecda47d03\"}, \"vaultId\": \"ocid1.vault.region1.sea.afnxza26aag4s.abzwkljswhzpc4bousva6miz4dvphxovg4wnxnofopi4adpbs5pzkmpdlqeb\"}",
+      "errorJson": "{\"statusCode\": 404, \"opcRequestId\": \"EAF885BE0AA24B859382D3DDE92DAB34/CC5064082F5507E2D7865AC5568C6418/DB36880AEDF43BB1C0F524A01F8F8584\",
+      \"code\": \"NotAuthorizedOrNotFound\", \"message\": \"Vault does not exist or
+      you are not authorized to access it.\"}", "containerId": "0ade0d6d-c0f2-4386-a94d-c0eb5db4d921",
+      "requestClass": "com.oracle.bmc.keymanagement.requests.UpdateVaultRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['662']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0294&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 31 Aug 2018 19:28:19 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

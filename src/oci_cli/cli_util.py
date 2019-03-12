@@ -58,19 +58,11 @@ DISPLAY_HEADERS = {
     "opc-next-cursor"
 }
 
-# Use the overrides here sparingly for situations where we do not want to create an extended file.
-OVERRIDES = {
-    "configuration_group.command_name": "config",
-    "list_work_request_logs.command_name": "list",
-    "healthchecks_root_group.command_name": "health-checks",
-    "health_checks_vantage_point_group.command_name": "vantage-point"
-}
-ROOT_COMMAND_HELP_OVERRIDES = {
-    "marketplace_service_group.help": "Marketplace Service CLI",
-    "marketplace_service_group.short_help": "Marketplace Service",
-    "email_root_group.help": "Email Delivery Service CLI"
-}
-OVERRIDES.update(ROOT_COMMAND_HELP_OVERRIDES)
+# This dictionary is populated by the cli_extended files found in /services/<service>/src/oci_cli_<service>.
+OVERRIDES = {}
+
+# This list is populated by the cli_extended files found in /services/<service>/src/oci_cli_<service>.
+SERVICES_REQUIRING_ENDPOINTS = []
 
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
 
@@ -196,10 +188,7 @@ def build_client(service_name, ctx):
         client_class = CLIENT_MAP[service_name]
 
         # The constructors for these clients need an endpoint
-        #
-        # TODO: Potentially integrate with a specific --vault-endpoint parameter or find a way to translate a vault
-        # (e.g. a vault's OCID) to the relevant endpoint
-        if service_name in ['kms_crypto', 'kms_management', 'stream']:
+        if service_name in SERVICES_REQUIRING_ENDPOINTS:
             kwargs['service_endpoint'] = ctx.obj.get('endpoint')
 
         try:
@@ -540,7 +529,7 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
         else:
             return json.loads(json_to_parse)
     except ValueError:
-        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm#complexinput'.format(parameter_name))
+        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/Content/API/SDKDocs/cli.htm#complexinput'.format(parameter_name))
 
 
 # Takes a dictionary representing a JSON object and converts keys into their camelized form. This will do a deep conversion - for example if a value in the dictionary is a dictionary itself

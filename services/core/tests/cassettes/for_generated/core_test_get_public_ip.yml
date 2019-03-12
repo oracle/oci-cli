@@ -1,0 +1,152 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetPublicIp&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:11 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0866&apiName=GetPublicIp&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"583f55da-13de-4064-809a-5a1de4932eb8","request":{"publicIpId":"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq"}},{"containerId":"a4e5d165-c413-4c3d-aead-87c28628a53b","request":{"publicIpId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}}]'}
+    headers:
+      Content-Length: ['276']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:11 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="EFivU34FH6xswcKaV8nhKHwcRtUZDLM9nBOxr11s1mPE2PGSOCMcCFhoL0YRpeb/onKeSovbIiA0WZdnkxcylDIiCjqFJu5XY2+XL0lCIGDwWB6lODQFr8jIxOS6x61eVU6dS0IhOcLsNhQ5GBlIWHPBlfs2cgJH6fkwBF7e52gh9++mC0xpzumdNVkHwbm7N6nIEJT+dKMcG4nY/odQaR+dvJBgZit+uA3zKOG/BfKP5Bgbu24KZLp5eyGWgkCdNt89EG413UqG0QGR+xuKERvib0qG8mgv041cUkHEXwUKZDEmPsg1NGWXraA/MCgcCeyLSi8ykh+W1/WmoE29GQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Jun 2018 00:22:11 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [2C542A6F6D4D4C5F964234E66B121BF8]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/publicIps/ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\"\
+        ,\n  \"definedTags\" : {\n    \"java_sdk_tag_ns_001\" : {\n      \"java_sdk_tag_03\"\
+        \ : \"tag6.__STS0866_5896\",\n      \"java_sdk_tag_01\" : \"tag4.__STS0866_5896\"\
+        ,\n      \"java_sdk_tag_02\" : \"tag5.__STS0866_5896\"\n    }\n  },\n  \"\
+        displayName\" : \"__STS0866_2067\",\n  \"freeformTags\" : {\n    \"tag1\"\
+        \ : \"value1.__STS0866_3467\",\n    \"tag2\" : \"value2.__STS0866_3467\"\n\
+        \  },\n  \"id\" : \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\"\
+        ,\n  \"ipAddress\" : \"129.146.92.85\",\n  \"lifecycleState\" : \"AVAILABLE\"\
+        ,\n  \"lifetime\" : \"RESERVED\",\n  \"scope\" : \"REGION\",\n  \"timeCreated\"\
+        \ : \"2018-06-28T00:22:01.923Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['711']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:12 GMT']
+      ETag: [c0979895]
+      opc-request-id: [2C542A6F6D4D4C5F964234E66B121BF8/E249DAD90028BEF590B05E0BC6C9BB1E/D75E2D7F52264F3FBE6CE8A71833247D]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9619C2E57025403D9131D5114D51A27F\",
+      \"etag\": \"c0979895\", \"publicIp\": {\"definedTags\": {\"java_sdk_tag_ns_001\":
+      {\"java_sdk_tag_01\": \"tag4.__STS0866_5896\", \"java_sdk_tag_02\": \"tag5.__STS0866_5896\",
+      \"java_sdk_tag_03\": \"tag6.__STS0866_5896\"}}, \"availabilityDomain\": null,
+      \"displayName\": \"__STS0866_2067\", \"timeCreated\": \"2018-06-28T00:22:01.923000+00:00\",
+      \"lifecycleState\": \"AVAILABLE\", \"privateIpId\": null, \"id\": \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"scope\": \"REGION\", \"freeformTags\": {\"tag2\": \"value2.__STS0866_3467\",
+      \"tag1\": \"value1.__STS0866_3467\"}, \"ipAddress\": \"129.146.92.85\", \"lifetime\":
+      \"RESERVED\"}}", "requestJson": "{\"publicIpId\": \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\"}",
+      "containerId": "583f55da-13de-4064-809a-5a1de4932eb8", "requestClass": "com.oracle.bmc.core.requests.GetPublicIpRequest",
+      "responseClass": "com.oracle.bmc.core.responses.GetPublicIpResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1180']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0866&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:12 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="p94k/o+QzU5mQkK3DHZ/iF798/pvitfCdEtFcxt4LVw9YvZWSyyaPwc2vUrt+1NEMqhDDpFURB+U0CD1YtdpH0Z9EoECcIVWnOk339leVyQPAWsQzuEtjY4pQaDCULE1FshhxH9Q0pljHZJHyzvBWg3sAlKJwAaE4o5K9CJANQe/btJLOAH2YarLCvQmLNnJnRxZns7FWRuIjuVwl9QhrnuMlUDSDqrcX5giS3v0kSHLo4raaEL5XFHupAZ7d4P5vhaBszBvecokxfLX6+TSfzK53ht+o999OMfRc5oaLPeF4yaogN6D/HUhvNfmNu8EstjaRjN4qhV+tSU2Et0WpQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Jun 2018 00:22:12 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [B9FE2EE7431D4179BC4088A9B36FD4A3]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/publicIps/ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  response:
+    body: {string: "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n  \"message\" :\
+        \ \"Either Public IP with ID ABCDEFGHIJKLMNOPQRSTUVWXYZ does not exist or\
+        \ you are not authorized to access it.\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['164']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:12 GMT']
+      opc-request-id: [B9FE2EE7431D4179BC4088A9B36FD4A3/599D51198E1A91A5B1AECF4B4482F5D2/C34207CC5FAB4856B723054ADB26D3EE]
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"requestJson": "{\"publicIpId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"}", "errorJson":
+      "{\"statusCode\": 404, \"opcRequestId\": \"B9FE2EE7431D4179BC4088A9B36FD4A3/599D51198E1A91A5B1AECF4B4482F5D2/C34207CC5FAB4856B723054ADB26D3EE\",
+      \"code\": \"NotAuthorizedOrNotFound\", \"message\": \"Either Public IP with
+      ID ABCDEFGHIJKLMNOPQRSTUVWXYZ does not exist or you are not authorized to access
+      it.\"}", "containerId": "a4e5d165-c413-4c3d-aead-87c28628a53b", "requestClass":
+      "com.oracle.bmc.core.requests.GetPublicIpRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['513']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0866&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:12 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

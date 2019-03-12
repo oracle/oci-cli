@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteAuthToken&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Jun 2018 20:16:38 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=DeleteAuthToken&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"fbdc040f-47f1-4791-b39a-debc8b563dc9","request":{"userId":"ocid1.user.oc1..aaaaaaaadomrtvomvbjkfkqnucyygqmdu7a23icyoakwxod5cpld523boc2q","authTokenId":"ocid1.credential.oc1..aaaaaaaaglgi6dsphxp7icpv6ltmqbmgwzirxexdi3fhxkk47iua5smly57q"}}]'}
+    headers:
+      Content-Length: ['255']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 20:16:38 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="oB1VS/yJlh3bvk9eXVbk+v7PdZXqt9XKF4erqjXl6beQu402vO0JB1+xNhqSW93j3epBoGaFribwwNDqwPDHZ8sBpqsMMQxN4pIXi0E5p6WTJ46Lu7h7WUN1zXy9UKOOk1fBFsRaYoJzoXzEtupxjYvjX6FG6JbgCnItGg1pJjvucdeArwh6bynsyrzT5ZTggQZsOLxXIX0BxDIqu5Sbsja34WKtlll6cJ0c/ULSOq9l4OQxgV6EyeNEN5Fsvrf1D0T/CtGcwxJ7o+CKQ+00bYSFQT4yI3Pct0v5hZ0cfDQEiU2hzeyDXWBhXoIKiSSS57Cc7mCSmKuYJoibJYiJQQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 20:16:38 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [B0841DC25B7D4219ACE89E2394F4383E]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.24+preview.1]
+    method: DELETE
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/ocid1.user.oc1..aaaaaaaadomrtvomvbjkfkqnucyygqmdu7a23icyoakwxod5cpld523boc2q/authTokens/ocid1.credential.oc1..aaaaaaaaglgi6dsphxp7icpv6ltmqbmgwzirxexdi3fhxkk47iua5smly57q
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 20:16:38 GMT']
+      opc-request-id: [B0841DC25B7D4219ACE89E2394F4383E/EEB08E4BAA00E4D13420DA0F7E980453/D48546DDF795411D81920BC3EB59284D]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"AA24D0B4553A43B4A502954EB0E95546\"}",
+      "requestJson": "{\"authTokenId\": \"ocid1.credential.oc1..aaaaaaaaglgi6dsphxp7icpv6ltmqbmgwzirxexdi3fhxkk47iua5smly57q\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaadomrtvomvbjkfkqnucyygqmdu7a23icyoakwxod5cpld523boc2q\"}",
+      "containerId": "fbdc040f-47f1-4791-b39a-debc8b563dc9", "requestClass": "com.oracle.bmc.identity.requests.DeleteAuthTokenRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.DeleteAuthTokenResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['502']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 20 Jun 2018 20:16:38 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

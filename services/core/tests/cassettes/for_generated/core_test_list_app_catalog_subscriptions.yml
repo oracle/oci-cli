@@ -1,0 +1,85 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListAppCatalogSubscriptions&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 12 Sep 2018 00:45:57 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0890&apiName=ListAppCatalogSubscriptions&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"fddbdc83-e9ea-4650-847e-54edfe67036a","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaausstrppom2iabgwzbpwyqkw4pyhe3wxhiblni7lzhfmp4cwxlktq","limit":1,"sortBy":"DISPLAYNAME","listingId":"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq"}}]'}
+    headers:
+      Content-Length: ['307']
+      Content-Type: [application/json]
+      Date: ['Wed, 12 Sep 2018 00:45:57 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaftow6wd3zfwyz6rawmfbsum7cdg5n3dnobsosxzbdmq5pjom7c5a/ocid1.user.oc1..aaaaaaaabefjptjqy4wj2ymrbi42lwqnvd64sagheg4zlid5zhbsxkec7h5q/68:b6:a9:ec:c6:6e:20:32:67:96:1b:20:73:fc:1c:2c",signature="oiXPNeIpW4wTfS/foQNOsGNZ1lY8OamasWqfh6BK7XAsBnby/bY6pwrL/T7Ewt1UVPB8mjeZHNiat6bFZpIzOANCYD4ngys56OWARjxEQbVhfllPAiMzVBjyxHWYbIDq2AzDmfPQlFRLoDCfoHxbql3Gh4QDN+MGnYNCPOYOK5xscD2ukiHlfI/hmIyCwUki6d1YltziTkl6yCNXpWexusQnlDZxaICggIjLYnLccHk1n+o3EAI7aQcsyl+sSjRofIbsvmdtWm84Kz0gLGX8go1UPFDYdOQUjRXDHtLKv3L/G8tkIDiYL0y7UTtJt3Vbxm0eXkEDlMtxl5IJuj/6sg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 12 Sep 2018 00:45:57 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3+preview.1.307]
+      opc-request-id: [3BD440328EDC47B2A7C4D551B451CA8C]
+      user-agent: [Oracle-PythonSDK/2.0.3+preview.1.307 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/appCatalogSubscriptions?listingId=ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq&sortBy=DISPLAYNAME&limit=1&compartmentId=ocid1.compartment.oc1..aaaaaaaausstrppom2iabgwzbpwyqkw4pyhe3wxhiblni7lzhfmp4cwxlktq
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Wed, 12 Sep 2018 00:45:57 GMT']
+      opc-request-id: [3BD440328EDC47B2A7C4D551B451CA8C/D9411D0A1F0B4B2AAAB7FCD978F0D504/D72669201E555405DED7CBB7B15E15DA]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"FB1F954571464CB8A94F87EEC5DE9DBC\",
+      \"items\": []}", "requestJson": "{\"listingId\": \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\",
+      \"limit\": 1, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaausstrppom2iabgwzbpwyqkw4pyhe3wxhiblni7lzhfmp4cwxlktq\",
+      \"sortBy\": \"DISPLAYNAME\"}", "containerId": "fddbdc83-e9ea-4650-847e-54edfe67036a",
+      "requestClass": "com.oracle.bmc.core.requests.ListAppCatalogSubscriptionsRequest",
+      "responseClass": "com.oracle.bmc.core.responses.ListAppCatalogSubscriptionsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['595']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0890&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 12 Sep 2018 00:45:58 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

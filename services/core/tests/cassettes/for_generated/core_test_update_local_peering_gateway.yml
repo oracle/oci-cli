@@ -1,0 +1,117 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateLocalPeeringGateway&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 28 Nov 2018 21:40:48 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0988&apiName=UpdateLocalPeeringGateway&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ed57317f-1dae-4755-ac09-798062328551","request":{"localPeeringGatewayId":"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q","updateLocalPeeringGatewayDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0988_5294","testing_service_tag_02":"tag5.__STS0988_5294","testing_service_tag_03":"tag6.__STS0988_5294"}},"displayName":"__STS0988_6456","freeformTags":{"tag1":"value1.__STS0988_200","tag2":"value2.__STS0988_200"},"routeTableId":"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha"}}}]'}
+    headers:
+      Content-Length: ['625']
+      Content-Type: [application/json]
+      Date: ['Wed, 28 Nov 2018 21:40:48 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
+      "tag5.__STS0988_5294", "testing_service_tag_01": "tag4.__STS0988_5294", "testing_service_tag_03":
+      "tag6.__STS0988_5294"}}, "displayName": "__STS0988_6456", "routeTableId": "ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha",
+      "freeformTags": {"tag2": "value2.__STS0988_200", "tag1": "value1.__STS0988_200"}}'
+    headers:
+      Content-Length: ['416']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="CpUFu4958vxhWp6XSX0NKI/iPj2I9s/UVdBx6zf1OE3g8mJ6Def/bemMeBjh8IY3+BQs9V6+nZlKDlZDoE48U6GMQCIgfhZxZZQFtEOaKLY7pJSNLySF0YZ2DDsgrmNpAg2C7Q4yB+ctJizAiTUWHdDamavxMtZYzOIuwZgradPz/Ax50nIYiO2ii4tzIzFwoazSu7npBltSI5vmYxI1qF9vFteDLJRCVKVGuZ8SRUhjRlmVzYxIyemFwC2ZcQ6db4hsYXQls/pSakIeERaFHAQEs3tMP8rA/AJ6JQLQmvk3hwX05anhHJhH/5tUbjb6JIfZsslS6KrWQ3QMelU+sA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 28 Nov 2018 21:40:58 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.2+preview.1]
+      opc-request-id: [1B19DF9FD7C143EC94629B02EF09F664]
+      user-agent: [Oracle-PythonSDK/2.1.2+preview.1 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.39]
+      x-content-sha256: [wpbtjNYoXJjcpqIE8mEQ4nYJE5RWy5CYHe1jx2p9cqc=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/localPeeringGateways/ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0988_5294\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0988_5294\",\n      \"testing_service_tag_03\" : \"tag6.__STS0988_5294\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0988_6456\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0988_200\",\n    \"tag2\" : \"value2.__STS0988_200\"\
+        \n  },\n  \"id\" : \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q\"\
+        ,\n  \"isCrossTenancyPeering\" : false,\n  \"lifecycleState\" : \"AVAILABLE\"\
+        ,\n  \"peeringStatus\" : \"NEW\",\n  \"peeringStatusDetails\" : \"Not connected\
+        \ to a peer.\",\n  \"routeTableId\" : \"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha\"\
+        ,\n  \"timeCreated\" : \"2018-11-28T21:40:55.932Z\",\n  \"vcnId\" : \"ocid1.vcn.oc1.phx.aaaaaaaa4e77qse4c7s2t7cyrgizkhuhfaebppaej2zqmaucoc4tuvchx3za\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['985']
+      Content-Type: [application/json]
+      Date: ['Wed, 28 Nov 2018 21:40:59 GMT']
+      ETag: [2ebe009f]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [1B19DF9FD7C143EC94629B02EF09F664/3A5BBF4030C0C298258DAE316E044176/23B9B983114246B7A7F3BDBCFE4735EE]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"617E4B934B6146F08191DE3770CD405C\",
+      \"etag\": \"2ebe009f\", \"localPeeringGateway\": {\"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_02\": \"tag5.__STS0988_5294\", \"testing_service_tag_01\":
+      \"tag4.__STS0988_5294\", \"testing_service_tag_03\": \"tag6.__STS0988_5294\"}},
+      \"peeringStatusDetails\": \"Not connected to a peer.\", \"displayName\": \"__STS0988_6456\",
+      \"isCrossTenancyPeering\": false, \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha\",
+      \"lifecycleState\": \"AVAILABLE\", \"peeringStatus\": \"NEW\", \"peerAdvertisedCidr\":
+      null, \"timeCreated\": \"2018-11-28T21:40:55.932000+00:00\", \"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaa4e77qse4c7s2t7cyrgizkhuhfaebppaej2zqmaucoc4tuvchx3za\",
+      \"id\": \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0988_200\", \"tag1\": \"value1.__STS0988_200\"},
+      \"peerAdvertisedCidrDetails\": null}}", "requestJson": "{\"updateLocalPeeringGatewayDetails\":
+      {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\":
+      \"tag6.__STS0988_5294\", \"testing_service_tag_01\": \"tag4.__STS0988_5294\",
+      \"testing_service_tag_02\": \"tag5.__STS0988_5294\"}}, \"displayName\": \"__STS0988_6456\",
+      \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0988_200\", \"tag1\": \"value1.__STS0988_200\"}},
+      \"localPeeringGatewayId\": \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q\"}",
+      "containerId": "ed57317f-1dae-4755-ac09-798062328551", "requestClass": "com.oracle.bmc.core.requests.UpdateLocalPeeringGatewayRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateLocalPeeringGatewayResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2019']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0988&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 28 Nov 2018 21:40:59 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

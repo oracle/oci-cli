@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteSender&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:58:38 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=DeleteSender&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"senderId":"ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa","opcRequestId":"stsDeleteSender"}}]'}
+    headers:
+      Content-Length: ['201']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 13:58:40 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="Qs3DGm3PmYb7PyXn2cxmmHPdEzQG9M74jSvEzWU6M0fKqgNS1tBZ+B9Y9LQZwiD2jgL+gfU68R6F05jjTXES7GpxcYSlKq6P/gsib8khwnItvwSm54139qJBOlovyjmXX0nDiNoEeCy/R9PHWY5X2StkQrt+mGVmjqUow93JH6lmbXwaccFPodBLYDOJ/sI4/6K98Ufq3R4UrybXgii3e7vS73JdKEwMAup2AWJhbOmMnOLjCxoRYc1iRDBTSgjCGdmXLRjo4HdFsjYbeuWYlO/Tx219T5gBS56N6K5wip5nCaaV3Z02PZprYD+HWW2z9ruhIlif0AqeNYnlLLx7Ug==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 01 Feb 2019 13:58:45 GMT']
+      host: [email.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
+      opc-request-id: [A7DC8EA2097543129FA8062A0FA9DEAF]
+      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43]
+    method: DELETE
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/senders/ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Date: ['Fri, 01 Feb 2019 13:58:53 GMT']
+      X-Application-Context: [application]
+      opc-request-id: [A7DC8EA2097543129FA8062A0FA9DEAF/D736D8271CA288FD1DE85AB0FCF01F57/1EF3A1BC73FE49EDE1FAF309E64E33B8]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"5790134BC10B4DF599B91E887D15BF2B\"}",
+      "requestJson": "{\"opcRequestId\": \"stsDeleteSender\", \"senderId\": \"ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa\"}",
+      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.DeleteSenderRequest",
+      "responseClass": "com.oracle.bmc.email.responses.DeleteSenderResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['436']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:58:55 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

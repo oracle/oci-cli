@@ -1,0 +1,387 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=core&apiName=UpdateBootVolumeKmsKey
+  response:
+    body: {string: 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Wed, 19 Sep 2018 06:38:57 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0442&serviceName=core&apiName=UpdateBootVolumeKmsKey
+  response:
+    body: {string: '[{"containerId":"79b53842-ced4-4e19-85e4-64308ee294a0","request":{"bootVolumeId":"ocid1.bootvolume.oc1.iad.abuwcljsbashpjlafels2qjhpr3gvesy3mnkqk4gk46qqv3v5lm4kdxpuhqq","updateBootVolumeKmsKeyDetails":{"kmsKeyId":"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}}}]'}
+    headers:
+      content-length: ['311']
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:38:57 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"kmsKeyId": "ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}'
+    headers:
+      Content-Length: ['108']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="hpPhMN1KhQiYe2jvdUYgLpeDhQol205homXzG8m/56rBJxXYRXdBIqPuyBqrlzQEiP7m9eEJbqKj7i1xvyBIARDSUkdMuv6IL44E/8dt1kAhyDppNrangpzKt+lyqhlCslgakFK+eFpGNg7mTjO8G4JwVHDQdbqnx8gA5naOzJUqeZX8gwttDegSZQxRhUv7Rtsu93Q8BHC3L3q3I/USzIbBvteyOeRpM4+BxUGvRjJ+MQuGoD6hkhZTDRwkLKzmFxEmZBP0deZ8FhC6WIvHDPp505k+Rbu0LcbroLprIIG3bvaJev8cp1dVk8M0VV1AOvHn29/dFQ253uH98ya/mw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:40:50 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.327]
+      opc-request-id: [2C665FE90CC7475399D8CD3A16591023]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.327 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [dBvtUEQtZyQRKyXKOB1/cfS42tHG6VT++4zAaKryLxY=]
+    method: PUT
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.iad.abuwcljsbashpjlafels2qjhpr3gvesy3mnkqk4gk46qqv3v5lm4kdxpuhqq/kmsKey
+  response:
+    body: {string: "{\n  \"kmsKeyId\" : \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"\
+        \n}"}
+    headers:
+      connection: [keep-alive]
+      content-length: ['113']
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:40:51 GMT']
+      etag: ['-2119017762']
+      opc-request-id: [2C665FE90CC7475399D8CD3A16591023/48E3CE44871DB6D0032061360F1F69BE/BB77FC68DD6B0C4A0EDAFF3AEA22D4AE]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"etag\": \"-2119017762\", \"opcRequestId\": \"945233C0F8284F928F8D5C21D18719B3\",
+      \"bootVolumeKmsKey\": {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"}}",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateBootVolumeKmsKeyResponse",
+      "containerId": "79b53842-ced4-4e19-85e4-64308ee294a0", "requestJson": "{\"bootVolumeId\":
+      \"ocid1.bootvolume.oc1.iad.abuwcljsbashpjlafels2qjhpr3gvesy3mnkqk4gk46qqv3v5lm4kdxpuhqq\",
+      \"updateBootVolumeKmsKeyDetails\": {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq\"}}",
+      "requestClass": "com.oracle.bmc.core.requests.UpdateBootVolumeKmsKeyRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['730']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0442
+  response:
+    body: {string: ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Wed, 19 Sep 2018 06:40:51 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'false'}
+    headers:
+      Content-Length: ['5']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:37:20 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'false'}
+    headers:
+      Content-Length: ['5']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:38:27 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:39:27 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0002&apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"64a5e4d7-4e9e-4aef-8d75-24cf8be8abc5","request":{"bootVolumeId":"ocid1.bootvolume.oc1.iad.abuwcljsglahktmw3vv2dxdki5x4v5rmoyo5kzlm2yv4napdbnattt4hwc3a","updateBootVolumeKmsKeyDetails":{"kmsKeyId":"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}}}]'}
+    headers:
+      Content-Length: ['311']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 01:39:27 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"kmsKeyId": "ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}'
+    headers:
+      Content-Length: ['108']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="gvzrme8IoAXGfzTi3JOmiviskpcQnWbMbTNCEXrXLcwIyilFZQCMaxX5ji48gemClqRHcjhVaBRHqql8XK++1NatbXEktR7UzkxXuAPOXbh2spP7NrCCEJN6O4Ik1pTA0WeIvyelEOK5hOp4C+oVaLZdayoOT4lgE/wWeiGLxn90mWelI1U9YtdxK1Zx/LsiydGl8bS7g1sKCgtGKRYE+TLU/3ylNAGn9bOnz89EFUg2Pt5aPpqz4hwUvEBEwtoqQ77q7Q7ruEUI/DjF9yIcYrx+Z7qeBtlk+6I5HvKPHHte9gQiU/qMw2Zv3FCqPcGiOEnN1I5r/Qo/NEYG2vjYxA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 25 Sep 2018 01:42:17 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4]
+      opc-request-id: [04BC8997636C465D831B68764AAA708B]
+      user-agent: [Oracle-PythonSDK/2.0.4 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.33]
+      x-content-sha256: [dBvtUEQtZyQRKyXKOB1/cfS42tHG6VT++4zAaKryLxY=]
+    method: PUT
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.iad.abuwcljsglahktmw3vv2dxdki5x4v5rmoyo5kzlm2yv4napdbnattt4hwc3a/kmsKey
+  response:
+    body: {string: "{\n  \"kmsKeyId\" : \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['113']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 01:42:17 GMT']
+      ETag: ['-2119017762']
+      opc-request-id: [04BC8997636C465D831B68764AAA708B/29FC63ECA947C2F8C79BD09C79D1AB22/5F7D38659808F4E9AF730E80C2BC2833]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"BED627E07CC14348B6296B4EF15AB7F8\",
+      \"bootVolumeKmsKey\": {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"},
+      \"etag\": \"-2119017762\"}", "requestJson": "{\"updateBootVolumeKmsKeyDetails\":
+      {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq\"},
+      \"bootVolumeId\": \"ocid1.bootvolume.oc1.iad.abuwcljsglahktmw3vv2dxdki5x4v5rmoyo5kzlm2yv4napdbnattt4hwc3a\"}",
+      "containerId": "64a5e4d7-4e9e-4aef-8d75-24cf8be8abc5", "requestClass": "com.oracle.bmc.core.requests.UpdateBootVolumeKmsKeyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateBootVolumeKmsKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['730']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0002&lang=PythonCLI
+  response:
+    body: {string: 'kmsKeyId should be same, expected: ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq,
+        actual: ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq'}
+    headers:
+      Content-Length: ['229']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:42:18 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:50:08 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0427&apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"64a5e4d7-4e9e-4aef-8d75-24cf8be8abc5","request":{"bootVolumeId":"ocid1.bootvolume.oc1.iad.abuwcljsbtxlfbx7ool337zmiyalqrttsqidk3v5euumpm3mgjp3dky35roq","updateBootVolumeKmsKeyDetails":{"kmsKeyId":"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}}}]'}
+    headers:
+      Content-Length: ['311']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 01:50:08 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"kmsKeyId": "ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}'
+    headers:
+      Content-Length: ['108']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="xHjxBwnQ/HxP7yXceoBqCEhb4FUyIPOkwTTmWGEQSrjOjPgFeRNNGpcMMN6F4t6SBP4lldZPnkMrZNcT5jLL/a9RivdzIUT09b9nYSt/toYLKj1b9+WkI4/czAydxyazL1fmbXKgLzFt+6IlmbRbdg+xyRa4IFBpBu7Wjo0D4AQ0wGoT5KwICNqSOyocuNaDz6G5rOitGZpCUBXxC0+KqP99epB3cpEanb0Bl+olZc1QeQwQmom4iziM5BQOmHw6iCXnAKB+3389tzsAIvKzbd5UbHAWY+MadVDyfT/tcxSVX79wbCUPNq6fhk6xfXeM/DbMnZaJAHBu0jc1lhWgwg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 25 Sep 2018 01:52:26 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4]
+      opc-request-id: [25A37BDAD30040FABE4901ADBDFA2C67]
+      user-agent: [Oracle-PythonSDK/2.0.4 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.33]
+      x-content-sha256: [dBvtUEQtZyQRKyXKOB1/cfS42tHG6VT++4zAaKryLxY=]
+    method: PUT
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.iad.abuwcljsbtxlfbx7ool337zmiyalqrttsqidk3v5euumpm3mgjp3dky35roq/kmsKey
+  response:
+    body: {string: "{\n  \"kmsKeyId\" : \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['113']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 01:52:26 GMT']
+      ETag: ['-2119017762']
+      opc-request-id: [25A37BDAD30040FABE4901ADBDFA2C67/09254670742D119849F3A0E81C76BA42/BC0F164293E520B7D151A6082D9B920C]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"C284388B52854C4891DDA4EE6F21DA30\",
+      \"bootVolumeKmsKey\": {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"},
+      \"etag\": \"-2119017762\"}", "requestJson": "{\"updateBootVolumeKmsKeyDetails\":
+      {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq\"},
+      \"bootVolumeId\": \"ocid1.bootvolume.oc1.iad.abuwcljsbtxlfbx7ool337zmiyalqrttsqidk3v5euumpm3mgjp3dky35roq\"}",
+      "containerId": "64a5e4d7-4e9e-4aef-8d75-24cf8be8abc5", "requestClass": "com.oracle.bmc.core.requests.UpdateBootVolumeKmsKeyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateBootVolumeKmsKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['730']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0427&lang=PythonCLI
+  response:
+    body: {string: 'kmsKeyId should be same, expected: ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq,
+        actual: ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq'}
+    headers:
+      Content-Length: ['229']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:52:26 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:57:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0856&apiName=UpdateBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"63c7b0ad-7302-46de-9996-5352f9d3759b","request":{"bootVolumeId":"ocid1.bootvolume.oc1.iad.abuwcljszxq76lsulooqcxaz7sffo4brfyukesklytaahuqarioctlktreuq","updateBootVolumeKmsKeyDetails":{"kmsKeyId":"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}}}]'}
+    headers:
+      Content-Length: ['311']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 01:57:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"kmsKeyId": "ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq"}'
+    headers:
+      Content-Length: ['108']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="QoDuE6yFy6poa9ShOMFRNIDNeakk0APvOPI7L77kf9gOoYjgRRejnBGFBnAA9PweoQnzY5COaD40FCXVNuoGcF4Db1p8q7X3yDToMF4GS44c9Tn6XUpYxa1PnG1RflZagqcZzpm4oQGHexSPzqLTgAtHev0UIOThqTCWSy/kvVQn2oiInQi8ByH++xIHOJ7c5MPCE7t2+/9T1Bo/qJH0NU+Ihg33FR8spxVdj1drR0oA/BmtU3xp0yyCyfJtefRD3djxxJKuxma2krzbtnGQAJ3RnXB1v/SWDYVuWkLYfaOzBYOHcy+s0mZDcpUYXrldBalEP/8ed2jlcCMZvKjtpQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 25 Sep 2018 01:58:59 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4]
+      opc-request-id: [373812FCB00B4A0E94C02C8C7E559456]
+      user-agent: [Oracle-PythonSDK/2.0.4 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.33]
+      x-content-sha256: [dBvtUEQtZyQRKyXKOB1/cfS42tHG6VT++4zAaKryLxY=]
+    method: PUT
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.iad.abuwcljszxq76lsulooqcxaz7sffo4brfyukesklytaahuqarioctlktreuq/kmsKey
+  response:
+    body: {string: "{\n  \"kmsKeyId\" : \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['113']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 01:58:59 GMT']
+      ETag: ['-2119017762']
+      opc-request-id: [373812FCB00B4A0E94C02C8C7E559456/5891D9D5D947E3039C4065A837A48FCF/24D8FF38E5572F0B13DF017CDDFEC57D]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"ABABB3F9A61D432DA0C2F5094648CAAD\",
+      \"bootVolumeKmsKey\": {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljt3b3cf6uje7ki7bb42hzp5nfjp3rhr57bilkk2cc65lpe4eqizjoq\"},
+      \"etag\": \"-2119017762\"}", "requestJson": "{\"updateBootVolumeKmsKeyDetails\":
+      {\"kmsKeyId\": \"ocid1.key.oc1.iad.annm5ag4aacuu.abuwcljr64khedka5u2rifk7r2lguhcmuzu4i4mjapcv2wrist6e6kzc7cyq\"},
+      \"bootVolumeId\": \"ocid1.bootvolume.oc1.iad.abuwcljszxq76lsulooqcxaz7sffo4brfyukesklytaahuqarioctlktreuq\"}",
+      "containerId": "63c7b0ad-7302-46de-9996-5352f9d3759b", "requestClass": "com.oracle.bmc.core.requests.UpdateBootVolumeKmsKeyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateBootVolumeKmsKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['730']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0856&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 01:59:00 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

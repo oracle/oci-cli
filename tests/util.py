@@ -7,17 +7,20 @@ import functools
 import json
 import random
 import os
+from os.path import abspath
 import pytest
 import six
 import sys
 import time
 import traceback
+from inspect import getsourcefile
 from six import StringIO
 import oci_cli.cli_util
 import oci
 from oci.object_storage.transfer.constants import MEBIBYTE
 from . import test_config_container
 from .conftest import runner
+from oci_cli import ALL_SERVICES_DIR
 
 try:
     # PY3+
@@ -87,15 +90,18 @@ MOVED_COMMANDS = {
 # This will process files under the generated_test_extensions that are named "extend_test*.py".
 # If those files have a "MOVED_COMMANDS" dictionary defined in them, they will be added to the
 # MOVED_COMMANDS dictionary defined above.
-test_dir = os.path.dirname(os.path.realpath(__file__))
-test_extension_dir = os.path.join(test_dir, "generated_test_extensions")
-for extend_test_file in os.listdir(test_extension_dir):
-    if "extend_test" in extend_test_file:
-        try:
-            extend_test_module = __import__("tests.generated_test_extensions." + extend_test_file[:-3], fromlist=['MOVED_COMMANDS'])
-            MOVED_COMMANDS.update(extend_test_module.MOVED_COMMANDS)
-        except Exception:
-            pass
+this_file_path = abspath(getsourcefile(lambda: 0))
+python_cli_root_dir = this_file_path[:-14]  # chop off "/tests/util.py"
+for service_dir in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
+    test_dir = os.path.join(python_cli_root_dir, ALL_SERVICES_DIR, service_dir, 'tests')
+    if os.path.isdir(test_dir):
+        for extend_test_file in os.listdir(test_dir):
+            if "extend_test" in extend_test_file:
+                try:
+                    extend_test_module = __import__(service_dir + ".tests." + extend_test_file[:-3], fromlist=['MOVED_COMMANDS'])
+                    MOVED_COMMANDS.update(extend_test_module.MOVED_COMMANDS)
+                except Exception:
+                    pass
 
 # This global can be changed to influence what configuration data this module vends.
 target_region = PROFILE_TO_REGION[pytest.config.getoption("--config-profile")]

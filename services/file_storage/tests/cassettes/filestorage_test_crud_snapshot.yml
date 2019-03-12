@@ -1,0 +1,159 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="tOUi1gzouPJvJBWfEzBoV3ud738BdodESTO8kaE82wXyM09AAVVi7iDF2e6NucOcojDhInV2KQdhopEV+BZg9CqFMBuJClZ3LPSZmVhcpzGMN/2PmKV+ZM+98w57BvDXDmXKg8/w3DZDDSC/yku6esomZ5VsJZa+42EN7skzx671qd/utzLs1rubu96lny6g2USiYyUnz68zrcIlzPzYgTg6vENNabkKx6LHrGosiWdBAB5xoEKa84Y41bGHklpH9GfzdMtuG1np4foh9BeZLfeajoW/wQviV9to42PB/UFrjG32K9yhCvLme3hJbEsYo22X0SGHaD9GRV698jCUSg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 12:35:28 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [5DAD522A3542453380650AA640D4D35A]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/snapshots?fileSystemId=ocid1.filesystem.oc1.phx.aaaaaaaaaaaacjugobuhqllqojxwiotqnb4c2ylefuyqaaaa
+  response:
+    body: {string: '[ ]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['3']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 12:35:29 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [5DAD522A3542453380650AA640D4D35A/CD6C07B7E9E49669A4AD23739E49A07F/A21B75C1E35B064ED329BC0051C552BA]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"fileSystemId": "ocid1.filesystem.oc1.phx.aaaaaaaaaaaacjugobuhqllqojxwiotqnb4c2ylefuyqaaaa",
+      "name": "cli_snapshot_vcr"}'
+    headers:
+      Content-Length: ['121']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="psqFwjmW2NleYvZsGZV0tO9NTD1YNv6z3OlH6M7aXDF2YLnouHKFz3SkFZEK7wEjwv9iCTCKQz6SHSFoTaGkTXnVQAFGeH1gQF2zFv7D8Av/iyFZngf13WrLxrdIW0xZMRZumku9EEzrol6uGOhFYDX6eZYYP4IOqS3X/FdGFoSKnr34f8x7F6xjWqP5L1I7EdQ3+1umT9OMVdzNA6LreSKPaQEsKUoNEJwQYIwqnkqTbu7zsuSqhfZ8Zzgk0+0XSl5yO663MA6mP85qEHTxlIAZ+Yp+WPJmsS0HLsaQrv2nZOqlnGFavDnQwA179hiHsidRd7vFgu2R9guRieYwSQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 12:35:29 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [862CDC770D3E4EE299EFDF48FE0BE603]
+      opc-retry-token: [O5YdwAVFsw5SDOybjcCjzH4af1tx5a]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+      x-content-sha256: [Xqmo9e7lSKIO7nONhImbxF/LTZf7IFVxz69Q3myt/1U=]
+    method: POST
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/snapshots
+  response:
+    body: {string: "{\n  \"fileSystemId\" : \"ocid1.filesystem.oc1.phx.aaaaaaaaaaaacjugobuhqllqojxwiotqnb4c2ylefuyqaaaa\"\
+        ,\n  \"id\" : \"ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaaetim4dipawxa4tpmq5ha2dyfvqwiljr\"\
+        ,\n  \"lifecycleState\" : \"ACTIVE\",\n  \"name\" : \"cli_snapshot_vcr\",\n\
+        \  \"timeCreated\" : \"2018-06-20T12:35:29.998Z\",\n  \"freeformTags\" : null,\n\
+        \  \"definedTags\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['347']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 12:35:31 GMT']
+      ETag: [81b4316e2ffcea10860b6bd89434f63b3ccbc618c551d3b7d50a7d7e2506fd18]
+      opc-request-id: [862CDC770D3E4EE299EFDF48FE0BE603/32937D96C345C8F1C45E08D83B88E2E9/B9FCA6CA0CD6FB4899F09CFABCB72DC0]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="Dc6Y+JM+YcabzGesZiNjeLIYjed75sIDb3LiwePV/bliqY3YgIYCYDvn0zN0AQDNznxubX2mNilJRB2t45KRVuqlf7AFodTWdRAepJ/goSGjyIBa8tGbdWDsTtaiPGWK4qWcn5WlbbFQWX3mFe2VVuxhLfeciCFhW6dGowl7+yIF8d5cQdDi80Reeh+uMVnRynDE+ApN+dZBCSydl+j3WCD4cEgAhj/Z75gUeIf4b+5IdzgIDTiQtcWPoqctwS2o93V2yHz3xl5LBtR98JiF8XfHILbaF1ANgt4sGdZQxeHarn++t61oWjL0eCEH6u5OUs9fmnFR6saXzWIL5Rbs7A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 12:35:31 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [965C1E00B56B4C24BB0536D0558BF535]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/snapshots/ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaaetim4dipawxa4tpmq5ha2dyfvqwiljr
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAG1PPW+DMBTc8ysQc2OBQ9KKLYo6ZC7q0CUy9nMw8gfGJmBV/e8F3FYMvenp7t7d
+        e5+7JEm5kPAWnAd1ZWlSJqmhguVood1KI0Nz1DUTIhvQdribemislNa00yiMt7ouKA4S+BDs4kmf
+        lnyxTXWadK4x/t/MGfXfBF6ogomOjBMpfKfssSGYBf6wo5BtH7Ol4EADnR/wxMPac75U1/fXKGui
+        IkmluP1W3x70Z3tugEsP82Y8EWf5yz477XFW5bg8HMtDhp5PxUd08x6Am15V5O4Wux6kXAUGXGhg
+        W3739Q3txARPWwEAAA==
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Length: ['241']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 12:35:32 GMT']
+      ETag: [81b4316e2ffcea10860b6bd89434f63b3ccbc618c551d3b7d50a7d7e2506fd18--gzip]
+      Vary: [Accept-Encoding]
+      opc-request-id: [965C1E00B56B4C24BB0536D0558BF535/AE765482E2E149C124B1E4B5DAD8AD03/57A16A02A9C6EE5DF4A643C3BFB0A597]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="OJZrqEFF9up4CrbAvXL4J1QpPjqD4jq/VL/W09NtL5DrPc+GdDnEMEhDTRu9bJT54Wl8Vb0Lh7XcYGK5uPa4sjksGJ5creD6P7ByPrAs8nMA6fDG7ZJFWMR4b9pOUkUPAtnTOltoZsxajcQunsNvnjT++fGpzxBkHmj/Msg/Aj1spB3xTx5KAnoI4/fA6ZqU4CxDp+LoptxI4Dg7zz0IU7/kIhgaUw4HaPvgigY/arcxbZKenqAbsSH3MgUTw1qlTO4RI9rWKAzogUsZC8j9HAhRsG/i/K0e5AExzioLtBL6AEyF6jeS1lKrj+i5x9zQu9YVnRw8UN2EenaRpgUPoA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 12:35:32 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [EE11C81CCFED4D67A89373AD6568DA9F]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/snapshots/ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaaetim4dipawxa4tpmq5ha2dyfvqwiljr
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAG1PPW+DMBTc8ysQc2OBQ9KKLYo6ZC7q0CUy9nMw8gfGJmBV/e8F3FYMvenp7t7d
+        e5+7JEm5kPAWnAd1ZWlSJqmhguVood1KI0Nz1DUTIhvQdribemislNa00yiMt7ouKA4S+BDs4kmf
+        lnyxTXWadK4x/t/MGfXfBF6ogomOjBMpfKfssSGYBf6wo5BtH7Ol4EADnR/wxMPac75U1/fXKGui
+        IkmluP1W3x70Z3tugEsP82Y8EWf5yz477XFW5bg8HMtDhp5PxUd08x6Am15V5O4Wux6kXAUGXGhg
+        W3739Q3txARPWwEAAA==
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Length: ['241']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 12:35:33 GMT']
+      ETag: [81b4316e2ffcea10860b6bd89434f63b3ccbc618c551d3b7d50a7d7e2506fd18--gzip]
+      Vary: [Accept-Encoding]
+      opc-request-id: [EE11C81CCFED4D67A89373AD6568DA9F/1C4A084FB0621CC9F0CAB8EB3B3EDD4E/038521B0537B2EB347D30D77E60F9905]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="TrxkBJdpYkHXuzZr9BAL9NV4CPiUu4Ekc5Oc/kp8Zh1GkhUdYKR3NOEW3Rt3BNpdkNCKD0tHB95gSepeXz3T9Cj7F3mYMk/UliyRmEYaA/UW23VlHAb6N5XWfFXvPJYKmzbWj/TV+9u0Uh/KTq4aR5KS88pGqFiJ29mhjRAbdfYNS01ZlSGhJeUzFUzVwKlPRbtHvvo64IVQS84xUJ6vXGvuQzDwYh9rKq4NgXuu71R4nIDz+Ok81cBVXXD09F+3ngZzCby/7fLmbkeLuCLrkhNTt8N7+Ou56YvaleN+cn1+Ln2kt7PnikF6j9WhasYlseSFs0siO3huo0oB4QE8fA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 12:35:33 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [152FC486155E4594B39B744C49885413]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: DELETE
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/snapshots/ocid1.snapshot.oc1.phx.aaaaaaaaaaaaaaabaaaaaaaaaetim4dipawxa4tpmq5ha2dyfvqwiljr
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Date: ['Wed, 20 Jun 2018 12:35:34 GMT']
+      opc-request-id: [152FC486155E4594B39B744C49885413/424D19BBA59DCA13CC8D6DEFD465DB54/8FF3458749446952588E9121CFC495E7]
+    status: {code: 204, message: No Content}
+version: 1

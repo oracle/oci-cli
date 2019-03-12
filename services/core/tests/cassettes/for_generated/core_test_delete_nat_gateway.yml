@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteNatGateway&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Mon, 05 Nov 2018 21:16:22 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0484&apiName=DeleteNatGateway&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"5796b41a-badd-492d-90fd-483bc3b9566b","request":{"natGatewayId":"ocid1.natgateway.oc1.iad.aaaaaaaaogcfsmw4gc2r44awjkbnohspribt6tzbxy27qhawpz4ltpqbztyq"}}]'}
+    headers:
+      Content-Length: ['171']
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Nov 2018 21:16:22 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaac2vk7nbkf7trfhr6vdxh6fve5ukhrv3hne233ngsdtui4pu3pagq/ocid1.user.oc1..aaaaaaaalomidn5dlsespicybohxhbjhqzhsodvi2uvrtvm2bghkb5iqbgdq/27:f0:c2:91:86:1a:8e:69:d9:3d:d6:f1:c1:92:45:2f",signature="FHxYlED8wzvqCmvBmO0KemChuOhQQX5T42dSO4b/PsDhNykZfgajU/Q0ZLglRilDF+gNhYGLn67TVo82N4P9Mu9tgIcgK9/KJfYhg+byHmdB3aRvzIHhrO8GeMt06wHiN3HM4SCen0Fu52k+5rKreX0Zr7ttH+bLhV3nmTjixqt6Ol6J4EMNH7kOpOZe29DImzfe39lHP6Y8feV2rmxYWNLMTMqiFYEsRjTysBZBZ+y0N05SQUUwOiQEzy69ZYmclHBz4EMk7oZKlcCetMufRJzf4MWh0+D+5q4XWm5MT7+05lzilApmTiL+h6ky07W2+NuZNMaFmzQ+05luXo6tSg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Mon, 05 Nov 2018 21:16:26 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7]
+      opc-request-id: [B3793DE5370E4808AD3F6E2EB70F9286]
+      user-agent: [Oracle-PythonSDK/2.0.7 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.38]
+    method: DELETE
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/natGateways/ocid1.natgateway.oc1.iad.aaaaaaaaogcfsmw4gc2r44awjkbnohspribt6tzbxy27qhawpz4ltpqbztyq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Mon, 05 Nov 2018 21:16:27 GMT']
+      opc-request-id: [B3793DE5370E4808AD3F6E2EB70F9286/3610FC727652B53D3171856C2E2ACEAC/411FFF6495E4D6551FF8C0DE673479FC]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"14E8048452244C098345D0A9702C226A\"}",
+      "requestJson": "{\"natGatewayId\": \"ocid1.natgateway.oc1.iad.aaaaaaaaogcfsmw4gc2r44awjkbnohspribt6tzbxy27qhawpz4ltpqbztyq\"}",
+      "containerId": "5796b41a-badd-492d-90fd-483bc3b9566b", "requestClass": "com.oracle.bmc.core.requests.DeleteNatGatewayRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteNatGatewayResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['406']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0484&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Mon, 05 Nov 2018 21:16:27 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

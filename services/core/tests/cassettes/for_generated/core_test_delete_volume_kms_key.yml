@@ -1,0 +1,244 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=core&apiName=DeleteVolumeKmsKey
+  response:
+    body: {string: 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Wed, 19 Sep 2018 06:32:52 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0914&serviceName=core&apiName=DeleteVolumeKmsKey
+  response:
+    body: {string: '[{"containerId":"79b53842-ced4-4e19-85e4-64308ee294a0","request":{"volumeId":"ocid1.volume.oc1.iad.abuwcljsmvreehlduey7upfdcm3xzns7t3ig7qifme6hd7uk6vmosjzb4mqa"}}]'}
+    headers:
+      content-length: ['163']
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:32:52 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="VsKkPSg8gQrrEnzTJ9a7NyGgU6r33eNdtODAH9PeQhYzHM7lTmU8hOOe5vTmhW7E8CLZ3Zrq/mHl2Qry2clPaMZZaA/ihKhGNI5wf0iTpvA47rVm4gZY/+q8lWE2A8gTEFwbPPCHM1odZ8MK9t7BVGKk62qL/882Yi23ujx/gRm0f8Am6NnJlD9bFk/a7CnSNDtIIxLdTj9niQpk+vHG0/VDlE3tsorbq1Sn9QdKSAgXf9mRnzRuQd44udOOeq7ZKQESHVwTg8gu+ZmRa79FdYyYoEvIpAxnRx2qAb1YVk3saY4a/SjTBx6DvBcROBaLjz35a/jkxOXlamilTr9ohQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:33:27 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.327]
+      opc-request-id: [4480A1547DC54CB98B34EC17287F058D]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.327 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.33+preview.1]
+    method: DELETE
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/volumes/ocid1.volume.oc1.iad.abuwcljsmvreehlduey7upfdcm3xzns7t3ig7qifme6hd7uk6vmosjzb4mqa/kmsKey
+  response:
+    body: {string: ''}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:33:28 GMT']
+      opc-request-id: [4480A1547DC54CB98B34EC17287F058D/3EF2BF77969F28539A31B7F51E047681/D571934F84BFB799B81F2B391952D568]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"2B709C6C31A34E41A3634231ED111515\"}",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteVolumeKmsKeyResponse",
+      "containerId": "79b53842-ced4-4e19-85e4-64308ee294a0", "requestJson": "{\"volumeId\":
+      \"ocid1.volume.oc1.iad.abuwcljsmvreehlduey7upfdcm3xzns7t3ig7qifme6hd7uk6vmosjzb4mqa\"}",
+      "requestClass": "com.oracle.bmc.core.requests.DeleteVolumeKmsKeyRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['402']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0914
+  response:
+    body: {string: ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Wed, 19 Sep 2018 06:33:28 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 02:36:41 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0947&apiName=DeleteVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"f174ad4a-84f2-4b59-8dd2-416e1b4e6fad","request":{"volumeId":"ocid1.volume.oc1.iad.abuwcljsmz4ek33ibgqktstixldazzt253ymadsluegirumvxj6vazgw7wxa"}}]'}
+    headers:
+      Content-Length: ['163']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 02:36:41 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="j3zbwZzKYhkKnP2ncF+q05ogqebpMNS9Ojm8Jf6HjGe1kLSn9ALTL3YhB0tPSzq/xq1V4ta5QJijZMTDZojqCnd1wv9+dWF01GE9vU6RdPly2OGozrkeuo9aMwq6tMdlcOCll4ffk31Rv5lPyWjILHV2FeSzDrO8WJWLmIZlS5YxD6AlB9u+jIubhHHn6ZVho1lqlgI4o+c0PaWRFSAhXqjuFMgvtXJjoabMb5iVyqIjTxnMeA6Fq8RyuKEvaVmrjDsRJYqO9HxNS/NdJh9zDZAmwQVHVhV2Hxbdh2bQEG53j2Mcd2OrktTofoYDpFWX0J/oYSSL1vd2dOkPHqrsbg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 25 Sep 2018 02:37:14 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4]
+      opc-request-id: [6F61D646B11940658CE1AAE52444D490]
+      user-agent: [Oracle-PythonSDK/2.0.4 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.33]
+    method: DELETE
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/volumes/ocid1.volume.oc1.iad.abuwcljsmz4ek33ibgqktstixldazzt253ymadsluegirumvxj6vazgw7wxa/kmsKey
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 02:37:15 GMT']
+      opc-request-id: [6F61D646B11940658CE1AAE52444D490/E861049BA2F1829D75E5F96C3E0427E7/0CA2CE1144590725A8C2F455517FC15B]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"5274BDF2F9124F6D8917D3E7B67F73FE\"}",
+      "requestJson": "{\"volumeId\": \"ocid1.volume.oc1.iad.abuwcljsmz4ek33ibgqktstixldazzt253ymadsluegirumvxj6vazgw7wxa\"}",
+      "containerId": "f174ad4a-84f2-4b59-8dd2-416e1b4e6fad", "requestClass": "com.oracle.bmc.core.requests.DeleteVolumeKmsKeyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteVolumeKmsKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['402']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0947&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 02:37:15 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 03:30:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0316&apiName=DeleteVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9e36ba8c-6fee-4c89-9bc4-622ee3676a87","request":{"volumeId":"ocid1.volume.oc1.iad.abuwcljs2bx4wepwubx22y3xleragndeut45cpibuwdi6oqviy42ck7x44uq"}}]'}
+    headers:
+      Content-Length: ['163']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 03:30:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="KUv6UWj/yHdsahA7O26MwVibztc9wdEh2BFws+O5Jh/+hN8aENA/Vbb0nW4gMGcJodPU+kftRuIh89nIxYAR0YrSFI+Gxu8bsRhZLitNC6zJijUHLqiBLc+jRebJYMrdEuILC0I+nEqQM4R2TTOWv29sWGhMkERQK2QnZvgEAyF+MixrhDhOXyd2GVkaKLvd72Z9XzpYAorV7P5dECK5vl2PdpcLJYMQWZhxF0ELARY5YAv2FA/NVMZ09a1AMa3MK1R2BPPPBD/YBXZ8qpp9XYQwzoGlTusNXBx1/F4c8YIaVhYCJqHqwN8G4Khh2AosQKKTXVTOKPdN+tyvWcxPEw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 25 Sep 2018 03:30:46 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4]
+      opc-request-id: [F193CF564AE149EBBE11F6467BE366AD]
+      user-agent: [Oracle-PythonSDK/2.0.4 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.33]
+    method: DELETE
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/volumes/ocid1.volume.oc1.iad.abuwcljs2bx4wepwubx22y3xleragndeut45cpibuwdi6oqviy42ck7x44uq/kmsKey
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 03:30:46 GMT']
+      opc-request-id: [F193CF564AE149EBBE11F6467BE366AD/1E29673E0B130F1BBDC6DBC3A05E5CAB/9A4A8692A79E02C78141B5BCE4B06D56]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"EF7E7C4356B54E189DD35956E40E7778\"}",
+      "requestJson": "{\"volumeId\": \"ocid1.volume.oc1.iad.abuwcljs2bx4wepwubx22y3xleragndeut45cpibuwdi6oqviy42ck7x44uq\"}",
+      "containerId": "9e36ba8c-6fee-4c89-9bc4-622ee3676a87", "requestClass": "com.oracle.bmc.core.requests.DeleteVolumeKmsKeyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteVolumeKmsKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['402']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0316&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 03:30:46 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

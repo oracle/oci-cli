@@ -1,0 +1,82 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 22:42:57 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0659&apiName=DeleteAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"c264f3ff-d6ed-48b5-8ee6-41f3b7932649","request":{"autonomousDataWarehouseId":"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrunkl74nfhazaf3jf4cu2gqeu5ttzojuxmjizq7kzcfo4a2535m6q"}}]'}
+    headers:
+      Content-Length: ['194']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 22:42:57 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="mN7WSDkY29B9dyEeDIB6dgygK+HrgQ9aCE8GZ0l8lQqi6f5LD6UHPlXNR1MhNBM2pAiA5MQpE9B0Kew1h/Ya0f1mUhb8RXCXGPZ/Sz+WKFdVi05EqKYxFQcEVfxL1Sv0IZV3kA25qp3zASta2NHNI2cwcuagT3AxH+Qk6Dh81FAm1QWNnMnnld++X6J78n7AuPo9A36vsxFsyhXnTL/Eqw+UCBysGxE4FMHius2vXmv5bjA8G4SsitCSsll04vl6OlouaiHkKtjJz6nIvdoj4LnnEHGU6mxIpnrR1goAOQmdJKX861TSIqKtM+50m4UZ36fldV7LDXMpPinv49YOjg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 05 Sep 2018 22:42:58 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [B5DC292A9E224AAFA2F78316F69E91AE]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: DELETE
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousDataWarehouses/ocid1.autonomousdwdatabase.oc1.phx.abyhqljrunkl74nfhazaf3jf4cu2gqeu5ttzojuxmjizq7kzcfo4a2535m6q
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 22:42:58 GMT']
+      opc-request-id: [B5DC292A9E224AAFA2F78316F69E91AE/E0E86E5C3A10C9C125059307432623C3/5559601C4FEFC0DF0819D822EA35F6A3]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"14F6F4BC593149C4AAA1E97B23D1DABD\"}",
+      "requestJson": "{\"autonomousDataWarehouseId\": \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljrunkl74nfhazaf3jf4cu2gqeu5ttzojuxmjizq7kzcfo4a2535m6q\"}",
+      "containerId": "c264f3ff-d6ed-48b5-8ee6-41f3b7932649", "requestClass": "com.oracle.bmc.database.requests.DeleteAutonomousDataWarehouseRequest",
+      "responseClass": "com.oracle.bmc.database.responses.DeleteAutonomousDataWarehouseResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['463']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0659&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 22:42:58 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

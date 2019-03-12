@@ -3,7 +3,7 @@
    * Each entry in this dictionary represents a virtual hostname. You can assign a virtual hostname
    * to any listener you create for your load balancer. Each hostname can correspond to an
    * application served from your backend. For more information on virtual hostnames, see
-   * https://docs.us-phoenix-1.oraclecloud.com/Content/Balance/Tasks/managingrequest.htm#vhost
+   * https://docs.cloud.oracle.com/Content/Balance/Tasks/managingrequest.htm#vhost
    */
 
    // The key value below should be the name of the "hostname" resource.

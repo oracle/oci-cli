@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetAppCatalogListingAgreements&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 12 Sep 2018 00:48:21 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0665&apiName=GetAppCatalogListingAgreements&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"fddbdc83-e9ea-4650-847e-54edfe67036a","request":{"listingId":"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq","resourceVersion":"2018.06.08-0"}}]'}
+    headers:
+      Content-Length: ['205']
+      Content-Type: [application/json]
+      Date: ['Wed, 12 Sep 2018 00:48:21 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaftow6wd3zfwyz6rawmfbsum7cdg5n3dnobsosxzbdmq5pjom7c5a/ocid1.user.oc1..aaaaaaaabefjptjqy4wj2ymrbi42lwqnvd64sagheg4zlid5zhbsxkec7h5q/68:b6:a9:ec:c6:6e:20:32:67:96:1b:20:73:fc:1c:2c",signature="CxxWKMqhud0tOeKvdve+tGt7bZG5VguT6OJQ3lubtJbAso+joWaIqc5FuTq43adppSgiv4/WV5YMLfw2LN3ODbTgENyFNCFZCOLeyBUj3tjzhWHbGkasETvPzTYBJFHzzS9s+sRdHAsM1fgy4vXfuaTjaolSQpyZdqs6yrOZX0p6iCHm2WccKxWC3FYUmwfW6irGB6s0eG1TXHcgWiWKkIgwrHpEMCKPfgN/DTFIKq4q8gb5qsUFPUreqRQVbVgGcBlQ9CSzYQs9bHd6Rz5DoKhg4kL7URtBUOcqnzhT/y+XX0KKJFwslUOriuzG+UCyhfgcEJAiVAKUdDgg1nvDuA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 12 Sep 2018 00:48:22 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3+preview.1.307]
+      opc-request-id: [43C507F629F645269F8919A40D42E8A0]
+      user-agent: [Oracle-PythonSDK/2.0.3+preview.1.307 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/appCatalogListings/ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq/resourceVersions/2018.06.08-0/agreements
+  response:
+    body: {string: "{\n  \"listingId\" : \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\",\n
+        \ \"listingResourceVersion\" : \"2018.06.08-0\",\n  \"oracleTermsOfUseLink\"
+        : \"https://objectstorage.us-ashburn-1.oraclecloud.com/n/partnerimagecatalog/b/eulas/o/oracle-terms-of-use.txt\",\n
+        \ \"eulaLink\" : null,\n  \"timeRetrieved\" : \"2018-09-12T00:48:22.438Z\",\n
+        \ \"signature\" : \"20ef64a51e0ef57c07d186f15ac8aa844533766488f9718ae913160663854f6c\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['446']
+      Content-Type: [application/json]
+      Date: ['Wed, 12 Sep 2018 00:48:22 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [43C507F629F645269F8919A40D42E8A0/28A251EA6D7150AD7E841C7B5FF5B508/48799975EB767A2FF4D76FEE29AC800E]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"appCatalogListingResourceVersionAgreements\": {\"listingId\":
+      \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\",
+      \"timeRetrieved\": \"2018-09-12T00:48:22.438000+00:00\", \"eulaLink\": null,
+      \"oracleTermsOfUseLink\": \"https://objectstorage.us-ashburn-1.oraclecloud.com/n/partnerimagecatalog/b/eulas/o/oracle-terms-of-use.txt\",
+      \"listingResourceVersion\": \"2018.06.08-0\", \"signature\": \"20ef64a51e0ef57c07d186f15ac8aa844533766488f9718ae913160663854f6c\"},
+      \"opcRequestId\": \"F8AC6558D75740D8B4CF408E8DF902C7\"}", "requestJson": "{\"listingId\":
+      \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\",
+      \"resourceVersion\": \"2018.06.08-0\"}", "containerId": "fddbdc83-e9ea-4650-847e-54edfe67036a",
+      "requestClass": "com.oracle.bmc.core.requests.GetAppCatalogListingAgreementsRequest",
+      "responseClass": "com.oracle.bmc.core.responses.GetAppCatalogListingAgreementsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['980']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0665&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 12 Sep 2018 00:48:22 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

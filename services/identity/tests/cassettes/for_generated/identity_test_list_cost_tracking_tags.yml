@@ -1,0 +1,274 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ListCostTrackingTags&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 12 Oct 2018 16:40:21 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0746&apiName=ListCostTrackingTags&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"00874aef-21c3-4dbc-a243-9d9d6b0c0b0e","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a","limit":10}},{"containerId":"5e58527b-4d7f-4509-bb2b-c6e68e0230b7","request":{"compartmentId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","limit":10}}]'}
+    headers:
+      Content-Length: ['300']
+      Content-Type: [application/json]
+      Date: ['Fri, 12 Oct 2018 16:40:21 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a/ocid1.user.oc1..aaaaaaaangtbwoyqaycv7hmehtqxhctyvso3j3cpni3pd5j6zmudrdegaktq/c7:90:93:d5:b6:0e:8c:65:26:20:72:c6:51:1c:29:72",signature="BTVpwjeZuf0gmQoM0LbR0QSRtq+cGATCVN+M9AF5NrV8BrMneSCqqIlm2IXIiU/Th2V22h7EQQCUgzaGi7Zyk36fj5MDhnkFTLo6qO/4cAFcsCX305H707LJjUQEmCZ38ZY18XtfvsngIlBTGGzY5i58VCkm+mju1zqPSBySmVnDaWj0QlxLxCt6vxyNLGGIuomGeI3eyqaqS2mALKHBJksZ0pM1CIcnmXF55k+cuG/tZMCHZDMjxT43GHOuEdXhyi8omupP+xHWQd85nmttg6tAkBj8Cl9saEShJtu3nmhe+iS5hbmL0BS+p3uy/Ynzj3u9fFxfAJ7gWHS5YF46tg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 12 Oct 2018 16:40:21 GMT']
+      host: [identity.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.6]
+      opc-request-id: [65C43A3380C94949A11D56484FC0ED9C]
+      user-agent: [Oracle-PythonSDK/2.0.6 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.35]
+    method: GET
+    uri: https://identity.us-ashburn-1.oraclecloud.com/20160918/tagNamespaces/actions/listCostTrackingTags?limit=10&compartmentId=ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a
+  response:
+    body: {string: "[ {\n  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n\
+        \  \"tagNamespaceId\" : \"ocid1.tagnamespace.oc1..aaaaaaaayebc4hjk5a72s7xdo3el3dsau6e2banwaydgixrbenemt55gqsnq\"\
+        ,\n  \"tagNamespaceName\" : \"SDK-Sample-NS1\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaaxn52czozbxiyqdvfvozuv6clmbih6vewxhfgactsekhuh3ikvfla\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaayebc4hjk5a72s7xdo3el3dsau6e2banwaydgixrbenemt55gqsnq\"\
+        ,\n  \"name\" : \"CLI-Sample-CT-Tag\",\n  \"description\" : \"Tag crested\
+        \ from CLI\",\n  \"timeCreated\" : \"2018-10-09T21:20:10.181Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n},\
+        \ {\n  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n  \"tagNamespaceId\"\
+        \ : \"ocid1.tagnamespace.oc1..aaaaaaaacvs5cvmjn7wrxnhlgl66qx3y2vdvbehuecuo347ertigup2uqzfa\"\
+        ,\n  \"tagNamespaceName\" : \"Sample-NS231\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaayi3igawheobrued26tkhuw5xuzkx5ftkd5xxvirdcptrzfqnepnq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaacvs5cvmjn7wrxnhlgl66qx3y2vdvbehuecuo347ertigup2uqzfa\"\
+        ,\n  \"name\" : \"Sample_CT_Tag331\",\n  \"description\" : \"description1\"\
+        ,\n  \"timeCreated\" : \"2018-10-04T18:05:44.284Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n  \"tagNamespaceId\"\
+        \ : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"tagNamespaceName\" : \"CostTracking\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaa7tfnx4yab7a356a5p3iubuc6xqupxioirz62iaqcqvjnc3ywts6q\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"name\" : \"Project\",\n  \"description\" : \"The special projects\"\
+        ,\n  \"timeCreated\" : \"2018-10-04T20:30:07.298Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n  \"tagNamespaceId\"\
+        \ : \"ocid1.tagnamespace.oc1..aaaaaaaa7oxlms64re4l6ctbuy4zuhqn4ohwgngvjd5nqkgfgrx44mtpedfa\"\
+        ,\n  \"tagNamespaceName\" : \"Sample-NS120\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaabmj6474zhdd3lfbeylmb7asoe6u5ciw5lx465ahhwhpvyb5jgf4q\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaa7oxlms64re4l6ctbuy4zuhqn4ohwgngvjd5nqkgfgrx44mtpedfa\"\
+        ,\n  \"name\" : \"Sample-CT-Tag120\",\n  \"description\" : \"description1\"\
+        ,\n  \"timeCreated\" : \"2018-10-04T18:07:22.682Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n  \"tagNamespaceId\"\
+        \ : \"ocid1.tagnamespace.oc1..aaaaaaaa5kg2pi62efk3n5pcwjl5vvrotyrx5zkvyyxwo466hqpmf6uswsma\"\
+        ,\n  \"tagNamespaceName\" : \"harsha_tagnamespace\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaalykvyc5lk3eqjexsyxsvpmhq5sqyjo3j2bpdhre6zbjfciciv37a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaa5kg2pi62efk3n5pcwjl5vvrotyrx5zkvyyxwo466hqpmf6uswsma\"\
+        ,\n  \"name\" : \"instances_region_ad\",\n  \"description\" : \"instances_region_ad\"\
+        ,\n  \"timeCreated\" : \"2018-09-17T17:31:24.251Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n  \"tagNamespaceId\"\
+        \ : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"tagNamespaceName\" : \"CostTracking\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaamhdahz5tv64te6qfjtpx5xgsylrrly66jf7agjvdiyaxnpwdv65q\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"name\" : \"CostCenter\",\n  \"description\" : \"The department that\
+        \ should be charged for this resource usage.\",\n  \"timeCreated\" : \"2018-10-04T20:29:54.130Z\"\
+        ,\n  \"freeformTags\" : { },\n  \"definedTags\" : { },\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}, {\n  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n\
+        \  \"tagNamespaceId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"tagNamespaceName\" : \"CostTracking\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaa2ohvv3lh4v22hkl7opv6bx3sa3xuqwinktqx4hkpqnsllj7oqnla\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"name\" : \"Customer_Job\",\n  \"description\" : \"The particular job\
+        \ that a customer is running\",\n  \"timeCreated\" : \"2018-10-04T20:30:37.487Z\"\
+        ,\n  \"freeformTags\" : { },\n  \"definedTags\" : { },\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}, {\n  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n\
+        \  \"tagNamespaceId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"tagNamespaceName\" : \"CostTracking\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaaaghnazj75txrjaxoou4uxyordiuh6bnzqwzxlee2cbnw3ogtgvna\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"name\" : \"Customer\",\n  \"description\" : \"The Customer on whose\
+        \ behalf the resources are running\",\n  \"timeCreated\" : \"2018-10-04T20:31:04.031Z\"\
+        ,\n  \"freeformTags\" : { },\n  \"definedTags\" : { },\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}, {\n  \"isRetired\" : false,\n  \"isCostTracking\" : true,\n\
+        \  \"tagNamespaceId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"tagNamespaceName\" : \"CostTracking\",\n  \"id\" : \"ocid1.tagdefinition.oc1..aaaaaaaa7anbqe5sumi6sschx4z26nbyl5juhepsvnwylhejy64xrejk47fa\"\
+        ,\n  \"compartmentId\" : \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\"\
+        ,\n  \"name\" : \"tagCreatedFromCli\",\n  \"description\" : \"Hello From CLI\"\
+        ,\n  \"timeCreated\" : \"2018-10-05T22:48:34.758Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['5512']
+      Content-Type: [application/json]
+      Date: ['Fri, 12 Oct 2018 16:40:22 GMT']
+      opc-limit: ['10']
+      opc-next-page: [AAAAAAAAAAJleUpyYVdRaU9pSTFNQ0lzSW1WdVl5STZJa0V5TlRaSFEwMGlMQ0poYkdjaU9pSmthWElpZlEuLmtmRnUxd0UxdlV6M1YyUVAuNWZoT2lGRkRXQzVYZnVlNDJFcGZmZmViTkV2N1VvYkJiTXktd09zYkR3ZlJtVXdHU25LeTkwY3Axa1huNnEyQkVhVnN5akU2MW95aUZfRndJRzFPNDNQV184SGg2UWw4QU1lZmtuYk9OYjJ1V242MzF4SWQtVkZ1S2FsMkxGR0dRd0FuS1VzNTljVm11U3l0VHRmbE0yRF8tc1l2ejJyaVM3MHJHeUxzNnZtMV80M2pDdWI5OGxzMWt3N1g1clAxOWliTDkxYWZxV3hyS2trMmJ5Z2xOMVFOVVk3R0tNZUNnczRjU2t5VGg3bnRpME5xd3BNVjJvYmJZZ1NaYkxwWlc0RDBCMW1PS3FrUnE2MjZfa3BHODRZU0EtQUpEc0dMM01YQ3RDVktHSVdRS3k3ajVZYTdqTEZkakgyQ1lUbWdEbnBma1g4UVZCZzhCUkxTR3RWMFYxejFkRWMzcC1xX0laVTJUSnUtN0IxYzR3TlpMbUFEM3p6UWFWWG1zNlFaN19ZbFh0Y2hnYllGdXFCNGZTOE5KUWQtRWU5emt2bjJuZFNCbmpxWFR0dy1GT1gwdDFIQjlDV3R1OGlVTFk1U3FZNXMyelJqcldVWHRHMkI2aDNVTFVOMHhUQlFpWnc3UVdvaTJYZVRjcm52Zk1QUkdEdUdEZHJMdnNMdlMxZ2NMaVUzc0NCNEp6MDJ1d1NjaklFbGdSSUpCUXFFUV9FaUZmTG5SMmhDZ0dwbWdJT0czTC1sRkNSeGZRdDNrSkZHRlItSzZudWVCbXVyWGxERW9rSHk2cDBmbDJFcFpreThha1ZnNUx5RkpTcHV0dkpfX2Y4RmVpRlN6OTgxM0dFZXVmc2ZqVDQxenFTMFJrU2c3Q3Joc1p4VTFBR2J6ZDZ2MzJReER0eFMzbGZZZEZ1RENIeHFqUHdmWURCUERHNTZHalZfaWRxdXkwN0JCN2JXeGFlbEdxWEM5aE1qM3JIQ3VGdEFpNDZlUnljcGpYbkE5TWpXWWZtSGlIbUQzSHJ3Q1JzczRncy5HVEtNTTJyNk11Q1RzNDR6QzN0NUh3]
+      opc-request-id: [65C43A3380C94949A11D56484FC0ED9C/DF20C4A4233F4AFB578A2D3A7BC1E42A/E00E19DEF33CAF03713EE126E010A3BF]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a/ocid1.user.oc1..aaaaaaaangtbwoyqaycv7hmehtqxhctyvso3j3cpni3pd5j6zmudrdegaktq/c7:90:93:d5:b6:0e:8c:65:26:20:72:c6:51:1c:29:72",signature="GfuOlB1p2Jxqwi9P1ya2lSK4/c9x72SIlmNsPE5NgTdwLO7GSaEHIA/H1UZGmh4OfibXbV7+9opHUdbcmcoMxrUjsFY2b+bKYVFLX+nUVa60sqAwoOIcdVgnNfZ9VARssIQZSeDh7Ua6lhK/vQnjbXCmjOSkxKxGWMQhgyPyPnSPdlblZUlW9vFE1K42gJ2GC7EfhOAX1fhLM3gxDaIeGt1GGSr7VhL6XeAyItN4pkfONLYu1gPbwvumI5bG6Eq313HzUzzjdCbLEqPNuU0XZCZMFvVOQKYZfkGTCLDnu2lAKIxdR7HuEHt8gXz/m/q9erbLpF9jJwpvQnWsrGFfEw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 12 Oct 2018 16:40:21 GMT']
+      host: [identity.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.6]
+      opc-request-id: [76110360E9E54705B43AC9643DF0A6C3]
+      user-agent: [Oracle-PythonSDK/2.0.6 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.35]
+    method: GET
+    uri: https://identity.us-ashburn-1.oraclecloud.com/20160918/tagNamespaces/actions/listCostTrackingTags?limit=1&page=AAAAAAAAAAJleUpyYVdRaU9pSTFNQ0lzSW1WdVl5STZJa0V5TlRaSFEwMGlMQ0poYkdjaU9pSmthWElpZlEuLmtmRnUxd0UxdlV6M1YyUVAuNWZoT2lGRkRXQzVYZnVlNDJFcGZmZmViTkV2N1VvYkJiTXktd09zYkR3ZlJtVXdHU25LeTkwY3Axa1huNnEyQkVhVnN5akU2MW95aUZfRndJRzFPNDNQV184SGg2UWw4QU1lZmtuYk9OYjJ1V242MzF4SWQtVkZ1S2FsMkxGR0dRd0FuS1VzNTljVm11U3l0VHRmbE0yRF8tc1l2ejJyaVM3MHJHeUxzNnZtMV80M2pDdWI5OGxzMWt3N1g1clAxOWliTDkxYWZxV3hyS2trMmJ5Z2xOMVFOVVk3R0tNZUNnczRjU2t5VGg3bnRpME5xd3BNVjJvYmJZZ1NaYkxwWlc0RDBCMW1PS3FrUnE2MjZfa3BHODRZU0EtQUpEc0dMM01YQ3RDVktHSVdRS3k3ajVZYTdqTEZkakgyQ1lUbWdEbnBma1g4UVZCZzhCUkxTR3RWMFYxejFkRWMzcC1xX0laVTJUSnUtN0IxYzR3TlpMbUFEM3p6UWFWWG1zNlFaN19ZbFh0Y2hnYllGdXFCNGZTOE5KUWQtRWU5emt2bjJuZFNCbmpxWFR0dy1GT1gwdDFIQjlDV3R1OGlVTFk1U3FZNXMyelJqcldVWHRHMkI2aDNVTFVOMHhUQlFpWnc3UVdvaTJYZVRjcm52Zk1QUkdEdUdEZHJMdnNMdlMxZ2NMaVUzc0NCNEp6MDJ1d1NjaklFbGdSSUpCUXFFUV9FaUZmTG5SMmhDZ0dwbWdJT0czTC1sRkNSeGZRdDNrSkZHRlItSzZudWVCbXVyWGxERW9rSHk2cDBmbDJFcFpreThha1ZnNUx5RkpTcHV0dkpfX2Y4RmVpRlN6OTgxM0dFZXVmc2ZqVDQxenFTMFJrU2c3Q3Joc1p4VTFBR2J6ZDZ2MzJReER0eFMzbGZZZEZ1RENIeHFqUHdmWURCUERHNTZHalZfaWRxdXkwN0JCN2JXeGFlbEdxWEM5aE1qM3JIQ3VGdEFpNDZlUnljcGpYbkE5TWpXWWZtSGlIbUQzSHJ3Q1JzczRncy5HVEtNTTJyNk11Q1RzNDR6QzN0NUh3&compartmentId=ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a
+  response:
+    body: {string: '[ ]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['3']
+      Content-Type: [application/json]
+      Date: ['Fri, 12 Oct 2018 16:40:22 GMT']
+      opc-limit: ['1']
+      opc-request-id: [76110360E9E54705B43AC9643DF0A6C3/D74338ADAEB4DBD13A3E62101A74138A/54CB07E023D351F5F228F5EC4227E81F]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9608B981DA4F4B6CA491D148AB837A6A\",
+      \"items\": [{\"isCostTracking\": true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaaxn52czozbxiyqdvfvozuv6clmbih6vewxhfgactsekhuh3ikvfla\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaayebc4hjk5a72s7xdo3el3dsau6e2banwaydgixrbenemt55gqsnq\",
+      \"name\": \"CLI-Sample-CT-Tag\", \"description\": \"Tag crested from CLI\",
+      \"freeformTags\": {}, \"definedTags\": {}, \"timeCreated\": \"2018-10-09T21:20:10.181000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaayebc4hjk5a72s7xdo3el3dsau6e2banwaydgixrbenemt55gqsnq\",
+      \"isRetired\": false, \"tagNamespaceName\": \"SDK-Sample-NS1\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaayi3igawheobrued26tkhuw5xuzkx5ftkd5xxvirdcptrzfqnepnq\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaacvs5cvmjn7wrxnhlgl66qx3y2vdvbehuecuo347ertigup2uqzfa\",
+      \"name\": \"Sample_CT_Tag331\", \"description\": \"description1\", \"freeformTags\":
+      {}, \"definedTags\": {}, \"timeCreated\": \"2018-10-04T18:05:44.284000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaacvs5cvmjn7wrxnhlgl66qx3y2vdvbehuecuo347ertigup2uqzfa\",
+      \"isRetired\": false, \"tagNamespaceName\": \"Sample-NS231\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaa7tfnx4yab7a356a5p3iubuc6xqupxioirz62iaqcqvjnc3ywts6q\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"name\": \"Project\", \"description\": \"The special projects\", \"freeformTags\":
+      {}, \"definedTags\": {}, \"timeCreated\": \"2018-10-04T20:30:07.298000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"isRetired\": false, \"tagNamespaceName\": \"CostTracking\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaabmj6474zhdd3lfbeylmb7asoe6u5ciw5lx465ahhwhpvyb5jgf4q\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaa7oxlms64re4l6ctbuy4zuhqn4ohwgngvjd5nqkgfgrx44mtpedfa\",
+      \"name\": \"Sample-CT-Tag120\", \"description\": \"description1\", \"freeformTags\":
+      {}, \"definedTags\": {}, \"timeCreated\": \"2018-10-04T18:07:22.682000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaa7oxlms64re4l6ctbuy4zuhqn4ohwgngvjd5nqkgfgrx44mtpedfa\",
+      \"isRetired\": false, \"tagNamespaceName\": \"Sample-NS120\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaalykvyc5lk3eqjexsyxsvpmhq5sqyjo3j2bpdhre6zbjfciciv37a\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaa5kg2pi62efk3n5pcwjl5vvrotyrx5zkvyyxwo466hqpmf6uswsma\",
+      \"name\": \"instances_region_ad\", \"description\": \"instances_region_ad\",
+      \"freeformTags\": {}, \"definedTags\": {}, \"timeCreated\": \"2018-09-17T17:31:24.251000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaa5kg2pi62efk3n5pcwjl5vvrotyrx5zkvyyxwo466hqpmf6uswsma\",
+      \"isRetired\": false, \"tagNamespaceName\": \"harsha_tagnamespace\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaamhdahz5tv64te6qfjtpx5xgsylrrly66jf7agjvdiyaxnpwdv65q\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"name\": \"CostCenter\", \"description\": \"The department that should be charged
+      for this resource usage.\", \"freeformTags\": {}, \"definedTags\": {}, \"timeCreated\":
+      \"2018-10-04T20:29:54.130000+00:00\", \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"isRetired\": false, \"tagNamespaceName\": \"CostTracking\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaa2ohvv3lh4v22hkl7opv6bx3sa3xuqwinktqx4hkpqnsllj7oqnla\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"name\": \"Customer_Job\", \"description\": \"The particular job that a customer
+      is running\", \"freeformTags\": {}, \"definedTags\": {}, \"timeCreated\": \"2018-10-04T20:30:37.487000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"isRetired\": false, \"tagNamespaceName\": \"CostTracking\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaaaghnazj75txrjaxoou4uxyordiuh6bnzqwzxlee2cbnw3ogtgvna\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"name\": \"Customer\", \"description\": \"The Customer on whose behalf the
+      resources are running\", \"freeformTags\": {}, \"definedTags\": {}, \"timeCreated\":
+      \"2018-10-04T20:31:04.031000+00:00\", \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"isRetired\": false, \"tagNamespaceName\": \"CostTracking\"}, {\"isCostTracking\":
+      true, \"id\": \"ocid1.tagdefinition.oc1..aaaaaaaa7anbqe5sumi6sschx4z26nbyl5juhepsvnwylhejy64xrejk47fa\",
+      \"compartmentId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"name\": \"tagCreatedFromCli\", \"description\": \"Hello From CLI\", \"freeformTags\":
+      {}, \"definedTags\": {}, \"timeCreated\": \"2018-10-05T22:48:34.758000+00:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaksxdvmrzmzipkjvaxafk3leo324o2myqihk4mpocjogll7uynjla\",
+      \"isRetired\": false, \"tagNamespaceName\": \"CostTracking\"}]}", "requestJson":
+      "{\"limit\": 10, \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a\"}",
+      "containerId": "00874aef-21c3-4dbc-a243-9d9d6b0c0b0e", "requestClass": "com.oracle.bmc.identity.requests.ListCostTrackingTagsRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ListCostTrackingTagsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['5739']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0746&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 12 Oct 2018 16:40:21 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5cpic4llfckocduehdxpdouzbk4dciq6nhilunevzeaycb62dd2a/ocid1.user.oc1..aaaaaaaangtbwoyqaycv7hmehtqxhctyvso3j3cpni3pd5j6zmudrdegaktq/c7:90:93:d5:b6:0e:8c:65:26:20:72:c6:51:1c:29:72",signature="NjlxwfLcpiIn9mSXXWwUq6vYPXbkhIJHm+5X0/Cv7o/bsCT0Mx0CKnLBwFBHe0o5jhlM3lPXD33o0gQ2ePMO7FunQKbkvxhrJNBqSWJPdRvE1oiWFxMMJwy6M4Ie5wGo7E2mtpKZeoD2aJFir6bzHj6I5YfSIRlgSENiqHLOCe+mVu4ax8CIRQfhTnROGzQw4v/A7EnzCu2Kn1dx9vgDRN6sGEJWKFhJPxlsSiBpbc84++/7DNgf2haFn5XOLkU+xSTmAqZunVkuNp14DdtdpdecbmJybPn0E2Qm/Ukhxnz8/5EyK/cO6VLk+vi2CS+8TolIZDtAaqAJLDN+3JiKUQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 12 Oct 2018 16:40:21 GMT']
+      host: [identity.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.6]
+      opc-request-id: [0ABFC43B15C740218A3413B5696DDBFD]
+      user-agent: [Oracle-PythonSDK/2.0.6 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.35]
+    method: GET
+    uri: https://identity.us-ashburn-1.oraclecloud.com/20160918/tagNamespaces/actions/listCostTrackingTags?limit=10&compartmentId=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  response:
+    body: {string: "{\n  \"code\" : \"InvalidParameter\",\n  \"message\" : \"tagging:costTrackingTags\
+        \ feature is not enabled for this tenant 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['143']
+      Content-Type: [application/json]
+      Date: ['Fri, 12 Oct 2018 16:40:22 GMT']
+      opc-request-id: [0ABFC43B15C740218A3413B5696DDBFD/5C758AFFF35C0108AABD294661F1B94A/2287DF83D3CB536416ED3102D32047C7]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"limit\": 10, \"compartmentId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"}",
+      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"0ABFC43B15C740218A3413B5696DDBFD/5C758AFFF35C0108AABD294661F1B94A/2287DF83D3CB536416ED3102D32047C7\",
+      \"code\": \"InvalidParameter\", \"message\": \"tagging:costTrackingTags feature
+      is not enabled for this tenant ''ABCDEFGHIJKLMNOPQRSTUVWXYZ''\"}", "containerId":
+      "5e58527b-4d7f-4509-bb2b-c6e68e0230b7", "requestClass": "com.oracle.bmc.identity.requests.ListCostTrackingTagsRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['523']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0746&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 12 Oct 2018 16:40:22 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

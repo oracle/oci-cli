@@ -1,0 +1,109 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=monitoring&apiName=GetAlarm
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:16 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=monitoring&apiName=GetAlarm&lang=PythonCLI&sessionId=0337
+  response:
+    body: {string: '[{"containerId":"a6a84ed4-c389-47e3-91eb-36422672c51b","request":{"alarmId":"ocid1.alarm.oc1.phx.aaaaaaaajjzgkbqeqfeuoskrljuwcepo7zq2luydcx45zmhp66osezjivhma"}}]'}
+    headers:
+      Content-Length: ['161']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:16 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq/ocid1.user.oc1..aaaaaaaa6srah3qsdcznyzb5uvradoid5a5tpbz22yj6vywbrnj45xf5sv3a/ea:97:59:7d:bc:75:53:5e:0f:9c:c2:fc:46:e3:ad:e4",signature="cfXjsehpgYzEpk2jCNfhWTLP08Y1DhaYkleTG6hbs5O8Q2PoUvCkxlNkcN2LnDk+NRHpRcZjg9EXf3wtPPSIPTE3sab8PTahACEOymuLTCRVqa7AKnQW0W9dUniS4E4UWtLV2v5Ou7TDZQ8oXcyXsuPv5FXoS0m06IZ6jGRb1HUB251EL0nUWJFFdCOoLfQOtAnmd1jUajMKxOhwu58JVekG7sVR2tE07DS6wd11yl/NOh+CSV1GNrR4AACbQKrwlgIt9wphcLeqp2hTKcrGiRAuR0mTk6ZIKxjBp575UwQJHR13UjVANkfNGLvV/skFo3F/WvgQ5KObfiX2TjcF6A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 22 Feb 2019 15:55:17 GMT']
+      host: [telemetry.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1.700]
+      opc-request-id: [F637EFE3CDE345DDA35177293F8EED12]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1.700 (python 3.7.2; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://telemetry.us-phoenix-1.oraclecloud.com/20180401/alarms/ocid1.alarm.oc1.phx.aaaaaaaajjzgkbqeqfeuoskrljuwcepo7zq2luydcx45zmhp66osezjivhma
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAMVSPW/bMBDd8ysETy3QCKJsS2iGAoGbwUPSwnY7NAgEijoptClS4octKch/L0Xa
+        SeAiKDpVE3X33r27d/d0EQQTWkyCq2AiCC1QiBmWdSgICpvHLsTHb7sdql3eQluCEWon2dYcCDQi
+        HdqYmb4g3Ww+1I9NkggFw5buH2s8+TQWL6hqGO7vcA1O5VZwqoWkvMqWXEMlsaaCZxtQOrsetbNo
+        Ok09l4i6wVLXwPXybY8aOOakd12+tChh6PpZ16ZbbLY9G/pUCj7NqckLzva46kAMya5Lq35H5CyX
+        ed+0XqYGLSlZ/DexJV+bXEtwBpWYKXBIbi1TDSZwaibTwGDk975Ua8A+x+QK7FvphTBc36P6IVSm
+        /vAx+BJEHilBCWZGox0c1T7cAC/sIr4avwSX+75Btz6rYA+Saq9ws1p9W/l4LgoX44Yxv2IrTbkr
+        ocbE/ck6+69FQ8kf5ySTvqYyplU1Z7Tnba+SaY4NU90+zosDLumuKHddK8pOHg4q0dLaFzwcZ2kA
+        6zuhaUmJE33b/0tTyjSNHVudx6m64Thn4FaspfFel9b9Ush6gys3wpMN2rDGFXLj7zEzgMIsW2/W
+        431mSYT8kXpU/IqKz1EW9Hz0qaQcinMN516VKZB7SiCz1TKusihCr6B3YB4y6s/eiM6SKDq29h4v
+        PvHm/8abnnjJOc/Rnl9GZbQE0hMGa421P+DrxWb588afkKY1LKRdo1/DJI7Q58sovozjDZpfzedX
+        KA0RSn+9on80xd/RF8+/AYrO8PXQBAAA
+    headers:
+      Content-Encoding: [gzip]
+      Content-Length: ['594']
+      Content-Type: [application/json]
+      Date: ['Fri, 22 Feb 2019 15:55:17 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [F637EFE3CDE345DDA35177293F8EED12/1870AB86CE5556461438DE0FC459E0C9/86E7C24E1C21CEDA740FC1FB7311EDEC]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "a6a84ed4-c389-47e3-91eb-36422672c51b", "requestClass":
+      "com.oracle.bmc.monitoring.requests.GetAlarmRequest", "requestJson": "{\"alarmId\":
+      \"ocid1.alarm.oc1.phx.aaaaaaaajjzgkbqeqfeuoskrljuwcepo7zq2luydcx45zmhp66osezjivhma\"}",
+      "responseJson": "{\"alarm\": {\"body\": null, \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\",
+      \"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_01\":
+      \"tag4.__STS0337_4600\", \"testing_service_tag_02\": \"tag5.__STS0337_4600\",
+      \"testing_service_tag_03\": \"tag6.__STS0337_4600\"}}, \"destinations\": [\"ocid1.onstopic.oc1.phx.aaaaaaaar6ymir2igg5liynqys63baulsxv2bdwafikdfkxqofxrwws6trpq\"],
+      \"displayName\": \"Monitoring_Integration_Test_Alarm_0337\", \"freeformTags\":
+      {\"tag1\": \"value1.__STS0337_6017\", \"tag2\": \"value2.__STS0337_6017\"},
+      \"id\": \"ocid1.alarm.oc1.phx.aaaaaaaajjzgkbqeqfeuoskrljuwcepo7zq2luydcx45zmhp66osezjivhma\",
+      \"isEnabled\": true, \"lifecycleState\": \"ACTIVE\", \"metricCompartmentId\":
+      \"ocid1.tenancy.oc1..aaaaaaaarezxy4xq7jaujylzy7ron3biubdnlvagxeoz6kx7gykcr4brbypq\",
+      \"metricCompartmentIdInSubtree\": false, \"namespace\": \"oci_telemetry\", \"pendingDuration\":
+      \"PT1M\", \"query\": \"RequestCount[1m].sum() > 0\", \"repeatNotificationDuration\":
+      null, \"resolution\": \"1m\", \"severity\": \"ERROR\", \"suppression\": null,
+      \"timeCreated\": \"2019-02-22T15:55:17.117000+00:00\", \"timeUpdated\": \"2019-02-22T15:55:17.117000+00:00\"},
+      \"opcRequestId\": \"7C00C6B7F70940DBBAA4F465A24B635C\"}", "responseClass": "com.oracle.bmc.monitoring.responses.GetAlarmResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1627']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0337&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 15:55:17 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

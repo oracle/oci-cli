@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="Jp+LrF3fU28BvSXcj6eytXwNR+6kypgrl7T+FLO24lbRebqeGW1NZdJpoNeMoptCpXQFdFuPO4IHyztshhRl13Lq51m9aZbyLjYbv68CHVi/lsBrdLI+CNw34oh1LYFhuM8FF8DSJZGrYJKoCB2dvXEtorm1kEvBDGzINWTmHzRAd/oz2s6ak+ULzacp9ruyq4Gelh6LqvdHRxBaVRW2V7UEMnGRo6CLHfBHKkJGs6qm9jasCqayA2vFXWlprIdP0fPju0GxcRNptyzDC6igsDjopBnY9+OX/BPx2uLXhJK+mFvERkH67vnphoz7D7mNseuJRj9ueK5R7SXyILYVrw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 21 Jun 2018 17:07:15 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [724851A29DDC4C8FBA21FA44B3DC5C35]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/crossConnectGroups/ocid1.crossconnectgroup.oc1.phx.aaaaaaaa6cyfle2deuxsy6qx6nztfywlhcihc45m4kvmxlmr5jzbw2nukejq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json]
+      Date: ['Thu, 21 Jun 2018 17:07:16 GMT']
+      opc-request-id: [724851A29DDC4C8FBA21FA44B3DC5C35/92D6DE10787AB87DB2276B3CABE90BD6/F4B4137975DBA0B598BA3284A7790CCA]
+    status: {code: 202, message: Accepted}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="pXkpjkHVGB8fuMsgBveEYjSz7YF/FdTTmjd/64ab3cRUw3IgYveZUQVarAHfXbg7Dntsmb/5JB85Liky7rD4vZDdkwOPFCqJ6McRIfFCUfYbvLd1hrX56KJ7izVecWJNSqHNQw+0LNwgdl350cLUj465ou0/VZH4gvidiMhEtba6MV2x/TZ7cILLuuHdOfIjOXk0INJ48U3IYY5rNP9CBHTjVoflhQaGu9Q8NsVxwff6LTnOMNMkQGGMMOAEmQw054/qY+FcIXdq+grDamjVL+7IbpKD0AnxdrpRD95RKw8zbknKXGsGyzNZ886R9twhxd6yqVIjFuiA3YJrpMBBQA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 21 Jun 2018 17:07:16 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [10ED76B70F704C9FBDCC6AA4FE48575E]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/crossConnectGroups/ocid1.crossconnectgroup.oc1.phx.aaaaaaaa6cyfle2deuxsy6qx6nztfywlhcihc45m4kvmxlmr5jzbw2nukejq
+  response:
+    body: {string: "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n  \"message\" :\
+        \ \"Either ocid1.crossconnectgroup.oc1.phx.aaaaaaaa6cyfle2deuxsy6qx6nztfywlhcihc45m4kvmxlmr5jzbw2nukejq\
+        \ does not exist or you are not authorized to access it with CrossConnectGroupBl\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['236']
+      Content-Type: [application/json]
+      Date: ['Thu, 21 Jun 2018 17:07:16 GMT']
+      opc-request-id: [10ED76B70F704C9FBDCC6AA4FE48575E/2B0E45180B2179044429836FDC6DC6F2/E0138E6796476AA95D457AC038F6A3A8]
+    status: {code: 404, message: Not Found}
+version: 1

@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=TerminateInstance&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 10 Aug 2018 22:19:27 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=TerminateInstance&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"081149c2-c1bd-4b79-9ab3-1b1ac6aea6ea","request":{"instanceId":"ocid1.instance.oc1.phx.abyhqljrkuqeln6jxgp3vtb754ycpwh36k7naexejj4tw5jrabrbesdlwnpq"}}]'}
+    headers:
+      Content-Length: ['167']
+      Content-Type: [application/json]
+      Date: ['Fri, 10 Aug 2018 22:19:27 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="mooUVtuIDra3W1O73AWg6sxb8OHe5rvINH5F3hQm+SJHaQpWLSodJmSi4MBmsJjeUmgCu/BANeEtBiHtuCVtdq7oBtAp1qBWBWc80RsHAkM7UR17VMBXi0GzjGpt7sHsVxQSPREpqJ5lpj5DwAC1RfsySBiCuFlTgOLd+d0C3Yt88FRyIf2oi//Kgi/3bzoheVN5TEBZh1a4B6Rtw9ho0L15/sTNrBHRLC2YASIsF4ViJ/Y2AxChGkbDdHBCP4S4OC41B5lQYu3FgqBtV1JzR1Dk54V85zuyftjBiihv8obPVs2T77k8JMKbJYAaatqnPEoy/Pwv0rSNUJWmGf7RaA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 10 Aug 2018 22:21:05 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.2+preview.1]
+      opc-request-id: [DB53B3542D6F4135A80EBE0DD60D94BB]
+      user-agent: [Oracle-PythonSDK/2.0.2+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.31+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/instances/ocid1.instance.oc1.phx.abyhqljrkuqeln6jxgp3vtb754ycpwh36k7naexejj4tw5jrabrbesdlwnpq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 10 Aug 2018 22:21:06 GMT']
+      opc-request-id: [DB53B3542D6F4135A80EBE0DD60D94BB/256AA739C4576772D033FF10AA91583D/9D3F15F10FB972A3ED52EA2E4C354930]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"A41C02458B864F62AA4C6C7243E9215B\"}",
+      "requestJson": "{\"instanceId\": \"ocid1.instance.oc1.phx.abyhqljrkuqeln6jxgp3vtb754ycpwh36k7naexejj4tw5jrabrbesdlwnpq\"}",
+      "containerId": "081149c2-c1bd-4b79-9ab3-1b1ac6aea6ea", "requestClass": "com.oracle.bmc.core.requests.TerminateInstanceRequest",
+      "responseClass": "com.oracle.bmc.core.responses.TerminateInstanceResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['404']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 10 Aug 2018 22:21:06 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

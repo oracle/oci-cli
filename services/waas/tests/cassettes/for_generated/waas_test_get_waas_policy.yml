@@ -1,0 +1,1739 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetWaasPolicy&serviceName=waas&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Mon, 04 Feb 2019 21:47:55 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0741&apiName=GetWaasPolicy&serviceName=waas&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"6c6a9c71-4e52-4c2d-b5bb-1f4eb6402154","request":{"waasPolicyId":"ocid1.waaspolicy.oc1..aaaaaaaa4svrfp23455ahnpwkli7krw3hccuavno5juzi2ueiaxhbqdlqiyq"}}]'}
+    headers:
+      Content-Length: ['168']
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 21:47:55 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="CCnyakQ6VrDLIG6va05CORsmU6kg+gnvyDUxfWlv+A7MQ75zU/gHxA8FV9EDyLnuo/0dLZNX3qCfEHYcaU5wzDy3RoOL7LJ/rgzFYVDGWoS8nwXBFZJwZdQo4NjkFKgJq1m1/LeAufSjpkFKIqxwxTKFnN8dbaRjqsBgIj22t77m6Nxc+Wv9HEld0J16+Cr2GfsOl60sMIxVI5CM0nNCfSYXw6rmuFNzeR7uS+PqnT1+2nO9AIIrJl9xvu74zK1ykK+tVk9sbOTl04emMFgF6wrs7wIRW09hpVgPi4kn5xRc3jV6c6/ra5XKPO9q4EBYHJdbOgD0Y7qpSimrFNC1rA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 21:48:29 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [2013688886CD45248F504511BFE267F9]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: GET
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies/ocid1.waaspolicy.oc1..aaaaaaaa4svrfp23455ahnpwkli7krw3hccuavno5juzi2ueiaxhbqdlqiyq
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 21:48:29 GMT']
+      Opc-Request-Id: [2013688886CD45248F504511BFE267F9/eb0c936aa68d5683244be35d1a94458b/ce14a42411d8d87628cdce353537d68d]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Cdn: [Served-By-Zenedge]
+      X-Zen-Fury: [947f7da7221f1877c095172b699b380aa30f76d4]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"0CF49AAB63834E468F1E700A0D994930\",
+      \"waasPolicy\": {\"definedTags\": null, \"cname\": \"xxsts0741x9797-waf-oci-example-com.b.waas.oci.oraclecloud.net\",
+      \"policyConfig\": {\"isHttpsForced\": false, \"certificateId\": null, \"isHttpsEnabled\":
+      false}, \"additionalDomains\": null, \"displayName\": \"WaasPolicy20190204214755\",
+      \"origins\": {\"primary\": {\"httpsPort\": 443, \"customHeaders\": [], \"uri\":
+      \"cloud.oracle.com\", \"httpPort\": 80}}, \"lifecycleState\": \"ACTIVE\", \"timeCreated\":
+      \"2019-02-04T21:47:55.941000+00:00\", \"wafConfig\": {\"humanInteractionChallenge\":
+      {\"recordingPeriodInSeconds\": 15, \"setHttpHeader\": null, \"challengeSettings\":
+      {\"captchaSubmitLabel\": \"Yes, I am human.\", \"captchaFooter\": \"Enter the
+      letters and numbers as they are shown in image above.\", \"captchaHeader\":
+      \"We have detected an increased number of attempts to access this website. To
+      help us keep this site secure, please let us know that you are not a robot by
+      entering the text from the image below.\", \"blockErrorPageDescription\": \"Access
+      blocked by website owner. Please contact support.\", \"captchaTitle\": \"Are
+      you human?\", \"blockAction\": \"SHOW_ERROR_PAGE\", \"blockErrorPageMessage\":
+      \"Access to the website is blocked.\", \"blockResponseCode\": 403, \"blockErrorPageCode\":
+      \"HIC\"}, \"interactionThreshold\": 3, \"action\": \"DETECT\", \"isEnabled\":
+      false, \"actionExpirationInSeconds\": 60, \"failureThreshold\": 10, \"failureThresholdExpirationInSeconds\":
+      60}, \"goodBots\": [{\"key\": \"dcf698c7-9df9-437b-9021-8bad5d523692\", \"isEnabled\":
+      false, \"name\": \"Pingdom\", \"description\": \"Pingdom is an uptime and performance
+      monitoring service.\"}, {\"key\": \"bb8eaf7b-11a6-408d-b1b5-3ec63bd1c668\",
+      \"isEnabled\": false, \"name\": \"Baidu Spider\", \"description\": \"Baiduspider
+      is a robot of Baidu Chinese search engine. Baidu (Chinese: \\u767e\\u5ea6; pinyin:
+      B\\u01ceid\\u00f9) is the leading Chinese search engine for websites, audio
+      files, and images.\"}, {\"key\": \"6b601cc8-9a7f-492e-8da8-005f3c7433c1\", \"isEnabled\":
+      false, \"name\": \"Googlebot \", \"description\": \"Googlebot is the search
+      bot software used by Google, which collects documents from the web to build
+      a searchable index for the Google Search engine.\"}, {\"key\": \"4d3b650a-105a-4816-aa23-eb4bb6827c29\",
+      \"isEnabled\": false, \"name\": \"MSN Bot/BingBot\", \"description\": \"Bingbot
+      is Microsoft''s Bing search engine''s crawler. It replaced msnbot as the main
+      Bing Crawler on October 2010.\"}, {\"key\": \"17be51ef-8c87-4eca-ae3e-287c8c1f5a71\",
+      \"isEnabled\": false, \"name\": \"Yandex Bot\", \"description\": \" Yandex bot
+      is Yandex''s search engine''s crawler. \"}, {\"key\": \"6b102898-8868-4651-966c-1b3e90473249\",
+      \"isEnabled\": false, \"name\": \"Yahoo\", \"description\": \"Yahoo bot\"},
+      {\"key\": \"8812c24d-890d-42db-943e-e52b75e985af\", \"isEnabled\": false, \"name\":
+      \"New Relic bot\", \"description\": \"A software analytics tool suite used for
+      applications performance monitoring.\"}, {\"key\": \"35fd5124-ae10-4d5f-91fb-888ed1898822\",
+      \"isEnabled\": false, \"name\": \"New Relic Synthetics\", \"description\": \"The
+      new Relic Synthetics monitoring bots.\"}, {\"key\": \"32e53985-63bd-4a7c-be49-37511d6eba93\",
+      \"isEnabled\": false, \"name\": \"Applebot\", \"description\": \"Applebot is
+      the web crawler for Apple, used by products including Siri and Spotlight Suggestions.
+      It respects customary robots.txt rules and robots meta tags. It originates in
+      the 17.0.0.0 net block.\"}, {\"key\": \"a02cf8af-b6ef-49fa-8330-796b7595d072\",
+      \"isEnabled\": false, \"name\": \"Naver\", \"description\": \"Korea search engine
+      crawler.\"}, {\"key\": \"4e2e7c59-80fb-4b03-bef1-216174f8dc2f\", \"isEnabled\":
+      false, \"name\": \"StatusCake\", \"description\": \"StatusCake is an uptime
+      and performance monitoring service.\"}], \"whitelists\": [], \"protectionSettings\":
+      {\"maxTotalNameLengthOfArguments\": 64000, \"allowedHttpMethods\": [\"GET\",
+      \"POST\", \"HEAD\", \"OPTIONS\"], \"recommendationsPeriodInDays\": 10, \"blockResponseCode\":
+      403, \"maxArgumentCount\": 255, \"mediaTypes\": [\"text/html\", \"text/plain\"],
+      \"maxResponseSizeInKiB\": 1024, \"blockErrorPageDescription\": \"Access blocked
+      by website owner. Please contact support.\", \"isResponseInspected\": false,
+      \"blockAction\": \"SET_RESPONSE_CODE\", \"blockErrorPageMessage\": \"Access
+      to the website is blocked.\", \"blockErrorPageCode\": null, \"maxNameLengthPerArgument\":
+      400}, \"accessRules\": [], \"jsChallenge\": {\"setHttpHeader\": {\"name\": \"x-jsc-alerts\",
+      \"value\": \"{failed_amount}\"}, \"challengeSettings\": {\"captchaSubmitLabel\":
+      \"Yes, I am human.\", \"captchaFooter\": \"Enter the letters and numbers as
+      they are shown in image above.\", \"captchaHeader\": \"We have detected an increased
+      number of attempts to access this website. To help us keep this site secure,
+      please let us know that you are not a robot by entering the text from the image
+      below.\", \"blockErrorPageDescription\": \"Access blocked by website owner.
+      Please contact support.\", \"captchaTitle\": \"Are you human?\", \"blockAction\":
+      \"SHOW_ERROR_PAGE\", \"blockErrorPageMessage\": \"Access to the website is blocked.\",
+      \"blockResponseCode\": 403, \"blockErrorPageCode\": \"JSC-403\"}, \"action\":
+      \"DETECT\", \"isEnabled\": false, \"actionExpirationInSeconds\": 60, \"failureThreshold\":
+      10}, \"captchas\": [], \"origin\": \"primary\", \"deviceFingerprintChallenge\":
+      {\"maxAddressCount\": 20, \"challengeSettings\": {\"captchaSubmitLabel\": \"Yes,
+      I am human.\", \"captchaFooter\": \"Enter the letters and numbers as they are
+      shown in image above.\", \"captchaHeader\": \"We have detected an increased
+      number of attempts to access this website. To help us keep this site secure,
+      please let us know that you are not a robot by entering the text from the image
+      below.\", \"blockErrorPageDescription\": \"Access blocked by website owner.
+      Please contact support.\", \"captchaTitle\": \"Are you human?\", \"blockAction\":
+      \"SHOW_ERROR_PAGE\", \"blockErrorPageMessage\": \"Access to the website is blocked.\",
+      \"blockResponseCode\": 403, \"blockErrorPageCode\": \"DFC\"}, \"action\": \"DETECT\",
+      \"isEnabled\": false, \"actionExpirationInSeconds\": 60, \"maxAddressCountExpirationInSeconds\":
+      60, \"failureThreshold\": 10, \"failureThresholdExpirationInSeconds\": 60},
+      \"threatFeeds\": [{\"action\": \"OFF\", \"key\": \"28677d9f-6211-47b6-9ed6-8c0448fbd208\",
+      \"name\": \"Zeus Tracker\", \"description\": \"      the IP blocklist includes
+      known ZeuS Command & Control servers (hosts) around the world.\\n\"}, {\"action\":
+      \"OFF\", \"key\": \"5fafb421-1474-4b09-80d2-6e951b342eff\", \"name\": \"SSL
+      Abuse\", \"description\": \"      is the blacklist of \\\"bad\\\" SSL certificates
+      identified by abuse.ch to be associated with malware\\n      or botnet activities.\\n\"},
+      {\"action\": \"OFF\", \"key\": \"79d82c99-762f-4296-8002-60e7595bb37f\", \"name\":
+      \"Palevo\", \"description\": \"      is the blocklist includes IPs which are
+      being used as botnet Command & Control for the Palevo\\n      crimeware.\\n\"},
+      {\"action\": \"OFF\", \"key\": \"c2cad92c-d65b-4162-a7c4-163006da82cf\", \"name\":
+      \"Webroot Tor Proxy\", \"description\": \"      Includes IP addresses acting
+      as exit nodes for the Tor Network. Exit nodes are the last point along the proxy
+      chain\\n      and make a direct connection to the originator\\u2019s intended
+      destination.\\n\"}, {\"action\": \"OFF\", \"key\": \"c7e54093-67fb-4c7a-a3b1-8d1812dfc4f4\",
+      \"name\": \"Feodo IP Blocklist\", \"description\": \"      The Feodo Tracker
+      Feodo IP Blocklist contains IP addresses used as C&C communication channel\\n      by
+      the Feodo Trojan. This lists contains two types of IP address: Feodo C&C servers
+      used by\\n      version A, version C and version D of the Feodo Trojan and Feodo
+      C&C servers used by version\\n      B which are usually used for the exclusive
+      purpose of hosting a Feodo C&C server.\\n\"}, {\"action\": \"OFF\", \"key\":
+      \"433fb959-c7a0-4cb0-ae92-6185a63442b4\", \"name\": \"ET Intelligence\", \"description\":
+      \"      ET Intelligence provides actionable threat intel feeds to identify IPs
+      involved in suspicious\\n      and malicious activity. All IPs are based on
+      behavior observed directly by Proofpoint ET Labs.\\n\"}, {\"action\": \"OFF\",
+      \"key\": \"c85f1461-933c-44ee-834d-d47ee11958d2\", \"name\": \"Danger Rules
+      BruteForceBlocker\", \"description\": \"      is the feed of known IPs from
+      blocked SSH bruteforce attacks by the BruteForceBlocker project.\\n\"}, {\"action\":
+      \"OFF\", \"key\": \"fa799ef5-065b-4c2a-8c76-1159af4e9d5c\", \"name\": \"BlockList.de\",
+      \"description\": \"      www.blocklist.de is a free and voluntary service provided
+      by a Fraud/Abuse-specialist,\\n      whose servers are often attacked via SSH-,
+      Mail-Login-, FTP-, Webserver- and other services.\\n\"}, {\"action\": \"OFF\",
+      \"key\": \"a8096cdd-b967-4461-8c97-b5b349435ad8\", \"name\": \"Bambenek Consulting
+      C&Cs\", \"description\": \"      is the feed of known, active and non-sinkholed
+      C&Cs IP addresses supported\\n      by Bambenek Consulting.\\n\"}, {\"action\":
+      \"OFF\", \"key\": \"c37e9eb5-3fa4-4941-a5cb-0c18e1a5b538\", \"name\": \"Webroot
+      Mobile Threats\", \"description\": \"      Includes IP addresses of malicious
+      and unwanted mobile applications. This category leverages data from\\n      Webroot
+      mobile threat research team.\\n\"}, {\"action\": \"OFF\", \"key\": \"0781a9c6-3cee-4c07-bff8-6944f11287cd\",
+      \"name\": \"TOR Nodes\", \"description\": \"      is the list of IPs for known
+      Tor nodes. The Tor network is a group of\\n      volunteer-operated servers
+      that allows people to improve their privacy and\\n      security on the Internet.
+      Tor''s users employ this network by connecting through\\n      a series of virtual
+      tunnels rather than making a direct connection, thus allowing\\n      both organizations
+      and individuals to share information over public networks\\n      without compromising
+      their privacy.\\n\"}, {\"action\": \"OFF\", \"key\": \"9923fcdb-d829-44bf-bd8d-7b4165ba4b3d\",
+      \"name\": \"Webroot Proxy\", \"description\": \"      Includes IP addresses
+      providing proxy and def services.\\n\"}, {\"action\": \"OFF\", \"key\": \"38f20877-9228-4b59-85ed-3ea8524ac975\",
+      \"name\": \"Webroot Phishing\", \"description\": \"      Includes IP addresses
+      hosting phishing sites, other kind of fraud activities such as Ad Click Fraud
+      or Gaming fraud.\\n\"}, {\"action\": \"OFF\", \"key\": \"3bd51a02-4beb-42ca-bae8-62be8da7298d\",
+      \"name\": \"Webroot Reputation\", \"description\": \"      Deny access from
+      IP addresses currently known to be infected with malware. This category also
+      includes\\n      IPs with average low Webroot Reputation Index score. Enabling
+      this category will prevent access from\\n      sources identified to contact
+      malware distribution points.\\n\"}, {\"action\": \"OFF\", \"key\": \"abdcb961-50f4-40f7-939b-7756aacadb81\",
+      \"name\": \"Webroot Denial of Service\", \"description\": \"      Includes DOS,
+      DDOS, anomalous sync flood, anomalous traffic detection.\\n\"}, {\"action\":
+      \"OFF\", \"key\": \"3fe7e6b2-bc32-4ab5-a0d5-580d2543a8c5\", \"name\": \"Webroot
+      Scanners\", \"description\": \"      Includes all reconnaissance such as probes,
+      host scan, domain scan and password brute force attack.\\n\"}, {\"action\":
+      \"OFF\", \"key\": \"66c576db-ba36-48cb-94cc-74e47eef54f8\", \"name\": \"Webroot
+      BotNets\", \"description\": \"      Includes Botnet C&C channels, and infected
+      zombie machine controlled by Bot master.\\n\"}, {\"action\": \"OFF\", \"key\":
+      \"00097f75-1fd1-4819-bce9-7d417cc3e5aa\", \"name\": \"Webroot Web Attacks\",
+      \"description\": \"      Includes cross site scripting, iFrame injection, SQL
+      injection, cross domain injection, or domain\\n      password brute force attack.\\n\"},
+      {\"action\": \"OFF\", \"key\": \"f1269786-fb51-4bf1-9631-8c56f374479a\", \"name\":
+      \"Webroot Windows Exploits\", \"description\": \"      Includes active IP Address
+      offering or distributing malware, shell code, rootkits, worms or viruses.\\n\"},
+      {\"action\": \"OFF\", \"key\": \"672e1315-9097-47c9-bb3e-f7d5cdbc6845\", \"name\":
+      \"Webroot Spam Sources\", \"description\": \"      Includes Tunneling Spam messages
+      through proxy, anomalous SMTP activities, Forum Spam activities.\\n\"}], \"addressRateLimiting\":
+      {\"maxDelayedCountPerAddress\": 10, \"isEnabled\": false, \"blockResponseCode\":
+      503, \"allowedRatePerAddress\": 1}, \"protectionRules\": [{\"name\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from Internet Explorer\", \"labels\": [\"OWASP\",
+      \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A2\", \"A2-2017\",
+      \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site Scripting
+      (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\": \"941340\",
+      \"modSecurityRuleIds\": [\"941340\"], \"exclusions\": []}, {\"name\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from Internet Explorer\", \"labels\": [\"OWASP\",
+      \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A2\", \"A2-2017\",
+      \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site Scripting
+      (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\": \"941330\",
+      \"modSecurityRuleIds\": [\"941330\"], \"exclusions\": []}, {\"name\": \"Cross-Site
+      Scripting (XSS) Attempt: HTML Tag Handler\", \"labels\": [\"OWASP\", \"OWASP-2017\",
+      \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A2\", \"A2-2017\", \"XSS\", \"Cross-Site
+      Scripting\"], \"description\": \"Cross-Site Scripting (XSS) Attempt: HTML Tag
+      Handler\", \"action\": \"OFF\", \"key\": \"941320\", \"modSecurityRuleIds\":
+      [\"941320\"], \"exclusions\": []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt:
+      XSS Filters - Category 5\", \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\",
+      \"WASCTC\", \"PCI\", \"HTTP\", \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"],
+      \"description\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters - Category
+      5. HTML attribues - src, style and href\", \"action\": \"OFF\", \"key\": \"941150\",
+      \"modSecurityRuleIds\": [\"941150\"], \"exclusions\": []}, {\"name\": \"Cross-Site
+      Scripting (XSS) Attempt: SS Attack Detected via libinjection\", \"labels\":
+      [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A3\",
+      \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: SS Attack Detected via libinjection\", \"action\":
+      \"OFF\", \"key\": \"941101\", \"modSecurityRuleIds\": [\"941101\"], \"exclusions\":
+      []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt: UTF-7 encoding XSS filter
+      evasion for IE\", \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\",
+      \"PCI\", \"HTTP\", \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"],
+      \"description\": \"Cross-Site Scripting (XSS) Attempt: UTF-7 encoding XSS filter
+      evasion for IE.\", \"action\": \"OFF\", \"key\": \"941350\", \"modSecurityRuleIds\":
+      [\"941350\"], \"exclusions\": []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt:
+      US-ASCII encoding bypass listed on XSS filter evasion\", \"labels\": [\"OWASP\",
+      \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A3\", \"A3-2017\",
+      \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site Scripting
+      (XSS) Attempt: US-ASCII encoding bypass listed on XSS filter evasion\", \"action\":
+      \"OFF\", \"key\": \"941310\", \"modSecurityRuleIds\": [\"941310\"], \"exclusions\":
+      []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet
+      Explorer\", \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\",
+      \"HTTP\", \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\",
+      \"key\": \"941300\", \"modSecurityRuleIds\": [\"941300\"], \"exclusions\": []},
+      {\"name\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941280\", \"modSecurityRuleIds\": [\"941280\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941270\", \"modSecurityRuleIds\": [\"941270\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941260\", \"modSecurityRuleIds\": [\"941260\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941250\", \"modSecurityRuleIds\": [\"941250\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941240\", \"modSecurityRuleIds\": [\"941240\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941230\", \"modSecurityRuleIds\": [\"941230\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941220\", \"modSecurityRuleIds\": [\"941220\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941210\", \"modSecurityRuleIds\": [\"941210\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941200\", \"modSecurityRuleIds\": [\"941200\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters from Internet Explorer\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters from IE\", \"action\": \"OFF\", \"key\":
+      \"941190\", \"modSecurityRuleIds\": [\"941190\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: Blacklist Keywords from Node-Validator\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: Blacklist Keywords from Node-Validator\", \"action\":
+      \"OFF\", \"key\": \"941180\", \"modSecurityRuleIds\": [\"941180\"], \"exclusions\":
+      []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt: NoScript XSS Filters\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: NoScript XSS Filters, NoScript InjectionChecker - Attributes
+      injection\", \"action\": \"OFF\", \"key\": \"941170\", \"modSecurityRuleIds\":
+      [\"941170\"], \"exclusions\": []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt:
+      NoScript XSS Filters\", \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\",
+      \"PCI\", \"HTTP\", \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"],
+      \"description\": \"Cross-Site Scripting (XSS) Attempt: NoScript XSS Filters,
+      NoScript InjectionChecker - HTML injection\", \"action\": \"OFF\", \"key\":
+      \"941160\", \"modSecurityRuleIds\": [\"941160\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters - Category 4\", \"labels\":
+      [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A3\",
+      \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters - Category 4. XSS vectors making use of
+      javascript URI and tags, e.g., <p style=\\\"background:url(javascript:alert(1))\\\">\",
+      \"action\": \"OFF\", \"key\": \"941140\", \"modSecurityRuleIds\": [\"941140\"],
+      \"exclusions\": []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters
+      - Category 3\", \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\",
+      \"PCI\", \"HTTP\", \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"],
+      \"description\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters - Category
+      3. XSS vectors making use of Attribute Vectors\", \"action\": \"OFF\", \"key\":
+      \"941130\", \"modSecurityRuleIds\": [\"941130\"], \"exclusions\": []}, {\"name\":
+      \"Cross-Site Scripting (XSS) Attempt: XSS Filters - Category 2\", \"labels\":
+      [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A3\",
+      \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: XSS Filters - Category 2. XSS vectors making use of
+      event handlers like onerror, onload etc, e.g., <body onload=\\\"alert(1)\\\">\",
+      \"action\": \"OFF\", \"key\": \"941120\", \"modSecurityRuleIds\": [\"941120\"],
+      \"exclusions\": []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters
+      - Category 1\", \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\",
+      \"PCI\", \"HTTP\", \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"],
+      \"description\": \"Cross-Site Scripting (XSS) Attempt: XSS Filters - Category
+      1. Script tag based XSS vectors, e.g., <script> alert(1)</script>\", \"action\":
+      \"OFF\", \"key\": \"941110\", \"modSecurityRuleIds\": [\"941110\"], \"exclusions\":
+      []}, {\"name\": \"Cross-Site Scripting (XSS) Attempt: Libinjection - XSS Detection\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A3\", \"A3-2017\", \"XSS\", \"Cross-Site Scripting\"], \"description\": \"Cross-Site
+      Scripting (XSS) Attempt: Detects XSS Libinjection\", \"action\": \"OFF\", \"key\":
+      \"941100\", \"modSecurityRuleIds\": [\"941100\"], \"exclusions\": []}, {\"name\":
+      \"CVE-2018-7600, CVE-2018-7602, Drupal unsafe internal attribute remote code
+      execution attempt\", \"labels\": [\"CVE-2018\", \"CVE-2018-7600\", \"CVE-2018-7602\"],
+      \"description\": \"Drupal unsafe internal attribute remote code execution attempt\",
+      \"action\": \"OFF\", \"key\": \"201846451\", \"modSecurityRuleIds\": [\"201846451\"],
+      \"exclusions\": []}, {\"name\": \"CVE-2018-7600, CVE-2018-7602, Drupal 8 remote
+      code execution attempt\", \"labels\": [\"CVE-2018\", \"CVE-2018-7600\", \"CVE-2018-7602\"],
+      \"description\": \"Drupal 8 remote code execution attempt\", \"action\": \"OFF\",
+      \"key\": \"201846316\", \"modSecurityRuleIds\": [\"201846316\"], \"exclusions\":
+      []}, {\"name\": \"Invalid HTTP Request Line\", \"labels\": [\"OWASP\", \"OWASP-2017\",
+      \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"A7\", \"A7-2017\"], \"description\":
+      \"Invalid HTTP Request Line\", \"action\": \"OFF\", \"key\": \"920350\", \"modSecurityRuleIds\":
+      [\"920350\"], \"exclusions\": []}, {\"name\": \"Missing/Empty Host Header\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A7\", \"A7-2017\"], \"description\": \"Missing/Empty Host Header\", \"action\":
+      \"OFF\", \"key\": \"920280\", \"modSecurityRuleIds\": [\"920280\"], \"exclusions\":
+      []}, {\"name\": \"Invalid HTTP Request Line\", \"labels\": [\"OWASP\", \"OWASP-2017\",
+      \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\", \"CAPEC-272\", \"\"], \"description\":
+      \"Invalid HTTP Request Line\", \"action\": \"OFF\", \"key\": \"920100\", \"modSecurityRuleIds\":
+      [\"920100\"], \"exclusions\": []}, {\"name\": \"Restrict HTTP Request Methods\",
+      \"labels\": [\"OWASP\", \"OWASP-2017\", \"CRS3\", \"WASCTC\", \"PCI\", \"HTTP\",
+      \"A6\", \"A6-2017\", \"Recommended\"], \"description\": \"allows only request
+      methods specified by the configurable \\\"Allowed http methods\\\" parameter\",
+      \"action\": \"OFF\", \"key\": \"911100\", \"modSecurityRuleIds\": [\"911100\"],
+      \"exclusions\": []}, {\"name\": \"CVE-2017-9813,  Kaspersky Linux File Server
+      WMC cross site scripting attempt\", \"labels\": [\"CVE-2017\", \"CVE-2017-9813\",
+      \"server-webapp\"], \"description\": \"Kaspersky Linux File Server WMC cross
+      site scripting attempt\", \"action\": \"OFF\", \"key\": \"201843813\", \"modSecurityRuleIds\":
+      [\"201843813\"], \"exclusions\": []}, {\"name\": \"CVE-2017-9812,  Kaspersky
+      Linux File Server WMC directory traversal attempt\", \"labels\": [\"CVE-2017\",
+      \"CVE-2017-9812\", \"server-webapp\"], \"description\": \"Kaspersky Linux File
+      Server WMC directory traversal attempt\", \"action\": \"OFF\", \"key\": \"201843812\",
+      \"modSecurityRuleIds\": [\"201843812\"], \"exclusions\": []}, {\"name\": \"CVE-2017-9812,  Kaspersky
+      Linux File Server WMC directory traversal attempt\", \"labels\": [\"CVE-2017\",
+      \"CVE-2017-9812\", \"server-webapp\"], \"description\": \"Kaspersky Linux File
+      Server WMC directory traversal attempt\", \"action\": \"OFF\", \"key\": \"201843811\",
+      \"modSecurityRuleIds\": [\"201843811\"], \"exclusions\": []}, {\"name\": \"CVE-2017-3823,
+      CVE-2017-6753,  Cisco WebEx explicit use of web plugin\", \"labels\": [\"CVE-2017\",
+      \"CVE-2017-3823\", \"CVE-2017-6753\", \"policy-other\"], \"description\": \"Cisco
+      WebEx explicit use of web plugin\", \"action\": \"OFF\", \"key\": \"201841409\",
+      \"modSecurityRuleIds\": [\"201841409\"], \"exclusions\": []}, {\"name\": \"CVE-2013-0422,
+      CVE-2013-2423,  Styx exploit kit plugin detection connection jorg\", \"labels\":
+      [\"CVE-2007\", \"CVE-2008\", \"CVE-2011\", \"CVE-2012\", \"CVE-2013\", \"CVE-2007-5659\",
+      \"CVE-2008-0655\", \"CVE-2011-3544\", \"CVE-2012-0507\", \"CVE-2012-1723\",
+      \"CVE-2012-4681\", \"CVE-2012-4969\", \"CVE-2013-0422\", \"CVE-2013-2423\",
+      \"exploit-kit\"], \"description\": \"Styx exploit kit plugin detection connection
+      jorg\", \"action\": \"OFF\", \"key\": \"201827040\", \"modSecurityRuleIds\":
+      [\"201827040\"], \"exclusions\": []}, {\"name\": \"CVE-2013-1493,  DotkaChef/Rmayana/DotCache
+      exploit kit inbound java exploit download\", \"labels\": [\"CVE-2013-1493\",
+      \"exploit-kit\"], \"description\": \"DotkaChef/Rmayana/DotCache exploit kit
+      inbound java exploit download\", \"action\": \"OFF\", \"key\": \"201826948\",
+      \"modSecurityRuleIds\": [\"201826948\"], \"exclusions\": []}, {\"name\": \"CVE-2013-2423,  DotkaChef/Rmayana/DotCache
+      exploit kit inbound java exploit download\", \"labels\": [\"CVE-2013-2423\",
+      \"exploit-kit\"], \"description\": \"DotkaChef/Rmayana/DotCache exploit kit
+      inbound java exploit download\", \"action\": \"OFF\", \"key\": \"201826947\",
+      \"modSecurityRuleIds\": [\"201826947\"], \"exclusions\": []}, {\"name\": \"CVE-2012-4681,
+      CVE-2012-5076, CVE-2013-2423, Sweet Orange exploit kit landing page in.php base64
+      uri\", \"labels\": [\"CVE-2010\", \"CVE-2012\", \"CVE-2012\", \"CVE-2012\",
+      \"CVE-2012\", \"CVE-2012\", \"CVE-2012\", \"CVE-2010-0188\", \"CVE-2012-0422\",
+      \"CVE-2012-0431\", \"CVE-2012-0607\", \"CVE-2012-1723\", \"CVE-2012-4681\",
+      \"CVE-2012-5076\", \"CVE-2013-2423\", \"exploit-kit\"], \"description\": \"Sweet
+      Orange exploit kit landing page in.php base64 uri\", \"action\": \"OFF\", \"key\":
+      \"201826834\", \"modSecurityRuleIds\": [\"201826834\"], \"exclusions\": []},
+      {\"name\": \"CVE-2012-1823, CVE-2012-2311, CVE-2012-2335, CVE-2012-2336,  PHP-CGI
+      remote file include attempt\", \"labels\": [\"CVE-2012\", \"CVE-2012\", \"CVE-2012\",
+      \"CVE-2012-1823\", \"CVE-2012-2311\", \"CVE-2012-2335\", \"CVE-2012-2336\",
+      \"server-webapp\"], \"description\": \"PHP-CGI remote file include attempt\",
+      \"action\": \"OFF\", \"key\": \"201822063\", \"modSecurityRuleIds\": [\"201822063\"],
+      \"exclusions\": []}, {\"name\": \"CVE-2012-1723, CVE-2012-1889, CVE-2012-4681,  Blackhole
+      exploit kit JavaScript carat string splitting with hostile applet\", \"labels\":
+      [\"CVE-2006\", \"CVE-2007\", \"CVE-2008\", \"CVE-2009\", \"CVE-2010\", \"CVE-2011\",
+      \"CVE-2011\", \"CVE-2012\", \"CVE-2006-0003\", \"CVE-2007-5659\", \"CVE-2008-0655\",
+      \"CVE-2008-2992\", \"CVE-2009-0927\", \"CVE-2010-1885\", \"CVE-2011-0559\",
+      \"CVE-2011-2110\", \"CVE-2011-3544\", \"CVE-2012-0188\", \"CVE-2012-0507\",
+      \"CVE-2012-1723\", \"CVE-2012-1889\", \"CVE-2012-4681\", \"exploit-kit\"], \"description\":
+      \"Blackhole exploit kit JavaScript carat string splitting with hostile applet\",
+      \"action\": \"OFF\", \"key\": \"201821438\", \"modSecurityRuleIds\": [\"201821438\"],
+      \"exclusions\": []}, {\"name\": \"CVE-2012-0209, Remote Execution Backdoor Attempt
+      Against Horde\", \"labels\": [\"CVE-2012\", \"CVE-2012-0209\", \"server-webapp\"],
+      \"description\": \"Remote Execution Backdoor Attempt Against Horde\", \"action\":
+      \"OFF\", \"key\": \"201821375\", \"modSecurityRuleIds\": [\"201821375\"], \"exclusions\":
+      []}, {\"name\": \"CVE-2003-1567 CVE-2004-2320 CVE-2010-0360 TRACE & CONNECT
+      Attempts\", \"labels\": [\"CVE-2003\", \"CVE-2004\", \"CVE-2010\", \"CVE-2003-1567\",
+      \"CVE-2004-2320\", \"CVE-2010-0360\", \"server-webapp\"], \"description\": \"TRACE
+      Method attempt\", \"action\": \"OFF\", \"key\": \"20182056\", \"modSecurityRuleIds\":
+      [\"20182056\"], \"exclusions\": []}, {\"name\": \"Apache Struts 2 Multipart
+      parser CVE-2017-5638 Remote Code Execution Vulnerability Prevention\", \"labels\":
+      [\"System Access\", \"CVE-2017\", \"application-apache\"], \"description\":
+      \"Detects Apache Jakarta CVE-2017-5638 Remote Code Execution Vulnerability payload\",
+      \"action\": \"OFF\", \"key\": \"2017100\", \"modSecurityRuleIds\": [\"2017100\"],
+      \"exclusions\": []}, {\"name\": \"CVE-2018-6389 WordPress Parameter Resource
+      Consumption Remote DoS\", \"labels\": [\"CVE-2018\", \"WordPress\"], \"description\":
+      \"WordPress Parameter Resource Consumption Remote DoS on jquery-ui-core\", \"action\":
+      \"OFF\", \"key\": \"2018100\", \"modSecurityRuleIds\": [\"2018100\"], \"exclusions\":
+      []}, {\"name\": \"Require Content-Length to be provided with every HTTP/1.1
+      POST request that has no Transfer-Encoding header\", \"labels\": [\"OWASP\",
+      \"Injections\"], \"description\": \"detect HTTP/1.1 request that do not comply
+      with HTTP 1.1 spec by having no Content-Length header when Transfer-Encoding
+      is also absent\", \"action\": \"OFF\", \"key\": \"960013\", \"modSecurityRuleIds\":
+      [\"960013\"], \"exclusions\": []}, {\"name\": \"HTTP Parameter Polution (HPP)
+      detection\", \"labels\": [\"HTTP\"], \"description\": \"Rule detects requests
+      that have multiple arguments with the same name indicative of HPP attack\",
+      \"action\": \"OFF\", \"key\": \"900032\", \"modSecurityRuleIds\": [\"900032\"],
+      \"exclusions\": []}, {\"name\": \"Joomla! Core CVE-2015-8562 Remote Code Execution
+      Vulnerability Prevention\", \"labels\": [\"System Access\", \"CMS\"], \"description\":
+      \"Detects Joomla! Core CVE-2015-8562 Remote Code Execution Vulnerability payload\",
+      \"action\": \"OFF\", \"key\": \"120123\", \"modSecurityRuleIds\": [\"120123\"],
+      \"exclusions\": []}, {\"name\": \"Canadian Social Identification Number (SIN)
+      leakage\", \"labels\": [\"WASCTC\", \"PCI\", \"A6\", \"ResponseBody\"], \"description\":
+      \"Detects leakage of Canadian SIN in reponse body and headers\", \"action\":
+      \"OFF\", \"key\": \"120133\", \"modSecurityRuleIds\": [\"120133\"], \"exclusions\":
+      []}, {\"name\": \"visitorTracker_isMob malware detection\", \"labels\": [\"A1\",
+      \"Injections\", \"CMS\", \"ResponseBody\"], \"description\": \"Detects and/or
+      blocks visitorTracker_isMob malware\", \"action\": \"OFF\", \"key\": \"90025\",
+      \"modSecurityRuleIds\": [\"90025\"], \"exclusions\": []}, {\"name\": \"Credit
+      card PAN leakage\", \"labels\": [\"WASCTC\", \"PCI\", \"CC Leakage\", \"ResponseBody\"],
+      \"description\": \"detects credit card primary account number in the response
+      body\", \"action\": \"OFF\", \"key\": \"90024\", \"modSecurityRuleIds\": [\"90024\"],
+      \"exclusions\": []}, {\"name\": \"Credit card Track 2 data leakage\", \"labels\":
+      [\"WASCTC\", \"PCI\", \"CC Leakage\", \"ResponseBody\"], \"description\": \"detects
+      credit card track 2 data in the response body\", \"action\": \"OFF\", \"key\":
+      \"90023\", \"modSecurityRuleIds\": [\"90023\"], \"exclusions\": []}, {\"name\":
+      \"Credit card Track 1 data leakage\", \"labels\": [\"WASCTC\", \"PCI\", \"CC
+      Leakage\", \"ResponseBody\"], \"description\": \"detects credit card track 1
+      data in the response body\", \"action\": \"OFF\", \"key\": \"90022\", \"modSecurityRuleIds\":
+      [\"90022\"], \"exclusions\": []}, {\"name\": \"Credit card leakage in response:
+      JCB\", \"labels\": [\"WASCTC\", \"PCI\", \"CC Leakage\", \"ResponseBody\"],
+      \"description\": \"Detects JCB credit card numbers sent from site to user.\",
+      \"action\": \"OFF\", \"key\": \"90021\", \"modSecurityRuleIds\": [\"90021\"],
+      \"exclusions\": []}, {\"name\": \"Credit card leakage in response: Discover\",
+      \"labels\": [\"WASCTC\", \"PCI\", \"CC Leakage\", \"ResponseBody\"], \"description\":
+      \"Detects Discover credit card numbers sent from site to user.\", \"action\":
+      \"OFF\", \"key\": \"90020\", \"modSecurityRuleIds\": [\"90020\"], \"exclusions\":
+      []}, {\"name\": \"Credit card leakage in response: enRoute\", \"labels\": [\"WASCTC\",
+      \"PCI\", \"CC Leakage\", \"ResponseBody\"], \"description\": \"Detects enRoute
+      credit card numbers sent from site to user.\", \"action\": \"OFF\", \"key\":
+      \"90019\", \"modSecurityRuleIds\": [\"90019\"], \"exclusions\": []}, {\"name\":
+      \"Credit card leakage in response: Diners Club\", \"labels\": [\"WASCTC\", \"PCI\",
+      \"CC Leakage\", \"ResponseBody\"], \"description\": \"Detects Diners Club credit
+      card numbers sent from site to user.\", \"action\": \"OFF\", \"key\": \"90018\",
+      \"modSecurityRuleIds\": [\"90018\"], \"exclusions\": []}, {\"name\": \"Credit
+      card leakage in response: American Express\", \"labels\": [\"WASCTC\", \"PCI\",
+      \"CC Leakage\", \"ResponseBody\"], \"description\": \"Detects American Express
+      credit card numbers sent from site to user.\", \"action\": \"OFF\", \"key\":
+      \"90017\", \"modSecurityRuleIds\": [\"90017\"], \"exclusions\": []}, {\"name\":
+      \"Credit card leakage in response: Visa\", \"labels\": [\"WASCTC\", \"PCI\",
+      \"CC Leakage\", \"ResponseBody\"], \"description\": \"Detects Visa credit card
+      numbers sent from site to user.\", \"action\": \"OFF\", \"key\": \"90016\",
+      \"modSecurityRuleIds\": [\"90016\"], \"exclusions\": []}, {\"name\": \"Credit
+      card leakage in response: MasterCard\", \"labels\": [\"WASCTC\", \"PCI\", \"CC
+      Leakage\", \"ResponseBody\"], \"description\": \"Detects MasterCard credit card
+      numbers sent from site to user.\", \"action\": \"OFF\", \"key\": \"90015\",
+      \"modSecurityRuleIds\": [\"90015\"], \"exclusions\": []}, {\"name\": \"Credit
+      card leakage in response: GSA SmartPay\", \"labels\": [\"WASCTC\", \"PCI\",
+      \"CC Leakage\", \"ResponseBody\"], \"description\": \"Detects GSA SmartPay credit
+      card numbers sent from site to user.\", \"action\": \"OFF\", \"key\": \"90014\",
+      \"modSecurityRuleIds\": [\"90014\"], \"exclusions\": []}, {\"name\": \"Credit
+      card leakage in request: JCB\", \"labels\": [\"PCI\", \"CC Leakage\"], \"description\":
+      \"Detects JCB credit card numbers in user input.\", \"action\": \"OFF\", \"key\":
+      \"90013\", \"modSecurityRuleIds\": [\"90013\"], \"exclusions\": []}, {\"name\":
+      \"Credit card leakage in request: Discover\", \"labels\": [\"PCI\", \"CC Leakage\"],
+      \"description\": \"Detects Discover credit card numbers in user input.\", \"action\":
+      \"OFF\", \"key\": \"90012\", \"modSecurityRuleIds\": [\"90012\"], \"exclusions\":
+      []}, {\"name\": \"Credit card leakage in request: enRoute\", \"labels\": [\"PCI\",
+      \"CC Leakage\"], \"description\": \"Detects enRoute credit card numbers in user
+      input.\", \"action\": \"OFF\", \"key\": \"90011\", \"modSecurityRuleIds\": [\"90011\"],
+      \"exclusions\": []}, {\"name\": \"Credit card leakage in request: Diners Club\",
+      \"labels\": [\"PCI\", \"CC Leakage\"], \"description\": \"Detects Diners Club
+      credit card numbers in user input.\", \"action\": \"OFF\", \"key\": \"90010\",
+      \"modSecurityRuleIds\": [\"90010\"], \"exclusions\": []}, {\"name\": \"Credit
+      card leakage in request: American Express\", \"labels\": [\"PCI\", \"CC Leakage\"],
+      \"description\": \"Detects American Express credit card numbers in user input.\",
+      \"action\": \"OFF\", \"key\": \"90009\", \"modSecurityRuleIds\": [\"90009\"],
+      \"exclusions\": []}, {\"name\": \"Credit card leakage in request: Visa\", \"labels\":
+      [\"PCI\", \"CC Leakage\"], \"description\": \"Detects Visa credit card numbers
+      in user input.\", \"action\": \"OFF\", \"key\": \"90008\", \"modSecurityRuleIds\":
+      [\"90008\"], \"exclusions\": []}, {\"name\": \"Credit card leakage in request:
+      MasterCard\", \"labels\": [\"PCI\", \"CC Leakage\"], \"description\": \"Detects
+      MasterCard credit card numbers in user input.\", \"action\": \"OFF\", \"key\":
+      \"90007\", \"modSecurityRuleIds\": [\"90007\"], \"exclusions\": []}, {\"name\":
+      \"Credit card leakage in request: GSA SmartPay\", \"labels\": [\"PCI\", \"CC
+      Leakage\"], \"description\": \"Detects GSA SmartPay credit card numbers in user
+      input.\", \"action\": \"OFF\", \"key\": \"90006\", \"modSecurityRuleIds\": [\"90006\"],
+      \"exclusions\": []}, {\"name\": \"Brazilian Social Security Number (CPF) Leakage\",
+      \"labels\": [\"WASCTC\", \"PCI\", \"A6\", \"ResponseBody\"], \"description\":
+      \"Detects leakage of Brazilian CPF in reponse body and headers\", \"action\":
+      \"OFF\", \"key\": \"90005\", \"modSecurityRuleIds\": [\"90005\"], \"exclusions\":
+      []}, {\"name\": \"Executable file upload attempt\", \"labels\": [\"RFI\", \"System
+      Access\", \"Injections\", \"Recommended\"], \"description\": \"Detects attempts
+      to upload executable files though input forms\", \"action\": \"OFF\", \"key\":
+      \"90004\", \"modSecurityRuleIds\": [\"90004\"], \"exclusions\": []}, {\"name\":
+      \"United States Social Security Number Leakage\", \"labels\": [\"WASCTC\", \"PCI\",
+      \"A6\", \"ResponseBody\"], \"description\": \"Detects leakage of US SSN in reponse
+      body and headers\", \"action\": \"OFF\", \"key\": \"90002\", \"modSecurityRuleIds\":
+      [\"90002\"], \"exclusions\": []}, {\"name\": \"Path/directory traversal\", \"labels\":
+      [\"System Access\", \"Recommended\"], \"description\": \"Detects path traversal
+      attempts, a.k.a directory traversal or \\\"../\\\" attacks.\", \"action\": \"OFF\",
+      \"key\": \"950103\", \"modSecurityRuleIds\": [\"950103\"], \"exclusions\": []},
+      {\"name\": \"Filter Profanity\", \"labels\": [\"CMS\"], \"description\": \"Detects
+      profanity used in request headers and body.\", \"action\": \"OFF\", \"key\":
+      \"90001\", \"modSecurityRuleIds\": [\"90001\"], \"exclusions\": []}, {\"name\":
+      \"IFrame Injection\", \"labels\": [\"Injections\", \"ResponseBody\", \"Recommended\"],
+      \"description\": \"Detects iframe injections that could execute malicious code
+      to steal data, redirect to malware infected sites, load malware, etc.\", \"action\":
+      \"OFF\", \"key\": \"981177\", \"modSecurityRuleIds\": [\"981177\", \"981000\",
+      \"981001\", \"981003\"], \"exclusions\": []}, {\"name\": \"Shellshock exploit
+      attempt\", \"labels\": [\"OWASP\", \"A1\", \"PCI\", \"Injections\", \"System
+      Access\", \"Recommended\", \"CVE-2014\"], \"description\": \"Detects the the
+      ability to unintentionally execute commands in Bash. CVE-2014-6271\", \"action\":
+      \"OFF\", \"key\": \"1000000\", \"modSecurityRuleIds\": [\"1000000\", \"1000001\",
+      \"1000002\", \"1000003\", \"1000004\"], \"exclusions\": []}, {\"name\": \"Repeatative
+      Non-Word Chars\", \"labels\": [\"Injections\"], \"description\": \"Attempts
+      to identify when 4 or more non-word characters are repeated in sequence\", \"action\":
+      \"OFF\", \"key\": \"960024\", \"modSecurityRuleIds\": [\"960024\"], \"exclusions\":
+      []}, {\"name\": \"XML-RPC PHP Injection Attack\", \"labels\": [\"Injections\"],
+      \"description\": \"Detects common XML-RPC PHP Injections like $exploit .= \\\"echo''j13mb0t'';\\\".$code.\\\"echo''j13mb0t'';exit;/*</name></value></param></params></methodCall>\\\";\",
+      \"action\": \"OFF\", \"key\": \"2250123\", \"modSecurityRuleIds\": [\"2250123\"],
+      \"exclusions\": []}, {\"name\": \"PHP Injection Attack\", \"labels\": [\"Injections\"],
+      \"description\": \"Detects common php injection attacks like \\\"send-contactus=1&author_name=[php]eval(base64_decode(''\\\".$code.\\\"''))%3Bdie%28%29%3B%5B%2Fphp%5D\\\"\",
+      \"action\": \"OFF\", \"key\": \"2250122\", \"modSecurityRuleIds\": [\"2250122\"],
+      \"exclusions\": []}, {\"name\": \"Injection for common system commands\", \"labels\":
+      [\"OWASP\", \"A1\", \"PCI\", \"System Access\", \"Injections\", \"Recommended\"],
+      \"description\": \"Detects injections for common system commands such as telnet,
+      map, blocalgroup, ftp, rcmd, echo, cmd, chmod, passwd, mail.\", \"action\":
+      \"OFF\", \"key\": \"950006\", \"modSecurityRuleIds\": [\"950006\"], \"exclusions\":
+      []}, {\"name\": \"php code injection\", \"labels\": [\"OWASP\", \"A6\", \"A1\",
+      \"PCI\", \"WASCTC\", \"Injections\"], \"description\": \"Detect a common injections
+      attack, when request contain any php code e.g. \\\"<\\\\?>\\\"\", \"action\":
+      \"OFF\", \"key\": \"959151\", \"modSecurityRuleIds\": [\"959151\", \"958976\",
+      \"958977\"], \"exclusions\": []}, {\"name\": \"Potential Obfuscated Javascript,
+      Heap Spray\", \"labels\": [\"Injections\", \"ResponseBody\"], \"description\":
+      \"Detects Potential Heap Spray in response\", \"action\": \"OFF\", \"key\":
+      \"981007\", \"modSecurityRuleIds\": [\"981007\"], \"exclusions\": []}, {\"name\":
+      \"Potential Obfuscated Javascript, Unescape\", \"labels\": [\"Injections\",
+      \"ResponseBody\"], \"description\": \"Detects Potential Unescape in response\",
+      \"action\": \"OFF\", \"key\": \"981006\", \"modSecurityRuleIds\": [\"981006\"],
+      \"exclusions\": []}, {\"name\": \"Potential Obfuscated Javascript, Eval+Unescape\",
+      \"labels\": [\"Injections\", \"ResponseBody\"], \"description\": \"Detects Potential
+      Eval+Unescape in response\", \"action\": \"OFF\", \"key\": \"981005\", \"modSecurityRuleIds\":
+      [\"981005\"], \"exclusions\": []}, {\"name\": \"Potential Obfuscated Javascript,
+      fromCharCode\", \"labels\": [\"Injections\", \"ResponseBody\"], \"description\":
+      \"Detects excessive fromCharCode Javascript in Output\", \"action\": \"OFF\",
+      \"key\": \"981004\", \"modSecurityRuleIds\": [\"981004\"], \"exclusions\": []},
+      {\"name\": \"Email Injection\", \"labels\": [\"Injections\"], \"description\":
+      \"detects mail command Injections targeting mail servers and webmail applications
+      that construct IMAP/SMTP statements from user-supplied input that is not properly
+      sanitized\", \"action\": \"OFF\", \"key\": \"950019\", \"modSecurityRuleIds\":
+      [\"950019\"], \"exclusions\": []}, {\"name\": \"SSI Injection\", \"labels\":
+      [\"OWASP\", \"A1\", \"PCI\", \"WASCTC\", \"Injections\", \"Recommended\"], \"description\":
+      \"detects common Server-Side-Include format data injections\", \"action\": \"OFF\",
+      \"key\": \"950011\", \"modSecurityRuleIds\": [\"950011\"], \"exclusions\": []},
+      {\"name\": \"LDAP Injection\", \"labels\": [\"OWASP\", \"A1\", \"PCI\", \"WASCTC\",
+      \"Injections\", \"System Access\", \"Recommended\"], \"description\": \"detects
+      common LDAP data constructions injections\", \"action\": \"OFF\", \"key\": \"950010\",
+      \"modSecurityRuleIds\": [\"950010\"], \"exclusions\": []}, {\"name\": \"OS Command
+      Injection\", \"labels\": [\"OWASP\", \"A1\", \"PCI\", \"Injections\", \"System
+      Access\", \"Recommended\"], \"description\": \"detects OS command injection
+      in an application to elevate privileges, execute arbitrary commands, compromise
+      the underlying operating system and install malicious toolkits such as those
+      to participate in botnet attacks\", \"action\": \"OFF\", \"key\": \"950907\",
+      \"modSecurityRuleIds\": [\"950907\"], \"exclusions\": []}, {\"name\": \"Malformed
+      request bodies\", \"labels\": [\"HTTP\", \"CAPEC\"], \"description\": \"Checks
+      for Request body parsing errors.\", \"action\": \"OFF\", \"key\": \"960912\",
+      \"modSecurityRuleIds\": [\"960912\"], \"exclusions\": []}, {\"name\": \"Strict
+      Multipart Parsing Checks\", \"labels\": [\"HTTP\", \"CAPEC\"], \"description\":
+      \"By default be strict with what we accept in the multipart/form-data request
+      body. If the rule below proves to be too strict for your environment consider
+      changing it to Off.\", \"action\": \"OFF\", \"key\": \"960914\", \"modSecurityRuleIds\":
+      [\"960914\"], \"exclusions\": []}, {\"name\": \"Multipart Unmatched Boundary
+      Check\", \"labels\": [\"HTTP\", \"CAPEC\"], \"description\": \"Checks for signs
+      of evasions during file upload requests.\", \"action\": \"OFF\", \"key\": \"960915\",
+      \"modSecurityRuleIds\": [\"960915\"], \"exclusions\": []}, {\"name\": \"Request
+      Line Format Validation against the HTTP RFC\", \"labels\": [\"HTTP\", \"CAPEC\"],
+      \"description\": \"Uses rule negation against the regex for positive security.
+      The regex specifies the proper construction of URI request lines such as: \\\"http:\\\"
+      \\\"//\\\" host [ \\\":\\\" port ] [ abs_path [ \\\"?\\\" query ]].  It also
+      outlines proper construction for CONNECT, OPTIONS and GET requests.\", \"action\":
+      \"OFF\", \"key\": \"960911\", \"modSecurityRuleIds\": [\"960911\"], \"exclusions\":
+      []}, {\"name\": \"Microsoft OLE DB Provider Error page leakage\", \"labels\":
+      [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"],
+      \"description\": \"detects Microsoft OLE DB Provider for SQL Server error page\",
+      \"action\": \"OFF\", \"key\": \"970118\", \"modSecurityRuleIds\": [\"970118\"],
+      \"exclusions\": []}, {\"name\": \"5XX Status code information leakage\", \"labels\":
+      [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\"], \"description\":
+      \"detects if application generates 500-level status code, e.g.,500 Internal
+      Server Error, 501 Not Implemented...505 HTTP Version Not Supported\", \"action\":
+      \"OFF\", \"key\": \"970901\", \"modSecurityRuleIds\": [\"970901\"], \"exclusions\":
+      []}, {\"name\": \"IIS default location revealed\", \"labels\": [\"Server Leakage\",
+      \"ResponseBody\"], \"description\": \"detects if IIS default location revealed\",
+      \"action\": \"OFF\", \"key\": \"970018\", \"modSecurityRuleIds\": [\"970018\"],
+      \"exclusions\": []}, {\"name\": \"Host doesn''t match localhost\", \"labels\":
+      [\"RFI\", \"Recommended\"], \"description\": \"Detects a common RFI attack,
+      when Host Doesn''t Match Local Host.\", \"action\": \"OFF\", \"key\": \"950120\",
+      \"modSecurityRuleIds\": [\"950120\"], \"exclusions\": []}, {\"name\": \"fromcharcode
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of fromcharcode in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958003\", \"modSecurityRuleIds\": [\"958003\"],
+      \"exclusions\": []}, {\"name\": \"type text javascript XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of type text javascript in request, cookies or arguments\", \"action\":
+      \"OFF\", \"key\": \"958039\", \"modSecurityRuleIds\": [\"958039\"], \"exclusions\":
+      []}, {\"name\": \"url shell XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\",
+      \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage
+      of <url shell in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958046\", \"modSecurityRuleIds\": [\"958046\"], \"exclusions\": []}, {\"name\":
+      \"input type image XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of <input type image in
+      request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958008\", \"modSecurityRuleIds\":
+      [\"958008\"], \"exclusions\": []}, {\"name\": \"onkeyup XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of onkeyup in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958412\", \"modSecurityRuleIds\": [\"958412\"], \"exclusions\": []}, {\"name\":
+      \"background-image: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage of background-image:
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958011\",
+      \"modSecurityRuleIds\": [\"958011\"], \"exclusions\": []}, {\"name\": \"iframe
+      src XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of iframe src in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958056\", \"modSecurityRuleIds\": [\"958056\"],
+      \"exclusions\": []}, {\"name\": \"onclick XSS attack\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of onclick
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958407\",
+      \"modSecurityRuleIds\": [\"958407\"], \"exclusions\": []}, {\"name\": \"onresize
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of onresize in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958420\", \"modSecurityRuleIds\": [\"958420\"],
+      \"exclusions\": []}, {\"name\": \"?script XSS attack\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects
+      usage of < ?script in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958051\", \"modSecurityRuleIds\": [\"958051\"], \"exclusions\": []},
+      {\"name\": \"onload XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of onload in request, cookies
+      or arguments\", \"action\": \"OFF\", \"key\": \"958413\", \"modSecurityRuleIds\":
+      [\"958413\"], \"exclusions\": []}, {\"name\": \"lowsrc vbscript XSS attack\",
+      \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\":
+      \"Detects usage of lowsrc vbscript in request, cookies or arguments\", \"action\":
+      \"OFF\", \"key\": \"958025\", \"modSecurityRuleIds\": [\"958025\"], \"exclusions\":
+      []}, {\"name\": \"import XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage of import
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958009\",
+      \"modSecurityRuleIds\": [\"958009\"], \"exclusions\": []}, {\"name\": \"onselect
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of onselect in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958421\", \"modSecurityRuleIds\": [\"958421\"],
+      \"exclusions\": []}, {\"name\": \"innerhtml XSS attack\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of innerhtml
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958004\",
+      \"modSecurityRuleIds\": [\"958004\"], \"exclusions\": []}, {\"name\": \"url
+      javascript: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"Detects usage of url javascript:
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958045\",
+      \"modSecurityRuleIds\": [\"958045\"], \"exclusions\": []}, {\"name\": \"href
+      vbscript: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\"], \"description\": \"Detects usage of href vbscript: in request, cookies
+      or arguments\", \"action\": \"OFF\", \"key\": \"958020\", \"modSecurityRuleIds\":
+      [\"958020\"], \"exclusions\": []}, {\"name\": \"bonmouseover XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of bonmouseover in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958417\", \"modSecurityRuleIds\": [\"958417\"], \"exclusions\": []},
+      {\"name\": \"asfunction: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of asfunction: in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958059\", \"modSecurityRuleIds\":
+      [\"958059\"], \"exclusions\": []}, {\"name\": \"lowsrc shell XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of lowsrc shell in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958024\", \"modSecurityRuleIds\": [\"958024\"], \"exclusions\": []},
+      {\"name\": \"bonmouseout XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage of bonmouseout
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958416\",
+      \"modSecurityRuleIds\": [\"958416\"], \"exclusions\": []}, {\"name\": \"type
+      text vbscript XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\"], \"description\": \"Detects usage of type text vbscript in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958041\", \"modSecurityRuleIds\":
+      [\"958041\"], \"exclusions\": []}, {\"name\": \"src http: XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of src http: in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958030\", \"modSecurityRuleIds\": [\"958030\"], \"exclusions\": []},
+      {\"name\": \"?meta XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of ?meta in request, cookies
+      or arguments\", \"action\": \"OFF\", \"key\": \"958049\", \"modSecurityRuleIds\":
+      [\"958049\"], \"exclusions\": []}, {\"name\": \"type application x-vbscript
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of type application x-vbscript in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958037\", \"modSecurityRuleIds\":
+      [\"958037\"], \"exclusions\": []}, {\"name\": \"alert XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of alert in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958052\", \"modSecurityRuleIds\": [\"958052\"], \"exclusions\": []}, {\"name\":
+      \"type text jscript XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of type text jscript in
+      request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958040\", \"modSecurityRuleIds\":
+      [\"958040\"], \"exclusions\": []}, {\"name\": \"onchange XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of onchange in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958406\", \"modSecurityRuleIds\": [\"958406\"], \"exclusions\": []}, {\"name\":
+      \"href javascript: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage of href
+      javascript: in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958018\", \"modSecurityRuleIds\": [\"958018\"], \"exclusions\": []}, {\"name\":
+      \"addimport XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"Detects usage of addimport in
+      request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958000\", \"modSecurityRuleIds\":
+      [\"958000\"], \"exclusions\": []}, {\"name\": \"type application x-javascript
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of type application x-javascript in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958036\", \"modSecurityRuleIds\":
+      [\"958036\"], \"exclusions\": []}, {\"name\": \"onsubmit XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of onsubmit in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958422\", \"modSecurityRuleIds\": [\"958422\"], \"exclusions\": []}, {\"name\":
+      \"onkeypress XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\"], \"description\": \"Detects usage of onkeypress in request, cookies
+      or arguments\", \"action\": \"OFF\", \"key\": \"958411\", \"modSecurityRuleIds\":
+      [\"958411\"], \"exclusions\": []}, {\"name\": \"activexobject XSS attack\",
+      \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\":
+      \"Detects usage of activexobject in request, cookies or arguments\", \"action\":
+      \"OFF\", \"key\": \"958010\", \"modSecurityRuleIds\": [\"958010\"], \"exclusions\":
+      []}, {\"name\": \"lowsrc javascript: XSS attack\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of lowsrc
+      javascript: in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958023\", \"modSecurityRuleIds\": [\"958023\"], \"exclusions\": []}, {\"name\":
+      \"onerror XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\"], \"description\": \"Detects usage of onerror in request, cookies or
+      arguments\", \"action\": \"OFF\", \"key\": \"958404\", \"modSecurityRuleIds\":
+      [\"958404\"], \"exclusions\": []}, {\"name\": \"cdata XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\":
+      \"Detects usage of cdata in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958005\", \"modSecurityRuleIds\": [\"958005\"], \"exclusions\": []},
+      {\"name\": \"document cookie XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\",
+      \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage
+      of document.cookie in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958001\", \"modSecurityRuleIds\": [\"958001\"], \"exclusions\": []},
+      {\"name\": \"onfocus XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of onfocus in request, cookies
+      or arguments\", \"action\": \"OFF\", \"key\": \"958409\", \"modSecurityRuleIds\":
+      [\"958409\"], \"exclusions\": []}, {\"name\": \"type text ecmascript XSS attack\",
+      \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\":
+      \"Detects usage of type text ecmascript in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958038\", \"modSecurityRuleIds\": [\"958038\"],
+      \"exclusions\": []}, {\"name\": \"vbscript: XSS attack\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of vbscript:
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958033\",
+      \"modSecurityRuleIds\": [\"958033\"], \"exclusions\": []}, {\"name\": \"body
+      background XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"Detects usage of <body background
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958006\",
+      \"modSecurityRuleIds\": [\"958006\"], \"exclusions\": []}, {\"name\": \"javascript:
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\",
+      \"Recommended\"], \"description\": \"Detects usage of javascript: in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958031\", \"modSecurityRuleIds\":
+      [\"958031\"], \"exclusions\": []}, {\"name\": \"?iframe XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\":
+      \"Detects usage of ?iframe in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958057\", \"modSecurityRuleIds\": [\"958057\"], \"exclusions\": []},
+      {\"name\": \"settimeout XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of settimeout in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958028\", \"modSecurityRuleIds\":
+      [\"958028\"], \"exclusions\": []}, {\"name\": \"onmove XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of onmove in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958419\", \"modSecurityRuleIds\": [\"958419\"], \"exclusions\": []}, {\"name\":
+      \"onblur XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\"], \"description\": \"Detects usage of onblur in request, cookies or
+      arguments\", \"action\": \"OFF\", \"key\": \"958405\", \"modSecurityRuleIds\":
+      [\"958405\"], \"exclusions\": []}, {\"name\": \"livescript: XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of livescript: in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958022\", \"modSecurityRuleIds\": [\"958022\"], \"exclusions\": []},
+      {\"name\": \"onmousemove XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of onmousemove in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958415\", \"modSecurityRuleIds\":
+      [\"958415\"], \"exclusions\": []}, {\"name\": \"onkeydown XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of onkeydown in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958410\", \"modSecurityRuleIds\": [\"958410\"], \"exclusions\": []},
+      {\"name\": \"url vbscript: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\",
+      \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of url vbscript:
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958047\",
+      \"modSecurityRuleIds\": [\"958047\"], \"exclusions\": []}, {\"name\": \"onload
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of onload in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958007\", \"modSecurityRuleIds\": [\"958007\"],
+      \"exclusions\": []}, {\"name\": \"getspecialfolder XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of getspecialfolder in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958017\", \"modSecurityRuleIds\": [\"958017\"], \"exclusions\": []},
+      {\"name\": \"execscript XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage of execscript
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958002\",
+      \"modSecurityRuleIds\": [\"958002\"], \"exclusions\": []}, {\"name\": \"onunload
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of onunload in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958423\", \"modSecurityRuleIds\": [\"958423\"],
+      \"exclusions\": []}, {\"name\": \"copyparentfolder XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of copyparentfolder in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958012\", \"modSecurityRuleIds\": [\"958012\"], \"exclusions\": []},
+      {\"name\": \"ondragdrop XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of ondragdrop in request,
+      cookies or arguments\", \"action\": \"OFF\", \"key\": \"958408\", \"modSecurityRuleIds\":
+      [\"958408\"], \"exclusions\": []}, {\"name\": \"createtextrange XSS attack\",
+      \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\":
+      \"Detects usage of createtextrange in request, cookies or arguments\", \"action\":
+      \"OFF\", \"key\": \"958013\", \"modSecurityRuleIds\": [\"958013\"], \"exclusions\":
+      []}, {\"name\": \"href schell XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\",
+      \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects usage
+      of href schell in request, cookies or arguments\", \"action\": \"OFF\", \"key\":
+      \"958019\", \"modSecurityRuleIds\": [\"958019\"], \"exclusions\": []}, {\"name\":
+      \"style bexpression XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\",
+      \"PCI\", \"XSS\"], \"description\": \"Detects usage of style bexpression in
+      request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958034\", \"modSecurityRuleIds\":
+      [\"958034\"], \"exclusions\": []}, {\"name\": \"onmouseup XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of onmouseup in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958418\", \"modSecurityRuleIds\": [\"958418\"], \"exclusions\": []},
+      {\"name\": \"lowsrc and http: XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\",
+      \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of lowsrc and http:
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958054\",
+      \"modSecurityRuleIds\": [\"958054\"], \"exclusions\": []}, {\"name\": \"onabort
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of onabort in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958027\", \"modSecurityRuleIds\": [\"958027\"],
+      \"exclusions\": []}, {\"name\": \"mocha: XSS attack\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects usage of mocha:
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958026\",
+      \"modSecurityRuleIds\": [\"958026\"], \"exclusions\": []}, {\"name\": \"src
+      and shell XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"Detects usage of src and shell
+      in request, cookies or arguments\", \"action\": \"OFF\", \"key\": \"958032\",
+      \"modSecurityRuleIds\": [\"958032\"], \"exclusions\": []}, {\"name\": \"onmousedown
+      XSS attack\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects usage of onmousedown in request, cookies or arguments\",
+      \"action\": \"OFF\", \"key\": \"958414\", \"modSecurityRuleIds\": [\"958414\"],
+      \"exclusions\": []}, {\"name\": \"getparentfolder XSS attack\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      usage of getparentfolder in request, cookies or arguments\", \"action\": \"OFF\",
+      \"key\": \"958016\", \"modSecurityRuleIds\": [\"958016\"], \"exclusions\": []},
+      {\"name\": \"Generic XSS attacks\", \"labels\": [\"XSS\", \"OWASP\", \"A3\",
+      \"Recommended\"], \"description\": \"Detects common XSS attacks embedded within
+      non-script elements, e.g., like jscript onsubmit copyparentfolder document javascript
+      meta onchange onmove onkeydown onkeyup activexobject onerror onmouseup ecmascript
+      bexpression onmouseover vbscript\", \"action\": \"OFF\", \"key\": \"981136\",
+      \"modSecurityRuleIds\": [\"981136\"], \"exclusions\": []}, {\"name\": \"Common
+      direct HTML injection\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"detects tags that are the most
+      common direct HTML injection points\", \"action\": \"OFF\", \"key\": \"973300\",
+      \"modSecurityRuleIds\": [\"973300\", \"973301\", \"973302\"], \"exclusions\":
+      []}, {\"name\": \"Drupal - pre-auth SQL Injection Vulnerability\", \"labels\":
+      [\"Apps\", \"CMS\", \"OWASP\", \"A1\"], \"description\": \"A malicious user
+      can inject arbitrary SQL queries. And thereby control the complete Drupal site.
+      This leads to a code execution as well. Drupal 7.32 fixed this bug.\", \"action\":
+      \"OFF\", \"key\": \"2100082\", \"modSecurityRuleIds\": [\"2100082\"], \"exclusions\":
+      []}, {\"name\": \"SQL Character Anomaly Scoring\", \"labels\": [\"SQL Injections\"],
+      \"description\": \"Attempts to gauge when there is an excessive use of meta-characters
+      within a single parameter payload.\", \"action\": \"OFF\", \"key\": \"981172\",
+      \"modSecurityRuleIds\": [\"981172\", \"981173\"], \"exclusions\": []}, {\"name\":
+      \"SQL Keyword Anomaly Scoring\", \"labels\": [\"SQL Injections\", \"WASCTC\",
+      \"OWASP\", \"A1\", \"PCI\"], \"description\": \"detects common SQL keywords
+      anomalies\", \"action\": \"OFF\", \"key\": \"981300\", \"modSecurityRuleIds\":
+      [\"981300\", \"981301\", \"981302\", \"981303\", \"981304\", \"981305\", \"981306\",
+      \"981307\", \"981308\", \"981309\", \"981310\", \"981311\", \"981312\", \"981313\",
+      \"981314\", \"981315\", \"981316\", \"981317\"], \"exclusions\": []}, {\"name\":
+      \"\\u0421lassic SQL injection probings\", \"labels\": [\"SQL Injections\"],
+      \"description\": \"detects classic SQL injection probings\", \"action\": \"OFF\",
+      \"key\": \"981242\", \"modSecurityRuleIds\": [\"981242\", \"981243\"], \"exclusions\":
+      []}, {\"name\": \"SQL injection using sleep() or benchmark()\", \"labels\":
+      [\"SQL Injections\", \"OWASP\", \"A1\"], \"description\": \"Detects blind SQL
+      injection tests using sleep() or benchmark() functions.\", \"action\": \"OFF\",
+      \"key\": \"981272\", \"modSecurityRuleIds\": [\"981272\"], \"exclusions\": []},
+      {\"name\": \"Blind SQL injection\", \"labels\": [\"SQL Injections\", \"WASCTC\",
+      \"OWASP\", \"A1\", \"PCI\", \"Recommended\"], \"description\": \"detects common
+      blind SQL injection attacks\", \"action\": \"OFF\", \"key\": \"950007\", \"modSecurityRuleIds\":
+      [\"950007\"], \"exclusions\": []}, {\"name\": \"wiki pages multiple Parameter
+      XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"XSS\", \"CVE-2013\"], \"description\":
+      \"Microsoft SharePoint wiki pages multiple Parameter XSS (CVE-2013-3180)\",
+      \"action\": \"OFF\", \"key\": \"2100069\", \"modSecurityRuleIds\": [\"2100069\"],
+      \"exclusions\": []}, {\"name\": \"Detects HOIC DoS Tool requests\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A7\", \"PCI\", \"Attack Tools\"], \"description\":
+      \"Detects HOIC DoS Tool requests\", \"action\": \"OFF\", \"key\": \"2200925\",
+      \"modSecurityRuleIds\": [\"2200925\", \"2200926\"], \"exclusions\": []}, {\"name\":
+      \"IRC Botnet Attacks\", \"labels\": [\"WASCTC\", \"OWASP\", \"A7\", \"PCI\",
+      \"Attack Tools\"], \"description\": \"Detects common IRC Botnet Attack Commands\",
+      \"action\": \"OFF\", \"key\": \"2200924\", \"modSecurityRuleIds\": [\"2200924\"],
+      \"exclusions\": []}, {\"name\": \"Trojan, Backdoor and Webshell Access Attempts\",
+      \"labels\": [\"WASCTC\", \"OWASP\", \"A7\", \"PCI\", \"Attack Tools\", \"ResponseBody\"],
+      \"description\": \"Detects when an attacker attempts to access trojan, backdoor
+      or webshell web page\", \"action\": \"OFF\", \"key\": \"950110\", \"modSecurityRuleIds\":
+      [\"950110\", \"950921\", \"950922\"], \"exclusions\": []}, {\"name\": \"HTTP
+      Request Smuggling\", \"labels\": [\"WASCTC\", \"OWASP\", \"A1\", \"PCI\", \"HTTP\",
+      \"Recommended\"], \"description\": \"detects specially crafted requests that
+      under certain circumstances could be seen by the attacked entities as two different
+      sets of requests. This allows certain requests to be smuggled through to a second
+      entity without the first one realizing it\", \"action\": \"OFF\", \"key\": \"950012\",
+      \"modSecurityRuleIds\": [\"950012\"], \"exclusions\": []}, {\"name\": \"HTTP
+      Response Splitting\", \"labels\": [\"HTTP\", \"Recommended\"], \"description\":
+      \"detects Carriage Return + Linefeed characters in the response header that
+      could cause attacked entities to interpret it as two separate responses instead
+      of one\", \"action\": \"OFF\", \"key\": \"950910\", \"modSecurityRuleIds\":
+      [\"950910\", \"950911\"], \"exclusions\": []}, {\"name\": \"Common system command
+      access attempt\", \"labels\": [\"WASCTC\", \"OWASP\", \"A1\", \"PCI\", \"System
+      Access\", \"Recommended\"], \"description\": \"Detect access attempts to common
+      system commands, such as map, telnet, ftp, rcms, cmd.\", \"action\": \"OFF\",
+      \"key\": \"950002\", \"modSecurityRuleIds\": [\"950002\"], \"exclusions\": []},
+      {\"name\": \"Common system files access attempt\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A4\", \"PCI\", \"System Access\", \"Recommended\"], \"description\":
+      \"Detects access attempts to common system files, such as access, passwd, groupm
+      global.asa, httpd.conf, boot.ini, /etc.\", \"action\": \"OFF\", \"key\": \"950005\",
+      \"modSecurityRuleIds\": [\"950005\"], \"exclusions\": []}, {\"name\": \"Session
+      fixation\", \"labels\": [\"WASCTC\", \"OWASP\", \"A2\", \"PCI\"], \"description\":
+      \"Session Fixation is an attack technique that forces a user''s session ID to
+      an explicit value. Depending on the functionality of the target web site, a
+      number of techniques can be utilized to \\\"fix\\\" the session ID value. These
+      techniques range from Cross-site Scripting exploits to peppering the web site
+      with previously made HTTP requests. After a user''s session ID has been fixed,
+      the attacker will wait for that user to login. Once the user does so, the attacker
+      uses the predefined session ID value to assume the same online identity.\",
+      \"action\": \"OFF\", \"key\": \"950009\", \"modSecurityRuleIds\": [\"950009\",
+      \"950003\", \"950000\"], \"exclusions\": []}, {\"name\": \"Zen Cart local file
+      disclosure vulnerability\", \"labels\": [\"Apps\", \"eCommerce\"], \"description\":
+      \"Detects Zen Cart local file disclosure vulnerability\", \"action\": \"OFF\",
+      \"key\": \"2250129\", \"modSecurityRuleIds\": [\"2250129\"], \"exclusions\":
+      []}, {\"name\": \"Opencart Remote File Upload Vulnerability\", \"labels\": [\"Apps\",
+      \"eCommerce\"], \"description\": \"Detects Opencart Remote File Upload Vulnerability\",
+      \"action\": \"OFF\", \"key\": \"2250128\", \"modSecurityRuleIds\": [\"2250128\"],
+      \"exclusions\": []}, {\"name\": \"Oscommerce File Disclosure And Admin ByPass\",
+      \"labels\": [\"Apps\", \"eCommerce\"], \"description\": \"Detects Oscommerce
+      File Disclosure And Admin ByPass\", \"action\": \"OFF\", \"key\": \"2250126\",
+      \"modSecurityRuleIds\": [\"2250126\"], \"exclusions\": []}, {\"name\": \"osCommerce
+      File Upload\", \"labels\": [\"Apps\", \"eCommerce\"], \"description\": \"Detects
+      osCommerce file upload attacks like \\\"http://\\\".$site.\\\"admin/file_manager.php/login.php\\\";\",
+      \"action\": \"OFF\", \"key\": \"2250125\", \"modSecurityRuleIds\": [\"2250125\"],
+      \"exclusions\": []}, {\"name\": \"Internet Explorer XSS Filters\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects
+      common IE XSS attacks\", \"action\": \"OFF\", \"key\": \"973331\", \"modSecurityRuleIds\":
+      [\"973331\", \"973315\", \"973330\", \"973327\", \"973326\", \"973346\", \"973345\",
+      \"973324\", \"973323\", \"973322\", \"973348\", \"973321\", \"973320\", \"973318\",
+      \"973317\", \"973347\", \"973335\", \"973334\", \"973333\", \"973344\", \"973332\",
+      \"973329\", \"973328\", \"973316\", \"973325\", \"973319\"], \"exclusions\":
+      []}, {\"name\": \"&{alert(''xss'')} attacks\", \"labels\": [\"WASCTC\", \"OWASP\",
+      \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects &{alert(''xss'')}
+      attacks\", \"action\": \"OFF\", \"key\": \"973313\", \"modSecurityRuleIds\":
+      [\"973313\"], \"exclusions\": []}, {\"name\": \"'''';!--\\\"<XSS>=&{()} Attacks\",
+      \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"],
+      \"description\": \"Detects '''';!--\\\"<XSS>=&{()} Attacks\", \"action\": \"OFF\",
+      \"key\": \"973312\", \"modSecurityRuleIds\": [\"973312\"], \"exclusions\": []},
+      {\"name\": \"String.fromCharCode(88,83,83) attacks\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\"], \"description\": \"Detects String.fromCharCode(88,83,83)
+      attacks.\", \"action\": \"OFF\", \"key\": \"973311\", \"modSecurityRuleIds\":
+      [\"973311\"], \"exclusions\": []}, {\"name\": \"Embedded Scripts Within Alert
+      Fragments\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"],
+      \"description\": \"Detects attacks like alert(''xss''), alert(\\\"xss\\\"),
+      alert(/xss/).\", \"action\": \"OFF\", \"key\": \"973310\", \"modSecurityRuleIds\":
+      [\"973310\"], \"exclusions\": []}, {\"name\": \"CSS Fragments attacks\", \"labels\":
+      [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\":
+      \"Detects common CSS fragments attacks like <div style=\\\"background-image:
+      url(javascript:...)\\\"> or <img style=\\\"x:expression(document.write(1))\\\">\",
+      \"action\": \"OFF\", \"key\": \"973309\", \"modSecurityRuleIds\": [\"973309\",
+      \"973308\"], \"exclusions\": []}, {\"name\": \"Embedded Scripts Within JavaScript
+      Fragments\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"],
+      \"description\": \"Detects common JavaScript fragments like fromcharcode, alert,
+      eval that can be used for attacks\", \"action\": \"OFF\", \"key\": \"973307\",
+      \"modSecurityRuleIds\": [\"973307\"], \"exclusions\": []}, {\"name\": \"Doctype
+      Entity inject\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\", \"XSS\"],
+      \"description\": \"Detects Doctype Entity inject attacks\", \"action\": \"OFF\",
+      \"key\": \"973314\", \"modSecurityRuleIds\": [\"973314\"], \"exclusions\": []},
+      {\"name\": \"Embedding javascript in style attribute\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects
+      Embedding javascript in style attribute\", \"action\": \"OFF\", \"key\": \"973306\",
+      \"modSecurityRuleIds\": [\"973306\"], \"exclusions\": []}, {\"name\": \"Embedded
+      Scripts Within URI Schemes\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"detects \\\"data\\\", \\\"javascript\\\",
+      \\\"src\\\" or other URI schemes/attributes based XSS vectors, e.g., <p style=\\\"background:url(javascript:alert(1))\\\">\",
+      \"action\": \"OFF\", \"key\": \"973338\", \"modSecurityRuleIds\": [\"973338\",
+      \"973304\", \"973305\"], \"exclusions\": []}, {\"name\": \"Embedded Scripts
+      Within Event Handlers\", \"labels\": [\"WASCTC\", \"OWASP\", \"A3\", \"PCI\",
+      \"XSS\", \"Recommended\"], \"description\": \"Detects event handler based XSS
+      vectors, e.g., <body onload=\\\"alert(1)\\\">\", \"action\": \"OFF\", \"key\":
+      \"973337\", \"modSecurityRuleIds\": [\"973337\", \"973303\"], \"exclusions\":
+      []}, {\"name\": \"Embedding Scripts Within Scripts\", \"labels\": [\"WASCTC\",
+      \"OWASP\", \"A3\", \"PCI\", \"XSS\", \"Recommended\"], \"description\": \"Detects
+      script tag based XSS vectors, e.g., <script> alert(1)</script>\", \"action\":
+      \"OFF\", \"key\": \"973336\", \"modSecurityRuleIds\": [\"973336\"], \"exclusions\":
+      []}, {\"name\": \"UPDF XSS Injection\", \"labels\": [\"XSS\", \"OWASP\", \"A3\"],
+      \"description\": \"Detects submitted links that contains the # fragment in a
+      query_string.\", \"action\": \"OFF\", \"key\": \"950018\", \"modSecurityRuleIds\":
+      [\"950018\"], \"exclusions\": []}, {\"name\": \"Directory listing information
+      leakage\", \"labels\": [\"OWASP\", \"A6\", \"A4\", \"PCI\", \"WASCTC\", \"Server
+      Leakage\", \"ResponseBody\"], \"description\": \"detects directory listing information
+      leakage\", \"action\": \"OFF\", \"key\": \"970013\", \"modSecurityRuleIds\":
+      [\"970013\"], \"exclusions\": []}, {\"name\": \"IIS errors information leakage\",
+      \"labels\": [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"],
+      \"description\": \"detects IIS errors information leakage\", \"action\": \"OFF\",
+      \"key\": \"970004\", \"modSecurityRuleIds\": [\"970004\", \"970904\"], \"exclusions\":
+      []}, {\"name\": \"SQL errors information leakage\", \"labels\": [\"OWASP\",
+      \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"], \"description\":
+      \"detects SQL errors information leakage\", \"action\": \"OFF\", \"key\": \"970003\",
+      \"modSecurityRuleIds\": [\"970003\"], \"exclusions\": []}, {\"name\": \"Statistics
+      pages information leakage\", \"labels\": [\"Server Leakage\", \"ResponseBody\"],
+      \"description\": \"detects statistics pages information leakage\", \"action\":
+      \"OFF\", \"key\": \"970002\", \"modSecurityRuleIds\": [\"970002\"], \"exclusions\":
+      []}, {\"name\": \"PHP source code leakage\", \"labels\": [\"OWASP\", \"A6\",
+      \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"], \"description\":
+      \"detects PHP source code leakage\", \"action\": \"OFF\", \"key\": \"970015\",
+      \"modSecurityRuleIds\": [\"970015\", \"970902\"], \"exclusions\": []}, {\"name\":
+      \"ASP/JSP source code leakage\", \"labels\": [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\",
+      \"Server Leakage\", \"ResponseBody\"], \"description\": \"detects ASP/JSP source
+      code leakage\", \"action\": \"OFF\", \"key\": \"970014\", \"modSecurityRuleIds\":
+      [\"970014\"], \"exclusions\": []}, {\"name\": \"File and/or directory names
+      leakage\", \"labels\": [\"OWASP\", \"A6\", \"A4\", \"PCI\", \"WASCTC\", \"Server
+      Leakage\", \"ResponseBody\"], \"description\": \"detects file and/or directory
+      names leakage\", \"action\": \"OFF\", \"key\": \"970011\", \"modSecurityRuleIds\":
+      [\"970011\"], \"exclusions\": []}, {\"name\": \"Weblogic information leakage\",
+      \"labels\": [\"Server Leakage\", \"ResponseBody\"], \"description\": \"detects
+      Weblogic information leakage\", \"action\": \"OFF\", \"key\": \"970021\", \"modSecurityRuleIds\":
+      [\"970021\"], \"exclusions\": []}, {\"name\": \"ColdFusion source code leakage\",
+      \"labels\": [\"OWASP\", \"A6\", \"A4\", \"PCI\", \"WASCTC\", \"Server Leakage\",
+      \"ResponseBody\"], \"description\": \"detects ColdFusion source code leakage\",
+      \"action\": \"OFF\", \"key\": \"970016\", \"modSecurityRuleIds\": [\"970016\"],
+      \"exclusions\": []}, {\"name\": \"MS Office document properties leakage\", \"labels\":
+      [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"],
+      \"description\": \"detects MS Office document properties leakage\", \"action\":
+      \"OFF\", \"key\": \"970012\", \"modSecurityRuleIds\": [\"970012\", \"970903\"],
+      \"exclusions\": []}, {\"name\": \"ISA server existence revealed\", \"labels\":
+      [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"],
+      \"description\": \"detects if ISA server existence revealed\", \"action\": \"OFF\",
+      \"key\": \"970010\", \"modSecurityRuleIds\": [\"970010\"], \"exclusions\": []},
+      {\"name\": \"PHP information leakage\", \"labels\": [\"OWASP\", \"A6\", \"PCI\",
+      \"WASCTC\", \"Server Leakage\", \"ResponseBody\"], \"description\": \"detects
+      PHP information leakage\", \"action\": \"OFF\", \"key\": \"970009\", \"modSecurityRuleIds\":
+      [\"970009\"], \"exclusions\": []}, {\"name\": \"ColdFusion information leakage\",
+      \"labels\": [\"OWASP\", \"A6\", \"PCI\", \"WASCTC\", \"Server Leakage\", \"ResponseBody\"],
+      \"description\": \"detects ColdFusion information leakage\", \"action\": \"OFF\",
+      \"key\": \"970008\", \"modSecurityRuleIds\": [\"970008\"], \"exclusions\": []},
+      {\"name\": \"Zope information leakage\", \"labels\": [\"OWASP\", \"A6\", \"PCI\",
+      \"WASCTC\", \"Server Leakage\", \"ResponseBody\"], \"description\": \"detects
+      Zope information leakage\", \"action\": \"OFF\", \"key\": \"970007\", \"modSecurityRuleIds\":
+      [\"970007\"], \"exclusions\": []}, {\"name\": \"Local File Inclusion ENV Attack
+      in User-Agent\", \"labels\": [\"RFI\", \"Recommended\"], \"description\": \"Detects
+      Local File Inclusion ENV Attack in User-Agent\", \"action\": \"OFF\", \"key\":
+      \"2250121\", \"modSecurityRuleIds\": [\"2250121\"], \"exclusions\": []}, {\"name\":
+      \"Local File Inclusion Attacks\", \"labels\": [\"RFI\", \"Recommended\"], \"description\":
+      \"Detects common local file inclusion attacks like my $dir = \\\"../../../../../../../../../../../../../\\\";
+      or \\\"http://\\\".$site.$bug.$dir.\\\"/proc/self/environ%0000\\\";\", \"action\":
+      \"OFF\", \"key\": \"2250120\", \"modSecurityRuleIds\": [\"2250120\"], \"exclusions\":
+      []}, {\"name\": \"Common RFI attacks\", \"labels\": [\"RFI\", \"Recommended\"],
+      \"description\": \"Detects a common types of Remote File Inclusion (RFI) attack\",
+      \"action\": \"OFF\", \"key\": \"2250117\", \"modSecurityRuleIds\": [\"2250117\",
+      \"2250118\", \"2250119\"], \"exclusions\": []}, {\"name\": \"Data ends with
+      question mark(s) (?)\", \"labels\": [\"RFI\"], \"description\": \"Detects a
+      common RFI attack, when data ends with question mark(s) (?).\", \"action\":
+      \"OFF\", \"key\": \"950119\", \"modSecurityRuleIds\": [\"950119\"], \"exclusions\":
+      []}, {\"name\": \"PHP include() function\", \"labels\": [\"RFI\"], \"description\":
+      \"Detects a common RFI php include() function attacks.\", \"action\": \"OFF\",
+      \"key\": \"950118\", \"modSecurityRuleIds\": [\"950118\"], \"exclusions\": []},
+      {\"name\": \"URL Contains an IP Address\", \"labels\": [\"RFI\", \"Recommended\"],
+      \"description\": \"Detects a common RFI attack, when URL contains an IP address.\",
+      \"action\": \"OFF\", \"key\": \"950117\", \"modSecurityRuleIds\": [\"950117\"],
+      \"exclusions\": []}, {\"name\": \"Microsoft OWA X-OWA-Error Response Header
+      Found\", \"labels\": [\"Apps\", \"ResponseBody\"], \"description\": \"Microsoft
+      OWA X-OWA-Error Response Header Found\", \"action\": \"OFF\", \"key\": \"2100090\",
+      \"modSecurityRuleIds\": [\"2100090\"], \"exclusions\": []}, {\"name\": \"Gerber
+      WebPDM SQL Injection Vulnerability\", \"labels\": [\"Apps\"], \"description\":
+      \"SQL Injection Vulnerability in Gerber WebPDM Product Data Management System\",
+      \"action\": \"OFF\", \"key\": \"2100084\", \"modSecurityRuleIds\": [\"2100084\"],
+      \"exclusions\": []}, {\"name\": \"Gerber WebPDM XSS Vulnerability\", \"labels\":
+      [\"Apps\"], \"description\": \"Cross-Site Scripting Vulnerability in Gerber
+      WebPDM Product Data Management System\", \"action\": \"OFF\", \"key\": \"2100083\",
+      \"modSecurityRuleIds\": [\"2100083\"], \"exclusions\": []}, {\"name\": \"e107
+      Plugin my_gallery Exploit\", \"labels\": [\"Apps\", \"CMS\"], \"description\":
+      \"Detects e107 Plugin my_gallery Exploit \\\"http://\\\".$site.\\\"e107_plugins/my_gallery/image.php?file=../../e107_config.php\\\"\",
+      \"action\": \"OFF\", \"key\": \"2250127\", \"modSecurityRuleIds\": [\"2250127\"],
+      \"exclusions\": []}, {\"name\": \"/_layouts/mobile/editform.aspx XSS\", \"labels\":
+      [\"SharePoint\", \"Apps\", \"CVE-2014\"], \"description\": \"Microsoft SharePoint
+      /_layouts/mobile/editform.aspx XSS\", \"action\": \"OFF\", \"key\": \"2100089\",
+      \"modSecurityRuleIds\": [\"2100089\"], \"exclusions\": []}, {\"name\": \"/Lists/Links/AllItems.aspx
+      XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2013\"], \"description\":
+      \"Microsoft SharePoint /Lists/Links/AllItems.aspx ctl00$m$g_2085a7 32_4692_4d3e_99d2_4d90ea5108d2$ctl00$ctl05$ctl00$ctl00$ctl00$ctl04$ctl00$ctl00$UrlFieldUrl
+      Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100070\", \"modSecurityRuleIds\":
+      [\"2100070\"], \"exclusions\": []}, {\"name\": \"_layouts/OSSSearchResults.aspx
+      k Parameter XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2013\"], \"description\":
+      \"Microsoft SharePoint _layouts/OSSSearchResults.aspx k Parameter XSS\", \"action\":
+      \"OFF\", \"key\": \"2100063\", \"modSecurityRuleIds\": [\"2100063\"], \"exclusions\":
+      []}, {\"name\": \"_layouts/ScriptResx.ashx name Parameter LFI\", \"labels\":
+      [\"SharePoint\", \"Apps\", \"CVE-2013\"], \"description\": \"Microsoft SharePoint
+      _layouts/ScriptResx.ashx name Parameter LFI\", \"action\": \"OFF\", \"key\":
+      \"2100062\", \"modSecurityRuleIds\": [\"2100062\"], \"exclusions\": []}, {\"name\":
+      \"_layouts/help.aspx cid0 Parameter XSS\", \"labels\": [\"SharePoint\", \"Apps\",
+      \"CVE-2010\"], \"description\": \"Microsoft SharePoint _layouts/help.aspx cid0
+      Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100048\", \"modSecurityRuleIds\":
+      [\"2100048\"], \"exclusions\": []}, {\"name\": \"_layouts/Picker.aspx XSS\",
+      \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2011\"], \"description\": \"Microsoft
+      SharePoint _layouts/Picker.aspx ctl00$PlaceHolderDialogBodySection$ctl04$hiddenSpanData
+      Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100035\", \"modSecurityRuleIds\":
+      [\"2100035\"], \"exclusions\": []}, {\"name\": \"/Lists/Calendar/calendar.aspx
+      CalendarDate Parameter XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2011\"],
+      \"description\": \"Microsoft SharePoint /Lists/Calendar/calendar.aspx CalendarDate
+      Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100034\", \"modSecurityRuleIds\":
+      [\"2100034\"], \"exclusions\": []}, {\"name\": \"NewForm.aspx TextField_spSave
+      Parameter XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2011\"], \"description\":
+      \"Microsoft SharePoint NewForm.aspx TextField_spSave Parameter XSS\", \"action\":
+      \"OFF\", \"key\": \"2100033\", \"modSecurityRuleIds\": [\"2100033\"], \"exclusions\":
+      []}, {\"name\": \"owssrv.dll View Parameter XSS\", \"labels\": [\"SharePoint\",
+      \"Apps\", \"CVE-2011\"], \"description\": \"Microsoft SharePoint owssrv.dll
+      View Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100032\", \"modSecurityRuleIds\":
+      [\"2100032\"], \"exclusions\": []}, {\"name\": \"_layouts/inplview.aspx ListViewPageUrl
+      Parameter XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2012\"], \"description\":
+      \"Microsoft SharePoint _layouts/inplview.aspx ListViewPageUrl Parameter XSS\",
+      \"action\": \"OFF\", \"key\": \"2100028\", \"modSecurityRuleIds\": [\"2100028\"],
+      \"exclusions\": []}, {\"name\": \"_layouts/themeweb.aspx XSS\", \"labels\":
+      [\"SharePoint\", \"Apps\", \"CVE-2012\"], \"description\": \"Microsoft SharePoint
+      _layouts/themeweb.aspx ctl00$PlaceHolderMain$ctl82$customizeThemeSection$accent6
+      Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100027\", \"modSecurityRuleIds\":
+      [\"2100027\"], \"exclusions\": []}, {\"name\": \"_layouts/Chart/WebUI/WizardList.aspx
+      skey Parameter XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2012\"],
+      \"description\": \"Microsoft SharePoint _layouts/Chart/WebUI/WizardList.aspx
+      skey Parameter XSS\", \"action\": \"OFF\", \"key\": \"2100026\", \"modSecurityRuleIds\":
+      [\"2100026\"], \"exclusions\": []}, {\"name\": \"/owssrv.dll List Parameter
+      XSS\", \"labels\": [\"SharePoint\", \"Apps\", \"CVE-2012\"], \"description\":
+      \"Microsoft SharePoint /owssrv.dll List Parameter XSS\", \"action\": \"OFF\",
+      \"key\": \"2100023\", \"modSecurityRuleIds\": [\"2100023\"], \"exclusions\":
+      []}, {\"name\": \"/_layouts/scriptresx.ashx sections Parameter XSS\", \"labels\":
+      [\"SharePoint\", \"Apps\", \"CVE-2012\"], \"description\": \"Microsoft SharePoint
+      /_layouts/scriptresx.ashx sections Parameter XSS\", \"action\": \"OFF\", \"key\":
+      \"2100019\", \"modSecurityRuleIds\": [\"2100019\"], \"exclusions\": []}, {\"name\":
+      \"Rights Management (IRM) Error Response Header Found\", \"labels\": [\"SharePoint\",
+      \"Apps\"], \"description\": \"Microsoft SharePoint Information Rights Management
+      (IRM) Error Response Header Found\", \"action\": \"OFF\", \"key\": \"2100088\",
+      \"modSecurityRuleIds\": [\"2100088\"], \"exclusions\": []}, {\"name\": \"x-virus-infected
+      Response Header Found\", \"labels\": [\"SharePoint\", \"Apps\"], \"description\":
+      \"\", \"action\": \"OFF\", \"key\": \"2100087\", \"modSecurityRuleIds\": [\"2100087\"],
+      \"exclusions\": []}, {\"name\": \"Response Header Found\", \"labels\": [\"SharePoint\",
+      \"Apps\"], \"description\": \"Microsoft SharePoint SharePointError Response
+      Header Found\", \"action\": \"OFF\", \"key\": \"2100086\", \"modSecurityRuleIds\":
+      [\"2100086\"], \"exclusions\": []}, {\"name\": \"High X-SharePointHealthScore\",
+      \"labels\": [\"SharePoint\", \"Apps\"], \"description\": \"Microsoft SharePoint
+      High X-SharePointHealthScore - Potential DoS Attack/Availability Risk\", \"action\":
+      \"OFF\", \"key\": \"2100085\", \"modSecurityRuleIds\": [\"2100085\"], \"exclusions\":
+      []}, {\"name\": \"Total Arguments Limits\", \"labels\": [\"HTTP\", \"Recommended\"],
+      \"description\": \"detects HTTP requests with total length of all arguments
+      exceeding the configurable \\\"Max total argument length\\\" parameter\", \"action\":
+      \"OFF\", \"key\": \"960341\", \"modSecurityRuleIds\": [\"960341\"], \"exclusions\":
+      []}, {\"name\": \"Number of Arguments Limits\", \"labels\": [\"HTTP\", \"Recommended\"],
+      \"description\": \"detects HTTP requests with number of arguments exceeding
+      the configurable \\\"Max amount of arguments\\\" value\", \"action\": \"OFF\",
+      \"key\": \"960335\", \"modSecurityRuleIds\": [\"960335\"], \"exclusions\": []},
+      {\"name\": \"Values Limits\", \"labels\": [\"HTTP\", \"Recommended\"], \"description\":
+      \"detects HTTP requests with value length exceeding the configurable \\\"Max
+      length of argument\\\" parameter\", \"action\": \"OFF\", \"key\": \"960208\",
+      \"modSecurityRuleIds\": [\"960208\"], \"exclusions\": []}, {\"name\": \"Arguments
+      Limits\", \"labels\": [\"HTTP\"], \"description\": \"detects HTTP requests with
+      argument name length exceeding the 100 symbols.\", \"action\": \"OFF\", \"key\":
+      \"960209\", \"modSecurityRuleIds\": [\"960209\"], \"exclusions\": []}, {\"name\":
+      \"Character Set Validation\", \"labels\": [\"HTTP\"], \"description\": \"ensures
+      that only specific character set(s) is used\", \"action\": \"OFF\", \"key\":
+      \"960901\", \"modSecurityRuleIds\": [\"960901\", \"960018\"], \"exclusions\":
+      []}, {\"name\": \"URI Validation\", \"labels\": [\"HTTP\", \"Recommended\"],
+      \"description\": \"ensures that URI and canonical server name are matching\",
+      \"action\": \"OFF\", \"key\": \"960014\", \"modSecurityRuleIds\": [\"960014\"],
+      \"exclusions\": []}, {\"name\": \"Unicode Encoding/Decoding Validation\", \"labels\":
+      [\"HTTP\"], \"description\": \"blocks full-width Unicode encoding as decoding
+      evasions could be possible\", \"action\": \"OFF\", \"key\": \"950116\", \"modSecurityRuleIds\":
+      [\"950116\"], \"exclusions\": []}, {\"name\": \"UTF Encoding Validation\", \"labels\":
+      [\"HTTP\"], \"description\": \"detects UTF encoding inconsistencies and invalid
+      formatting\", \"action\": \"OFF\", \"key\": \"950801\", \"modSecurityRuleIds\":
+      [\"950801\"], \"exclusions\": []}, {\"name\": \"URL Encodings Validation\",
+      \"labels\": [\"HTTP\"], \"description\": \"detects URL encoding inconsistencies,
+      encoding abuse and invalid formatting\", \"action\": \"OFF\", \"key\": \"950107\",
+      \"modSecurityRuleIds\": [\"950107\", \"950109\", \"950108\"], \"exclusions\":
+      []}, {\"name\": \"Connection Header Validation\", \"labels\": [\"HTTP\", \"Recommended\"],
+      \"description\": \"detects connection header inconsistencies and invalid formatting\",
+      \"action\": \"OFF\", \"key\": \"958295\", \"modSecurityRuleIds\": [\"958295\"],
+      \"exclusions\": []}, {\"name\": \"Range Header Validation\", \"labels\": [\"HTTP\"],
+      \"description\": \"detects range header inconsistencies and invalid formatting\",
+      \"action\": \"OFF\", \"key\": \"958291\", \"modSecurityRuleIds\": [\"958291\",
+      \"958230\", \"958231\"], \"exclusions\": []}, {\"name\": \"Pragma Header Validation\",
+      \"labels\": [\"HTTP\"], \"description\": \"ensures that pragma, cache-control
+      headers and HTTP protocol version supplied by the client are matching\", \"action\":
+      \"OFF\", \"key\": \"960020\", \"modSecurityRuleIds\": [\"960020\"], \"exclusions\":
+      []}, {\"name\": \"Expect Header Validation\", \"labels\": [\"HTTP\"], \"description\":
+      \"ensures that expect header and HTTP protocol version supplied by the client
+      are matching\", \"action\": \"OFF\", \"key\": \"960022\", \"modSecurityRuleIds\":
+      [\"960022\"], \"exclusions\": []}, {\"name\": \"Content-Encoding Header Validation\",
+      \"labels\": [\"HTTP\"], \"description\": \"ensures that identity is not specified
+      in content-encoding header\", \"action\": \"OFF\", \"key\": \"960902\", \"modSecurityRuleIds\":
+      [\"960902\"], \"exclusions\": []}, {\"name\": \"Content-Length Header Validation\",
+      \"labels\": [\"HTTP\", \"CAPEC\", \"Recommended\"], \"description\": \"detects
+      if content-length header is provided with every POST request\", \"action\":
+      \"OFF\", \"key\": \"960012\", \"modSecurityRuleIds\": [\"960012\"], \"exclusions\":
+      []}, {\"name\": \"GET/HEAD Requests Validation\", \"labels\": [\"HTTP\", \"Recommended\"],
+      \"description\": \"detects if GET/HEAD requests contain request body since it
+      is not a common practice\", \"action\": \"OFF\", \"key\": \"960011\", \"modSecurityRuleIds\":
+      [\"960011\"], \"exclusions\": []}, {\"name\": \"Content-Length Header Validation\",
+      \"labels\": [\"HTTP\", \"CAPEC\"], \"description\": \"detects if content-length
+      HTTP header is not numeric\", \"action\": \"OFF\", \"key\": \"960016\", \"modSecurityRuleIds\":
+      [\"960016\"], \"exclusions\": []}, {\"name\": \"File Name Validation\", \"labels\":
+      [\"HTTP\", \"CAPEC\"], \"description\": \"detects multipart/form-data file name
+      evasion attempts\", \"action\": \"OFF\", \"key\": \"960000\", \"modSecurityRuleIds\":
+      [\"960000\"], \"exclusions\": []}, {\"name\": \"Request URI Validation\", \"labels\":
+      [\"HTTP\"], \"description\": \"detects invalid URI in request\", \"action\":
+      \"OFF\", \"key\": \"981227\", \"modSecurityRuleIds\": [\"981227\"], \"exclusions\":
+      []}, {\"name\": \"Host Header Is IP Address\", \"labels\": [\"OWASP\", \"WASCTC\",
+      \"A7\", \"PCI\", \"HTTP\", \"Recommended\"], \"description\": \"detects if host
+      header is a numeric IP address as it could be an indicative of automated client
+      access\", \"action\": \"OFF\", \"key\": \"960017\", \"modSecurityRuleIds\":
+      [\"960017\"], \"exclusions\": []}, {\"name\": \"Missing Content-Type Header\",
+      \"labels\": [\"HTTP\", \"Recommended\"], \"description\": \"detects missing
+      content-type header or if combination of content-length and content-type headers
+      is invalid\", \"action\": \"OFF\", \"key\": \"960904\", \"modSecurityRuleIds\":
+      [\"960904\"], \"exclusions\": []}, {\"name\": \"Missing User-Agent Header\",
+      \"labels\": [\"OWASP\", \"WASCTC\", \"A7\", \"PCI\", \"HTTP\", \"Recommended\"],
+      \"description\": \"detects missing request user-agent header\", \"action\":
+      \"OFF\", \"key\": \"960009\", \"modSecurityRuleIds\": [\"960009\", \"960006\"],
+      \"exclusions\": []}, {\"name\": \"Missing Accept Header\", \"labels\": [\"OWASP\",
+      \"WASCTC\", \"A7\", \"PCI\", \"HTTP\", \"Recommended\"], \"description\": \"detects
+      missing request accept header\", \"action\": \"OFF\", \"key\": \"960015\", \"modSecurityRuleIds\":
+      [\"960015\", \"960021\"], \"exclusions\": []}, {\"name\": \"Missing Host Header\",
+      \"labels\": [\"OWASP\", \"WASCTC\", \"A7\", \"PCI\", \"HTTP\", \"Recommended\"],
+      \"description\": \"detects missing request host header\", \"action\": \"OFF\",
+      \"key\": \"960007\", \"modSecurityRuleIds\": [\"960007\", \"960008\"], \"exclusions\":
+      []}, {\"name\": \"Restrict HTTP Protocol Versions\", \"labels\": [\"OWASP\",
+      \"WASCTC\", \"PCI\", \"HTTP\", \"Recommended\"], \"description\": \"allows only
+      HTTP protocol versions HTTP/1.0 and HTTP/1.1\", \"action\": \"OFF\", \"key\":
+      \"960034\", \"modSecurityRuleIds\": [\"960034\"], \"exclusions\": []}, {\"name\":
+      \"Restrict HTTP Content Types\", \"labels\": [\"OWASP\", \"WASCTC\", \"A1\",
+      \"PCI\", \"HTTP\"], \"description\": \"allows only such content types as: application/x-www-form-urlencoded,
+      multipart/form-data, text/xml, application/xml, application/x-amf, application/json\",
+      \"action\": \"OFF\", \"key\": \"960010\", \"modSecurityRuleIds\": [\"960010\"],
+      \"exclusions\": []}, {\"name\": \"Restrict HTTP Request Methods\", \"labels\":
+      [\"OWASP\", \"WASCTC\", \"PCI\", \"HTTP\", \"Recommended\"], \"description\":
+      \"allows only request methods specified by the configurable \\\"Allowed http
+      methods\\\" parameter\", \"action\": \"OFF\", \"key\": \"960032\", \"modSecurityRuleIds\":
+      [\"960032\"], \"exclusions\": []}, {\"name\": \"Botnet SQL Injection Attack\",
+      \"labels\": [\"SQL Injections\"], \"description\": \"Detects Botnet SQL Injections
+      like $sql=$situs.\\\"-1\\\".$cmn.\\\"union\\\".$cmn.\\\"select\\\".$cmn.\\\"0x6c6f67696e70776e7a\\\".$inyection.$cfin;\",
+      \"action\": \"OFF\", \"key\": \"2250124\", \"modSecurityRuleIds\": [\"2250124\"],
+      \"exclusions\": []}, {\"name\": \"Concatenated basic SQL injection and SQLLFI
+      attempts\", \"labels\": [\"SQL Injections\", \"Recommended\"], \"description\":
+      \"detects concatenated basic SQL injection and SQLLFI attempts\", \"action\":
+      \"OFF\", \"key\": \"981247\", \"modSecurityRuleIds\": [\"981247\"], \"exclusions\":
+      []}, {\"name\": \"MATCH AGAINST, MERGE, EXECUTE IMMEDIATE and HAVING\", \"labels\":
+      [\"SQL Injections\", \"Recommended\"], \"description\": \"Detects MATCH AGAINST,
+      MERGE, EXECUTE IMMEDIATE and HAVING injections.\", \"action\": \"OFF\", \"key\":
+      \"981256\", \"modSecurityRuleIds\": [\"981256\"], \"exclusions\": []}, {\"name\":
+      \"Conditional SQL injection attempts\", \"labels\": [\"SQL Injections\", \"Recommended\"],
+      \"description\": \"Detects conditional SQL injection attempts.\", \"action\":
+      \"OFF\", \"key\": \"981241\", \"modSecurityRuleIds\": [\"981241\"], \"exclusions\":
+      []}, {\"name\": \"SQL benchmark and sleep injection attempts\", \"labels\":
+      [\"SQL Injections\", \"Recommended\"], \"description\": \"Detects SQL benchmark
+      and sleep injection attempts including conditional queries.\", \"action\": \"OFF\",
+      \"key\": \"981250\", \"modSecurityRuleIds\": [\"981250\"], \"exclusions\": []},
+      {\"name\": \"Integer overflow attacks\", \"labels\": [\"SQL Injections\"], \"description\":
+      \"Detects integer overflow attacks.\", \"action\": \"OFF\", \"key\": \"981277\",
+      \"modSecurityRuleIds\": [\"981277\"], \"exclusions\": []}, {\"name\": \"Chained
+      SQL injection attempts\", \"labels\": [\"SQL Injections\", \"Recommended\"],
+      \"description\": \"Detects chained SQL injection attempts.\", \"action\": \"OFF\",
+      \"key\": \"981248\", \"modSecurityRuleIds\": [\"981248\", \"981249\"], \"exclusions\":
+      []}, {\"name\": \"SQL authentication bypass attempts\", \"labels\": [\"SQL Injections\",
+      \"Recommended\"], \"description\": \"Detects basic SQL authentication bypass
+      attempts.\", \"action\": \"OFF\", \"key\": \"981244\", \"modSecurityRuleIds\":
+      [\"981244\", \"981245\", \"981246\"], \"exclusions\": []}, {\"name\": \"Common
+      SQL Injections\", \"labels\": [\"SQL Injections\", \"WASCTC\", \"OWASP\", \"A1\",
+      \"PCI\", \"Recommended\"], \"description\": \"detects common SQL injection attacks\",
+      \"action\": \"OFF\", \"key\": \"950001\", \"modSecurityRuleIds\": [\"950001\",
+      \"959070\", \"959071\", \"959072\", \"950908\", \"959073\"], \"exclusions\":
+      []}, {\"name\": \"DB Names\", \"labels\": [\"SQL Injections\", \"WASCTC\", \"OWASP\",
+      \"A1\", \"PCI\", \"DB SQL\"], \"description\": \"detects common DB names injection
+      attacks\", \"action\": \"OFF\", \"key\": \"981320\", \"modSecurityRuleIds\":
+      [\"981320\"], \"exclusions\": []}, {\"name\": \"SQL Tautologies\", \"labels\":
+      [\"SQL Injections\", \"WASCTC\", \"OWASP\", \"A1\", \"PCI\"], \"description\":
+      \"detects common SQL tautologies attacks\", \"action\": \"OFF\", \"key\": \"950901\",
+      \"modSecurityRuleIds\": [\"950901\"], \"exclusions\": []}, {\"name\": \"SQL
+      Operators\", \"labels\": [\"SQL Injections\", \"WASCTC\", \"OWASP\", \"A1\",
+      \"PCI\"], \"description\": \"detects common SQL operators injection attacks\",
+      \"action\": \"OFF\", \"key\": \"981319\", \"modSecurityRuleIds\": [\"981319\"],
+      \"exclusions\": []}, {\"name\": \"String Termination/Statement Ending\", \"labels\":
+      [\"SQL Injections\", \"WASCTC\", \"OWASP\", \"A1\", \"PCI\", \"Recommended\"],
+      \"description\": \"identifies common initial SQLi probing requests where attackers
+      insert/append quote characters to the existing normal payload to see how the
+      app/db responds\", \"action\": \"OFF\", \"key\": \"981318\", \"modSecurityRuleIds\":
+      [\"981318\"], \"exclusions\": []}, {\"name\": \"SQL Hex Evasion Methods\", \"labels\":
+      [\"SQL Injections\", \"WASCTC\", \"OWASP\", \"A1\", \"PCI\", \"Recommended\"],
+      \"description\": \"detects SQL hex encoding evasion attacks\", \"action\": \"OFF\",
+      \"key\": \"981260\", \"modSecurityRuleIds\": [\"981260\"], \"exclusions\": []},
+      {\"name\": \"SQL Comment Sequences\", \"labels\": [\"SQL Injections\", \"OWASP\",
+      \"A1\", \"WASCTC\", \"PCI\"], \"description\": \"detects common SQL comment
+      sequences, e.g., DROP/*comment*/sampletable\", \"action\": \"OFF\", \"key\":
+      \"981231\", \"modSecurityRuleIds\": [\"981231\"], \"exclusions\": []}, {\"name\":
+      \"MongoDB SQL injection\", \"labels\": [\"SQL Injections\", \"DB SQL\", \"OWASP\",
+      \"A1\"], \"description\": \"detects basic MongoDB SQL injection attempts\",
+      \"action\": \"OFF\", \"key\": \"981270\", \"modSecurityRuleIds\": [\"981270\"],
+      \"exclusions\": []}, {\"name\": \"PostgreSQL pg_sleep injection\", \"labels\":
+      [\"SQL Injections\", \"DB SQL\", \"OWASP\", \"A1\"], \"description\": \"detects
+      PostgreSQL pg_sleep injection, waitfor delay attacks and database shutdown attempts\",
+      \"action\": \"OFF\", \"key\": \"981254\", \"modSecurityRuleIds\": [\"981254\"],
+      \"exclusions\": []}, {\"name\": \"MySQL comments, conditions\", \"labels\":
+      [\"SQL Injections\", \"DB SQL\", \"OWASP\", \"A1\"], \"description\": \"detects
+      MySQL comments, conditions and ch(a)r injections\", \"action\": \"OFF\", \"key\":
+      \"981240\", \"modSecurityRuleIds\": [\"981240\"], \"exclusions\": []}, {\"name\":
+      \"MySQL and PostgreSQL stored procedure/function injections\", \"labels\": [\"SQL
+      Injections\", \"DB SQL\", \"OWASP\", \"A1\"], \"description\": \"detects MySQL
+      and PostgreSQL stored procedure/function injections\", \"action\": \"OFF\",
+      \"key\": \"981253\", \"modSecurityRuleIds\": [\"981253\"], \"exclusions\": []},
+      {\"name\": \"MySQL UDF injection\", \"labels\": [\"SQL Injections\", \"DB SQL\",
+      \"OWASP\", \"A1\"], \"description\": \"detects MySQL UDF injection and other
+      data/structure manipulation attempts\", \"action\": \"OFF\", \"key\": \"981251\",
+      \"modSecurityRuleIds\": [\"981251\"], \"exclusions\": []}, {\"name\": \"MySQL
+      comment-/space-obfuscated\", \"labels\": [\"SQL Injections\", \"DB SQL\"], \"description\":
+      \"detects MySQL comment-/space-obfuscated injections and backtick termination\",
+      \"action\": \"OFF\", \"key\": \"981257\", \"modSecurityRuleIds\": [\"981257\"],
+      \"exclusions\": []}, {\"name\": \"MSSQL code execution\", \"labels\": [\"SQL
+      Injections\", \"DB SQL\"], \"description\": \"detects MSSQL code execution and
+      information gathering attempts\", \"action\": \"OFF\", \"key\": \"981255\",
+      \"modSecurityRuleIds\": [\"981255\"], \"exclusions\": []}, {\"name\": \"Common
+      attack string for mysql, oracle\", \"labels\": [\"SQL Injections\", \"DB SQL\",
+      \"OWASP\", \"A1\"], \"description\": \"Detects common attack string for mysql,
+      oracle and others\", \"action\": \"OFF\", \"key\": \"981276\", \"modSecurityRuleIds\":
+      [\"981276\"], \"exclusions\": []}, {\"name\": \"MySQL charset switch and MSSQL
+      DoS attempts\", \"labels\": [\"SQL Injections\", \"DB SQL\", \"OWASP\", \"A1\"],
+      \"description\": \"detects MySQL charset switch and MSSQL DoS attempts\", \"action\":
+      \"OFF\", \"key\": \"981252\", \"modSecurityRuleIds\": [\"981252\"], \"exclusions\":
+      []}, {\"name\": \"Credit card PAN leakage\", \"labels\": [\"WASCTC\", \"PCI\",
+      \"CC Leakage\", \"ResponseBody\"], \"description\": \"detects credit card primary
+      account number in the response body\", \"action\": \"OFF\", \"key\": \"920021\",
+      \"modSecurityRuleIds\": [\"920021\", \"920022\", \"920023\"], \"exclusions\":
+      []}, {\"name\": \"Credit card leakage in response\", \"labels\": [\"WASCTC\",
+      \"PCI\", \"CC Leakage\", \"ResponseBody\"], \"description\": \"Detects primary
+      credit card numbers (Visa, MasterCard, GSA SmartPay, Americal Express, Diners
+      Club, enRoute, Discover, JCB) sent from site to user.\", \"action\": \"OFF\",
+      \"key\": \"981080\", \"modSecurityRuleIds\": [\"981080\", \"920020\", \"920006\",
+      \"920008\", \"920010\", \"920012\", \"920014\", \"920016\", \"920018\"], \"exclusions\":
+      []}, {\"name\": \"Credit card leakage in request\", \"labels\": [\"PCI\", \"CC
+      Leakage\"], \"description\": \"Detects primary credit card numbers (Visa, MasterCard,
+      GSA SmartPay, Americal Express, Diners Club, enRoute, Discover, JCB) in user
+      input.\", \"action\": \"OFF\", \"key\": \"981078\", \"modSecurityRuleIds\":
+      [\"981078\", \"920019\", \"920005\", \"920007\", \"920009\", \"920011\", \"920013\",
+      \"920015\", \"920017\"], \"exclusions\": []}, {\"name\": \"ColdFusion Admin
+      Functions Injection\", \"labels\": [\"Apps\", \"WASCTC\", \"OWASP\", \"A1\",
+      \"PCI\", \"System Access\"], \"description\": \"Detects injection of ColdFusion
+      undocumented admin functions\", \"action\": \"OFF\", \"key\": \"950008\", \"modSecurityRuleIds\":
+      [\"950008\"], \"exclusions\": []}]}, \"id\": \"ocid1.waaspolicy.oc1..aaaaaaaa4svrfp23455ahnpwkli7krw3hccuavno5juzi2ueiaxhbqdlqiyq\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaamzcvp4dfoesnp3dus7ipqa34hyrazxejqttpyctbuaxbny6l6esq\",
+      \"freeformTags\": null, \"domain\": \"xxsts0741x9797.waf.oci.example.com\"}}",
+      "requestJson": "{\"waasPolicyId\": \"ocid1.waaspolicy.oc1..aaaaaaaa4svrfp23455ahnpwkli7krw3hccuavno5juzi2ueiaxhbqdlqiyq\"}",
+      "containerId": "6c6a9c71-4e52-4c2d-b5bb-1f4eb6402154", "requestClass": "com.oracle.bmc.waas.requests.GetWaasPolicyRequest",
+      "responseClass": "com.oracle.bmc.waas.responses.GetWaasPolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['109058']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0741&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Mon, 04 Feb 2019 21:48:30 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

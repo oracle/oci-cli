@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=GetAutoScalingPolicy&serviceName=autoscaling&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:24:34 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0657&apiName=GetAutoScalingPolicy&serviceName=autoscaling&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"51dc3a45-a054-4b21-9417-d441dd360663","request":{"autoScalingConfigurationId":"ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaazvrrryis5hxgzoicjlceisb5bj66izowifele5w7n744tsdw6fxq","autoScalingPolicyId":"e92386e8-eda9-4b39-a4a0-b993e66c29c0"}}]'}
+    headers:
+      Content-Length: ['260']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:24:35 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaeoyapgtdcnhbomoi7d6sesv3rl2n6c6pxozdd73dsszomknbnsia/ocid1.user.oc1..aaaaaaaaf4xpc64kldjum6klyq4wngd4phz6cvwbbptbzhqbl4ho75apyttq/ea:af:af:07:17:e0:56:be:9f:30:09:76:a6:cf:20:fc",signature="deboeOY+8P+Tq7b82dzkudfB35feNVZ/piojq5jVm+xbffbFdig585HUCrOGsMf7ccii/04c+YwWp1+ZM6LA+NkcKfWirHCZrFWnvgT/R1oweHqqTRpvBl7GqZ3KDAlv04Wqs05gGky6mvrNiXKqWdbrEZveE4fru2xyiFRHiKbsU+geZJYUaDT+WGCTNs8k3K4SEj9m4J2NBr/v3RKuLDtaGYnq18Xj4XYGwOrzUW4FgSbjn2FJPzUdkKRFOHle2AqGDUyPFlgqSuZ8qna5avD1ZNMw4RMKyWaRgHTBT7/b/x3/oYRjdixx3EvnSawZWNl2eKsd96YFCPqlYYuJJw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 09 Feb 2019 02:24:37 GMT']
+      host: [autoscaling.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7+preview.1.681]
+      opc-request-id: [28A6537A6B1849649B94E6FD034FB5DE]
+      user-agent: [Oracle-PythonSDK/2.1.7+preview.1.681 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: GET
+    uri: https://autoscaling.us-phoenix-1.oci.oraclecloud.com/20181001/autoScalingConfigurations/ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaazvrrryis5hxgzoicjlceisb5bj66izowifele5w7n744tsdw6fxq/policies/e92386e8-eda9-4b39-a4a0-b993e66c29c0
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAL2Rz2vCMBTH7/4VpedmJC9pbby5MpwgukM9zDEkTSMGWlvaOCaj//v6U5142GHs
+        0ML75vtevu+Tr5Fl2XmWaHkKT7myrYllm32hyn2WxLbTnEqRC6nNqTn7qoVaSsVnU1GnL/WhKUlf
+        6oM2WiSNBLVStVN03M5WHKjvKR+pWHDEIsqRYAKjiHOqPE8Cl7i7NtZlnojTUqRdqi4kYMIx4PoD
+        INA5jU5VUChhVHdH40EYEOYhhgnAhMAD5mzTuYtjosrG9zZsI6TR2eGyXjNyYBE8T5ezp22wWi/D
+        7eOr7QyOD5EcWwsirVT1y9/GLqVIVM1nYNNFlMrHjNUZxxFxEXOBIJ8qjJi3Yx6mbuTT3dCSKlNo
+        +SNeJ50fLHhZb9fhfDHfTMP5ankJeXnJq+5az3JVCJMVbfciPDdc70VxL1aj4V85f4PsF8Syo7lB
+        Box4ELkUUTkmiFFfIK6oRCyOPNdlxCXA/wvZ7D6y8R1k1vuo+gbxsu1VZQMAAA==
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Length: ['388']
+      Content-Type: [application/json]
+      Date: ['Sat, 09 Feb 2019 02:24:39 GMT']
+      ETag: [86b6fe4113d0ea717f0aa14dc676d40f13489e0ce33110a871a9d6c6beb9d1e8--gzip]
+      Vary: [Accept-Encoding]
+      opc-request-id: [28A6537A6B1849649B94E6FD034FB5DE/C3A777DBB74A32FCA0810F763788B5A8/F803226322A15DF07A0F8238105535F1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"C8D659A4BA484C75B767698F086E65ED\",
+      \"etag\": \"86b6fe4113d0ea717f0aa14dc676d40f13489e0ce33110a871a9d6c6beb9d1e8--gzip\",
+      \"autoScalingPolicy\": {\"id\": \"e92386e8-eda9-4b39-a4a0-b993e66c29c0\", \"capacity\":
+      {\"initial\": 2, \"min\": 1, \"max\": 3}, \"timeCreated\": \"2019-02-09T02:22:12.094000+00:00\",
+      \"displayName\": \"policy20190209022212\", \"policyType\": \"threshold\", \"rules\":
+      [{\"action\": {\"type\": \"CHANGE_COUNT_BY\", \"value\": -1}, \"id\": \"ce804402-7b15-4521-83e0-46f46035b83f\",
+      \"metric\": {\"threshold\": {\"operator\": \"LT\", \"value\": 30}, \"metricType\":
+      \"CPU_UTILIZATION\"}, \"displayName\": \"scalein\"}, {\"action\": {\"type\":
+      \"CHANGE_COUNT_BY\", \"value\": 1}, \"id\": \"24162b53-3c71-438a-9e3c-4db655415129\",
+      \"metric\": {\"threshold\": {\"operator\": \"GT\", \"value\": 70}, \"metricType\":
+      \"CPU_UTILIZATION\"}, \"displayName\": \"scaleout\"}]}}", "requestJson": "{\"autoScalingConfigurationId\":
+      \"ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaazvrrryis5hxgzoicjlceisb5bj66izowifele5w7n744tsdw6fxq\",
+      \"autoScalingPolicyId\": \"e92386e8-eda9-4b39-a4a0-b993e66c29c0\"}", "containerId":
+      "51dc3a45-a054-4b21-9417-d441dd360663", "requestClass": "com.oracle.bmc.autoscaling.requests.GetAutoScalingPolicyRequest",
+      "responseClass": "com.oracle.bmc.autoscaling.responses.GetAutoScalingPolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1376']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0657&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:24:40 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

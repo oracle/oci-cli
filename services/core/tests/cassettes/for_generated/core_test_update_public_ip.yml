@@ -1,0 +1,168 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdatePublicIp&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:16 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0866&apiName=UpdatePublicIp&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"583f55da-13de-4064-809a-5a1de4932eb8","request":{"publicIpId":"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq","updatePublicIpDetails":{"definedTags":{"java_sdk_tag_ns_001":{"java_sdk_tag_03":"tag6.__STS0866_4266","java_sdk_tag_01":"tag4.__STS0866_4266","java_sdk_tag_02":"tag5.__STS0866_4266"}},"displayName":"__STS0866_9703","freeformTags":{"tag1":"value1.__STS0866_1509","tag2":"value2.__STS0866_1509"}}}},{"containerId":"a4e5d165-c413-4c3d-aead-87c28628a53b","request":{"publicIpId":"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq","updatePublicIpDetails":{"definedTags":{"java_sdk_tag_ns_001":{"java_sdk_tag_03":"tag6.__STS0866_551","java_sdk_tag_01":"tag4.__STS0866_551","java_sdk_tag_02":"tag5.__STS0866_551"}},"displayName":"","freeformTags":{"tag1":"value1.__STS0866_3022","tag2":"value2.__STS0866_3022"}}}}]'}
+    headers:
+      Content-Length: ['908']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:16 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"java_sdk_tag_ns_001": {"java_sdk_tag_01": "tag4.__STS0866_4266",
+      "java_sdk_tag_02": "tag5.__STS0866_4266", "java_sdk_tag_03": "tag6.__STS0866_4266"}},
+      "displayName": "__STS0866_9703", "freeformTags": {"tag2": "value2.__STS0866_1509",
+      "tag1": "value1.__STS0866_1509"}}'
+    headers:
+      Content-Length: ['285']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="hLcdQFvJBy/i8q/75MvwN1H65Ms32YOGAj4f74oDi/ePFfSKqnIYpWxCaY95BzBNVbIe1Uoules87dspHkF9JeUKbeHgHJE5V3mlbnIu2p8fHtBjJYgIVDi4E5qex9djgiGYkkFOOh4crqQKe+p7L5Jnl04OrNrt37s67RqDCxMJ4i02rFsP6S6Q+euMLmguHTX7qyJs8hEcgA9z6cncWyH8P1K31tkQQl7GKgWA4PK0+ct83GnTR3QOUKSE4EOIi87DL5pQGyXu2spCQwz/I8HZIgCwV3vVkOFlTQYT2pTDAwpoG1eBl+C3B6/HjDjR+FbNGrMdVl/6fSQlNrnxpg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Jun 2018 00:22:16 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [5051503513464D7F8AF3F8DBA703A751]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26+preview.1]
+      x-content-sha256: [KXiRIWICNe7J5q3f9RzCPioQ/UAe73KhHLg9c/3Cyb8=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/publicIps/ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\"\
+        ,\n  \"definedTags\" : {\n    \"java_sdk_tag_ns_001\" : {\n      \"java_sdk_tag_03\"\
+        \ : \"tag6.__STS0866_4266\",\n      \"java_sdk_tag_01\" : \"tag4.__STS0866_4266\"\
+        ,\n      \"java_sdk_tag_02\" : \"tag5.__STS0866_4266\"\n    }\n  },\n  \"\
+        displayName\" : \"__STS0866_9703\",\n  \"freeformTags\" : {\n    \"tag1\"\
+        \ : \"value1.__STS0866_1509\",\n    \"tag2\" : \"value2.__STS0866_1509\"\n\
+        \  },\n  \"id\" : \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\"\
+        ,\n  \"ipAddress\" : \"129.146.92.85\",\n  \"lifecycleState\" : \"AVAILABLE\"\
+        ,\n  \"lifetime\" : \"RESERVED\",\n  \"scope\" : \"REGION\",\n  \"timeCreated\"\
+        \ : \"2018-06-28T00:22:01.923Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['711']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:17 GMT']
+      ETag: [c0979896]
+      opc-request-id: [5051503513464D7F8AF3F8DBA703A751/0238C7EAF9B9FFD671EF24433A3F8756/A9887F92061C4CE88CDB2A2078B99601]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"2BB2375709A248E5BBBF7E8831F940EF\",
+      \"etag\": \"c0979896\", \"publicIp\": {\"definedTags\": {\"java_sdk_tag_ns_001\":
+      {\"java_sdk_tag_01\": \"tag4.__STS0866_4266\", \"java_sdk_tag_02\": \"tag5.__STS0866_4266\",
+      \"java_sdk_tag_03\": \"tag6.__STS0866_4266\"}}, \"availabilityDomain\": null,
+      \"displayName\": \"__STS0866_9703\", \"timeCreated\": \"2018-06-28T00:22:01.923000+00:00\",
+      \"lifecycleState\": \"AVAILABLE\", \"privateIpId\": null, \"id\": \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"scope\": \"REGION\", \"freeformTags\": {\"tag2\": \"value2.__STS0866_1509\",
+      \"tag1\": \"value1.__STS0866_1509\"}, \"ipAddress\": \"129.146.92.85\", \"lifetime\":
+      \"RESERVED\"}}", "requestJson": "{\"publicIpId\": \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\",
+      \"updatePublicIpDetails\": {\"definedTags\": {\"java_sdk_tag_ns_001\": {\"java_sdk_tag_01\":
+      \"tag4.__STS0866_4266\", \"java_sdk_tag_02\": \"tag5.__STS0866_4266\", \"java_sdk_tag_03\":
+      \"tag6.__STS0866_4266\"}}, \"displayName\": \"__STS0866_9703\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0866_1509\", \"tag1\": \"value1.__STS0866_1509\"}}}",
+      "containerId": "583f55da-13de-4064-809a-5a1de4932eb8", "requestClass": "com.oracle.bmc.core.requests.UpdatePublicIpRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdatePublicIpResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1530']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0866&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:17 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"java_sdk_tag_ns_001": {"java_sdk_tag_01": "tag4.__STS0866_551",
+      "java_sdk_tag_02": "tag5.__STS0866_551", "java_sdk_tag_03": "tag6.__STS0866_551"}},
+      "displayName": "", "freeformTags": {"tag2": "value2.__STS0866_3022", "tag1":
+      "value1.__STS0866_3022"}}'
+    headers:
+      Content-Length: ['268']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="TGMuEQD09cmSwq+PucBiS1XyAvmfzjnYiF+Nup5bPn7ANo1JVaQXxJm5zlXy92xPWd/3qvqfbtN594UJK3/0saxixU43UMmR6hzLbEU77ssR8xicFnjnuz0KRM5wwo0hLp2B3To9QbZZNbsbDHxPaZopuffiHpLeYC9wOhE2SuUgkaYCuVowhiGy6VN4jovcYeK740eUaW49t5N+cYgsRMDEHNb6w6YFof/CKzKHj7UcHHBkDWmUY92H3iDZhZtm0YBYjUUf/KawQSQacZ9JY/kafGi93yJH7cCvnjJWNzgtuZjM/v+3Ub61AVSq2/NQYHGY0ruCTP264YmvYYFSZQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Jun 2018 00:22:17 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
+      opc-request-id: [95004D0B2B8A420BB49CD7C0E35C928C]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26+preview.1]
+      x-content-sha256: [pJQkdsHbEAK2aV9krjhJNjJYLPJlFa1AQhFV2d3fTjo=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/publicIps/ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq
+  response:
+    body: {string: "{\n  \"code\" : \"InvalidParameter\",\n  \"message\" : \"displayName\
+        \ size must be between 1 and 255\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['93']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Jun 2018 00:22:18 GMT']
+      opc-request-id: [95004D0B2B8A420BB49CD7C0E35C928C/214744554D934EF0DCDBF1D5EEBD443B/A928B0DCBFDD412798B3324E430DCD6E]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"publicIpId\": \"ocid1.publicip.oc1.phx.aaaaaaaa6vnhj7zbmrnamxukm7dkrvzn2dzdnxgkbpnggomz6cimyrvwkwdq\",
+      \"updatePublicIpDetails\": {\"definedTags\": {\"java_sdk_tag_ns_001\": {\"java_sdk_tag_01\":
+      \"tag4.__STS0866_551\", \"java_sdk_tag_02\": \"tag5.__STS0866_551\", \"java_sdk_tag_03\":
+      \"tag6.__STS0866_551\"}}, \"displayName\": \"\", \"freeformTags\": {\"tag2\":
+      \"value2.__STS0866_3022\", \"tag1\": \"value1.__STS0866_3022\"}}}", "errorJson":
+      "{\"statusCode\": 400, \"opcRequestId\": \"95004D0B2B8A420BB49CD7C0E35C928C/214744554D934EF0DCDBF1D5EEBD443B/A928B0DCBFDD412798B3324E430DCD6E\",
+      \"code\": \"InvalidParameter\", \"message\": \"displayName size must be between
+      1 and 255\"}", "containerId": "a4e5d165-c413-4c3d-aead-87c28628a53b", "requestClass":
+      "com.oracle.bmc.core.requests.UpdatePublicIpRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['829']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0866&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Jun 2018 00:22:18 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

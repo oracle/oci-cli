@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=healthchecks&apiName=DeleteHttpMonitor
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:14:30 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=healthchecks&apiName=DeleteHttpMonitor&lang=PythonCLI&sessionId=0759
+  response:
+    body: {string: '[{"containerId":"388318f1-e536-43a4-b6c5-b62571a4e225","request":{"monitorId":"ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a"}}]'}
+    headers:
+      Content-Length: ['166']
+      Content-Type: [application/json]
+      Date: ['Sat, 02 Feb 2019 03:14:30 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="GH757idI1jUW/nA9J9OeocXnMD85Adhb0gKiHS2/OwSMM0bxmbNBG+3LhOw8lOYrXLsdpE2kJ7AIvxVQvkjXpzyuPemw0vAtc9ERwVha8VOxJfYUBrsyzENlstTkjynNYGgtiqLr0lPSZva3tKIIbBPa9/VWR/YYlhHDb07yowhTcznj/Q7I/WBZJjav3bfk5nTadvvwPEBu9W/gZKiHS8jInPkaFbLOSEClUg1PFfhcBuTD+n3v+gOdVoUJ3J0SruXZqx396ivSkEI+3h4MiZ4TDC2wvL6XuOIEWSZtkYmtK862Tyvl5FVqNt90x+9ICOlFi/d3Fs9ELDnG386Jdg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Sat, 02 Feb 2019 03:14:32 GMT']
+      host: [healthchecks.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.653]
+      opc-request-id: [8CBEE9793D48403CBA92994000F32E13]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.653 (python 3.6.5; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.44]
+    method: DELETE
+    uri: https://healthchecks.us-phoenix-1.oraclecloud.com/20180501/httpMonitors/ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Date: ['Sat, 02 Feb 2019 03:14:33 GMT']
+      opc-request-id: [8CBEE9793D48403CBA92994000F32E13/46A4AE2F95F2FAFD7D6B043737417694/1A64DBBD0350521A95A3C3F7BB4EBEF6]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"containerId": "388318f1-e536-43a4-b6c5-b62571a4e225", "requestClass":
+      "com.oracle.bmc.healthchecks.requests.DeleteHttpMonitorRequest", "requestJson":
+      "{\"monitorId\": \"ocid1.httpmonitor.oc1..aaaaaaaam4o5ordltuio5zwwnjidumz3tnc6sujxepvmqq4iaieqiqepmz6a\"}",
+      "responseJson": "{\"opcRequestId\": \"0E754F8F694043D18DB297A4389A6777\"}",
+      "responseClass": "com.oracle.bmc.healthchecks.responses.DeleteHttpMonitorResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['419']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0759&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 02 Feb 2019 03:14:36 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

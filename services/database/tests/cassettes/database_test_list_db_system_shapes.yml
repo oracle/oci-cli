@@ -1,0 +1,28 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="XpM6WZq7dguDr5wSjCXwehrKpAJVMBizcg39liT4A4PSoZZPp+km4h8aOa0QCZhfegaSTIO2TqqR+M4jx59i77CvPCkUsdLeuVSUmwSKkJsJQeU4pykT3auAe/cDv3ZSRdNEXheR1hXdy3FzVl3jpQQHoVqt4ZTuVBFcJGmkqpJCHqf4D02QhcZKAX9Ww4AWpmZ8ywcVSkiUc6ybaHxE01clNmxdBt6L5Rzxkpt0dmQtz38aLs1sH/246MJYv0Zz/8r/Izv/04IvsvNYbLo7Q3WkLjLGOGjTnWbcpNkuih42OPRmSbqAi72uBU9dRNDjj/29sIVOP2GOieRCkTiuSA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 21 Jun 2018 13:38:31 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [ABCFA3C3F4B6425DBECA02B74D6B7B9A]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/dbSystemShapes?availabilityDomain=Iocq%3APHX-AD-1&compartmentId=ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca
+  response:
+    body: {string: '[{"availableCoreCount":4,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":4,"minimumNodeCount":1,"name":"VM.Standard1.4","shape":"VM.Standard1.4"},{"availableCoreCount":2,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":2,"minimumNodeCount":1,"name":"VM.Standard2.2","shape":"VM.Standard2.2"},{"availableCoreCount":36,"coreCountIncrement":2,"maximumNodeCount":1,"minimumCoreCount":2,"minimumNodeCount":1,"name":"BM.DenseIO1.36","shape":"BM.DenseIO1.36"},{"availableCoreCount":8,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":8,"minimumNodeCount":1,"name":"VM.Standard1.8","shape":"VM.Standard1.8"},{"availableCoreCount":336,"coreCountIncrement":8,"maximumNodeCount":8,"minimumCoreCount":88,"minimumNodeCount":8,"name":"Exadata.Full1.336","shape":"Exadata.Full1.336"},{"availableCoreCount":1,"coreCountIncrement":0,"maximumNodeCount":1,"minimumCoreCount":1,"minimumNodeCount":1,"name":"VM.Standard2.1","shape":"VM.Standard2.1"},{"availableCoreCount":8,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":8,"minimumNodeCount":1,"name":"VM.Standard2.8","shape":"VM.Standard2.8"},{"availableCoreCount":52,"coreCountIncrement":2,"maximumNodeCount":1,"minimumCoreCount":2,"minimumNodeCount":1,"name":"BM.DenseIO2.52","shape":"BM.DenseIO2.52"},{"availableCoreCount":84,"coreCountIncrement":2,"maximumNodeCount":2,"minimumCoreCount":22,"minimumNodeCount":2,"name":"Exadata.Quarter1.84","shape":"Exadata.Quarter1.84"},{"availableCoreCount":2,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":2,"minimumNodeCount":1,"name":"VM.Standard1.2","shape":"VM.Standard1.2"},{"availableCoreCount":92,"coreCountIncrement":2,"maximumNodeCount":2,"minimumCoreCount":0,"minimumNodeCount":2,"name":"Exadata.Quarter2.92","shape":"Exadata.Quarter2.92"},{"availableCoreCount":368,"coreCountIncrement":8,"maximumNodeCount":8,"minimumCoreCount":0,"minimumNodeCount":8,"name":"Exadata.Full2.368","shape":"Exadata.Full2.368"},{"availableCoreCount":24,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":24,"minimumNodeCount":1,"name":"VM.Standard2.24","shape":"VM.Standard2.24"},{"availableCoreCount":16,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":16,"minimumNodeCount":1,"name":"VM.Standard1.16","shape":"VM.Standard1.16"},{"availableCoreCount":184,"coreCountIncrement":4,"maximumNodeCount":4,"minimumCoreCount":0,"minimumNodeCount":4,"name":"Exadata.Half2.184","shape":"Exadata.Half2.184"},{"availableCoreCount":168,"coreCountIncrement":4,"maximumNodeCount":4,"minimumCoreCount":44,"minimumNodeCount":4,"name":"Exadata.Half1.168","shape":"Exadata.Half1.168"},{"availableCoreCount":1,"coreCountIncrement":0,"maximumNodeCount":1,"minimumCoreCount":1,"minimumNodeCount":1,"name":"VM.Standard1.1","shape":"VM.Standard1.1"},{"availableCoreCount":4,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":4,"minimumNodeCount":1,"name":"VM.Standard2.4","shape":"VM.Standard2.4"},{"availableCoreCount":16,"coreCountIncrement":0,"maximumNodeCount":2,"minimumCoreCount":16,"minimumNodeCount":1,"name":"VM.Standard2.16","shape":"VM.Standard2.16"}]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['3112']
+      Content-Type: [application/json]
+      Date: ['Thu, 21 Jun 2018 13:38:32 GMT']
+      opc-request-id: [ABCFA3C3F4B6425DBECA02B74D6B7B9A/E53CBCA83A2D1B9778A9F6FF44DEA024/37DA1AC4C5D1CB33B4E057B48B4CBECE]
+    status: {code: 200, message: OK}
+version: 1

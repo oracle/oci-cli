@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=budget&apiName=GetBudget
+  response:
+    body: {string: !!python/unicode true}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:30 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0673&serviceName=budget&apiName=GetBudget
+  response:
+    body: {string: !!python/unicode '[{"containerId":"1180089e-e6f5-4504-9acb-f04829492524","request":{"budgetId":"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq"}}]'}
+    headers:
+      content-length: ['160']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:30 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaae65zouabl37jpbbtil2vzvehmmwfissg7zgom6zeta3wbmdrrwiq/ocid1.user.oc1..aaaaaaaaob2fwxfjim7fgeex573hij7wue7soxgddarko3tna2ocll4mwheq/e9:01:60:92:3b:81:c5:ff:f6:4d:6d:36:8f:1d:4b:ec",signature="O7fdXASGsKdHPc+aSBRBVDMbu4Rmjo8/iCUQXjtsf4VY4rP6blnuWzE2/VLW4gn+wQLUcFV73wKQTejQTPMgfOsBbc8/3gE7ATKGqmGH1MhxpoiXYc7fBU8EXByuObvDq2GOSF86wyI/yFbhT8SgVUXiMO6Okoe/SdVebHMGnaZi/7k8326SjiSSSDmNnXUPkActnCrMQD6r82nTl78tbgUB0ZCWgRY908ZkEmHTrp5QUaUXub9ro4+8vGo6UA6ipgp6U/F4Yl7FKZIz8nDE3LOelrtQd0P8HfTsZtWWCbe+wpMu637zEh7rxCzDo3xk4jRMbiHCQLpynK9AXhZvEw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:30 GMT']
+      host: [usage.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [4BCAD87BEF964A23BA97AD7AA10A6D15]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: GET
+    uri: https://usage.us-phoenix-1.oci.oraclecloud.com/20190111/budgets/ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAI2QTW+bQBCG7/kViHODYAHT+FZZlRqpTavardRerNllIGv2i2WBQJT/HvOhyFZU
+        qXN85tU8r+b5xvN8nvve1vM143kU0DYv0QWaRUEA61TYY5xUZT2UpsVRIehEn7LRVc5AZwf+lFR1
+        UZiS1rqJ01P6qGv/w3SaaWnAOonK3V9aHCpQbLjW4CYddQtUxNnJUOq4IN3Y4aOUfcGbpszGUsvN
+        iA7insrc2p6vGgf2XHr3D9lFiWshqVJWmFRlNDNJKlWTUE0rnY91B6KXaZ9RDawoyVM2CkJU2QlY
+        hDlvjIDhASTOouPxuD/sw00WHzdhQtYQNsxy47hWU0i1QswcpG6Vm1BE4iSdmcUG3Q+0XC/Nv31/
+        OHz5+mc5JHiBbGAC9w7cIvy0O9z//rysQaB1P1uBu7e7M+/QNqt7AcBcC2JvUOVXhQptkUHjMH+/
+        c1ziTKfvtufIu+3OIqzcJ2F0dxuSW/LxQOJtGG3JXZAm4V//Lf3L5P+ZLiziuZk8QNlM8WfvZX1r
+        wRXmF/jm5RXiFhY7yAIAAA==
+    headers:
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['415']
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:30 GMT']
+      etag: [68e86bd625722d9fcf7e0a5070b6b6310a39ca23b9baf869f0d11a25dc1de248--gzip]
+      opc-request-id: [4BCAD87BEF964A23BA97AD7AA10A6D15/436CDD1756B070EA308B7E22A2CFDF97/EE14E9E1B4EDD4D0BD371C7835A7C70A]
+      vary: [Accept-Encoding]
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"etag\": \"68e86bd625722d9fcf7e0a5070b6b6310a39ca23b9baf869f0d11a25dc1de248--gzip\",
+      \"opcRequestId\": \"031E990EB9BE44929BB1E6F4BE6EA4AE\", \"budget\": {\"resetPeriod\":
+      \"MONTHLY\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaae65zouabl37jpbbtil2vzvehmmwfissg7zgom6zeta3wbmdrrwiq\",
+      \"alertRuleCount\": 1, \"displayName\": \"___STS0673_6042\", \"description\":
+      null, \"timeCreated\": \"2019-02-28T23:01:29.540000+00:00\", \"timeSpendComputed\":
+      null, \"freeformTags\": {}, \"actualSpend\": null, \"definedTags\": {}, \"amount\":
+      12345.0, \"forecastedSpend\": null, \"targetCompartmentId\": \"ocid1.compartment.oc1..aaaaaaaa2k5cfp5n7b7p45mns4bobkodzqvalwm5w7boacfg2x7zl22ngvla\",
+      \"version\": 1, \"timeUpdated\": \"2019-02-28T23:01:29.540000+00:00\", \"id\":
+      \"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq\",
+      \"lifecycleState\": \"ACTIVE\"}}", "responseClass": "com.oracle.bmc.budget.responses.GetBudgetResponse",
+      "containerId": "1180089e-e6f5-4504-9acb-f04829492524", "requestJson": "{\"budgetId\":
+      \"ocid1.budget.oc1..aaaaaaaakewe34kgqygpuezneao4oj7ztktpavryix4kqffpgbqos35j5hoq\"}",
+      "requestClass": "com.oracle.bmc.budget.requests.GetBudgetRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1210']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0673
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:30 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

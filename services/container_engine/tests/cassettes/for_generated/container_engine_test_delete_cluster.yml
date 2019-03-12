@@ -1,0 +1,93 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteCluster&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 20:53:35 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=DeleteCluster&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"clusterId":"ocid1.cluster.oc1.phx.aaaaaaaaae4dam3bgy3dgmzygqzgmnjymjtdamjrmy3wcmrqmc4dgm3fmfsw"}}]'}
+    headers:
+      Content-Length: ['165']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 Aug 2018 20:53:35 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="hNjYy3KAycM5yErDczwoa6Po03CtrMQukBTTNCN6Ded/Vl4Qkhgjk3gEnq8eeVEyPwbmHSjedzp1fcKteUxTcKLRQPt/kBsdtBJWIDuVGkZshr5kgYXlMKqw8La662sFB3QdfQd87Y7g50Td/EIxeNOfzgA42zWLCZn6nrGFwiRdEezDP47inm9kqc3eJN+Oc2qX0/+iejk/YEX5/ucRKU5pUIVfd63eiJM2FEujFKFMxIIQDO5SXmb6LNtT/IrzUGdpndmZ3pWEe4Z6ykLkcJGpbcHZHNFA/9yP/Uor5CVj8P2I/wjUS4qgEl1d0Qk6Vz5dzqGTnEuyd65kJkDYLA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 03 Aug 2018 20:53:36 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
+      opc-request-id: [F6D067A661FB460DA3F058BDEE72AB98]
+      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.29+preview.1]
+    method: DELETE
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/clusters/ocid1.cluster.oc1.phx.aaaaaaaaae4dam3bgy3dgmzygqzgmnjymjtdamjrmy3wcmrqmc4dgm3fmfsw
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Length: ['0']
+      Date: ['Fri, 03 Aug 2018 20:53:26 GMT']
+      Opc-Request-Id: [F6D067A661FB460DA3F058BDEE72AB98/A9C220CFF7DB4D3A8834EEAF16C98E39/84521D3A0B6B4403A34EE5B46138024A]
+      Opc-Work-Request-Id: [ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2weyldguytanlbmeydozdbgy3tqmlemiytgyzwmw2tczlcge3t]
+      Uri: [/20180222/clusters/_id_]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.237.11.0, 10.237.49.241']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.49.241:52495']
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"DBBCEA7D212446B1B91CF5E685B7FD70\",
+      \"opcWorkRequestId\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaae2weyldguytanlbmeydozdbgy3tqmlemiytgyzwmw2tczlcge3t\"}",
+      "requestJson": "{\"clusterId\": \"ocid1.cluster.oc1.phx.aaaaaaaaae4dam3bgy3dgmzygqzgmnjymjtdamjrmy3wcmrqmc4dgm3fmfsw\"}",
+      "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass": "com.oracle.bmc.containerengine.requests.DeleteClusterRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.DeleteClusterResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['538']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 Aug 2018 20:53:37 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

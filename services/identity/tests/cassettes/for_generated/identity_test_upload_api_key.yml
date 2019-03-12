@@ -1,0 +1,104 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UploadApiKey&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:33 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=UploadApiKey&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"userId":"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa","createApiKeyDetails":{"key":"-----BEGIN
+        PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr0MF/Yfb1EcPzE10xpIH\nIVgJr6tYDAsddCo4Xxp2cX/VUV03aq+FebqWHM7gw7Rv0jxPR100ICkqvplmgyTM\nCIKGR0yiCK4i8YeccB93UJniMuWrur1uVI2Re6dyBPLfDYtg//m+sHpkYp0QTve6\nMW651b167bIUN1vb1f3MbwKizJxcpmf2uTyOG/1rFYH5mmoRlybP9A5oZrrIPCh7\nhliFq6S1zFD+izagYCAhJOT9I140sgwyQnJZ/UpUO53jyh56mI2+jk4wHoYkh9N1\nDFnxrqGZCeiBvisDRySvAgACweESASUGMByXIJomfUqdMrmBgkPGQb/Bd0tcrcjw\nJwIDAQAB\n-----END
+        PUBLIC KEY-----"},"opcRetryToken":"6bd283ad-10a0-49c4-8408-59cb36a2af31"}}]'}
+    headers:
+      Content-Length: ['702']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:33 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr0MF/Yfb1EcPzE10xpIH\nIVgJr6tYDAsddCo4Xxp2cX/VUV03aq+FebqWHM7gw7Rv0jxPR100ICkqvplmgyTM\nCIKGR0yiCK4i8YeccB93UJniMuWrur1uVI2Re6dyBPLfDYtg//m+sHpkYp0QTve6\nMW651b167bIUN1vb1f3MbwKizJxcpmf2uTyOG/1rFYH5mmoRlybP9A5oZrrIPCh7\nhliFq6S1zFD+izagYCAhJOT9I140sgwyQnJZ/UpUO53jyh56mI2+jk4wHoYkh9N1\nDFnxrqGZCeiBvisDRySvAgACweESASUGMByXIJomfUqdMrmBgkPGQb/Bd0tcrcjw\nJwIDAQAB\n-----END
+      PUBLIC KEY-----"}'
+    headers:
+      Content-Length: ['469']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="kwaO/pIW7eirGUyLnYZOPvcBfKjG3g/en00YFnYLHRTeycYFNZvX9qrCdr0K0t2FDk9uRV+Vx9e6a2/rkvl/PUWKC5pVY+iIIDIvG6CX57oJmV85dIoxVmwb+c7Cc2XcJiBu03jh+cSilvQg7hwTebMnHEpZPBT1pwhCI2svJ+dT6iOTRdbXq+6sXZGv2ttkSpipBGkbRO1L4GJM9rZJmGk40iN2GIBc5vkwVbKkx91RH5oqxu0NAQnJ5Zppk4RqGs5q/yNVBMeY74+GJxxZRrGDYQAiDYU+ngn0sh+njgZNHLfWQY+Igu9fiDoYgMQt955hhGFoFaSldHE6+lTHrA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:34 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [1DF743AA73A84EBDAA452F1D840B9939]
+      opc-retry-token: [U8vkVZnsc9nuDVu36xJCZgkO2VNWBW]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [sRyr40UNLfFGK1EgPhg9gT8CpNcBpOC8m3gkP4O4P1k=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa/apiKeys/
+  response:
+    body: {string: "{\n  \"timeCreated\" : \"2018-09-04T17:54:34.342Z\",\n  \"userId\"\
+        \ : \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\"\
+        ,\n  \"fingerprint\" : \"34:b8:89:9c:5f:85:88:9b:ca:e4:9f:8a:77:3c:3a:79\"\
+        ,\n  \"keyValue\" : \"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr0MF/Yfb1EcPzE10xpIH\\\
+        nIVgJr6tYDAsddCo4Xxp2cX/VUV03aq+FebqWHM7gw7Rv0jxPR100ICkqvplmgyTM\\nCIKGR0yiCK4i8YeccB93UJniMuWrur1uVI2Re6dyBPLfDYtg//m+sHpkYp0QTve6\\\
+        nMW651b167bIUN1vb1f3MbwKizJxcpmf2uTyOG/1rFYH5mmoRlybP9A5oZrrIPCh7\\nhliFq6S1zFD+izagYCAhJOT9I140sgwyQnJZ/UpUO53jyh56mI2+jk4wHoYkh9N1\\\
+        nDFnxrqGZCeiBvisDRySvAgACweESASUGMByXIJomfUqdMrmBgkPGQb/Bd0tcrcjw\\nJwIDAQAB\\\
+        n-----END PUBLIC KEY-----\",\n  \"keyId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa/34:b8:89:9c:5f:85:88:9b:ca:e4:9f:8a:77:3c:3a:79\"\
+        ,\n  \"lifecycleState\" : \"ACTIVE\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['938']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:34 GMT']
+      Location: ['http://identity.us-phoenix-1.oraclecloud.com/20160918/users/ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa/keys/ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa/34:b8:89:9c:5f:85:88:9b:ca:e4:9f:8a:77:3c:3a:79']
+      opc-request-id: [1DF743AA73A84EBDAA452F1D840B9939/75E827EB771BFEB292994C41DC25A02B/4E0DC5B9C05A5D031D51C8AE276C0E26]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9659CDA0B2FD49518F452C814F03C1C1\",
+      \"apiKey\": {\"keyValue\": \"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr0MF/Yfb1EcPzE10xpIH\\nIVgJr6tYDAsddCo4Xxp2cX/VUV03aq+FebqWHM7gw7Rv0jxPR100ICkqvplmgyTM\\nCIKGR0yiCK4i8YeccB93UJniMuWrur1uVI2Re6dyBPLfDYtg//m+sHpkYp0QTve6\\nMW651b167bIUN1vb1f3MbwKizJxcpmf2uTyOG/1rFYH5mmoRlybP9A5oZrrIPCh7\\nhliFq6S1zFD+izagYCAhJOT9I140sgwyQnJZ/UpUO53jyh56mI2+jk4wHoYkh9N1\\nDFnxrqGZCeiBvisDRySvAgACweESASUGMByXIJomfUqdMrmBgkPGQb/Bd0tcrcjw\\nJwIDAQAB\\n-----END
+      PUBLIC KEY-----\", \"inactiveStatus\": null, \"fingerprint\": \"34:b8:89:9c:5f:85:88:9b:ca:e4:9f:8a:77:3c:3a:79\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"lifecycleState\": \"ACTIVE\", \"timeCreated\": \"2018-09-04T17:54:34.342000+00:00\",
+      \"keyId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa/34:b8:89:9c:5f:85:88:9b:ca:e4:9f:8a:77:3c:3a:79\"}}",
+      "requestJson": "{\"userId\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"createApiKeyDetails\": {\"key\": \"-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr0MF/Yfb1EcPzE10xpIH\\nIVgJr6tYDAsddCo4Xxp2cX/VUV03aq+FebqWHM7gw7Rv0jxPR100ICkqvplmgyTM\\nCIKGR0yiCK4i8YeccB93UJniMuWrur1uVI2Re6dyBPLfDYtg//m+sHpkYp0QTve6\\nMW651b167bIUN1vb1f3MbwKizJxcpmf2uTyOG/1rFYH5mmoRlybP9A5oZrrIPCh7\\nhliFq6S1zFD+izagYCAhJOT9I140sgwyQnJZ/UpUO53jyh56mI2+jk4wHoYkh9N1\\nDFnxrqGZCeiBvisDRySvAgACweESASUGMByXIJomfUqdMrmBgkPGQb/Bd0tcrcjw\\nJwIDAQAB\\n-----END
+      PUBLIC KEY-----\"}, \"opcRetryToken\": \"6bd283ad-10a0-49c4-8408-59cb36a2af31\"}",
+      "containerId": "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.UploadApiKeyRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.UploadApiKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1958']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:34 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

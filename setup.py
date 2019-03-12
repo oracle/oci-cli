@@ -29,7 +29,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.2.1',
+    'oci==2.2.2',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
@@ -73,7 +73,7 @@ for spec_dir_name in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
 
 setup(
     name='oci-cli',
-    url='https://docs.us-phoenix-1.oraclecloud.com/Content/API/SDKDocs/cli.htm',
+    url='https://docs.cloud.oracle.com/Content/API/SDKDocs/cli.htm',
     version=version,
     author='Oracle',
     author_email='joe.levy@oracle.com',

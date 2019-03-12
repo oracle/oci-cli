@@ -1,0 +1,164 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=core&apiName=DeleteBootVolumeKmsKey
+  response:
+    body: {string: 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Wed, 19 Sep 2018 06:43:00 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0484&serviceName=core&apiName=DeleteBootVolumeKmsKey
+  response:
+    body: {string: '[{"containerId":"79b53842-ced4-4e19-85e4-64308ee294a0","request":{"bootVolumeId":"ocid1.bootvolume.oc1.iad.abuwcljsa2fmrt7xmswd36fsr3usn4b56s5kxdwifkulxcqrqkveibnecrkq"}}]'}
+    headers:
+      content-length: ['171']
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:43:00 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="MrdwfGW4qRGOEMyp6Ai1o9u97tVLrHNtfoZtYMqvA4JmgK9aE7b2Rbz+XF/q9jrwYmhAG7LvnEiJxOQU3tDyTJYGG+Kqcb3rPa8L7q2P2IuaiixbfFmQE9GvAEr8LF2tiytt2d0fp72M2++49Q1fjTRlJLEXI6hewdz2Zt/w8j5pD92qc+M7zXm4iWMDorLRyKGaGQ/3JtTyPC9B6FvASc1Ph1o+pZrWD3VT/kKi5JdFotJCCb1LdsG3oLYFnqRVHk/QfgAITIMts9Qf7++3CTH8Ianvp1dE5aJjLccPwYUQXtbncQAfZKW7JUC10T183KBZZlVzq3OymgyHK7+//g==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:44:49 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.327]
+      opc-request-id: [61299D6CFABC491FB335D51CDAF26CD9]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.327 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.33+preview.1]
+    method: DELETE
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.iad.abuwcljsa2fmrt7xmswd36fsr3usn4b56s5kxdwifkulxcqrqkveibnecrkq/kmsKey
+  response:
+    body: {string: ''}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 19 Sep 2018 06:44:49 GMT']
+      opc-request-id: [61299D6CFABC491FB335D51CDAF26CD9/F498BF61BDCD48C8A0545249BA341B6D/1D02A2E4C0E23679588F2C98EB8D4D69]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"D3D984B12214449CB5A88C8137F614B3\"}",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteBootVolumeKmsKeyResponse",
+      "containerId": "79b53842-ced4-4e19-85e4-64308ee294a0", "requestJson": "{\"bootVolumeId\":
+      \"ocid1.bootvolume.oc1.iad.abuwcljsa2fmrt7xmswd36fsr3usn4b56s5kxdwifkulxcqrqkveibnecrkq\"}",
+      "requestClass": "com.oracle.bmc.core.requests.DeleteBootVolumeKmsKeyRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['418']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0484
+  response:
+    body: {string: ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Wed, 19 Sep 2018 06:44:50 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 02:13:52 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0706&apiName=DeleteBootVolumeKmsKey&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"63c7b0ad-7302-46de-9996-5352f9d3759b","request":{"bootVolumeId":"ocid1.bootvolume.oc1.iad.abuwcljskknibmfzuxyi2hu6quivxptz4hptbd45j5l5hcmowhodbwaplgda"}}]'}
+    headers:
+      Content-Length: ['171']
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 02:13:52 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaqc4e5bvje4gl6qj4qm7q34z2dxlmznnwf4fzybq5lwglaokqaruq/ocid1.user.oc1..aaaaaaaadt4eedbhv6ajkglxebmkdm4bwwlxvwrj66vtdhlo62ysxdwoqotq/d1:7b:e2:b7:14:4b:b3:9b:46:23:6a:25:92:30:3e:27",signature="KBXnjECtTsDZeoYTc/jn+k7JQz022kMTBMtFhhK8Yfz6+JUYyLumNbeqMNT9HstVDjyvuffqivAsbfnpswj0u7P7qqOaiKyS9eJKoVYkr/5RO2p4aiawPkIKiLCQaov9M9jeSNqMzKIh3EisGxyHjYRFPPvfHJu1KwuENB9qLtIwsTQ9FtDGX3Sr53WBt8E1uJsJ8Yp9caN5HL6OIBpxioLM5y0LnSIeJL4Bz0dOIwOy02YfOv4Q4Gu9sOy/MUHIpoyjSvDCbK5BLeUgAmrwECutXYo8CCT8uI2p4BzHBYeyqzl9PsWgR6Zv7wyCkpJjymDrOvanDTp82sRon1SADA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 25 Sep 2018 02:16:09 GMT']
+      host: [iaas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4]
+      opc-request-id: [F3BEFB22ED1D4C88B2433DE9E6FB6B27]
+      user-agent: [Oracle-PythonSDK/2.0.4 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.33]
+    method: DELETE
+    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.iad.abuwcljskknibmfzuxyi2hu6quivxptz4hptbd45j5l5hcmowhodbwaplgda/kmsKey
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Tue, 25 Sep 2018 02:16:10 GMT']
+      opc-request-id: [F3BEFB22ED1D4C88B2433DE9E6FB6B27/0DE1C12C28BE4A23C20D3FC42A1A100A/10DD713ADD0C137653CFA252501402ED]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"DEF05A15CA88413780B62FE2597C57C8\"}",
+      "requestJson": "{\"bootVolumeId\": \"ocid1.bootvolume.oc1.iad.abuwcljskknibmfzuxyi2hu6quivxptz4hptbd45j5l5hcmowhodbwaplgda\"}",
+      "containerId": "63c7b0ad-7302-46de-9996-5352f9d3759b", "requestClass": "com.oracle.bmc.core.requests.DeleteBootVolumeKmsKeyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteBootVolumeKmsKeyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['418']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0706&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 25 Sep 2018 02:16:10 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

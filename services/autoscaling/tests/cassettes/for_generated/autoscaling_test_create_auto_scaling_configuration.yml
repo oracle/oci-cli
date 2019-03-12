@@ -1,0 +1,152 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateAutoScalingConfiguration&serviceName=autoscaling&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:15:09 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0657&apiName=CreateAutoScalingConfiguration&serviceName=autoscaling&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"51dc3a45-a054-4b21-9417-d441dd360663","request":{"createAutoScalingConfigurationDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya","definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0657_7966","testing_service_tag_02":"tag5.__STS0657_7966","testing_service_tag_03":"tag6.__STS0657_7966"}},"displayName":"__STS0657_3061","freeformTags":{"tag1":"value1.__STS0657_7880","tag2":"value2.__STS0657_7880"},"policies":[{"policyType":"threshold","capacity":{"max":3,"min":1,"initial":2},"rules":[{"action":{"type":"CHANGE_COUNT_BY","value":1},"displayName":"scaleout","metric":{"metricType":"CPU_UTILIZATION","threshold":{"operator":"GT","value":70}}},{"action":{"type":"CHANGE_COUNT_BY","value":-1},"displayName":"scalein","metric":{"metricType":"CPU_UTILIZATION","threshold":{"operator":"LT","value":30}}}]}],"resource":{"type":"instancePool","id":"ocid1.instancepool.oc1.phx.aaaaaaaaa3b5ytia55e6onmddykgoqgpq4x6asr6rgxqggw2uni7vlqohbaq"}},"opcRetryToken":"b3060f60-c367-427a-977a-92d981e275c6"}}]'}
+    headers:
+      Content-Length: ['1098']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:15:11 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"resource": {"id": "ocid1.instancepool.oc1.phx.aaaaaaaaa3b5ytia55e6onmddykgoqgpq4x6asr6rgxqggw2uni7vlqohbaq",
+      "type": "instancePool"}, "definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
+      "tag5.__STS0657_7966", "testing_service_tag_01": "tag4.__STS0657_7966", "testing_service_tag_03":
+      "tag6.__STS0657_7966"}}, "compartmentId": "ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya",
+      "policies": [{"policyType": "threshold", "capacity": {"initial": 2, "min": 1,
+      "max": 3}, "rules": [{"action": {"type": "CHANGE_COUNT_BY", "value": 1}, "displayName":
+      "scaleout", "metric": {"threshold": {"operator": "GT", "value": 70}, "metricType":
+      "CPU_UTILIZATION"}}, {"action": {"type": "CHANGE_COUNT_BY", "value": -1}, "displayName":
+      "scalein", "metric": {"threshold": {"operator": "LT", "value": 30}, "metricType":
+      "CPU_UTILIZATION"}}]}], "freeformTags": {"tag2": "value2.__STS0657_7880", "tag1":
+      "value1.__STS0657_7880"}, "displayName": "__STS0657_3061"}'
+    headers:
+      Content-Length: ['996']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaeoyapgtdcnhbomoi7d6sesv3rl2n6c6pxozdd73dsszomknbnsia/ocid1.user.oc1..aaaaaaaaf4xpc64kldjum6klyq4wngd4phz6cvwbbptbzhqbl4ho75apyttq/ea:af:af:07:17:e0:56:be:9f:30:09:76:a6:cf:20:fc",signature="EkQMtvb0BsyGEev7skQWrsIafoEmro8otMiIvc2gfMdvo44Nhr1DlzBm2JVs+BJdqkk1vjBng3obP4GC5vNX2gWROppKnDR+sFnKrmVuB9/GCgaFseD0uYggQSFX/eXtPni+rBxft5tYImAlIrULnBv8KWN1YVQhd1f+Q0auyuDDe8yg5SDewQykZeeEPl5mL53jLlPYAn7TMBeqd/65faYfzO2yM4cdJT/wt0KynMXRv2XKBw2sPiwOVvPFihWIT0THM8n0HtCD+D6sKpyXPUW67SSiEsGaPjYvGgXgzN7PkwFqUDwRVNpEBcS/u5CGzDFx5n9G90ZcVWuDH5/ikg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Sat, 09 Feb 2019 02:19:01 GMT']
+      host: [autoscaling.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7+preview.1.681]
+      opc-request-id: [DEE0F7E73E564E569B5C13900A2EA2CE]
+      opc-retry-token: [IfxMeQgRbKueZsPgJf0XNXpm7H9BxR]
+      user-agent: [Oracle-PythonSDK/2.1.7+preview.1.681 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+      x-content-sha256: [blfllzo1xBBjsCEivp4iZk6+ZebdYaDTX5CcsXGKEQ4=]
+    method: POST
+    uri: https://autoscaling.us-phoenix-1.oci.oraclecloud.com/20181001/autoScalingConfigurations
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0657_7966\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0657_7966\",\n      \"testing_service_tag_03\" : \"tag6.__STS0657_7966\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0657_3061\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0657_7880\",\n    \"tag2\" : \"value2.__STS0657_7880\"\
+        \n  },\n  \"id\" : \"ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaanw7ytvlbh7r645l3rwp4itm5pkagtnoc5ijxstvdsb4nrkh54xgq\"\
+        ,\n  \"coolDownInSeconds\" : 300,\n  \"isEnabled\" : true,\n  \"resource\"\
+        \ : {\n    \"type\" : \"instancePool\",\n    \"id\" : \"ocid1.instancepool.oc1.phx.aaaaaaaaa3b5ytia55e6onmddykgoqgpq4x6asr6rgxqggw2uni7vlqohbaq\"\
+        \n  },\n  \"policies\" : [ {\n    \"policyType\" : \"threshold\",\n    \"\
+        capacity\" : {\n      \"max\" : 3,\n      \"min\" : 1,\n      \"initial\"\
+        \ : 2\n    },\n    \"id\" : \"bbf0a3c6-6eea-40bf-b164-e7dc98454cc6\",\n  \
+        \  \"displayName\" : \"policy20190209021903\",\n    \"timeCreated\" : \"2019-02-09T02:19:03.516Z\"\
+        ,\n    \"rules\" : [ {\n      \"action\" : {\n        \"type\" : \"CHANGE_COUNT_BY\"\
+        ,\n        \"value\" : -1\n      },\n      \"displayName\" : \"scalein\",\n\
+        \      \"id\" : \"ad542c0d-7957-4ca0-a348-a14a65efce58\",\n      \"metric\"\
+        \ : {\n        \"metricType\" : \"CPU_UTILIZATION\",\n        \"threshold\"\
+        \ : {\n          \"operator\" : \"LT\",\n          \"value\" : 30\n      \
+        \  }\n      }\n    }, {\n      \"action\" : {\n        \"type\" : \"CHANGE_COUNT_BY\"\
+        ,\n        \"value\" : 1\n      },\n      \"displayName\" : \"scaleout\",\n\
+        \      \"id\" : \"d6dc2ec5-9771-4761-8b87-10fec5461dd0\",\n      \"metric\"\
+        \ : {\n        \"metricType\" : \"CPU_UTILIZATION\",\n        \"threshold\"\
+        \ : {\n          \"operator\" : \"GT\",\n          \"value\" : 70\n      \
+        \  }\n      }\n    } ]\n  } ],\n  \"timeCreated\" : \"2019-02-09T02:19:08.696Z\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1810']
+      Content-Type: [application/json]
+      Date: ['Sat, 09 Feb 2019 02:19:08 GMT']
+      ETag: [2ed607332a3ccc937dca12bffde0f6752ba504e558611214226458ba8546ce1c]
+      opc-request-id: [DEE0F7E73E564E569B5C13900A2EA2CE/822F89121D3E77DAF5C9DA3A4FE2EE5A/CD900DFC3EDE21A8D9866499F9876081]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"D141DB01304C4370A9D01699A25239C8\",
+      \"etag\": \"2ed607332a3ccc937dca12bffde0f6752ba504e558611214226458ba8546ce1c\",
+      \"autoScalingConfiguration\": {\"resource\": {\"id\": \"ocid1.instancepool.oc1.phx.aaaaaaaaa3b5ytia55e6onmddykgoqgpq4x6asr6rgxqggw2uni7vlqohbaq\",
+      \"type\": \"instancePool\"}, \"id\": \"ocid1.autoscalingconfiguration.oc1.phx.aaaaaaaanw7ytvlbh7r645l3rwp4itm5pkagtnoc5ijxstvdsb4nrkh54xgq\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\",
+      \"policies\": [{\"id\": \"bbf0a3c6-6eea-40bf-b164-e7dc98454cc6\", \"capacity\":
+      {\"initial\": 2, \"min\": 1, \"max\": 3}, \"timeCreated\": \"2019-02-09T02:19:03.516000+00:00\",
+      \"displayName\": \"policy20190209021903\", \"policyType\": \"threshold\", \"rules\":
+      [{\"action\": {\"type\": \"CHANGE_COUNT_BY\", \"value\": -1}, \"id\": \"ad542c0d-7957-4ca0-a348-a14a65efce58\",
+      \"metric\": {\"threshold\": {\"operator\": \"LT\", \"value\": 30}, \"metricType\":
+      \"CPU_UTILIZATION\"}, \"displayName\": \"scalein\"}, {\"action\": {\"type\":
+      \"CHANGE_COUNT_BY\", \"value\": 1}, \"id\": \"d6dc2ec5-9771-4761-8b87-10fec5461dd0\",
+      \"metric\": {\"threshold\": {\"operator\": \"GT\", \"value\": 70}, \"metricType\":
+      \"CPU_UTILIZATION\"}, \"displayName\": \"scaleout\"}]}], \"coolDownInSeconds\":
+      300, \"freeformTags\": {\"tag2\": \"value2.__STS0657_7880\", \"tag1\": \"value1.__STS0657_7880\"},
+      \"displayName\": \"__STS0657_3061\", \"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_02\": \"tag5.__STS0657_7966\", \"testing_service_tag_01\":
+      \"tag4.__STS0657_7966\", \"testing_service_tag_03\": \"tag6.__STS0657_7966\"}},
+      \"timeCreated\": \"2019-02-09T02:19:08.696000+00:00\", \"isEnabled\": true}}",
+      "requestJson": "{\"opcRetryToken\": \"b3060f60-c367-427a-977a-92d981e275c6\",
+      \"createAutoScalingConfigurationDetails\": {\"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_03\": \"tag6.__STS0657_7966\", \"testing_service_tag_01\":
+      \"tag4.__STS0657_7966\", \"testing_service_tag_02\": \"tag5.__STS0657_7966\"}},
+      \"resource\": {\"id\": \"ocid1.instancepool.oc1.phx.aaaaaaaaa3b5ytia55e6onmddykgoqgpq4x6asr6rgxqggw2uni7vlqohbaq\",
+      \"type\": \"instancePool\"}, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaakqweysfghbvp3l76xllv4rq7ieiswhxxbu2xrktlm3skjyzj6ya\",
+      \"policies\": [{\"policyType\": \"threshold\", \"rules\": [{\"action\": {\"value\":
+      1, \"type\": \"CHANGE_COUNT_BY\"}, \"displayName\": \"scaleout\", \"metric\":
+      {\"threshold\": {\"operator\": \"GT\", \"value\": 70}, \"metricType\": \"CPU_UTILIZATION\"}},
+      {\"action\": {\"value\": -1, \"type\": \"CHANGE_COUNT_BY\"}, \"displayName\":
+      \"scalein\", \"metric\": {\"threshold\": {\"operator\": \"LT\", \"value\": 30},
+      \"metricType\": \"CPU_UTILIZATION\"}}], \"capacity\": {\"initial\": 2, \"min\":
+      1, \"max\": 3}}], \"freeformTags\": {\"tag2\": \"value2.__STS0657_7880\", \"tag1\":
+      \"value1.__STS0657_7880\"}, \"displayName\": \"__STS0657_3061\"}}", "containerId":
+      "51dc3a45-a054-4b21-9417-d441dd360663", "requestClass": "com.oracle.bmc.autoscaling.requests.CreateAutoScalingConfigurationRequest",
+      "responseClass": "com.oracle.bmc.autoscaling.responses.CreateAutoScalingConfigurationResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['3238']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0657&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Sat, 09 Feb 2019 02:19:09 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

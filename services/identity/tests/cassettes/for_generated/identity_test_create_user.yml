@@ -1,0 +1,19 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=identity&apiName=CreateUser
+  response:
+    body: {string: !!python/unicode 'false'}
+    headers:
+      content-length: ['5']
+      content-type: [text/plain]
+      date: ['Fri, 01 Mar 2019 21:26:11 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

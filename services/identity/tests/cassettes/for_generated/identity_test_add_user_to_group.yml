@@ -1,0 +1,101 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=AddUserToGroup&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:53:51 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=AddUserToGroup&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"addUserToGroupDetails":{"userId":"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa","groupId":"ocid1.group.oc1..aaaaaaaat33wn2vhmaxms2dpu67a5z7p3ir6p2yidcq2amg66jw7mu7osoia"},"opcRetryToken":"57ace1be-b436-4161-9015-f19fb74d0c8b"}}]'}
+    headers:
+      Content-Length: ['327']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:53:52 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"userId": "ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa",
+      "groupId": "ocid1.group.oc1..aaaaaaaat33wn2vhmaxms2dpu67a5z7p3ir6p2yidcq2amg66jw7mu7osoia"}'
+    headers:
+      Content-Length: ['182']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="j6qUIobZh12chIbQzfrume1EjMt4tqgw0sgeyH90rOaWVCYjLr6N4qYIcz30+grHe0lp7kUcPwUFNJ/I57BZU+NGmSyco6hjnqvcTXdZ6OCvrzvvAAyPTaOyncmaY59GJXp8Fer7bfMpQjdN2BXvS27GtR33tSLy18My3hgThztqeutu2DkpmuXzjVeIHAM5vyw7wvDzaw+K+aoJgAiC6WlaLAju9lAgwChk3IedNvQvd0oz8Rj/Gw4Lzdr4igMOf8L8+okAYA8RXNLJD8Jzv4uDzL4MsPwrS35B9VrmtiOTVtZkjqj+5oNOUsWW/hwoery6omt4jWa4mFqUWBI//g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:53:54 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [944879E559704E04835FEFE68172C9CC]
+      opc-retry-token: [l6irJTZUunqaUZVScTOdiETlOxIIb4]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [8SvQk+MN15U0aspdxrPwFe+whT8I3LF0C40vWIC+WlE=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/userGroupMemberships/
+  response:
+    body: {string: "{\n  \"userId\" : \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\"\
+        ,\n  \"groupId\" : \"ocid1.group.oc1..aaaaaaaat33wn2vhmaxms2dpu67a5z7p3ir6p2yidcq2amg66jw7mu7osoia\"\
+        ,\n  \"id\" : \"ocid1.groupmembership.oc1..aaaaaaaagtuv2mah6rjsdvmnitfgiq6plnejzusk6axocxtovq2czuf3j2bq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"description\" : \"GRP_MBR:ocid1.group.oc1..aaaaaaaat33wn2vhmaxms2dpu67a5z7p3ir6p2yidcq2amg66jw7mu7osoia-ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\"\
+        ,\n  \"timeCreated\" : \"2018-09-04T17:53:55.244Z\",\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['654']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:53:55 GMT']
+      ETag: [fe9ce735ae0f30a873a7871387d4d063c3541964]
+      opc-request-id: [944879E559704E04835FEFE68172C9CC/04753470B92E77C1193D333B95868C9B/7DC381B743661AA780B82ACEF5ABBEA3]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"711099638B154EA0BEFE47A7FF75209C\",
+      \"etag\": \"fe9ce735ae0f30a873a7871387d4d063c3541964\", \"userGroupMembership\":
+      {\"id\": \"ocid1.groupmembership.oc1..aaaaaaaagtuv2mah6rjsdvmnitfgiq6plnejzusk6axocxtovq2czuf3j2bq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"inactiveStatus\": null, \"timeCreated\": \"2018-09-04T17:53:55.244000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"groupId\": \"ocid1.group.oc1..aaaaaaaat33wn2vhmaxms2dpu67a5z7p3ir6p2yidcq2amg66jw7mu7osoia\"}}",
+      "requestJson": "{\"addUserToGroupDetails\": {\"userId\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"groupId\": \"ocid1.group.oc1..aaaaaaaat33wn2vhmaxms2dpu67a5z7p3ir6p2yidcq2amg66jw7mu7osoia\"},
+      \"opcRetryToken\": \"57ace1be-b436-4161-9015-f19fb74d0c8b\"}", "containerId":
+      "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.AddUserToGroupRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.AddUserToGroupResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1172']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:53:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

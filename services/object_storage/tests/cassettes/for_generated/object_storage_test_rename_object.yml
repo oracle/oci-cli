@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=RenameObject&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 06 Sep 2018 00:20:04 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0194&apiName=RenameObject&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"e43568d3-fd98-4615-9e44-517265c8b53d","request":{"namespaceName":"dex-us-phx-cli-1","bucketName":"__STS0194_4920","renameObjectDetails":{"sourceName":"__STS0194_253","newName":"__STS0194_9121"}}}]'}
+    headers:
+      Content-Length: ['213']
+      Content-Type: [application/json]
+      Date: ['Thu, 06 Sep 2018 00:20:04 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"newName": "__STS0194_9121", "sourceName": "__STS0194_253"}'
+    headers:
+      Content-Length: ['60']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="cQkPY+yO5tBXvJZV1Y5lwbpj6fhxHgxsBd7XBw+L3gxMDmgyGOFQU5gfZ0z/adTyGF/RrYMbZB38WjH1sJ0+rxIelsM9XtJlF3ylsZNI0z0w5zeOuuPwM/WSlGtL6M0TaoUNeGkXeD9bV2nFOVNeTpiw+GlRYAvFUR9iRnAPMhmkbGRY8gyhDhSKow/O7MldUlPdJNX8jLjqW8pdbOvcQ20rY2jMM6fG3yItpfzKV2jLGDX4ayoonfQqvM7sGlDGhLyci85nJdavVQEMNM2wtyFcyqObWapN3IthRC4hBsGXIGRcPzYwqD68e/yPi7MmMuJtw0gRlLo5a4t2CVQuRA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 06 Sep 2018 00:20:10 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-client-request-id: [BAE8D6B3F5254E67AFA026D4A29FC6AB]
+      opc-request-id: [ABF79A2A9EFD48888C010EFF87424549]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [9W49BWdg2pnBphgbG3pUNptXuW6uLnf/TXW2m2cQS0w=]
+    method: POST
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/__STS0194_4920/actions/renameObject
+  response:
+    body: {string: '{"namespace":"dex-us-phx-cli-1","bucketName":"__STS0194_4920","objectName":"__STS0194_9121","sizeInBytes":25,"checksum":{"base64":"ptHmNpTkoJY2D5+KMvVshg==","quotedHex":"\"a6d1e63694e4a096360f9f8a32f56c86\"","hex":"a6d1e63694e4a096360f9f8a32f56c86"},"metadata":{"@^T":"application/octet-stream"},"creationTime":"2018-09-06T00:20:10.272+0000","modificationTime":"2018-09-06T00:20:10.922+0000","archivedTime":{"present":false},"restoredTime":{"present":false},"etag":"75295128ED59B2ADE053824711AC1C71","archivalState":"Available"}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,ETag,Last-Modified,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['528']
+      Content-Type: [application/json]
+      Date: ['Thu, 06 Sep 2018 00:20:10 GMT']
+      ETag: [75295128ED59B2ADE053824711AC1C71]
+      Last-Modified: ['Thu, 06 Sep 2018 00:20:10 GMT']
+      opc-client-request-id: [BAE8D6B3F5254E67AFA026D4A29FC6AB]
+      opc-request-id: [ed28db3b-1f39-2157-636a-c9bfd08fa3b0]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"F2AF56ADCA4343F0BDA5C4D9AFF28B9B\",
+      \"etag\": \"75295128ED59B2ADE053824711AC1C71\"}", "requestJson": "{\"bucketName\":
+      \"__STS0194_4920\", \"namespaceName\": \"dex-us-phx-cli-1\", \"renameObjectDetails\":
+      {\"newName\": \"__STS0194_9121\", \"sourceName\": \"__STS0194_253\"}}", "containerId":
+      "e43568d3-fd98-4615-9e44-517265c8b53d", "requestClass": "com.oracle.bmc.objectstorage.requests.RenameObjectRequest",
+      "responseClass": "com.oracle.bmc.objectstorage.responses.RenameObjectResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['527']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0194&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 06 Sep 2018 00:20:11 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

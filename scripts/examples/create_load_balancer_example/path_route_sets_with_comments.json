@@ -10,7 +10,7 @@
      * path route rule consists of a path route string and a pattern match type.
      */
     /* For more information about each attribute and the feature, refer this link:
-     * https://docs.us-phoenix-1.oraclecloud.com/Content/Balance/Tasks/managingrequest.htm#path
+     * https://docs.cloud.oracle.com/Content/Balance/Tasks/managingrequest.htm#path
      */
     "pathRoutes": [
       {
@@ -20,7 +20,7 @@
         // The unique part of the URI e.g. /video, /data, etc.
         "path": "/video",
         // Rule match type. Pick one option from below link:
-        // https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/PathMatchType
+        // https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/PathMatchType
         "pathMatchType": {
           "matchType": "EXACT_MATCH"
         }

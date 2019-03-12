@@ -8,8 +8,8 @@
      */
     "my_cert_bundle" : {
         /*
-         * For information about each of these fields, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/CreateCertificateDetails
-         * 
+         * For information about each of these fields, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/CreateCertificateDetails
+         *
          * Note that the attribute names here have to match what is shown in the above link.
          *
          * Also note that the caCertificate, privateKey and publicCertificate PEM format strings should be a single string, so we have the newline separator (\n) in the strings

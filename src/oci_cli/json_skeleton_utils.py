@@ -343,10 +343,13 @@ def get_cli_json_input_option(json_metadata):
         type=CliFromJson(json_metadata),
         is_eager=True,
         callback=cli_json_input_callback,
-        help="""Provide input to this command as a JSON document from a file.
+        help="""Provide input to this command as a JSON document from a file using the file://path-to/file syntax.
 
-        Options can still be provided on the command line. If an option exists in both the JSON document and the command line then the command line specified value will be used
-        """)
+        The --generate-full-command-json-input option can be used to generate a sample json file to be used with this command option. The key names are pre-populated and match the command option names (converted to camelCase format, e.g. compartment-id --> compartmentId), while the values of the keys need to be populated by the user before using the sample file as an input to this command. For any command option that accepts multiple values, the value of the key can be a JSON array.
+
+        Options can still be provided on the command line. If an option exists in both the JSON document and the command line then the command line specified value will be used.
+
+        For examples on usage of this option, please see our "using CLI with advanced JSON options" link: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOptions""")
 
 
 # Intended for when we take in params from **kwargs in an _extended CLI and then shuttle them down to a corresponding command in a

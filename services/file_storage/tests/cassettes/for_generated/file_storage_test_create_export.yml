@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=filestorage&apiName=CreateExport
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 22 Oct 2018 13:53:51 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0012&serviceName=filestorage&apiName=CreateExport
+  response:
+    body: {string: !!python/unicode '[{"containerId":"f466d099-b85b-4dfe-8af5-96c180fe8694","request":{"createExportDetails":{"exportSetId":"ocid1.exportset.oc1.phx.aaaaaa4np2smvtifobuhqllqojxwiotqnb4c2ylefuzqaaaa","fileSystemId":"ocid1.filesystem.oc1.phx.aaaaaaaaaaaafdqyobuhqllqojxwiotqnb4c2ylefuzqaaaa","path":"/files"},"opcRetryToken":"fab90f89-61f2-4d15-b051-350aa83e521b"}}]'}
+    headers:
+      content-length: ['343']
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:53:51 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"path": "/files", "exportSetId": "ocid1.exportset.oc1.phx.aaaaaa4np2smvtifobuhqllqojxwiotqnb4c2ylefuzqaaaa",
+      "fileSystemId": "ocid1.filesystem.oc1.phx.aaaaaaaaaaaafdqyobuhqllqojxwiotqnb4c2ylefuzqaaaa"}'
+    headers:
+      Content-Length: ['202']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="HKCNpGGrOYQSLplDg9uW0qMkbcDDteYFHEnw7U/+toTxVGvkT53krN3iayPLcEGBQ/iki0PjCFFjOr8BrIqCf3hKajkdXsoqKxcySy+W218zyvtJkm/tq9Rk4CxowvN5QuXK86kil471qwOWQOic03B1iMcCDJL7BLYEd6L4tU/vS1OApZ2X+waPzFDkQskhH4uBuBTTaL+ve7j0tQA+GosX+O8kfdzctCiw+m4ifNeli1GTQhv1o2GApiAxOln5D6PxF4hEo/2n1yW+z97rcVIuHqC+LwQ0MlEfY0Qc1J+ryQ93+eY17G7E/wij2dkJqtYVAEr1DzTeu+abWFC89Q==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:54:16 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
+      opc-request-id: [9F60BA47F7D54781A6C31621D4F6A197]
+      opc-retry-token: [z44NP0hjHAOio829BkoXXQjyN5y9cG]
+      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.34+preview.1]
+      x-content-sha256: [!!python/unicode '5jXrZJhcb/p4QalDZ2JOlISTc9qRTjmipRsXPBvauM8=']
+    method: POST
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/exports
+  response:
+    body: {string: !!python/unicode "{\n  \"exportOptions\" : [ {\n    \"source\"\
+        \ : \"0.0.0.0/0\",\n    \"requirePrivilegedSourcePort\" : false,\n    \"access\"\
+        \ : \"READ_WRITE\",\n    \"identitySquash\" : \"NONE\",\n    \"anonymousUid\"\
+        \ : 65534,\n    \"anonymousGid\" : 65534\n  } ],\n  \"exportSetId\" : \"ocid1.exportset.oc1.phx.aaaaaa4np2smvtifobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"fileSystemId\" : \"ocid1.filesystem.oc1.phx.aaaaaaaaaaaafdqyobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"id\" : \"ocid1.export.oc1.phx.aaaaaby27vezcuagobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"lifecycleState\" : \"ACTIVE\",\n  \"path\" : \"/files\",\n  \"timeCreated\"\
+        \ : \"2018-10-22T13:54:17.463Z\"\n}"}
+    headers:
+      connection: [keep-alive]
+      content-length: ['589']
+      content-type: [application/json]
+      date: ['Mon, 22 Oct 2018 13:54:17 GMT']
+      etag: [47f6319dab1bdd4455e7b9af025629b002702affe7d9968201a896f836ad976f]
+      opc-request-id: [9F60BA47F7D54781A6C31621D4F6A197/AB1E5F426AC3D3A46925B1E4A565D395/4793187E659D322CAD91BB31EE267476]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"A8679B73CA0B4C6DAB498C570717E95F\",
+      \"etag\": \"47f6319dab1bdd4455e7b9af025629b002702affe7d9968201a896f836ad976f\",
+      \"export\": {\"timeCreated\": \"2018-10-22T13:54:17.463000+00:00\", \"exportSetId\":
+      \"ocid1.exportset.oc1.phx.aaaaaa4np2smvtifobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"fileSystemId\": \"ocid1.filesystem.oc1.phx.aaaaaaaaaaaafdqyobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"lifecycleState\": \"ACTIVE\", \"path\": \"/files\", \"id\": \"ocid1.export.oc1.phx.aaaaaby27vezcuagobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"exportOptions\": [{\"access\": \"READ_WRITE\", \"source\": \"0.0.0.0/0\",
+      \"identitySquash\": \"NONE\", \"anonymousUid\": 65534, \"anonymousGid\": 65534,
+      \"requirePrivilegedSourcePort\": false}]}}", "responseClass": "com.oracle.bmc.filestorage.responses.CreateExportResponse",
+      "containerId": "f466d099-b85b-4dfe-8af5-96c180fe8694", "requestJson": "{\"createExportDetails\":
+      {\"path\": \"/files\", \"exportSetId\": \"ocid1.exportset.oc1.phx.aaaaaa4np2smvtifobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"fileSystemId\": \"ocid1.filesystem.oc1.phx.aaaaaaaaaaaafdqyobuhqllqojxwiotqnb4c2ylefuzqaaaa\"},
+      \"opcRetryToken\": \"fab90f89-61f2-4d15-b051-350aa83e521b\"}", "requestClass":
+      "com.oracle.bmc.filestorage.requests.CreateExportRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1281']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0012
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 22 Oct 2018 13:54:17 GMT']
+      server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

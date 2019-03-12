@@ -1,0 +1,120 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=ons&apiName=CreateTopic
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 12 Feb 2019 05:36:45 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?serviceName=ons&apiName=CreateTopic&lang=PythonCLI&sessionId=0920
+  response:
+    body: {string: '[{"containerId":"259071e3-755f-4c6e-8ac7-6a6d23d2e7a1","request":{"createTopicDetails":{"name":"us-phoenix-1_CreateTopic_us-phoenix-1___STS0920_1663","compartmentId":"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba","description":"__STS0920_8660","freeformTags":{"tag1":"value1.__STS0920_6663","tag2":"value2.__STS0920_6663"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0920_276","testing_service_tag_02":"tag5.__STS0920_276","testing_service_tag_03":"tag6.__STS0920_276"}}},"opcRetryToken":"d642db6b-3549-4494-99a2-4993ba6ed9e0"}}]'}
+    headers:
+      Content-Length: ['605']
+      Content-Type: [text/plain]
+      Date: ['Tue, 12 Feb 2019 05:36:45 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "us-phoenix-1_CreateTopic_us-phoenix-1___STS0920_1663", "compartmentId":
+      "ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba",
+      "description": "__STS0920_8660", "freeformTags": {"tag1": "value1.__STS0920_6663",
+      "tag2": "value2.__STS0920_6663"}, "definedTags": {"testing_service_tag_ns_001":
+      {"testing_service_tag_01": "tag4.__STS0920_276", "testing_service_tag_02": "tag5.__STS0920_276",
+      "testing_service_tag_03": "tag6.__STS0920_276"}}}'
+    headers:
+      Content-Length: ['478']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="DCHQs3bvJY+08jNVJeM7HBkokJpCyFibK3AkbTyw2asFxkYo62VFOKi3QjnRaGCAJyoSBoW9usPo6lGJYF7w/TIe9FgKOinFdQin8H7dNsJYJpr1CKxrTwHXWZwleBJhdG6EVfbb2g8cz4uC2ZxuYFci/96wazPcnIb5r8lfKyeOnuzX8hTn7M1mDuPETf6eHmcJRZ9KRGLqVUlmqzVdHfW6sFG4vqfzxomQQfV6ovKOXGP6Tf0w4wG0lkViuZY9eGJsmQFcxW4vMUdVod9zps3Ak6m9aJynmGUH+21XtHk4iFqaDTcGxKB8xtXIhMQmuUAXdnWGi2fCHV90kTpn7A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 05:36:46 GMT']
+      host: [notification.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.3+preview.1.528]
+      opc-request-id: [90A6B3EC00A648D4880032A3F16301A9]
+      opc-retry-token: [o4GKeSCGTFfSW3PJIkXJ0VZ2xV1N36]
+      user-agent: [Oracle-PythonSDK/2.1.3+preview.1.528 (python 3.6.2; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.40+preview.1]
+      x-content-sha256: [mSbWTiv/1PG95kmxU9/X1f/XYdtYcYLZGdhxUFg+lLg=]
+    method: POST
+    uri: https://notification.us-phoenix-1.oraclecloud.com/20181201/topics
+  response:
+    body: {string: "{\n  \"name\" : \"us-phoenix-1_CreateTopic_us-phoenix-1___STS0920_1663\"\
+        ,\n  \"topicId\" : \"ocid1.onstopic.oc1.phx.aaaaaaaahl7pzuxdoj6a66yhzqx3dtcqjcyhqrzlctdfslwxb3jv6wspxila\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\"\
+        ,\n  \"lifecycleState\" : \"ACTIVE\",\n  \"description\" : \"__STS0920_8660\"\
+        ,\n  \"timeCreated\" : \"2019-02-12T05:36:46.540Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0920_6663\",\n    \"tag2\" : \"value2.__STS0920_6663\"\
+        \n  },\n  \"definedTags\" : {\n    \"testing_service_andy_tag_ns_001\" : {\n\
+        \      \"__sts0438_8918\" : \"__STS0438_2554\",\n      \"__sts0476_4908\"\
+        \ : \"__STS0476_6855\"\n    },\n    \"testing_service_tag_ns_001\" : {\n \
+        \     \"testing_service_tag_01\" : \"tag4.__STS0920_276\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0920_276\",\n      \"testing_service_tag_03\" : \"tag6.__STS0920_276\"\
+        \n    }\n  },\n  \"apiEndpoint\" : \"https://cell1.notification.us-phoenix-1.oraclecloud.com\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['934']
+      Content-Type: [application/json]
+      Date: ['Tue, 12 Feb 2019 05:36:46 GMT']
+      ETag: [427e901d]
+      opc-request-id: [90A6B3EC00A648D4880032A3F16301A9/D633F4941F2F46AFC220081072607E2B/4D6598DAA73489AA02D3A1137C8D851A]
+    status: {code: 201, message: Created}
+- request:
+    body: '{"containerId": "259071e3-755f-4c6e-8ac7-6a6d23d2e7a1", "requestClass":
+      "com.oracle.bmc.ons.requests.CreateTopicRequest", "requestJson": "{\"createTopicDetails\":
+      {\"name\": \"us-phoenix-1_CreateTopic_us-phoenix-1___STS0920_1663\", \"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"description\": \"__STS0920_8660\", \"freeformTags\": {\"tag1\": \"value1.__STS0920_6663\",
+      \"tag2\": \"value2.__STS0920_6663\"}, \"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_01\": \"tag4.__STS0920_276\", \"testing_service_tag_02\":
+      \"tag5.__STS0920_276\", \"testing_service_tag_03\": \"tag6.__STS0920_276\"}}},
+      \"opcRetryToken\": \"d642db6b-3549-4494-99a2-4993ba6ed9e0\"}", "responseJson":
+      "{\"etag\": \"427e901d\", \"notificationTopic\": {\"apiEndpoint\": \"https://cell1.notification.us-phoenix-1.oraclecloud.com\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
+      \"definedTags\": {\"testing_service_andy_tag_ns_001\": {\"__sts0438_8918\":
+      \"__STS0438_2554\", \"__sts0476_4908\": \"__STS0476_6855\"}, \"testing_service_tag_ns_001\":
+      {\"testing_service_tag_01\": \"tag4.__STS0920_276\", \"testing_service_tag_02\":
+      \"tag5.__STS0920_276\", \"testing_service_tag_03\": \"tag6.__STS0920_276\"}},
+      \"description\": \"__STS0920_8660\", \"etag\": null, \"freeformTags\": {\"tag1\":
+      \"value1.__STS0920_6663\", \"tag2\": \"value2.__STS0920_6663\"}, \"lifecycleState\":
+      \"ACTIVE\", \"name\": \"us-phoenix-1_CreateTopic_us-phoenix-1___STS0920_1663\",
+      \"timeCreated\": \"2019-02-12T05:36:46.540000+00:00\", \"topicId\": \"ocid1.onstopic.oc1.phx.aaaaaaaahl7pzuxdoj6a66yhzqx3dtcqjcyhqrzlctdfslwxb3jv6wspxila\"},
+      \"opcRequestId\": \"1810CDFCF0C34CC09EC05B81A5189536\"}", "responseClass": "com.oracle.bmc.ons.responses.CreateTopicResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1855']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0920&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 12 Feb 2019 05:36:46 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

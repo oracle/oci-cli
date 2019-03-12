@@ -1,0 +1,428 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListUsers&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=ListUsers&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq","limit":10}}]'}
+    headers:
+      Content-Length: ['177']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="jNEmCdWtfbF09DEgmA5icG0acXCKlGx8uoSBx8N8McNS27Xj0RtOJZQXW6pKxFsWR8rkytd05yIWiaHNWi6Fz1BU0jTFBhJKdPyhNz7snfZYGzZy5mobQOzeDwJB0r7y1cb//ZoDZl4sBu3LWHVs1UteREnMwsHYaCmBRAD3w2EIPHd3JeuBeaVByy+dK8QjFlj8Y6pCNjenjOz18hEiNnLua1olxPMs8zvcQRZuDXIn0iEMJ8o/g8MJBPdBUTxm+OLCm1SlzlzZCnBiFS5Ocviq2HvwkdoJR8f0T3F9KjCskGJ6sRvyq3hjuvVRYN3Nk5u5GVca1qqaE+1nHXBh6A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [E88F978E80034ABCBBD2F0CEAECE5307]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/?limit=10&compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: "[ {\n  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n\
+        \    \"canUseApiKeys\" : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-09-04T17:54:07.795Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"__STS0277_2575\",\n  \"description\" : \"__STS0277_2934\"\
+        ,\n  \"timeCreated\" : \"2018-09-04T17:53:53.889Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0277_4443\",\n    \"tag2\" : \"value2.__STS0277_4443\"\
+        \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
+        \    \"testing_service_tag_01\" : \"tag4.__STS0277_5547\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0277_5547\",\n      \"testing_service_tag_03\" : \"tag6.__STS0277_5547\"\
+        \n    }\n  },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n  \"capabilities\"\
+        \ : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\" : true,\n\
+        \    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\" : true,\n\
+        \    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\" :\
+        \ null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-09-04T17:51:58.484Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaazmxgb7x7flpnagzt6uqpalu7kxolsufzhk65pz275r6zwmejf2xa\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"__STS0277_446\",\n  \"description\" : \"__STS0277_7919\"\
+        ,\n  \"timeCreated\" : \"2018-09-04T17:51:11.581Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0277_6435\",\n    \"tag2\" : \"value2.__STS0277_6435\"\
+        \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
+        \    \"testing_service_tag_01\" : \"tag4.__STS0277_1398\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0277_1398\",\n      \"testing_service_tag_03\" : \"tag6.__STS0277_1398\"\
+        \n    }\n  },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n  \"capabilities\"\
+        \ : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\" : true,\n\
+        \    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\" : true,\n\
+        \    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\" :\
+        \ null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-09-04T17:47:29.844Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaawykfsn2t2ahfjbs6b4tgsyvjziqdwex6xs3z7mrkvnymnbhfwabq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"__STS0277_4597\",\n  \"description\" : \"__STS0277_2692\"\
+        ,\n  \"timeCreated\" : \"2018-09-04T17:45:19.962Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0277_1082\",\n    \"tag2\" : \"value2.__STS0277_1082\"\
+        \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
+        \    \"testing_service_tag_01\" : \"tag4.__STS0277_2747\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0277_2747\",\n      \"testing_service_tag_03\" : \"tag6.__STS0277_2747\"\
+        \n    }\n  },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n  \"capabilities\"\
+        \ : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\" : true,\n\
+        \    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\" : true,\n\
+        \    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\" :\
+        \ null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-09-04T17:46:49.085Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaaunyqtllvtqokzfsss4ghm4k4xnhcy5ntyny5if3cfv6uw45gjulq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"__STS0277_6419\",\n  \"description\" : \"__STS0277_2771\"\
+        ,\n  \"timeCreated\" : \"2018-09-04T17:46:47.688Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0277_1580\",\n    \"tag2\" : \"value2.__STS0277_1580\"\
+        \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
+        \    \"testing_service_tag_01\" : \"tag4.__STS0277_6659\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0277_6659\",\n      \"testing_service_tag_03\" : \"tag6.__STS0277_6659\"\
+        \n    }\n  },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n  \"capabilities\"\
+        \ : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\" : true,\n\
+        \    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\" : true,\n\
+        \    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\" :\
+        \ null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-09-04T17:53:23.584Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaaxbvtlfq3mm6kub635o4ixusevlv4hfe6p2no6yndufg4ioia5gza\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"__STS0277_7358\",\n  \"description\" : \"__STS0277_7773\"\
+        ,\n  \"timeCreated\" : \"2018-09-04T17:53:23.584Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0277_7100\",\n    \"tag2\" : \"value2.__STS0277_7100\"\
+        \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
+        \    \"testing_service_tag_01\" : \"tag4.__STS0277_7492\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0277_7492\",\n      \"testing_service_tag_03\" : \"tag6.__STS0277_7492\"\
+        \n    }\n  },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n  \"capabilities\"\
+        \ : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\" : true,\n\
+        \    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\" : true,\n\
+        \    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\" :\
+        \ null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-07-30T17:41:46.290Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"CLIIntegrationTestAdminUser\",\n  \"description\" : \"Use\
+        \ for Python CLI integration tests that require an admin - do not delete.\
+        \ \",\n  \"timeCreated\" : \"2018-06-19T17:15:26.909Z\",\n  \"freeformTags\"\
+        \ : {\n    \"asdf\" : \"asdf\"\n  },\n  \"definedTags\" : { },\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}, {\n  \"capabilities\" : {\n    \"canUseConsolePassword\"\
+        \ : true,\n    \"canUseApiKeys\" : true,\n    \"canUseAuthTokens\" : true,\n\
+        \    \"canUseSmtpCredentials\" : true,\n    \"canUseCustomerSecretKeys\" :\
+        \ true\n  },\n  \"identityProviderId\" : null,\n  \"externalIdentifier\" :\
+        \ null,\n  \"timeModified\" : \"2018-07-18T20:18:40.181Z\",\n  \"id\" : \"\
+        ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"CLIIntegrationTestUser\",\n  \"description\" : \"Used for\
+        \ the Python CLI integration tests - do not delete. \",\n  \"timeCreated\"\
+        \ : \"2018-06-19T17:02:12.896Z\",\n  \"freeformTags\" : { },\n  \"definedTags\"\
+        \ : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n  \"capabilities\" : {\n\
+        \    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\" : true,\n  \
+        \  \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\" : true,\n \
+        \   \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\" :\
+        \ null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-08-28T16:56:48.432Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaarb4gad6t2uqxjatjldijuowozas7powhjtevcwgiqzfimrav6ccq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"dex-4153\",\n  \"description\" : \"User to debug problem\"\
+        ,\n  \"timeCreated\" : \"2018-08-28T14:33:05.798Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\"\
+        \ : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-08-28T17:39:08.885Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaaxv6iyszhllviann5zsjyt6euhpnmxsbtxwumyz5nankjjsego54a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"mike.c.ross@oracle.com\",\n  \"description\" : \"User account\"\
+        ,\n  \"timeCreated\" : \"2018-06-19T15:53:32.591Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\"\
+        \ : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-06-21T00:32:04.299Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaab26pqfrzdltbik2htkmam7wcphggkskypcrlh3c4rjj27gxdpxea\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"mingchi.stephen.mak@oracle.com\",\n  \"description\" : \"\
+        User account\",\n  \"timeCreated\" : \"2018-06-19T15:53:36.960Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      opc-limit: ['10']
+      opc-next-page: [AAAAAAAAAAEQ1KBd-yMBRGrPJCT5bV3sBkL4pYNUp-qJPmKVNfwe4WEFabdK7mWCDmUpHgh45Ec_5thK2dSwB-Naiu5tbl_hXnJCT8-8Hv5P2y91IjrwHPjqDcfQf-ld-uFYYHT-F600LFPmkZEdnOz8jhLbLu0vJmvrJ5h3hxRNdO56NG9FYxps-7dLkUPvVSTdOBzdmOxFYRPHw2JF2pqYXyqrg3r_o_pILOlkJj7uzdJaL-YKrPjaHReNaVYhdQXMNBLvPaAKZsCt_vAOx5hwfaPrmobk4c5ShANmgIVfr63K6Fxul0fWcDJkc6v2xWPsKaE8fJi50LLOZemoUFzShWNGSBZwFB_I2SbGWPl5HQcj3OHCi5_P0gkTwVzjCRZA4PP-VhP5oHWdSD9YS70OpbbOqsHKATrupMdxp8Rmi6ZaKhZth-OvMQbEx2yGCKRFA4TK2vDSsz7Oo0gM_Z_TfXGRVoFZV8RooRahukNiOG44m2mwTGavLX6gohRwhDvzC61emFNrqrRia5rcXuANjg1mWY-wWleBUK8yDxeUhG-ustIm53en9Ov-lEFduy0nJZWDxlnqpcGkTmvrJn91Cyw9M5Ewaw5hig==]
+      opc-request-id: [E88F978E80034ABCBBD2F0CEAECE5307/A01CAF4F204FEE027AEF9C9BA32D7FF5/08CB57D025ED33743CF6C8B8D13F00B0]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"9B0B31A2E808449BABCD27165966EB55\",
+      \"opcNextPage\": \"AAAAAAAAAAEQ1KBd-yMBRGrPJCT5bV3sBkL4pYNUp-qJPmKVNfwe4WEFabdK7mWCDmUpHgh45Ec_5thK2dSwB-Naiu5tbl_hXnJCT8-8Hv5P2y91IjrwHPjqDcfQf-ld-uFYYHT-F600LFPmkZEdnOz8jhLbLu0vJmvrJ5h3hxRNdO56NG9FYxps-7dLkUPvVSTdOBzdmOxFYRPHw2JF2pqYXyqrg3r_o_pILOlkJj7uzdJaL-YKrPjaHReNaVYhdQXMNBLvPaAKZsCt_vAOx5hwfaPrmobk4c5ShANmgIVfr63K6Fxul0fWcDJkc6v2xWPsKaE8fJi50LLOZemoUFzShWNGSBZwFB_I2SbGWPl5HQcj3OHCi5_P0gkTwVzjCRZA4PP-VhP5oHWdSD9YS70OpbbOqsHKATrupMdxp8Rmi6ZaKhZth-OvMQbEx2yGCKRFA4TK2vDSsz7Oo0gM_Z_TfXGRVoFZV8RooRahukNiOG44m2mwTGavLX6gohRwhDvzC61emFNrqrRia5rcXuANjg1mWY-wWleBUK8yDxeUhG-ustIm53en9Ov-lEFduy0nJZWDxlnqpcGkTmvrJn91Cyw9M5Ewaw5hig==\",
+      \"items\": [{\"definedTags\": {\"testingServiceTagNs001\": {\"testingServiceTag03\":
+      \"tag6.__STS0277_5547\", \"testingServiceTag01\": \"tag4.__STS0277_5547\", \"testingServiceTag02\":
+      \"tag5.__STS0277_5547\"}}, \"id\": \"ocid1.user.oc1..aaaaaaaasmhk3nzhkx4o6hpz22uqltsgcb6jplnzzvgeozb5asvn4aftatfa\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"__STS0277_2575\", \"description\": \"__STS0277_2934\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0277_4443\", \"tag1\": \"value1.__STS0277_4443\"},
+      \"timeCreated\": \"2018-09-04T17:53:53.889000+00:00\", \"lifecycleState\": \"ACTIVE\",
+      \"inactiveStatus\": null}, {\"definedTags\": {\"testingServiceTagNs001\": {\"testingServiceTag03\":
+      \"tag6.__STS0277_1398\", \"testingServiceTag01\": \"tag4.__STS0277_1398\", \"testingServiceTag02\":
+      \"tag5.__STS0277_1398\"}}, \"id\": \"ocid1.user.oc1..aaaaaaaazmxgb7x7flpnagzt6uqpalu7kxolsufzhk65pz275r6zwmejf2xa\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"__STS0277_446\", \"description\": \"__STS0277_7919\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0277_6435\", \"tag1\": \"value1.__STS0277_6435\"},
+      \"timeCreated\": \"2018-09-04T17:51:11.581000+00:00\", \"lifecycleState\": \"ACTIVE\",
+      \"inactiveStatus\": null}, {\"definedTags\": {\"testingServiceTagNs001\": {\"testingServiceTag03\":
+      \"tag6.__STS0277_2747\", \"testingServiceTag01\": \"tag4.__STS0277_2747\", \"testingServiceTag02\":
+      \"tag5.__STS0277_2747\"}}, \"id\": \"ocid1.user.oc1..aaaaaaaawykfsn2t2ahfjbs6b4tgsyvjziqdwex6xs3z7mrkvnymnbhfwabq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"__STS0277_4597\", \"description\": \"__STS0277_2692\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0277_1082\", \"tag1\": \"value1.__STS0277_1082\"},
+      \"timeCreated\": \"2018-09-04T17:45:19.962000+00:00\", \"lifecycleState\": \"ACTIVE\",
+      \"inactiveStatus\": null}, {\"definedTags\": {\"testingServiceTagNs001\": {\"testingServiceTag03\":
+      \"tag6.__STS0277_6659\", \"testingServiceTag01\": \"tag4.__STS0277_6659\", \"testingServiceTag02\":
+      \"tag5.__STS0277_6659\"}}, \"id\": \"ocid1.user.oc1..aaaaaaaaunyqtllvtqokzfsss4ghm4k4xnhcy5ntyny5if3cfv6uw45gjulq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"__STS0277_6419\", \"description\": \"__STS0277_2771\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0277_1580\", \"tag1\": \"value1.__STS0277_1580\"},
+      \"timeCreated\": \"2018-09-04T17:46:47.688000+00:00\", \"lifecycleState\": \"ACTIVE\",
+      \"inactiveStatus\": null}, {\"definedTags\": {\"testingServiceTagNs001\": {\"testingServiceTag03\":
+      \"tag6.__STS0277_7492\", \"testingServiceTag01\": \"tag4.__STS0277_7492\", \"testingServiceTag02\":
+      \"tag5.__STS0277_7492\"}}, \"id\": \"ocid1.user.oc1..aaaaaaaaxbvtlfq3mm6kub635o4ixusevlv4hfe6p2no6yndufg4ioia5gza\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"__STS0277_7358\", \"description\": \"__STS0277_7773\", \"freeformTags\":
+      {\"tag2\": \"value2.__STS0277_7100\", \"tag1\": \"value1.__STS0277_7100\"},
+      \"timeCreated\": \"2018-09-04T17:53:23.584000+00:00\", \"lifecycleState\": \"ACTIVE\",
+      \"inactiveStatus\": null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"CLIIntegrationTestAdminUser\", \"description\": \"Use for Python
+      CLI integration tests that require an admin - do not delete. \", \"freeformTags\":
+      {\"asdf\": \"asdf\"}, \"timeCreated\": \"2018-06-19T17:15:26.909000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\":
+      {}, \"id\": \"ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"CLIIntegrationTestUser\", \"description\": \"Used for the Python
+      CLI integration tests - do not delete. \", \"freeformTags\": {}, \"timeCreated\":
+      \"2018-06-19T17:02:12.896000+00:00\", \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\":
+      null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaarb4gad6t2uqxjatjldijuowozas7powhjtevcwgiqzfimrav6ccq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"dex-4153\", \"description\": \"User to debug problem\", \"freeformTags\":
+      {}, \"timeCreated\": \"2018-08-28T14:33:05.798000+00:00\", \"lifecycleState\":
+      \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaaxv6iyszhllviann5zsjyt6euhpnmxsbtxwumyz5nankjjsego54a\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"mike.c.ross@oracle.com\", \"description\": \"User account\", \"freeformTags\":
+      {}, \"timeCreated\": \"2018-06-19T15:53:32.591000+00:00\", \"lifecycleState\":
+      \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaab26pqfrzdltbik2htkmam7wcphggkskypcrlh3c4rjj27gxdpxea\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"mingchi.stephen.mak@oracle.com\", \"description\": \"User account\",
+      \"freeformTags\": {}, \"timeCreated\": \"2018-06-19T15:53:36.960000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null}]}", "requestJson":
+      "{\"limit\": 10, \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"}",
+      "containerId": "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.ListUsersRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ListUsersResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['6668']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: CONT}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0277&apiName=ListUsers&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"72fb4c5d-69eb-4d24-9402-17d3f00d6383","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq","page":"AAAAAAAAAAEQ1KBd-yMBRGrPJCT5bV3sBkL4pYNUp-qJPmKVNfwe4WEFabdK7mWCDmUpHgh45Ec_5thK2dSwB-Naiu5tbl_hXnJCT8-8Hv5P2y91IjrwHPjqDcfQf-ld-uFYYHT-F600LFPmkZEdnOz8jhLbLu0vJmvrJ5h3hxRNdO56NG9FYxps-7dLkUPvVSTdOBzdmOxFYRPHw2JF2pqYXyqrg3r_o_pILOlkJj7uzdJaL-YKrPjaHReNaVYhdQXMNBLvPaAKZsCt_vAOx5hwfaPrmobk4c5ShANmgIVfr63K6Fxul0fWcDJkc6v2xWPsKaE8fJi50LLOZemoUFzShWNGSBZwFB_I2SbGWPl5HQcj3OHCi5_P0gkTwVzjCRZA4PP-VhP5oHWdSD9YS70OpbbOqsHKATrupMdxp8Rmi6ZaKhZth-OvMQbEx2yGCKRFA4TK2vDSsz7Oo0gM_Z_TfXGRVoFZV8RooRahukNiOG44m2mwTGavLX6gohRwhDvzC61emFNrqrRia5rcXuANjg1mWY-wWleBUK8yDxeUhG-ustIm53en9Ov-lEFduy0nJZWDxlnqpcGkTmvrJn91Cyw9M5Ewaw5hig==","limit":10}}]'}
+    headers:
+      Content-Length: ['803']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="wrxD79/Ew30Wzto29JSWZNt3a6OVIHliXOHBNLRyrbYXKxaLxMX4Vcj/r/qKZSm1S0u+Oh3bhuuW4OCou3H8eyfNzSWjCuNY4aiMv/RezJuRs62vMMKEW8Ve5yD4FH2H2GfF5DOi26UizqxAZxeDkIeRvNgF51anvAxK7DTxwZxPnoTZHyzoOXds/ETMATEShbHmJJuEaN6ecxixavwFaH9/Vbgui2X9Ku+xmro7x2YaF5IEY7jNQbQZyRDTs5YzgbKhdyuqDldtsaHKCPKmVNPUZGPv2QQo016c/dJGxp4vLQI7MhLTGMqG09vmerrTBSablbBmu8IGpkixZfXQ4w==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [D6F699A18D99432CB4F0A8A3250D5D33]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/?limit=10&page=AAAAAAAAAAEQ1KBd-yMBRGrPJCT5bV3sBkL4pYNUp-qJPmKVNfwe4WEFabdK7mWCDmUpHgh45Ec_5thK2dSwB-Naiu5tbl_hXnJCT8-8Hv5P2y91IjrwHPjqDcfQf-ld-uFYYHT-F600LFPmkZEdnOz8jhLbLu0vJmvrJ5h3hxRNdO56NG9FYxps-7dLkUPvVSTdOBzdmOxFYRPHw2JF2pqYXyqrg3r_o_pILOlkJj7uzdJaL-YKrPjaHReNaVYhdQXMNBLvPaAKZsCt_vAOx5hwfaPrmobk4c5ShANmgIVfr63K6Fxul0fWcDJkc6v2xWPsKaE8fJi50LLOZemoUFzShWNGSBZwFB_I2SbGWPl5HQcj3OHCi5_P0gkTwVzjCRZA4PP-VhP5oHWdSD9YS70OpbbOqsHKATrupMdxp8Rmi6ZaKhZth-OvMQbEx2yGCKRFA4TK2vDSsz7Oo0gM_Z_TfXGRVoFZV8RooRahukNiOG44m2mwTGavLX6gohRwhDvzC61emFNrqrRia5rcXuANjg1mWY-wWleBUK8yDxeUhG-ustIm53en9Ov-lEFduy0nJZWDxlnqpcGkTmvrJn91Cyw9M5Ewaw5hig%3D%3D&compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: "[ {\n  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n\
+        \    \"canUseApiKeys\" : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-06-19T15:50:14.629Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaagurqq7wwk7b5w6fadgvwl6msjnumpws77wl5e5ob2v3qcanlo7ha\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"mukarram.baig@oracle.com\",\n  \"description\" : \"User\
+        \ account\",\n  \"timeCreated\" : \"2018-06-19T15:50:13.631Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n},\
+        \ {\n  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n    \"\
+        canUseApiKeys\" : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-08-20T17:15:20.741Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaauknyfgu6taa4bulfgj5l3wriqjz263nff6larn4tnm7jyeqmewiq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"nabeel.al.saber@oracle.com\",\n  \"description\" : \"Nabeel\
+        \ AlSaber\",\n  \"timeCreated\" : \"2018-08-14T22:25:32.919Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n},\
+        \ {\n  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n    \"\
+        canUseApiKeys\" : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-06-12T21:22:47.505Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaasftmhzjafskxdxpbv46fcauoybudiqx5svh7yahovirlljrdgw6q\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"paul.hummel@oracle.com\",\n  \"description\" : \"Paul Hummel\"\
+        ,\n  \"timeCreated\" : \"2018-06-11T17:32:48.257Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\"\
+        \ : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-06-19T15:53:39.247Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaaj64odmlylj6hvezohuez6fnhcnzivbzi4yb2utu2bo72itevuj7a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"srikanth.reddy.kumbham@oracle.com\",\n  \"description\"\
+        \ : \"User account\",\n  \"timeCreated\" : \"2018-06-19T15:53:38.272Z\",\n\
+        \  \"freeformTags\" : { },\n  \"definedTags\" : { },\n  \"lifecycleState\"\
+        \ : \"ACTIVE\"\n}, {\n  \"capabilities\" : {\n    \"canUseConsolePassword\"\
+        \ : true,\n    \"canUseApiKeys\" : true,\n    \"canUseAuthTokens\" : true,\n\
+        \    \"canUseSmtpCredentials\" : true,\n    \"canUseCustomerSecretKeys\" :\
+        \ true\n  },\n  \"identityProviderId\" : null,\n  \"externalIdentifier\" :\
+        \ null,\n  \"timeModified\" : \"2018-06-21T23:41:11.359Z\",\n  \"id\" : \"\
+        ocid1.user.oc1..aaaaaaaa53fihg2busuuybqwjfrceiartjucmpsmk7ftnzynxjeny6qdspjq\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"viral.modi@oracle.com\",\n  \"description\" : \"User account\"\
+        ,\n  \"timeCreated\" : \"2018-06-19T15:53:34.034Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n}, {\n\
+        \  \"capabilities\" : {\n    \"canUseConsolePassword\" : true,\n    \"canUseApiKeys\"\
+        \ : true,\n    \"canUseAuthTokens\" : true,\n    \"canUseSmtpCredentials\"\
+        \ : true,\n    \"canUseCustomerSecretKeys\" : true\n  },\n  \"identityProviderId\"\
+        \ : null,\n  \"externalIdentifier\" : null,\n  \"timeModified\" : \"2018-06-25T23:57:37.871Z\"\
+        ,\n  \"id\" : \"ocid1.user.oc1..aaaaaaaao7h3uefxfdawlxobya4tleksbbylpsnm7pggdgiujcn6pzndmz6a\"\
+        ,\n  \"compartmentId\" : \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"\
+        ,\n  \"name\" : \"vishwas.v.bhat@oracle.com\",\n  \"description\" : \"User\
+        \ account\",\n  \"timeCreated\" : \"2018-06-19T15:53:35.526Z\",\n  \"freeformTags\"\
+        \ : { },\n  \"definedTags\" : { },\n  \"lifecycleState\" : \"ACTIVE\"\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['4192']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      opc-limit: ['10']
+      opc-next-page: [AAAAAAAAAAHfP543BLouTYZ73WU4o_hdmOtB3MxqCQ_qdE_3x8vjJR3eQ9G3EPTbQATm8PrQZzA8ytYSHWFQVlcGypHTfytTvcE0JzuU-MXujiguFhIEpRlOVUYTkd_k_BHonZBUXPLPLnqGkTRNcOhgFfBR9iRAwgPEuHGdnU6eZk8LnxEdnfPorOH3VBLe2cvXhuggMS3Q1_G8fI54hk3gWKx4rZdbsR5Zg_ESPSdr6hw1d64n427udtHimBXVj5luXAgKOWnJYNj_ygHhO09zGRfDs0wiZU-X-WTKLGPnKCXV46xKirXvvD0Y1ndedrO8PM35afm4Et0x1-5-7GhkUHWBfuca-WZFzxIe-1HjH3G1YWdAwXQlJMBvHJP3H7diHP35NDq1pnug3Nnq5zU_ekQ2W7-3exHoRsFijh-dRfaFPRZ40BGQIVWKv_XWr0g1_NMj478LuVuMTQzm0f7Koigh6ue0PmS-rOFvbyPV_N73JvarVYuwLaJfUOcb17V7mZk82muOGMFOYUvbDYVEGMjiK01IT8UsqdlTBXbBvC7NUl8HcxeXkoYSONLD3RUdsc-3rBQ0AiN6k6cOaLMBlKqF--0=]
+      opc-request-id: [D6F699A18D99432CB4F0A8A3250D5D33/A76CE961DF2D5C7DF9F7FD812B2BFE83/7368706810B961A32E302A1A96EEEC9B]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="NdGaKdKlJ6zfa+VBfDBXm5IXUfNljk+d7YMR+sVKHIA5Gt0p5TzcoN7vXte1Bfw/Me16ZqkkMgQta0bUMvLU2ix3fMmB+30u4mGnnCU0ZSipMu8GhzJNV+P5FEkiAMz2lPLUg1QLE5oMkz0jULHes0EUzSiUSvOJoyfRx+a3Z7WumJCbpjGwZq1kRQatJAlEsP5vtuzkuelfM8STrtA4HfCuNTVxFwwMRs4rkqlKaDvKa5foA71WL+uVIy5xp3HH2dVsgg3m8n4mWEQfaeq61oMaNah50G4q+84wi5yD/JdX664sqCMs2eHJlv7WjS8EUtJoDTp3vSJAW8Qlwbp2tg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [961A11A9D1164A5F80960CA68A6867F7]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+    method: GET
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/users/?limit=4&page=AAAAAAAAAAHfP543BLouTYZ73WU4o_hdmOtB3MxqCQ_qdE_3x8vjJR3eQ9G3EPTbQATm8PrQZzA8ytYSHWFQVlcGypHTfytTvcE0JzuU-MXujiguFhIEpRlOVUYTkd_k_BHonZBUXPLPLnqGkTRNcOhgFfBR9iRAwgPEuHGdnU6eZk8LnxEdnfPorOH3VBLe2cvXhuggMS3Q1_G8fI54hk3gWKx4rZdbsR5Zg_ESPSdr6hw1d64n427udtHimBXVj5luXAgKOWnJYNj_ygHhO09zGRfDs0wiZU-X-WTKLGPnKCXV46xKirXvvD0Y1ndedrO8PM35afm4Et0x1-5-7GhkUHWBfuca-WZFzxIe-1HjH3G1YWdAwXQlJMBvHJP3H7diHP35NDq1pnug3Nnq5zU_ekQ2W7-3exHoRsFijh-dRfaFPRZ40BGQIVWKv_XWr0g1_NMj478LuVuMTQzm0f7Koigh6ue0PmS-rOFvbyPV_N73JvarVYuwLaJfUOcb17V7mZk82muOGMFOYUvbDYVEGMjiK01IT8UsqdlTBXbBvC7NUl8HcxeXkoYSONLD3RUdsc-3rBQ0AiN6k6cOaLMBlKqF--0%3D&compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: '[ ]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['3']
+      Content-Type: [application/json]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      opc-limit: ['4']
+      opc-request-id: [961A11A9D1164A5F80960CA68A6867F7/24102FD44F29DE45357A92773861E2B5/BD6E882F4E51FE2ED3F0115EAFA34CB3]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"5E503C3F96CB4C0E91FB9B91355194EF\",
+      \"items\": [{\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaagurqq7wwk7b5w6fadgvwl6msjnumpws77wl5e5ob2v3qcanlo7ha\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"mukarram.baig@oracle.com\", \"description\": \"User account\", \"freeformTags\":
+      {}, \"timeCreated\": \"2018-06-19T15:50:13.631000+00:00\", \"lifecycleState\":
+      \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaauknyfgu6taa4bulfgj5l3wriqjz263nff6larn4tnm7jyeqmewiq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"nabeel.al.saber@oracle.com\", \"description\": \"Nabeel AlSaber\",
+      \"freeformTags\": {}, \"timeCreated\": \"2018-08-14T22:25:32.919000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\":
+      {}, \"id\": \"ocid1.user.oc1..aaaaaaaasftmhzjafskxdxpbv46fcauoybudiqx5svh7yahovirlljrdgw6q\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"paul.hummel@oracle.com\", \"description\": \"Paul Hummel\", \"freeformTags\":
+      {}, \"timeCreated\": \"2018-06-11T17:32:48.257000+00:00\", \"lifecycleState\":
+      \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaaj64odmlylj6hvezohuez6fnhcnzivbzi4yb2utu2bo72itevuj7a\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"srikanth.reddy.kumbham@oracle.com\", \"description\": \"User account\",
+      \"freeformTags\": {}, \"timeCreated\": \"2018-06-19T15:53:38.272000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\":
+      {}, \"id\": \"ocid1.user.oc1..aaaaaaaa53fihg2busuuybqwjfrceiartjucmpsmk7ftnzynxjeny6qdspjq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"viral.modi@oracle.com\", \"description\": \"User account\", \"freeformTags\":
+      {}, \"timeCreated\": \"2018-06-19T15:53:34.034000+00:00\", \"lifecycleState\":
+      \"ACTIVE\", \"inactiveStatus\": null}, {\"definedTags\": {}, \"id\": \"ocid1.user.oc1..aaaaaaaao7h3uefxfdawlxobya4tleksbbylpsnm7pggdgiujcn6pzndmz6a\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"name\": \"vishwas.v.bhat@oracle.com\", \"description\": \"User account\",
+      \"freeformTags\": {}, \"timeCreated\": \"2018-06-19T15:53:35.526000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"inactiveStatus\": null}]}", "requestJson":
+      "{\"limit\": 10, \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\",
+      \"page\": \"AAAAAAAAAAEQ1KBd-yMBRGrPJCT5bV3sBkL4pYNUp-qJPmKVNfwe4WEFabdK7mWCDmUpHgh45Ec_5thK2dSwB-Naiu5tbl_hXnJCT8-8Hv5P2y91IjrwHPjqDcfQf-ld-uFYYHT-F600LFPmkZEdnOz8jhLbLu0vJmvrJ5h3hxRNdO56NG9FYxps-7dLkUPvVSTdOBzdmOxFYRPHw2JF2pqYXyqrg3r_o_pILOlkJj7uzdJaL-YKrPjaHReNaVYhdQXMNBLvPaAKZsCt_vAOx5hwfaPrmobk4c5ShANmgIVfr63K6Fxul0fWcDJkc6v2xWPsKaE8fJi50LLOZemoUFzShWNGSBZwFB_I2SbGWPl5HQcj3OHCi5_P0gkTwVzjCRZA4PP-VhP5oHWdSD9YS70OpbbOqsHKATrupMdxp8Rmi6ZaKhZth-OvMQbEx2yGCKRFA4TK2vDSsz7Oo0gM_Z_TfXGRVoFZV8RooRahukNiOG44m2mwTGavLX6gohRwhDvzC61emFNrqrRia5rcXuANjg1mWY-wWleBUK8yDxeUhG-ustIm53en9Ov-lEFduy0nJZWDxlnqpcGkTmvrJn91Cyw9M5Ewaw5hig==\"}",
+      "containerId": "72fb4c5d-69eb-4d24-9402-17d3f00d6383", "requestClass": "com.oracle.bmc.identity.requests.ListUsersRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ListUsersResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['3625']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0277&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 04 Sep 2018 17:54:23 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,98 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetWorkRequest&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 05 Oct 2018 19:16:33 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0033&apiName=GetWorkRequest&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"fcb99243-b4eb-484d-9dfc-d20834f2393c","request":{"workRequestId":"ocid1.identityworkrequest.region1..aaaaaaaae4lecwvwfbvoklbfvkvuacqhdmrfxaovbcui6ub6z2s7lfrkaefq"}}]'}
+    headers:
+      Content-Length: ['182']
+      Content-Type: [application/json]
+      Date: ['Fri, 05 Oct 2018 19:16:33 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.region1..aaaaaaaahicrirjt7aznra4yqn7sllu7elhq47qplxtvpqlgi2ivqpabpjfa/ocid1.user.region1..aaaaaaaabz5etq72apqzfpowop6n25pctf2dzddw4ver4fsykkxy6ttkktba/59:46:4f:9e:72:4e:0c:83:8f:ec:e0:1c:e7:45:ef:f7",signature="Nea2dL0M/LnHfP8bit0OxY9abYWMpK7USLboi57hXhV+CNIZXI6fYAflGMkiOnWqFLmfV2Y1vXP8COMHlqBiQuXs1+9PDFqwSa7zerGC5s4E73/yZJ1jgW8zKDlInvtCi42vUeelptWgUby/4T9pcNKbkoAVlheyyrUK99kMAJHN0Vr8HCNmspi/f4aQ/EsYPKOdUyZkAGQXYdNGEOX4dxwqgMQqKlkOWV6tgQ/iIMddXsF/rklJos8TH3J10/pemq9oy/SUrVZwuJLaeFm+PcALjz4thJmNMgOMw+kzegdNtnf55kWG6o4aEO+xF+n0NjYXb2Zf3CQVD8BT2iStwg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 05 Oct 2018 19:16:34 GMT']
+      host: [identity.r1.oracleiaas.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.497]
+      opc-request-id: [97F658127FC049FDB7A6CAD0C70DE486]
+      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.497 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.35+preview.1]
+    method: GET
+    uri: https://identity.r1.oracleiaas.com/20160918/workRequests/ocid1.identityworkrequest.region1..aaaaaaaae4lecwvwfbvoklbfvkvuacqhdmrfxaovbcui6ub6z2s7lfrkaefq
+  response:
+    body: {string: "{\n  \"id\" : \"ocid1.identityworkrequest.region1..aaaaaaaae4lecwvwfbvoklbfvkvuacqhdmrfxaovbcui6ub6z2s7lfrkaefq\"\
+        ,\n  \"operationType\" : \"DELETE_COMPARTMENT\",\n  \"tenantId\" : \"ocid1.tenancy.region1..aaaaaaaahicrirjt7aznra4yqn7sllu7elhq47qplxtvpqlgi2ivqpabpjfa\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.region1..aaaaaaaakr6espughyhamui4gcodfm2hzuab7v5fqptbhbrspvb5y6qvyuqq\"\
+        ,\n  \"resourceId\" : \"ocid1.compartment.region1..aaaaaaaakr6espughyhamui4gcodfm2hzuab7v5fqptbhbrspvb5y6qvyuqq\"\
+        ,\n  \"status\" : \"FAILED\",\n  \"timeAccepted\" : \"2018-10-04T17:37:42.888Z\"\
+        ,\n  \"timeStarted\" : \"2018-10-04T17:41:52.001Z\",\n  \"timeFinished\" :\
+        \ \"2018-10-04T17:44:44.120Z\",\n  \"percentComplete\" : 0.0,\n  \"etag\"\
+        \ : \"a33dedd5d4a6306de31934e4ae0fbba7e79ffe38\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store, must-revalidate']
+      Connection: [keep-alive]
+      Content-Length: ['718']
+      Content-Type: [application/json]
+      Date: ['Fri, 05 Oct 2018 19:16:35 GMT']
+      Pragma: [no-cache]
+      Retry-After: ['60']
+      opc-request-id: [97F658127FC049FDB7A6CAD0C70DE486/2B1D0FA55FD154D9A4203F5A44C56619/D837F693C8779E9FE8C83108C20C0587]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"workRequest\": {\"id\": \"ocid1.identityworkrequest.region1..aaaaaaaae4lecwvwfbvoklbfvkvuacqhdmrfxaovbcui6ub6z2s7lfrkaefq\",
+      \"timeAccepted\": \"2018-10-04T17:37:42.888000+00:00\", \"compartmentId\": \"ocid1.compartment.region1..aaaaaaaakr6espughyhamui4gcodfm2hzuab7v5fqptbhbrspvb5y6qvyuqq\",
+      \"logs\": null, \"timeStarted\": \"2018-10-04T17:41:52.001000+00:00\", \"operationType\":
+      \"DELETE_COMPARTMENT\", \"errors\": null, \"percentComplete\": 0.0, \"status\":
+      \"FAILED\", \"timeFinished\": \"2018-10-04T17:44:44.120000+00:00\", \"resources\":
+      null}, \"opcRequestId\": \"502F7A0B6D74497DB29A19F787A6AED8\"}", "requestJson":
+      "{\"workRequestId\": \"ocid1.identityworkrequest.region1..aaaaaaaae4lecwvwfbvoklbfvkvuacqhdmrfxaovbcui6ub6z2s7lfrkaefq\"}",
+      "containerId": "fcb99243-b4eb-484d-9dfc-d20834f2393c", "requestClass": "com.oracle.bmc.identity.requests.GetWorkRequestRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.GetWorkRequestResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['976']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0033&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 05 Oct 2018 19:16:35 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

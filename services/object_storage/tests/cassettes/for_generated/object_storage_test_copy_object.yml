@@ -1,0 +1,289 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CopyObject&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:04:42 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0462&apiName=CopyObject&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"b7cd566d-bc04-4119-85ac-2512798df317","request":{"namespaceName":"bmcostests","bucketName":"__sts0462_1356_sourceBucket","copyObjectDetails":{"sourceObjectName":"__sts0462_2219_sourceObject","destinationRegion":"us-phoenix-1","destinationNamespace":"bmcostests","destinationBucket":"__sts0462_1293_destinationBucket","destinationObjectName":"__STS0462_9693_destinationObject"}}},{"containerId":"89b97c6d-285d-4a33-86be-bfbc86ef3792","request":{"namespaceName":"bmcostests","bucketName":"  this
+        name is invalid  ","copyObjectDetails":{"sourceObjectName":"__sts0462_2219_sourceObject","destinationRegion":"us-phoenix-1","destinationNamespace":"bmcostests","destinationBucket":"__sts0462_5649_destinationBucket","destinationObjectName":"__STS0462_6653_destinationObject"}}},{"containerId":"88d9adb2-8bfe-4d45-92f5-5fb2ad786c5e","request":{"namespaceName":"  this
+        name is invalid  ","bucketName":"__sts0462_1356_sourceBucket","copyObjectDetails":{"sourceObjectName":"__sts0462_2219_sourceObject","destinationRegion":"us-phoenix-1","destinationNamespace":"bmcostests","destinationBucket":"__sts0462_2158_destinationBucket","destinationObjectName":"__STS0462_8254_destinationObject"}}},{"containerId":"cb125b07-1fb5-4ec6-8356-2ce72d1548f6","request":{"namespaceName":"bmcostests","bucketName":"__sts0462_1356_sourceBucket","copyObjectDetails":{"sourceObjectName":"doesNotExist","destinationRegion":"us-phoenix-1","destinationNamespace":"bmcostests","destinationBucket":"__sts0462_5338_destinationBucket","destinationObjectName":"__STS0462_3159_destinationObject"}}}]'}
+    headers:
+      Content-Length: ['1577']
+      Content-Type: [application/json]
+      Date: ['Thu, 20 Sep 2018 18:04:42 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"sourceObjectName": "__sts0462_2219_sourceObject", "destinationBucket":
+      "__sts0462_1293_destinationBucket", "destinationNamespace": "bmcostests", "destinationRegion":
+      "us-phoenix-1", "destinationObjectName": "__STS0462_9693_destinationObject"}'
+    headers:
+      Content-Length: ['244']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/c1:4c:5d:54:33:96:03:4e:54:2f:5f:ec:c9:36:90:8e",signature="aWTYsAaF5UXE9jOHCTw2U37RpXygah6PtdRz7V2ysizp0I2peYLGR1QHO1Wh94eXuRknlCuEHVB6sGLLNHr4JaNYE656h8wCfIZ5c3/ULUr/QKzFk833ZBPmWJffzqd0Y/Ogl8ET6LZUghAw7XxhrRAABgMxKL4mmTL5upjnqK5Ehlxmia/N3kQA0WJEhsCrvi+VG2MMyygUKRFIkEA4fR24sAxWF38wHGtmSFxW/PxJxL5gVDbcKRE99kkzGfr4JXCgV6gROZAkUrsCTU5HYW4QRqUp9HGujRRn3b5xZpuizJ9P/ohyQv6G4GdHCRUQB/9SFlrih2Jx5JjLO1hUdA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 20 Sep 2018 18:05:28 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.342]
+      opc-client-request-id: [9979FC4CD63647A6AFAC2C312BD4B384]
+      opc-request-id: [8E2AB5D500E74E988C27300D54D13611]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.342 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [lSf3RRuO5/14o6y/JqK2XY8+WGdX7OaX4B3aYWMh/IY=]
+    method: POST
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/bmcostests/b/__sts0462_1356_sourceBucket/actions/copyObject
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,opc-client-info,opc-client-request-id,opc-request-id,opc-work-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Date: ['Thu, 20 Sep 2018 18:05:29 GMT']
+      opc-client-request-id: [9979FC4CD63647A6AFAC2C312BD4B384]
+      opc-request-id: [7c95e150-d32a-c7eb-e2e5-1241e7da37e3]
+      opc-work-request-id: [68a3fc81-28d8-43e6-bc2e-0d629fb7b423]
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"C8285204DC5E4299AFE71967E3DF912E\",
+      \"opcWorkRequestId\": \"68a3fc81-28d8-43e6-bc2e-0d629fb7b423\"}", "requestJson":
+      "{\"copyObjectDetails\": {\"destinationNamespace\": \"bmcostests\", \"destinationBucket\":
+      \"__sts0462_1293_destinationBucket\", \"sourceObjectName\": \"__sts0462_2219_sourceObject\",
+      \"destinationObjectName\": \"__STS0462_9693_destinationObject\", \"destinationRegion\":
+      \"us-phoenix-1\"}, \"bucketName\": \"__sts0462_1356_sourceBucket\", \"namespaceName\":
+      \"bmcostests\"}", "containerId": "b7cd566d-bc04-4119-85ac-2512798df317", "requestClass":
+      "com.oracle.bmc.objectstorage.requests.CopyObjectRequest", "responseClass":
+      "com.oracle.bmc.objectstorage.responses.CopyObjectResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['740']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0462&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:05:29 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"sourceObjectName": "__sts0462_2219_sourceObject", "destinationBucket":
+      "__sts0462_5649_destinationBucket", "destinationNamespace": "bmcostests", "destinationRegion":
+      "us-phoenix-1", "destinationObjectName": "__STS0462_6653_destinationObject"}'
+    headers:
+      Content-Length: ['244']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/c1:4c:5d:54:33:96:03:4e:54:2f:5f:ec:c9:36:90:8e",signature="WxZva73+3LA4Dmr+zi2SBn3KFDL4TVh+NC+2JC2hfZ7J6pXrRpPi5kLlGzvoPu/dqWZ5qbcD6EySlCDAqmPGr+GbjSY95dNgqIEnaD685Js3C/0fX03qS/UOAud8AcTdvzeY8RnvpnoQ7gEZ84qneenTxRgDGaeCG2e8rau3wyR+/sGcSWwhI4Bafy631pRmvU5scQHVH8ZkuV2ebCg360JL/gPtxXr0Sw2F3xbt6V3DTFcAkE40f9G5cV6A57XRwC47kY7T6ET8MSkMzZV2RC/uXdWN3TDGcwHtqx9tjy2ZmuUJXWKscdsRT0QUoqgbFmpiZFNWsG2iHDesxijDPA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 20 Sep 2018 18:05:32 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.342]
+      opc-client-request-id: [17B86CE3F6AD46FFA581C4330B3F7D59]
+      opc-request-id: [ABA02ECFB27D480485A0907D75928A57]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.342 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [UIYKzNL39B9ZrFAknb8wbiU2gGPq6iKTtN1jgzLrTz0=]
+    method: POST
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/bmcostests/b/%20%20this%20name%20is%20invalid%20%20/actions/copyObject
+  response:
+    body: {string: '{"code":"InvalidBucketName","message":"The name   this name is
+        invalid   may contain only letters, numbers, dashes and underscores"}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['132']
+      Content-Type: [application/json]
+      Date: ['Thu, 20 Sep 2018 18:05:32 GMT']
+      opc-client-request-id: [17B86CE3F6AD46FFA581C4330B3F7D59]
+      opc-request-id: [14ec9d06-7c09-f887-041b-86949046dc02]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"copyObjectDetails\": {\"destinationNamespace\": \"bmcostests\",
+      \"destinationBucket\": \"__sts0462_5649_destinationBucket\", \"sourceObjectName\":
+      \"__sts0462_2219_sourceObject\", \"destinationObjectName\": \"__STS0462_6653_destinationObject\",
+      \"destinationRegion\": \"us-phoenix-1\"}, \"bucketName\": \"  this name is invalid  \",
+      \"namespaceName\": \"bmcostests\"}", "errorJson": "{\"statusCode\": 400, \"opcRequestId\":
+      \"14ec9d06-7c09-f887-041b-86949046dc02\", \"code\": \"InvalidBucketName\", \"message\":
+      \"The name   this name is invalid   may contain only letters, numbers, dashes
+      and underscores\"}", "containerId": "89b97c6d-285d-4a33-86be-bfbc86ef3792",
+      "requestClass": "com.oracle.bmc.objectstorage.requests.CopyObjectRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['760']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0462&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:05:32 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"sourceObjectName": "__sts0462_2219_sourceObject", "destinationBucket":
+      "__sts0462_2158_destinationBucket", "destinationNamespace": "bmcostests", "destinationRegion":
+      "us-phoenix-1", "destinationObjectName": "__STS0462_8254_destinationObject"}'
+    headers:
+      Content-Length: ['244']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/c1:4c:5d:54:33:96:03:4e:54:2f:5f:ec:c9:36:90:8e",signature="eyiK4cvchjy7I+FTzr+VAqC4KnoPy0t4gWesKV6Pah8JAbskCvVVc4XVN8ZcN4PLS7DFMaDr14j0gK2HLBJGK4R8Mgpl6kQfhF7OfkskLPclBmdyXYNb6myhtqiOyI4KEb6aLNQrL/AV+ROVCE4XIqy0uWNJ92aY2BBgDirdtQyqQzkPUZs8ZI/BB4L1iGOTE9fg9hGIcJAgUoCKU+hQZfMDQ5dlI37nDSFbZC8oodivy0z3sPp9afCzNLGdT3d5+fo1iamPexzeCW8f4hYNjUUWvDiFncjVC1/KV0e3FsbpGhpKcSxECY0OWeNbk2s+Dz7j0Ikfes4PuHKMjzW2oQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 20 Sep 2018 18:05:32 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.342]
+      opc-client-request-id: [14CFABAFA14E4DB39301B63F01B62386]
+      opc-request-id: [0C71BC23FF3341F38A2752B7847E0A0A]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.342 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [MyFZNTkrifvIcE3+SjvkqdJITzxeFp1oUMovF/r54pM=]
+    method: POST
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/%20%20this%20name%20is%20invalid%20%20/b/__sts0462_1356_sourceBucket/actions/copyObject
+  response:
+    body: {string: '{"code":"BucketNotFound","message":"Either the bucket named ''__sts0462_1356_sourceBucket''
+        does not exist in the namespace ''  this name is invalid  '' or you are not
+        authorized to access it"}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['189']
+      Content-Type: [application/json]
+      Date: ['Thu, 20 Sep 2018 18:05:33 GMT']
+      opc-client-request-id: [14CFABAFA14E4DB39301B63F01B62386]
+      opc-request-id: [7a7a5e85-f90b-68e1-35c5-df1a5ff956e0]
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"requestJson": "{\"copyObjectDetails\": {\"destinationNamespace\": \"bmcostests\",
+      \"destinationBucket\": \"__sts0462_2158_destinationBucket\", \"sourceObjectName\":
+      \"__sts0462_2219_sourceObject\", \"destinationObjectName\": \"__STS0462_8254_destinationObject\",
+      \"destinationRegion\": \"us-phoenix-1\"}, \"bucketName\": \"__sts0462_1356_sourceBucket\",
+      \"namespaceName\": \"  this name is invalid  \"}", "errorJson": "{\"statusCode\":
+      404, \"opcRequestId\": \"7a7a5e85-f90b-68e1-35c5-df1a5ff956e0\", \"code\": \"BucketNotFound\",
+      \"message\": \"Either the bucket named ''__sts0462_1356_sourceBucket'' does
+      not exist in the namespace ''  this name is invalid  '' or you are not authorized
+      to access it\"}", "containerId": "88d9adb2-8bfe-4d45-92f5-5fb2ad786c5e", "requestClass":
+      "com.oracle.bmc.objectstorage.requests.CopyObjectRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['834']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0462&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:05:33 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"sourceObjectName": "doesNotExist", "destinationBucket": "__sts0462_5338_destinationBucket",
+      "destinationNamespace": "bmcostests", "destinationRegion": "us-phoenix-1", "destinationObjectName":
+      "__STS0462_3159_destinationObject"}'
+    headers:
+      Content-Length: ['229']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/c1:4c:5d:54:33:96:03:4e:54:2f:5f:ec:c9:36:90:8e",signature="eCunToWFm5aIDi5fAOtEpwwdz0lkvM0W0Oh4DcuLJ2Y4hF2QBfX7cTEKXzALBPQ7VGHtTkWKe/zAvjcvRPxO/C3T1NDlma3Y0oxb0cRPguLf19+iEeIseCcuii6Oz69On2rDzf+jMEu1qq0yyDCwp3z2LnFsUGFc2PldTQOpkKpHiwFYX7EGTPFVxitkitFM+Tzc8hplb2TG4At+xYA2/Ftv/R1EJHG/Wx9EkESDc2TEO2+vBgzwsc2Zf3ZxFLmawo545xuZ1TDyL31DB6AyV5xMxdcLElMwxxo4sOk6yseHVumMBold/Rid22pBU8k1qL9Wa44cMt3pvmlMBdjVig==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 20 Sep 2018 18:05:33 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.342]
+      opc-client-request-id: [51F6C0DBB59545BE9A5CDDAB852F8A4C]
+      opc-request-id: [F86859B2FF7640E79864A820611881E6]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.342 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [vBLRuMV7JtIXd6wQY/+/NgA4Acv3vLhtvm5tB03ba/g=]
+    method: POST
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/bmcostests/b/__sts0462_1356_sourceBucket/actions/copyObject
+  response:
+    body: {string: '{"code":"ObjectNotFound","message":"Source Object not found."}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['62']
+      Content-Type: [application/json]
+      Date: ['Thu, 20 Sep 2018 18:05:33 GMT']
+      opc-client-request-id: [51F6C0DBB59545BE9A5CDDAB852F8A4C]
+      opc-request-id: [8d28fc4b-0083-8d6e-a55a-3c0be6a2046c]
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"requestJson": "{\"copyObjectDetails\": {\"destinationNamespace\": \"bmcostests\",
+      \"destinationBucket\": \"__sts0462_5338_destinationBucket\", \"sourceObjectName\":
+      \"doesNotExist\", \"destinationObjectName\": \"__STS0462_3159_destinationObject\",
+      \"destinationRegion\": \"us-phoenix-1\"}, \"bucketName\": \"__sts0462_1356_sourceBucket\",
+      \"namespaceName\": \"bmcostests\"}", "errorJson": "{\"statusCode\": 404, \"opcRequestId\":
+      \"8d28fc4b-0083-8d6e-a55a-3c0be6a2046c\", \"code\": \"ObjectNotFound\", \"message\":
+      \"Source Object not found.\"}", "containerId": "cb125b07-1fb5-4ec6-8356-2ce72d1548f6",
+      "requestClass": "com.oracle.bmc.objectstorage.requests.CopyObjectRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['678']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?sessionId=0462&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 20 Sep 2018 18:05:34 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,104 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreateDrgAttachment&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 28 Nov 2018 21:35:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0052&apiName=CreateDrgAttachment&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ed57317f-1dae-4755-ac09-798062328551","request":{"createDrgAttachmentDetails":{"displayName":"__STS0052_15","drgId":"ocid1.drg.oc1.phx.aaaaaaaaz6xjra3zwxufpwrxgpc7hwihtordjujtq7kkjtiddj7lmgdoya3a","routeTableId":"ocid1.routetable.oc1.phx.aaaaaaaag3v36rq6fmrincuuanxlyyzz4qsko6bdpygabgltnq3s7ccmr3ja","vcnId":"ocid1.vcn.oc1.phx.aaaaaaaaglyr7guxw45oetujyosemx2ekodlpcen6p2fmme3j3347g7fmwhq"},"opcRetryToken":"c209de4e-b78d-4192-abfe-8afa4a6e5681"}}]'}
+    headers:
+      Content-Length: ['464']
+      Content-Type: [application/json]
+      Date: ['Wed, 28 Nov 2018 21:35:55 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"vcnId": "ocid1.vcn.oc1.phx.aaaaaaaaglyr7guxw45oetujyosemx2ekodlpcen6p2fmme3j3347g7fmwhq",
+      "displayName": "__STS0052_15", "drgId": "ocid1.drg.oc1.phx.aaaaaaaaz6xjra3zwxufpwrxgpc7hwihtordjujtq7kkjtiddj7lmgdoya3a",
+      "routeTableId": "ocid1.routetable.oc1.phx.aaaaaaaag3v36rq6fmrincuuanxlyyzz4qsko6bdpygabgltnq3s7ccmr3ja"}'
+    headers:
+      Content-Length: ['318']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="lmKCUoC1h939ZQMafInHwlbguZUAy0+WLyWO7Ngn5u1532O3lFzKB4dcXYovPuBOgzwzASLR4wT9yytBG3R78e4Fb6+1TLF6a0LNm0Dkhof0t/Z0DpxDjyshYiXPfcRlOY05mw59S903XYr4i+kqnzwkpkau2qHgvWhosyDFz7kl52uG7lYC1KkJJBY9HNNhl55qp0A/bC3MxYz8tCxjddZr4LAygqba0ZvdfLm0UR5AKMLA3GtHba1z02K5/vyHoX4Gl297Hia8iY15XrXrMjStbHkTgRjGrwllqBe99BIeqCkKq6Z3MswhSDLuXgonddzaWDAUK3mAO0/5bI4w5g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 28 Nov 2018 21:36:23 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.2+preview.1]
+      opc-request-id: [151C768A35A14CC199BF364B1B1C173D]
+      opc-retry-token: [7AHQ9T5Zy9HbClDLlv2drS6MZBu5xZ]
+      user-agent: [Oracle-PythonSDK/2.1.2+preview.1 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.39]
+      x-content-sha256: [MwTOT7rK49w7O2xv6Fbe4ZLQtsRAiFv0gjcU4AtHfXI=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/drgAttachments
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"displayName\" : \"__STS0052_15\",\n  \"drgId\" : \"ocid1.drg.oc1.phx.aaaaaaaaz6xjra3zwxufpwrxgpc7hwihtordjujtq7kkjtiddj7lmgdoya3a\"\
+        ,\n  \"id\" : \"ocid1.drgattachment.oc1.phx.aaaaaaaacqlaqsxvdtbnmpc2r6cqvmvl5uyiwivouhrptg2hotvqubd7fadq\"\
+        ,\n  \"lifecycleState\" : \"ATTACHING\",\n  \"routeTableId\" : \"ocid1.routetable.oc1.phx.aaaaaaaag3v36rq6fmrincuuanxlyyzz4qsko6bdpygabgltnq3s7ccmr3ja\"\
+        ,\n  \"timeCreated\" : \"2018-11-28T21:36:25.282Z\",\n  \"vcnId\" : \"ocid1.vcn.oc1.phx.aaaaaaaaglyr7guxw45oetujyosemx2ekodlpcen6p2fmme3j3347g7fmwhq\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['620']
+      Content-Type: [application/json]
+      Date: ['Wed, 28 Nov 2018 21:36:25 GMT']
+      ETag: [2d4a02e0]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [151C768A35A14CC199BF364B1B1C173D/CA288858BA35968639E8526531C6339D/964FF134C8EB4EC7A5CCE36090314ED1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"drgAttachment\": {\"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaaglyr7guxw45oetujyosemx2ekodlpcen6p2fmme3j3347g7fmwhq\",
+      \"id\": \"ocid1.drgattachment.oc1.phx.aaaaaaaacqlaqsxvdtbnmpc2r6cqvmvl5uyiwivouhrptg2hotvqubd7fadq\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"timeCreated\": \"2018-11-28T21:36:25.282000+00:00\", \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaag3v36rq6fmrincuuanxlyyzz4qsko6bdpygabgltnq3s7ccmr3ja\",
+      \"displayName\": \"__STS0052_15\", \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaaz6xjra3zwxufpwrxgpc7hwihtordjujtq7kkjtiddj7lmgdoya3a\",
+      \"lifecycleState\": \"ATTACHING\"}, \"opcRequestId\": \"6275874CCE9242D390A1F4FB3AA5CB0B\",
+      \"etag\": \"2d4a02e0\"}", "requestJson": "{\"createDrgAttachmentDetails\": {\"routeTableId\":
+      \"ocid1.routetable.oc1.phx.aaaaaaaag3v36rq6fmrincuuanxlyyzz4qsko6bdpygabgltnq3s7ccmr3ja\",
+      \"displayName\": \"__STS0052_15\", \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaaz6xjra3zwxufpwrxgpc7hwihtordjujtq7kkjtiddj7lmgdoya3a\",
+      \"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaaglyr7guxw45oetujyosemx2ekodlpcen6p2fmme3j3347g7fmwhq\"},
+      \"opcRetryToken\": \"c209de4e-b78d-4192-abfe-8afa4a6e5681\"}", "containerId":
+      "ed57317f-1dae-4755-ac09-798062328551", "requestClass": "com.oracle.bmc.core.requests.CreateDrgAttachmentRequest",
+      "responseClass": "com.oracle.bmc.core.responses.CreateDrgAttachmentResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1411']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0052&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 28 Nov 2018 21:36:25 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

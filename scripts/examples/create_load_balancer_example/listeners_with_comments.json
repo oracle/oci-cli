@@ -6,7 +6,7 @@
      */
     "listenerName": {
         /*
-         * For information about each attribute, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/BackendSetDetails
+         * For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/BackendSetDetails
          * Note that the attribute names here have to match what is shown in the above link. Optional attributes can be omitted entirely from the 
          * data sent
          */

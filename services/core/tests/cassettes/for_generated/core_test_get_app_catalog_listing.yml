@@ -1,0 +1,101 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetAppCatalogListing&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 12 Sep 2018 00:44:48 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0393&apiName=GetAppCatalogListing&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"fddbdc83-e9ea-4650-847e-54edfe67036a","request":{"listingId":"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq"}}]'}
+    headers:
+      Content-Length: ['172']
+      Content-Type: [application/json]
+      Date: ['Wed, 12 Sep 2018 00:44:48 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaftow6wd3zfwyz6rawmfbsum7cdg5n3dnobsosxzbdmq5pjom7c5a/ocid1.user.oc1..aaaaaaaabefjptjqy4wj2ymrbi42lwqnvd64sagheg4zlid5zhbsxkec7h5q/68:b6:a9:ec:c6:6e:20:32:67:96:1b:20:73:fc:1c:2c",signature="ZfKMjEyKM4o+oOs/2878QLJ7Wj+HAM9rGlFCkpnjORNM+9tA2NYn2s4aJn8HkJQw9BfaZVC0+Hfj4DG56iFnSs/Fqt9Yi7O159dcbL7IsWhVZBf9QLk/us+PE7nVWuvBTHWSMu43edohhRpp+1OLDLaIs2hHlmL09yvAVQDsPHaiaZLF+5cLJ2Byb+Hs7hiYad7k/3qZf6Zxj2DFPHXrLYjHdTBs3Tc5L3l+AF841CGX0lAL8T2LCkILtaEMk+J2ll0nq1aBB6CQ3KstSRS7V59nC5E6bNeJDsRrJcpnuaamAdN+/bEI4rDONm7uNX5KZMXBw9qaHimkghyIq/gjQA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 12 Sep 2018 00:44:49 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3+preview.1.307]
+      opc-request-id: [082E1644E07C4F1FBFF034B919E9E206]
+      user-agent: [Oracle-PythonSDK/2.0.3+preview.1.307 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/appCatalogListings/ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq
+  response:
+    body: {string: "{\n  \"contactUrl\" : \"http://www.oracle.com/technetwork/server-storage/linux/technologies/ol-kvm-image-4466272.html\",\n
+        \ \"description\" : \"The Oracle Linux KVM Image for Oracle Cloud simplifies
+        the deployment of virtual machines using Oracle Cloud resources by integrating
+        with services like block storage and virtual network interfaces (VNICs) through
+        the use of tooling and automation.\",\n  \"listingId\" : \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\",\n
+        \ \"displayName\" : \"Oracle Linux KVM Image\",\n  \"timePublished\" : null,\n
+        \ \"publisherLogoUrl\" : \"https://objectstorage.us-ashburn-1.oraclecloud.com/n/partnerimagecatalog/b/logos/o/O-Linux-rgb.png\",\n
+        \ \"publisherName\" : \"Oracle Linux\",\n  \"summary\" : \"Easily set up a
+        KVM host using Oracle Linux and Oracle Cloud\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['804']
+      Content-Type: [application/json]
+      Date: ['Wed, 12 Sep 2018 00:44:50 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [082E1644E07C4F1FBFF034B919E9E206/A058ECBCD759D93C89ED7E135BA94AFF/C31578AD8F5C1EC40BF7C2459D786D83]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"2721086A0D1E43DDA7C85AB3DF1B5D4B\",
+      \"appCatalogListing\": {\"listingId\": \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\",
+      \"publisherLogoUrl\": \"https://objectstorage.us-ashburn-1.oraclecloud.com/n/partnerimagecatalog/b/logos/o/O-Linux-rgb.png\",
+      \"contactUrl\": \"http://www.oracle.com/technetwork/server-storage/linux/technologies/ol-kvm-image-4466272.html\",
+      \"description\": \"The Oracle Linux KVM Image for Oracle Cloud simplifies the
+      deployment of virtual machines using Oracle Cloud resources by integrating with
+      services like block storage and virtual network interfaces (VNICs) through the
+      use of tooling and automation.\", \"publisherName\": \"Oracle Linux\", \"displayName\":
+      \"Oracle Linux KVM Image\", \"summary\": \"Easily set up a KVM host using Oracle
+      Linux and Oracle Cloud\", \"timePublished\": null}}", "requestJson": "{\"listingId\":
+      \"ocid1.appcataloglisting.oc1..aaaaaaaabc3patrrc5ahsivc73kbqg4u73gkm2tekx7xmhywaci44ykzdooq\"}",
+      "containerId": "fddbdc83-e9ea-4650-847e-54edfe67036a", "requestClass": "com.oracle.bmc.core.requests.GetAppCatalogListingRequest",
+      "responseClass": "com.oracle.bmc.core.responses.GetAppCatalogListingResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1248']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0393&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 12 Sep 2018 00:44:50 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

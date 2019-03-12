@@ -1,0 +1,85 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteSuppression&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:58:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=DeleteSuppression&serviceName=email&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"suppressionId":"ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq","opcRequestId":"stsDeleteSuppression"}}]'}
+    headers:
+      Content-Length: ['213']
+      Content-Type: [application/json]
+      Date: ['Fri, 01 Feb 2019 13:58:59 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="GdheXJL5ppT2ddphTcGtU3CUnus3reO5NcNkEQ7TjcIeLnzYAXGjAeaIUdEfV1AYnTfa+S9fsnnLLSJxq1zeSYcRzxd6LVOQuP/mTYxmRg/Y0ngSTZQvkEiVjzYcJtilx+CotgI931UQRKem7vu+TPJMsPHfOwCBpUdNMaIBPMyfYYddg5HZ/ou3HD8bvsBJ06kVqObfTR4ofMNJ+z7TmzSFieHjzaoV1vMU0NPnjo2oNLH2Mj1N22HEzWObMISN9c2GP8DW6mjWRbfyJMDjiQ5L7148BB/cEwHdmAiiDwQq+GP3MaAP3zgfgvSNrcrhrGeTUAb1tKU5lY6Lyu88LQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 01 Feb 2019 13:59:02 GMT']
+      host: [email.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
+      opc-request-id: [ECFC54C4135C4951A1A6BFB17C10B4CF]
+      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43]
+    method: DELETE
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions/ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Connection: [keep-alive]
+      Date: ['Fri, 01 Feb 2019 13:59:10 GMT']
+      X-Application-Context: [application]
+      opc-request-id: [ECFC54C4135C4951A1A6BFB17C10B4CF/4FF518C7DA1598AF8187A89B9EB88BDF/26E024E0937E018541BC49F510F6533A]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"FF814D9ACB244BE6A1024AD28204E3B8\"}",
+      "requestJson": "{\"opcRequestId\": \"stsDeleteSuppression\", \"suppressionId\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq\"}",
+      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.DeleteSuppressionRequest",
+      "responseClass": "com.oracle.bmc.email.responses.DeleteSuppressionResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['458']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 01 Feb 2019 13:59:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

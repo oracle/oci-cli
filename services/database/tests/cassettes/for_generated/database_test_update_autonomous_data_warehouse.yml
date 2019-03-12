@@ -1,0 +1,107 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 23:41:59 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0511&apiName=UpdateAutonomousDataWarehouse&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"c264f3ff-d6ed-48b5-8ee6-41f3b7932649","request":{"autonomousDataWarehouseId":"ocid1.autonomousdwdatabase.oc1.phx.abyhqljsvzked4mcb67vzrn77lnrqzs6vczbcu3ae6prfwrlmmxiuzmx2uqa","updateAutonomousDataWarehouseDetails":{"cpuCoreCount":2,"dataStorageSizeInTBs":2,"displayName":"__STS0511_1677"}}}]'}
+    headers:
+      Content-Length: ['308']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 23:41:59 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"cpuCoreCount": 2, "dataStorageSizeInTBs": 2, "displayName": "__STS0511_1677"}'
+    headers:
+      Content-Length: ['79']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="h95TSfucEpreMwiUAJ4zsAhbUacrenFle/GY6ano6NZ+nIcVO+oz8ZqdPDjFtRUprSmskIb4GRkf4hzvv0q/CCHkfENmncS7SUoA2VTJhPmru/nuxPRxG093eexSlIZOHcXBIwPRAJSvOSHx1IYgru5ok5DqwYBf8UCRs7JDK+tnjH1d4nzpT3CSn1VDfWXOjf6MSIlLPZgf6DTnIkpm+nfCh37EX8JINqowtXtSCPYkYjBVTe7KdctQeLWFZRquxFpaQx7Uxj22vBvo7Qi3X+TYMaquhxyXcnSXDD/+kxkr2moE7WnAIuEYTWJgRx/4TIBK7Wl1tkJYExvgINjUTQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 05 Sep 2018 23:45:36 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-request-id: [E4A3160728864D48AA6D319E48CFE904]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.1; x86_64-Darwin) Oracle-PythonCLI/2.4.32]
+      x-content-sha256: [mHJQKgSpzNzfuIdQ5wjoEs9kvv72ki46DUJGk5sY+lw=]
+    method: PUT
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousDataWarehouses/ocid1.autonomousdwdatabase.oc1.phx.abyhqljsvzked4mcb67vzrn77lnrqzs6vczbcu3ae6prfwrlmmxiuzmx2uqa
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"connectionStrings\" : {\n    \"high\" : \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0511126_high.adwc.oraclecloud.com\"\
+        ,\n    \"low\" : \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0511126_low.adwc.oraclecloud.com\"\
+        ,\n    \"medium\" : \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0511126_medium.adwc.oraclecloud.com\"\
+        \n  },\n  \"cpuCoreCount\" : 1,\n  \"dataStorageSizeInTBs\" : 1,\n  \"dbName\"\
+        \ : \"a0511126\",\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0511_1677\"\
+        ,\n  \"freeformTags\" : { },\n  \"id\" : \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljsvzked4mcb67vzrn77lnrqzs6vczbcu3ae6prfwrlmmxiuzmx2uqa\"\
+        ,\n  \"licenseModel\" : \"BRING_YOUR_OWN_LICENSE\",\n  \"lifecycleDetails\"\
+        \ : null,\n  \"lifecycleState\" : \"SCALE_IN_PROGRESS\",\n  \"serviceConsoleUrl\"\
+        \ : \"https://adwc.uscom-west-1.oraclecloud.com/console/index.html?tenant_name=OCID1.TENANCY.OC1..AAAAAAAA3VI3FT3YI3SQ4NHIQL4NVBZJZ6GIPBN72H7WERL6NJS6XSQ4WGDQ&database_name=A0511126&service_type=ADW\"\
+        ,\n  \"timeCreated\" : \"2018-09-05T23:42:00.372Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1109']
+      Content-Type: [application/json]
+      Date: ['Wed, 05 Sep 2018 23:45:36 GMT']
+      ETag: [44ddbef9]
+      opc-request-id: [E4A3160728864D48AA6D319E48CFE904/0A274BA971AA23192DF11BCF9F8CE68B/02EE39F3A9584F69285AA0AFB6C43D90]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"CECB054635B1490CA1851B3B716035B4\",
+      \"etag\": \"44ddbef9\", \"autonomousDataWarehouse\": {\"definedTags\": {}, \"serviceConsoleUrl\":
+      \"https://adwc.uscom-west-1.oraclecloud.com/console/index.html?tenant_name=OCID1.TENANCY.OC1..AAAAAAAA3VI3FT3YI3SQ4NHIQL4NVBZJZ6GIPBN72H7WERL6NJS6XSQ4WGDQ&database_name=A0511126&service_type=ADW\",
+      \"lifecycleDetails\": null, \"displayName\": \"__STS0511_1677\", \"cpuCoreCount\":
+      1, \"dataStorageSizeInTbs\": 1, \"timeCreated\": \"2018-09-05T23:42:00.372000+00:00\",
+      \"lifecycleState\": \"SCALE_IN_PROGRESS\", \"id\": \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljsvzked4mcb67vzrn77lnrqzs6vczbcu3ae6prfwrlmmxiuzmx2uqa\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
+      \"freeformTags\": {}, \"licenseModel\": \"BRING_YOUR_OWN_LICENSE\", \"connectionStrings\":
+      {\"high\": \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0511126_high.adwc.oraclecloud.com\",
+      \"low\": \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0511126_low.adwc.oraclecloud.com\",
+      \"medium\": \"adwc.uscom-west-1.oraclecloud.com:1522/knnzwj479hkddyk_a0511126_medium.adwc.oraclecloud.com\"},
+      \"dbName\": \"a0511126\"}}", "requestJson": "{\"updateAutonomousDataWarehouseDetails\":
+      {\"cpuCoreCount\": 2, \"dataStorageSizeInTBs\": 2, \"displayName\": \"__STS0511_1677\"},
+      \"autonomousDataWarehouseId\": \"ocid1.autonomousdwdatabase.oc1.phx.abyhqljsvzked4mcb67vzrn77lnrqzs6vczbcu3ae6prfwrlmmxiuzmx2uqa\"}",
+      "containerId": "c264f3ff-d6ed-48b5-8ee6-41f3b7932649", "requestClass": "com.oracle.bmc.database.requests.UpdateAutonomousDataWarehouseRequest",
+      "responseClass": "com.oracle.bmc.database.responses.UpdateAutonomousDataWarehouseResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1757']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0511&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Sep 2018 23:45:37 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

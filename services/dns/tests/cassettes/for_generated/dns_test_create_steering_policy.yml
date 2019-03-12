@@ -1,0 +1,138 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreateSteeringPolicy&serviceName=dns&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:56:20 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0945&apiName=CreateSteeringPolicy&serviceName=dns&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"2836af7a-7995-448e-8965-71752f3e8e1e","request":{"createSteeringPolicyDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q","displayName":"__STS0945_1597
+        OCI Testing Service","template":"LOAD_BALANCE","answers":[{"name":"Server
+        1","rtype":"A","rdata":"1.2.3.4"},{"name":"Server 2","rtype":"A","rdata":"5.6.7.8"},{"name":"Server
+        3","rtype":"A","rdata":"9.10.11.12","isDisabled":true}],"rules":[{"ruleType":"FILTER","defaultAnswerData":[{"answerCondition":"answer.isDisabled
+        != true","shouldKeep":true}]},{"ruleType":"WEIGHTED","defaultAnswerData":[{"answerCondition":"answer.name
+        == ''Server 1''","value":75},{"answerCondition":"answer.name == ''Server 2''","value":25},{"answerCondition":"answer.name
+        == ''Server 3''","value":1}]},{"ruleType":"LIMIT","defaultCount":1}]}}}]'}
+    headers:
+      Content-Length: ['838']
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:56:20 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "__STS0945_1597 OCI Testing Service", "template": "LOAD_BALANCE",
+      "compartmentId": "ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q",
+      "answers": [{"rtype": "A", "name": "Server 1", "rdata": "1.2.3.4"}, {"rtype":
+      "A", "name": "Server 2", "rdata": "5.6.7.8"}, {"rtype": "A", "isDisabled": true,
+      "name": "Server 3", "rdata": "9.10.11.12"}], "rules": [{"defaultAnswerData":
+      [{"answerCondition": "answer.isDisabled != true", "shouldKeep": true}], "ruleType":
+      "FILTER"}, {"defaultAnswerData": [{"answerCondition": "answer.name == ''Server
+      1''", "value": 75}, {"answerCondition": "answer.name == ''Server 2''", "value":
+      25}, {"answerCondition": "answer.name == ''Server 3''", "value": 1}], "ruleType":
+      "WEIGHTED"}, {"defaultCount": 1, "ruleType": "LIMIT"}]}'
+    headers:
+      Content-Length: ['792']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q/ocid1.user.oc1..aaaaaaaan6hnk4feurapwnp2hignfmye2fnscqkor5ocetjlbjlunbmxdgia/17:e9:1b:88:96:1b:50:75:51:65:0b:2d:57:51:09:fc",signature="rhqy9TchH17EYKD9XxnAi0lT2R8vhEzD5nwzEGZagOhnAXBV9W6A6rAByqJ062OUJIfo2cyzB+DVijFqmdae9pa1DsuOwMBbNZwLAXzfyxW5d3N3AzNGkDQpOkMoQedZVJapnITb8clK0lswbfqfAYlcwutmoAuZoO3wW7TQ+vEfJ8zKmxAmhWRtGBxsvIBmDIIECQF8ziX2m+sr9CceP72iaqsa9/fkAc+ekd1j2luN/qlH3+XK5G1LVl5UScNorGJMIWUsaFqpavO5HLBxXEX4es+8L0yhk3si5tYwtSv6nizZkh62hcK9iybxAtwRGMXIcM+LGPVumwCqdPNxPg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 25 Jan 2019 22:56:20 GMT']
+      host: [dns.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.5]
+      opc-request-id: [A45E8483C7DB4100AE16214FA6921C58]
+      opc-retry-token: [JNfF08gQLw19LtkdgS6MmQfknFSaie]
+      user-agent: [Oracle-PythonSDK/2.1.5 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.42]
+      x-content-sha256: [LoS6sVhkEMh4rTFgJ81VFGP4mqIMM3afWGfORU2w5Ag=]
+    method: POST
+    uri: https://dns.us-phoenix-1.oraclecloud.com/20180115/steeringPolicies
+  response:
+    body: {string: '{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q","displayName":"__STS0945_1597
+        OCI Testing Service","ttl":30,"freeformTags":{},"definedTags":{},"answers":[{"name":"Server
+        1","rtype":"A","rdata":"1.2.3.4"},{"name":"Server 2","rtype":"A","rdata":"5.6.7.8"},{"name":"Server
+        3","rtype":"A","rdata":"9.10.11.12","isDisabled":true}],"rules":[{"ruleType":"FILTER","defaultAnswerData":[{"answerCondition":"answer.isDisabled
+        != true","shouldKeep":true}]},{"ruleType":"WEIGHTED","defaultAnswerData":[{"answerCondition":"answer.name
+        == ''Server 1''","value":75},{"answerCondition":"answer.name == ''Server 2''","value":25},{"answerCondition":"answer.name
+        == ''Server 3''","value":1}]},{"ruleType":"LIMIT","defaultCount":1}],"self":"https://dns.us-phoenix-1.oraclecloud.com/20180115/steeringPolicies/ocid1.dnspolicy.oc1..0dbe0ee4ceb349ef9b4e35a95c08e52c","id":"ocid1.dnspolicy.oc1..0dbe0ee4ceb349ef9b4e35a95c08e52c","timeCreated":"2019-01-25T22:56:22Z","lifecycleState":"ACTIVE","template":"LOAD_BALANCE"}
+
+'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1038']
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:56:23 GMT']
+      ETag: ['"0#application/json"']
+      opc-request-id: [A45E8483C7DB4100AE16214FA6921C58/D076421CA28F4F22BE1ECE7CCA17000E/72C8AF32DD184ED09869779B0E137D50]
+      opc-retry-token: [JNfF08gQLw19LtkdgS6MmQfknFSaie]
+    status: {code: 201, message: Created}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"0BF0C68EA9D44FFA915C4E765162AD2D\",
+      \"etag\": \"\\\"0#application/json\\\"\", \"steeringPolicy\": {\"definedTags\":
+      {}, \"ttl\": 30, \"healthCheckMonitorId\": null, \"displayName\": \"__STS0945_1597
+      OCI Testing Service\", \"answers\": [{\"rtype\": \"A\", \"isDisabled\": null,
+      \"pool\": null, \"name\": \"Server 1\", \"rdata\": \"1.2.3.4\"}, {\"rtype\":
+      \"A\", \"isDisabled\": null, \"pool\": null, \"name\": \"Server 2\", \"rdata\":
+      \"5.6.7.8\"}, {\"rtype\": \"A\", \"isDisabled\": true, \"pool\": null, \"name\":
+      \"Server 3\", \"rdata\": \"9.10.11.12\"}], \"freeformTags\": {}, \"lifecycleState\":
+      \"ACTIVE\", \"-self\": \"https://dns.us-phoenix-1.oraclecloud.com/20180115/steeringPolicies/ocid1.dnspolicy.oc1..0dbe0ee4ceb349ef9b4e35a95c08e52c\",
+      \"id\": \"ocid1.dnspolicy.oc1..0dbe0ee4ceb349ef9b4e35a95c08e52c\", \"compartmentId\":
+      \"ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q\",
+      \"timeCreated\": \"2019-01-25T22:56:22+00:00\", \"template\": \"LOAD_BALANCE\",
+      \"rules\": [{\"cases\": null, \"defaultAnswerData\": [{\"answerCondition\":
+      \"answer.isDisabled != true\", \"shouldKeep\": true}], \"ruleType\": \"FILTER\",
+      \"description\": null}, {\"cases\": null, \"defaultAnswerData\": [{\"answerCondition\":
+      \"answer.name == ''Server 1''\", \"value\": 75}, {\"answerCondition\": \"answer.name
+      == ''Server 2''\", \"value\": 25}, {\"answerCondition\": \"answer.name == ''Server
+      3''\", \"value\": 1}], \"ruleType\": \"WEIGHTED\", \"description\": null}, {\"cases\":
+      null, \"defaultCount\": 1, \"ruleType\": \"LIMIT\", \"description\": null}]}}",
+      "requestJson": "{\"createSteeringPolicyDetails\": {\"displayName\": \"__STS0945_1597
+      OCI Testing Service\", \"template\": \"LOAD_BALANCE\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaw5q5qku6oijgtxsecl7y3lwydibmcw76vsabsf4t6izyzwr5dh5q\",
+      \"answers\": [{\"rtype\": \"A\", \"name\": \"Server 1\", \"rdata\": \"1.2.3.4\"},
+      {\"rtype\": \"A\", \"name\": \"Server 2\", \"rdata\": \"5.6.7.8\"}, {\"rtype\":
+      \"A\", \"isDisabled\": true, \"name\": \"Server 3\", \"rdata\": \"9.10.11.12\"}],
+      \"rules\": [{\"defaultAnswerData\": [{\"answerCondition\": \"answer.isDisabled
+      != true\", \"shouldKeep\": true}], \"ruleType\": \"FILTER\"}, {\"defaultAnswerData\":
+      [{\"answerCondition\": \"answer.name == ''Server 1''\", \"value\": 75}, {\"answerCondition\":
+      \"answer.name == ''Server 2''\", \"value\": 25}, {\"answerCondition\": \"answer.name
+      == ''Server 3''\", \"value\": 1}], \"ruleType\": \"WEIGHTED\"}, {\"defaultCount\":
+      1, \"ruleType\": \"LIMIT\"}]}}", "containerId": "2836af7a-7995-448e-8965-71752f3e8e1e",
+      "requestClass": "com.oracle.bmc.dns.requests.CreateSteeringPolicyRequest", "responseClass":
+      "com.oracle.bmc.dns.responses.CreateSteeringPolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['2762']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0945&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:56:23 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

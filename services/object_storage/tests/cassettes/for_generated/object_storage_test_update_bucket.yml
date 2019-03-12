@@ -1,0 +1,243 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateBucket&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 23:49:12 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0639&apiName=UpdateBucket&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ed7211cd-148e-4030-aff3-590f66cbf586","request":{"namespaceName":"bmcostests","bucketName":"__STS0639_1509","updateBucketDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya","publicAccessType":"NoPublicAccess","freeformTags":{"tag1":"value1.__STS0639_5997","tag2":"value2.__STS0639_5997"},"kmsKeyId":"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq"}}},{"containerId":"f3fe0e5e-c31f-4ebf-bf2b-c2afb02422b1","request":{"namespaceName":"bmcostests","bucketName":"__STS0639_5141","updateBucketDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya","publicAccessType":"ObjectRead","freeformTags":{"tag1":"value1.__STS0639_8347","tag2":"value2.__STS0639_8347"},"kmsKeyId":"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq"}}},{"containerId":"52278d85-2f31-4292-ab31-9325bf7d97ec","request":{"namespaceName":"bmcostests","bucketName":"__STS0639_8218","updateBucketDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya","publicAccessType":"NoPublicAccess","freeformTags":{"tag1":"value1.__STS0639_2704","tag2":"value2.__STS0639_2704"},"kmsKeyId":"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq"}}}]'}
+    headers:
+      Content-Length: ['1404']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 23:49:12 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "__STS0639_1509", "compartmentId": "ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya",
+      "publicAccessType": "NoPublicAccess", "freeformTags": {"tag2": "value2.__STS0639_5997",
+      "tag1": "value1.__STS0639_5997"}, "kmsKeyId": "ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq"}'
+    headers:
+      Content-Length: ['356']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/f1:00:bd:2c:70:61:6a:c6:c9:bb:cd:f1:c8:fa:81:29",signature="nBSPXdB3+OL3NqycksYFtIZUB2uEKhrj+SAWbOXvb9fgpare4zFG4/CzNPhG004C6JdAAoOyWdTNUQQCrHGHomsZx4lHdQfzOmbWETHAOFlZaZ86J2r1Ykve6Qlprdk5d3vwaBolt2bTR+ynl9KU6JDYqXKHXRdROdd2OyjLGEGjbg2Cb2CkyYe3NfSLaMuBYVtPC2dyd5quV9+pg3kOCHSJh9WHKM/24au4iF8JyfQ2lr02Lo1FhpqFwujASJh4PCr8kbJSA5tylUgL2ii5oJQuzcrg9flDTIBvSgitNEr5W3G40+EGcSvw3UiGAstV65gLgFG9dLCnrgrZYgibZA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 11 Sep 2018 23:49:15 GMT']
+      host: [objectstorage.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-client-request-id: [E5A0BFE1A09E425C82C46ADC8136B49A]
+      opc-request-id: [DF95D34BEE894397971214D4295B65CF]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.33]
+      x-content-sha256: [CJdQ2WEQHx7zX+tlF7Ayqe75i3pELBIySa3n51fRj5Q=]
+    method: POST
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/bmcostests/b/__STS0639_1509/
+  response:
+    body: {string: '{"namespace":"bmcostests","name":"__STS0639_1509","compartmentId":"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya","createdBy":"ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq","timeCreated":"2018-09-11T23:49:13.951Z","metadata":{},"etag":"ab5a47a5-e2a0-4520-bb78-31bd4238d382","publicAccessType":"NoPublicAccess","storageTier":"Standard","objectLevelAuditMode":"Disabled","freeformTags":{"tag1":"value1.__STS0639_5997","tag2":"value2.__STS0639_5997"},"definedTags":{},"kmsKeyId":"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq","count":null,"size":null}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,ETag,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['662']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 23:49:15 GMT']
+      ETag: [ab5a47a5-e2a0-4520-bb78-31bd4238d382]
+      opc-client-request-id: [E5A0BFE1A09E425C82C46ADC8136B49A]
+      opc-request-id: [e970fed9-2a92-2138-402a-28706e0f7d75]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"A662AB6653B84715BE3ACB9D719E4777\",
+      \"etag\": \"ab5a47a5-e2a0-4520-bb78-31bd4238d382\", \"bucket\": {\"definedTags\":
+      {}, \"etag\": \"ab5a47a5-e2a0-4520-bb78-31bd4238d382\", \"name\": \"__STS0639_1509\",
+      \"createdBy\": \"ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq\",
+      \"timeCreated\": \"2018-09-11T23:49:13.951000+00:00\", \"storageTier\": \"Standard\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya\",
+      \"publicAccessType\": \"NoPublicAccess\", \"freeformTags\": {\"tag2\": \"value2.__STS0639_5997\",
+      \"tag1\": \"value1.__STS0639_5997\"}, \"metadata\": {}, \"kmsKeyId\": \"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq\",
+      \"namespace\": \"bmcostests\"}}", "requestJson": "{\"updateBucketDetails\":
+      {\"kmsKeyId\": \"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya\",
+      \"publicAccessType\": \"NoPublicAccess\", \"freeformTags\": {\"tag2\": \"value2.__STS0639_5997\",
+      \"tag1\": \"value1.__STS0639_5997\"}}, \"bucketName\": \"__STS0639_1509\", \"namespaceName\":
+      \"bmcostests\"}", "containerId": "ed7211cd-148e-4030-aff3-590f66cbf586", "requestClass":
+      "com.oracle.bmc.objectstorage.requests.UpdateBucketRequest", "responseClass":
+      "com.oracle.bmc.objectstorage.responses.UpdateBucketResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1510']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0639&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 23:49:15 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "__STS0639_5141", "compartmentId": "ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya",
+      "publicAccessType": "ObjectRead", "freeformTags": {"tag2": "value2.__STS0639_8347",
+      "tag1": "value1.__STS0639_8347"}, "kmsKeyId": "ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq"}'
+    headers:
+      Content-Length: ['352']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/f1:00:bd:2c:70:61:6a:c6:c9:bb:cd:f1:c8:fa:81:29",signature="GD7bENei9kRlv2vKXYOBnAq/rcXiulPZEXGqlz5Ic1wEgvylpz0cSj4NJIkbSAhKAasTmGjxA22jtKTAboHDhtnPAMH/BpyHaC1EWe6/WqLoW8Z5d//Y7lPD44aPgj3oobkCJ2o01Q9GofFWdtLkxt4KI9/Gmq6FtPUNe6H/NStMUQLQ4BpLFIyS56HnQgLPboDPnPC1sOU51kLNqN94IbF82YQgQql1yupqlcoBKjV8Tj2AW3iw7tNrA5/rOxcTyDJf3nIv8vXoa5SiFOVMFw0lvxptJsQXI6+LvXWElqcgXbprxPDKLRI3qyf7hlyg7t3rCAYFeABQi1OZM15tyg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 11 Sep 2018 23:49:15 GMT']
+      host: [objectstorage.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-client-request-id: [C8E9BA8AD9184E2292DE474E5D72F8B8]
+      opc-request-id: [F9824F7EECA94678ABF4C7B24E5E6893]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.33]
+      x-content-sha256: [dIXLajkU3INRl5mjVq5cy8ePiWjkxDXZd8d3pOe/i14=]
+    method: POST
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/bmcostests/b/__STS0639_5141/
+  response:
+    body: {string: '{"namespace":"bmcostests","name":"__STS0639_5141","compartmentId":"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya","createdBy":"ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq","timeCreated":"2018-09-11T23:49:14.643Z","metadata":{},"etag":"2df55de4-d7cb-4128-9cbe-352dc734cc45","publicAccessType":"ObjectRead","storageTier":"Standard","objectLevelAuditMode":"Disabled","freeformTags":{"tag1":"value1.__STS0639_8347","tag2":"value2.__STS0639_8347"},"definedTags":{},"kmsKeyId":"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq","count":null,"size":null}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,ETag,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['658']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 23:49:16 GMT']
+      ETag: [2df55de4-d7cb-4128-9cbe-352dc734cc45]
+      opc-client-request-id: [C8E9BA8AD9184E2292DE474E5D72F8B8]
+      opc-request-id: [37b0c264-cb6e-66ca-2a65-7fc2f5e41cb8]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"F52DA0C350FF46C492032D82E0D82EF1\",
+      \"etag\": \"2df55de4-d7cb-4128-9cbe-352dc734cc45\", \"bucket\": {\"definedTags\":
+      {}, \"etag\": \"2df55de4-d7cb-4128-9cbe-352dc734cc45\", \"name\": \"__STS0639_5141\",
+      \"createdBy\": \"ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq\",
+      \"timeCreated\": \"2018-09-11T23:49:14.643000+00:00\", \"storageTier\": \"Standard\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya\",
+      \"publicAccessType\": \"ObjectRead\", \"freeformTags\": {\"tag2\": \"value2.__STS0639_8347\",
+      \"tag1\": \"value1.__STS0639_8347\"}, \"metadata\": {}, \"kmsKeyId\": \"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq\",
+      \"namespace\": \"bmcostests\"}}", "requestJson": "{\"updateBucketDetails\":
+      {\"kmsKeyId\": \"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya\",
+      \"publicAccessType\": \"ObjectRead\", \"freeformTags\": {\"tag2\": \"value2.__STS0639_8347\",
+      \"tag1\": \"value1.__STS0639_8347\"}}, \"bucketName\": \"__STS0639_5141\", \"namespaceName\":
+      \"bmcostests\"}", "containerId": "f3fe0e5e-c31f-4ebf-bf2b-c2afb02422b1", "requestClass":
+      "com.oracle.bmc.objectstorage.requests.UpdateBucketRequest", "responseClass":
+      "com.oracle.bmc.objectstorage.responses.UpdateBucketResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1502']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0639&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 23:49:16 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"name": "__STS0639_8218", "compartmentId": "ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya",
+      "publicAccessType": "NoPublicAccess", "freeformTags": {"tag2": "value2.__STS0639_2704",
+      "tag1": "value1.__STS0639_2704"}, "kmsKeyId": "ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq"}'
+    headers:
+      Content-Length: ['356']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/f1:00:bd:2c:70:61:6a:c6:c9:bb:cd:f1:c8:fa:81:29",signature="a+EEyPIKsapnWGdP4THPy28C00efOSFFAE45YdtXs4WApmLcveRz+rNqN06zSTvkvcesqzndM+Hnn6pixbwCzefPIcyLZvmqCy801QfHIE1riUgJXAzwuIenp97lGzU1lQsOs90n5B0y+ExldICXN2a0mRFZwYwFvBFb1vgFafV7CZxnzuavBbgwlHMhA5vJrY0eYroXDjhFcWXBD6+63BoeJrmRSxBXu/L+jzBIwWivgIvn5JKxNlX4eAkcvWW/niZX+3S+hk3P50uEv6K3LhgrHSexWRw5p8DiHBF+8tjTbyzEMqW15MkBq/YRR+BcK65YtbtLLy1jK0q8yaWxzw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 11 Sep 2018 23:49:16 GMT']
+      host: [objectstorage.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.3]
+      opc-client-request-id: [1551ABD3D3C949158417332A13422738]
+      opc-request-id: [1D07BB2D08124AD895D354C8AA0C6EF3]
+      user-agent: [Oracle-PythonSDK/2.0.3 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.33]
+      x-content-sha256: [YMj4RR2rnqBJH5Dc8FP4qPF9qUnlUX9DKxtNu+zDmHE=]
+    method: POST
+    uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/bmcostests/b/__STS0639_8218/
+  response:
+    body: {string: '{"namespace":"bmcostests","name":"__STS0639_8218","compartmentId":"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya","createdBy":"ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq","timeCreated":"2018-09-11T23:49:15.243Z","metadata":{},"etag":"ec38f176-217c-457e-81df-952486493919","publicAccessType":"NoPublicAccess","storageTier":"Standard","objectLevelAuditMode":"Disabled","freeformTags":{"tag1":"value1.__STS0639_2704","tag2":"value2.__STS0639_2704"},"definedTags":{},"kmsKeyId":"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq","count":null,"size":null}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,ETag,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['662']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 23:49:16 GMT']
+      ETag: [ec38f176-217c-457e-81df-952486493919]
+      opc-client-request-id: [1551ABD3D3C949158417332A13422738]
+      opc-request-id: [cd393705-6f37-acf3-19f6-1b771d46f33e]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"E29D546773BF4402B2172E6A7FBE61A7\",
+      \"etag\": \"ec38f176-217c-457e-81df-952486493919\", \"bucket\": {\"definedTags\":
+      {}, \"etag\": \"ec38f176-217c-457e-81df-952486493919\", \"name\": \"__STS0639_8218\",
+      \"createdBy\": \"ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq\",
+      \"timeCreated\": \"2018-09-11T23:49:15.243000+00:00\", \"storageTier\": \"Standard\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya\",
+      \"publicAccessType\": \"NoPublicAccess\", \"freeformTags\": {\"tag2\": \"value2.__STS0639_2704\",
+      \"tag1\": \"value1.__STS0639_2704\"}, \"metadata\": {}, \"kmsKeyId\": \"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq\",
+      \"namespace\": \"bmcostests\"}}", "requestJson": "{\"updateBucketDetails\":
+      {\"kmsKeyId\": \"ocid1.key.oc1.iad.annnb3f4aacuu.abuwcljsm3euxysmqg2nep57ysfjhaevswlxo43ohsvag6dgjjhfpxhu3mzq\",
+      \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya\",
+      \"publicAccessType\": \"NoPublicAccess\", \"freeformTags\": {\"tag2\": \"value2.__STS0639_2704\",
+      \"tag1\": \"value1.__STS0639_2704\"}}, \"bucketName\": \"__STS0639_8218\", \"namespaceName\":
+      \"bmcostests\"}", "containerId": "52278d85-2f31-4292-ab31-9325bf7d97ec", "requestClass":
+      "com.oracle.bmc.objectstorage.requests.UpdateBucketRequest", "responseClass":
+      "com.oracle.bmc.objectstorage.responses.UpdateBucketResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1510']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0639&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 23:49:16 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

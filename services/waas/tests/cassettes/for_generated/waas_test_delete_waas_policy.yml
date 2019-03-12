@@ -1,0 +1,90 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteWaasPolicy&serviceName=waas&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Mon, 04 Feb 2019 21:47:51 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0741&apiName=DeleteWaasPolicy&serviceName=waas&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"6c6a9c71-4e52-4c2d-b5bb-1f4eb6402154","request":{"waasPolicyId":"ocid1.waaspolicy.oc1..aaaaaaaabxdg7duqffkkf7qouw35icrach2qse6zjr4z7ufdqu7crqdlem5q","opcRetryToken":"c32c0b27-b2bb-4570-9c2b-a6ea5ac4f333"}}]'}
+    headers:
+      Content-Length: ['223']
+      Content-Type: [application/json]
+      Date: ['Mon, 04 Feb 2019 21:47:51 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaanqzp2vspdtzw5qvbexavvkbfj675rl7aiqejbnsi5btqe4dzsf3a/ocid1.user.oc1..aaaaaaaampz2r53y5kwg5crywysxnsl6o3fo6intg4g4jynlfnwusp6wxzpa/6c:77:40:79:cd:a0:b2:4c:54:ea:ed:2d:ea:20:b2:54",signature="w4y7ghcokQ9B6m1soPn/IZxHxIdVEtUHYqwZJzOd4qck0ObjuelYhlJhUE6eg38cjU2l7Uyil055VEgoFbL/Uw10Jo4TGvj+kxKpE2FPhSox+qKb8r9OLWNPq8GdVaY9NTYL0h/jIBz69nam3y0qS6hpnQQMqlCseovph+Rrw0a2bTyo3ZaN0wd1IM2NIMLuyTfgDKnPSLn9QQnpbyELbrbbMJxqiI6J31baWF2stdNfbFeT+J5xO6zYLBIOVv/u3Y5vVqlXgyAxdZSa06OwFeT38xNvFZyCo+mMQWb36WwGo/kTvgIFxuC7IziElUzpzHYy577GYFpM5hHF6R3Lfw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Mon, 04 Feb 2019 21:47:52 GMT']
+      host: [waas.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7]
+      opc-request-id: [D635B1021853430F8FABCCB3E981A4B7]
+      opc-retry-token: [e5kzodndcHsUGpaRGaBuKhYIbZk3bF]
+      user-agent: [Oracle-PythonSDK/2.1.7 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.4.44]
+    method: DELETE
+    uri: https://waas.us-ashburn-1.oraclecloud.com/20181116/waasPolicies/ocid1.waaspolicy.oc1..aaaaaaaabxdg7duqffkkf7qouw35icrach2qse6zjr4z7ufdqu7crqdlem5q
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [text/html]
+      Date: ['Mon, 04 Feb 2019 21:47:54 GMT']
+      Opc-Request-Id: [D635B1021853430F8FABCCB3E981A4B7/56e1455a738fd94a31d3c9670e12b7c0/09862a1e5912dd34ae040b2d548800c3]
+      Opc-Work-Request-Id: [ocid1.waasworkrequest.oc1..aaaaaaaah2aitfsdt7ikuqm4exws2ntdvsgkv2bavmybaihnwtzyemg5jsqa]
+      Server: [ZENEDGE]
+      X-Cache-Status: [NOTCACHED]
+      X-Zen-Fury: [87b6f1bbe0c5b27f0316881924b69fe55eb394ff]
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"3875A2D139774B3698AF04B08DB548D8\",
+      \"opcWorkRequestId\": \"ocid1.waasworkrequest.oc1..aaaaaaaah2aitfsdt7ikuqm4exws2ntdvsgkv2bavmybaihnwtzyemg5jsqa\"}",
+      "requestJson": "{\"waasPolicyId\": \"ocid1.waaspolicy.oc1..aaaaaaaabxdg7duqffkkf7qouw35icrach2qse6zjr4z7ufdqu7crqdlem5q\",
+      \"opcRetryToken\": \"c32c0b27-b2bb-4570-9c2b-a6ea5ac4f333\"}", "containerId":
+      "6c6a9c71-4e52-4c2d-b5bb-1f4eb6402154", "requestClass": "com.oracle.bmc.waas.requests.DeleteWaasPolicyRequest",
+      "responseClass": "com.oracle.bmc.waas.responses.DeleteWaasPolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['579']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0741&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Mon, 04 Feb 2019 21:47:55 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

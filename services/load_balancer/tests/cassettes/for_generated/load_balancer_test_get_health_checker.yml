@@ -1,0 +1,19 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=GetHealthChecker&serviceName=loadbalancer&lang=PythonCLI
+  response:
+    body: {string: 'false'}
+    headers:
+      Content-Length: ['5']
+      Content-Type: [text/plain]
+      Date: ['Wed, 05 Dec 2018 19:03:00 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

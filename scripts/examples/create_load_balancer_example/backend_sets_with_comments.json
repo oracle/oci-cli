@@ -5,7 +5,7 @@
      */
     "backendSetName": {
         /*
-         * For information about each attribute, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/BackendSetDetails
+         * For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/BackendSetDetails
          * Note that the attribute names here have to match what is shown in the above link. 
          */
 
@@ -13,7 +13,7 @@
 
         /*
          * This is an array/list/collection of backends which comprise this backend set. Note that each item is its own object (enclosed in
-         * the curly braces). For information about each attribute, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/BackendDetails
+         * the curly braces). For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/BackendDetails
          *
          * Note that the attribute names here have to match what is shown in the above link. For attributes you do not want to provide,
          * you don't have to supply them here (i.e. delete their key and value). For example, if you don't want to provide
@@ -34,7 +34,7 @@
         "healthChecker": {
             /*
              * We can only define one health checker. 
-             * For information about each attribute, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/HealthCheckerDetails
+             * For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/HealthCheckerDetails
              * 
              * Note that the attribute names here have to match what is shown in the above link. For attributes you do not want to provide,
              * you don't have to supply them here (i.e. delete their key and value). As an example, if you didn't want to supply timeout or retry
@@ -53,7 +53,7 @@
         },
         "sessionPersistenceConfiguration": {
             /*
-             * For more information, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/SessionPersistenceConfigurationDetails
+             * For more information, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/SessionPersistenceConfigurationDetails
              * 
              * Note that the attribtue names here have to match what is shown in the above link. For attributes you do not want to provide,
              * you don't have to supply them here (i.e. delete their key and value)
@@ -63,7 +63,7 @@
         },
         "sslConfiguration": {
             /*
-             * For more information, see: https://docs.us-phoenix-1.oraclecloud.com/api/#/en/loadbalancer/20170115/requests/SSLConfigurationDetails
+             * For more information, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/SSLConfigurationDetails
              *
              * Note that attribute names here have to match what is shown in the above link. For attribtues you do not want to provide,
              * you don't have to supply them here (i.e. delete their key and value)

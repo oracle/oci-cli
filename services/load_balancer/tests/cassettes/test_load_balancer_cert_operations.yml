@@ -1,0 +1,50 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="EhgFlI/pg8InMjdcCOJIXXsYU0hH3kNiuRSAywo2WzL0TmuJufY8734Q6Xs0Z+fLKotw/Yr1OlNjmma6n4ORQDCo38Qyak01I6PdInP6YCpqru67x+WheYP3/FzQSNw0laQyHAQ6FjWZ3QbOv8PDDUaetx1rfXbqPESQCFbE7Kv/OvXb2jm5IYRzm7agtCN2GWIpvpSb52Dane31DzlYU6V1OaNcYY9GqlOOW0LJatf4/cTYOr4raMaiwJmhJPkI1E7ischrxeQhlZR1CUdyPhmu12fnnQ0mn1p6lvgZWbD2f2n2sbgR4FT/BUJN8ylEO//XZwgDAwz0sAbiwXBoVg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 11 Jul 2018 17:08:33 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.4]
+      opc-request-id: [AD156726D0654DC48F8BC08CA4EB2B4D]
+      user-agent: [Oracle-PythonSDK/1.4.4 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.27]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20170115/loadBalancers/ocid1.loadbalancer.oc1.phx.aaaaaaaadezhdwcj6tjrvkpys6uhmgwuwx3answj7kobnvchmfxztwimudya/certificates
+  response:
+    body: {string: "[ {\n  \"caCertificate\" : \"-----BEGIN CERTIFICATE-----\\nMIIDTDCCAjSgAwIBAgIUMlWfS9xcefn1OV9+nH2KEbjnl94wDQYJKoZIhvcNAQEL\\\
+        nBQAwUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAldBMRAwDgYDVQQHDAdTZWF0dGxl\\nMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMMC2NvbXBhbnkuY29tMB4XDTE4MDcx\\\
+        nMTE3MDgxOVoXDTE4MDcyMTE3MDgxOVowUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgM\\nAldBMRAwDgYDVQQHDAdTZWF0dGxlMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMM\\\
+        nC2NvbXBhbnkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1rjO\\nufDTRv4fYhr1DDjCce7gXFvFfxN1B/tDRafSCgPoMSn0NeCorlRSBMPTjV34G0Po\\\
+        nF7AyKt6h60ncgYOnza8NNcEDaIhHypNFzr23kQ6jta5isJrRnu+2oK8syCh7Z3tn\\n52UMIkNnoCTXmC8CreV/JixfOFwnZ/ZeS12thdWAHeN3f8Kzvj+5AFmKnSuJfVvr\\\
+        njsJcYSVxRQVJp7MstEz2p3pY5MYHKUeK1+o4BPhxH9Hq2TWFeHxj2vWpoEZDyFC8\\nUzPNgDjGWrdNRVNqGq8QWA9fT9OqNYtnAVOlhlSX/etlpiwNqUjXxcWaeQZQYHmp\\\
+        nwyqSlKf1qBrtFsj2PQIDAQABoxgwFjAUBgNVHREEDTALgglsb2NhbGhvc3QwDQYJ\\nKoZIhvcNAQELBQADggEBALMdBAYkoPNLHXzJSMYp8ST9svw1Li52UQZX5HNUGVjR\\\
+        n/4uzrV2FtTsq3xhbvD0/8nJ3ViI2Oj7XwhvCQMGWrs+Qu2Hg7i6MpKuLgZEotn9W\\nhapUemoG2qbXCxa56kXU4CPayKG9kpK3OoaidUQna7bWVNhrCWcgTC6Tn0yl7+ZU\\\
+        n6JisQ2YM05kNe86P5CGGJVReRI3E0QRaPfRANoOjWAMW/PI0lIpRUdZAxE/sH1W3\\nuYbIsnnUqQ/yGXk3yn2+YsuLu4KNdp0tlEk4x7a0JPjsWBvO/4OZEF5QzR4nlrEQ\\\
+        nquxGP4CXFJ0t3dWbMgfZw+gqRlqBPXa+3KiDYPDeg8E=\\n-----END CERTIFICATE-----\\\
+        n\",\n  \"certificateName\" : \"cli_lb_certificate_vcr\",\n  \"publicCertificate\"\
+        \ : \"-----BEGIN CERTIFICATE-----\\nMIIDTDCCAjSgAwIBAgIUMlWfS9xcefn1OV9+nH2KEbjnl94wDQYJKoZIhvcNAQEL\\\
+        nBQAwUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAldBMRAwDgYDVQQHDAdTZWF0dGxl\\nMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMMC2NvbXBhbnkuY29tMB4XDTE4MDcx\\\
+        nMTE3MDgxOVoXDTE4MDcyMTE3MDgxOVowUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgM\\nAldBMRAwDgYDVQQHDAdTZWF0dGxlMQ8wDQYDVQQKDAZPcmFjbGUxFDASBgNVBAMM\\\
+        nC2NvbXBhbnkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1rjO\\nufDTRv4fYhr1DDjCce7gXFvFfxN1B/tDRafSCgPoMSn0NeCorlRSBMPTjV34G0Po\\\
+        nF7AyKt6h60ncgYOnza8NNcEDaIhHypNFzr23kQ6jta5isJrRnu+2oK8syCh7Z3tn\\n52UMIkNnoCTXmC8CreV/JixfOFwnZ/ZeS12thdWAHeN3f8Kzvj+5AFmKnSuJfVvr\\\
+        njsJcYSVxRQVJp7MstEz2p3pY5MYHKUeK1+o4BPhxH9Hq2TWFeHxj2vWpoEZDyFC8\\nUzPNgDjGWrdNRVNqGq8QWA9fT9OqNYtnAVOlhlSX/etlpiwNqUjXxcWaeQZQYHmp\\\
+        nwyqSlKf1qBrtFsj2PQIDAQABoxgwFjAUBgNVHREEDTALgglsb2NhbGhvc3QwDQYJ\\nKoZIhvcNAQELBQADggEBALMdBAYkoPNLHXzJSMYp8ST9svw1Li52UQZX5HNUGVjR\\\
+        n/4uzrV2FtTsq3xhbvD0/8nJ3ViI2Oj7XwhvCQMGWrs+Qu2Hg7i6MpKuLgZEotn9W\\nhapUemoG2qbXCxa56kXU4CPayKG9kpK3OoaidUQna7bWVNhrCWcgTC6Tn0yl7+ZU\\\
+        n6JisQ2YM05kNe86P5CGGJVReRI3E0QRaPfRANoOjWAMW/PI0lIpRUdZAxE/sH1W3\\nuYbIsnnUqQ/yGXk3yn2+YsuLu4KNdp0tlEk4x7a0JPjsWBvO/4OZEF5QzR4nlrEQ\\\
+        nquxGP4CXFJ0t3dWbMgfZw+gqRlqBPXa+3KiDYPDeg8E=\\n-----END CERTIFICATE-----\\\
+        n\"\n} ]"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['2554']
+      Content-Type: [application/json]
+      Date: ['Wed, 11 Jul 2018 17:08:33 GMT']
+      ETag: ['1345266063']
+      Vary: [Accept-Encoding]
+      opc-request-id: [AD156726D0654DC48F8BC08CA4EB2B4D/2AC282E137544CBEE9F6D2B1982F0C56/B5EE05604BD3BD91C770C96475E8F110]
+    status: {code: 200, message: OK}
+version: 1

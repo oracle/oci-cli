@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=TerminateInstancePool&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 00:56:11 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0131&apiName=TerminateInstancePool&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"0d9995f3-d5f4-4126-ab84-d99fd17caeae","request":{"instancePoolId":"ocid1.instancepool.oc1.phx.aaaaaaaa37p4bjs6mn7g4uxiihsx53h5efb2vflvpmtwa7tsekks76h52xwa"}}]'}
+    headers:
+      Content-Length: ['175']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 00:56:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaaeoyapgtdcnhbomoi7d6sesv3rl2n6c6pxozdd73dsszomknbnsia/ocid1.user.oc1..aaaaaaaaf4xpc64kldjum6klyq4wngd4phz6cvwbbptbzhqbl4ho75apyttq/ea:af:af:07:17:e0:56:be:9f:30:09:76:a6:cf:20:fc",signature="qOQulkiVKhH+DZpV9r02tLOmwIwLxUgG9Ra3mknlTd9unVfWoWp7zeZIzm2FZT+gf+uYvKXOrISt5BfXEaKLWaqVu3XgJ/q8hZDYFmwQLM7kdKchJPmJ7+MDEPJh7cTfozBUVW1cIrQ2I8MvR8QVEFs8Bg/WpUMn7wdh7+KTnVkIZbEzUF4WhX1jRV2V1a/wC68JKEKmUTTtuxpGw/03pUkwbDm8YO6sJTkHd6VY4NHRNOPO8Mmfk93xNn9H+Nkn02XkFaOV22UmjrBt8HPCFQIxj1Ly0I9pY/Gj7t1lfofx87MhtQ8myU7YWPqlP+47SG1ZPHpm524Iul7Y5tsbQw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 21 Feb 2019 00:58:56 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.7+preview.1.681]
+      opc-request-id: [19A9B7B90A74468CA04A3A1D6A77148F]
+      user-agent: [Oracle-PythonSDK/2.1.7+preview.1.681 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/instancePools/ocid1.instancepool.oc1.phx.aaaaaaaa37p4bjs6mn7g4uxiihsx53h5efb2vflvpmtwa7tsekks76h52xwa
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 21 Feb 2019 00:58:59 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [19A9B7B90A74468CA04A3A1D6A77148F/C400101275A1036F7B985A227A88C830/B63D3B3F9314EE0EEB36758AD5C79A39]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"10A7A2F2375B481F8ACFFC0C8BE2A52A\"}",
+      "requestJson": "{\"instancePoolId\": \"ocid1.instancepool.oc1.phx.aaaaaaaa37p4bjs6mn7g4uxiihsx53h5efb2vflvpmtwa7tsekks76h52xwa\"}",
+      "containerId": "0d9995f3-d5f4-4126-ab84-d99fd17caeae", "requestClass": "com.oracle.bmc.core.requests.TerminateInstancePoolRequest",
+      "responseClass": "com.oracle.bmc.core.responses.TerminateInstancePoolResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['420']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0131&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 00:59:00 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

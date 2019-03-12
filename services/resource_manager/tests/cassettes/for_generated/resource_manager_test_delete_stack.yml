@@ -1,0 +1,88 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteStack&serviceName=resourcemanager&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:14:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0456&apiName=DeleteStack&serviceName=resourcemanager&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"ab27a9d4-0356-4ec9-97a6-0001f20a74f4","request":{"stackId":"ocid1.ormstack.oc1..aaaaaaaaruoqlylz23mtnwmysu2bsn26az4u67uxxv5bprljwiz4jh73x3va"}}]'}
+    headers:
+      Content-Length: ['161']
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:14:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaaz3i3ludxpa5x7gyqsidwftngdyzdjtu3wdnsmls4ojedyzxtdqzq/ec:28:a8:ff:92:ef:cb:59:30:c2:43:f7:44:4b:dc:d9",signature="SjcNjvshP9DkkdDbvukkn9rLIhwNLIQZcsY6CqvAnUQXUqrYejOSiQw9c6fa35k+2MuwMH2YK7T7AfqFxr61rXEuK7bAWCSO5sGB1jSzWVFN35Cf27ZqF97lNAFQujspLEyCAaNr52XZS1LtzZ3pjNEcRogSvrNIzbiuDVMgvZZQ/WAeb92b6FkzsAgxVXC4V2h6EiL+OO8pTikdnR1GBCAsTcZCx3MuDn5xsPm4wlF3jjrNqu+D63z3GszjjgDEYv7U5xPwlcPR9GYmVB3PN62QO3llqWV7G+nsjaK19aKCt+Udw+vXn4a7IcvZ+cT/dGAuKjjnvdXvCN1soF1h4Q==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Fri, 25 Jan 2019 22:14:14 GMT']
+      host: [resourcemanager.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.634]
+      opc-request-id: [9ABB5AFEE4FF444F8E832A9FB95AE0BA]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.634 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.42+preview.1]
+    method: DELETE
+    uri: https://resourcemanager.us-phoenix-1.oraclecloud.com/20180917/stacks/ocid1.ormstack.oc1..aaaaaaaaruoqlylz23mtnwmysu2bsn26az4u67uxxv5bprljwiz4jh73x3va
+  response:
+    body: {string: ''}
+    headers:
+      Cache-Control: ['no-cache, no-store, must-revalidate']
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 25 Jan 2019 22:14:14 GMT']
+      Pragma: [no-cache]
+      Strict-Transport-Security: [max-age=31536000; includeSubDomains;]
+      X-Content-Type-Options: [nosniff]
+      X-XSS-Protection: [1; mode=block]
+      opc-request-id: [9ABB5AFEE4FF444F8E832A9FB95AE0BA/5252B52CAA49E2FED619DD2FFF5E9EA3/79E243312045EB330005BFE95309E234]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"BE32BD7C4AC64B0C8366EE0050587565\"}",
+      "requestJson": "{\"stackId\": \"ocid1.ormstack.oc1..aaaaaaaaruoqlylz23mtnwmysu2bsn26az4u67uxxv5bprljwiz4jh73x3va\"}",
+      "containerId": "ab27a9d4-0356-4ec9-97a6-0001f20a74f4", "requestClass": "com.oracle.bmc.resourcemanager.requests.DeleteStackRequest",
+      "responseClass": "com.oracle.bmc.resourcemanager.responses.DeleteStackResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['408']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0456&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 25 Jan 2019 22:14:15 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

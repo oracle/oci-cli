@@ -1,0 +1,86 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=budget&apiName=DeleteAlertRule
+  response:
+    body: {string: !!python/unicode true}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:27 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0673&serviceName=budget&apiName=DeleteAlertRule
+  response:
+    body: {string: !!python/unicode '[{"containerId":"1180089e-e6f5-4504-9acb-f04829492524","request":{"budgetId":"ocid1.budget.oc1..aaaaaaaa2iec3r7s5djbaxx5nizyvdqqluh3yvfqxbhffvaxm5rmqfbn2xtq","alertRuleId":"ocid1.alertrule.oc1..aaaaaaaacpq57xdv2fwlovcdhtfonck4jxsf6t3gosbc73andxlkpkwik4xa"}}]'}
+    headers:
+      content-length: ['258']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:27 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaae65zouabl37jpbbtil2vzvehmmwfissg7zgom6zeta3wbmdrrwiq/ocid1.user.oc1..aaaaaaaaob2fwxfjim7fgeex573hij7wue7soxgddarko3tna2ocll4mwheq/e9:01:60:92:3b:81:c5:ff:f6:4d:6d:36:8f:1d:4b:ec",signature="u8pm3SjrsQcOEk4MUfItwkkqVGWCefxZeB8i65XqrXL7CMpE+l9jxGzCaeX8pGUwBld5hj7OSD/FteO2ZN3gVwFrSViPsNJ3B070jOh/VJX9WPLWsKuMa5PQPxWS6e46U6uvYcwY0YxHLDHehzXl/cghZM2cm++metYUl4WUjgSoyk7EHy8Y5TZwWWb5U1KKMBrNTkeRXH+bb2XUAxGPYvd9GGBbstYfIT9Z1K3Ul9LxFtEHqryTr2Be1IVFsVue4XhsXyqK/VNgr9PwQ34u1xBLuzU1aZTr8lZyoAlyRLdt1VMLvG+ZpfYpEBTSJccv2kILoysUxM4ylNOafOOckw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:27 GMT']
+      host: [usage.us-phoenix-1.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [B9C6EF1160504F15B03E0154856C3ACC]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 2.7.15; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: DELETE
+    uri: https://usage.us-phoenix-1.oci.oraclecloud.com/20190111/budgets/ocid1.budget.oc1..aaaaaaaa2iec3r7s5djbaxx5nizyvdqqluh3yvfqxbhffvaxm5rmqfbn2xtq/alertRules/ocid1.alertrule.oc1..aaaaaaaacpq57xdv2fwlovcdhtfonck4jxsf6t3gosbc73andxlkpkwik4xa
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 23:01:28 GMT']
+      opc-request-id: [B9C6EF1160504F15B03E0154856C3ACC/EA1F094B710A6E98296F1D2152E8BE15/266B79EC27CC73ABFE084C179F099152]
+      x-content-type-options: [nosniff]
+    status: {code: 204, message: No Content}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"B88E34B808A94F7E8FADA644D49B850B\"}",
+      "responseClass": "com.oracle.bmc.budget.responses.DeleteAlertRuleResponse",
+      "containerId": "1180089e-e6f5-4504-9acb-f04829492524", "requestJson": "{\"alertRuleId\":
+      \"ocid1.alertrule.oc1..aaaaaaaacpq57xdv2fwlovcdhtfonck4jxsf6t3gosbc73andxlkpkwik4xa\",
+      \"budgetId\": \"ocid1.budget.oc1..aaaaaaaa2iec3r7s5djbaxx5nizyvdqqluh3yvfqxbhffvaxm5rmqfbn2xtq\"}",
+      "requestClass": "com.oracle.bmc.budget.requests.DeleteAlertRuleRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['501']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0673
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Thu, 28 Feb 2019 23:01:28 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

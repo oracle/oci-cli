@@ -1,0 +1,126 @@
+interactions:
+- request:
+    body: '{"compartmentId": "ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca",
+      "name": "ObjectStorageBulkDelete_10000"}'
+    headers:
+      Content-Length: ['145']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="m4GFKDrxJz2GnsgfgmBa9U5VdhOSICDha0Vhkz2OktHGx7LgApQvJ27e1661QbKrmN0WZopt9zkbwDd1nhZi+IamTActX3hFN+edy+1JHNwqsVklXsAOeVPkdU0HOep6VXWRuAdjre5LESgchFYjwhVnPd4qsvyvh35sE15rt/iK5KmJNCBnDJgPwJQaT8zaox4RIDBPfG7NUyQGemLm4Nitun/RntYusXjU9GVF0LARVz0zvnK385JMRAwJqx5pLH0ufZRnFA0mwfkzRc066L1TZfgDuqMWgo1aJuJCpnC7a5NlRIkaJnpF+Sxohw5i6ZxntNrk5kpyP/DwOaaJnA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 23 Oct 2018 23:50:09 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7+preview.1.437]
+      opc-request-id: [F680AAAEC8F7470D8C33CDD178793612]
+      user-agent: [Oracle-PythonSDK/2.0.7+preview.1.437 (python 3.5.1; x86_64-Darwin)]
+      x-content-sha256: [QHl2qTrtsZHV4lQtIbczpBjYYJVTPpKRPocvTOo3vVg=]
+    method: POST
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/
+  response:
+    body: {string: '{"namespace":"dex-us-phx-cli-1","name":"ObjectStorageBulkDelete_10000","compartmentId":"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca","createdBy":"ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq","timeCreated":"2018-10-23T23:50:09.844Z","metadata":{},"etag":"e0b216f7-2bbe-4489-82ad-af7f7eabdf5b","publicAccessType":"NoPublicAccess","storageTier":"Standard","objectLevelAuditMode":"Disabled","freeformTags":{},"definedTags":{},"kmsKeyId":null,"estimatedCount":null,"estimatedSize":null}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,ETag,Location,opc-client-info,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['554']
+      Content-Type: [application/json]
+      Date: ['Tue, 23 Oct 2018 23:50:09 GMT']
+      ETag: [e0b216f7-2bbe-4489-82ad-af7f7eabdf5b]
+      Location: ['http://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/ObjectStorageBulkDelete_10000']
+      opc-request-id: [a9e775c6-73b2-616b-c137-bdefa6edb48b]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="udHTK2lWAGbM9nfJ+fNlOCX9azQx8q///gOlLSu0q63ck9VbRMa1m0XzKgFz8u8C1dMSFVEYXK3lljx2KbKHf8i+6maJ+bjcExyaKgyitBlBylIzMwf7LvR0+DFbJr70YQYW47l5C0hi8r+xSt/RbZKUubLxur3vWx7fwMOw6x/JYcp/RqfQDsdshic+th1NbFNVLQNhPRpARkl0bxw83Clomo0dggjV2yODt7TT6eYDtTCIctCGcyvCKrQBZSLdFeNuQiWgIoPhY2MyytUWBwYnhUNbLLNpwV0kZDByme894FJqydXMqzF1tke2Pmew3Ek2DRCf/DNDIcbjTkS6Ew==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 23 Oct 2018 23:50:09 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7+preview.1.437]
+      opc-client-request-id: [3E78628E0D9646DDA34C89564F0BB53C]
+      opc-request-id: [1A0BD3DEF7E947E0AD8D732CAAE4532C]
+      user-agent: [Oracle-PythonSDK/2.0.7+preview.1.437 (python 3.5.1; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.36+preview.1]
+    method: GET
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/ObjectStorageBulkDelete_10000/o?limit=1000&fields=name
+  response:
+    body: {string: '{"objects":[]}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['14']
+      Content-Type: [application/json]
+      Date: ['Tue, 23 Oct 2018 23:50:10 GMT']
+      opc-client-request-id: [3E78628E0D9646DDA34C89564F0BB53C]
+      opc-request-id: [82f996da-7877-878c-e742-e26b1ae23863]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="vtpRH5EZzuKcja/yEu+Ut83B8b2FI3rBIWJg/TmWO7+cQd2pxVhjwJmr4XGO4T9wsc/ETGx/W703qCo3L0loOrEDyV5q62X5CGs3/ZFHLamrOpxZvp0xyT2LtABp3AYJ3abxsE/UbrTrrmJJobY5hkysDZlCqdN5hKUw9uqeX35uZHJjrSGadLz5tRHhxL0UBSnmYNOqD3BwID/OS9mTd8wNRK3wbJnsIBPjo/D0NlWiM0JiVTug6fXoiGo7l2qZvlrjDNpjE7oRRo+fx1Hc1SxnJ1Nuq6SL9BpMP3bFEYrUP8b8EGwu2OmK7mKXFmVO0vMqGtuHXtm1nnte6cPuiw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 23 Oct 2018 23:50:10 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7+preview.1.437]
+      opc-request-id: [5862F3967AEA41CAB2A5A2CFDB30BC93]
+      user-agent: [Oracle-PythonSDK/2.0.7+preview.1.437 (python 3.5.1; x86_64-Darwin)]
+    method: GET
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/ObjectStorageBulkDelete_10000/o?limit=1000&fields=name
+  response:
+    body: {string: '{"objects":[]}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,opc-client-info,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['14']
+      Content-Type: [application/json]
+      Date: ['Tue, 23 Oct 2018 23:50:10 GMT']
+      opc-request-id: [d0c9979e-9e29-1f15-d4fa-9a5302333173]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="RxtNvda0/63RtXcHaS1jpB5xJ0wvgObMSArBZLEsKx4zXOB7b6aUat8VKLq4bZae02JF0hrjTKTxg+ixgdSG/qqBRbDcCP7D9lkA+kbsfCt8aKCdXVXOw4R/x2xcWDGphI37D+hfBbCPcvYCrIWd13f0SszywkyMytNJW5juhr11oja9nZf1RRspKa09vutE4wi82RFFhNszYuFxOjV7qaanxeKyZ32JUsmyVXDDy8PQU7w5mbkCAS8xmxEeWf4yXBsz9B3jYaEHJaLm/56NtjFcJRoM+mZU4CM2KToT89N4l5Qmp0PVH/gb5N/oS7CBw2r6NVl+rssGdCLb6Lk8Uw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 23 Oct 2018 23:50:10 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.7+preview.1.437]
+      opc-request-id: [E395E4F76D854FA9AF75254E69D7D673]
+      user-agent: [Oracle-PythonSDK/2.0.7+preview.1.437 (python 3.5.1; x86_64-Darwin)]
+    method: DELETE
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/dex-us-phx-cli-1/b/ObjectStorageBulkDelete_10000/
+  response:
+    body: {string: ''}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,opc-client-info,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Date: ['Tue, 23 Oct 2018 23:50:10 GMT']
+      opc-request-id: [d0aadec7-cdab-241d-ce3c-cefc0dda6f8b]
+    status: {code: 204, message: No Content}
+version: 1

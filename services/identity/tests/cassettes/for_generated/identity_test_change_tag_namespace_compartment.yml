@@ -1,0 +1,142 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ChangeTagNamespaceCompartment&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 00:16:35 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0281&apiName=ChangeTagNamespaceCompartment&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"66beb8d3-6d7a-4582-8660-f54fdce4e957","request":{"tagNamespaceId":"ocid1.tagnamespace.oc1..aaaaaaaaz2bvxltjbibsvhhjwcmg7nnjzqd4swucmomnivr4buuz4fqws54a","changeTagNamespaceCompartmentDetail":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaawftp4jt2x6ga54e2cf5gfwafipt4mpx56yyqbu4xvqczcsjtuwuq"},"opcRetryToken":"ae863e1d-9328-4973-9715-7e7f1f4c7dfd"}},{"containerId":"e5ee2f41-2b41-4f6b-a549-53462b3f9491","request":{"tagNamespaceId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","changeTagNamespaceCompartmentDetail":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaawftp4jt2x6ga54e2cf5gfwafipt4mpx56yyqbu4xvqczcsjtuwuq"},"opcRetryToken":"587e4c1d-66e4-4f1c-bd4f-441de2dd2817"}}]'}
+    headers:
+      Content-Length: ['679']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 00:16:36 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"compartmentId": "ocid1.compartment.oc1..aaaaaaaawftp4jt2x6ga54e2cf5gfwafipt4mpx56yyqbu4xvqczcsjtuwuq"}'
+    headers:
+      Content-Length: ['104']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaasm2lmvphilyjb6qhlafqx3dsoupnykswocqq43wm256pgxnkhopa/ocid1.user.oc1..aaaaaaaa6h7dynctwgwccia46vpy7oycwal6ue5g2rtnlfl3ijoetijmfhsq/e1:fa:97:a1:51:24:b5:c3:4f:43:5c:4b:0d:3a:cf:40",signature="hDKn6dgu1DA9T7z4HUVG9pz9Uw0Ul7gqlKCArCWmbJXY53blVlhXGkM3KkuIcXR0V217jLKDUhMOA20UIq81lamtIfG9P6wcbAHWhEF7UhbIVg3x3IYydstmpFpaZ4nsx/T01+2xItSeA8GzMnkfYihyO0VP4Q07r3X4WZwSBkixq0IO7id/z14Mb6JpwN9Ws3TAMC7hcsIt2+I/X3ayMaQMc/A50Mp+AFPbsnRYu9gfKcI2+ZOdtozz0P2yaDwEXo4nRQeQaU1Q0x32NW3zHNIU2d2eRT6kAiwcr4MU2kdmkdVxX0Rox1ElhSxGjv+bt1myh95Z4+6Cdrf895u5hw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 22 Feb 2019 00:16:37 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8]
+      opc-request-id: [EBFAE275CB0241B7A2293EC73B32D023]
+      opc-retry-token: [N4dNiLD83TWUNnMXVGMxFTBpOx3Tus]
+      user-agent: [Oracle-PythonSDK/2.1.8 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.5.0]
+      x-content-sha256: [WRRJUzBpQAJIoSIo2QzVbnH027XDgUlxRSu+ULKHlYQ=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/tagNamespaces/ocid1.tagnamespace.oc1..aaaaaaaaz2bvxltjbibsvhhjwcmg7nnjzqd4swucmomnivr4buuz4fqws54a/actions/changeCompartment
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Fri, 22 Feb 2019 00:16:38 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [EBFAE275CB0241B7A2293EC73B32D023/610CABE4AF696CE5A1F50EFED87A8238/E51EB33AD0835C2F88011C1426C1E05D]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"D2337BA0E5E7439F862B070CF3616D1E\"}",
+      "requestJson": "{\"changeTagNamespaceCompartmentDetail\": {\"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaawftp4jt2x6ga54e2cf5gfwafipt4mpx56yyqbu4xvqczcsjtuwuq\"},
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaz2bvxltjbibsvhhjwcmg7nnjzqd4swucmomnivr4buuz4fqws54a\",
+      \"opcRetryToken\": \"ae863e1d-9328-4973-9715-7e7f1f4c7dfd\"}", "containerId":
+      "66beb8d3-6d7a-4582-8660-f54fdce4e957", "requestClass": "com.oracle.bmc.identity.requests.ChangeTagNamespaceCompartmentRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.ChangeTagNamespaceCompartmentResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['653']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0281&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 00:16:39 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"compartmentId": "ocid1.compartment.oc1..aaaaaaaawftp4jt2x6ga54e2cf5gfwafipt4mpx56yyqbu4xvqczcsjtuwuq"}'
+    headers:
+      Content-Length: ['104']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaasm2lmvphilyjb6qhlafqx3dsoupnykswocqq43wm256pgxnkhopa/ocid1.user.oc1..aaaaaaaa6h7dynctwgwccia46vpy7oycwal6ue5g2rtnlfl3ijoetijmfhsq/e1:fa:97:a1:51:24:b5:c3:4f:43:5c:4b:0d:3a:cf:40",signature="u7TQBS0qSrjGEpNO+f0dZvrv901rY3taQ3j6KE+omLS/maASON1+brcC4cFsPg6y6OBHr253B/xVuzyujf/aLBBu81XOy7B29GEa+IJGSHmjhj3cdH5yeTE3wgaWpTfDQewFiJdGGXepxi9jkBxliLOaAeN6zhguEGBpOZ801kFZscAn34I7JMsTDlnMZS7g20cRn0+hFexCez9uWR2/AWfyoT81gouG5qoAoYli6ey1Ly4vcRWWTXhl9r8tE9YsDn5Eu//o8or/gW3/2SDF1yuhf+uTZc/1hMPio1HA4WXUpqWZ3tsYLX+2n29brCzkOh0xO52qu/1B25HhiM3u0g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 22 Feb 2019 00:16:39 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8]
+      opc-request-id: [823B96AC69A740D6BE6A67C676F3946C]
+      opc-retry-token: [vvcRrXUbYeof7shNSpujUGrOXKNY19]
+      user-agent: [Oracle-PythonSDK/2.1.8 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.5.0]
+      x-content-sha256: [WRRJUzBpQAJIoSIo2QzVbnH027XDgUlxRSu+ULKHlYQ=]
+    method: POST
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/tagNamespaces/ABCDEFGHIJKLMNOPQRSTUVWXYZ/actions/changeCompartment
+  response:
+    body: {string: "{\n  \"code\" : \"InvalidParameter\",\n  \"message\" : \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+        \ is not a valid tag namespace Id\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['109']
+      Content-Type: [application/json]
+      Date: ['Fri, 22 Feb 2019 00:16:40 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [823B96AC69A740D6BE6A67C676F3946C/27E914D4DCAE2C6831F2B14F3D8F0DCE/81C7D39DD288F8A9E3B517DF288EDA3E]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"changeTagNamespaceCompartmentDetail\": {\"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaawftp4jt2x6ga54e2cf5gfwafipt4mpx56yyqbu4xvqczcsjtuwuq\"},
+      \"tagNamespaceId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"opcRetryToken\": \"587e4c1d-66e4-4f1c-bd4f-441de2dd2817\"}",
+      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"823B96AC69A740D6BE6A67C676F3946C/27E914D4DCAE2C6831F2B14F3D8F0DCE/81C7D39DD288F8A9E3B517DF288EDA3E\",
+      \"code\": \"InvalidParameter\", \"message\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ is
+      not a valid tag namespace Id\"}", "containerId": "e5ee2f41-2b41-4f6b-a549-53462b3f9491",
+      "requestClass": "com.oracle.bmc.identity.requests.ChangeTagNamespaceCompartmentRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['696']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0281&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 22 Feb 2019 00:16:40 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

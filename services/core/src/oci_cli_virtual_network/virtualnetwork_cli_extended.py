@@ -281,7 +281,7 @@ This operation must be called by the VCN administrator who is designated as the 
 # Below param is not enforced as an enum to allow backward compatibility for old CLIs to support newer regions.
 @cli_util.option('--peer-region-name', required=True, help="""The name of the region that contains the RPC you want to peer with.
 
-The region names that could be used are listed here: https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm
+The region names that could be used are listed here: https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm
 Example: `us-ashburn-1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})

@@ -189,7 +189,7 @@ $T contains the OCID of the current tenant):
 
 Output is in JSON format.
 
-For information on configuration, see https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm.""")
+For information on configuration, see https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--config-file',
               default=DEFAULT_LOCATION, show_default=True,

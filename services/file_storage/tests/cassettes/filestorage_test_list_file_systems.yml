@@ -1,0 +1,36 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="I53ONEgiyynUaWICY15NQb7ItSIrAoOpyiCR5ZMd3BngRkPIlAlDSqEOBHpuyQGWYx/TPSHo9Zn8mJe0CLfNIlMfplbhIS/0BYkNqXLILosLMwnz/RGnBx8UADU4FMMhxUzVfq2lgG7LCqVQA0eXZHx4ivW+j9IggB+42X0R0RUvMFrjSox1K2OPG02N0WdTXZIvU4O1j1jSGkNUgpwvczXaJ2XYBLVmWwX4MGhkFmI7Do9J6l96idOkOis9hYmPxGEg46xhuT9MzEJyvVRUlRaPrH5EE3Jk/jfxfECZNEePkKhx9oOG817zpDVm32rqeEc1Uj3ONSBLCCzHWu7oIA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 20 Jun 2018 12:35:01 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1.116]
+      opc-request-id: [E5097B0F84CE4200AA83E98A9CF73645]
+      user-agent: [Oracle-PythonSDK/1.4.3+preview.1.116 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.26]
+    method: GET
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/fileSystems?availabilityDomain=Iocq%3APHX-AD-1&compartmentId=ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAE2OT0+EMBTE7/spCGch5U9Zw23dNZGLMXFjjMZDKY+lS0spLSzV+N0VaszOcWbe
+        +82797XxPJ9MhHFSMs6MPUhBWOd7uecXkqr86eE12B2CyL9ZmgIMDFDdWQN66aDVpVL0ZDACOlNU
+        66mkrIrCKz+UNApD8qey3vZDn6i5HUXbTnGG+8biTLK0ylRal3yYG32xp2n8TAxWGo+UuAEV0z0n
+        9pEIWEG1DtItSlzIruE146CtNiBWdt/M//hF9DyeZDk2inMlz/OFSaO6MqWx5VCPVi0d95WzGqil
+        HJ4NMY662x+Ll3sXGyZgP8Bv5Ogxim4DlAUxOkZxnuAcoTDC+M3ffHsfP4UYnAxxAQAA
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Length: ['279']
+      Content-Type: [application/json]
+      Date: ['Wed, 20 Jun 2018 12:35:02 GMT']
+      Vary: [Accept-Encoding]
+      opc-request-id: [E5097B0F84CE4200AA83E98A9CF73645/0B1FF5C48CEA578F3DBF6E98B160B35A/5941E1C95E01A3CB673EA5F8540CF4D1]
+    status: {code: 200, message: OK}
+version: 1

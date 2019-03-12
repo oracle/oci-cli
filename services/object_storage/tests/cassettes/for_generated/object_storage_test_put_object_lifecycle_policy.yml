@@ -1,0 +1,102 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=PutObjectLifecyclePolicy&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 22:24:30 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0905&apiName=PutObjectLifecyclePolicy&serviceName=objectstorage&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"f8af1a0d-5d92-479a-b6e7-cd2b1751706e","request":{"namespaceName":"bmcostests","bucketName":"__STS0905_509","putObjectLifecyclePolicyDetails":{"items":[{"name":"__STS0905_4809","action":"Delete","timeAmount":1,"timeUnit":"DAYS","isEnabled":false,"objectNameFilter":{"inclusionPrefixes":["testPrefix"]}}]}}}]'}
+    headers:
+      Content-Length: ['323']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 22:24:30 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"items": [{"timeUnit": "DAYS", "objectNameFilter": {"inclusionPrefixes":
+      ["testPrefix"]}, "name": "__STS0905_4809", "timeAmount": 1, "action": "Delete",
+      "isEnabled": false}]}'
+    headers:
+      Content-Length: ['175']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaaaodntvb6nij46dccx2dqn6a3xs563vhqm7ay5bkn4wbqvb2a3bya/ocid1.user.oc1..aaaaaaaasvngmjbme3ja5u43czv5i2jwpbtlijbvngbeshjcnkqniitygivq/c1:4c:5d:54:33:96:03:4e:54:2f:5f:ec:c9:36:90:8e",signature="jCH+mXr1D6A5gMoNyFHc2Z8bJ45PnnXmO8QURzMKCHaKU0LWVP8DDCNEYJI58sJe0eEkDhHEc7KZXx1646pMJ18YSeynoFVfCwCefXia2LNCUZqEliYDFuGL8jWkijuzTOw8ZASk/X7DyNR/mkl3nxrPVtH0J4YrKpr8OyIC+8VSnTHuMjwEW6NrnhfBZ2uhIUgde3XODrYh2wVZVcKI6yzw6U0QyYhtPuA7/jjdIqynth4j94J8ArLQRw8svmlZeDHefpsGq9keLyN4zu31QZ1KaRWySG706snZDRLURAllYtUHNQBfUlgE/cDGlXQsdnbcFjzbz2JLFus8ofchkA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 11 Sep 2018 22:24:33 GMT']
+      host: [objectstorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.2+preview.1.261]
+      opc-client-request-id: [F24D8E6AF0B3407C91C8AF365ADFDAE5]
+      opc-request-id: [217712F614E048B2ACF678D3BE752FBC]
+      user-agent: [Oracle-PythonSDK/2.0.2+preview.1.261 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [YnjhrxnUDo9qFO9X2FBFDT6qtgCBJNXa/y4uGWK0EZw=]
+    method: PUT
+    uri: https://objectstorage.us-phoenix-1.oraclecloud.com/n/bmcostests/b/__STS0905_509/l
+  response:
+    body: {string: '{"timeCreated":"2018-09-11T22:23:34.389Z","items":[{"name":"__STS0905_4809","action":"Delete","timeAmount":1,"timeUnit":"DAYS","isEnabled":false,"objectNameFilter":{"inclusionPrefixes":["testPrefix"]}}]}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Methods: ['POST,PUT,GET,HEAD,DELETE,OPTIONS']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Allow-Origin,Content-Length,Content-Type,ETag,Last-Modified,opc-client-info,opc-client-request-id,opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['203']
+      Content-Type: [application/json]
+      Date: ['Tue, 11 Sep 2018 22:23:34 GMT']
+      ETag: [lifecycle-policy-6bc68e17-da85-4f20-bf3d-ddee6f583430]
+      Last-Modified: ['Tue, 11 Sep 2018 22:23:34 GMT']
+      opc-client-request-id: [F24D8E6AF0B3407C91C8AF365ADFDAE5]
+      opc-request-id: [e334ff1d-6e71-2173-af22-4a54ee0e2c6d]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"B9D73D29022241718A1C1DFC732401AC\",
+      \"objectLifecyclePolicy\": {\"items\": [{\"timeUnit\": \"DAYS\", \"objectNameFilter\":
+      {\"inclusionPrefixes\": [\"testPrefix\"]}, \"name\": \"__STS0905_4809\", \"timeAmount\":
+      1, \"action\": \"Delete\", \"isEnabled\": false}], \"timeCreated\": \"2018-09-11T22:23:34.389000+00:00\"},
+      \"etag\": \"lifecycle-policy-6bc68e17-da85-4f20-bf3d-ddee6f583430\"}", "requestJson":
+      "{\"bucketName\": \"__STS0905_509\", \"namespaceName\": \"bmcostests\", \"putObjectLifecyclePolicyDetails\":
+      {\"items\": [{\"timeUnit\": \"DAYS\", \"objectNameFilter\": {\"inclusionPrefixes\":
+      [\"testPrefix\"]}, \"name\": \"__STS0905_4809\", \"timeAmount\": 1, \"action\":
+      \"Delete\", \"isEnabled\": false}]}}", "containerId": "f8af1a0d-5d92-479a-b6e7-cd2b1751706e",
+      "requestClass": "com.oracle.bmc.objectstorage.requests.PutObjectLifecyclePolicyRequest",
+      "responseClass": "com.oracle.bmc.objectstorage.responses.PutObjectLifecyclePolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['991']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0905&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 11 Sep 2018 22:24:34 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateCursor&serviceName=streaming&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Fri, 30 Nov 2018 01:34:28 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0047&apiName=CreateCursor&serviceName=streaming&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"785c68dc-b366-4986-b035-7373122dc4c1","request":{"streamId":"ocid1.stream.oc1.phx.aaaaaaaaqraexq5kxojwbwimoeqnzjk3tudx4wh4ecobxbm7jd7uh7sy3p6q","createCursorDetails":{"partition":"0","type":"LATEST"}}}]'}
+    headers:
+      Content-Length: ['219']
+      Content-Type: [application/json]
+      Date: ['Fri, 30 Nov 2018 01:34:28 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/endpoint?lang=PythonCLI&sessionId=0047&apiName=CreateCursor&serviceName=streaming&clientName=StreamClient
+  response:
+    body: {string: 'https://api.cell-1.us-phoenix-1.streaming.oci.oraclecloud.com'}
+    headers:
+      Content-Length: ['61']
+      Content-Type: [text/plain]
+      Date: ['Fri, 30 Nov 2018 01:34:29 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"partition": "0", "type": "LATEST"}'
+    headers:
+      Content-Length: ['36']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaajqjeaxdh4zukw7ugptutjucry4k2ilpaixh5uxoc6uzqutxvl3ba/ocid1.user.oc1..aaaaaaaawaebmr4g53c7jk2kc4c7zccvqkyhw4o7ueyhxquw3x6wkbgsk4tq/b3:8c:98:d8:75:1a:38:9e:6d:6d:49:3d:9f:6c:12:bf",signature="Xi/R2UO/HVc6Pbe7wUZHbWwO0sC+wh5YHhpMcY+qDbO7+wdw6mNhjmJVOpoXcsKZYBbwbRQFgLAO5pr4Z50E6WKtj/E3ZVNorMqnbufxdwF1cw2/BBfn/kLwZIKdavrWTwbEEZWljKyXSFT1Iu4XILOClkFdjgCNcn00eqh18uyi5Pj9Ew2VW3a8Tdgt6L515rPfu3H30II63Sq5pIVmSyY0ERDD2bcLlM0HyouKnPDskG6A9AtEFmXOA8su1GSVr3FLI2KRKOqKM/l2ZTugqBS6B4Ymlyaud02Il+f6JjipY3gvd/AjGm1y3IUzl2i6/lsM77NBjzx1nmG8P0la8g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 30 Nov 2018 01:34:32 GMT']
+      host: [api.cell-1.us-phoenix-1.streaming.oci.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.2+preview.1.596]
+      opc-request-id: [595656DCA5704430BECDE8CAD67A429F]
+      user-agent: [Oracle-PythonSDK/2.1.2+preview.1.596 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.39+preview.1]
+      x-content-sha256: [1nrGzTcByPDQYkjmwr9Ytfj3vC9WToFWJFgso2yTBxw=]
+    method: POST
+    uri: https://api.cell-1.us-phoenix-1.streaming.oci.oraclecloud.com/20180418/streams/ocid1.stream.oc1.phx.aaaaaaaaqraexq5kxojwbwimoeqnzjk3tudx4wh4ecobxbm7jd7uh7sy3p6q/cursors
+  response:
+    body: {string: "{\n  \"value\" : \"eyJjdXJzb3JUeXBlIjoicGFydGl0aW9uIiwidHlwZSI6IkF0VGltZSIsIm9mZnNldCI6bnVsbCwidGltZSI6MTU0MzU0MTY3Mjc5OCwicGFydGl0aW9uIjoiMCIsInN0cmVhbUlkIjoib2NpZDEuc3RyZWFtLm9jMS5waHguYWFhYWFhYWFxcmFleHE1a3hvandid2ltb2VxbnpqazN0dWR4NHdoNGVjb2J4Ym03amQ3dWg3c3kzcDZxIiwiZXhwaXJhdGlvbiI6MTU0MzU0MTk3Mjc5OCwiY3Vyc29yVHlwZSI6InBhcnRpdGlvbiJ9\"\
+        \n}"}
+    headers:
+      Content-Length: ['338']
+      Content-Type: [application/json]
+      Date: ['Fri, 30 Nov 2018 01:34:32 GMT']
+      Strict-Transport-Security: [max-age=15768000]
+      opc-request-id: [595656DCA5704430BECDE8CAD67A429F/5B57EE5719A172B75EA22A2E4C95CE34/98C35D3CA3609948D2A6EB3383388EAB]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"E304185AB789423A8480104BDC09C6AA\",
+      \"cursor\": {\"value\": \"eyJjdXJzb3JUeXBlIjoicGFydGl0aW9uIiwidHlwZSI6IkF0VGltZSIsIm9mZnNldCI6bnVsbCwidGltZSI6MTU0MzU0MTY3Mjc5OCwicGFydGl0aW9uIjoiMCIsInN0cmVhbUlkIjoib2NpZDEuc3RyZWFtLm9jMS5waHguYWFhYWFhYWFxcmFleHE1a3hvandid2ltb2VxbnpqazN0dWR4NHdoNGVjb2J4Ym03amQ3dWg3c3kzcDZxIiwiZXhwaXJhdGlvbiI6MTU0MzU0MTk3Mjc5OCwiY3Vyc29yVHlwZSI6InBhcnRpdGlvbiJ9\"}}",
+      "requestJson": "{\"createCursorDetails\": {\"type\": \"LATEST\", \"partition\":
+      \"0\"}, \"streamId\": \"ocid1.stream.oc1.phx.aaaaaaaaqraexq5kxojwbwimoeqnzjk3tudx4wh4ecobxbm7jd7uh7sy3p6q\"}",
+      "containerId": "785c68dc-b366-4986-b035-7373122dc4c1", "requestClass": "com.oracle.bmc.streaming.requests.CreateCursorRequest",
+      "responseClass": "com.oracle.bmc.streaming.responses.CreateCursorResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['822']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0047&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 30 Nov 2018 01:34:32 GMT']
+      Server: [Jetty(9.2.14.v20151106)]
+    status: {code: 200, message: OK}
+version: 1

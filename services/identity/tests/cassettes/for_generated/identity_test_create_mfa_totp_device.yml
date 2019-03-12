@@ -1,0 +1,156 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=identity&apiName=CreateMfaTotpDevice
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 01:48:42 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.4]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0924&serviceName=identity&apiName=CreateMfaTotpDevice
+  response:
+    body: {string: !!python/unicode '[{"containerId":"0961ea99-50d2-4af4-8d0e-44a5b0875529","request":{"userId":"ocid1.user.region1..aaaaaaaaj76zg33ufxjycach2ayoszx6wliv7q6f4lu6bewbf2rd57vgm75q","opcRetryToken":"bebc9126-9764-459f-a437-61f20d98a67b"}},{"containerId":"c0badb01-f7d3-41f7-9dce-1bcb5a686481","request":{"userId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","opcRetryToken":"31c22c9d-4e4f-4c5a-9fc7-e63ddefe8181"}}]'}
+    headers:
+      content-length: ['375']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 01:48:43 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.region1..aaaaaaaamgn7ki7mktitfmtvpiuq6f6rjupv5tazu4czraym2fh7dyahkm5a/ocid1.user.region1..aaaaaaaanxbis5dkepuqu36tth3xbqoh3tr7jt7y7tfzieieuni73k7cwkaa/7e:97:1c:d6:4f:38:52:37:7e:1d:4c:9e:6c:1c:88:ef",signature="p4Xbva2Fhax4qly9FZkzWYD9aPFArs9twjb0lCTUDc6Bk4atnsEQhgnnQlyGika0Rkgjy0ojWl/0g/lOZHLhrfDx4T/Rv2RYcq1MuH7Xa1rGHecWkLQT6q5hZUi4sDZf1lEtTumTipn3Eo6iIZZN9puMkDKiCvCc4afKaxhXC7EI9WklMVGiwFuC5xIh25tsl5cXZzJZkuEdwquDITumVcXiepTj2UnnwHoYRKuUaTdufnmLYnSAGozGehcRVj50nikYK5kBsRhFzFnpj9fMiAAL/A3rBVzOL9nncKcPJivCI11uylL81olUfKMJxsXt5y/GnVP5IbDYTzd0WkdetQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 01:48:45 GMT']
+      host: [identity.r1.oracleiaas.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.648]
+      opc-request-id: [724C3B92E53F4EAABF5CD73B17B3EF34]
+      opc-retry-token: [WWDuMQwNF10eD3drybHzd35sjLPnU2]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.648 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43+preview.1]
+      x-content-sha256: [!!python/unicode '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=']
+    method: POST
+    uri: https://identity.r1.oracleiaas.com/20160918/users/ocid1.user.region1..aaaaaaaaj76zg33ufxjycach2ayoszx6wliv7q6f4lu6bewbf2rd57vgm75q/mfaTotpDevices
+  response:
+    body: {string: !!python/unicode "{\n  \"id\" : \"ocid1.credential.region1..aaaaaaaavludk5cz3b4oktzxydu3gtrmwa5ursoqp4voz5iqinwc46xihhha\"\
+        ,\n  \"userId\" : \"ocid1.user.region1..aaaaaaaaj76zg33ufxjycach2ayoszx6wliv7q6f4lu6bewbf2rd57vgm75q\"\
+        ,\n  \"seed\" : \"E62KPCJQT37LQ3AZACOT3DD3COKYGKQA\",\n  \"timeCreated\" :\
+        \ \"2019-02-12T01:48:46.962Z\",\n  \"lifecycleState\" : \"ACTIVE\",\n  \"\
+        isActivated\" : false\n}"}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['347']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 01:48:47 GMT']
+      etag: [ef60b670671d99118f1dac98d48e6e27824ac2c4]
+      opc-request-id: [724C3B92E53F4EAABF5CD73B17B3EF34/C02DACC9EC3823DE131A1672CB28AD44/C4E4DC5D3DCA23DD9526087780A223C0]
+      pragma: [no-cache]
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"mfaTotpDevice\": {\"timeCreated\":
+      \"2019-02-12T01:48:46.962000+00:00\", \"isActivated\": false, \"userId\": \"ocid1.user.region1..aaaaaaaaj76zg33ufxjycach2ayoszx6wliv7q6f4lu6bewbf2rd57vgm75q\",
+      \"inactiveStatus\": null, \"seed\": \"E62KPCJQT37LQ3AZACOT3DD3COKYGKQA\", \"lifecycleState\":
+      \"ACTIVE\", \"id\": \"ocid1.credential.region1..aaaaaaaavludk5cz3b4oktzxydu3gtrmwa5ursoqp4voz5iqinwc46xihhha\",
+      \"timeExpires\": null}, \"etag\": \"ef60b670671d99118f1dac98d48e6e27824ac2c4\",
+      \"opcRequestId\": \"9AC8C93B3DA7411FB17EDB6CCB09533F\"}", "responseClass": "com.oracle.bmc.identity.responses.CreateMfaTotpDeviceResponse",
+      "containerId": "0961ea99-50d2-4af4-8d0e-44a5b0875529", "requestJson": "{\"opcRetryToken\":
+      \"bebc9126-9764-459f-a437-61f20d98a67b\", \"userId\": \"ocid1.user.region1..aaaaaaaaj76zg33ufxjycach2ayoszx6wliv7q6f4lu6bewbf2rd57vgm75q\"}",
+      "requestClass": "com.oracle.bmc.identity.requests.CreateMfaTotpDeviceRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['953']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0924
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 01:48:47 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.region1..aaaaaaaamgn7ki7mktitfmtvpiuq6f6rjupv5tazu4czraym2fh7dyahkm5a/ocid1.user.region1..aaaaaaaanxbis5dkepuqu36tth3xbqoh3tr7jt7y7tfzieieuni73k7cwkaa/7e:97:1c:d6:4f:38:52:37:7e:1d:4c:9e:6c:1c:88:ef",signature="pgmQnNOvK9wZaZ8jvVk1b2SZjktNkQJ6W6RCLeEJCbNVQhQvm8ZzpD1Hi7nHEOReZ+4soINoCTGdIx0XGGlfB2iPpsKTKHn+TyWKQL3opLX8lvI5FIx7aaWz+5Ywvn4xWs7yc0+7WuZ7oiF5XVCJCHxH8fRnruYXpS0pHxseUaAIQvLrp1fDWfxkXZ01t8NTZT5A1JqKTVYWliD1DUx8/q+Oo3P52+OdzFj3h1TvY3bZd+u4iwyBb60OkLpoG1eFfw10TtQHF4wF7+b+m2OWF+1O60ZXyqxuG9RDcWT2SMkrazCqxfrPp4OsjcTrjIV8Xa+sG35YU1Rnh3CoNNXv4g==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 01:48:47 GMT']
+      host: [identity.r1.oracleiaas.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.6+preview.1.648]
+      opc-request-id: [244AAC6676B54CF6872D0CFA6F9CFD17]
+      opc-retry-token: [JnUphgGGrhmjk1gS8ElMHUvCCgLXR3]
+      user-agent: [Oracle-PythonSDK/2.1.6+preview.1.648 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.4.43+preview.1]
+      x-content-sha256: [!!python/unicode '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=']
+    method: POST
+    uri: https://identity.r1.oracleiaas.com/20160918/users/ABCDEFGHIJKLMNOPQRSTUVWXYZ/mfaTotpDevices
+  response:
+    body: {string: !!python/unicode "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n\
+        \  \"message\" : \"Authorization failed or requested resource not found\"\n\
+        }"}
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['110']
+      content-type: [application/json]
+      date: ['Tue, 12 Feb 2019 01:48:48 GMT']
+      opc-request-id: [244AAC6676B54CF6872D0CFA6F9CFD17/8BE9505531521904BAADF113F1F591EF/9A3BB267A27C0AC2E35424B6158F4775]
+      pragma: [no-cache]
+      x-content-type-options: [nosniff]
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"errorJson": "{\"message\": \"Authorization failed or
+      requested resource not found\", \"code\": \"NotAuthorizedOrNotFound\", \"opcRequestId\":
+      \"244AAC6676B54CF6872D0CFA6F9CFD17/8BE9505531521904BAADF113F1F591EF/9A3BB267A27C0AC2E35424B6158F4775\",
+      \"statusCode\": 404}", "containerId": "c0badb01-f7d3-41f7-9dce-1bcb5a686481",
+      "requestJson": "{\"opcRetryToken\": \"31c22c9d-4e4f-4c5a-9fc7-e63ddefe8181\",
+      \"userId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"}", "requestClass": "com.oracle.bmc.identity.requests.CreateMfaTotpDeviceRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['528']
+      User-Agent: [python-requests/2.18.4]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?lang=PythonCLI&sessionId=0924
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 12 Feb 2019 01:48:49 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1
