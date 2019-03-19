@@ -14,13 +14,16 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_root_group.help', """Container Engine for Kubernetes API"""), short_help=cli_util.override('ce_root_group.short_help', """Container Engine for Kubernetes API"""))
+@cli.command(cli_util.override('ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_root_group.help', """API for the Container Engine for Kubernetes service. Use this API to build, deploy,
+and manage cloud-native applications. For more information, see
+[Overview of Container Engine for Kubernetes](/iaas/Content/ContEng/Concepts/contengoverview.htm).
+"""), short_help=cli_util.override('ce_root_group.short_help', """Container Engine for Kubernetes API"""))
 @cli_util.help_option_group
 def ce_root_group():
     pass
 
 
-@click.command(cli_util.override('cluster_group.command_name', 'cluster'), cls=CommandGroupWithAlias, help="""A Kubernetes cluster.""")
+@click.command(cli_util.override('cluster_group.command_name', 'cluster'), cls=CommandGroupWithAlias, help="""A Kubernetes cluster. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def cluster_group():
     pass
@@ -44,7 +47,7 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('node_pool_group.command_name', 'node-pool'), cls=CommandGroupWithAlias, help="""A pool of compute nodes attached to a cluster.""")
+@click.command(cli_util.override('node_pool_group.command_name', 'node-pool'), cls=CommandGroupWithAlias, help="""A pool of compute nodes attached to a cluster. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def node_pool_group():
     pass
@@ -194,6 +197,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 @cli_util.option('--node-image-name', required=True, help="""The name of the image running on the nodes in the node pool.""")
 @cli_util.option('--node-shape', required=True, help="""The name of the node shape of the nodes in the node pool.""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to each underlying OCI instance in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -202,12 +206,12 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_image_name, node_shape, subnet_ids, initial_node_labels, ssh_public_key, quantity_per_subnet):
+def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_image_name, node_shape, subnet_ids, node_metadata, initial_node_labels, ssh_public_key, quantity_per_subnet):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -220,6 +224,9 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     details['nodeImageName'] = node_image_name
     details['nodeShape'] = node_shape
     details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+
+    if node_metadata is not None:
+        details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
 
     if initial_node_labels is not None:
         details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
@@ -502,8 +509,8 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""A cluster lifecycle state to filter on. Can have multiple parameters of this name.""")
 @cli_util.option('--name', help="""The name to filter on.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The optional order in which to sort the results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help="""The optional field to sort the results by.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -562,8 +569,8 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--cluster-id', help="""The OCID of the cluster.""")
 @cli_util.option('--name', help="""The name to filter on.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The optional order in which to sort the results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help="""The optional field to sort the results by.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -674,8 +681,8 @@ def list_work_request_logs(ctx, from_json, all_pages, compartment_id, work_reque
 @cli_util.option('--resource-id', help="""The OCID of the resource associated with a work request""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["CLUSTER", "NODEPOOL"]), help="""Type of the resource associated with a work request""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""A work request status to filter on. Can have multiple parameters of this name.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The optional order in which to sort the results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "OPERATION_TYPE", "STATUS", "TIME_ACCEPTED", "TIME_STARTED", "TIME_FINISHED"]), help="""The optional field to sort the results by.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

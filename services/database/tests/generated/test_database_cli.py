@@ -295,6 +295,26 @@ def test_create_autonomous_database(cli_testing_service_client, runner, config_f
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('source') == 'DATABASE':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_autonomous_database_create_autonomous_database_clone_details.command_name', 'create-autonomous-database-create-autonomous-database-clone-details')
+                )
+
+                if params:
+                    del request['source']
+
+            if request.get('source') == 'NONE':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_autonomous_database_create_autonomous_database_details.command_name', 'create-autonomous-database-create-autonomous-database-details')
+                )
+
+                if params:
+                    del request['source']
+
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'CreateAutonomousDatabase', request)
 
             input_content = json.dumps(request)

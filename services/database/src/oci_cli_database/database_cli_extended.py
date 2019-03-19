@@ -17,6 +17,7 @@ cli_util.rename_command(database_cli.db_root_group, database_cli.db_system_group
 cli_util.rename_command(database_cli.db_root_group, database_cli.db_system_shape_group, "system-shape")
 cli_util.rename_command(database_cli.db_root_group, database_cli.db_version_group, "version")
 cli_util.rename_command(database_cli.db_root_group, database_cli.patch_history_entry_group, "patch-history")
+
 database_cli.patch_group.commands.pop("get-db-system")
 database_cli.patch_group.commands.pop("list-db-system")
 database_cli.patch_history_entry_group.commands.pop("get-db-system")
@@ -29,6 +30,10 @@ database_cli.list_db_system_patch_history_entries.name = "by-db-system"
 
 cli_util.rename_command(database_cli.autonomous_database_group, database_cli.generate_autonomous_database_wallet, "generate-wallet")
 cli_util.rename_command(database_cli.autonomous_data_warehouse_group, database_cli.generate_autonomous_data_warehouse_wallet, "generate-wallet")
+
+database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomous_database.name)
+cli_util.rename_command(database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_clone_details, "create-from-clone")
+cli_util.rename_command(database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_details, "create")
 
 
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'ssh_public_keys'])

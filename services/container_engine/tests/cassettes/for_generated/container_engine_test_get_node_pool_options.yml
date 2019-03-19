@@ -7,14 +7,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetNodePoolOptions&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=containerengine&apiName=GetNodePoolOptions
   response:
-    body: {string: 'true'}
+    body: {string: !!python/unicode 'true'}
     headers:
-      Content-Length: ['4']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 21:13:57 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:41:52 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -24,76 +24,76 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=GetNodePoolOptions&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0485&serviceName=containerengine&apiName=GetNodePoolOptions
   response:
-    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"nodePoolOptionId":"all"}}]'}
+    body: {string: !!python/unicode '[{"containerId":"5b2e50d4-c4af-49af-b602-d890c8df0724","request":{"nodePoolOptionId":"all"}}]'}
     headers:
-      Content-Length: ['93']
-      Content-Type: [application/json]
-      Date: ['Fri, 03 Aug 2018 21:13:57 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['93']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:41:53 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
     headers:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
-      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="Ei9zBzZpNz+6UQS9M8ixvMe5w2gtwtGnPqVenA4ytxKpvB/r1gHA0y8VpVfDy2lkqttkx9tRUaWT9ClZmU4XidJvbad31zy5PByRabTh74p8rQsTt1RYZHXBnamkQT4O+YD+Ct3e4sQiaoYYPytFcvsB+GvMWfdLX+6YUa7qdHhlswLdHFaWe5II453KgUiRnPx1qJk2k+hfgfTNyOwV/tMlYbtkiufrsncXffacYgQrJhZOGiDSd/pjxfA6x+FcKH+OQvead7b77ltvqsObwV4cW8Tm9OvuZ7RDa5IZu24tIocc6U+tKP/guhVu2OXXD2ezgpvm0LPaF7C23vssVg==",version="1"']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaat37ab62ltpvzgyoydasbfig3gcmccxwzvbi6yoh6ewqiiswps6sq/ocid1.user.oc1..aaaaaaaasdznyz2a25ym3qrym4sm4pxwsiehmhosjz3ofcqmtwmb3w6snreq/0b:38:fd:f5:0e:0e:b7:90:a0:33:27:0c:a0:2a:9c:87",signature="BHRq9gJJBoYsJagm6Dl92yCI6OKdPkp1ANpMxDyROZ2Vi8maHW+hgIkwZUouN7pSMxbD3ydai63xkgtQEUXBcqVQi1o3lI7hYYmlNjt9skpYro3J0Q6aCB334c7mm4wPA8ie2zwxeppSLt8Bqj+AxRZP850QzPLPSlRRlhN4eBlVkcDvokDrpw+R+oKskBDxsUel/bQ3lZJiVyusc6LTsVcHIYNd9XLkBcVbiO+hhB5QhJS+s9K1ryC9+OIzBfNF/2wCnKy4Yh4PE49feaj7Z/nPnnjQseHaX1PDmjgX4IUNRpruSyvhcY32NfzK8p41YyJxnvJTN1oJLnzquNrhpQ==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 03 Aug 2018 21:13:57 GMT']
-      host: [containerengine.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
-      opc-request-id: [99BB17653DF947899DCBA7705AB9AD6C]
-      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.29+preview.1]
+      date: ['Mon, 11 Mar 2019 22:43:00 GMT']
+      host: [containerengine.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.2]
+      opc-request-id: [E888FF1099D146C7B13F45CBA6F353B8]
+      user-agent: [Oracle-PythonSDK/2.2.2 (python 2.7.13; x86_64-Linux) Oracle-PythonCLI/2.5.3]
     method: GET
-    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/nodePoolOptions/all
+    uri: https://containerengine.us-ashburn-1.oraclecloud.com/20180222/nodePoolOptions/all
   response:
-    body: {string: "{\n  \"kubernetesVersions\": [\n    \"v1.8.11\",\n    \"v1.9.7\"\
-        ,\n    \"v1.10.3\"\n  ],\n  \"images\": [\n    \"Oracle-Linux-7.4\"\n  ],\n\
-        \  \"shapes\": [\n    \"BM.HighIO1.36\",\n    \"BM.DenseIO1.36\",\n    \"\
-        VM.Standard2.1\",\n    \"VM.Standard2.2\",\n    \"VM.Standard1.1\",\n    \"\
-        VM.Standard1.2\",\n    \"VM.Standard1.4\",\n    \"VM.DenseIO1.4\"\n  ]\n}"}
+    body: {string: !!python/unicode "{\n  \"kubernetesVersions\": [\n    \"v1.10.11\"\
+        ,\n    \"v1.11.8\",\n    \"v1.12.6\"\n  ],\n  \"images\": [\n    \"Oracle-Linux-7.4\"\
+        ,\n    \"Oracle-Linux-7.5\"\n  ],\n  \"shapes\": [\n    \"VM.Standard2.1\"\
+        ,\n    \"VM.Standard2.4\",\n    \"VM.Standard2.8\",\n    \"VM.Standard2.16\"\
+        ,\n    \"VM.Standard1.2\",\n    \"VM.Standard1.4\",\n    \"VM.Standard1.8\"\
+        ,\n    \"VM.DenseIO1.8\"\n  ]\n}"}
     headers:
-      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
-      Access-Control-Allow-Origin: ['*']
-      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
-      Content-Length: ['310']
-      Content-Type: [application/json]
-      Date: ['Fri, 03 Aug 2018 21:13:59 GMT']
-      Opc-Request-Id: [99BB17653DF947899DCBA7705AB9AD6C/16040DB0676A42EEB1C61267F79C17C5/20876216AF174E84ABA12C883961DC0F]
-      Uri: [/20180222/nodePoolOptions/_id_]
-      Vary: [Accept-Encoding]
-      X-Rate-Limit-Duration: ['1']
-      X-Rate-Limit-Limit: ['16.70']
-      X-Rate-Limit-Request-Forwarded-For: ['10.237.37.0, 10.237.41.58']
-      X-Rate-Limit-Request-Remote-Addr: ['10.237.41.58:47416']
+      access-control-allow-methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      content-length: ['338']
+      content-type: [application/json]
+      date: ['Mon, 11 Mar 2019 22:41:55 GMT']
+      opc-request-id: [E888FF1099D146C7B13F45CBA6F353B8/B0973BB5DDD64F619872100D185AC283/183D3D319D16453FA7BD34B8F6FB148B]
+      uri: [/20180222/nodePoolOptions/_id_]
+      vary: [Accept-Encoding]
+      x-rate-limit-duration: ['1']
+      x-rate-limit-limit: ['16.70']
+      x-rate-limit-request-forwarded-for: ['10.0.88.4, 10.237.173.243']
+      x-rate-limit-request-remote-addr: ['10.237.173.243:47650']
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"71439CF6C0F947E8AFB4E33FEE41981E\",
-      \"nodePoolOptions\": {\"kubernetesVersions\": [\"v1.8.11\", \"v1.9.7\", \"v1.10.3\"],
-      \"images\": [\"Oracle-Linux-7.4\"], \"shapes\": [\"BM.HighIO1.36\", \"BM.DenseIO1.36\",
-      \"VM.Standard2.1\", \"VM.Standard2.2\", \"VM.Standard1.1\", \"VM.Standard1.2\",
-      \"VM.Standard1.4\", \"VM.DenseIO1.4\"]}}", "requestJson": "{\"nodePoolOptionId\":
-      \"all\"}", "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass":
-      "com.oracle.bmc.containerengine.requests.GetNodePoolOptionsRequest", "responseClass":
-      "com.oracle.bmc.containerengine.responses.GetNodePoolOptionsResponse"}'
+    body: !!python/unicode '{"responseJson": "{\"nodePoolOptions\": {\"images\": [\"Oracle-Linux-7.4\",
+      \"Oracle-Linux-7.5\"], \"shapes\": [\"VM.Standard2.1\", \"VM.Standard2.4\",
+      \"VM.Standard2.8\", \"VM.Standard2.16\", \"VM.Standard1.2\", \"VM.Standard1.4\",
+      \"VM.Standard1.8\", \"VM.DenseIO1.8\"], \"kubernetesVersions\": [\"v1.10.11\",
+      \"v1.11.8\", \"v1.12.6\"]}, \"opcRequestId\": \"9E727804288040F6BB514B117508DECA\"}",
+      "responseClass": "com.oracle.bmc.containerengine.responses.GetNodePoolOptionsResponse",
+      "containerId": "5b2e50d4-c4af-49af-b602-d890c8df0724", "requestJson": "{\"nodePoolOptionId\":
+      \"all\"}", "requestClass": "com.oracle.bmc.containerengine.requests.GetNodePoolOptionsRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['649']
+      Content-Length: ['675']
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0485
   response:
-    body: {string: ''}
+    body: {string: !!python/unicode ''}
     headers:
-      Content-Length: ['0']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 21:13:59 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:41:55 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

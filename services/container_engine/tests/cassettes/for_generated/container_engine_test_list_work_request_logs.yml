@@ -7,13 +7,13 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListWorkRequestLogs&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=containerengine&apiName=ListWorkRequestLogs
   response:
-    body: {string: 'false'}
+    body: {string: !!python/unicode 'false'}
     headers:
-      Content-Length: ['5']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 21:40:37 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['5']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:42:12 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1
