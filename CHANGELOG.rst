@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.4 - 2019-03-19
+------------------
+Added
+~~~~~
+* Support for provisioning a new autonomous database or autonomous data warehouse as a clone of another in the Database service
+
+  * ``oci db autonomous-database create-from-clone``
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_example.sh>`__.
+
+* Support for specifying metadata on node pools in the Container Engine for Kubernetes service
+
+  * ``oci ce node-pool create --node-metadata``
+
 2.5.3 - 2019-03-12
 ------------------
 Added

@@ -14,7 +14,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('resource_manager_root_group.command_name', 'resource-manager'), cls=CommandGroupWithAlias, help=cli_util.override('resource_manager_root_group.help', """Oracle Resource Manager API."""), short_help=cli_util.override('resource_manager_root_group.short_help', """Oracle Resource Manager"""))
+@cli.command(cli_util.override('resource_manager_root_group.command_name', 'resource-manager'), cls=CommandGroupWithAlias, help=cli_util.override('resource_manager_root_group.help', """API for the Resource Manager service. Use this API to install, configure, and manage resources via the "infrastructure-as-code" model. For more information, see [Overview of Resource Manager](/iaas/Content/ResourceManager/Concepts/resourcemanager.htm)."""), short_help=cli_util.override('resource_manager_root_group.short_help', """Resource Manager API"""))
 @cli_util.help_option_group
 def resource_manager_root_group():
     pass

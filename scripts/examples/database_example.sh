@@ -20,6 +20,8 @@ SCALED_STORAGE="2"
 STORAGE="1"
 LICENSE_TYPE="LICENSE_INCLUDED"
 DB_SYSTEM_SHAPE="VM.Standard1.1"
+CLONE_TYPE="FULL"
+SOURCE_ID=""
 
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
@@ -119,6 +121,17 @@ echo 'Deleted Autonomous Transaction Processing'
 
 echo 'Trying to Get Deleted Autonomous Transaction Processing. Should not find it.'
 oci db autonomous-database get --autonomous-database-id $ADB_ID
+
+echo 'Cloning Autonomous Transaction Processing...'
+CLONE_ATP=$(oci db autonomous-database create-from-clone -c $COMPARTMENT_ID --db-name $DB_NAME2 --admin-password $PASSWORD1 --cpu-core-count $CPU \
+                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE \
+                    --source-id $SOURCE_ID --clone-type $CLONE_TYPE
+                    --wait-for-state AVAILABLE)
+
+ADB_ID=$(jq -r '.data.id' <<< "CLONE_ATP")
+
+echo "Cloning Autonomous Transaction Processing with OCID:"
+echo CLONE_ATP
 
 echo 'End of Autonomous Transaction Processing Examples.'
 

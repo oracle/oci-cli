@@ -7,14 +7,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreateCluster&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=containerengine&apiName=CreateCluster
   response:
-    body: {string: 'true'}
+    body: {string: !!python/unicode 'true'}
     headers:
-      Content-Length: ['4']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 20:39:28 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:16:56 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -24,81 +24,80 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=CreateCluster&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0485&serviceName=containerengine&apiName=CreateCluster
   response:
-    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"createClusterDetails":{"name":"__STS0242_8802","compartmentId":"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba","vcnId":"ocid1.vcn.oc1.phx.aaaaaaaanvmchlhxd2pngifkhec2iwr3sqsnj3wj75ucohcolgzhh5mtguaq","kubernetesVersion":"v1.10.3","options":{"serviceLbSubnetIds":["ocid1.subnet.oc1.phx.aaaaaaaatldg7rrt5hhkhez7m23xejswjm6qgw37s556btzu3rrjpd5q4boa","ocid1.subnet.oc1.phx.aaaaaaaa2llpgobvedy6xrurboqspig2wrml2jdllxw6kdbic2c7la3awvua"],"kubernetesNetworkConfig":{"podsCidr":"10.96.0.0/16","servicesCidr":"10.244.0.0/16"},"addOns":{"isKubernetesDashboardEnabled":true,"isTillerEnabled":true}}},"opcRetryToken":"e864b7ed-71f0-4cd7-8831-153c2ce6c2d3"}}]'}
+    body: {string: !!python/unicode '[{"containerId":"5b2e50d4-c4af-49af-b602-d890c8df0724","request":{"createClusterDetails":{"name":"__STS0485_4486","compartmentId":"ocid1.compartment.oc1..aaaaaaaaeiaj7c45ah4dhlksbg7ptytgbr5i7d6wwc4ikeasfojcjdjhsbsa","vcnId":"ocid1.vcn.oc1.iad.aaaaaaaa5dh3p55dxjnugn3keuokt5yoat2pwdziam67lgb5q57lwbzfukda","kubernetesVersion":"v1.10.11","options":{"serviceLbSubnetIds":["ocid1.subnet.oc1.iad.aaaaaaaaw3fw7q4o3eor7pwgdcy45bk3y3yikhr2holon2lkyzetbmoczjvq","ocid1.subnet.oc1.iad.aaaaaaaauraq3ddaxxkbwmjx67cmi5qvh4rkketjmtxetoycv3rprpm43otq"],"kubernetesNetworkConfig":{"podsCidr":"10.96.0.0/16","servicesCidr":"10.244.0.0/16"},"addOns":{"isKubernetesDashboardEnabled":true,"isTillerEnabled":true}}},"opcRetryToken":"85bbbdb5-bd44-40df-975f-1573d5bde6b5"}}]'}
     headers:
-      Content-Length: ['751']
-      Content-Type: [application/json]
-      Date: ['Fri, 03 Aug 2018 20:39:29 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['752']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:16:56 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
-    body: '{"vcnId": "ocid1.vcn.oc1.phx.aaaaaaaanvmchlhxd2pngifkhec2iwr3sqsnj3wj75ucohcolgzhh5mtguaq",
-      "compartmentId": "ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba",
-      "name": "__STS0242_8802", "options": {}, "kubernetesVersion": "v1.10.3"}'
+    body: !!python/unicode '{"kubernetesVersion": "v1.10.11", "compartmentId": "ocid1.compartment.oc1..aaaaaaaaeiaj7c45ah4dhlksbg7ptytgbr5i7d6wwc4ikeasfojcjdjhsbsa",
+      "vcnId": "ocid1.vcn.oc1.iad.aaaaaaaa5dh3p55dxjnugn3keuokt5yoat2pwdziam67lgb5q57lwbzfukda",
+      "name": "__STS0485_4486", "options": {}}'
     headers:
-      Content-Length: ['268']
+      Content-Length: ['269']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
-      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="WpwICMSZvrgJ3cU6PU866SK3LUB7tqacidv5dYjpevi0Bhu7VGgk0zgJ9cTb7YSjTft6ikXyTZQBLwCOoa5GUC3/PuIRy7ga9z/nDOK9Y7LscizOv/3cefcs4LwBL2ZZZ0B3dT5g1/pmdsAQlabcdA/2RHkD83Ntph9DRcy1H/zu9gv9Rrid/IuhoZExb1+i0/mmR0WHL4n23QLn4B3KZOYxSJtbkB6G55t2Fm8rmgMNTzhocltU9M759brxORkZ2JdE3dl+s1UGf0d5QfavEDHyK4HTmH8J202/3bLSAZUHM87t5ZkxikmZk/+l2ECrcUXWZnkSrF0XB6mYPQAcFA==",version="1"']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaat37ab62ltpvzgyoydasbfig3gcmccxwzvbi6yoh6ewqiiswps6sq/ocid1.user.oc1..aaaaaaaasdznyz2a25ym3qrym4sm4pxwsiehmhosjz3ofcqmtwmb3w6snreq/0b:38:fd:f5:0e:0e:b7:90:a0:33:27:0c:a0:2a:9c:87",signature="AFsKhxmASVA6D3hDner2RxB83WMccJyKvKNck4eiw0oHwwYeTr2gRi+bsebhsvuB8srztpOXs9r5Fl4vIkLGPjA3VNq/WVSWs1Esa1WnxkUgzF2ReukTsOLHG3kvsaqiCt10N/+qVY3OK8l7s6kCLCkIG6rwaLmtSZo/6cFHtM/gCul7NwzkTGuJLQ4naWJHrNgH/YnjzpjygVMH7yZJjTiOKlv0zec2snWEIRI+wjVCS8ixkAfhKzXxNPLYHqv0ULdKUzXru3q1i0fU1CQECNO1T/T99CjPJ/g7sCizzGOAX7tXjMnlAXGxRtXRJgZ7k0RQlQlFOYblv9SIXBr/zw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 03 Aug 2018 20:39:36 GMT']
-      host: [containerengine.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
-      opc-request-id: [851AD2FC6E254F9D91B908BC5739EB0C]
-      opc-retry-token: [6gBeBGuUpj7Tk4GOOi2c0tmByUnMx0]
-      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.29+preview.1]
-      x-content-sha256: [TOej9TtXFM8rARGoKC51UENlEz8oUA+FoN0XXJuuu3A=]
+      date: ['Mon, 11 Mar 2019 22:18:06 GMT']
+      host: [containerengine.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.2]
+      opc-request-id: [328E175264A7403096FDBF02FB589B50]
+      opc-retry-token: [ef3RiT3G99A0xKRslH2sEPng5FGxB7]
+      user-agent: [Oracle-PythonSDK/2.2.2 (python 2.7.13; x86_64-Linux) Oracle-PythonCLI/2.5.3]
+      x-content-sha256: [!!python/unicode 'PKyKglA7Yw4J5szN16izJoJch0AbPHPKvfMup/sLfg0=']
     method: POST
-    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/clusters
+    uri: https://containerengine.us-ashburn-1.oraclecloud.com/20180222/clusters
   response:
-    body: {string: ''}
+    body: {string: !!python/unicode ''}
     headers:
-      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
-      Access-Control-Allow-Origin: ['*']
-      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
-      Content-Length: ['0']
-      Date: ['Fri, 03 Aug 2018 20:39:27 GMT']
-      Opc-Request-Id: [851AD2FC6E254F9D91B908BC5739EB0C/2EEE99E42D364DE4A3759340774D53E0/1C9832BBF65A45E797944077161DC591]
-      Opc-Work-Request-Id: [ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaezdmodfgzrgeyrzga2win3gmi4dam3ggizggyjqmw2temzvhfsd]
-      Uri: [/20180222/clusters]
-      Vary: [Accept-Encoding]
-      X-Rate-Limit-Duration: ['1']
-      X-Rate-Limit-Limit: ['16.70']
-      X-Rate-Limit-Request-Forwarded-For: ['10.237.38.0, 10.237.41.58']
-      X-Rate-Limit-Request-Remote-Addr: ['10.237.41.58:60956']
+      access-control-allow-methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      content-length: ['0']
+      date: ['Mon, 11 Mar 2019 22:17:05 GMT']
+      opc-request-id: [328E175264A7403096FDBF02FB589B50/3AC2671400A844F190A4984003ABBF24/65B4C01B05B34B84B204FC5BC0D30148]
+      opc-work-request-id: [ocid1.clustersworkrequest.oc1.iad.aaaaaaaaae3tambrmzrdmoddmq3tqmbwgftgkmbqmy2tsytchw2wimrxheyg]
+      uri: [/20180222/clusters]
+      vary: [Accept-Encoding]
+      x-rate-limit-duration: ['1']
+      x-rate-limit-limit: ['16.70']
+      x-rate-limit-request-forwarded-for: ['10.0.88.4, 10.237.0.83']
+      x-rate-limit-request-remote-addr: ['10.237.0.83:38283']
     status: {code: 202, message: Accepted}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"CD27EA32A3C041E7A024408FBB4229E7\",
-      \"opcWorkRequestId\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaezdmodfgzrgeyrzga2win3gmi4dam3ggizggyjqmw2temzvhfsd\"}",
-      "requestJson": "{\"createClusterDetails\": {\"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaanvmchlhxd2pngifkhec2iwr3sqsnj3wj75ucohcolgzhh5mtguaq\",
-      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazpbmt2urchrvht3nie37sjksf5syfr5nrfzjl4ut2lzf665ys3ba\",
-      \"name\": \"__STS0242_8802\", \"options\": {\"addOns\": {\"isKubernetesDashboardEnabled\":
-      true, \"isTillerEnabled\": true}, \"serviceLbSubnetIds\": [\"ocid1.subnet.oc1.phx.aaaaaaaatldg7rrt5hhkhez7m23xejswjm6qgw37s556btzu3rrjpd5q4boa\",
-      \"ocid1.subnet.oc1.phx.aaaaaaaa2llpgobvedy6xrurboqspig2wrml2jdllxw6kdbic2c7la3awvua\"],
-      \"kubernetesNetworkConfig\": {\"servicesCidr\": \"10.244.0.0/16\", \"podsCidr\":
-      \"10.96.0.0/16\"}}, \"kubernetesVersion\": \"v1.10.3\"}, \"opcRetryToken\":
-      \"e864b7ed-71f0-4cd7-8831-153c2ce6c2d3\"}", "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b",
-      "requestClass": "com.oracle.bmc.containerengine.requests.CreateClusterRequest",
-      "responseClass": "com.oracle.bmc.containerengine.responses.CreateClusterResponse"}'
+    body: !!python/unicode '{"responseJson": "{\"opcWorkRequestId\": \"ocid1.clustersworkrequest.oc1.iad.aaaaaaaaae3tambrmzrdmoddmq3tqmbwgftgkmbqmy2tsytchw2wimrxheyg\",
+      \"opcRequestId\": \"A64048D8B61A4C5A8DB3C6A925E63F36\"}", "responseClass": "com.oracle.bmc.containerengine.responses.CreateClusterResponse",
+      "containerId": "5b2e50d4-c4af-49af-b602-d890c8df0724", "requestJson": "{\"createClusterDetails\":
+      {\"kubernetesVersion\": \"v1.10.11\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaeiaj7c45ah4dhlksbg7ptytgbr5i7d6wwc4ikeasfojcjdjhsbsa\",
+      \"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaa5dh3p55dxjnugn3keuokt5yoat2pwdziam67lgb5q57lwbzfukda\",
+      \"name\": \"__STS0485_4486\", \"options\": {\"kubernetesNetworkConfig\": {\"servicesCidr\":
+      \"10.244.0.0/16\", \"podsCidr\": \"10.96.0.0/16\"}, \"serviceLbSubnetIds\":
+      [\"ocid1.subnet.oc1.iad.aaaaaaaaw3fw7q4o3eor7pwgdcy45bk3y3yikhr2holon2lkyzetbmoczjvq\",
+      \"ocid1.subnet.oc1.iad.aaaaaaaauraq3ddaxxkbwmjx67cmi5qvh4rkketjmtxetoycv3rprpm43otq\"],
+      \"addOns\": {\"isTillerEnabled\": true, \"isKubernetesDashboardEnabled\": true}}},
+      \"opcRetryToken\": \"85bbbdb5-bd44-40df-975f-1573d5bde6b5\"}", "requestClass":
+      "com.oracle.bmc.containerengine.requests.CreateClusterRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['1189']
+      Content-Length: ['1190']
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0485
   response:
-    body: {string: ''}
+    body: {string: !!python/unicode ''}
     headers:
-      Content-Length: ['0']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 20:39:38 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:17:06 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

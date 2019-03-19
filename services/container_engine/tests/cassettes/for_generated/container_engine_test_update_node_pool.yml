@@ -7,14 +7,14 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateNodePool&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=containerengine&apiName=UpdateNodePool
   response:
-    body: {string: 'true'}
+    body: {string: !!python/unicode 'true'}
     headers:
-      Content-Length: ['4']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 21:21:50 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:42:23 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -24,73 +24,72 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=UpdateNodePool&serviceName=containerengine&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0485&serviceName=containerengine&apiName=UpdateNodePool
   response:
-    body: {string: '[{"containerId":"0226042f-bff6-41d9-aeb9-32f0d9f5a27b","request":{"nodePoolId":"ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd","updateNodePoolDetails":{"name":"__STS0242_6555","kubernetesVersion":"v1.10.3","quantityPerSubnet":1}}}]'}
+    body: {string: !!python/unicode '[{"containerId":"5b2e50d4-c4af-49af-b602-d890c8df0724","request":{"nodePoolId":"ocid1.nodepool.oc1.iad.aaaaaaaaafrtqntfmrrwkmrtg44tomddg5tdsobtgazdamddmnztazjvgi3t","updateNodePoolDetails":{"name":"__STS0485_1302","kubernetesVersion":"v1.10.11","quantityPerSubnet":1}}}]'}
     headers:
-      Content-Length: ['269']
-      Content-Type: [application/json]
-      Date: ['Fri, 03 Aug 2018 21:21:50 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['270']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:42:24 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
-    body: '{"kubernetesVersion": "v1.10.3", "name": "__STS0242_6555", "quantityPerSubnet":
-      1}'
+    body: !!python/unicode '{"kubernetesVersion": "v1.10.11", "quantityPerSubnet":
+      1, "name": "__STS0485_1302"}'
     headers:
-      Content-Length: ['82']
+      Content-Length: ['83']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
-      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="oAF0bS/1Y9SeR0IBAN2wY1QTCTb70zRadYF23mO34LIH8W3Hs0oJV9TkVjL5HmDQOXkOxi+dJ+nn5y0Rlu2Poy0WgN87klE9TlbfEMWd3Ktew0FHQ0VNyKikAJQEauGV+PgF83aO7F3WgLlooq+LBnzIrRy8VXlLLdaSB6ic17vZIzE+7L3EwYHw/RmaufOmCzFlIyn1ebfBjPE8FHm72ToMqq21Kvq7HW3JBpGgGM6UjJRkhd1eXv5zumhIJ4hTnZK2D3ntiaSXsRk3fdPlLJT0t/GRZxGMlCI5J8eyfzohiRxiKZbSWG8U4EjtSacsPbh/nIPJVynPIKfeCUXoMA==",version="1"']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaat37ab62ltpvzgyoydasbfig3gcmccxwzvbi6yoh6ewqiiswps6sq/ocid1.user.oc1..aaaaaaaasdznyz2a25ym3qrym4sm4pxwsiehmhosjz3ofcqmtwmb3w6snreq/0b:38:fd:f5:0e:0e:b7:90:a0:33:27:0c:a0:2a:9c:87",signature="So9e5jKetl3kig7ECJswUd5HZDutaKW/T2AdNuDUbHTrcHM+6IWB599P2MVbjes5OVqXBqoT63t0UN/ZaiIgeNgmWjdA6YxaZOFXL78ahJ1LStyUEHGlVnxbBNYX2az114FaxFlHx0IVmcaoJUjlB5MeqRrsGVz2FtJPANQAuJ0zRN3e4E0stuHw7rFg+U/OFOkHvK6DyseSaV1tSZKdUs6Znq9/P9ywfZSARH9spLnHujUXOCQnveYri1XaKTHxUbwaEjP7W/GXcTVrJt3VgArYuyCu5vwIhoHUD8bxeSL8XhfoFOM996IroWGucJznjzxpcBQkBr+YLQ3jDSVehg==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 03 Aug 2018 21:21:51 GMT']
-      host: [containerengine.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.1+preview.1.387]
-      opc-request-id: [A806EE703E2F4A879C8DB58CCD165A3F]
-      user-agent: [Oracle-PythonSDK/2.0.1+preview.1.387 (python 3.5.3; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.29+preview.1]
-      x-content-sha256: [xPk1KzN8DAUuyAZuQzb+yqCQlDRxlpGH4O9rSDJkbwc=]
+      date: ['Mon, 11 Mar 2019 22:43:31 GMT']
+      host: [containerengine.us-ashburn-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.2]
+      opc-request-id: [EC1D2C35748C4F518EAB76E1E6A4B4B1]
+      user-agent: [Oracle-PythonSDK/2.2.2 (python 2.7.13; x86_64-Linux) Oracle-PythonCLI/2.5.3]
+      x-content-sha256: [!!python/unicode '/m0AD0ClajZkk/L+xYRQnIMPDNGl8J5eyGGqtIqZ2mc=']
     method: PUT
-    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/nodePools/ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd
+    uri: https://containerengine.us-ashburn-1.oraclecloud.com/20180222/nodePools/ocid1.nodepool.oc1.iad.aaaaaaaaafrtqntfmrrwkmrtg44tomddg5tdsobtgazdamddmnztazjvgi3t
   response:
-    body: {string: ''}
+    body: {string: !!python/unicode ''}
     headers:
-      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
-      Access-Control-Allow-Origin: ['*']
-      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
-      Content-Length: ['0']
-      Date: ['Fri, 03 Aug 2018 21:21:52 GMT']
-      Opc-Request-Id: [A806EE703E2F4A879C8DB58CCD165A3F/49EEC444E9D64235856CBC707873843A/F71DE52C265E4396A9BD6CD9FF9FB46F]
-      Opc-Work-Request-Id: [ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaezdcnzvmyzwkzbzmqygmzdbgjrtsmrtgq4wgnbwgwytondegrqt]
-      Uri: [/20180222/nodePools/_id_]
-      Vary: [Accept-Encoding]
-      X-Rate-Limit-Duration: ['1']
-      X-Rate-Limit-Limit: ['16.70']
-      X-Rate-Limit-Request-Forwarded-For: ['10.237.51.0, 10.237.49.241']
-      X-Rate-Limit-Request-Remote-Addr: ['10.237.49.241:43690']
+      access-control-allow-methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      access-control-allow-origin: ['*']
+      access-control-expose-headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      content-length: ['0']
+      date: ['Mon, 11 Mar 2019 22:42:27 GMT']
+      opc-request-id: [EC1D2C35748C4F518EAB76E1E6A4B4B1/96CCA759C67148118D61DFFF349D54AD/89A713CC4E274374B7962505FEA841D2]
+      opc-work-request-id: [ocid1.clustersworkrequest.oc1.iad.aaaaaaaaafrgenzwmizwmolfmvsdqmrtgy3dayjzmm2tcmjwgwqwiytbhazd]
+      uri: [/20180222/nodePools/_id_]
+      vary: [Accept-Encoding]
+      x-rate-limit-duration: ['1']
+      x-rate-limit-limit: ['16.70']
+      x-rate-limit-request-forwarded-for: ['10.0.88.4, 10.237.99.218']
+      x-rate-limit-request-remote-addr: ['10.237.99.218:56940']
     status: {code: 202, message: Accepted}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"20A432931D704DC7A45232FB21CD6199\",
-      \"opcWorkRequestId\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaezdcnzvmyzwkzbzmqygmzdbgjrtsmrtgq4wgnbwgwytondegrqt\"}",
-      "requestJson": "{\"updateNodePoolDetails\": {\"quantityPerSubnet\": 1, \"name\":
-      \"__STS0242_6555\", \"kubernetesVersion\": \"v1.10.3\"}, \"nodePoolId\": \"ocid1.nodepool.oc1.phx.aaaaaaaaae2gcytfgrtgmmlcgfrgcobxmjqtmytbme3toztfmn2tonbug4zd\"}",
-      "containerId": "0226042f-bff6-41d9-aeb9-32f0d9f5a27b", "requestClass": "com.oracle.bmc.containerengine.requests.UpdateNodePoolRequest",
-      "responseClass": "com.oracle.bmc.containerengine.responses.UpdateNodePoolResponse"}'
+    body: !!python/unicode '{"responseJson": "{\"opcWorkRequestId\": \"ocid1.clustersworkrequest.oc1.iad.aaaaaaaaafrgenzwmizwmolfmvsdqmrtgy3dayjzmm2tcmjwgwqwiytbhazd\",
+      \"opcRequestId\": \"FE7AE2B6368044BB903767B4D483CEF7\"}", "responseClass": "com.oracle.bmc.containerengine.responses.UpdateNodePoolResponse",
+      "containerId": "5b2e50d4-c4af-49af-b602-d890c8df0724", "requestJson": "{\"updateNodePoolDetails\":
+      {\"kubernetesVersion\": \"v1.10.11\", \"quantityPerSubnet\": 1, \"name\": \"__STS0485_1302\"},
+      \"nodePoolId\": \"ocid1.nodepool.oc1.iad.aaaaaaaaafrtqntfmrrwkmrtg44tomddg5tdsobtgazdamddmnztazjvgi3t\"}",
+      "requestClass": "com.oracle.bmc.containerengine.requests.UpdateNodePoolRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['663']
+      Content-Length: ['664']
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0485
   response:
-    body: {string: ''}
+    body: {string: !!python/unicode ''}
     headers:
-      Content-Length: ['0']
-      Content-Type: [text/plain]
-      Date: ['Fri, 03 Aug 2018 21:21:53 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 11 Mar 2019 22:42:28 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1
