@@ -12,10 +12,17 @@ import six
 # Commands which we skip evaluation of because they don't have the JSON input
 IGNORED_COMMANDS = [
     ['setup', 'autocomplete'],
+    ['setup', 'bootstrap'],
     ['setup', 'config'],
     ['setup', 'keys'],
     ['setup', 'repair-file-permissions'],
-    ['setup', 'oci-cli-rc']
+    ['setup', 'oci-cli-rc'],
+    ['session', 'authenticate'],
+    ['session', 'export'],
+    ['session', 'import'],
+    ['session', 'refresh'],
+    ['session', 'terminate'],
+    ['session', 'validate']
 ]
 
 

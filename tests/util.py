@@ -314,6 +314,33 @@ def invoke_command(command, ** args):
     return command_output
 
 
+def invoke_command_with_overrides(command, profile_override, ** args):
+    num_tries = 0
+
+    if profile_override is not '':
+        command = ['--profile', profile_override] + command
+
+    while num_tries < NUM_INVOKE_COMMAND_RETRIES:
+        command_output = runner().invoke(oci_cli.cli, command, ** args)
+
+        if command_output.exception:
+            output_to_test = str(command_output.exception)
+        else:
+            output_to_test = command_output.output
+
+        if should_retry(output_to_test):
+            num_tries += 1
+            if num_tries >= NUM_INVOKE_COMMAND_RETRIES:
+                return command_output
+            else:
+                time.sleep(2 ** num_tries)  # Backoff
+                time.sleep(random.random() * 2)  # Jitter
+        else:
+            return command_output
+
+    return command_output
+
+
 def wait_until(get_command, state, max_wait_seconds=30, max_interval_seconds=15, succeed_if_not_found=False, item_index_in_list_response=None, state_property_name='lifecycle-state'):
     """Poll the given get command until the result has a lifecycle-state that matches the given state.
     The Polling interval will double with each call until max_interval_seconds is reached."""

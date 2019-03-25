@@ -28,16 +28,24 @@ echo "Creating bucket."
 oci os bucket create --namespace-name $NAMESPACE_NAME --name $BUCKET_NAME --compartment-id $COMPARTMENT_ID --storage-tier Standard
 echo "Created bucket."
 
-# An object lifecycle policy's rules needs to be uploaded as a JSON array.  Each element in the array is a rule with this structure: 
+# An object lifecycle policy's rules needs to be uploaded as a JSON array.  Each element in the array is a rule with this structure:
 #
-# { 
+# {
 #     "action": "string",
 #         "isEnabled": true,
 #         "name": "string",
 #         "objectNameFilter": {
 #             "inclusionPrefixes": [
 #                 "string",
-#             "string"
+#                 "string"
+#             ],
+#             "inclusionPatterns": [
+#                 "string",
+#                 "string"
+#             ],
+#             "exclusionPatterns": [
+#                 "string",
+#                 "string"
 #             ]
 #         },
 #         "timeAmount": 0,
@@ -51,16 +59,20 @@ echo "Created bucket."
 # - isEnabled:  A boolean that can be used to temporarily disable a rule.
 # - name:  A user-friendly name for the rule.  This element has no effect on the rule's execution.
 # - objectNameFilter:  An object that allows filtering object names.  A rule with a missing or empty filter will match all objects.
-#     - inclusionPrefixes:  An array of string object name prefixes that will match desired objects in the bucket.  For example, "/tmp/".
+#     - inclusionPrefixes:  An array of string object name prefixes that will match desired objects in the bucket. For example, "/tmp/".
+#     - inclusionPatterns:  An array of string object name patterns that will match desired objects in the bucket. For example, "/tmp/*"
+#     - exclusionPatterns:  An array of string object name patterns that will exclude desired objects in the bucket. For example, "*log*".
+#                           Exclusions take precedence over inclusions..
 # - timeAmount:  An integer amount of time, specified in terms of the timeUnit below.  For example, 90 DAYS.
 # - timeUnit:  The unit of time to interpret timeAmount in terms of.  Valid values are "DAYS" and "YEARS".
-# 
+#
 # A full lifecycle policy is an array of these rules.  You may, for example, have one rule that archives objects after 30 days, and
 # another that deletes objects after 120 days.  If an object matches both of these rules, it will be deleted.
 #
 # A valid example lifecycle policy exists in write_object_lifecycle_policy_example/object_lifecycle_policy.json
-# It will archive objects whose names begin with "/tmp/" when they reach one day old (rounded to midnight UTC), and all others after
-# 30 days.
+# It will archive objects whose names begin with "/tmp/" when they reach one day old (rounded to midnight UTC),
+# delete objects whose names contains ".log" but does not contain "/auth/" when they reach 14 days old,
+# and archive all others after 30 days.
 echo "Writing lifecycle policy."
 oci os object-lifecycle-policy put --namespace $NAMESPACE_NAME --bucket-name $BUCKET_NAME --items file://scripts/examples/write_object_lifecycle_policy_example/object_lifecycle_policy.json
 echo "Object lifecycle policy created successfully."

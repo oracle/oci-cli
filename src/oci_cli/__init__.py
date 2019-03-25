@@ -59,6 +59,8 @@ from . import aliasing  # noqa: F401,E402
 from . import file_filters  # noqa: F401,E402
 from . import final_command_processor  # noqa: F401,E402
 from . import cli_setup  # noqa: F401,E402
+from . import cli_session  # noqa: F401,E402
+from . import cli_setup_bootstrap  # noqa: F401,E402
 from . import cli_util  # noqa: F401,E402
 from . import cli_exceptions  # noqa: F401,E402
 from . import object_storage_transfer_manager  # noqa: F401,E402

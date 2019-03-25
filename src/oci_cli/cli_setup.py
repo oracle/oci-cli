@@ -9,6 +9,8 @@ from . import cli_util
 from .util import pymd5
 
 import base64
+
+import configparser
 import os
 import os.path
 import stat
@@ -120,12 +122,16 @@ default_param_aliases = """
 """
 
 
-public_key_filename_suffix = '_public.pem'
-private_key_filename_suffix = '.pem'
+PUBLIC_KEY_FILENAME_SUFFIX = '_public.pem'
+PRIVATE_KEY_FILENAME_SUFFIX = '.pem'
 
 config_generation_canceled_message = "Config creation canceled."
 
-default_directory = os.path.join(os.path.expanduser('~'), '.oci')
+DEFAULT_DIRECTORY = os.path.join(os.path.expanduser('~'), '.oci')
+DEFAULT_KEY_NAME = 'oci_api_key'
+DEFAULT_PROFILE_NAME = 'DEFAULT'
+DEFAULT_TOKEN_DIRECTORY = os.path.join(DEFAULT_DIRECTORY, 'sessions')
+DEFAULT_CONFIG_LOCATION = os.path.join(DEFAULT_DIRECTORY, 'config')
 
 
 @cli.group('setup', help="""Setup commands for CLI""")
@@ -135,8 +141,8 @@ def setup_group():
 
 
 @setup_group.command('keys', help="""Generates an RSA key pair. A passphrase for the private key can be provided using either the 'passphrase' or 'passphrase-file' option. If neither option is provided, the user will be prompted for a passphrase via stdin.""")
-@cli_util.option('--key-name', default='oci_api_key', help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
-@cli_util.option('--output-dir', default=default_directory, help="""An optional directory to output the generated keys.""", type=click.Path())
+@cli_util.option('--key-name', default=DEFAULT_KEY_NAME, help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
+@cli_util.option('--output-dir', default=DEFAULT_DIRECTORY, help="""An optional directory to output the generated keys.""", type=click.Path())
 @cli_util.option('--passphrase', help="""An optional passphrase to encrypt the private key.""")
 @cli_util.option('--passphrase-file', help="""An optional file with the first line specifying a passphrase to encrypt the private key (or '-' to read from stdin).""", type=click.File(mode='r'))
 @cli_util.option('--overwrite', default=False, help="""An option to overwrite existing files without a confirmation prompt.""", is_flag=True)
@@ -161,8 +167,8 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
     private_key = cli_util.generate_key()
     public_key = private_key.public_key()
 
-    write_public_key_to_file(os.path.join(output_dir, key_name + public_key_filename_suffix), public_key, overwrite)
-    write_private_key_to_file(os.path.join(output_dir, key_name + private_key_filename_suffix), private_key, passphrase, overwrite)
+    write_public_key_to_file(os.path.join(output_dir, key_name + PUBLIC_KEY_FILENAME_SUFFIX), public_key, overwrite)
+    write_private_key_to_file(os.path.join(output_dir, key_name + PRIVATE_KEY_FILENAME_SUFFIX), private_key, passphrase, overwrite)
 
     fingerprint = public_key_to_fingerprint(public_key)
     click.echo('Public key fingerprint: {}'.format(fingerprint))
@@ -174,42 +180,31 @@ def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwri
 def generate_oci_config():
     click.echo(click.wrap_text(text=generate_oci_config_instructions, preserve_paragraphs=True))
 
-    config_location = os.path.abspath(click.prompt('Enter a location for your config', default=os.path.join(default_directory, 'config'), value_proc=process_config_filename))
-    if os.path.exists(config_location):
-        if not click.confirm('File: {} already exists. Do you want to overwrite?'.format(config_location)):
-            click.echo(config_generation_canceled_message)
-            return
-    else:
-        dirname = os.path.dirname(config_location)
-
-        # if user inputs only a filename (dirname=='') it implies the current directory so no need to create a dir
-        if dirname and not os.path.exists(dirname):
-            create_directory(dirname)
+    config_location, profile_name = prompt_for_config_location()
+    if not config_location:
+        click.echo(config_generation_canceled_message)
+        sys.exit(0)
 
     user_id = click.prompt('Enter a user OCID', value_proc=lambda ocid: validate_ocid(ocid, config.PATTERNS['user']))
     tenant_id = click.prompt('Enter a tenancy OCID', value_proc=lambda ocid: validate_ocid(ocid, config.PATTERNS['tenancy']))
 
-    region = None
-    while not region:
-        region_list = ', '.join(sorted(REGIONS))
-        region = click.prompt(text='Enter a region (e.g. {})'.format(region_list), value_proc=validate_region)
+    region = prompt_for_region()
 
     if click.confirm("Do you want to generate a new RSA key pair? (If you decline you will be asked to supply the path to an existing key.)", default=True):
-        key_location = os.path.abspath(click.prompt(text='Enter a directory for your keys to be created', default=default_directory))
-        key_location = os.path.expanduser(key_location)
+        key_location = os.path.abspath(os.path.expanduser(click.prompt(text='Enter a directory for your keys to be created', default=DEFAULT_DIRECTORY)))
         if not os.path.exists(key_location):
             create_directory(key_location)
 
         private_key = cli_util.generate_key()
         public_key = private_key.public_key()
 
-        key_name = click.prompt('Enter a name for your key', 'oci_api_key')
-        if not write_public_key_to_file(os.path.join(key_location, key_name + public_key_filename_suffix), public_key):
+        key_name = click.prompt('Enter a name for your key', DEFAULT_KEY_NAME)
+        if not write_public_key_to_file(os.path.join(key_location, key_name + PUBLIC_KEY_FILENAME_SUFFIX), public_key):
             click.echo(config_generation_canceled_message)
             return
 
         key_passphrase = click.prompt(text='Enter a passphrase for your private key (empty for no passphrase)', default='', hide_input=True, show_default=False, confirmation_prompt=True)
-        private_key_file = os.path.join(key_location, key_name + private_key_filename_suffix)
+        private_key_file = os.path.join(key_location, key_name + PRIVATE_KEY_FILENAME_SUFFIX)
         if not write_private_key_to_file(private_key_file, private_key, key_passphrase):
             click.echo(config_generation_canceled_message)
             return
@@ -230,7 +225,16 @@ def generate_oci_config():
     if key_passphrase and not click.confirm('Do you want to write your passphrase to the config file? (if not, you will need to supply it as an argument to the CLI)', default=False):
         key_passphrase = None
 
-    write_config(config_location, user_id, fingerprint, private_key_file, tenant_id, region, key_passphrase)
+    write_config(
+        config_location,
+        user_id,
+        fingerprint,
+        private_key_file,
+        tenant_id,
+        region,
+        pass_phrase=key_passphrase,
+        profile_name=profile_name
+    )
 
     click.echo('Config written to {}'.format(config_location))
     click.echo(click.wrap_text(upload_public_key_instructions, preserve_paragraphs=True))
@@ -391,23 +395,33 @@ def public_key_to_fingerprint(public_key):
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
 
 
-def write_config(filename, user_id, fingerprint, key_file, tenant_id, region, passphrase=None):
-    with open(filename, 'w') as f:
-        f.write('[DEFAULT]\n')
-        f.write('user={}\n'.format(user_id))
+def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenancy=None, region=None, pass_phrase=None, profile_name=DEFAULT_PROFILE_NAME, security_token_file=None, **kwargs):
+    existing_file = os.path.exists(filename)
+    with open(filename, 'a') as f:
+        if existing_file:
+            f.write('\n\n')
+
+        f.write('[{}]\n'.format(profile_name))
+
+        if user_id:
+            f.write('user={}\n'.format(user_id))
+
         f.write('fingerprint={}\n'.format(fingerprint))
         f.write('key_file={}\n'.format(key_file))
-        f.write('tenancy={}\n'.format(tenant_id))
+        f.write('tenancy={}\n'.format(tenancy))
         f.write('region={}\n'.format(region))
 
-        if passphrase:
-            f.write("pass_phrase={}\n".format(passphrase))
+        if pass_phrase:
+            f.write("pass_phrase={}\n".format(pass_phrase))
+
+        if security_token_file:
+            f.write("security_token_file={}\n".format(security_token_file))
 
     # only user has R/W permissions to the config file
     apply_user_only_access_permissions(filename)
 
 
-def write_public_key_to_file(filename, public_key, overwrite=False):
+def write_public_key_to_file(filename, public_key, overwrite=False, silent=False):
     if not overwrite and os.path.isfile(filename) and not click.confirm('File {} already exists, do you want to overwrite?'.format(filename)):
         return False
 
@@ -417,11 +431,12 @@ def write_public_key_to_file(filename, public_key, overwrite=False):
     # only user has R/W permissions to the key file
     apply_user_only_access_permissions(filename)
 
-    click.echo('Public key written to: {}'.format(filename))
+    if not silent:
+        click.echo('Public key written to: {}'.format(filename))
     return True
 
 
-def write_private_key_to_file(filename, private_key, passphrase, overwrite=False):
+def write_private_key_to_file(filename, private_key, passphrase, overwrite=False, silent=False):
     if not overwrite and os.path.isfile(filename) and not click.confirm('File {} already exists, do you want to overwrite?'.format(filename)):
         return False
 
@@ -431,7 +446,8 @@ def write_private_key_to_file(filename, private_key, passphrase, overwrite=False
     # only user has R/W permissions to the key file
     apply_user_only_access_permissions(filename)
 
-    click.echo('Private key written to: {}'.format(filename))
+    if not silent:
+        click.echo('Private key written to: {}'.format(filename))
     return True
 
 
@@ -529,3 +545,86 @@ def validate_ocid(ocid, pattern):
 def create_directory(dirname):
     os.makedirs(dirname)
     apply_user_only_access_permissions(dirname)
+
+
+def validate_profile_name(value, config_parser, overwrite=False, makeUpper=True):
+    if not value:
+        click.echo('Cannot specify blank profile name')
+        return None
+
+    sections = [section.upper() for section in config_parser.sections()]
+    if config_parser['DEFAULT']:
+        sections.append('DEFAULT')
+
+    if makeUpper:
+        value = value.upper()
+
+    if value in sections and not overwrite:
+        click.echo('Profile {section} already exists in config. Cannot specify a profile that conflicts with any existing profile(s): {sections}'.format(
+            section=value,
+            sections=', '.join(sections)
+        ))
+        value = None
+
+    return value
+
+
+def prompt_for_config_location():
+    config_location = os.path.abspath(click.prompt('Enter a location for your config', default=os.path.join(DEFAULT_DIRECTORY, 'config'), value_proc=process_config_filename))
+    if os.path.exists(config_location):
+        config_parser = configparser.ConfigParser()
+        try:
+            config_parser.read(config_location)
+            if click.confirm('Config file: {} already exists. Do you want add a profile here? (If no, you will be prompted to overwrite the file)'.format(config_location), default=True):
+                profile_name = None
+                while not profile_name:
+                    profile_name = click.prompt('Enter the name of the profile you would like to create', value_proc=lambda value: validate_profile_name(value, config_parser))
+
+                return (config_location, profile_name)
+        except configparser.Error as e:
+            pass
+
+        if not click.confirm('File: {} already exists. Do you want to overwrite (Removes existing profiles!!!)?'.format(config_location)):
+            return (None, None)
+
+        # remove the config file, since we are in the overwrite path
+        os.remove(config_location)
+    else:
+        dirname = os.path.dirname(config_location)
+
+        # if user inputs only a filename (dirname=='') it implies the current directory so no need to create a dir
+        if dirname and not os.path.exists(dirname):
+            create_directory(dirname)
+
+    return (config_location, DEFAULT_PROFILE_NAME)
+
+
+def prompt_session_for_profile():
+    config_parser = configparser.ConfigParser()
+    try:
+        if not os.path.exists(DEFAULT_CONFIG_LOCATION):
+            return (DEFAULT_CONFIG_LOCATION, DEFAULT_PROFILE_NAME)
+        config_parser.read(DEFAULT_CONFIG_LOCATION)
+        profile_name = click.prompt('Enter the name of the profile you would like to create',
+                                    value_proc=lambda value: validate_profile_name(value, config_parser, True, False))
+    except configparser.Error as e:
+        pass
+
+    return DEFAULT_CONFIG_LOCATION, profile_name
+
+
+def prompt_for_region():
+    region = None
+    while not region:
+        region_list = ', '.join(sorted(REGIONS))
+        region = click.prompt(text='Enter a region (e.g. {})'.format(region_list), value_proc=validate_region)
+
+    return region
+
+
+def remove_profile_from_config(config_file, profile_name_to_terminate):
+    config = configparser.ConfigParser()
+    config.read(config_file)
+    config.remove_section(profile_name_to_terminate)
+    with open(config_file, 'w') as config_file_handle:
+        config.write(config_file_handle)
