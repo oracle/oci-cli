@@ -22,7 +22,9 @@ def dns_root_group():
     pass
 
 
-@click.command(cli_util.override('steering_policy_attachment_group.command_name', 'steering-policy-attachment'), cls=CommandGroupWithAlias, help="""An attachment between a steering policy and a domain. An attachment occludes all records at its domain that are of a covered rtype, constructing DNS responses from its steering policy rather than from those domain records. A domain can have at most one attachment covering any given rtype.""")
+@click.command(cli_util.override('steering_policy_attachment_group.command_name', 'steering-policy-attachment'), cls=CommandGroupWithAlias, help="""An attachment between a steering policy and a domain. An attachment constructs DNS responses using its steering policy instead of the records at its defined domain. Only records of the policy's covered rtype are blocked at the domain. A domain can have a maximum of one attachment covering any given rtype.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def steering_policy_attachment_group():
     pass
@@ -30,7 +32,7 @@ def steering_policy_attachment_group():
 
 @click.command(cli_util.override('zone_group.command_name', 'zone'), cls=CommandGroupWithAlias, help="""A DNS zone.
 
-*Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def zone_group():
     pass
@@ -50,7 +52,7 @@ def record_collection_group():
 
 @click.command(cli_util.override('steering_policy_group.command_name', 'steering-policy'), cls=CommandGroupWithAlias, help="""A DNS steering policy.
 
-*Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def steering_policy_group():
     pass
@@ -77,22 +79,46 @@ dns_root_group.add_command(records_group)
 dns_root_group.add_command(zones_group)
 
 
-@steering_policy_group.command(name=cli_util.override('create_steering_policy.command_name', 'create'), help="""Creates a new steering policy in the specified compartment.""")
+@steering_policy_group.command(name=cli_util.override('create_steering_policy.command_name', 'create'), help="""Creates a new steering policy in the specified compartment. For more information on creating policies with templates, see [Traffic Management API Guide].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment containing the steering policy.""")
-@cli_util.option('--display-name', required=True, help="""A user-friendly name for the steering policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--template', required=True, type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help="""The common pattern (or lack thereof) to which the steering policy adheres. This value restricts the possible configurations of rules, but thereby supports specifically tailored interfaces. Values other than \"CUSTOM\" require the rules to begin with an unconditional FILTER that keeps answers contingent upon `answer.isDisabled != true`, followed _if and only if the policy references a health check monitor_ by an unconditional HEALTH rule, and require the last rule to be an unconditional LIMIT. What must precede the LIMIT rule is determined by the template value: - FAILOVER requires exactly an unconditional PRIORITY rule that ranks answers by pool.   Each answer pool must have a unique priority value assigned to it. Answer data must   be defined in the `defaultAnswerData` property for the rule and the `cases` property   must not be defined. - LOAD_BALANCE requires exactly an unconditional WEIGHTED rule that shuffles answers   by name. Answer data must be defined in the `defaultAnswerData` property for the   rule and the `cases` property must not be defined. - ROUTE_BY_GEO requires exactly one PRIORITY rule that ranks answers by pool using the   geographical location of the client as a condition. Within that rule you may only   use `query.client.geoKey` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_ASN requires exactly one PRIORITY rule that ranks answers by pool using the   ASN of the client as a condition. Within that rule you may only use   `query.client.asn` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_IP requires exactly one PRIORITY rule that ranks answers by pool using the   IP subnet of the client as a condition. Within that rule you may only use   `query.client.address` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - CUSTOM allows an arbitrary configuration of rules.
+@cli_util.option('--display-name', required=True, help="""A user-friendly name for the steering policy. Does not have to be unique and can be changed. Avoid entering confidential information.""")
+@cli_util.option('--template', required=True, type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help="""A set of predefined rules based on the desired purpose of the steering policy. Each template utilizes Traffic Management's rules in a different order to produce the desired results when answering DNS queries.
 
-For an existing steering policy, the template value may be changed to any of the supported options but the resulting policy must conform to the requirements for the new template type or else a Bad Request error will be returned.""")
-@cli_util.option('--ttl', type=click.INT, help="""The Time To Live for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
-@cli_util.option('--health-check-monitor-id', help="""The OCID of the health check monitor providing health data about the answers of the steering policy. A steering policy answer with `rdata` matching a monitored endpoint will use the health data of that endpoint. A steering policy answer with `rdata` not matching any monitored endpoint will be assumed healthy.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+ **Example:** The `FAILOVER` template determines answers by filtering the policy's answers using the `FILTER` rule first, then the following rules in succession: `HEALTH`, `PRIORITY`, and `LIMIT`. This gives the domain dynamic failover capability.
+
+ It is **strongly recommended** to use a template other than `CUSTOM` when creating a steering policy.
+
+ All templates require the rule order to begin with an unconditional `FILTER` rule that keeps answers contingent upon `answer.isDisabled != true`, except for `CUSTOM`. A defined `HEALTH` rule must follow the `FILTER` rule if the policy references a `healthCheckMonitorId`. The last rule of a template must must be a `LIMIT` rule. For more information about templates and code examples, see [Traffic Management API Guide].
+
+**Template Types**
+
+* `FAILOVER` - Uses health check information on your endpoints to determine which DNS answers to serve. If an endpoint fails a health check, the answer for that endpoint will be removed from the list of available answers until the endpoint is detected as healthy.
+
+ * `LOAD_BALANCE` - Distributes web traffic to specified endpoints based on defined weights.
+
+ * `ROUTE_BY_GEO` - Answers DNS queries based on the query's geographic location. For a list of geographic locations to route by, see [Traffic Management Geographic Locations].
+
+ * `ROUTE_BY_ASN` - Answers DNS queries based on the query's originating ASN.
+
+ * `ROUTE_BY_IP` - Answers DNS queries based on the query's IP address.
+
+ * `CUSTOM` - Allows a customized configuration of rules.""")
+@cli_util.option('--ttl', type=click.INT, help="""The Time To Live (TTL) for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
+@cli_util.option('--health-check-monitor-id', help="""The OCID of the health check monitor providing health data about the answers of the steering policy. A steering policy answer with `rdata` matching a monitored endpoint will use the health data of that endpoint. A steering policy answer with `rdata` not matching any monitored endpoint will be assumed healthy.
+
+ **Note:** To use the Health Check monitoring feature in a steering policy, a monitor must be created using the Health Checks service first. For more information on how to create a monitor, please see [Managing Health Checks].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--answers', type=custom_types.CLI_COMPLEX_TYPE, help="""The set of all answers that can potentially issue from the steering policy.
 
 This option is a JSON list with items of type SteeringPolicyAnswer.  For documentation on SteeringPolicyAnswer please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyAnswer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The pipeline of rules that will be processed in sequence to reduce the pool of answers to a response for any given request.
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The series of rules that will be processed in sequence to reduce the pool of answers to a response for any given request.
 
-The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
+ The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
 
 This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -160,11 +186,13 @@ def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_attachment_group.command(name=cli_util.override('create_steering_policy_attachment.command_name', 'create'), help="""Creates a new attachment between a steering policy and a domain. For the purposes of access control, the attachment is automatically placed into the same compartment as the containing zone of the domain.""")
+@steering_policy_attachment_group.command(name=cli_util.override('create_steering_policy_attachment.command_name', 'create'), help="""Creates a new attachment between a steering policy and a domain, giving the policy permission to answer queries for the specified domain. A steering policy must be attached to a domain for the policy to answer DNS queries for that domain.
+
+For the purposes of access control, the attachment is automatically placed into the same compartment as the domain's zone.""")
 @cli_util.option('--steering-policy-id', required=True, help="""The OCID of the attached steering policy.""")
 @cli_util.option('--zone-id', required=True, help="""The OCID of the attached zone.""")
 @cli_util.option('--domain-name', required=True, help="""The attached domain within the attached zone.""")
-@cli_util.option('--display-name', help="""A user-friendly name for the steering policy attachment. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help="""A user-friendly name for the steering policy attachment. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -218,8 +246,12 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
 @cli_util.option('--name', required=True, help="""The name of the zone.""")
 @cli_util.option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help="""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -359,7 +391,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('delete_steering_policy.command_name', 'delete'), help="""Deletes the specified steering policy. A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones.""")
+@steering_policy_group.command(name=cli_util.override('delete_steering_policy.command_name', 'delete'), help="""Deletes the specified steering policy. A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones. To detach a policy from a zone, see `DeleteSteeringPolicyAttachment`.""")
 @cli_util.option('--steering-policy-id', required=True, help="""The OCID of the target steering policy.""")
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -879,12 +911,12 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 @cli_util.option('--id', help="""The OCID of a resource.""")
 @cli_util.option('--display-name', help="""The displayName of a resource.""")
 @cli_util.option('--display-name-contains', help="""The partial displayName of a resource. Will match any resource whose name (case-insensitive) contains the provided value.""")
-@cli_util.option('--health-check-monitor-id', help="""Search by health check monitor OCID. Will match any resource whose health check monitor id matches the provided value.""")
+@cli_util.option('--health-check-monitor-id', help="""Search by health check monitor OCID. Will match any resource whose health check monitor ID matches the provided value.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--template', help="""Search by template type. Will match any resource whose template type matches the provided value.""")
+@cli_util.option('--template', help="""Search by steering template type. Will match any resource whose template type matches the provided value.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help="""The state of a resource.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "template"]), help="""The field by which to sort steering policies.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "template"]), help="""The field by which to sort steering policies. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -955,14 +987,14 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--id', help="""The OCID of a resource.""")
 @cli_util.option('--display-name', help="""The displayName of a resource.""")
-@cli_util.option('--steering-policy-id', help="""Search by steering policy OCID. Will match any resource whose steering policy id matches the provided value.""")
-@cli_util.option('--zone-id', help="""Search by zone OCID. Will match any resource whose zone id matches the provided value.""")
+@cli_util.option('--steering-policy-id', help="""Search by steering policy OCID. Will match any resource whose steering policy ID matches the provided value.""")
+@cli_util.option('--zone-id', help="""Search by zone OCID. Will match any resource whose zone ID matches the provided value.""")
 @cli_util.option('--domain', help="""Search by domain. Will match any record whose domain (case-insensitive) equals the provided value.""")
 @cli_util.option('--domain-contains', help="""Search by domain. Will match any record whose domain (case-insensitive) contains the provided value.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created on or after the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help="""An [RFC 3339] timestamp that states all returned resources were created before the indicated time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""The state of a resource.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "domainName"]), help="""The field by which to sort steering policy attachments.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "domainName"]), help="""The field by which to sort steering policy attachments. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The order to sort the resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1340,22 +1372,46 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('update_steering_policy.command_name', 'update'), help="""Updates the specified steering policy with your new information.""")
+@steering_policy_group.command(name=cli_util.override('update_steering_policy.command_name', 'update'), help="""Updates the configuration of the specified steering policy.""")
 @cli_util.option('--steering-policy-id', required=True, help="""The OCID of the target steering policy.""")
-@cli_util.option('--display-name', help="""A user-friendly name for the steering policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--ttl', type=click.INT, help="""The Time To Live for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
-@cli_util.option('--health-check-monitor-id', help="""The OCID of the health check monitor providing health data about the answers of the steering policy. A steering policy answer with `rdata` matching a monitored endpoint will use the health data of that endpoint. A steering policy answer with `rdata` not matching any monitored endpoint will be assumed healthy.""")
-@cli_util.option('--template', type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help="""The common pattern (or lack thereof) to which the steering policy adheres. This value restricts the possible configurations of rules, but thereby supports specifically tailored interfaces. Values other than \"CUSTOM\" require the rules to begin with an unconditional FILTER that keeps answers contingent upon `answer.isDisabled != true`, followed _if and only if the policy references a health check monitor_ by an unconditional HEALTH rule, and require the last rule to be an unconditional LIMIT. What must precede the LIMIT rule is determined by the template value: - FAILOVER requires exactly an unconditional PRIORITY rule that ranks answers by pool.   Each answer pool must have a unique priority value assigned to it. Answer data must   be defined in the `defaultAnswerData` property for the rule and the `cases` property   must not be defined. - LOAD_BALANCE requires exactly an unconditional WEIGHTED rule that shuffles answers   by name. Answer data must be defined in the `defaultAnswerData` property for the   rule and the `cases` property must not be defined. - ROUTE_BY_GEO requires exactly one PRIORITY rule that ranks answers by pool using the   geographical location of the client as a condition. Within that rule you may only   use `query.client.geoKey` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_ASN requires exactly one PRIORITY rule that ranks answers by pool using the   ASN of the client as a condition. Within that rule you may only use   `query.client.asn` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - ROUTE_BY_IP requires exactly one PRIORITY rule that ranks answers by pool using the   IP subnet of the client as a condition. Within that rule you may only use   `query.client.address` in the `caseCondition` expressions for defining the cases.   For each case in the PRIORITY rule each answer pool must have a unique priority   value assigned to it. Answer data can only be defined within cases and   `defaultAnswerData` cannot be used in the PRIORITY rule. - CUSTOM allows an arbitrary configuration of rules.
+@cli_util.option('--display-name', help="""A user-friendly name for the steering policy. Does not have to be unique and can be changed. Avoid entering confidential information.""")
+@cli_util.option('--ttl', type=click.INT, help="""The Time To Live (TTL) for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
+@cli_util.option('--health-check-monitor-id', help="""The OCID of the health check monitor providing health data about the answers of the steering policy. A steering policy answer with `rdata` matching a monitored endpoint will use the health data of that endpoint. A steering policy answer with `rdata` not matching any monitored endpoint will be assumed healthy.
 
-For an existing steering policy, the template value may be changed to any of the supported options but the resulting policy must conform to the requirements for the new template type or else a Bad Request error will be returned.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+ **Note:** To use the Health Check monitoring feature in a steering policy, a monitor must be created using the Health Checks service first. For more information on how to create a monitor, please see [Managing Health Checks].""")
+@cli_util.option('--template', type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help="""A set of predefined rules based on the desired purpose of the steering policy. Each template utilizes Traffic Management's rules in a different order to produce the desired results when answering DNS queries.
+
+ **Example:** The `FAILOVER` template determines answers by filtering the policy's answers using the `FILTER` rule first, then the following rules in succession: `HEALTH`, `PRIORITY`, and `LIMIT`. This gives the domain dynamic failover capability.
+
+ It is **strongly recommended** to use a template other than `CUSTOM` when creating a steering policy.
+
+ All templates require the rule order to begin with an unconditional `FILTER` rule that keeps answers contingent upon `answer.isDisabled != true`, except for `CUSTOM`. A defined `HEALTH` rule must follow the `FILTER` rule if the policy references a `healthCheckMonitorId`. The last rule of a template must must be a `LIMIT` rule. For more information about templates and code examples, see [Traffic Management API Guide].
+
+**Template Types**
+
+* `FAILOVER` - Uses health check information on your endpoints to determine which DNS answers to serve. If an endpoint fails a health check, the answer for that endpoint will be removed from the list of available answers until the endpoint is detected as healthy.
+
+ * `LOAD_BALANCE` - Distributes web traffic to specified endpoints based on defined weights.
+
+ * `ROUTE_BY_GEO` - Answers DNS queries based on the query's geographic location. For a list of geographic locations to route by, see [Traffic Management Geographic Locations].
+
+ * `ROUTE_BY_ASN` - Answers DNS queries based on the query's originating ASN.
+
+ * `ROUTE_BY_IP` - Answers DNS queries based on the query's IP address.
+
+ * `CUSTOM` - Allows a customized configuration of rules.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--answers', type=custom_types.CLI_COMPLEX_TYPE, help="""The set of all answers that can potentially issue from the steering policy.
 
 This option is a JSON list with items of type SteeringPolicyAnswer.  For documentation on SteeringPolicyAnswer please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyAnswer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The pipeline of rules that will be processed in sequence to reduce the pool of answers to a response for any given request.
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""The series of rules that will be processed in sequence to reduce the pool of answers to a response for any given request.
 
-The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
+ The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
 
 This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -1443,7 +1499,7 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
 
 @steering_policy_attachment_group.command(name=cli_util.override('update_steering_policy_attachment.command_name', 'update'), help="""Updates the specified steering policy attachment with your new information.""")
 @cli_util.option('--steering-policy-attachment-id', required=True, help="""The OCID of the target steering policy attachment.""")
-@cli_util.option('--display-name', help="""A user-friendly name for the steering policy attachment. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help="""A user-friendly name for the steering policy attachment. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help="""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help="""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1503,8 +1559,12 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 
 @zone_group.command(name=cli_util.override('update_zone.command_name', 'update'), help="""Updates the specified secondary zone with your new external master server information. For more information about secondary zone, see [Manage DNS Service Zone].""")
 @cli_util.option('--zone-name-or-id', required=True, help="""The name or OCID of the target zone.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. For more information, see [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help="""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

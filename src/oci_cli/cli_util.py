@@ -21,6 +21,8 @@ import stat
 import subprocess
 import sys
 import uuid
+import struct
+import base64
 from .formatting import render_config_errors
 from terminaltables import AsciiTable
 from timeit import default_timer as timer
@@ -75,6 +77,8 @@ CLOCK_SKEW_WARNING_THRESHOLD_MINUTES = 5
 MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
 
 LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports pagination and not all resources were returned.  Re-run using the --all option to auto paginate and list all resources."
+
+TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING = "WARNING: The active profile contains a value for 'security_token_file' which is not being used. To authenticate using the token, specify --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN)
 
 
 def rename_command(parent_group, command, new_name):
@@ -134,8 +138,14 @@ def override(key, default):
     return OVERRIDES.get(key, default)
 
 
-def build_client(service_name, ctx):
+def create_config_and_signer_based_on_click_context(ctx):
+    # If not set by the user as part of the command, then set it to a default.
+    # This value is used later by some commands.
+    if not ctx.obj['request_id']:
+        ctx.obj['request_id'] = str(uuid.uuid4()).replace('-', '').upper()
+
     instance_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL
+    session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
 
     signer = None
     kwargs = {}
@@ -150,9 +160,37 @@ def build_client(service_name, ctx):
 
     if instance_principal_auth:
         try:
-            signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
+            signer_kwargs = {}
+            if ctx.obj['cert_bundle']:
+                signer_kwargs['federation_client_cert_bundle_verify'] = ctx.obj['cert_bundle']
+            if ctx.obj['region']:
+                signer_kwargs['federation_endpoint'] = '{}/v1/x509'.format(oci.regions.endpoint_for('auth', ctx.obj['region']))
+                # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
+                # conflict with the caller intent (since they *DID* explicitly pass a region)
+                client_config['region'] = ctx.obj['region']
+            signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner(**signer_kwargs)
         except Exception as e:
             sys.exit("ERROR: Failed retrieving certificates from localhost. Instance principal auth is only possible from OCI compute instances. \nException: {}".format(str(e)))
+        kwargs['signer'] = signer
+    elif session_token_auth:
+        security_token_location = client_config.get('security_token_file')
+        if not security_token_location:
+            sys.exit("ERROR: Config value for 'security_token_file' must be specified when using --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN))
+
+        expanded_security_token_location = os.path.expanduser(security_token_location)
+        if not os.path.exists(expanded_security_token_location):
+            sys.exit("ERROR: File specified by 'security_token_file' does not exist: {}".format(expanded_security_token_location))
+
+        with open(expanded_security_token_location, 'r') as security_token_file:
+            token = security_token_file.read()
+
+        try:
+            private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
+        except exceptions.MissingPrivateKeyPassphrase:
+            client_config['pass_phrase'] = prompt_for_passphrase()
+            signer = oci.Signer.from_config(client_config)
+
+        signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
         kwargs['signer'] = signer
 
     try:
@@ -164,6 +202,71 @@ def build_client(service_name, ctx):
             config_file=ctx.obj['config_file'],
             errors=table
         ))
+
+    return ConfigAndSigner(config=client_config, signer=signer, uses_instance_principals_auth=instance_principal_auth)
+
+
+def set_request_session_properties_from_context(session, ctx, uses_ssl=True):
+    cert_bundle = ctx.obj['cert_bundle']
+    if cert_bundle:
+        cert_bundle = os.path.expanduser(cert_bundle)
+        if not os.path.isfile(cert_bundle):
+            raise click.BadParameter(param_hint='cert_bundle', message='Cannot find cert_bundle file: {}'.format(cert_bundle))
+
+        # TODO: Update this once alternate certs are exposed in the SDK.
+        session.verify = cert_bundle
+
+    if ctx.obj['proxy'] or ctx.obj.get('settings', {}).get('proxy'):
+        # If the proxy is specified explicitly on the command line then use that, otherwise use
+        # the one from the cli_rc_file
+        proxy_to_use = ctx.obj['proxy']
+        if not proxy_to_use:
+            proxy_to_use = ctx.obj['settings']['proxy']
+
+        if uses_ssl:
+            session.proxies = {'https': proxy_to_use}
+        else:
+            session.proxies = {'http': proxy_to_use}
+
+
+def build_raw_requests_session(ctx):
+    config_and_signer = create_config_and_signer_based_on_click_context(ctx)
+    signer = config_and_signer.signer
+    client_config = config_and_signer.config
+
+    if 'key_file' in client_config:
+        warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
+
+    if signer is None and config_and_signer.uses_instance_principals_auth:
+        raise click.ClickException('Invalid configuration detected: instance principals authentication is being used without a created signer')
+
+    try:
+        if signer is None:
+            try:
+                signer = oci.Signer.from_config(client_config)
+            except exceptions.MissingPrivateKeyPassphrase:
+                client_config['pass_phrase'] = prompt_for_passphrase()
+                signer = oci.Signer.from_config(client_config)
+
+        session = requests.Session()
+        session.auth = signer
+        session.headers['opc-request-id'] = ctx.obj['request_id']
+        session.headers['user-agent'] = oci.base_client.build_user_agent(extra=client_config['additional_user_agent'])
+        set_request_session_properties_from_context(session, ctx)
+
+        return session
+    except exceptions.InvalidPrivateKey as bad_key:
+        sys.exit(str(bad_key))
+
+
+def build_client(service_name, ctx):
+    config_and_signer = create_config_and_signer_based_on_click_context(ctx)
+    signer = config_and_signer.signer
+    client_config = config_and_signer.config
+
+    kwargs = {}
+    if config_and_signer.signer:
+        kwargs['signer'] = signer
 
     if 'key_file' in client_config:
         warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
@@ -479,6 +582,7 @@ def wrap_exceptions(func):
         except exceptions.ServiceError as exception:
             if exception.status == 401:
                 warn_if_clock_skew_present(ctx.obj.get('config'))
+                warn_if_token_present_in_profile_but_not_using_token_auth(ctx)
 
             if ctx.obj["debug"]:
                 raise
@@ -1224,6 +1328,12 @@ def warn_if_clock_skew_present(config):
         return False
 
 
+def warn_if_token_present_in_profile_but_not_using_token_auth(ctx):
+    security_token = ctx.obj.get('config').get('security_token_file')
+    if security_token and ctx.obj.get('auth') != cli_constants.OCI_CLI_AUTH_SESSION_TOKEN:
+        click.echo(click.style(TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING, fg='red'), file=sys.stderr)
+
+
 def warn_on_invalid_file_permissions(filepath):
     suppress_warning = os.environ.get('OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING')
     if suppress_warning == 'True':
@@ -1681,3 +1791,55 @@ def get_tenancy_from_config(ctx):
     except Exception:
         return None
     return client_config['tenancy']
+
+
+def bytes_from_int(val):
+    # Use int.to_bytes if it exists (Python 3)
+    if getattr(int, 'to_bytes', None):
+        remaining = val
+        byte_length = 0
+
+        while remaining != 0:
+            remaining = remaining >> 8
+            byte_length += 1
+        return val.to_bytes(byte_length, 'big', signed=False)
+    else:
+        buf = []
+        while val:
+            val, remainder = divmod(val, 256)
+            buf.append(remainder)
+
+        buf.reverse()
+        return struct.pack('%sB' % len(buf), *buf)
+
+
+def force_unicode(value):
+    return value.decode('utf-8')
+
+
+def base64url_encode(input):
+    return base64.urlsafe_b64encode(input).replace(b'=', b'')
+
+
+def to_base64url_uint(val):
+    if val < 0:
+        raise ValueError('Must be a positive integer')
+
+    int_bytes = bytes_from_int(val)
+
+    if len(int_bytes) == 0:
+        int_bytes = b'\x00'
+
+    return base64url_encode(int_bytes)
+
+
+def to_jwk(key_obj):
+    numbers = key_obj.public_numbers()
+
+    obj = {
+        'kty': 'RSA',
+        'n': force_unicode(to_base64url_uint(numbers.n)),
+        'e': force_unicode(to_base64url_uint(numbers.e)),
+        'kid': 'Ignored'  # field expected but value is not in the publickey entry for SOUP
+    }
+    return json.dumps(obj)

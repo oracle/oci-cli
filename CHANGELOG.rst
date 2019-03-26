@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.5 - 2019-03-26
+------------------
+Added
+~~~~~
+* Support for token-based authentication for the CLI allowing customers to authenticate their session interactively, then use the CLI for a single session without an API signing key
+
+ * ``oci session authenticate``
+ * ``oci session export``
+ * ``oci session import``
+ * ``oci session refresh``
+ * ``oci session terminate``
+ * ``oci session validate``
+
+* Support for an interactive process to create a CLI config file using username / password based login through a browser. Also handles generating API keys and uploading them to your Oracle Cloud Infrastructure account.
+
+ * ``oci setup bootstrap``
+
+* Support for obtaining and updating Authentication Policy in the Identity Service.
+
+  * ``oci iam authentication-policy get | update``
+
+Changed
+~~~~~~~~
+* Documentation enhancements and corrections for traffic management in the DNS service.
+
+* Improve Object Lifecycle Management policy in Object Storage by supporting glob patterns and exclusions.
+
+  * An example on writing object lifecycle policy can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/write_object_lifecycle_policy.sh>`__.
+
+
 2.5.4 - 2019-03-19
 ------------------
 Added

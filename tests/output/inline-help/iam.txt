@@ -251,8 +251,8 @@ $ oci iam authentication-policy get --help
 Usage: oci iam authentication-policy get [OPTIONS]
 
   Gets the authentication policy for the given tenancy. You must specify your
-  tenant\u2019s OCID as the value for the compartment ID (remember that the
-  tenancy is simply the root compartment).
+  tenant’s OCID as the value for the compartment ID (remember that the tenancy
+  is simply the root compartment).
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment. [required]

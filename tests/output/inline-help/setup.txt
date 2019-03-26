@@ -14,6 +14,7 @@ Options:
 
 Commands:
   autocomplete             Interactive script to set up tab completion...
+  bootstrap                Provides an interactive process to create a...
   config                   Interactive script to generate oci config...
   keys                     Generates an RSA key pair.
   oci-cli-rc               Generates a oci_cli_rc file that can contain...
@@ -24,6 +25,21 @@ $ oci setup autocomplete --help
 Usage: oci setup autocomplete [OPTIONS]
 
   Interactive script to set up tab completion for commands and parameters.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci setup bootstrap --help
+Usage: oci setup bootstrap [OPTIONS]
+
+  Provides an interactive process to create a CLI config file using username /
+  password based login through a browser. Also handles generating API keys and
+  uploading them to your Oracle Cloud Infrastructure account.
+
+  Note that port 8181 must be available in order for this command to complete
+  properly.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter

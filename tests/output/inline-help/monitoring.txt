@@ -250,20 +250,21 @@ Options:
                                   
                                   Example of threshold alarm:
                                   -----
-                                  CpuUtilization[1m]{availabilityDomain="cumS
-                                  :PHX-AD-1"}.groupBy(availabilityDomain).percen
-                                  tile(0.9) > 85
+                                  
+                                      CpuUtilization[1m]{availabilityDoma
+                                  in="cumS:PHX-AD-1"}.groupBy(availabilityDomain
+                                  ).percentile(0.9) > 85
                                   
                                     -----
                                   
-                                  Example of absence
-                                  alarm:
+                                  Example of
+                                  absence alarm:
                                   
                                     -----
-                                  CpuUtilization[1m]{availabilityDomain="cumS
-                                  :PHX-AD-1"}.absent()
                                   
-                                    ----- [required]
+                                      CpuUtilization[1m
+                                  ]{availabilityDomain="cumS:PHX-AD-1"}.absent()
+                                  ----- [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -670,20 +671,21 @@ Options:
                                   
                                   Example of threshold alarm:
                                   -----
-                                  CpuUtilization[1m]{availabilityDomain="cumS
-                                  :PHX-AD-1"}.groupBy(availabilityDomain).percen
-                                  tile(0.9) > 85
+                                  
+                                      CpuUtilization[1m]{availabilityDoma
+                                  in="cumS:PHX-AD-1"}.groupBy(availabilityDomain
+                                  ).percentile(0.9) > 85
                                   
                                     -----
                                   
-                                  Example of absence
-                                  alarm:
+                                  Example of
+                                  absence alarm:
                                   
                                     -----
-                                  CpuUtilization[1m]{availabilityDomain="cumS
-                                  :PHX-AD-1"}.absent()
                                   
-                                    -----
+                                      CpuUtilization[1m
+                                  ]{availabilityDomain="cumS:PHX-AD-1"}.absent()
+                                  -----
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.

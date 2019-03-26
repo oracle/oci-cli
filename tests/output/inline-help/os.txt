@@ -19,7 +19,7 @@ Commands:
   object                   To use any of the API operations, you must be...
   object-lifecycle-policy  The collection of lifecycle policy rules that...
   preauth-request          Pre-authenticated requests provide a way to...
-  work-request             A description of workRequest status
+  work-request             A description of workRequest status.
   work-request-error
   work-request-log-entry
 
@@ -33,7 +33,7 @@ Usage: oci os bucket [OPTIONS] COMMAND [ARGS]...
   all the objects in the bucket. For more information, see [Managing Buckets].
 
   To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
+  If you are not authorized, talk to an administrator. If you are an
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
 
@@ -43,9 +43,9 @@ Options:
 
 Commands:
   create  Creates a bucket in the given namespace with...
-  delete  Deletes a bucket if it is already empty.
+  delete  Deletes a bucket if the bucket is already...
   get     Gets the current representation of the given...
-  list    Gets a list of all `BucketSummary`s in a...
+  list    Gets a list of all BucketSummary items in a...
   update  Performs a partial or full update of a...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -53,20 +53,21 @@ $ oci os bucket create --help
 Usage: oci os bucket create [OPTIONS]
 
   Creates a bucket in the given namespace with a bucket name and optional
-  user-defined metadata.
+  user-defined metadata. Avoid entering confidential information in bucket
+  names.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   --name TEXT                     The name of the bucket. Valid characters are
                                   uppercase or lowercase letters, numbers, and
-                                  dashes. Bucket names must be unique within the
-                                  namespace. Avoid entering confidential
-                                  information. example: Example: my-new-bucket1
-                                  [required]
+                                  dashes. Bucket names must be unique within an
+                                  Object Storage namespace. Avoid entering
+                                  confidential information. example: Example:
+                                  my-new-bucket1 [required]
   -c, --compartment-id TEXT       The ID of the compartment in which to create
                                   the bucket. [required]
   --metadata COMPLEX TYPE         Arbitrary string, up to 4KB, of keys and
@@ -142,8 +143,8 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --kms-key-id TEXT               The OCID of a KMS key id used to call KMS to
-                                  generate data key, decrypt the encrypted data
-                                  key
+                                  generate the data key or decrypt the encrypted
+                                  data key.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -177,24 +178,25 @@ Options:
 $ oci os bucket delete --help
 Usage: oci os bucket delete [OPTIONS]
 
-  Deletes a bucket if it is already empty. If the bucket is not empty, use
-  [DeleteObject] first.
+  Deletes a bucket if the bucket is already empty. If the bucket is not empty,
+  use [DeleteObject] first. You also cannot delete a bucket that has a pre-
+  authenticated request associated with that bucket.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name, --name TEXT
                                   The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
-  --if-match TEXT                 The entity tag to match. For creating and
-                                  committing a multipart upload to an object,
-                                  this is the entity tag of the target object.
-                                  For uploading a part, this is the entity tag
-                                  of the target part.
+  --if-match TEXT                 The entity tag (ETag) to match. For creating
+                                  and committing a multipart upload to an
+                                  object, this is the entity tag of the target
+                                  object. For uploading a part, this is the
+                                  entity tag of the target part.
   --force                         Perform deletion without prompting for
                                   confirmation.
   --from-json TEXT                Provide input to this command as a JSON
@@ -230,26 +232,27 @@ Options:
 $ oci os bucket get --help
 Usage: oci os bucket get [OPTIONS]
 
-  Gets the current representation of the given bucket in the given namespace.
+  Gets the current representation of the given bucket in the given Object
+  Storage namespace.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name, --name TEXT
                                   The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
-  --if-match TEXT                 The entity tag to match. For creating and
-                                  committing a multipart upload to an object,
-                                  this is the entity tag of the target object.
-                                  For uploading a part, this is the entity tag
-                                  of the target part.
-  --if-none-match TEXT            The entity tag to avoid matching. The only
-                                  valid value is '*', which indicates that the
-                                  request should fail if the object already
+  --if-match TEXT                 The entity tag (ETag) to match. For creating
+                                  and committing a multipart upload to an
+                                  object, this is the entity tag of the target
+                                  object. For uploading a part, this is the
+                                  entity tag of the target part.
+  --if-none-match TEXT            The entity tag (ETag) to avoid matching. The
+                                  only valid value is '*', which indicates that
+                                  the request should fail if the object already
                                   exists. For creating and committing a
                                   multipart upload, this is the entity tag of
                                   the target object. For uploading a part, this
@@ -259,10 +262,10 @@ Options:
                                   'name', 'compartmentId', 'createdBy',
                                   'timeCreated', and 'etag' fields. This
                                   parameter can also include 'approximateCount'
-                                  (Approximate number of objects) and
+                                  (approximate number of objects) and
                                   'approximateSize' (total approximate size in
                                   bytes of all objects). For example
-                                  'approximateCount,approximateSize'
+                                  'approximateCount,approximateSize'.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -296,21 +299,21 @@ Options:
 $ oci os bucket list --help
 Usage: oci os bucket list [OPTIONS]
 
-  Gets a list of all `BucketSummary`s in a compartment. A `BucketSummary`
+  Gets a list of all BucketSummary items in a compartment. A BucketSummary
   contains only summary fields for the bucket and does not contain fields like
   the user-defined metadata.
 
   To use this and other API operations, you must be authorized in an IAM
-  policy. If you're not authorized, talk to an administrator. If you're an
+  policy. If you are not authorized, talk to an administrator. If you are an
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -c, --compartment-id TEXT       The ID of the compartment in which to list
                                   buckets. [required]
   --limit INTEGER                 The maximum number of items to return.
@@ -365,10 +368,10 @@ Usage: oci os bucket update [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name, --name TEXT
                                   The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
@@ -442,16 +445,16 @@ Options:
   --kms-key-id TEXT               A KMS key OCID that will be associated with
                                   the given bucket. If it is empty the Update
                                   operation will actually remove the KMS key, if
-                                  there is one, from the given bucket. Please
-                                  note, the old kms key should still be enbaled
-                                  in KMS otherwise all the objects in the bucket
+                                  there is one, from the given bucket. Note that
+                                  the old kms key should still be enbaled in KMS
+                                  otherwise all the objects in the bucket
                                   encrypted with the old KMS key will no longer
-                                  accessible.
-  --if-match TEXT                 The entity tag to match. For creating and
-                                  committing a multipart upload to an object,
-                                  this is the entity tag of the target object.
-                                  For uploading a part, this is the entity tag
-                                  of the target part.
+                                  be accessible.
+  --if-match TEXT                 The entity tag (ETag) to match. For creating
+                                  and committing a multipart upload to an
+                                  object, this is the entity tag of the target
+                                  object. For uploading a part, this is the
+                                  entity tag of the target part.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -491,7 +494,7 @@ Options:
 
 Commands:
   abort  Aborts an uncommitted multipart upload...
-  list   Lists all in-progress multipart uploads for...
+  list   Lists all of the in-progress multipart...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os multipart abort --help
@@ -546,15 +549,15 @@ Options:
 $ oci os multipart list --help
 Usage: oci os multipart list [OPTIONS]
 
-  Lists all in-progress multipart uploads for the given bucket in the given
-  namespace.
+  Lists all of the in-progress multipart uploads for the given bucket in the
+  given Object Storage namespace.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
@@ -617,14 +620,21 @@ Options:
 
 Commands:
   get              Gets the name of the namespace for the user
-  get-metadata     Get the metadata for the namespace, which...
-  update-metadata  Change the default Swift/S3 compartmentId of...
+  get-metadata     Gets the metadata for the Object Storage...
+  update-metadata  By default, buckets created using the Amazon...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os ns get --help
 Usage: oci os ns get [OPTIONS]
 
-  Gets the name of the namespace for the user making the request.
+  Each Oracle Cloud Infrastructure tenant is assigned one unique and
+  uneditable Object Storage namespace. The namespace is a system-generated
+  string assigned during account creation. For some older tenancies, the
+  namespace string may be the tenancy name in all lower-case letters. You
+  cannot edit a namespace.
+
+  GetNamespace returns the name of the Object Storage namespace for the user
+  making the request.
 
 Options:
   --from-json TEXT  Provide input to this command as a JSON document from a file
@@ -655,18 +665,20 @@ Options:
 $ oci os ns get-metadata --help
 Usage: oci os ns get-metadata [OPTIONS]
 
-  Get the metadata for the namespace, which contains defaultS3CompartmentId
-  and defaultSwiftCompartmentId. Any user with the NAMESPACE_READ permission
-  will be able to see the current metadata. If you're not authorized, talk to
-  an administrator. If you're an administrator who needs to write policies to
-  give users access, see [Getting Started with Policies].
+  Gets the metadata for the Object Storage namespace, which contains
+  defaultS3CompartmentId and defaultSwiftCompartmentId.
+
+  Any user with the NAMESPACE_READ permission will be able to see the current
+  metadata. If you are not authorized, talk to an administrator. If you are an
+  administrator who needs to write policies to give users access, see [Getting
+  Started with Policies].
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -700,24 +712,28 @@ Options:
 $ oci os ns update-metadata --help
 Usage: oci os ns update-metadata [OPTIONS]
 
-  Change the default Swift/S3 compartmentId of user's namespace into the user-
-  defined compartmentId. Upon doing this, all subsequent bucket creations will
-  use the new default compartment, but no previously created buckets will be
-  modified. A user must have the NAMESPACE_UPDATE permission to make changes
-  to the default compartments for S3 and Swift.
+  By default, buckets created using the Amazon S3 Compatibility API or the
+  Swift API are created in the root compartment of the Oracle Cloud
+  Infrastructure tenancy.
+
+  You can change the default Swift/Amazon S3 compartmentId designation to a
+  different compartmentId. All subsequent bucket creations will use the new
+  default compartment, but no previously created buckets will be modified. A
+  user must have NAMESPACE_UPDATE permission to make changes to the default
+  compartments for Amazon S3 and Swift.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   --default-s3-compartment-id TEXT
-                                  The update compartment id for an S3 client if
-                                  this field is set.
+                                  The updated compartment id for use by an S3
+                                  client, if this field is set.
   --default-swift-compartment-id TEXT
-                                  The update compartment id for a Swift client
-                                  if this field is set.
+                                  The updated compartment id for use by a Swift
+                                  client, if this field is set.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -752,7 +768,7 @@ $ oci os object --help
 Usage: oci os object [OPTIONS] COMMAND [ARGS]...
 
   To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
+  If you are not authorized, talk to an administrator. If you are an
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
 
@@ -764,14 +780,14 @@ Commands:
   bulk-delete     Deletes all objects in a bucket which match...
   bulk-download   Downloads all objects which match the given...
   bulk-upload     Uploads all files in a given directory and...
-  copy            Create a request for copy object within or...
+  copy            Creates a request to copy an object within a...
   delete          Deletes an object.
   get             Gets the metadata and body of an object.
   head            Gets the user-defined metadata and entity tag...
   list            Lists the objects in a bucket.
   put             Creates a new object or overwrites an...
-  rename          Rename an object from source key to target...
-  restore         Restore one or more objects specified by the...
+  rename          Rename an object in the given Object Storage...
+  restore         Restores one or more objects specified by the...
   restore-status  Gets the restore status for an object.
   resume-put      Resume a previous multipart put.
 
@@ -1241,50 +1257,62 @@ Options:
 $ oci os object copy --help
 Usage: oci os object copy [OPTIONS]
 
-  Create a request for copy object within or cross region
+  Creates a request to copy an object within a region or to another region.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
-  --source-object-name TEXT       The name of the object to be copied [required]
-  --destination-bucket TEXT       The destination bucket object will be copied
-                                  to. [required]
+  --source-object-name TEXT       The name of the object to be copied.
+                                  [required]
+  --destination-bucket TEXT       The destination bucket the object will be
+                                  copied to. [required]
   --source-object-if-match-e-tag TEXT
-                                  The entity tag to match the target object.
+                                  The entity tag (ETag) to match against that of
+                                  the source object. Used to confirm that the
+                                  source object with a given name is the version
+                                  of that object storing a specified ETag.
   --destination-object-if-match-e-tag TEXT
-                                  The entity tag to match the target object.
+                                  The entity tag (ETag) to match against that of
+                                  the destination object (an object intended to
+                                  be overwritten). Used to confirm that the
+                                  destination object stored under a given name
+                                  is the version of that object storing a
+                                  specified entity tag.
   --destination-object-if-none-match-e-tag TEXT
-                                  The entity tag to not match the target object.
+                                  The entity tag (ETag) to avoid matching. The
+                                  only valid value is '*', which indicates that
+                                  the request should fail if the object already
+                                  exists in the destination bucket.
   --destination-object-metadata COMPLEX TYPE
                                   Arbitrary string keys and values for the user-
                                   defined metadata for the object. Keys must be
                                   in "opc-meta-*" format. Avoid entering
-                                  confidential information. If user enter value
-                                  in this field, the value will become the
-                                  object metadata for destination Object. If no
-                                  value pass in, the destination object will
-                                  have the exact object metadata as source
-                                  object.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
+                                  confidential information. Metadata key-value
+                                  pairs entered in this field are assigned to
+                                  the destination object. If you enter no
+                                  metadata values, the destination object will
+                                  inherit any existing metadata values
+                                  associated with the source object.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|COMPLETED|CANCELING|CANCELED]
                                   This operation asynchronously creates,
                                   modifies or deletes a resource and uses a work
@@ -1345,21 +1373,21 @@ Usage: oci os object delete [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
   --object-name, --name TEXT      The name of the object. Avoid entering
                                   confidential information. Example:
                                   `test/object1.log` [required]
-  --if-match TEXT                 The entity tag to match. For creating and
-                                  committing a multipart upload to an object,
-                                  this is the entity tag of the target object.
-                                  For uploading a part, this is the entity tag
-                                  of the target part.
+  --if-match TEXT                 The entity tag (ETag) to match. For creating
+                                  and committing a multipart upload to an
+                                  object, this is the entity tag of the target
+                                  object. For uploading a part, this is the
+                                  entity tag of the target part.
   --force                         Perform deletion without prompting for
                                   confirmation.
   --from-json TEXT                Provide input to this command as a JSON
@@ -1686,14 +1714,14 @@ Options:
 $ oci os object rename --help
 Usage: oci os object rename [OPTIONS]
 
-  Rename an object from source key to target key in the given namespace.
+  Rename an object in the given Object Storage namespace.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name, --bucket TEXT
                                   The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
@@ -1702,11 +1730,13 @@ Options:
                                   [required]
   --new-name TEXT                 The new name of the source object. [required]
   --src-obj-if-match-e-tag, --src-if-match TEXT
-                                  The if-match entity tag of the source object.
+                                  The if-match entity tag (ETag) of the source
+                                  object.
   --new-obj-if-match-e-tag, --new-if-match TEXT
-                                  The if-match entity tag of the new object.
+                                  The if-match entity tag (ETag) of the new
+                                  object.
   --new-obj-if-none-match-e-tag, --new-if-none-match TEXT
-                                  The if-none-match entity tag of the new
+                                  The if-none-match entity tag (ETag) of the new
                                   object.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
@@ -1741,15 +1771,16 @@ Options:
 $ oci os object restore --help
 Usage: oci os object restore [OPTIONS]
 
-  Restore one or more objects specified by the objectName parameter. By
+  Restores one or more objects specified by the objectName parameter. By
   default objects will be restored for 24 hours. Duration can be configured
   using the hours parameter.
 
 Options:
   --hours INTEGER                 The number of hours for which this object will
                                   be restored. By default objects will be
-                                  restored for 24 hours. Duration can be
-                                  configured using the hours parameter.
+                                  restored for 24 hours. You can instead
+                                  configure the duration using the hours
+                                  parameter.
   -ns, --namespace, --namespace-name TEXT
                                   The top-level namespace used for the request.
                                   If not provided, this parameter will be
@@ -1919,18 +1950,18 @@ Usage: oci os object-lifecycle-policy delete [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
-  --if-match TEXT                 The entity tag to match. For creating and
-                                  committing a multipart upload to an object,
-                                  this is the entity tag of the target object.
-                                  For uploading a part, this is the entity tag
-                                  of the target part.
+  --if-match TEXT                 The entity tag (ETag) to match. For creating
+                                  and committing a multipart upload to an
+                                  object, this is the entity tag of the target
+                                  object. For uploading a part, this is the
+                                  entity tag of the target part.
   --force                         Perform deletion without prompting for
                                   confirmation.
   --from-json TEXT                Provide input to this command as a JSON
@@ -1970,10 +2001,10 @@ Usage: oci os object-lifecycle-policy get [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
@@ -2014,10 +2045,10 @@ Usage: oci os object-lifecycle-policy put [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
@@ -2042,14 +2073,14 @@ Options:
                                   in a file, modifying it
                                   as needed and then passing it back in via the
                                   file:// syntax.
-  --if-match TEXT                 The entity tag to match. For creating and
-                                  committing a multipart upload to an object,
-                                  this is the entity tag of the target object.
-                                  For uploading a part, this is the entity tag
-                                  of the target part.
-  --if-none-match TEXT            The entity tag to avoid matching. The only
-                                  valid value is '*', which indicates that the
-                                  request should fail if the object already
+  --if-match TEXT                 The entity tag (ETag) to match. For creating
+                                  and committing a multipart upload to an
+                                  object, this is the entity tag of the target
+                                  object. For uploading a part, this is the
+                                  entity tag of the target part.
+  --if-none-match TEXT            The entity tag (ETag) to avoid matching. The
+                                  only valid value is '*', which indicates that
+                                  the request should fail if the object already
                                   exists. For creating and committing a
                                   multipart upload, this is the entity tag of
                                   the target object. For uploading a part, this
@@ -2093,11 +2124,11 @@ Usage: oci os preauth-request [OPTIONS] COMMAND [ARGS]...
   object without having their own credentials. When you create a pre-
   authenticated request, a unique URL is generated. Users in your
   organization, partners, or third parties can use this URL to access the
-  targets identified in the pre-authenticated request. See [Managing Access to
-  Buckets and Objects].
+  targets identified in the pre-authenticated request. See [Using Pre-
+  Authenticated Requests].
 
   To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
+  If you are not authorized, talk to an administrator. If you are an
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
 
@@ -2119,16 +2150,17 @@ Usage: oci os preauth-request create [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
   --name TEXT                     A user-specified name for the pre-
-                                  authenticated request. Helpful for management
-                                  purposes. [required]
+                                  authenticated request. Names can be helpful in
+                                  managing pre-authenticated requests.
+                                  [required]
   --access-type [ObjectRead|ObjectWrite|ObjectReadWrite|AnyObjectWrite]
                                   The operation that can be performed on this
                                   resource. [required]
@@ -2208,9 +2240,10 @@ Options:
                                   **************
                                   Example: 1412195400
                                   [required]
-  -on, --object-name TEXT         The name of object that is being granted
+  -on, --object-name TEXT         The name of the object that is being granted
                                   access to by the pre-authenticated request.
-                                  This can be null and if it is, the pre-
+                                  Avoid entering confidential information. The
+                                  object name can be null and if so, the pre-
                                   authenticated request grants access to the
                                   entire bucket.
   --from-json TEXT                Provide input to this command as a JSON
@@ -2250,10 +2283,10 @@ Usage: oci os preauth-request delete [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
@@ -2301,10 +2334,10 @@ Usage: oci os preauth-request get [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
@@ -2350,10 +2383,10 @@ Usage: oci os preauth-request list [OPTIONS]
 
 Options:
   -ns, --namespace-name, --namespace TEXT
-                                  The top-level namespace used for the request.
-                                  If not provided, this parameter will be
-                                  obtained internally using a call to 'oci os ns
-                                  get'
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
   -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
@@ -2401,22 +2434,22 @@ Options:
 $ oci os work-request --help
 Usage: oci os work-request [OPTIONS] COMMAND [ARGS]...
 
-  A description of workRequest status
+  A description of workRequest status.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  cancel  Cancel a work request.
-  get     Gets the status of the work request with the...
+  cancel  Cancels a work request.
+  get     Gets the status of the work request for the...
   list    Lists the work requests in a compartment.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os work-request cancel --help
 Usage: oci os work-request cancel [OPTIONS]
 
-  Cancel a work request.
+  Cancels a work request.
 
 Options:
   --work-request-id TEXT  The ID of the asynchronous request. [required]
@@ -2450,7 +2483,7 @@ Options:
 $ oci os work-request get --help
 Usage: oci os work-request get [OPTIONS]
 
-  Gets the status of the work request with the given ID.
+  Gets the status of the work request for the given ID.
 
 Options:
   --work-request-id TEXT  The ID of the asynchronous request. [required]

@@ -853,7 +853,7 @@ Usage: oci dns steering-policy [OPTIONS] COMMAND [ARGS]...
 
   A DNS steering policy.
 
-  *Warning:* Oracle recommends that you avoid using any confidential
+  **Warning:** Oracle recommends that you avoid using any confidential
   information when you supply string values using the API.
 
 Options:
@@ -865,88 +865,81 @@ Commands:
   delete  Deletes the specified steering policy.
   get     Gets information about the specified steering...
   list    Gets a list of all steering policies in the...
-  update  Updates the specified steering policy with...
+  update  Updates the configuration of the specified...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dns steering-policy create --help
 Usage: oci dns steering-policy create [OPTIONS]
 
-  Creates a new steering policy in the specified compartment.
+  Creates a new steering policy in the specified compartment. For more
+  information on creating policies with templates, see [Traffic Management API
+  Guide].
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment containing the
                                   steering policy. [required]
   --display-name TEXT             A user-friendly name for the steering policy.
-                                  Does not have to be unique, and it's
-                                  changeable. Avoid entering confidential
-                                  information. [required]
-  --template [FAILOVER|LOAD_BALANCE|ROUTE_BY_GEO|ROUTE_BY_ASN|ROUTE_BY_IP|CUSTOM]
-                                  The common pattern (or lack thereof) to which
-                                  the steering policy adheres. This value
-                                  restricts the possible configurations of
-                                  rules, but thereby supports specifically
-                                  tailored interfaces. Values other than
-                                  "CUSTOM" require the rules to begin with an
-                                  unconditional FILTER that keeps answers
-                                  contingent upon `answer.isDisabled != true`,
-                                  followed _if and only if the policy references
-                                  a health check monitor_ by an unconditional
-                                  HEALTH rule, and require the last rule to be
-                                  an unconditional LIMIT. What must precede the
-                                  LIMIT rule is determined by the template
-                                  value: - FAILOVER requires exactly an
-                                  unconditional PRIORITY rule that ranks answers
-                                  by pool.   Each answer pool must have a unique
-                                  priority value assigned to it. Answer data
-                                  must   be defined in the `defaultAnswerData`
-                                  property for the rule and the `cases` property
-                                  must not be defined. - LOAD_BALANCE requires
-                                  exactly an unconditional WEIGHTED rule that
-                                  shuffles answers   by name. Answer data must
-                                  be defined in the `defaultAnswerData` property
-                                  for the   rule and the `cases` property must
-                                  not be defined. - ROUTE_BY_GEO requires
-                                  exactly one PRIORITY rule that ranks answers
-                                  by pool using the   geographical location of
-                                  the client as a condition. Within that rule
-                                  you may only   use `query.client.geoKey` in
-                                  the `caseCondition` expressions for defining
-                                  the cases.   For each case in the PRIORITY
-                                  rule each answer pool must have a unique
-                                  priority   value assigned to it. Answer data
-                                  can only be defined within cases and
-                                  `defaultAnswerData` cannot be used in the
-                                  PRIORITY rule. - ROUTE_BY_ASN requires exactly
-                                  one PRIORITY rule that ranks answers by pool
-                                  using the   ASN of the client as a condition.
-                                  Within that rule you may only use
-                                  `query.client.asn` in the `caseCondition`
-                                  expressions for defining the cases.   For each
-                                  case in the PRIORITY rule each answer pool
-                                  must have a unique priority   value assigned
-                                  to it. Answer data can only be defined within
-                                  cases and   `defaultAnswerData` cannot be used
-                                  in the PRIORITY rule. - ROUTE_BY_IP requires
-                                  exactly one PRIORITY rule that ranks answers
-                                  by pool using the   IP subnet of the client as
-                                  a condition. Within that rule you may only use
-                                  `query.client.address` in the `caseCondition`
-                                  expressions for defining the cases.   For each
-                                  case in the PRIORITY rule each answer pool
-                                  must have a unique priority   value assigned
-                                  to it. Answer data can only be defined within
-                                  cases and   `defaultAnswerData` cannot be used
-                                  in the PRIORITY rule. - CUSTOM allows an
-                                  arbitrary configuration of rules.
-                                  
-                                  For an
-                                  existing steering policy, the template value
-                                  may be changed to any of the supported options
-                                  but the resulting policy must conform to the
-                                  requirements for the new template type or else
-                                  a Bad Request error will be returned.
+                                  Does not have to be unique and can be changed.
+                                  Avoid entering confidential information.
                                   [required]
-  --ttl INTEGER                   The Time To Live for responses from the
+  --template [FAILOVER|LOAD_BALANCE|ROUTE_BY_GEO|ROUTE_BY_ASN|ROUTE_BY_IP|CUSTOM]
+                                  A set of predefined rules based on the desired
+                                  purpose of the steering policy. Each template
+                                  utilizes Traffic Management's rules in a
+                                  different order to produce the desired results
+                                  when answering DNS queries.
+                                  
+                                   **Example:** The
+                                  `FAILOVER` template determines answers by
+                                  filtering the policy's answers using the
+                                  `FILTER` rule first, then the following rules
+                                  in succession: `HEALTH`, `PRIORITY`, and
+                                  `LIMIT`. This gives the domain dynamic
+                                  failover capability.
+                                  
+                                   It is **strongly
+                                  recommended** to use a template other than
+                                  `CUSTOM` when creating a steering policy.
+                                  All templates require the rule order to begin
+                                  with an unconditional `FILTER` rule that keeps
+                                  answers contingent upon `answer.isDisabled !=
+                                  true`, except for `CUSTOM`. A defined `HEALTH`
+                                  rule must follow the `FILTER` rule if the
+                                  policy references a `healthCheckMonitorId`.
+                                  The last rule of a template must must be a
+                                  `LIMIT` rule. For more information about
+                                  templates and code examples, see [Traffic
+                                  Management API Guide].
+                                  
+                                  **Template Types**
+                                  
+                                  *
+                                  `FAILOVER` - Uses health check information on
+                                  your endpoints to determine which DNS answers
+                                  to serve. If an endpoint fails a health check,
+                                  the answer for that endpoint will be removed
+                                  from the list of available answers until the
+                                  endpoint is detected as healthy.
+                                  
+                                   *
+                                  `LOAD_BALANCE` - Distributes web traffic to
+                                  specified endpoints based on defined weights.
+                                  * `ROUTE_BY_GEO` - Answers DNS queries based
+                                  on the query's geographic location. For a list
+                                  of geographic locations to route by, see
+                                  [Traffic Management Geographic Locations].
+                                  
+                                   *
+                                  `ROUTE_BY_ASN` - Answers DNS queries based on
+                                  the query's originating ASN.
+                                  
+                                   * `ROUTE_BY_IP`
+                                  - Answers DNS queries based on the query's IP
+                                  address.
+                                  
+                                   * `CUSTOM` - Allows a customized
+                                  configuration of rules. [required]
+  --ttl INTEGER                   The Time To Live (TTL) for responses from the
                                   steering policy, in seconds. If not specified
                                   during creation, a value of 30 seconds will be
                                   used.
@@ -957,27 +950,16 @@ Options:
                                   health data of that endpoint. A steering
                                   policy answer with `rdata` not matching any
                                   monitored endpoint will be assumed healthy.
-  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
-                                  any predefined name, type, or scope. For more
-                                  information, see [Resource Tags]. Example:
-                                  `{"bar-key": "value"}`
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
-                                  keys are scoped to a namespace. Example:
-                                  `{"foo-namespace": {"bar-key": "value"}}`
+                                  **Note:** To use the Health Check monitoring
+                                  feature in a steering policy, a monitor must
+                                  be created using the Health Checks service
+                                  first. For more information on how to create a
+                                  monitor, please see [Managing Health Checks].
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Department": "Finance"}`
                                   This
                                   is a complex type whose value must be valid
                                   JSON. The value can be provided as a string on
@@ -990,6 +972,25 @@ Options:
                                   be provided. We recommend storing this example
                                   in a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Operations": {"CostCenter":
+                                  "42"}}`
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --answers COMPLEX TYPE          The set of all answers that can potentially
                                   issue from the steering policy.
                                   
@@ -1012,11 +1013,11 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
-  --rules COMPLEX TYPE            The pipeline of rules that will be processed
-                                  in sequence to reduce the pool of answers to a
+  --rules COMPLEX TYPE            The series of rules that will be processed in
+                                  sequence to reduce the pool of answers to a
                                   response for any given request.
                                   
-                                  The first
+                                   The first
                                   rule receives a shuffled list of all answers,
                                   and every other rule receives the list of
                                   answers emitted by the one preceding it. The
@@ -1091,7 +1092,8 @@ Usage: oci dns steering-policy delete [OPTIONS]
 
   Deletes the specified steering policy. A `204` response indicates that the
   delete has been successful. Deletion will fail if the policy is attached to
-  any zones.
+  any zones. To detach a policy from a zone, see
+  `DeleteSteeringPolicyAttachment`.
 
 Options:
   --steering-policy-id TEXT       The OCID of the target steering policy.
@@ -1225,7 +1227,7 @@ Options:
                                   insensitive) contains the provided value.
   --health-check-monitor-id TEXT  Search by health check monitor OCID. Will
                                   match any resource whose health check monitor
-                                  id matches the provided value.
+                                  ID matches the provided value.
   --time-created-greater-than-or-equal-to DATETIME
                                   An [RFC 3339] timestamp that states all
                                   returned resources were created on or after
@@ -1376,13 +1378,14 @@ Options:
                                   Epoch seconds
                                   **************
                                   Example: 1412195400
-  --template TEXT                 Search by template type. Will match any
-                                  resource whose template type matches the
+  --template TEXT                 Search by steering template type. Will match
+                                  any resource whose template type matches the
                                   provided value.
   --lifecycle-state [ACTIVE|CREATING|DELETED|DELETING]
                                   The state of a resource.
   --sort-by [displayName|timeCreated|template]
                                   The field by which to sort steering policies.
+                                  If unspecified, defaults to `timeCreated`.
   --sort-order [ASC|DESC]         The order to sort the resources.
   --all                           Fetches all pages of results. If you provide
                                   this option, then you cannot provide the
@@ -1423,16 +1426,15 @@ Options:
 $ oci dns steering-policy update --help
 Usage: oci dns steering-policy update [OPTIONS]
 
-  Updates the specified steering policy with your new information.
+  Updates the configuration of the specified steering policy.
 
 Options:
   --steering-policy-id TEXT       The OCID of the target steering policy.
                                   [required]
   --display-name TEXT             A user-friendly name for the steering policy.
-                                  Does not have to be unique, and it's
-                                  changeable. Avoid entering confidential
-                                  information.
-  --ttl INTEGER                   The Time To Live for responses from the
+                                  Does not have to be unique and can be changed.
+                                  Avoid entering confidential information.
+  --ttl INTEGER                   The Time To Live (TTL) for responses from the
                                   steering policy, in seconds. If not specified
                                   during creation, a value of 30 seconds will be
                                   used.
@@ -1443,92 +1445,73 @@ Options:
                                   health data of that endpoint. A steering
                                   policy answer with `rdata` not matching any
                                   monitored endpoint will be assumed healthy.
+                                  **Note:** To use the Health Check monitoring
+                                  feature in a steering policy, a monitor must
+                                  be created using the Health Checks service
+                                  first. For more information on how to create a
+                                  monitor, please see [Managing Health Checks].
   --template [FAILOVER|LOAD_BALANCE|ROUTE_BY_GEO|ROUTE_BY_ASN|ROUTE_BY_IP|CUSTOM]
-                                  The common pattern (or lack thereof) to which
-                                  the steering policy adheres. This value
-                                  restricts the possible configurations of
-                                  rules, but thereby supports specifically
-                                  tailored interfaces. Values other than
-                                  "CUSTOM" require the rules to begin with an
-                                  unconditional FILTER that keeps answers
-                                  contingent upon `answer.isDisabled != true`,
-                                  followed _if and only if the policy references
-                                  a health check monitor_ by an unconditional
-                                  HEALTH rule, and require the last rule to be
-                                  an unconditional LIMIT. What must precede the
-                                  LIMIT rule is determined by the template
-                                  value: - FAILOVER requires exactly an
-                                  unconditional PRIORITY rule that ranks answers
-                                  by pool.   Each answer pool must have a unique
-                                  priority value assigned to it. Answer data
-                                  must   be defined in the `defaultAnswerData`
-                                  property for the rule and the `cases` property
-                                  must not be defined. - LOAD_BALANCE requires
-                                  exactly an unconditional WEIGHTED rule that
-                                  shuffles answers   by name. Answer data must
-                                  be defined in the `defaultAnswerData` property
-                                  for the   rule and the `cases` property must
-                                  not be defined. - ROUTE_BY_GEO requires
-                                  exactly one PRIORITY rule that ranks answers
-                                  by pool using the   geographical location of
-                                  the client as a condition. Within that rule
-                                  you may only   use `query.client.geoKey` in
-                                  the `caseCondition` expressions for defining
-                                  the cases.   For each case in the PRIORITY
-                                  rule each answer pool must have a unique
-                                  priority   value assigned to it. Answer data
-                                  can only be defined within cases and
-                                  `defaultAnswerData` cannot be used in the
-                                  PRIORITY rule. - ROUTE_BY_ASN requires exactly
-                                  one PRIORITY rule that ranks answers by pool
-                                  using the   ASN of the client as a condition.
-                                  Within that rule you may only use
-                                  `query.client.asn` in the `caseCondition`
-                                  expressions for defining the cases.   For each
-                                  case in the PRIORITY rule each answer pool
-                                  must have a unique priority   value assigned
-                                  to it. Answer data can only be defined within
-                                  cases and   `defaultAnswerData` cannot be used
-                                  in the PRIORITY rule. - ROUTE_BY_IP requires
-                                  exactly one PRIORITY rule that ranks answers
-                                  by pool using the   IP subnet of the client as
-                                  a condition. Within that rule you may only use
-                                  `query.client.address` in the `caseCondition`
-                                  expressions for defining the cases.   For each
-                                  case in the PRIORITY rule each answer pool
-                                  must have a unique priority   value assigned
-                                  to it. Answer data can only be defined within
-                                  cases and   `defaultAnswerData` cannot be used
-                                  in the PRIORITY rule. - CUSTOM allows an
-                                  arbitrary configuration of rules.
+                                  A set of predefined rules based on the desired
+                                  purpose of the steering policy. Each template
+                                  utilizes Traffic Management's rules in a
+                                  different order to produce the desired results
+                                  when answering DNS queries.
                                   
-                                  For an
-                                  existing steering policy, the template value
-                                  may be changed to any of the supported options
-                                  but the resulting policy must conform to the
-                                  requirements for the new template type or else
-                                  a Bad Request error will be returned.
-  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
-                                  any predefined name, type, or scope. For more
-                                  information, see [Resource Tags]. Example:
-                                  `{"bar-key": "value"}`
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
+                                   **Example:** The
+                                  `FAILOVER` template determines answers by
+                                  filtering the policy's answers using the
+                                  `FILTER` rule first, then the following rules
+                                  in succession: `HEALTH`, `PRIORITY`, and
+                                  `LIMIT`. This gives the domain dynamic
+                                  failover capability.
                                   
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
-                                  keys are scoped to a namespace. Example:
-                                  `{"foo-namespace": {"bar-key": "value"}}`
+                                   It is **strongly
+                                  recommended** to use a template other than
+                                  `CUSTOM` when creating a steering policy.
+                                  All templates require the rule order to begin
+                                  with an unconditional `FILTER` rule that keeps
+                                  answers contingent upon `answer.isDisabled !=
+                                  true`, except for `CUSTOM`. A defined `HEALTH`
+                                  rule must follow the `FILTER` rule if the
+                                  policy references a `healthCheckMonitorId`.
+                                  The last rule of a template must must be a
+                                  `LIMIT` rule. For more information about
+                                  templates and code examples, see [Traffic
+                                  Management API Guide].
+                                  
+                                  **Template Types**
+                                  
+                                  *
+                                  `FAILOVER` - Uses health check information on
+                                  your endpoints to determine which DNS answers
+                                  to serve. If an endpoint fails a health check,
+                                  the answer for that endpoint will be removed
+                                  from the list of available answers until the
+                                  endpoint is detected as healthy.
+                                  
+                                   *
+                                  `LOAD_BALANCE` - Distributes web traffic to
+                                  specified endpoints based on defined weights.
+                                  * `ROUTE_BY_GEO` - Answers DNS queries based
+                                  on the query's geographic location. For a list
+                                  of geographic locations to route by, see
+                                  [Traffic Management Geographic Locations].
+                                  
+                                   *
+                                  `ROUTE_BY_ASN` - Answers DNS queries based on
+                                  the query's originating ASN.
+                                  
+                                   * `ROUTE_BY_IP`
+                                  - Answers DNS queries based on the query's IP
+                                  address.
+                                  
+                                   * `CUSTOM` - Allows a customized
+                                  configuration of rules.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Department": "Finance"}`
                                   This
                                   is a complex type whose value must be valid
                                   JSON. The value can be provided as a string on
@@ -1541,6 +1524,25 @@ Options:
                                   be provided. We recommend storing this example
                                   in a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Operations": {"CostCenter":
+                                  "42"}}`
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --answers COMPLEX TYPE          The set of all answers that can potentially
                                   issue from the steering policy.
                                   
@@ -1563,11 +1565,11 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
-  --rules COMPLEX TYPE            The pipeline of rules that will be processed
-                                  in sequence to reduce the pool of answers to a
+  --rules COMPLEX TYPE            The series of rules that will be processed in
+                                  sequence to reduce the pool of answers to a
                                   response for any given request.
                                   
-                                  The first
+                                   The first
                                   rule receives a shuffled list of all answers,
                                   and every other rule receives the list of
                                   answers emitted by the one preceding it. The
@@ -1658,10 +1660,14 @@ Options:
 $ oci dns steering-policy-attachment --help
 Usage: oci dns steering-policy-attachment [OPTIONS] COMMAND [ARGS]...
 
-  An attachment between a steering policy and a domain. An attachment occludes
-  all records at its domain that are of a covered rtype, constructing DNS
-  responses from its steering policy rather than from those domain records. A
-  domain can have at most one attachment covering any given rtype.
+  An attachment between a steering policy and a domain. An attachment
+  constructs DNS responses using its steering policy instead of the records at
+  its defined domain. Only records of the policy's covered rtype are blocked
+  at the domain. A domain can have a maximum of one attachment covering any
+  given rtype.
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -1678,9 +1684,13 @@ Commands:
 $ oci dns steering-policy-attachment create --help
 Usage: oci dns steering-policy-attachment create [OPTIONS]
 
-  Creates a new attachment between a steering policy and a domain. For the
-  purposes of access control, the attachment is automatically placed into the
-  same compartment as the containing zone of the domain.
+  Creates a new attachment between a steering policy and a domain, giving the
+  policy permission to answer queries for the specified domain. A steering
+  policy must be attached to a domain for the policy to answer DNS queries for
+  that domain.
+
+  For the purposes of access control, the attachment is automatically placed
+  into the same compartment as the domain's zone.
 
 Options:
   --steering-policy-id TEXT       The OCID of the attached steering policy.
@@ -1689,8 +1699,8 @@ Options:
   --domain-name TEXT              The attached domain within the attached zone.
                                   [required]
   --display-name TEXT             A user-friendly name for the steering policy
-                                  attachment. Does not have to be unique, and
-                                  it's changeable. Avoid entering confidential
+                                  attachment. Does not have to be unique and can
+                                  be changed. Avoid entering confidential
                                   information.
   --wait-for-state [CREATING|ACTIVE|DELETING]
                                   This operation creates, modifies or deletes a
@@ -1880,10 +1890,10 @@ Options:
   --id TEXT                       The OCID of a resource.
   --display-name TEXT             The displayName of a resource.
   --steering-policy-id TEXT       Search by steering policy OCID. Will match any
-                                  resource whose steering policy id matches the
+                                  resource whose steering policy ID matches the
                                   provided value.
   --zone-id TEXT                  Search by zone OCID. Will match any resource
-                                  whose zone id matches the provided value.
+                                  whose zone ID matches the provided value.
   --domain TEXT                   Search by domain. Will match any record whose
                                   domain (case-insensitive) equals the provided
                                   value.
@@ -2044,7 +2054,8 @@ Options:
                                   The state of a resource.
   --sort-by [displayName|timeCreated|domainName]
                                   The field by which to sort steering policy
-                                  attachments.
+                                  attachments. If unspecified, defaults to
+                                  `timeCreated`.
   --sort-order [ASC|DESC]         The order to sort the resources.
   --all                           Fetches all pages of results. If you provide
                                   this option, then you cannot provide the
@@ -2092,8 +2103,8 @@ Options:
                                   The OCID of the target steering policy
                                   attachment. [required]
   --display-name TEXT             A user-friendly name for the steering policy
-                                  attachment. Does not have to be unique, and
-                                  it's changeable. Avoid entering confidential
+                                  attachment. Does not have to be unique and can
+                                  be changed. Avoid entering confidential
                                   information.
   --if-match TEXT                 The `If-Match` header field makes the request
                                   method conditional on the existence of at
@@ -2162,7 +2173,7 @@ Usage: oci dns zone [OPTIONS] COMMAND [ARGS]...
 
   A DNS zone.
 
-  *Warning:* Oracle recommends that you avoid using any confidential
+  **Warning:** Oracle recommends that you avoid using any confidential
   information when you supply string values using the API.
 
 Options:
@@ -2189,27 +2200,11 @@ Options:
   --zone-type [PRIMARY|SECONDARY]
                                   The type of the zone. Must be either `PRIMARY`
                                   or `SECONDARY`. [required]
-  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
-                                  any predefined name, type, or scope. For more
-                                  information, see [Resource Tags]. Example:
-                                  `{"bar-key": "value"}`
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
-                                  keys are scoped to a namespace. Example:
-                                  `{"foo-namespace": {"bar-key": "value"}}`
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Department": "Finance"}`
                                   This
                                   is a complex type whose value must be valid
                                   JSON. The value can be provided as a string on
@@ -2222,6 +2217,25 @@ Options:
                                   be provided. We recommend storing this example
                                   in a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Operations": {"CostCenter":
+                                  "42"}}`
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --external-masters COMPLEX TYPE
                                   External master servers for the zone.
                                   `externalMasters` becomes a required parameter
@@ -2641,27 +2655,11 @@ Usage: oci dns zone update [OPTIONS]
 Options:
   --zone-name-or-id TEXT          The name or OCID of the target zone.
                                   [required]
-  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
-                                  any predefined name, type, or scope. For more
-                                  information, see [Resource Tags]. Example:
-                                  `{"bar-key": "value"}`
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
-                                  keys are scoped to a namespace. Example:
-                                  `{"foo-namespace": {"bar-key": "value"}}`
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Department": "Finance"}`
                                   This
                                   is a complex type whose value must be valid
                                   JSON. The value can be provided as a string on
@@ -2674,6 +2672,25 @@ Options:
                                   be provided. We recommend storing this example
                                   in a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  **Example:** `{"Operations": {"CostCenter":
+                                  "42"}}`
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --external-masters COMPLEX TYPE
                                   External master servers for the zone.
                                   `externalMasters` becomes a required parameter
