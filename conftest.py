@@ -7,9 +7,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
-from oci_cli import cli_util, cli_setup
-from . import tag_data_container
-from . import test_config_container
+from oci_cli import cli_constants, cli_util, cli_setup
 
 import click
 import datetime
@@ -21,7 +19,19 @@ import pytest
 import random
 import time
 import configparser
+import sys
 
+from inspect import getsourcefile
+from os.path import abspath
+
+this_file_path = abspath(getsourcefile(lambda: 0))
+python_cli_root_dir = this_file_path[:-20]
+sys.path.append(python_cli_root_dir)
+from tests import tag_data_container     # noqa: E402
+from tests import test_config_container  # noqa: E402
+
+
+WAIT_INTERVAL_SECONDS = 30 if test_config_container.vcr_mode != 'none' else 0
 
 # docs on VCR log levels: http://vcrpy.readthedocs.io/en/latest/debugging.html
 logging.basicConfig()
@@ -34,15 +44,55 @@ if not os.path.exists(os.path.join('tests', 'temp')):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--fast", action="store_true", default=False, help="Skip slow tests, as marked with the @slow annotation.")
-    parser.addoption("--enable-long-running", action="store_true", default=False, help="Enables tests marked with the @enable_long_running annotation")
-    parser.addoption("--config-profile", action="store", help="profile to use from the config file", default=oci.config.DEFAULT_PROFILE)
-    parser.addoption("--vcr-record-mode", action="store", default='once', help="Record mode option for VCRpy library.")
-    parser.addoption("--run-recordable-tests-only", action="store", default=False, help="Skip tests where we don't want to record their output.")
+    add_test_option(parser, "--fast", "store_true", False, "Skip slow tests, as marked with the @slow annotation.")
+    add_test_option(parser, "--enable-long-running", "store_true", False, "Enables tests marked with the @enable_long_running annotation")
+    add_test_option(parser, "--config-profile", "store", oci.config.DEFAULT_PROFILE, "profile to use from the config file")
+    add_test_option(parser, "--vcr-record-mode", "store", 'once', "Record mode option for VCRpy library.")
+    add_test_option(parser, "--run-recordable-tests-only", "store", False, "Skip tests where we don't want to record their output.")
+
+
+def add_test_option(parser, option, action, default, help):
+    try:
+        parser.addoption(option, action=action, default=default, help=help)
+    except ValueError as ve:
+        # ValueError: option names {'--fast'} already added
+        if 'already added' in str(ve):
+            pass
+        else:
+            raise ve
 
 
 def pytest_configure(config):
     test_config_container.vcr_mode = config.getoption("--vcr-record-mode")
+
+
+@pytest.fixture(scope='session', autouse=True)
+def move_cli_config_rc_file():
+    expanded_rc_location = os.path.expandvars(os.path.expanduser(cli_constants.CLI_RC_DEFAULT_LOCATION))
+    expanded_rc_fallback_location = os.path.expandvars(os.path.expanduser(cli_constants.CLI_RC_FALLBACK_LOCATION))
+
+    moved_rc_file = False
+    moved_rc_fallback_file = False
+
+    if os.path.exists(expanded_rc_location):
+        os.rename(expanded_rc_location, '{}.moved'.format(expanded_rc_location))
+        print('Moved: {}'.format(expanded_rc_location))
+        moved_rc_file = True
+
+    if os.path.exists(expanded_rc_fallback_location):
+        os.rename(expanded_rc_fallback_location, '{}.moved'.format(expanded_rc_fallback_location))
+        print('Moved: {}'.format(expanded_rc_fallback_location))
+        moved_rc_fallback_file = True
+
+    yield
+
+    if moved_rc_file:
+        os.rename('{}.moved'.format(expanded_rc_location), expanded_rc_location)
+        print('Moved Back: {}'.format(expanded_rc_location))
+
+    if moved_rc_fallback_file:
+        os.rename('{}.moved'.format(expanded_rc_fallback_location), expanded_rc_fallback_location)
+        print('Moved Back: {}'.format(expanded_rc_fallback_location))
 
 
 @pytest.fixture(scope='session')
@@ -160,9 +210,14 @@ def dns_client(config):
 
 
 @pytest.fixture(scope='session')
+def blockstorage_client(config):
+    return oci.core.BlockstorageClient(config)
+
+
+@pytest.fixture(scope='session')
 def cli_testing_service_client():
     try:
-        from .cli_testing_service_client import CLITestingServiceClient
+        from tests.cli_testing_service_client import CLITestingServiceClient
         client = CLITestingServiceClient()
 
         with test_config_container.create_vcr().use_cassette('generated/create_test_service_session.yml'):
@@ -268,7 +323,7 @@ def key_pair_files():
 
 @pytest.fixture(scope='module')
 def vcn_and_subnets(network_client):
-    from . import util
+    from tests import util
 
     with test_config_container.create_vcr().use_cassette('_conftest_fixture_vcn_and_subnets.yml'):
         # create VCN
@@ -286,7 +341,7 @@ def vcn_and_subnets(network_client):
         vcn_ocid = result.data.id
         assert result.status == 200
 
-        oci.wait_until(network_client, network_client.get_vcn(vcn_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+        oci.wait_until(network_client, network_client.get_vcn(vcn_ocid), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300, max_interval_seconds=WAIT_INTERVAL_SECONDS)
 
         # create subnet in first AD
         subnet_name = util.random_name('cli_lb_test_subnet')
@@ -305,7 +360,7 @@ def vcn_and_subnets(network_client):
         subnet_ocid_1 = result.data.id
         assert result.status == 200
 
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300, max_interval_seconds=WAIT_INTERVAL_SECONDS)
 
         # create subnet in second AD
         subnet_name = util.random_name('cli_lb_test_subnet')
@@ -324,7 +379,7 @@ def vcn_and_subnets(network_client):
         subnet_ocid_2 = result.data.id
         assert result.status == 200
 
-        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300)
+        oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'AVAILABLE', max_wait_seconds=300, max_interval_seconds=WAIT_INTERVAL_SECONDS)
 
     yield [vcn_ocid, subnet_ocid_1, subnet_ocid_2]
 
@@ -334,7 +389,7 @@ def vcn_and_subnets(network_client):
         network_client.delete_subnet(subnet_ocid_1)
 
         try:
-            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_1), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600, max_interval_seconds=WAIT_INTERVAL_SECONDS)
         except oci.exceptions.ServiceError as error:
             if not hasattr(error, 'status') or error.status != 404:
                 util.print_latest_exception(error)
@@ -342,7 +397,7 @@ def vcn_and_subnets(network_client):
         network_client.delete_subnet(subnet_ocid_2)
 
         try:
-            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600)
+            oci.wait_until(network_client, network_client.get_subnet(subnet_ocid_2), 'lifecycle_state', 'TERMINATED', max_wait_seconds=600, max_interval_seconds=WAIT_INTERVAL_SECONDS)
         except oci.exceptions.ServiceError as error:
             if not hasattr(error, 'status') or error.status != 404:
                 util.print_latest_exception(error)
@@ -450,7 +505,7 @@ def get_resource_directory():
     File is located based on the relative location of this file (util.py).
     """
     here = os.path.abspath(os.path.dirname(__file__))
-    return os.path.join(here, "resources")
+    return os.path.join(here, "tests", "resources")
 
 
 def get_resource_path(file_name):

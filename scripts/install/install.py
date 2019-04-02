@@ -40,6 +40,8 @@ def is_windows():
     return sys.platform == 'win32'
 
 
+optional_feature_list = ['db (will install cx_Oracle)']
+
 ACCEPT_ALL_DEFAULTS = False
 
 VIRTUALENV_VERSION = '15.0.0'
@@ -60,6 +62,7 @@ USER_BASH_PROFILE = os.path.expanduser(os.path.join('~', '.bash_profile'))
 SOURCE_AUTOCOMPLETE_COMMAND_TEMPLATE = '[[ -e "{completion_file_path}" ]] && source "{completion_file_path}"'
 RELATIVE_PATH_TO_AUTOCOMPLETE_SCRIPT = os.path.join('oci_cli', 'bin', 'oci_autocomplete.sh')
 RELATIVE_PATH_TO_POWERSHELL_AUTOCOMPLETE_SCRIPT = os.path.join('oci_cli', 'bin', 'OciTabExpansion.ps1')
+DEFAULT_OPTIONAL_FEATURES = ''  # Default is to not install any optional features during OCI CLI installation
 
 
 class CLIInstallError(Exception):
@@ -170,7 +173,7 @@ def create_virtualenv(tmp_dir, install_dir):
     exec_command(cmd, cwd=working_dir)
 
 
-def install_cli(install_dir, tmp_dir):
+def install_cli(install_dir, tmp_dir, optional_features):
     if is_windows():
         path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
     else:
@@ -183,7 +186,11 @@ def install_cli(install_dir, tmp_dir):
     if '__PYVENV_LAUNCHER__' in os.environ:
         env.pop('__PYVENV_LAUNCHER__')
 
-    cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'oci_cli', '--upgrade']
+    cli_package_name = 'oci_cli'
+    if (optional_features):
+        cli_package_name += '[' + optional_features + ']'
+
+    cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
     exec_command(cmd, env=env)
 
 
@@ -244,7 +251,7 @@ def get_exec_dir(install_dir):
 def get_script_dir(install_dir):
     script_dir = None
     while not script_dir:
-        prompt_message = "In what directory would you like to place the OCI scripts?".format(OCI_EXECUTABLE_NAME)
+        prompt_message = "In what directory would you like to place the OCI scripts?"
         script_dir = prompt_input_with_default(prompt_message, DEFAULT_SCRIPT_DIR)
         script_dir = os.path.realpath(os.path.expanduser(script_dir))
         if ' ' in script_dir:
@@ -260,6 +267,16 @@ def get_script_dir(install_dir):
     create_dir(script_dir)
     print_status("The scripts will be in '{}'.".format(script_dir))
     return script_dir
+
+
+def get_optional_features():
+    prompt_message = "Currently supported optional packages are: {}\n" \
+                     "What optional CLI packages would you like to be installed (comma separated names; press enter if " \
+                     "you don't need any optional packages)?".format(optional_feature_list)
+    optional_features = prompt_input_with_default(prompt_message, DEFAULT_OPTIONAL_FEATURES)
+
+    print_status("The optional packages installed will be '{}'.".format(optional_features))
+    return optional_features
 
 
 def _backup_rc(rc_file):
@@ -476,12 +493,18 @@ def verify_install_dir_exec_path_conflict(install_dir, exec_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.')
+    parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.', allow_abbrev=False)
     parser.add_argument('--accept-all-defaults', action='store_true',
                         help='If this flag is specified, no user prompts will be displayed and all default prompt responses will be used.')
+    parser.add_argument('--optional-features', help="""This input param is used to specify any optional
+                         features that need to be installed as part of OCI CLI install .e.g. to run dbaas script
+                         'create_backup_from_onprem', users need to install optional "db" feature which will install
+                         dependent cxOracle package. Use this optional input param as follows:
+                         --optional-features feature1,feature2""")
     args = parser.parse_args()
     global ACCEPT_ALL_DEFAULTS
     ACCEPT_ALL_DEFAULTS = args.accept_all_defaults
+    OPTIONAL_FEATURES = args.optional_features
 
     verify_python_version()
     verify_native_dependencies()
@@ -489,13 +512,15 @@ def main():
     install_dir = get_install_dir()
     exec_dir = get_exec_dir(install_dir)
     script_dir = get_script_dir(install_dir)
+    if OPTIONAL_FEATURES is None:
+        OPTIONAL_FEATURES = get_optional_features()
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
     bmcs_exec_path = os.path.join(exec_dir, BMCS_EXECUTABLE_NAME)
     dbaas_exec_path = os.path.join(script_dir, DBAAS_SCRIPT_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)
     verify_install_dir_exec_path_conflict(install_dir, bmcs_exec_path)
     create_virtualenv(tmp_dir, install_dir)
-    install_cli(install_dir, tmp_dir)
+    install_cli(install_dir, tmp_dir, OPTIONAL_FEATURES)
 
     if is_windows():
         venv_python_executable = os.path.join(install_dir, 'Scripts', 'python')

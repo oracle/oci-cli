@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_accept_recommendations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'AcceptRecommendations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -59,9 +60,9 @@ def test_accept_recommendations(cli_testing_service_client, runner, config_file,
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, AcceptRecommendations. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('accept_recommendations.command_name', 'accept'),
@@ -97,6 +98,7 @@ def test_accept_recommendations(cli_testing_service_client, runner, config_file,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_cancel_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'CancelWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -133,9 +135,9 @@ def test_cancel_work_request(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, CancelWorkRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('cancel_work_request.command_name', 'cancel'),
@@ -172,6 +174,7 @@ def test_cancel_work_request(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'CreateCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -216,9 +219,9 @@ def test_create_certificate(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, CreateCertificate. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_certificate.command_name', 'create'),
@@ -254,6 +257,7 @@ def test_create_certificate(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'CreateWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -298,9 +302,9 @@ def test_create_waas_policy(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, CreateWaasPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_waas_policy.command_name', 'create'),
@@ -336,6 +340,7 @@ def test_create_waas_policy(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'DeleteCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -372,9 +377,9 @@ def test_delete_certificate(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, DeleteCertificate. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_certificate.command_name', 'delete'),
@@ -411,6 +416,7 @@ def test_delete_certificate(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'DeleteWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -447,9 +453,9 @@ def test_delete_waas_policy(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, DeleteWaasPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_waas_policy.command_name', 'delete'),
@@ -486,6 +492,7 @@ def test_delete_waas_policy(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -522,9 +529,9 @@ def test_get_certificate(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetCertificate. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_certificate.command_name', 'get'),
@@ -560,6 +567,7 @@ def test_get_certificate(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_device_fingerprint_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetDeviceFingerprintChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -596,9 +604,9 @@ def test_get_device_fingerprint_challenge(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetDeviceFingerprintChallenge. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_device_fingerprint_challenge.command_name', 'get'),
@@ -634,6 +642,7 @@ def test_get_device_fingerprint_challenge(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_human_interaction_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetHumanInteractionChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -670,9 +679,9 @@ def test_get_human_interaction_challenge(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetHumanInteractionChallenge. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_human_interaction_challenge.command_name', 'get'),
@@ -708,6 +717,7 @@ def test_get_human_interaction_challenge(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_js_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetJsChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -744,9 +754,9 @@ def test_get_js_challenge(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetJsChallenge. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_js_challenge.command_name', 'get'),
@@ -782,6 +792,7 @@ def test_get_js_challenge(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_policy_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetPolicyConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -818,9 +829,9 @@ def test_get_policy_config(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetPolicyConfig. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_policy_config.command_name', 'get'),
@@ -856,6 +867,7 @@ def test_get_policy_config(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_protection_rule(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetProtectionRule'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -892,9 +904,9 @@ def test_get_protection_rule(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetProtectionRule. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_protection_rule.command_name', 'get'),
@@ -930,6 +942,7 @@ def test_get_protection_rule(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_protection_settings(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetProtectionSettings'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -966,9 +979,9 @@ def test_get_protection_settings(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetProtectionSettings. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_protection_settings.command_name', 'get'),
@@ -1004,6 +1017,7 @@ def test_get_protection_settings(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1040,9 +1054,9 @@ def test_get_waas_policy(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetWaasPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_waas_policy.command_name', 'get'),
@@ -1078,6 +1092,7 @@ def test_get_waas_policy(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_waf_address_rate_limiting(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWafAddressRateLimiting'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1114,9 +1129,9 @@ def test_get_waf_address_rate_limiting(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetWafAddressRateLimiting. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_waf_address_rate_limiting.command_name', 'get-waf'),
@@ -1152,6 +1167,7 @@ def test_get_waf_address_rate_limiting(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_waf_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWafConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1188,9 +1204,9 @@ def test_get_waf_config(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetWafConfig. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_waf_config.command_name', 'get'),
@@ -1226,6 +1242,7 @@ def test_get_waf_config(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1262,9 +1279,9 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, GetWorkRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_work_request.command_name', 'get'),
@@ -1300,6 +1317,7 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_access_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListAccessRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1336,9 +1354,9 @@ def test_list_access_rules(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListAccessRules. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_access_rules.command_name', 'list'),
@@ -1374,6 +1392,7 @@ def test_list_access_rules(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_captchas(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListCaptchas'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1410,9 +1429,9 @@ def test_list_captchas(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListCaptchas. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_captchas.command_name', 'list'),
@@ -1448,6 +1467,7 @@ def test_list_captchas(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_certificates(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListCertificates'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1484,9 +1504,9 @@ def test_list_certificates(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListCertificates. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_certificates.command_name', 'list'),
@@ -1522,6 +1542,7 @@ def test_list_certificates(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_edge_subnets(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListEdgeSubnets'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1558,9 +1579,9 @@ def test_list_edge_subnets(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListEdgeSubnets. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_edge_subnets.command_name', 'list'),
@@ -1596,6 +1617,7 @@ def test_list_edge_subnets(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_good_bots(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListGoodBots'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1632,9 +1654,9 @@ def test_list_good_bots(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListGoodBots. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_good_bots.command_name', 'list'),
@@ -1670,6 +1692,7 @@ def test_list_good_bots(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_protection_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListProtectionRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1706,9 +1729,9 @@ def test_list_protection_rules(cli_testing_service_client, runner, config_file, 
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListProtectionRules. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_protection_rules.command_name', 'list'),
@@ -1744,6 +1767,7 @@ def test_list_protection_rules(cli_testing_service_client, runner, config_file, 
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_recommendations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListRecommendations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1780,9 +1804,9 @@ def test_list_recommendations(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListRecommendations. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_recommendations.command_name', 'list'),
@@ -1818,6 +1842,7 @@ def test_list_recommendations(cli_testing_service_client, runner, config_file, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_threat_feeds(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListThreatFeeds'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1854,9 +1879,9 @@ def test_list_threat_feeds(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListThreatFeeds. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_threat_feeds.command_name', 'list'),
@@ -1892,6 +1917,7 @@ def test_list_threat_feeds(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_waas_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWaasPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1928,9 +1954,9 @@ def test_list_waas_policies(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWaasPolicies. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_waas_policies.command_name', 'list'),
@@ -1966,6 +1992,7 @@ def test_list_waas_policies(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_waf_blocked_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafBlockedRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2002,9 +2029,9 @@ def test_list_waf_blocked_requests(cli_testing_service_client, runner, config_fi
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWafBlockedRequests. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_waf_blocked_requests.command_name', 'list'),
@@ -2040,6 +2067,7 @@ def test_list_waf_blocked_requests(cli_testing_service_client, runner, config_fi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_waf_logs(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafLogs'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2076,9 +2104,9 @@ def test_list_waf_logs(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWafLogs. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_waf_logs.command_name', 'list'),
@@ -2114,6 +2142,7 @@ def test_list_waf_logs(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_waf_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2150,9 +2179,9 @@ def test_list_waf_requests(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWafRequests. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_waf_requests.command_name', 'list'),
@@ -2188,6 +2217,7 @@ def test_list_waf_requests(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_waf_traffic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafTraffic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2224,9 +2254,9 @@ def test_list_waf_traffic(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWafTraffic. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_waf_traffic.command_name', 'list-waf-traffic'),
@@ -2262,6 +2292,7 @@ def test_list_waf_traffic(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_whitelists(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWhitelists'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2298,9 +2329,9 @@ def test_list_whitelists(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWhitelists. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_whitelists.command_name', 'list'),
@@ -2336,6 +2367,7 @@ def test_list_whitelists(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_work_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWorkRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2372,9 +2404,9 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, ListWorkRequests. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_work_requests.command_name', 'list'),
@@ -2410,6 +2442,7 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_access_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateAccessRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2446,9 +2479,9 @@ def test_update_access_rules(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateAccessRules. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_access_rules.command_name', 'update'),
@@ -2484,6 +2517,7 @@ def test_update_access_rules(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_captchas(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateCaptchas'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2520,9 +2554,9 @@ def test_update_captchas(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateCaptchas. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_captchas.command_name', 'update'),
@@ -2558,6 +2592,7 @@ def test_update_captchas(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2602,9 +2637,9 @@ def test_update_certificate(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateCertificate. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_certificate.command_name', 'update'),
@@ -2641,6 +2676,7 @@ def test_update_certificate(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_device_fingerprint_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateDeviceFingerprintChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2685,9 +2721,9 @@ def test_update_device_fingerprint_challenge(cli_testing_service_client, runner,
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateDeviceFingerprintChallenge. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_device_fingerprint_challenge.command_name', 'update'),
@@ -2724,6 +2760,7 @@ def test_update_device_fingerprint_challenge(cli_testing_service_client, runner,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_good_bots(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateGoodBots'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2760,9 +2797,9 @@ def test_update_good_bots(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateGoodBots. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_good_bots.command_name', 'update'),
@@ -2798,6 +2835,7 @@ def test_update_good_bots(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_human_interaction_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateHumanInteractionChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2842,9 +2880,9 @@ def test_update_human_interaction_challenge(cli_testing_service_client, runner, 
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateHumanInteractionChallenge. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_human_interaction_challenge.command_name', 'update'),
@@ -2881,6 +2919,7 @@ def test_update_human_interaction_challenge(cli_testing_service_client, runner, 
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_js_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateJsChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2925,9 +2964,9 @@ def test_update_js_challenge(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateJsChallenge. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_js_challenge.command_name', 'update'),
@@ -2964,6 +3003,7 @@ def test_update_js_challenge(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_policy_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdatePolicyConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3008,9 +3048,9 @@ def test_update_policy_config(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdatePolicyConfig. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_policy_config.command_name', 'update'),
@@ -3046,6 +3086,7 @@ def test_update_policy_config(cli_testing_service_client, runner, config_file, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_protection_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateProtectionRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3082,9 +3123,9 @@ def test_update_protection_rules(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateProtectionRules. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_protection_rules.command_name', 'update'),
@@ -3120,6 +3161,7 @@ def test_update_protection_rules(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_protection_settings(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateProtectionSettings'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3164,9 +3206,9 @@ def test_update_protection_settings(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateProtectionSettings. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_protection_settings.command_name', 'update'),
@@ -3203,6 +3245,7 @@ def test_update_protection_settings(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_threat_feeds(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateThreatFeeds'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3239,9 +3282,9 @@ def test_update_threat_feeds(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateThreatFeeds. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_threat_feeds.command_name', 'update'),
@@ -3277,6 +3320,7 @@ def test_update_threat_feeds(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3321,9 +3365,9 @@ def test_update_waas_policy(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateWaasPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_waas_policy.command_name', 'update'),
@@ -3360,6 +3404,7 @@ def test_update_waas_policy(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_waf_address_rate_limiting(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWafAddressRateLimiting'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3404,9 +3449,9 @@ def test_update_waf_address_rate_limiting(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateWafAddressRateLimiting. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_waf_address_rate_limiting.command_name', 'update-waf'),
@@ -3442,6 +3487,7 @@ def test_update_waf_address_rate_limiting(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_waf_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWafConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3486,9 +3532,9 @@ def test_update_waf_config(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateWafConfig. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_waf_config.command_name', 'update'),
@@ -3525,6 +3571,7 @@ def test_update_waf_config(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_whitelists(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWhitelists'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3561,9 +3608,9 @@ def test_update_whitelists(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: waas, UpdateWhitelists. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_whitelists.command_name', 'update'),

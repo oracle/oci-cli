@@ -6,7 +6,7 @@ import os
 import unittest
 from . import util
 import oci_cli
-from .conftest import runner
+from conftest import runner
 
 help_template = u"""
 ++++++++++++++++++++++++++++++++++++++++++++++

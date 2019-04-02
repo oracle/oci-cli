@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_abort_multipart_upload(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'AbortMultipartUpload'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -59,9 +60,9 @@ def test_abort_multipart_upload(cli_testing_service_client, runner, config_file,
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, AbortMultipartUpload. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('abort_multipart_upload.command_name', 'abort-multipart-upload'),
@@ -98,6 +99,7 @@ def test_abort_multipart_upload(cli_testing_service_client, runner, config_file,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_cancel_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'CancelWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -134,9 +136,9 @@ def test_cancel_work_request(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, CancelWorkRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('cancel_work_request.command_name', 'cancel'),
@@ -173,6 +175,7 @@ def test_cancel_work_request(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_commit_multipart_upload(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'CommitMultipartUpload'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -217,9 +220,9 @@ def test_commit_multipart_upload(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, CommitMultipartUpload. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('commit_multipart_upload.command_name', 'commit-multipart-upload'),
@@ -255,6 +258,7 @@ def test_commit_multipart_upload(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_copy_object(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'CopyObject'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -299,9 +303,9 @@ def test_copy_object(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, CopyObject. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('copy_object.command_name', 'copy'),
@@ -337,6 +341,7 @@ def test_copy_object(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_bucket(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'CreateBucket'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -381,9 +386,9 @@ def test_create_bucket(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, CreateBucket. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_bucket.command_name', 'create'),
@@ -419,6 +424,7 @@ def test_create_bucket(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_multipart_upload(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'CreateMultipartUpload'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -463,9 +469,9 @@ def test_create_multipart_upload(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, CreateMultipartUpload. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_multipart_upload.command_name', 'create-multipart-upload'),
@@ -501,6 +507,7 @@ def test_create_multipart_upload(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_preauthenticated_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'CreatePreauthenticatedRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -545,9 +552,9 @@ def test_create_preauthenticated_request(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, CreatePreauthenticatedRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_preauthenticated_request.command_name', 'create'),
@@ -583,6 +590,7 @@ def test_create_preauthenticated_request(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_bucket(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'DeleteBucket'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -619,9 +627,9 @@ def test_delete_bucket(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, DeleteBucket. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_bucket.command_name', 'delete'),
@@ -658,6 +666,7 @@ def test_delete_bucket(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_object(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'DeleteObject'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -694,9 +703,9 @@ def test_delete_object(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, DeleteObject. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_object.command_name', 'delete'),
@@ -733,6 +742,7 @@ def test_delete_object(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_object_lifecycle_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'DeleteObjectLifecyclePolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -769,9 +779,9 @@ def test_delete_object_lifecycle_policy(cli_testing_service_client, runner, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, DeleteObjectLifecyclePolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_object_lifecycle_policy.command_name', 'delete'),
@@ -808,6 +818,7 @@ def test_delete_object_lifecycle_policy(cli_testing_service_client, runner, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_preauthenticated_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'DeletePreauthenticatedRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -844,9 +855,9 @@ def test_delete_preauthenticated_request(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, DeletePreauthenticatedRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_preauthenticated_request.command_name', 'delete'),
@@ -883,6 +894,7 @@ def test_delete_preauthenticated_request(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_bucket(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetBucket'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -919,9 +931,9 @@ def test_get_bucket(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetBucket. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_bucket.command_name', 'get'),
@@ -957,6 +969,7 @@ def test_get_bucket(cli_testing_service_client, runner, config_file, config_prof
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_namespace(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetNamespace'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -993,9 +1006,9 @@ def test_get_namespace(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetNamespace. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_namespace.command_name', 'get'),
@@ -1031,6 +1044,7 @@ def test_get_namespace(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_namespace_metadata(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetNamespaceMetadata'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1067,9 +1081,9 @@ def test_get_namespace_metadata(cli_testing_service_client, runner, config_file,
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetNamespaceMetadata. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_namespace_metadata.command_name', 'get-namespace-metadata'),
@@ -1105,6 +1119,7 @@ def test_get_namespace_metadata(cli_testing_service_client, runner, config_file,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_object(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetObject'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1141,9 +1156,9 @@ def test_get_object(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetObject. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_object.command_name', 'get'),
@@ -1188,6 +1203,7 @@ def test_get_object(cli_testing_service_client, runner, config_file, config_prof
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_object_lifecycle_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetObjectLifecyclePolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1224,9 +1240,9 @@ def test_get_object_lifecycle_policy(cli_testing_service_client, runner, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetObjectLifecyclePolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_object_lifecycle_policy.command_name', 'get'),
@@ -1262,6 +1278,7 @@ def test_get_object_lifecycle_policy(cli_testing_service_client, runner, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_preauthenticated_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetPreauthenticatedRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1298,9 +1315,9 @@ def test_get_preauthenticated_request(cli_testing_service_client, runner, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetPreauthenticatedRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_preauthenticated_request.command_name', 'get'),
@@ -1336,6 +1353,7 @@ def test_get_preauthenticated_request(cli_testing_service_client, runner, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'GetWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1372,9 +1390,9 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, GetWorkRequest. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_work_request.command_name', 'get'),
@@ -1410,6 +1428,7 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_head_bucket(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'HeadBucket'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1446,9 +1465,9 @@ def test_head_bucket(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, HeadBucket. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('head_bucket.command_name', 'head'),
@@ -1484,6 +1503,7 @@ def test_head_bucket(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_head_object(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'HeadObject'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1520,9 +1540,9 @@ def test_head_object(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, HeadObject. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('head_object.command_name', 'head'),
@@ -1558,6 +1578,7 @@ def test_head_object(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_buckets(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListBuckets'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1594,9 +1615,9 @@ def test_list_buckets(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListBuckets. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_buckets.command_name', 'list'),
@@ -1632,6 +1653,7 @@ def test_list_buckets(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_multipart_upload_parts(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListMultipartUploadParts'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1668,9 +1690,9 @@ def test_list_multipart_upload_parts(cli_testing_service_client, runner, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListMultipartUploadParts. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_multipart_upload_parts.command_name', 'list-multipart-upload-parts'),
@@ -1706,6 +1728,7 @@ def test_list_multipart_upload_parts(cli_testing_service_client, runner, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_multipart_uploads(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListMultipartUploads'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1742,9 +1765,9 @@ def test_list_multipart_uploads(cli_testing_service_client, runner, config_file,
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListMultipartUploads. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_multipart_uploads.command_name', 'list-multipart-uploads'),
@@ -1780,6 +1803,7 @@ def test_list_multipart_uploads(cli_testing_service_client, runner, config_file,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_objects(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListObjects'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1816,9 +1840,9 @@ def test_list_objects(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListObjects. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_objects.command_name', 'list'),
@@ -1854,6 +1878,7 @@ def test_list_objects(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_preauthenticated_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListPreauthenticatedRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1890,9 +1915,9 @@ def test_list_preauthenticated_requests(cli_testing_service_client, runner, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListPreauthenticatedRequests. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_preauthenticated_requests.command_name', 'list'),
@@ -1928,6 +1953,7 @@ def test_list_preauthenticated_requests(cli_testing_service_client, runner, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_work_request_errors(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListWorkRequestErrors'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1964,9 +1990,9 @@ def test_list_work_request_errors(cli_testing_service_client, runner, config_fil
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListWorkRequestErrors. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_work_request_errors.command_name', 'list'),
@@ -2002,6 +2028,7 @@ def test_list_work_request_errors(cli_testing_service_client, runner, config_fil
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_work_request_logs(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListWorkRequestLogs'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2038,9 +2065,9 @@ def test_list_work_request_logs(cli_testing_service_client, runner, config_file,
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListWorkRequestLogs. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'),
@@ -2076,6 +2103,7 @@ def test_list_work_request_logs(cli_testing_service_client, runner, config_file,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_work_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'ListWorkRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2112,9 +2140,9 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, ListWorkRequests. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_work_requests.command_name', 'list'),
@@ -2150,6 +2178,7 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_put_object(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'PutObject'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2186,9 +2215,9 @@ def test_put_object(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, PutObject. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('put_object.command_name', 'put'),
@@ -2224,6 +2253,7 @@ def test_put_object(cli_testing_service_client, runner, config_file, config_prof
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_put_object_lifecycle_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'PutObjectLifecyclePolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2268,9 +2298,9 @@ def test_put_object_lifecycle_policy(cli_testing_service_client, runner, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, PutObjectLifecyclePolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('put_object_lifecycle_policy.command_name', 'put'),
@@ -2307,6 +2337,7 @@ def test_put_object_lifecycle_policy(cli_testing_service_client, runner, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_rename_object(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'RenameObject'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2351,9 +2382,9 @@ def test_rename_object(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, RenameObject. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('rename_object.command_name', 'rename'),
@@ -2389,6 +2420,7 @@ def test_rename_object(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_restore_objects(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'RestoreObjects'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2433,9 +2465,9 @@ def test_restore_objects(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, RestoreObjects. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('restore_objects.command_name', 'restore'),
@@ -2471,6 +2503,7 @@ def test_restore_objects(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_bucket(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'UpdateBucket'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2515,9 +2548,9 @@ def test_update_bucket(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, UpdateBucket. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_bucket.command_name', 'update'),
@@ -2553,6 +2586,7 @@ def test_update_bucket(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_namespace_metadata(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'UpdateNamespaceMetadata'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2597,9 +2631,9 @@ def test_update_namespace_metadata(cli_testing_service_client, runner, config_fi
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, UpdateNamespaceMetadata. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_namespace_metadata.command_name', 'update-namespace-metadata'),
@@ -2635,6 +2669,7 @@ def test_update_namespace_metadata(cli_testing_service_client, runner, config_fi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_upload_part(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('object_storage', 'UploadPart'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2671,9 +2706,9 @@ def test_upload_part(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: object_storage, UploadPart. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('upload_part.command_name', 'upload-part'),

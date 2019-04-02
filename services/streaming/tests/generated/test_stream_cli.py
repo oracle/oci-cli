@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_consumer_commit(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'ConsumerCommit'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -60,9 +61,9 @@ def test_consumer_commit(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, ConsumerCommit. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('consumer_commit.command_name', 'consumer-commit'),
@@ -101,6 +102,7 @@ def test_consumer_commit(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_consumer_heartbeat(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'ConsumerHeartbeat'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -138,9 +140,9 @@ def test_consumer_heartbeat(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, ConsumerHeartbeat. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('consumer_heartbeat.command_name', 'consumer-heartbeat'),
@@ -179,6 +181,7 @@ def test_consumer_heartbeat(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_cursor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'CreateCursor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -224,9 +227,9 @@ def test_create_cursor(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, CreateCursor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_cursor.command_name', 'create'),
@@ -265,6 +268,7 @@ def test_create_cursor(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_group_cursor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'CreateGroupCursor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -310,9 +314,9 @@ def test_create_group_cursor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, CreateGroupCursor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_group_cursor.command_name', 'create-group'),
@@ -351,6 +355,7 @@ def test_create_group_cursor(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'GetGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -388,9 +393,9 @@ def test_get_group(cli_testing_service_client, runner, config_file, config_profi
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, GetGroup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_group.command_name', 'get'),
@@ -429,6 +434,7 @@ def test_get_group(cli_testing_service_client, runner, config_file, config_profi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_messages(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'GetMessages'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -466,9 +472,9 @@ def test_get_messages(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, GetMessages. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_messages.command_name', 'get'),
@@ -507,6 +513,7 @@ def test_get_messages(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_put_messages(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'PutMessages'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -552,9 +559,9 @@ def test_put_messages(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, PutMessages. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('put_messages.command_name', 'put'),
@@ -593,6 +600,7 @@ def test_put_messages(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'UpdateGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -638,9 +646,9 @@ def test_update_group(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: streaming, UpdateGroup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_group.command_name', 'update'),

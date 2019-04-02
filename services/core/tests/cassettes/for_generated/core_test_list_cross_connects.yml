@@ -5,15 +5,82 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListCrossConnects&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:13 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Feb 2019 19:39:27 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0806&apiName=ListCrossConnects&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9d7273af-ba6f-4dbc-9a9f-613e48890293","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa","crossConnectGroupId":"ocid1.crossconnectgroup.oc1.phx.aaaaaaaa3k33qedycjtfqe3rfpuwlk6cqtqgc4i4kw67sk3owyyifzqbsavq","limit":10,"displayName":"__STS0806_4287"}}]'}
+    headers:
+      Content-Length: ['329']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:39:29 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/de:55:09:69:53:e3:c0:d0:8d:ab:97:5f:7b:51:ec:cc",signature="TjKTeBrAT8pKM46A+V3ECkYT6U4B6wb6+ZDiHHe111DSgpdxCiTxFk92rH2HT4P5Cc00FFWZKhQ/rGbmjI3OIkfNZ2iTgRqfTvmtS0dGcSZFz4+Z23yHQUYcflFfUZXaELkvsB8dEU9f8UDqO3A9Sz8g4ZKcV3cCYOT5LMUbNhgih7SeIy98J3b7plf/QGhIqRK0x5lohmmpuXNHHzf2b77NY9XjAj+4qqu6pvawIU3sK6icIWvMdhtLdcNAY8CYVhfLaQo89gwvA8Cm6BIKnlCByXAQD11G5LbRCER3b0LDzRLymZdM55hAqjx+3VL+jGnQ68WIoIlGjN7RWa+Mrg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 19:39:30 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [4F985079C1E6430C97EBD534E5595B4F]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/crossConnects?crossConnectGroupId=ocid1.crossconnectgroup.oc1.phx.aaaaaaaa3k33qedycjtfqe3rfpuwlk6cqtqgc4i4kw67sk3owyyifzqbsavq&displayName=__STS0806_4287&limit=10&compartmentId=ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 19:39:33 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [4F985079C1E6430C97EBD534E5595B4F/2A30A1E2F21FB9C5A36B543DD66A6762/5D0C111821586F347E440BC9317461D8]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"E4FDAE4788274FCAB421378FF89EC1CF\",
+      \"items\": []}", "requestJson": "{\"crossConnectGroupId\": \"ocid1.crossconnectgroup.oc1.phx.aaaaaaaa3k33qedycjtfqe3rfpuwlk6cqtqgc4i4kw67sk3owyyifzqbsavq\",
+      \"limit\": 10, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"displayName\": \"__STS0806_4287\"}", "containerId": "9d7273af-ba6f-4dbc-9a9f-613e48890293",
+      "requestClass": "com.oracle.bmc.core.requests.ListCrossConnectsRequest", "responseClass":
+      "com.oracle.bmc.core.responses.ListCrossConnectsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['597']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0806&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:39:35 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

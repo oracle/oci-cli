@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_create_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'CreateKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -68,9 +69,9 @@ def test_create_key(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, CreateKey. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_key.command_name', 'create'),
@@ -109,6 +110,7 @@ def test_create_key(cli_testing_service_client, runner, config_file, config_prof
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_key_version(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'CreateKeyVersion'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -146,9 +148,9 @@ def test_create_key_version(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, CreateKeyVersion. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_key_version.command_name', 'create'),
@@ -187,6 +189,7 @@ def test_create_key_version(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_disable_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'DisableKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -224,9 +227,9 @@ def test_disable_key(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, DisableKey. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('disable_key.command_name', 'disable'),
@@ -265,6 +268,7 @@ def test_disable_key(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_enable_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'EnableKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -302,9 +306,9 @@ def test_enable_key(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, EnableKey. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('enable_key.command_name', 'enable'),
@@ -343,6 +347,7 @@ def test_enable_key(cli_testing_service_client, runner, config_file, config_prof
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GetKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -380,9 +385,9 @@ def test_get_key(cli_testing_service_client, runner, config_file, config_profile
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, GetKey. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_key.command_name', 'get'),
@@ -421,6 +426,7 @@ def test_get_key(cli_testing_service_client, runner, config_file, config_profile
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_key_version(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GetKeyVersion'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -458,9 +464,9 @@ def test_get_key_version(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, GetKeyVersion. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_key_version.command_name', 'get'),
@@ -499,6 +505,7 @@ def test_get_key_version(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_key_versions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'ListKeyVersions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -536,9 +543,9 @@ def test_list_key_versions(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, ListKeyVersions. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_key_versions.command_name', 'list'),
@@ -577,6 +584,7 @@ def test_list_key_versions(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_keys(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'ListKeys'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -614,9 +622,9 @@ def test_list_keys(cli_testing_service_client, runner, config_file, config_profi
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, ListKeys. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_keys.command_name', 'list'),
@@ -655,6 +663,7 @@ def test_list_keys(cli_testing_service_client, runner, config_file, config_profi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'UpdateKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -700,9 +709,9 @@ def test_update_key(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, UpdateKey. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_key.command_name', 'update'),

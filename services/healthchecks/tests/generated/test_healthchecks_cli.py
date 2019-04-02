@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_create_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreateHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -67,9 +68,9 @@ def test_create_http_monitor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, CreateHttpMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_http_monitor.command_name', 'create'),
@@ -105,6 +106,7 @@ def test_create_http_monitor(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_on_demand_http_probe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreateOnDemandHttpProbe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -149,9 +151,9 @@ def test_create_on_demand_http_probe(cli_testing_service_client, runner, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, CreateOnDemandHttpProbe. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_on_demand_http_probe.command_name', 'create-on-demand'),
@@ -187,6 +189,7 @@ def test_create_on_demand_http_probe(cli_testing_service_client, runner, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_on_demand_ping_probe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreateOnDemandPingProbe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -231,9 +234,9 @@ def test_create_on_demand_ping_probe(cli_testing_service_client, runner, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, CreateOnDemandPingProbe. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_on_demand_ping_probe.command_name', 'create-on-demand'),
@@ -269,6 +272,7 @@ def test_create_on_demand_ping_probe(cli_testing_service_client, runner, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreatePingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -313,9 +317,9 @@ def test_create_ping_monitor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, CreatePingMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_ping_monitor.command_name', 'create'),
@@ -351,6 +355,7 @@ def test_create_ping_monitor(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'DeleteHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -387,9 +392,9 @@ def test_delete_http_monitor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, DeleteHttpMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_http_monitor.command_name', 'delete'),
@@ -426,6 +431,7 @@ def test_delete_http_monitor(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'DeletePingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -462,9 +468,9 @@ def test_delete_ping_monitor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, DeletePingMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_ping_monitor.command_name', 'delete'),
@@ -501,6 +507,7 @@ def test_delete_ping_monitor(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'GetHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -537,9 +544,9 @@ def test_get_http_monitor(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, GetHttpMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_http_monitor.command_name', 'get'),
@@ -575,6 +582,7 @@ def test_get_http_monitor(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'GetPingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -611,9 +619,9 @@ def test_get_ping_monitor(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, GetPingMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_ping_monitor.command_name', 'get'),
@@ -649,6 +657,7 @@ def test_get_ping_monitor(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_health_checks_vantage_points(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListHealthChecksVantagePoints'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -685,9 +694,9 @@ def test_list_health_checks_vantage_points(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, ListHealthChecksVantagePoints. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_health_checks_vantage_points.command_name', 'list'),
@@ -723,6 +732,7 @@ def test_list_health_checks_vantage_points(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_http_monitors(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListHttpMonitors'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -759,9 +769,9 @@ def test_list_http_monitors(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, ListHttpMonitors. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_http_monitors.command_name', 'list'),
@@ -797,6 +807,7 @@ def test_list_http_monitors(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_http_probe_results(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListHttpProbeResults'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -833,9 +844,9 @@ def test_list_http_probe_results(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, ListHttpProbeResults. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_http_probe_results.command_name', 'list'),
@@ -871,6 +882,7 @@ def test_list_http_probe_results(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_ping_monitors(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListPingMonitors'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -907,9 +919,9 @@ def test_list_ping_monitors(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, ListPingMonitors. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_ping_monitors.command_name', 'list'),
@@ -945,6 +957,7 @@ def test_list_ping_monitors(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_ping_probe_results(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListPingProbeResults'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -981,9 +994,9 @@ def test_list_ping_probe_results(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, ListPingProbeResults. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_ping_probe_results.command_name', 'list'),
@@ -1019,6 +1032,7 @@ def test_list_ping_probe_results(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'UpdateHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1063,9 +1077,9 @@ def test_update_http_monitor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, UpdateHttpMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_http_monitor.command_name', 'update'),
@@ -1102,6 +1116,7 @@ def test_update_http_monitor(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'UpdatePingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1146,9 +1161,9 @@ def test_update_ping_monitor(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: healthchecks, UpdatePingMonitor. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_ping_monitor.command_name', 'update'),

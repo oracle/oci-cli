@@ -29,13 +29,12 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.2.4',
+    'oci==2.2.5',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
     'configparser==3.5.0',
     'cryptography==2.4.2',
-    'cx_Oracle==7.0',
     'httpsig_cffi==15.0.0',
     'jmespath==0.9.3',
     'python-dateutil==2.7.3',
@@ -47,6 +46,10 @@ requires = [
     'pyOpenSSL==18.0.0',
     'PyYAML==3.13'
 ]
+
+extras = {
+    'db': ['cx_Oracle==7.0']
+}
 
 fips_libcrypto_file = os.getenv("OCI_CLI_FIPS_LIBCRYPTO_FILE")
 if fips_libcrypto_file:
@@ -84,6 +87,7 @@ setup(
                             "create_backup_from_onprem=oci_cli.scripts.database.dbaas:create_backup_from_onprem"]
     },
     install_requires=requires,
+    extras_require=extras,
     packages=all_packages,
     package_dir=package_dirs,
     include_package_data=True,

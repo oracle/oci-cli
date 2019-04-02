@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_attach_load_balancer(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'AttachLoadBalancer'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -68,9 +69,9 @@ def test_attach_load_balancer(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, AttachLoadBalancer. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('attach_load_balancer.command_name', 'attach'),
@@ -106,6 +107,7 @@ def test_attach_load_balancer(cli_testing_service_client, runner, config_file, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -151,9 +153,9 @@ def test_create_instance_configuration(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, CreateInstanceConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_instance_configuration.command_name', 'create'),
@@ -189,6 +191,7 @@ def test_create_instance_configuration(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -234,9 +237,9 @@ def test_create_instance_pool(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, CreateInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_instance_pool.command_name', 'create'),
@@ -272,6 +275,7 @@ def test_create_instance_pool(cli_testing_service_client, runner, config_file, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -309,9 +313,9 @@ def test_delete_instance_configuration(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, DeleteInstanceConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_instance_configuration.command_name', 'delete'),
@@ -348,6 +352,7 @@ def test_delete_instance_configuration(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_detach_load_balancer(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DetachLoadBalancer'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -393,9 +398,9 @@ def test_detach_load_balancer(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, DetachLoadBalancer. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('detach_load_balancer.command_name', 'detach'),
@@ -431,6 +436,7 @@ def test_detach_load_balancer(cli_testing_service_client, runner, config_file, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -468,9 +474,9 @@ def test_get_instance_configuration(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, GetInstanceConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_instance_configuration.command_name', 'get'),
@@ -506,6 +512,7 @@ def test_get_instance_configuration(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -543,9 +550,9 @@ def test_get_instance_pool(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, GetInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_instance_pool.command_name', 'get'),
@@ -581,6 +588,7 @@ def test_get_instance_pool(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_launch_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'LaunchInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -636,9 +644,9 @@ def test_launch_instance_configuration(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, LaunchInstanceConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('launch_instance_configuration.command_name', 'launch-instance-configuration'),
@@ -674,6 +682,7 @@ def test_launch_instance_configuration(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_instance_configurations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInstanceConfigurations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -711,9 +720,9 @@ def test_list_instance_configurations(cli_testing_service_client, runner, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, ListInstanceConfigurations. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_instance_configurations.command_name', 'list'),
@@ -749,6 +758,7 @@ def test_list_instance_configurations(cli_testing_service_client, runner, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_instance_pool_instances(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInstancePoolInstances'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -786,9 +796,9 @@ def test_list_instance_pool_instances(cli_testing_service_client, runner, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, ListInstancePoolInstances. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_instance_pool_instances.command_name', 'list-instance-pool-instances'),
@@ -824,6 +834,7 @@ def test_list_instance_pool_instances(cli_testing_service_client, runner, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_instance_pools(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInstancePools'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -861,9 +872,9 @@ def test_list_instance_pools(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, ListInstancePools. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_instance_pools.command_name', 'list'),
@@ -899,6 +910,7 @@ def test_list_instance_pools(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_reset_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ResetInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -936,9 +948,9 @@ def test_reset_instance_pool(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, ResetInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('reset_instance_pool.command_name', 'reset'),
@@ -974,6 +986,7 @@ def test_reset_instance_pool(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_softreset_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'SoftresetInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1011,9 +1024,9 @@ def test_softreset_instance_pool(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, SoftresetInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('softreset_instance_pool.command_name', 'softreset'),
@@ -1049,6 +1062,7 @@ def test_softreset_instance_pool(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_start_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'StartInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1086,9 +1100,9 @@ def test_start_instance_pool(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, StartInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('start_instance_pool.command_name', 'start'),
@@ -1124,6 +1138,7 @@ def test_start_instance_pool(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_stop_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'StopInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1161,9 +1176,9 @@ def test_stop_instance_pool(cli_testing_service_client, runner, config_file, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, StopInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('stop_instance_pool.command_name', 'stop'),
@@ -1199,6 +1214,7 @@ def test_stop_instance_pool(cli_testing_service_client, runner, config_file, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_terminate_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'TerminateInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1236,9 +1252,9 @@ def test_terminate_instance_pool(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, TerminateInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('terminate_instance_pool.command_name', 'terminate'),
@@ -1275,6 +1291,7 @@ def test_terminate_instance_pool(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1320,9 +1337,9 @@ def test_update_instance_configuration(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, UpdateInstanceConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_instance_configuration.command_name', 'update'),
@@ -1359,6 +1376,7 @@ def test_update_instance_configuration(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1404,9 +1422,9 @@ def test_update_instance_pool(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: core, UpdateInstancePool. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_instance_pool.command_name', 'update'),

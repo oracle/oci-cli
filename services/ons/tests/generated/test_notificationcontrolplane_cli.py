@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_create_topic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'CreateTopic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -68,9 +69,9 @@ def test_create_topic(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: ons, CreateTopic. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_topic.command_name', 'create-topic'),
@@ -106,6 +107,7 @@ def test_create_topic(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_topic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'DeleteTopic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -143,9 +145,9 @@ def test_delete_topic(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: ons, DeleteTopic. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_topic.command_name', 'delete'),
@@ -182,6 +184,7 @@ def test_delete_topic(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_topic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'GetTopic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -219,9 +222,9 @@ def test_get_topic(cli_testing_service_client, runner, config_file, config_profi
                     'Failed to find CLI command "oci {} {} {}" for given operation: ons, GetTopic. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_topic.command_name', 'get-topic'),
@@ -257,6 +260,7 @@ def test_get_topic(cli_testing_service_client, runner, config_file, config_profi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_topics(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'ListTopics'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -294,9 +298,9 @@ def test_list_topics(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: ons, ListTopics. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_topics.command_name', 'list-topics'),
@@ -332,6 +336,7 @@ def test_list_topics(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_topic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'UpdateTopic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -377,9 +382,9 @@ def test_update_topic(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: ons, UpdateTopic. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_topic.command_name', 'update-topic'),

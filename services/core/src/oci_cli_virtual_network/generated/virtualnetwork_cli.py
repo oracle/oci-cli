@@ -6,6 +6,7 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
+from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
@@ -223,6 +224,12 @@ def vnic_group():
     pass
 
 
+@click.command(cli_util.override('fast_connect_provider_service_key_group.command_name', 'fast-connect-provider-service-key'), cls=CommandGroupWithAlias, help="""A provider service key and its details. A provider service key is an identifier for a provider's virtual circuit.""")
+@cli_util.help_option_group
+def fast_connect_provider_service_key_group():
+    pass
+
+
 @click.command(cli_util.override('dhcp_options_group.command_name', 'dhcp-options'), cls=CommandGroupWithAlias, help="""A set of DHCP options. Used by the VCN to automatically provide configuration information to the instances when they boot up. There are two options you can set:
 
 - [DhcpDnsOption]: Lets you specify how DNS (hostname resolution) is handled in the subnets in your VCN.
@@ -334,6 +341,7 @@ virtual_network_root_group.add_command(cross_connect_status_group)
 virtual_network_root_group.add_command(vcn_group)
 virtual_network_root_group.add_command(ip_sec_connection_device_status_group)
 virtual_network_root_group.add_command(vnic_group)
+virtual_network_root_group.add_command(fast_connect_provider_service_key_group)
 virtual_network_root_group.add_command(dhcp_options_group)
 virtual_network_root_group.add_command(virtual_circuit_bandwidth_shape_group)
 virtual_network_root_group.add_command(peer_region_for_remote_peering_group)
@@ -584,6 +592,7 @@ Example: `10 Gbps`""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--far-cross-connect-or-cross-connect-group-id', help="""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on a different router (for the purposes of redundancy), provide the OCID of that existing cross-connect or cross-connect group.""")
 @cli_util.option('--near-cross-connect-or-cross-connect-group-id', help="""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on the same router, provide the OCID of that existing cross-connect or cross-connect group.""")
+@cli_util.option('--customer-reference-name', help="""A reference name or identifier for the physical fiber connection that this cross-connect uses.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -592,7 +601,7 @@ Example: `10 Gbps`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
-def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, display_name, far_cross_connect_or_cross_connect_group_id, near_cross_connect_or_cross_connect_group_id):
+def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, display_name, far_cross_connect_or_cross_connect_group_id, near_cross_connect_or_cross_connect_group_id, customer_reference_name):
 
     kwargs = {}
 
@@ -612,6 +621,9 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if near_cross_connect_or_cross_connect_group_id is not None:
         details['nearCrossConnectOrCrossConnectGroupId'] = near_cross_connect_or_cross_connect_group_id
+
+    if customer_reference_name is not None:
+        details['customerReferenceName'] = customer_reference_name
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_cross_connect(
@@ -650,6 +662,7 @@ For the purposes of access control, you must provide the OCID of the compartment
 You may optionally specify a *display name* for the cross-connect group. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment to contain the cross-connect group.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--customer-reference-name', help="""A reference name or identifier for the physical fiber connection that this cross-connect group uses.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -658,7 +671,7 @@ You may optionally specify a *display name* for the cross-connect group. It does
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
-def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name):
+def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, customer_reference_name):
 
     kwargs = {}
 
@@ -667,6 +680,9 @@ def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if customer_reference_name is not None:
+        details['customerReferenceName'] = customer_reference_name
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_cross_connect_group(
@@ -1826,6 +1842,7 @@ This option is a JSON list with items of type CrossConnectMapping.  For document
 @cli_util.option('--gateway-id', help="""For private virtual circuits only. The OCID of the [dynamic routing gateway (DRG)] that this virtual circuit uses.""")
 @cli_util.option('--provider-name', help="""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @cli_util.option('--provider-service-id', help="""The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
+@cli_util.option('--provider-service-key-name', help="""The service key name offered by the provider (if the customer is connecting via a provider).""")
 @cli_util.option('--provider-service-name', help="""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @cli_util.option('--public-prefixes', type=custom_types.CLI_COMPLEX_TYPE, help="""For a public virtual circuit. The public IP prefixes (CIDRs) the customer wants to advertise across the connection.
 
@@ -1839,7 +1856,7 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_id, provider_service_name, public_prefixes, region):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region):
 
     kwargs = {}
 
@@ -1867,6 +1884,9 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if provider_service_id is not None:
         details['providerServiceId'] = provider_service_id
+
+    if provider_service_key_name is not None:
+        details['providerServiceKeyName'] = provider_service_key_name
 
     if provider_service_name is not None:
         details['providerServiceName'] = provider_service_name
@@ -3280,6 +3300,32 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_fast_connect_provider_service(
         provider_service_id=provider_service_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@fast_connect_provider_service_key_group.command(name=cli_util.override('get_fast_connect_provider_service_key.command_name', 'get'), help="""Gets the specified provider service key's information.""")
+@cli_util.option('--provider-service-id', required=True, help="""The OCID of the provider service.""")
+@cli_util.option('--provider-service-key-name', required=True, help="""The provider service key name.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'FastConnectProviderServiceKey'})
+@cli_util.wrap_exceptions
+def get_fast_connect_provider_service_key(ctx, from_json, provider_service_id, provider_service_key_name):
+
+    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+        raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
+
+    if isinstance(provider_service_key_name, six.string_types) and len(provider_service_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --provider-service-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_fast_connect_provider_service_key(
+        provider_service_id=provider_service_id,
+        provider_service_key_name=provider_service_key_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5257,6 +5303,7 @@ def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freefo
 @cli_util.option('--is-active', type=click.BOOL, help="""Set to true to activate the cross-connect. You activate it after the physical cabling is complete, and you've confirmed the cross-connect's light levels are good and your side of the interface is up. Activation indicates to Oracle that the physical connection is ready.
 
 Example: `true`""")
+@cli_util.option('--customer-reference-name', help="""A reference name or identifier for the physical fiber connection that this cross-connect uses.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5266,7 +5313,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
-def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, display_name, is_active, if_match):
+def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, display_name, is_active, customer_reference_name, if_match):
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
@@ -5282,6 +5329,9 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if is_active is not None:
         details['isActive'] = is_active
+
+    if customer_reference_name is not None:
+        details['customerReferenceName'] = customer_reference_name
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_cross_connect(
@@ -5317,6 +5367,7 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cross_connect_group_group.command(name=cli_util.override('update_cross_connect_group.command_name', 'update'), help="""Updates the specified cross-connect group's display name. Avoid entering confidential information.""")
 @cli_util.option('--cross-connect-group-id', required=True, help="""The OCID of the cross-connect group.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--customer-reference-name', help="""A reference name or identifier for the physical fiber connection that this cross-connect group uses.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5326,7 +5377,7 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
-def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, display_name, if_match):
+def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, display_name, customer_reference_name, if_match):
 
     if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
@@ -5339,6 +5390,9 @@ def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if customer_reference_name is not None:
+        details['customerReferenceName'] = customer_reference_name
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_cross_connect_group(
@@ -6560,6 +6614,7 @@ To be updated only by the customer who owns the virtual circuit.""")
 @cli_util.option('--provider-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help="""The provider's state in relation to this virtual circuit. Relevant only if the customer is using FastConnect via a provider.  ACTIVE means the provider has provisioned the virtual circuit from their end. INACTIVE means the provider has not yet provisioned the virtual circuit, or has de-provisioned it.
 
 To be updated only by the provider.""")
+@cli_util.option('--provider-service-key-name', help="""The service key name offered by the provider (if the customer is connecting via a provider).""")
 @cli_util.option('--reference-comment', help="""Provider-supplied reference information about this virtual circuit. Relevant only if the customer is using FastConnect via a provider.
 
 To be updated only by the provider.""")
@@ -6573,7 +6628,7 @@ To be updated only by the provider.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_state, reference_comment, if_match):
+def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_state, provider_service_key_name, reference_comment, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
@@ -6605,6 +6660,9 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if provider_state is not None:
         details['providerState'] = provider_state
+
+    if provider_service_key_name is not None:
+        details['providerServiceKeyName'] = provider_service_key_name
 
     if reference_comment is not None:
         details['referenceComment'] = reference_comment

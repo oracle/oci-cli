@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import unittest
-from .conftest import runner
+from conftest import runner
 import oci_cli
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa

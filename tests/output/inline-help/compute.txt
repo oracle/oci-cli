@@ -876,8 +876,9 @@ Usage: oci compute image create [OPTIONS]
   name, use [ImageSourceViaObjectStorageTupleDetails].
 
   When importing an image based on the Object Storage URL, use
-  [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-
-  authenticated requests] for constructing URLs for image import/export.
+  [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and
+  [Using Pre-Authenticated Requests] for constructing URLs for image
+  import/export.
 
   For more information about importing exported images, see [Image
   Import/Export].
@@ -981,11 +982,11 @@ Options:
                                   Specifies the configuration mode for launching
                                   virtual machine (VM) instances. The
                                   configuration modes are: * `NATIVE` - VM
-                                  instances launch with iSCSI boot and VFIO
-                                  devices. The default value for Oracle-provided
-                                  images. * `EMULATED` - VM instances launch
-                                  with emulated devices, such as the E1000
-                                  network driver and emulated SCSI disk
+                                  instances launch with paravirtualized boot and
+                                  VFIO devices. The default value for Oracle-
+                                  provided images. * `EMULATED` - VM instances
+                                  launch with emulated devices, such as the
+                                  E1000 network driver and emulated SCSI disk
                                   controller. * `PARAVIRTUALIZED` - VM instances
                                   launch with paravirtualized devices using
                                   virtio drivers. * `CUSTOM` - VM instances
@@ -1358,11 +1359,11 @@ Options:
                                   Specifies the configuration mode for launching
                                   virtual machine (VM) instances. The
                                   configuration modes are: * `NATIVE` - VM
-                                  instances launch with iSCSI boot and VFIO
-                                  devices. The default value for Oracle-provided
-                                  images. * `EMULATED` - VM instances launch
-                                  with emulated devices, such as the E1000
-                                  network driver and emulated SCSI disk
+                                  instances launch with paravirtualized boot and
+                                  VFIO devices. The default value for Oracle-
+                                  provided images. * `EMULATED` - VM instances
+                                  launch with emulated devices, such as the
+                                  E1000 network driver and emulated SCSI disk
                                   controller. * `PARAVIRTUALIZED` - VM instances
                                   launch with paravirtualized devices using
                                   virtio drivers. * `CUSTOM` - VM instances
@@ -1484,11 +1485,11 @@ Options:
                                   Specifies the configuration mode for launching
                                   virtual machine (VM) instances. The
                                   configuration modes are: * `NATIVE` - VM
-                                  instances launch with iSCSI boot and VFIO
-                                  devices. The default value for Oracle-provided
-                                  images. * `EMULATED` - VM instances launch
-                                  with emulated devices, such as the E1000
-                                  network driver and emulated SCSI disk
+                                  instances launch with paravirtualized boot and
+                                  VFIO devices. The default value for Oracle-
+                                  provided images. * `EMULATED` - VM instances
+                                  launch with emulated devices, such as the
+                                  E1000 network driver and emulated SCSI disk
                                   controller. * `PARAVIRTUALIZED` - VM instances
                                   launch with paravirtualized devices using
                                   virtio drivers. * `CUSTOM` - VM instances
@@ -2335,9 +2336,9 @@ Options:
   --subnet-id TEXT                The OCID of the subnet where the VNIC attached
                                   to this instance will be created.
   --is-pv-encryption-in-transit-enabled BOOLEAN
-                                  Whether to enable encryption in transit for
-                                  the PV boot volume attachment. Defaults to
-                                  false.
+                                  Whether to enable in-transit encryption for
+                                  the data volume's paravirtualized attachment.
+                                  The default value is false.
   --wait-for-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -4067,9 +4068,9 @@ Options:
   --is-read-only BOOLEAN          Whether the attachment was created in read-
                                   only mode.
   --is-pv-encryption-in-transit-enabled BOOLEAN
-                                  Whether to enable encryption in transit for
-                                  the PV data volume attachment. Defaults to
-                                  false.
+                                  Whether to enable in-transit encryption for
+                                  the data volume's paravirtualized attachment.
+                                  The default value is false.
   --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.

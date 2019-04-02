@@ -5,15 +5,81 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListCrossconnectPortSpeedShapes&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:13 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Feb 2019 19:39:38 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0806&apiName=ListCrossconnectPortSpeedShapes&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9d7273af-ba6f-4dbc-9a9f-613e48890293","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa","limit":10}}]'}
+    headers:
+      Content-Length: ['181']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:39:40 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/de:55:09:69:53:e3:c0:d0:8d:ab:97:5f:7b:51:ec:cc",signature="PDbwKW9U5SV7dDOxDX+Fa56dS0AzEnLQmbrzsdTOXL4Ta/FRC1XncIuRunHcKVq8jR2Zi3D0IMkUX4PdamvDGRPvqj2ag6zaaUSeMgcKhuo4f3qYFxOzQ8h7TyZD+joHPA8L6JkrX3TcxeNULhtVwucklTkTjEgJqyfP46EwFZm3F2AwjDHgCO32wxEolkBSDqKYc5ef9piFk75WWF7j/yjp//usQ8IPUUap2rmvDXVq6jp/crau6xUKZPqQXgwlUnEoIAApbnsAroFiZIT4SLrapkDrP8JShYdJDsQk+Rdj76D3692M3uIerQ4ZFZUo/JF0tZKyYnAF0XqY7UAfGQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 19:39:40 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [87667FC010894BEFA474537ED36E85EB]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/crossConnectPortSpeedShapes?limit=10&compartmentId=ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa
+  response:
+    body: {string: '[{"name":"10 Gbps","portSpeedInGbps":10}]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['41']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 19:39:41 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [87667FC010894BEFA474537ED36E85EB/7B74F6B7C37A20FA7CE2F1436860E6D5/2A43E7FDC704BCBBD0F56CBBEED59766]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"7E58B545B1E14D319518529D2BF6B92F\",
+      \"items\": [{\"name\": \"10 Gbps\", \"portSpeedInGbps\": 10}]}", "requestJson":
+      "{\"limit\": 10, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"}",
+      "containerId": "9d7273af-ba6f-4dbc-9a9f-613e48890293", "requestClass": "com.oracle.bmc.core.requests.ListCrossconnectPortSpeedShapesRequest",
+      "responseClass": "com.oracle.bmc.core.responses.ListCrossconnectPortSpeedShapesResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['513']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0806&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:39:43 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

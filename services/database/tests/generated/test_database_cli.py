@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_complete_external_backup_job(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CompleteExternalBackupJob'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -67,9 +68,9 @@ def test_complete_external_backup_job(cli_testing_service_client, runner, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CompleteExternalBackupJob. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('complete_external_backup_job.command_name', 'complete'),
@@ -105,6 +106,7 @@ def test_complete_external_backup_job(cli_testing_service_client, runner, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -149,9 +151,9 @@ def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_autonomous_data_warehouse.command_name', 'create'),
@@ -187,6 +189,7 @@ def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_autonomous_data_warehouse_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDataWarehouseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -231,9 +234,9 @@ def test_create_autonomous_data_warehouse_backup(cli_testing_service_client, run
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateAutonomousDataWarehouseBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_autonomous_data_warehouse_backup.command_name', 'create'),
@@ -269,6 +272,7 @@ def test_create_autonomous_data_warehouse_backup(cli_testing_service_client, run
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -333,9 +337,9 @@ def test_create_autonomous_database(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_autonomous_database.command_name', 'create'),
@@ -371,6 +375,7 @@ def test_create_autonomous_database(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_autonomous_database_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDatabaseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -415,9 +420,9 @@ def test_create_autonomous_database_backup(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateAutonomousDatabaseBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_autonomous_database_backup.command_name', 'create'),
@@ -453,6 +458,7 @@ def test_create_autonomous_database_backup(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -497,9 +503,9 @@ def test_create_backup(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_backup.command_name', 'create'),
@@ -535,6 +541,7 @@ def test_create_backup(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -599,9 +606,9 @@ def test_create_data_guard_association(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateDataGuardAssociation. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_data_guard_association.command_name', 'create'),
@@ -637,6 +644,7 @@ def test_create_data_guard_association(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -701,9 +709,9 @@ def test_create_db_home(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateDbHome. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_db_home.command_name', 'create'),
@@ -739,6 +747,7 @@ def test_create_db_home(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_external_backup_job(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateExternalBackupJob'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -783,9 +792,9 @@ def test_create_external_backup_job(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateExternalBackupJob. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_external_backup_job.command_name', 'create'),
@@ -821,6 +830,7 @@ def test_create_external_backup_job(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_db_node_action(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DbNodeAction'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -857,9 +867,9 @@ def test_db_node_action(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, DbNodeAction. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('db_node_action.command_name', 'db-node-action'),
@@ -895,6 +905,7 @@ def test_db_node_action(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -931,9 +942,9 @@ def test_delete_autonomous_data_warehouse(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, DeleteAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_autonomous_data_warehouse.command_name', 'delete'),
@@ -970,6 +981,7 @@ def test_delete_autonomous_data_warehouse(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1006,9 +1018,9 @@ def test_delete_autonomous_database(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, DeleteAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_autonomous_database.command_name', 'delete'),
@@ -1045,6 +1057,7 @@ def test_delete_autonomous_database(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1081,9 +1094,9 @@ def test_delete_backup(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, DeleteBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_backup.command_name', 'delete'),
@@ -1120,6 +1133,7 @@ def test_delete_backup(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1156,9 +1170,9 @@ def test_delete_db_home(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, DeleteDbHome. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_db_home.command_name', 'delete'),
@@ -1195,6 +1209,7 @@ def test_delete_db_home(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_failover_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'FailoverDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1239,9 +1254,9 @@ def test_failover_data_guard_association(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, FailoverDataGuardAssociation. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('failover_data_guard_association.command_name', 'failover'),
@@ -1277,6 +1292,7 @@ def test_failover_data_guard_association(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_generate_autonomous_data_warehouse_wallet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GenerateAutonomousDataWarehouseWallet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1321,9 +1337,9 @@ def test_generate_autonomous_data_warehouse_wallet(cli_testing_service_client, r
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GenerateAutonomousDataWarehouseWallet. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'),
@@ -1368,6 +1384,7 @@ def test_generate_autonomous_data_warehouse_wallet(cli_testing_service_client, r
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_generate_autonomous_database_wallet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GenerateAutonomousDatabaseWallet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1412,9 +1429,9 @@ def test_generate_autonomous_database_wallet(cli_testing_service_client, runner,
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GenerateAutonomousDatabaseWallet. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'),
@@ -1459,6 +1476,7 @@ def test_generate_autonomous_database_wallet(cli_testing_service_client, runner,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1495,9 +1513,9 @@ def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_autonomous_data_warehouse.command_name', 'get'),
@@ -1533,6 +1551,7 @@ def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_autonomous_data_warehouse_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDataWarehouseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1569,9 +1588,9 @@ def test_get_autonomous_data_warehouse_backup(cli_testing_service_client, runner
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetAutonomousDataWarehouseBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_autonomous_data_warehouse_backup.command_name', 'get'),
@@ -1607,6 +1626,7 @@ def test_get_autonomous_data_warehouse_backup(cli_testing_service_client, runner
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1643,9 +1663,9 @@ def test_get_autonomous_database(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_autonomous_database.command_name', 'get'),
@@ -1681,6 +1701,7 @@ def test_get_autonomous_database(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_autonomous_database_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDatabaseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1717,9 +1738,9 @@ def test_get_autonomous_database_backup(cli_testing_service_client, runner, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetAutonomousDatabaseBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_autonomous_database_backup.command_name', 'get'),
@@ -1755,6 +1776,7 @@ def test_get_autonomous_database_backup(cli_testing_service_client, runner, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1791,9 +1813,9 @@ def test_get_backup(cli_testing_service_client, runner, config_file, config_prof
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetBackup. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_backup.command_name', 'get'),
@@ -1829,6 +1851,7 @@ def test_get_backup(cli_testing_service_client, runner, config_file, config_prof
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1865,9 +1888,9 @@ def test_get_data_guard_association(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDataGuardAssociation. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_data_guard_association.command_name', 'get'),
@@ -1903,6 +1926,7 @@ def test_get_data_guard_association(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1939,9 +1963,9 @@ def test_get_database(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_database.command_name', 'get'),
@@ -1977,6 +2001,7 @@ def test_get_database(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2013,9 +2038,9 @@ def test_get_db_home(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbHome. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_home.command_name', 'get'),
@@ -2051,6 +2076,7 @@ def test_get_db_home(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_home_patch(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbHomePatch'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2087,9 +2113,9 @@ def test_get_db_home_patch(cli_testing_service_client, runner, config_file, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbHomePatch. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_home_patch.command_name', 'get-db-home'),
@@ -2125,6 +2151,7 @@ def test_get_db_home_patch(cli_testing_service_client, runner, config_file, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_home_patch_history_entry(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbHomePatchHistoryEntry'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2161,9 +2188,9 @@ def test_get_db_home_patch_history_entry(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbHomePatchHistoryEntry. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_home_patch_history_entry.command_name', 'get-db-home'),
@@ -2199,6 +2226,7 @@ def test_get_db_home_patch_history_entry(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_node(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbNode'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2235,9 +2263,9 @@ def test_get_db_node(cli_testing_service_client, runner, config_file, config_pro
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbNode. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_node.command_name', 'get'),
@@ -2273,6 +2301,7 @@ def test_get_db_node(cli_testing_service_client, runner, config_file, config_pro
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2309,9 +2338,9 @@ def test_get_db_system(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbSystem. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_system.command_name', 'get'),
@@ -2347,6 +2376,7 @@ def test_get_db_system(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_system_patch(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbSystemPatch'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2383,9 +2413,9 @@ def test_get_db_system_patch(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbSystemPatch. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_system_patch.command_name', 'get-db-system'),
@@ -2421,6 +2451,7 @@ def test_get_db_system_patch(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_db_system_patch_history_entry(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbSystemPatchHistoryEntry'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2457,9 +2488,9 @@ def test_get_db_system_patch_history_entry(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetDbSystemPatchHistoryEntry. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_db_system_patch_history_entry.command_name', 'get-db-system'),
@@ -2495,6 +2526,7 @@ def test_get_db_system_patch_history_entry(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_exadata_iorm_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetExadataIormConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2531,9 +2563,9 @@ def test_get_exadata_iorm_config(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetExadataIormConfig. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_exadata_iorm_config.command_name', 'get-exadata-iorm-config'),
@@ -2569,6 +2601,7 @@ def test_get_exadata_iorm_config(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_external_backup_job(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetExternalBackupJob'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2605,9 +2638,9 @@ def test_get_external_backup_job(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, GetExternalBackupJob. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_external_backup_job.command_name', 'get'),
@@ -2643,6 +2676,7 @@ def test_get_external_backup_job(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_launch_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'LaunchDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2707,9 +2741,9 @@ def test_launch_db_system(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, LaunchDbSystem. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('launch_db_system.command_name', 'launch'),
@@ -2745,6 +2779,7 @@ def test_launch_db_system(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_autonomous_data_warehouse_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDataWarehouseBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2781,9 +2816,9 @@ def test_list_autonomous_data_warehouse_backups(cli_testing_service_client, runn
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousDataWarehouseBackups. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_autonomous_data_warehouse_backups.command_name', 'list'),
@@ -2819,6 +2854,7 @@ def test_list_autonomous_data_warehouse_backups(cli_testing_service_client, runn
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_autonomous_data_warehouses(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDataWarehouses'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2855,9 +2891,9 @@ def test_list_autonomous_data_warehouses(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousDataWarehouses. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_autonomous_data_warehouses.command_name', 'list'),
@@ -2893,6 +2929,7 @@ def test_list_autonomous_data_warehouses(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_autonomous_database_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDatabaseBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2929,9 +2966,9 @@ def test_list_autonomous_database_backups(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousDatabaseBackups. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_autonomous_database_backups.command_name', 'list'),
@@ -2967,6 +3004,7 @@ def test_list_autonomous_database_backups(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_autonomous_databases(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDatabases'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3003,9 +3041,9 @@ def test_list_autonomous_databases(cli_testing_service_client, runner, config_fi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousDatabases. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_autonomous_databases.command_name', 'list'),
@@ -3041,6 +3079,7 @@ def test_list_autonomous_databases(cli_testing_service_client, runner, config_fi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3077,9 +3116,9 @@ def test_list_backups(cli_testing_service_client, runner, config_file, config_pr
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListBackups. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_backups.command_name', 'list'),
@@ -3115,6 +3154,7 @@ def test_list_backups(cli_testing_service_client, runner, config_file, config_pr
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_data_guard_associations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDataGuardAssociations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3151,9 +3191,9 @@ def test_list_data_guard_associations(cli_testing_service_client, runner, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDataGuardAssociations. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_data_guard_associations.command_name', 'list'),
@@ -3189,6 +3229,7 @@ def test_list_data_guard_associations(cli_testing_service_client, runner, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_databases(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDatabases'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3225,9 +3266,9 @@ def test_list_databases(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDatabases. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_databases.command_name', 'list'),
@@ -3263,6 +3304,7 @@ def test_list_databases(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_home_patch_history_entries(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbHomePatchHistoryEntries'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3299,9 +3341,9 @@ def test_list_db_home_patch_history_entries(cli_testing_service_client, runner, 
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbHomePatchHistoryEntries. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_home_patch_history_entries.command_name', 'list-db-home'),
@@ -3337,6 +3379,7 @@ def test_list_db_home_patch_history_entries(cli_testing_service_client, runner, 
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_home_patches(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbHomePatches'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3373,9 +3416,9 @@ def test_list_db_home_patches(cli_testing_service_client, runner, config_file, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbHomePatches. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_home_patches.command_name', 'list-db-home'),
@@ -3411,6 +3454,7 @@ def test_list_db_home_patches(cli_testing_service_client, runner, config_file, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_homes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbHomes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3447,9 +3491,9 @@ def test_list_db_homes(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbHomes. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_homes.command_name', 'list'),
@@ -3485,6 +3529,7 @@ def test_list_db_homes(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_nodes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbNodes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3521,9 +3566,9 @@ def test_list_db_nodes(cli_testing_service_client, runner, config_file, config_p
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbNodes. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_nodes.command_name', 'list'),
@@ -3559,6 +3604,7 @@ def test_list_db_nodes(cli_testing_service_client, runner, config_file, config_p
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_system_patch_history_entries(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystemPatchHistoryEntries'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3595,9 +3641,9 @@ def test_list_db_system_patch_history_entries(cli_testing_service_client, runner
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbSystemPatchHistoryEntries. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_system_patch_history_entries.command_name', 'list-db-system'),
@@ -3633,6 +3679,7 @@ def test_list_db_system_patch_history_entries(cli_testing_service_client, runner
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_system_patches(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystemPatches'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3669,9 +3716,9 @@ def test_list_db_system_patches(cli_testing_service_client, runner, config_file,
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbSystemPatches. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_system_patches.command_name', 'list-db-system'),
@@ -3707,6 +3754,7 @@ def test_list_db_system_patches(cli_testing_service_client, runner, config_file,
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_system_shapes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystemShapes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3743,9 +3791,9 @@ def test_list_db_system_shapes(cli_testing_service_client, runner, config_file, 
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbSystemShapes. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_system_shapes.command_name', 'list'),
@@ -3781,6 +3829,7 @@ def test_list_db_system_shapes(cli_testing_service_client, runner, config_file, 
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_systems(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystems'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3817,9 +3866,9 @@ def test_list_db_systems(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbSystems. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_systems.command_name', 'list'),
@@ -3855,6 +3904,7 @@ def test_list_db_systems(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_db_versions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbVersions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3891,9 +3941,9 @@ def test_list_db_versions(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ListDbVersions. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_db_versions.command_name', 'list'),
@@ -3929,6 +3979,7 @@ def test_list_db_versions(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_reinstate_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ReinstateDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3973,9 +4024,9 @@ def test_reinstate_data_guard_association(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, ReinstateDataGuardAssociation. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('reinstate_data_guard_association.command_name', 'reinstate'),
@@ -4011,6 +4062,7 @@ def test_reinstate_data_guard_association(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_restore_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'RestoreAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4055,9 +4107,9 @@ def test_restore_autonomous_data_warehouse(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, RestoreAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('restore_autonomous_data_warehouse.command_name', 'restore'),
@@ -4093,6 +4145,7 @@ def test_restore_autonomous_data_warehouse(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_restore_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'RestoreAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4137,9 +4190,9 @@ def test_restore_autonomous_database(cli_testing_service_client, runner, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, RestoreAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('restore_autonomous_database.command_name', 'restore'),
@@ -4175,6 +4228,7 @@ def test_restore_autonomous_database(cli_testing_service_client, runner, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_restore_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'RestoreDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4219,9 +4273,9 @@ def test_restore_database(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, RestoreDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('restore_database.command_name', 'restore'),
@@ -4257,6 +4311,7 @@ def test_restore_database(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_start_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StartAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4293,9 +4348,9 @@ def test_start_autonomous_data_warehouse(cli_testing_service_client, runner, con
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, StartAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('start_autonomous_data_warehouse.command_name', 'start'),
@@ -4331,6 +4386,7 @@ def test_start_autonomous_data_warehouse(cli_testing_service_client, runner, con
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_start_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StartAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4367,9 +4423,9 @@ def test_start_autonomous_database(cli_testing_service_client, runner, config_fi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, StartAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('start_autonomous_database.command_name', 'start'),
@@ -4405,6 +4461,7 @@ def test_start_autonomous_database(cli_testing_service_client, runner, config_fi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_stop_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StopAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4441,9 +4498,9 @@ def test_stop_autonomous_data_warehouse(cli_testing_service_client, runner, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, StopAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('stop_autonomous_data_warehouse.command_name', 'stop'),
@@ -4479,6 +4536,7 @@ def test_stop_autonomous_data_warehouse(cli_testing_service_client, runner, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_stop_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StopAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4515,9 +4573,9 @@ def test_stop_autonomous_database(cli_testing_service_client, runner, config_fil
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, StopAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('stop_autonomous_database.command_name', 'stop'),
@@ -4553,6 +4611,7 @@ def test_stop_autonomous_database(cli_testing_service_client, runner, config_fil
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_switchover_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'SwitchoverDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4597,9 +4656,9 @@ def test_switchover_data_guard_association(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, SwitchoverDataGuardAssociation. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('switchover_data_guard_association.command_name', 'switchover'),
@@ -4635,6 +4694,7 @@ def test_switchover_data_guard_association(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_terminate_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'TerminateDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4671,9 +4731,9 @@ def test_terminate_db_system(cli_testing_service_client, runner, config_file, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, TerminateDbSystem. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('terminate_db_system.command_name', 'terminate'),
@@ -4710,6 +4770,7 @@ def test_terminate_db_system(cli_testing_service_client, runner, config_file, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4754,9 +4815,9 @@ def test_update_autonomous_data_warehouse(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateAutonomousDataWarehouse. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_autonomous_data_warehouse.command_name', 'update'),
@@ -4793,6 +4854,7 @@ def test_update_autonomous_data_warehouse(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4837,9 +4899,9 @@ def test_update_autonomous_database(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateAutonomousDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_autonomous_database.command_name', 'update'),
@@ -4876,6 +4938,7 @@ def test_update_autonomous_database(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -4920,9 +4983,9 @@ def test_update_database(cli_testing_service_client, runner, config_file, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateDatabase. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_database.command_name', 'update'),
@@ -4959,6 +5022,7 @@ def test_update_database(cli_testing_service_client, runner, config_file, config
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -5003,9 +5067,9 @@ def test_update_db_home(cli_testing_service_client, runner, config_file, config_
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateDbHome. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_db_home.command_name', 'update'),
@@ -5042,6 +5106,7 @@ def test_update_db_home(cli_testing_service_client, runner, config_file, config_
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -5086,9 +5151,9 @@ def test_update_db_system(cli_testing_service_client, runner, config_file, confi
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateDbSystem. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_db_system.command_name', 'update'),
@@ -5125,6 +5190,7 @@ def test_update_db_system(cli_testing_service_client, runner, config_file, confi
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_exadata_iorm_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateExadataIormConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -5169,9 +5235,9 @@ def test_update_exadata_iorm_config(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateExadataIormConfig. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_exadata_iorm_config.command_name', 'update-exadata-iorm-config'),

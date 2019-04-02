@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.6 - 2019-04-02
+------------------
+Added
+~~~~~
+* New command as mentioned below is added to the FastConnect Service. A provider service key is an
+  identifier for a provider's virtual circuit.
+
+  * ``oci network fast-connect-provider-service-key get``
+
+* Improvement that introduces --customer-reference-name to CrossConnect and CrossConnectGroup in the FastConnectService.
+
+  * (``oci network cross-connect create --customer-reference-name [text]``)
+  * (``oci network cross-connect update --customer-reference-name [text]``)
+  * (``oci network cross-connect-group create --customer-reference-name [text]``)
+  * (``oci network cross-connect-group update --customer-reference-name [text]``)
+
+* Improvement that introduces --provider-service-key-name to VirtualCircuit in the FastConnect Service.
+
+  * (``oci network virtual-circuit create --provider-service-key-name [text]``)
+  * (``oci network virtual-circuit update --provider-service-key-name [text]``)
+
+Changed
+~~~~~~~~
+* Make cx-Oracle used by Database Service an optional package for OCI CLI installer. It's installation instructions are as below:
+
+  * In \*NIX systems, type below commands in bash shell:
+
+    * ``curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"``
+    * ``./install.sh --optional-features db``
+  * In Windows systems using powershell, type below commands:
+
+    * ``((New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1', "$pwd\\install.ps1"))``
+    * ``.\install.ps1 -OptionalFeatures db``
+  * If just using pip:
+
+    * ``pip install 'oci-cli[db]'``
+
+
 2.5.5 - 2019-03-26
 ------------------
 Added

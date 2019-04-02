@@ -6,6 +6,7 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
+from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
@@ -408,7 +409,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @cli_util.option('--device', help="""The device name.""")
 @cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help="""Whether the attachment was created in read-only mode.""")
-@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable encryption in transit for the PV data volume attachment. Defaults to false.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -592,7 +593,7 @@ When importing an exported image from Object Storage, you specify the source inf
 
 When importing an image based on the namespace, bucket name, and object name, use [ImageSourceViaObjectStorageTupleDetails].
 
-When importing an image based on the Object Storage URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.
+When importing an image based on the Object Storage URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.
 
 For more information about importing exported images, see [Image Import/Export].
 
@@ -611,7 +612,7 @@ Example: `My Oracle Linux image`""")
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-source-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an image through import""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', help="""The OCID of the instance you want to use as the basis for the image.""")
-@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help="""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with iSCSI boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
+@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help="""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1145,7 +1146,7 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
-See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
 @cli_util.option('--destination-type', required=True, help="""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1206,9 +1207,9 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
-See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
-@cli_util.option('--destination-uri', required=True, help="""The Object Storage URL to export the image to. See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+@cli_util.option('--destination-uri', required=True, help="""The Object Storage URL to export the image to. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1269,11 +1270,11 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
-See [Object Storage URLs] and [pre-authenticated requests] for constructing URLs for image import/export.""")
+See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--image-id', required=True, help="""The OCID of the image.""")
-@cli_util.option('--bucket-name', help="""The Object Storage bucket to export the image to.""")
-@cli_util.option('--namespace-name', help="""The Object Storage namespace to export the image to.""")
-@cli_util.option('--object-name', help="""The Object Storage object name for the exported image.""")
+@cli_util.option('--bucket-name', required=True, help="""The Object Storage bucket to export the image to.""")
+@cli_util.option('--namespace-name', required=True, help="""The Object Storage namespace to export the image to.""")
+@cli_util.option('--object-name', required=True, help="""The Object Storage object name for the exported image.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1293,15 +1294,9 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
         kwargs['if_match'] = if_match
 
     details = {}
-
-    if bucket_name is not None:
-        details['bucketName'] = bucket_name
-
-    if namespace_name is not None:
-        details['namespaceName'] = namespace_name
-
-    if object_name is not None:
-        details['objectName'] = object_name
+    details['bucketName'] = bucket_name
+    details['namespaceName'] = namespace_name
+    details['objectName'] = object_name
 
     details['destinationType'] = 'objectStorageTuple'
 
@@ -1755,7 +1750,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help="""Details for creating an instance. Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help="""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
-@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable encryption in transit for the PV boot volume attachment. Defaults to false.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help="""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")

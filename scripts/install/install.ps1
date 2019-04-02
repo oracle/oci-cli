@@ -5,7 +5,18 @@
     Installs the Oracle Cloud Infrastructure CLI.
 .PARAMETER AcceptAllDefaults
     Run the script accepting all default options. This will suppress all prompts for user input.
-    
+.PARAMETER PythonInstallLocation
+    Optionally specifies where to install python on systems where it is not present. This must be an absolute path and
+    it will be created if it does not exist.
+.PARAMETER OptionalFeatures
+    This input param is used to specify any optional features that need to be installed as part of OCI CLI install
+    .e.g. to run dbaas script 'create_backup_from_onprem', users need to install optional "db" feature which will install dependent cxOracle package.
+    Use this optional input param as follows: --optional-features feature1,feature2
+
+.NOTES
+    The order of precedence in which this scripts applies input parameters is as follows:
+    individual params > accept_all_defaults > interactive inputs
+
     Default options:
     - Install required version of Python if not already installed (to $env:USERPROFILE\Python)
     - Create virtualenv in $env:USERPROFILE\lib\oracle-cli
@@ -16,7 +27,10 @@
 
 [CmdletBinding()]
 Param(
-    [switch]$AcceptAllDefaults
+    [switch]$AcceptAllDefaults,
+    [string]$PythonInstallLocation,
+    [string]$OptionalFeatures
+
 )
 
 $OriginalErrorActionPreference = $ErrorActionPreference
@@ -26,7 +40,9 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12';
 }
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
+
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.5.6/scripts/install/install.py"
+$FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.5"    # version of Python to install if none exists
 $MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
 $MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
@@ -134,7 +150,7 @@ function DownloadFile($Uri, $OutFile) {
     } 
 }
 
-function DownloadAndRunPythonExeInstaller($InstallDir, $Version) {
+function DownloadAndRunPythonExeInstaller($PythonInstallLocation, $Version) {
     LogOutput "Downloading Python..."
 
     # Download python executable installer
@@ -151,11 +167,11 @@ function DownloadAndRunPythonExeInstaller($InstallDir, $Version) {
 
     LogOutput "Download Complete! Installer executable written to: $PythonInstallerExe"
 
-    LogOutput "Installing Python to $InstallDir..."
+    LogOutput "Installing Python to $PythonInstallLocation..."
 
     # Do a 'passive' install of Python which will not require any user interaction but will pop up a progress window
     # Options documented here: https://docs.python.org/3/using/windows.html#installing-without-ui
-    $Args = "/passive PrependPath=0 Include_test=0 Include_tcltk=0 Include_launcher=0 Include_symbols=0 DefaultJustForMeTargetDir=`"$InstallDir`""
+    $Args = "/passive PrependPath=0 Include_test=0 Include_tcltk=0 Include_launcher=0 Include_symbols=0 DefaultJustForMeTargetDir=`"$PythonInstallLocation`""
     $Process = Start-Process -FilePath $PythonInstallerExe -ArgumentList $Args -Wait -PassThru
     if ($Process.ExitCode -ne 0) {
         Write-Error "Failed to install Python. On some systems installing Python can require running the script as an Administrator. More detailed information can be found in the Python installation logs in $env:LOCALAPPDATA\Temp"
@@ -164,7 +180,7 @@ function DownloadAndRunPythonExeInstaller($InstallDir, $Version) {
     LogOutput "Successfully installed Python!"
 }
 
-function DownloadAndRunPythonMsiInstaller($InstallDir, $Version) {
+function DownloadAndRunPythonMsiInstaller($PythonInstallLocation, $Version) {
 
     LogOutput "Downloading Python..."
 
@@ -182,9 +198,9 @@ function DownloadAndRunPythonMsiInstaller($InstallDir, $Version) {
 
     LogOutput "Download Complete! Installer MSI written to: $PythonInstallerMsi"
 
-    LogOutput "Installing Python to $InstallDir..."
+    LogOutput "Installing Python to $PythonInstallLocation..."
 
-    $InstallDir = (Get-ChildItem Env:\USERPROFILE).Value + "\Python\"
+    $PythonInstallLocation = (Get-ChildItem Env:\USERPROFILE).Value + "\Python\"
     $DataStamp = get-date -Format yyyyMMddTHHmmss
     $logFile = '{0}-{1}.log' -f $PythonInstallerMsi,$DataStamp
 
@@ -196,7 +212,7 @@ function DownloadAndRunPythonMsiInstaller($InstallDir, $Version) {
         "/norestart"
         "/L*v"
         $logFile
-        "TARGETDIR=`"$InstallDir`""
+        "TARGETDIR=`"$PythonInstallLocation`""
     )
 
     $Process = Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow -PassThru
@@ -211,6 +227,21 @@ Try {
     # ensure that the script stops executing if any errors are encountered so we don't get in a weird state
     $ErrorActionPreference = "Stop"
 
+    if (-Not $AcceptAllDefaults)
+    {
+        Write-Output "
+        ******************************************************************************
+        ******************************************************************************
+        You have started the OCI CLI Installer in interactive mode. If you do not wish
+        to run this in interactive mode or would like to know more about input options
+        for this script, kill this process and invoke the commands below to get more
+        help text for this script:
+        ((New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/
+        oracle/oci-cli/master/scripts/install/install.ps1', `"`$pwd\install.ps1`"))
+        Get-Help .\install.ps1 -full
+        ******************************************************************************
+        ******************************************************************************"
+    }
     # check if Python is installed, and is greater than MinValidPythonVersion
     $PythonExecutable = $null
     $CurrentUserPythonExecutable = FindLatestPythonExecutableInRegistry "HKCU"
@@ -250,30 +281,49 @@ Try {
         }
 
         # (e.g. C:\Users\{USER}\Python)
-        $InstallDir = Join-Path (Get-ChildItem Env:\USERPROFILE).Value "Python"
-
+        if (-Not $PythonInstallLocation)
+        {
+            $PythonInstallLocation = Join-Path (Get-ChildItem Env:\USERPROFILE).Value "Python"
+        }
+        else {
+            # value passed by the user as an argument
+            $PythonInstallLocation = Join-Path $PythonInstallLocation "Python"
+        }
         # use MSI installer for python 2.7.x on Windows Server 2008 SP 0
         $OsInfo = Get-WMIObject Win32_OperatingSystem -ComputerName $env:COMPUTERNAME
         if ($OsInfo.Caption.Contains('Windows Server 2008') -And $OsInfo.ServicePackMajorVersion -eq 0) {
-            DownloadAndRunPythonMsiInstaller -InstallDir $InstallDir -Version "2.7.14"
+            DownloadAndRunPythonMsiInstaller -PythonInstallLocation $PythonInstallLocation -Version "2.7.14"
         }
         else {
-            DownloadAndRunPythonExeInstaller -InstallDir $InstallDir -Version $PythonVersionToInstall
+            DownloadAndRunPythonExeInstaller -PythonInstallLocation $PythonInstallLocation -Version $PythonVersionToInstall
         }
 
-        $PythonExecutable = Join-Path $InstallDir 'python.exe'
+        $PythonExecutable = Join-Path $PythonInstallLocation 'python.exe'
     }
 
     # Once python is installed, execute the CLI install script
     $PythonInstallScriptPath = [System.IO.Path]::GetTempFileName()
     LogOutput "Downloading install script to $PythonInstallScriptPath"
-    DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
+    Try {
+        DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
+    }
+    catch [System.Net.WebException] {
+        $PythonInstallScriptUrl = $FallbackPythonInstallScriptUrl
+        DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
+        LogOutput "Falling back to previous install.py script URL - $PythonInstallScriptUrl"
+    }
+
     $ArgumentList = "`"$PythonInstallScriptPath`""
     if ($AcceptAllDefaults) {
         $ArgumentList = "$ArgumentList --accept-all-defaults"
     }
 
+    if ($OptionalFeatures) {
+        $ArgumentList = "$ArgumentList --optional-features $OptionalFeatures"
+    }
+
     LogOutput "Using Python executable: $PythonExecutable to run install script..."
+    LogOutput "Arguments to python script: $ArgumentList"
 
     $Process = Start-Process -FilePath $PythonExecutable -ArgumentList $ArgumentList -Wait -NoNewWindow -PassThru
     if ($Process.ExitCode -ne 0) {

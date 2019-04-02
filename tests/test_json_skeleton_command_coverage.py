@@ -61,15 +61,15 @@ COMMANDS_WITH_ALL_OPTIONAL_PARAMS = sorted(command for command, _, _ in
                                            filter(lambda x: x[2] == 0 and x[0] not in IGNORED_COMMANDS,
                                                   util.collect_leaf_commands_with_counts(oci_cli.cli)))
 
+commands_list = [cmd for cmd in sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
+                 if cmd not in IGNORED_COMMANDS]
+
 
 def test_all_commands_generate_skeleton():
-    commands = sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
 
     failed_to_parse_commands = []
     commands_with_bad_json = []  # We don't expect any commands that emit an empty dict
-    for cmd in commands:
-        if cmd in IGNORED_COMMANDS:
-            continue
+    for cmd in commands_list:
 
         full_command = list(cmd)
         full_command.append('--generate-full-command-json-input')
@@ -87,51 +87,14 @@ def test_all_commands_generate_skeleton():
 
 
 def test_all_commands_can_accept_from_json_input():
-    commands_to_retry = []
-    # Since this test was hitting live services, it occassionally failed.
-    # By adding recordings, we can cut-down on the number of intermittent failures.
-    # However, since new commands are added all the time, we don't want to make this test have a hard
-    # failure just b/c the recordings have not been updated.
-    # So in cases where the command is not in the recording, we just fall-back to hitting the live service.
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_coverage_test_all_commands_can_accept_from_json_input.yml'):
-        commands = [cmd for cmd in sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
-                    if cmd not in IGNORED_COMMANDS]
-        commands_to_retry = check_commands_can_accept_from_json_input(commands)
-    if commands_to_retry:
-        # It's useful to see that there are tests still hitting live services and that updating the
-        # recording can improve test stability.
-        print("test_all_commands_can_accept_from_json_input: commands without recordings", commands_to_retry)
-        # Re-run commands against live services that were failing b/c of missing recordings.
-        check_commands_can_accept_from_json_input(commands_to_retry)
-
-
-def check_commands_can_accept_from_json_input(commands):
-    commands_not_in_cassette = []
-    for cmd in commands:
-        full_command = list(cmd)
-        full_command.extend(['--from-json', 'file://tests/resources/json_input/dummy.json'])
-        result = util.invoke_command(full_command)
-        if result.output:
-            if 'CannotOverwriteExistingCassetteException' in result.output:
-                commands_not_in_cassette.append(cmd)
-                continue
-
-        # If the command takes no params, then invoking it should actually work (and so we should get nothing back or valid JSON back).
-        #
-        # If the command has only optional parameters, then invoking it should actually work (but we may get an error back from the service
-        # as the operation may rely on some combination of parameters being provided).
-        #
-        # Otherwise make the assumption that at least one of them is required so we should get "Missing option" in
-        # there somewhere, but nothing mentioning that our from-json option is not needed.  If the operation requires confirmation
-        # then the output may contain 'Are you sure' but this means we have already gotten past the point where the '--from-json' is not
-        # needed error would have been thrown.
-        if cmd in COMMANDS_WITH_NO_PARAMS:
+        for cmd in commands_list:
+            full_command = list(cmd)
+            full_command.extend(['--from-json', 'file://tests/resources/json_input/dummy.json'])
+            result = util.invoke_command(full_command)
             if result.output:
-                # Sanity check that there are no errors
-                assert 'error' not in result.output.lower()
-                json.loads(result.output)
-        elif cmd in COMMANDS_WITH_ALL_OPTIONAL_PARAMS:
-            if result.output:
+                if 'CannotOverwriteExistingCassetteException' in result.output:
+                    continue
                 assert 'from-json' not in result.output
                 if cmd in [['iam', 'compartment', 'list'],
                            ['iam', 'availability-domain', 'list']]:
@@ -146,14 +109,12 @@ def check_commands_can_accept_from_json_input(commands):
                     assert 'region-name' in result.output
                 elif cmd in [['network', 'service', 'list']]:
                     assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-        else:
-            assert 'from-json' not in result.output
-            if cmd == ['network', 'public-ip', 'get']:
-                # This command displays a different message
-                assert 'At least one of the options' in str(result.output)
-            else:
-                assert 'Missing option' in result.output or 'Are you sure' in str(result.output)
-    return commands_not_in_cassette
+                else:
+                    assert 'from-json' not in result.output
+                    if cmd == ['network', 'public-ip', 'get']:
+                        # This command displays a different message
+                        assert 'At least one of the options' in str(result.output)
+        return
 
 
 def teardown_module(module):
