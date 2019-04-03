@@ -41,7 +41,7 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
 }
 
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.5.6/scripts/install/install.py"
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/5a96643afa1f3c1e52cc58e4e9a7e75c60b4dda1/scripts/install/install.py"
 $FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.5"    # version of Python to install if none exists
 $MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
