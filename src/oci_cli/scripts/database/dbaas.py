@@ -5,7 +5,6 @@ import sys
 import click
 from oci_cli import cli_util, cli_root
 import tempfile
-import cx_Oracle  # to query oracle instance
 from subprocess import Popen, PIPE  # to spawn processes
 import time  # to sleep before retrying
 import os  # to get access to os environment
@@ -16,6 +15,23 @@ import math  # to ceil dataSize and redoSize
 import shutil  # to delete a directory
 from oci.util import Sentinel
 import tarfile
+
+try:
+    import cx_Oracle  # to query oracle instance
+except ImportError:
+    click.echo("cx_Oracle module could not be imported. This most likely means you have installed OCI CLI without "
+               "optional feature 'db'. To use this script, please re-install CLI with 'db' optional feature.\n"
+               "Below are the relevant commands to do it:\n"
+               "In *NIX systems:\n"
+               "    curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh\n"
+               "    ./install.sh --optional-features db\n"
+               "In Windows systems using powershell:\n"
+               "    ((New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1', ""$pwd\\install.ps1""))\n"
+               "    .\\install.ps1 -OptionalFeatures db\n"
+               "If just using pip:\n"
+               "    pip install 'oci-cli[db]'")
+    exit(1)
+
 
 DEFAULT_LOCATION = os.path.join('~', '.oci', 'config')
 DEFAULT_PROFILE = "DEFAULT"

@@ -24,6 +24,8 @@ Commands:
   drg                             A dynamic routing gateway (DRG), which is a...
   drg-attachment                  A link between a DRG and VCN.
   fast-connect-provider-service   A service offering from a supported provider.
+  fast-connect-provider-service-key
+                                  A provider service key and its details.
   internet-gateway                Represents a router that connects the edge
                                   of...
   ip-sec-connection               A connection between a DRG and CPE.
@@ -482,6 +484,9 @@ Options:
                                   to be on the same router, provide the OCID of
                                   that existing cross-connect or cross-connect
                                   group.
+  --customer-reference-name TEXT  A reference name or identifier for the
+                                  physical fiber connection that this cross-
+                                  connect uses.
   --wait-for-state [PENDING_CUSTOMER|PROVISIONING|PROVISIONED|INACTIVE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -727,6 +732,9 @@ Options:
                                   ready.
                                   
                                   Example: `true`
+  --customer-reference-name TEXT  A reference name or identifier for the
+                                  physical fiber connection that this cross-
+                                  connect uses.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -837,6 +845,9 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --customer-reference-name TEXT  A reference name or identifier for the
+                                  physical fiber connection that this cross-
+                                  connect group uses.
   --wait-for-state [PROVISIONING|PROVISIONED|INACTIVE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1076,6 +1087,9 @@ Options:
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --customer-reference-name TEXT  A reference name or identifier for the
+                                  physical fiber connection that this cross-
+                                  connect group uses.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -2683,6 +2697,41 @@ Options:
                               Options
   -?, -h, --help              For detailed help on any of these individual
                               commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network fast-connect-provider-service-key --help
+Usage: oci network fast-connect-provider-service-key [OPTIONS] COMMAND [ARGS]...
+
+  A provider service key and its details. A provider service key is an
+  identifier for a provider's virtual circuit.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get  Gets the specified provider service key's...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network fast-connect-provider-service-key get --help
+Usage: oci network fast-connect-provider-service-key get [OPTIONS]
+
+  Gets the specified provider service key's information.
+
+Options:
+  --provider-service-id TEXT      The OCID of the provider service. [required]
+  --provider-service-key-name TEXT
+                                  The provider service key name. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file.
+                                  
+                                  Options can still be
+                                  provided on the command line. If an option
+                                  exists in both the JSON document and the
+                                  command line then the command line specified
+                                  value will be used
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway --help
@@ -8577,6 +8626,10 @@ Options:
                                   provider). To get a list of the available
                                   service offerings, see
                                   [ListFastConnectProviderServices].
+  --provider-service-key-name TEXT
+                                  The service key name offered by the provider
+                                  (if the customer is connecting via a
+                                  provider).
   --provider-service-name TEXT    Deprecated. Instead use `providerServiceId`.
                                   To get a list of the provider names, see
                                   [ListFastConnectProviderServices].
@@ -8932,6 +8985,10 @@ Options:
                                   
                                   To be
                                   updated only by the provider.
+  --provider-service-key-name TEXT
+                                  The service key name offered by the provider
+                                  (if the customer is connecting via a
+                                  provider).
   --reference-comment TEXT        Provider-supplied reference information about
                                   this virtual circuit. Relevant only if the
                                   customer is using FastConnect via a provider.

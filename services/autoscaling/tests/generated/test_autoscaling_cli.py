@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_create_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'CreateAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -67,9 +68,9 @@ def test_create_auto_scaling_configuration(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, CreateAutoScalingConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_auto_scaling_configuration.command_name', 'create'),
@@ -105,6 +106,7 @@ def test_create_auto_scaling_configuration(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_create_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'CreateAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -159,9 +161,9 @@ def test_create_auto_scaling_policy(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, CreateAutoScalingPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('create_auto_scaling_policy.command_name', 'create'),
@@ -197,6 +199,7 @@ def test_create_auto_scaling_policy(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'DeleteAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -233,9 +236,9 @@ def test_delete_auto_scaling_configuration(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, DeleteAutoScalingConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_auto_scaling_configuration.command_name', 'delete'),
@@ -272,6 +275,7 @@ def test_delete_auto_scaling_configuration(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_delete_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'DeleteAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -308,9 +312,9 @@ def test_delete_auto_scaling_policy(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, DeleteAutoScalingPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('delete_auto_scaling_policy.command_name', 'delete'),
@@ -347,6 +351,7 @@ def test_delete_auto_scaling_policy(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'GetAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -383,9 +388,9 @@ def test_get_auto_scaling_configuration(cli_testing_service_client, runner, conf
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, GetAutoScalingConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_auto_scaling_configuration.command_name', 'get'),
@@ -421,6 +426,7 @@ def test_get_auto_scaling_configuration(cli_testing_service_client, runner, conf
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_get_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'GetAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -457,9 +463,9 @@ def test_get_auto_scaling_policy(cli_testing_service_client, runner, config_file
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, GetAutoScalingPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('get_auto_scaling_policy.command_name', 'get'),
@@ -495,6 +501,7 @@ def test_get_auto_scaling_policy(cli_testing_service_client, runner, config_file
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_auto_scaling_configurations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'ListAutoScalingConfigurations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -531,9 +538,9 @@ def test_list_auto_scaling_configurations(cli_testing_service_client, runner, co
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, ListAutoScalingConfigurations. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_auto_scaling_configurations.command_name', 'list'),
@@ -569,6 +576,7 @@ def test_list_auto_scaling_configurations(cli_testing_service_client, runner, co
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_list_auto_scaling_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'ListAutoScalingPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -605,9 +613,9 @@ def test_list_auto_scaling_policies(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, ListAutoScalingPolicies. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('list_auto_scaling_policies.command_name', 'list'),
@@ -643,6 +651,7 @@ def test_list_auto_scaling_policies(cli_testing_service_client, runner, config_f
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'UpdateAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -687,9 +696,9 @@ def test_update_auto_scaling_configuration(cli_testing_service_client, runner, c
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, UpdateAutoScalingConfiguration. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_auto_scaling_configuration.command_name', 'update'),
@@ -726,6 +735,7 @@ def test_update_auto_scaling_configuration(cli_testing_service_client, runner, c
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_update_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'UpdateAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -780,9 +790,9 @@ def test_update_auto_scaling_policy(cli_testing_service_client, runner, config_f
                     'Failed to find CLI command "oci {} {} {}" for given operation: autoscaling, UpdateAutoScalingPolicy. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_auto_scaling_policy.command_name', 'update'),

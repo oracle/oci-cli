@@ -6,6 +6,7 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
+from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
@@ -29,7 +30,7 @@ kms_service_cli.kms_service_group.add_command(kms_vault_root_group)
 kms_vault_root_group.add_command(vault_group)
 
 
-@vault_group.command(name=cli_util.override('cancel_vault_deletion.command_name', 'cancel-vault-deletion'), help="""Cancels the scheduled deletion of the specified Vault, which must be in PendingDeletion state. The Vault and all Keys in it will be moved back to their previous states before the deletion was scheduled.""")
+@vault_group.command(name=cli_util.override('cancel_vault_deletion.command_name', 'cancel-vault-deletion'), help="""Cancels the scheduled deletion of the specified vault. Canceling a scheduled deletion restores the vault and all keys in it to the respective states they were in before the deletion was scheduled.""")
 @cli_util.option('--vault-id', required=True, help="""The OCID of the vault.""")
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -79,7 +80,7 @@ def cancel_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('create_vault.command_name', 'create'), help="""Creates a new vault. The type of vault you create determines key placement, pricing, and available options. Options include storage isolation, a dedicated service endpoint instead of a shared service endpoint for API calls, and a dedicated HSM or a multitenant HSM.""")
+@vault_group.command(name=cli_util.override('create_vault.command_name', 'create'), help="""Creates a new vault. The type of vault you create determines key placement, pricing, and available options. Options include storage isolation, a dedicated service endpoint instead of a shared service endpoint for API calls, and a dedicated hardware security module (HSM) or a multitenant HSM.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment where you want to create this vault.""")
 @cli_util.option('--display-name', required=True, help="""A user-friendly name for the vault. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--vault-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIRTUAL_PRIVATE"]), help="""The type of vault to create. Each type of vault stores the key with different degrees of isolation and has different options and pricing.""")
@@ -161,7 +162,7 @@ def get_vault(ctx, from_json, vault_id):
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('list_vaults.command_name', 'list'), help="""Lists vaults in the specified compartment.""")
+@vault_group.command(name=cli_util.override('list_vaults.command_name', 'list'), help="""Lists the vaults in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -215,9 +216,9 @@ def list_vaults(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('schedule_vault_deletion.command_name', 'schedule-vault-deletion'), help="""Schedules the deletion of the specified Vault. The Vault and all Keys in it will be moved to PendingDeletion state and deleted after the retention period.""")
+@vault_group.command(name=cli_util.override('schedule_vault_deletion.command_name', 'schedule-vault-deletion'), help="""Schedules the deletion of the specified vault. This sets the state of the vault and all keys in it to `PENDING_DELETION` and then deletes them after the retention period ends.""")
 @cli_util.option('--vault-id', required=True, help="""The OCID of the vault.""")
-@cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help="""An optional property to indicate the deletion time of the Vault. The time format should comply with RFC-3339 standards. This time must be between 7 to 30 days from the time when the request is received. If the property is missing, it will be set to 30 days from request time by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help="""An optional property to indicate the deletion time of the vault, expressed in [RFC 3339] timestamp format. The specified time must be between 7 and 30 days from the time when the request is received. If this property is missing, it will be set to 30 days from the time of the request by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -273,7 +274,7 @@ def schedule_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('update_vault.command_name', 'update'), help="""Updates the properties of a vault. Specifically, you can update the `displayName` , `freeformTags`, and `definedTags` properties. Furthermore, the vault must be in an `ACTIVE` or `CREATING` state.""")
+@vault_group.command(name=cli_util.override('update_vault.command_name', 'update'), help="""Updates the properties of a vault. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the vault must be in an `ACTIVE` or `CREATING` state to be updated.""")
 @cli_util.option('--vault-id', required=True, help="""The OCID of the vault.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help="""A user-friendly name for the vault. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")

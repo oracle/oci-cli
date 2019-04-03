@@ -5,15 +5,80 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteVirtualCircuit&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:10 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Feb 2019 19:36:13 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0806&apiName=DeleteVirtualCircuit&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9d7273af-ba6f-4dbc-9a9f-613e48890293","request":{"virtualCircuitId":"ocid1.virtualcircuit.oc1.phx.aaaaaaaavuvjchgglhkoxozdxqorkxx2gh4sj5c7xdunj2xom2kgjq5owvsq"}}]'}
+    headers:
+      Content-Length: ['179']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:36:14 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/de:55:09:69:53:e3:c0:d0:8d:ab:97:5f:7b:51:ec:cc",signature="YYxPZSMyzp5/VCJ8apWJNYD6rakrOU/6VTx7ERa8SCFuqpbZXnl+Lz+tqWnbRQrpUXvxut1mNwwSURXew6uiwm4FUhfCqtGsD3g1cAz+fb0m3H47Xeme317ugwiV4SdBDIfdOOCmUJ81EiyXVvY6lKd57cholqw2J+UlNZT46jhuQwaBOYJvor9miS4+3Vq4+o4LULHTtJVIfKU6MAeW7/D/FBwshOTIZd0LzKdbkLInvK0HfzgBadc0Ema25YFlvRkGGDcY9XsIk6LMfl58bb5eYzYQfk2sVTc6K1wNNqiEsuJOAX2u+If/fPFwiMSz6pvKDNulB/omDhlPn4I1Mg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 19:36:15 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [1EEF459711FE4B369CF5582B7D4E662A]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/virtualCircuits/ocid1.virtualcircuit.oc1.phx.aaaaaaaavuvjchgglhkoxozdxqorkxx2gh4sj5c7xdunj2xom2kgjq5owvsq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 19:36:18 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [1EEF459711FE4B369CF5582B7D4E662A/E227FE4675BCFE257ED556AAEC38C308/CE38E6213C2953834CBC4B66DD0CF069]
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"6FE0F018D5A64F6B95E87DD06181CD1D\"}",
+      "requestJson": "{\"virtualCircuitId\": \"ocid1.virtualcircuit.oc1.phx.aaaaaaaavuvjchgglhkoxozdxqorkxx2gh4sj5c7xdunj2xom2kgjq5owvsq\"}",
+      "containerId": "9d7273af-ba6f-4dbc-9a9f-613e48890293", "requestClass": "com.oracle.bmc.core.requests.DeleteVirtualCircuitRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteVirtualCircuitResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['422']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0806&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:36:20 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

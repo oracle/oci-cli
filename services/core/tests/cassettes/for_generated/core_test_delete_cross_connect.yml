@@ -5,15 +5,80 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteCrossConnect&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:03 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Feb 2019 19:34:27 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0806&apiName=DeleteCrossConnect&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9d7273af-ba6f-4dbc-9a9f-613e48890293","request":{"crossConnectId":"ocid1.crossconnect.oc1.phx.aaaaaaaajjaebzpo2rf2ipcsbvfbvhuegn53qxb6kvelh57y5r2m23dxe37a"}}]'}
+    headers:
+      Content-Length: ['175']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:34:29 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/de:55:09:69:53:e3:c0:d0:8d:ab:97:5f:7b:51:ec:cc",signature="j3dFkWE2hN1K95obHk78P31LCUt9vs4IX5cuTlOZXPl0q0ncaIliFfc8plwsJRiCv8X8ikvSW3t10MyR4Ut8lIEGu+AXqBzWtjTTXrxcaRECKxLbOpCfC3L+hQcVCPDYey9fPW8AzzFDFRDmIqX48aB2g50N1Gm/9fPz6o+RbrDQgMwGgb6tGNUeTpPcD4eq1/TpSdR3c5WvKzxz5PwagonQPVabTUHEEw7Q3m+9fSJqLcbY1O34Z1lr7h7BCsf5OivgFN1/HfMSwF6vVc+HTyv5kjGfQGW+kfjHVVFBQF7evevaX9I3B9HNp2d9RUlNWOvipJYLP4HIKbiFdy24Bw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 19:34:30 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [B5561BC304844CB6B6C9968BDE12E508]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/crossConnects/ocid1.crossconnect.oc1.phx.aaaaaaaajjaebzpo2rf2ipcsbvfbvhuegn53qxb6kvelh57y5r2m23dxe37a
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 19:34:33 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [B5561BC304844CB6B6C9968BDE12E508/7A9FEAFB9EB7BE1DA435D08F2593134B/64C41C38D5361F2BD426BDDF4BD9A36D]
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"7815816F661C4F6296B4ABA1FB1C64CB\"}",
+      "requestJson": "{\"crossConnectId\": \"ocid1.crossconnect.oc1.phx.aaaaaaaajjaebzpo2rf2ipcsbvfbvhuegn53qxb6kvelh57y5r2m23dxe37a\"}",
+      "containerId": "9d7273af-ba6f-4dbc-9a9f-613e48890293", "requestClass": "com.oracle.bmc.core.requests.DeleteCrossConnectRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteCrossConnectResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['414']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0806&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:34:35 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

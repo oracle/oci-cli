@@ -6,6 +6,7 @@ import json
 import yaml
 import oci_cli
 import pytest
+import shutil
 
 from tests import util
 from tests import test_config_container
@@ -14,7 +15,8 @@ CLUSTER_CREATE_PROVISIONING_TIME_SEC = 1200
 PROVISIONING_TIME_SEC = 300
 DELETION_TIME_SEC = 300
 DEFAULT_KUBECONFIG_LOCATION = '~/.kube/config'
-USER_KUBECONFIG_LOCATION = './config_path/kubeconfig'
+USER_KUBECONFIG_DIR = './config/'
+USER_KUBECONFIG_LOCATION = USER_KUBECONFIG_DIR + 'kubeconfig'
 CASSETTE_LIBRARY_DIR = 'services/container_engine/tests/cassettes'
 # When we run this test under tox with multi-threading, some of these tests were failing
 # as there was contention to read/write to DEFAULT_KUBECONFIG_LOCATION.
@@ -198,6 +200,9 @@ def oce_cluster(runner, config_file, config_profile):
         ]
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result, json_response_expected=False)
+
+    if os.path.isdir(os.path.expandvars(os.path.expanduser(USER_KUBECONFIG_DIR))):
+        shutil.rmtree(USER_KUBECONFIG_DIR)
 
 
 @util.slow

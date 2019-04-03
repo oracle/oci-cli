@@ -5,15 +5,110 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=GetVirtualCircuit&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:12 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Feb 2019 19:38:52 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0806&apiName=GetVirtualCircuit&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9d7273af-ba6f-4dbc-9a9f-613e48890293","request":{"virtualCircuitId":"ocid1.virtualcircuit.oc1.phx.aaaaaaaagl7y65cwxt23nuuhydnvgkxzxpa27dnxiccmpjy32jhgygluqjfa"}}]'}
+    headers:
+      Content-Length: ['179']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:38:54 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/de:55:09:69:53:e3:c0:d0:8d:ab:97:5f:7b:51:ec:cc",signature="abhT2IKMKpg6jY5XsztiEkKyn5mvfzjEK5uUa+lZsmTXk1+4dCJCzoTBDe3Z6RyHmaQb2BA9RHaMCuujf5ES16e0acko9yNu+xiFtcLsdnTfHt0tJ0Tz7vlzjvp7L6kLeMSQlwLg0md9OawpOc5lhUx6417Wbj1qJt0jKFX8X5r3qLqvC/JP5dlyXOPQfKrjwBZpX1J/hStERjJZt+vuGl5tJFy+mdiB+0+ozKxycz7GXi9cwIhaQc9yh6Wxgh8YSugUwbaxkdMnk3kNEru2CJ4DOMhjMrsZG3QUMROC+J+P9gsoZfwlPHQK3RHVeMNC9LAbTgp7KvFhscWHoioAuQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 19:39:00 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [D3CF08CCFA6D4E65B4D99384A78E1027]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/virtualCircuits/ocid1.virtualcircuit.oc1.phx.aaaaaaaagl7y65cwxt23nuuhydnvgkxzxpa27dnxiccmpjy32jhgygluqjfa
+  response:
+    body: {string: "{\n  \"bandwidthShapeName\" : \"1 Gbps\",\n  \"bgpManagement\"\
+        \ : \"ORACLE_MANAGED\",\n  \"bgpSessionState\" : \"DOWN\",\n  \"compartmentId\"\
+        \ : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
+        ,\n  \"crossConnectMappings\" : [ {\n    \"bgpMd5AuthKey\" : null,\n    \"\
+        crossConnectOrCrossConnectGroupId\" : null,\n    \"customerBgpPeeringIp\"\
+        \ : \"169.254.161.22/30\",\n    \"oracleBgpPeeringIp\" : \"169.254.161.21/30\"\
+        ,\n    \"customerBgpPeeringIpv6\" : null,\n    \"oracleBgpPeeringIpv6\" :\
+        \ null,\n    \"vlan\" : null\n  } ],\n  \"customerBgpAsn\" : null,\n  \"definedTags\"\
+        \ : { },\n  \"displayName\" : \"__STS0806_4331\",\n  \"freeformTags\" : {\
+        \ },\n  \"gatewayId\" : null,\n  \"id\" : \"ocid1.virtualcircuit.oc1.phx.aaaaaaaagl7y65cwxt23nuuhydnvgkxzxpa27dnxiccmpjy32jhgygluqjfa\"\
+        ,\n  \"lifecycleState\" : \"PENDING_PROVIDER\",\n  \"oracleBgpAsn\" : 31898,\n\
+        \  \"providerName\" : \"CenturyLink\",\n  \"providerServiceId\" : \"ocid1.providerservice.oc1.phx.aaaaaaaa5dbfeyv4ndgbbd7j26a7yjzttgyxrh37jvrmmei6w7rikubd7lkq\"\
+        ,\n  \"providerServiceKeyName\" : null,\n  \"providerServiceName\" : \"Cloud\
+        \ Connect\",\n  \"providerState\" : \"INACTIVE\",\n  \"publicPrefixes\" :\
+        \ null,\n  \"referenceComment\" : null,\n  \"region\" : null,\n  \"serviceType\"\
+        \ : \"LAYER2\",\n  \"timeCreated\" : \"2019-02-28T19:38:59.953Z\",\n  \"type\"\
+        \ : \"PUBLIC\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['1247']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 19:39:01 GMT']
+      ETag: ['-1260949034']
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [D3CF08CCFA6D4E65B4D99384A78E1027/9BB24534C8C2360D92DEC4FC6C46507F/867CFFA35BDDCAEFDCA14D8D5E01AF52]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"F12282BBB6784B00A4C62A7B115423D0\",
+      \"etag\": \"-1260949034\", \"virtualCircuit\": {\"crossConnectMappings\": [{\"oracleBgpPeeringIp\":
+      \"169.254.161.21/30\", \"crossConnectOrCrossConnectGroupId\": null, \"customerBgpPeeringIpv6\":
+      null, \"customerBgpPeeringIp\": \"169.254.161.22/30\", \"vlan\": null, \"oracleBgpPeeringIpv6\":
+      null, \"bgpMd5AuthKey\": null}], \"providerName\": \"CenturyLink\", \"gatewayId\":
+      null, \"providerServiceName\": \"Cloud Connect\", \"oracleBgpAsn\": 31898, \"bandwidthShapeName\":
+      \"1 Gbps\", \"type\": \"PUBLIC\", \"publicPrefixes\": null, \"referenceComment\":
+      null, \"region\": null, \"bgpManagement\": \"ORACLE_MANAGED\", \"displayName\":
+      \"__STS0806_4331\", \"lifecycleState\": \"PENDING_PROVIDER\", \"id\": \"ocid1.virtualcircuit.oc1.phx.aaaaaaaagl7y65cwxt23nuuhydnvgkxzxpa27dnxiccmpjy32jhgygluqjfa\",
+      \"providerState\": \"INACTIVE\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"providerServiceId\": \"ocid1.providerservice.oc1.phx.aaaaaaaa5dbfeyv4ndgbbd7j26a7yjzttgyxrh37jvrmmei6w7rikubd7lkq\",
+      \"timeCreated\": \"2019-02-28T19:38:59.953000+00:00\", \"providerServiceKeyName\":
+      null, \"bgpSessionState\": \"DOWN\", \"serviceType\": \"LAYER2\", \"customerBgpAsn\":
+      null}}", "requestJson": "{\"virtualCircuitId\": \"ocid1.virtualcircuit.oc1.phx.aaaaaaaagl7y65cwxt23nuuhydnvgkxzxpa27dnxiccmpjy32jhgygluqjfa\"}",
+      "containerId": "9d7273af-ba6f-4dbc-9a9f-613e48890293", "requestClass": "com.oracle.bmc.core.requests.GetVirtualCircuitRequest",
+      "responseClass": "com.oracle.bmc.core.responses.GetVirtualCircuitResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1654']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0806&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:39:02 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

@@ -6,6 +6,7 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
+from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
@@ -98,7 +99,7 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help="""Generates new cryptographic material for a key. Key must be in an `ENABLED` state to be rotated.
+@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help="""Generates new cryptographic material for a key. The key must be in an `ENABLED` state to be rotated.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
@@ -394,7 +395,7 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help="""Updates the properties of a key. Specifically, you can update the `displayName` , `freeformTags`, and `definedTags` properties. Furthermore, the key must in an `ACTIVE` or `CREATING` state.
+@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help="""Updates the properties of a key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must in an `ACTIVE` or `CREATING` state to be updated.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help="""The OCID of the key.""")

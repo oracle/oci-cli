@@ -3,15 +3,37 @@
 #
 # Bash script to install the Oracle Cloud Infrastructure CLI
 # Example invocation: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
-#
-# Parameters:
-#   --accept-all-defauts: When specified, skips all interactive prompts by selecting the default response.
-#   --python-install-location: Optionally specifies where to install python on systems where it is not present. This must be an absolute path and it will be created if it does not exist.
-#                              This value will only be used on systems with 'yum' where a valid version of Python is not present on the system PATH.
-#
-SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh" 
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
+
+SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.5.6/scripts/install/install.py"
+FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
 _TTY=/dev/tty
+
+# Below is the usage text to be printed when --help is invoked on this script.
+usage="$(basename "$0") [--help] [--accept-all-defaults] [--python-install-location directory_name] [--optional-features feature1,feature2]
+        -- Bash script to install the Oracle Cloud Infrastructure CLI. The
+           script when run without any options runs in interactive mode
+           requesting for user inputs.
+
+The following options are available:
+    --accept-all-defaults
+        When specified, skips all interactive prompts by selecting the default
+        response.
+    --python-install-location
+        Optionally specifies where to install python on systems where it is
+        not present. This must be an absolute path and it will be created if
+        it does not exist. This value will only be used on systems where a
+        valid version of Python is not present on the system PATH.
+    --optional-features
+        This input param is used to specify any optional features
+        that need to be installed as part of OCI CLI install .e.g. to run
+        dbaas script 'create_backup_from_onprem', users need to install
+        optional 'db' feature which will install dependent cxOracle package.
+    --help
+        show this help text and exit.
+
+The order of precedence in which this scripts applies input parameters is as follows:
+individual params > accept_all_defaults > interactive inputs"
 
 # detect if the script is able to prompt for user input from stdin
 # if it is being run by piping the script content into bash (cat install.sh | bash) prompts will fail
@@ -21,6 +43,8 @@ if ! [ -t 0 ]; then
     echo "WARNING: Script should either be downloaded and invoked directly, or be run with the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
 fi
 
+# Initialize install args. Populate it with command line arguments
+install_args=""
 # parse script arguments
 while [[ $# -gt 0 ]]
 do
@@ -34,7 +58,19 @@ case $key in
     ;;
     --accept-all-defaults)
     ACCEPT_ALL_DEFAULTS=true
+    install_args="$install_args --accept-all-defaults"
     shift # past argument
+    ;;
+    --optional-features)
+    OPTIONAL_PACKAGE_NAME="$2"
+    install_args="$install_args --optional-features $OPTIONAL_PACKAGE_NAME"
+    shift # past argument
+    shift # past value
+    ;;
+    # Help text for this script. This option takes precedence over all other options
+    --help|-h)
+    echo "$usage"
+    exit 0
     ;;
     *)    # unknown option
     echo "Failed to run install script. Unrecognized argument: $1"
@@ -49,11 +85,28 @@ if [ "$ACCEPT_ALL_DEFAULTS" = true ]; then
     yum_opts="-y"
     apt_get_opts="-y"
     echo "Running with --accept-all-defaults"
+else
+    echo "
+    ******************************************************************************
+    ******************************************************************************
+    You have started the OCI CLI Installer in interactive mode. If you do not wish
+    to run this in interactive mode or would like to know more about input options
+    for this script, kill this process and invoke the commands below in your shell
+    to get more help text for this script:
+    curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+    ./install.sh -h
+    ******************************************************************************
+    ******************************************************************************"
 fi
 
 install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
 echo "Downloading Oracle Cloud Infrastructure CLI install script from $INSTALL_SCRIPT_URL to $install_script."
-curl -# $INSTALL_SCRIPT_URL > $install_script || exit
+curl -# -f $INSTALL_SCRIPT_URL > $install_script
+if [ $? -ne 0 ]; then
+    INSTALL_SCRIPT_URL=$FALLBACK_INSTALL_SCRIPT_URL
+    curl -# -f $INSTALL_SCRIPT_URL > $install_script || exit
+    echo "Falling back to previous install.py script URL - $INSTALL_SCRIPT_URL"
+fi
 
 # use default system executable on path unless we have to install one below
 python_exe=python
@@ -134,11 +187,5 @@ fi
 
 chmod 775 $install_script
 echo "Running install script."
-
-install_args=""
-if [ "$ACCEPT_ALL_DEFAULTS" = true ]; then
-    install_args="--accept-all-defaults"
-fi
-
 echo "$python_exe $install_script $install_args < $_TTY"
 $python_exe $install_script $install_args < $_TTY

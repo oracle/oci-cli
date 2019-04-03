@@ -586,8 +586,8 @@ $ oci kms management key update --help
 Usage: oci kms management key update [OPTIONS]
 
   Updates the properties of a key. Specifically, you can update the
-  `displayName` , `freeformTags`, and `definedTags` properties. Furthermore,
-  the key must in an `ACTIVE` or `CREATING` state.
+  `displayName`, `freeformTags`, and `definedTags` properties. Furthermore,
+  the key must in an `ACTIVE` or `CREATING` state to be updated.
 
   The top level --endpoint parameter must be supplied for this operation.
 
@@ -703,8 +703,8 @@ Commands:
 $ oci kms management key-version create --help
 Usage: oci kms management key-version create [OPTIONS]
 
-  Generates new cryptographic material for a key. Key must be in an `ENABLED`
-  state to be rotated.
+  Generates new cryptographic material for a key. The key must be in an
+  `ENABLED` state to be rotated.
 
   The top level --endpoint parameter must be supplied for this operation.
 
@@ -840,7 +840,7 @@ Commands:
   cancel-deletion    Cancels the scheduled deletion of the...
   create             Creates a new vault.
   get                Gets the specified vault's configuration...
-  list               Lists vaults in the specified compartment.
+  list               Lists the vaults in the specified...
   schedule-deletion  Schedules the deletion of the specified...
   update             Updates the properties of a vault.
 
@@ -848,9 +848,9 @@ Commands:
 $ oci kms management vault cancel-deletion --help
 Usage: oci kms management vault cancel-deletion [OPTIONS]
 
-  Cancels the scheduled deletion of the specified Vault, which must be in
-  PendingDeletion state. The Vault and all Keys in it will be moved back to
-  their previous states before the deletion was scheduled.
+  Cancels the scheduled deletion of the specified vault. Canceling a scheduled
+  deletion restores the vault and all keys in it to the respective states they
+  were in before the deletion was scheduled.
 
 Options:
   --vault-id TEXT                 The OCID of the vault. [required]
@@ -913,7 +913,7 @@ Usage: oci kms management vault create [OPTIONS]
   Creates a new vault. The type of vault you create determines key placement,
   pricing, and available options. Options include storage isolation, a
   dedicated service endpoint instead of a shared service endpoint for API
-  calls, and a dedicated HSM or a multitenant HSM.
+  calls, and a dedicated hardware security module (HSM) or a multitenant HSM.
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment where you want to
@@ -1040,7 +1040,7 @@ Options:
 $ oci kms management vault list --help
 Usage: oci kms management vault list [OPTIONS]
 
-  Lists vaults in the specified compartment.
+  Lists the vaults in the specified compartment.
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
@@ -1094,28 +1094,26 @@ Options:
 $ oci kms management vault schedule-deletion --help
 Usage: oci kms management vault schedule-deletion [OPTIONS]
 
-  Schedules the deletion of the specified Vault. The Vault and all Keys in it
-  will be moved to PendingDeletion state and deleted after the retention
-  period.
+  Schedules the deletion of the specified vault. This sets the state of the
+  vault and all keys in it to `PENDING_DELETION` and then deletes them after
+  the retention period ends.
 
 Options:
   --vault-id TEXT                 The OCID of the vault. [required]
   --time-of-deletion DATETIME     An optional property to indicate the deletion
-                                  time of the Vault. The time format should
-                                  comply with RFC-3339 standards. This time must
-                                  be between 7 to 30 days from the time when the
-                                  request is received. If the property is
-                                  missing, it will be set to 30 days from
-                                  request time by default.
+                                  time of the vault, expressed in [RFC 3339]
+                                  timestamp format. The specified time must be
+                                  between 7 and 30 days from the time when the
+                                  request is received. If this property is
+                                  missing, it will be set to 30 days from the
+                                  time of the request by default.
                                   
-                                  The following
-                                  datetime formats are supported:
+                                  The
+                                  following datetime formats are supported:
                                   
-                                  UTC with
-                                  milliseconds
+                                  UTC with milliseconds
                                   ***********************
-                                  Format:
-                                  YYYY-MM-DDTHH:mm:ss.sssTZD
+                                  Format: YYYY-MM-DDTHH:mm:ss.sssTZD
                                   Example:
                                   2017-09-15T20:30:00.123Z
                                   
@@ -1236,8 +1234,8 @@ $ oci kms management vault update --help
 Usage: oci kms management vault update [OPTIONS]
 
   Updates the properties of a vault. Specifically, you can update the
-  `displayName` , `freeformTags`, and `definedTags` properties. Furthermore,
-  the vault must be in an `ACTIVE` or `CREATING` state.
+  `displayName`, `freeformTags`, and `definedTags` properties. Furthermore,
+  the vault must be in an `ACTIVE` or `CREATING` state to be updated.
 
 Options:
   --vault-id TEXT                 The OCID of the vault. [required]

@@ -23,6 +23,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.generated
 def test_decrypt(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'Decrypt'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -68,9 +69,9 @@ def test_decrypt(cli_testing_service_client, runner, config_file, config_profile
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, Decrypt. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('decrypt.command_name', 'decrypt'),
@@ -109,6 +110,7 @@ def test_decrypt(cli_testing_service_client, runner, config_file, config_profile
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_encrypt(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'Encrypt'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -154,9 +156,9 @@ def test_encrypt(cli_testing_service_client, runner, config_file, config_profile
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, Encrypt. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('encrypt.command_name', 'encrypt'),
@@ -195,6 +197,7 @@ def test_encrypt(cli_testing_service_client, runner, config_file, config_profile
                 request = request_containers[i]['request'].copy()
 
 
+@pytest.mark.generated
 def test_generate_data_encryption_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GenerateDataEncryptionKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -240,9 +243,9 @@ def test_generate_data_encryption_key(cli_testing_service_client, runner, config
                     'Failed to find CLI command "oci {} {} {}" for given operation: key_management, GenerateDataEncryptionKey. '
                     'This usually happens because generated commands have been manually re-arranged in code for better user '
                     'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
-                    'tests/generated_test_extensions/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
                     'for the new command. If the file does not exist for your service, please create one. You can refer the '
-                    'MOVED_COMMANDS map in tests/generated_test_extensions/extend_test_compute.py as an example.'
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('generate_data_encryption_key.command_name', 'generate-data-encryption-key'),

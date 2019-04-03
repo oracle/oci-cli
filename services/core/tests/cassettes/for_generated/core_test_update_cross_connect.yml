@@ -5,15 +5,97 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateCrossConnect&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:15 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Feb 2019 19:41:44 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0806&apiName=UpdateCrossConnect&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"9d7273af-ba6f-4dbc-9a9f-613e48890293","request":{"crossConnectId":"ocid1.crossconnect.oc1.phx.aaaaaaaaiov45rlqr26dqsb3kwklc2rc2azqmfuiweq5wrq6lkrvsjgconjq","updateCrossConnectDetails":{"displayName":"__STS0806_1456"}}}]'}
+    headers:
+      Content-Length: ['236']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:41:46 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "__STS0806_1456"}'
+    headers:
+      Content-Length: ['33']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/de:55:09:69:53:e3:c0:d0:8d:ab:97:5f:7b:51:ec:cc",signature="qOqMWA24yPTGua2XKl8qIBrn8qQNfFVvoFUYd6QADFmHp/P0hntHXDrHA7wBW2QRFN66d9uOeIUNLzpnLDdgbOIBGEznk6yEBJ5Gga19IcImV31LKh13zToW7TfeyAPFPH5PVFNop1Ioxe8eXHlehTqsbwIXRnf90sDhyyB83e+IeVTYziSZMQKWCxQRU1z8+lKZ3GL4tuSqBqEzF8aHtliHUSkFWvfu8hz8T+ACDDEQVczkLMqda0MCqcihwh/2WKpSOP2LcMBBeKTLc0ogORh6mJKEZHWWC+0dSXfTCzIJNI//f0SSLksS8FXQ4DbVPEPg3bgz/rBlGm3krZINFQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Feb 2019 19:41:47 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.1+preview.1.712]
+      opc-request-id: [887101DBD086424CBB225677F0D14BF8]
+      user-agent: [Oracle-PythonSDK/2.2.1+preview.1.712 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.2+preview.1]
+      x-content-sha256: [/NhKX5XrSs75xFsJUVWuCkuubR2BDnK8JE4oSSAk+/Q=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/crossConnects/ocid1.crossconnect.oc1.phx.aaaaaaaaiov45rlqr26dqsb3kwklc2rc2azqmfuiweq5wrq6lkrvsjgconjq
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
+        ,\n  \"crossConnectGroupId\" : \"ocid1.crossconnectgroup.oc1.phx.aaaaaaaa3k33qedycjtfqe3rfpuwlk6cqtqgc4i4kw67sk3owyyifzqbsavq\"\
+        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0806_1456\",\n  \"\
+        freeformTags\" : { },\n  \"id\" : \"ocid1.crossconnect.oc1.phx.aaaaaaaaiov45rlqr26dqsb3kwklc2rc2azqmfuiweq5wrq6lkrvsjgconjq\"\
+        ,\n  \"lifecycleState\" : \"PENDING_CUSTOMER\",\n  \"locationName\" : \"Fake\
+        \ Location, Phoenix, AZ\",\n  \"portName\" : \"Port 5\",\n  \"portSpeedShapeName\"\
+        \ : \"10 Gbps\",\n  \"customerReferenceName\" : null,\n  \"timeCreated\" :\
+        \ \"2019-02-28T19:36:40.301Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['645']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Feb 2019 19:41:49 GMT']
+      ETag: ['-1967202818']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [887101DBD086424CBB225677F0D14BF8/879AAC872C6F4FA803CE7B04B39CE265/BCA491B72A4EEECEB122B7E3D6455CB9]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"26F2B1C349EA489BA5476EA07DB40BD3\",
+      \"etag\": \"-1967202818\", \"crossConnect\": {\"crossConnectGroupId\": \"ocid1.crossconnectgroup.oc1.phx.aaaaaaaa3k33qedycjtfqe3rfpuwlk6cqtqgc4i4kw67sk3owyyifzqbsavq\",
+      \"id\": \"ocid1.crossconnect.oc1.phx.aaaaaaaaiov45rlqr26dqsb3kwklc2rc2azqmfuiweq5wrq6lkrvsjgconjq\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"displayName\": \"__STS0806_1456\", \"timeCreated\": \"2019-02-28T19:36:40.301000+00:00\",
+      \"lifecycleState\": \"PENDING_CUSTOMER\", \"portSpeedShapeName\": \"10 Gbps\",
+      \"portName\": \"Port 5\", \"customerReferenceName\": null, \"locationName\":
+      \"Fake Location, Phoenix, AZ\"}}", "requestJson": "{\"updateCrossConnectDetails\":
+      {\"displayName\": \"__STS0806_1456\"}, \"crossConnectId\": \"ocid1.crossconnect.oc1.phx.aaaaaaaaiov45rlqr26dqsb3kwklc2rc2azqmfuiweq5wrq6lkrvsjgconjq\"}",
+      "containerId": "9d7273af-ba6f-4dbc-9a9f-613e48890293", "requestClass": "com.oracle.bmc.core.requests.UpdateCrossConnectRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateCrossConnectResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1143']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0806&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Feb 2019 19:41:50 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

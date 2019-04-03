@@ -19,7 +19,7 @@ import oci_cli.cli_util
 import oci
 from oci.object_storage.transfer.constants import MEBIBYTE
 from . import test_config_container
-from .conftest import runner
+from conftest import runner
 from oci_cli import ALL_SERVICES_DIR
 
 try:
@@ -98,7 +98,7 @@ for service_dir in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
         for extend_test_file in os.listdir(test_dir):
             if "extend_test" in extend_test_file:
                 try:
-                    extend_test_module = __import__(service_dir + ".tests." + extend_test_file[:-3], fromlist=['MOVED_COMMANDS'])
+                    extend_test_module = __import__("services." + service_dir + ".tests." + extend_test_file[:-3], fromlist=['MOVED_COMMANDS'])
                     MOVED_COMMANDS.update(extend_test_module.MOVED_COMMANDS)
                 except Exception:
                     pass
