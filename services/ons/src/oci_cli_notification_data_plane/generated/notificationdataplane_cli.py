@@ -60,16 +60,16 @@ notification_data_plane_root_group.add_command(confirmation_result_group)
 notification_data_plane_root_group.add_command(string_group)
 
 
-@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help="""Creates a subscription for the specified topic.""")
-@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic for the subscription.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment for the subscription.""")
-@cli_util.option('--protocol', required=True, help="""The protocol to use for delivering messages. Valid values: EMAIL, HTTPS.""")
-@cli_util.option('--endpoint', required=True, help="""The endpoint of the subscription. Valid values depend on the protocol. For EMAIL, only an email address is valid. For HTTPS, only a PagerDuty URL is valid. A URL cannot exceed 512 characters. Avoid entering confidential information.""")
-@cli_util.option('--metadata', help="""Metadata for the subscription. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help=u"""Creates a subscription for the specified topic.""")
+@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic for the subscription.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the subscription.""")
+@cli_util.option('--protocol', required=True, help=u"""The protocol to use for delivering messages. Valid values: EMAIL, HTTPS.""")
+@cli_util.option('--endpoint', required=True, help=u"""The endpoint of the subscription. Valid values depend on the protocol. For EMAIL, only an email address is valid. For HTTPS, only a PagerDuty URL is valid. A URL cannot exceed 512 characters. Avoid entering confidential information.""")
+@cli_util.option('--metadata', help=u"""Metadata for the subscription. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "ACTIVE", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -130,9 +130,9 @@ def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('delete_subscription.command_name', 'delete'), help="""Deletes the specified subscription.""")
-@cli_util.option('--subscription-id', required=True, help="""The [OCID] of the subscription to delete.""")
-@cli_util.option('--if-match', help="""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@subscription_group.command(name=cli_util.override('delete_subscription.command_name', 'delete'), help=u"""Deletes the specified subscription.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to delete.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING", "ACTIVE", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -193,10 +193,10 @@ def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@confirmation_result_group.command(name=cli_util.override('get_confirm_subscription.command_name', 'get-confirm-subscription'), help="""Gets the confirmation details for the specified subscription.""")
-@cli_util.option('--id', required=True, help="""The subscription ID.""")
-@cli_util.option('--token', required=True, help="""The subscription confirmation token.""")
-@cli_util.option('--protocol', required=True, help="""The subscription protocol. Valid values: EMAIL, HTTPS.""")
+@confirmation_result_group.command(name=cli_util.override('get_confirm_subscription.command_name', 'get-confirm-subscription'), help=u"""Gets the confirmation details for the specified subscription.""")
+@cli_util.option('--id', required=True, help=u"""The subscription ID.""")
+@cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
+@cli_util.option('--protocol', required=True, help=u"""The subscription protocol. Valid values: EMAIL, HTTPS.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -219,8 +219,8 @@ def get_confirm_subscription(ctx, from_json, id, token, protocol):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('get_subscription.command_name', 'get'), help="""Gets the specified subscription's configuration information.""")
-@cli_util.option('--subscription-id', required=True, help="""The [OCID] of the subscription to retrieve.""")
+@subscription_group.command(name=cli_util.override('get_subscription.command_name', 'get'), help=u"""Gets the specified subscription's configuration information.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -241,10 +241,10 @@ def get_subscription(ctx, from_json, subscription_id):
     cli_util.render_response(result, ctx)
 
 
-@string_group.command(name=cli_util.override('get_unsubscription.command_name', 'get-unsubscription'), help="""Gets the unsubscription details for the specified subscription.""")
-@cli_util.option('--id', required=True, help="""The [OCID] of the subscription to unsubscribe from.""")
-@cli_util.option('--token', required=True, help="""The subscription confirmation token.""")
-@cli_util.option('--protocol', required=True, help="""The subscription protocol. Valid values: EMAIL, HTTPS.""")
+@string_group.command(name=cli_util.override('get_unsubscription.command_name', 'get-unsubscription'), help=u"""Gets the unsubscription details for the specified subscription.""")
+@cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to unsubscribe from.""")
+@cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
+@cli_util.option('--protocol', required=True, help=u"""The subscription protocol. Valid values: EMAIL, HTTPS.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -267,11 +267,11 @@ def get_unsubscription(ctx, from_json, id, token, protocol):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('list_subscriptions.command_name', 'list'), help="""Lists the subscriptions in the specified compartment or topic.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment.""")
-@cli_util.option('--topic-id', help="""Return all subscriptions that are subscribed to the given topic OCID. Either this query parameter or the compartmentId query parameter must be set.""")
-@cli_util.option('--page', help="""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@subscription_group.command(name=cli_util.override('list_subscriptions.command_name', 'list'), help=u"""Lists the subscriptions in the specified compartment or topic.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--topic-id', help=u"""Return all subscriptions that are subscribed to the given topic OCID. Either this query parameter or the compartmentId query parameter must be set.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -318,11 +318,11 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, top
     cli_util.render_response(result, ctx)
 
 
-@publish_result_group.command(name=cli_util.override('publish_message.command_name', 'publish-message'), help="""Publishes a message to the specified topic. For more information about publishing messages, see [Publishing Messages].""")
-@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic.""")
-@cli_util.option('--body', required=True, help="""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
-@cli_util.option('--title', help="""The title of the message to be published. Avoid entering confidential information.""")
-@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help="""Type of message body in the request. Default value: JSON.""")
+@publish_result_group.command(name=cli_util.override('publish_message.command_name', 'publish-message'), help=u"""Publishes a message to the specified topic. For more information about publishing messages, see [Publishing Messages].""")
+@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic.""")
+@cli_util.option('--body', required=True, help=u"""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
+@cli_util.option('--title', help=u"""The title of the message to be published. Avoid entering confidential information.""")
+@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help=u"""Type of message body in the request. Default value: JSON.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -353,8 +353,8 @@ def publish_message(ctx, from_json, topic_id, body, title, message_type):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('resend_subscription_confirmation.command_name', 'resend-subscription-confirmation'), help="""Resends the confirmation details for the specified subscription.""")
-@cli_util.option('--id', required=True, help="""The [OCID] of the subscription to resend the confirmation for.""")
+@subscription_group.command(name=cli_util.override('resend_subscription_confirmation.command_name', 'resend-subscription-confirmation'), help=u"""Resends the confirmation details for the specified subscription.""")
+@cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to resend the confirmation for.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -375,16 +375,16 @@ def resend_subscription_confirmation(ctx, from_json, id):
     cli_util.render_response(result, ctx)
 
 
-@update_subscription_details_group.command(name=cli_util.override('update_subscription.command_name', 'update-subscription'), help="""Updates the specified subscription's configuration.""")
-@cli_util.option('--subscription-id', required=True, help="""The [OCID] of the subscription to update.""")
-@cli_util.option('--delivery-policy', type=custom_types.CLI_COMPLEX_TYPE, help="""The delivery policy of the subscription. Stored as a JSON string.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@update_subscription_details_group.command(name=cli_util.override('update_subscription.command_name', 'update-subscription'), help=u"""Updates the specified subscription's configuration.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to update.""")
+@cli_util.option('--delivery-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The delivery policy of the subscription. Stored as a JSON string.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'delivery-policy': {'module': 'ons', 'class': 'DeliveryPolicy'}, 'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option

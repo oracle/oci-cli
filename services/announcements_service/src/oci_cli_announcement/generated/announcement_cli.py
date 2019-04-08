@@ -50,8 +50,8 @@ announce_root_group.add_command(announcement_group)
 announce_root_group.add_command(announcement_user_status_group)
 
 
-@announcement_group.command(name=cli_util.override('get_announcement.command_name', 'get'), help="""Gets the details of a specific announcement.""")
-@cli_util.option('--announcement-id', required=True, help="""The OCID of the announcement.""")
+@announcement_group.command(name=cli_util.override('get_announcement.command_name', 'get'), help=u"""Gets the details of a specific announcement.""")
+@cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -72,8 +72,8 @@ def get_announcement(ctx, from_json, announcement_id):
     cli_util.render_response(result, ctx)
 
 
-@announcement_user_status_details_group.command(name=cli_util.override('get_announcement_user_status.command_name', 'get-announcement-user-status'), help="""Gets information about whether a specific announcement was acknowledged by a user.""")
-@cli_util.option('--announcement-id', required=True, help="""The OCID of the announcement.""")
+@announcement_user_status_details_group.command(name=cli_util.override('get_announcement_user_status.command_name', 'get-announcement-user-status'), help=u"""Gets information about whether a specific announcement was acknowledged by a user.""")
+@cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -94,17 +94,17 @@ def get_announcement_user_status(ctx, from_json, announcement_id):
     cli_util.render_response(result, ctx)
 
 
-@announcements_collection_group.command(name=cli_util.override('list_announcements.command_name', 'list-announcements'), help="""Gets a list of announcements for the current tenancy.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment. Because announcements are specific to a tenancy, this is the OCID of the root compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--announcement-type', help="""The type of announcement.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help="""The announcement's current lifecycle state.""")
-@cli_util.option('--is-banner', type=click.BOOL, help="""Whether the announcement is displayed as a console banner.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeOneValue", "timeTwoValue", "timeCreated", "referenceTicketNumber", "summary", "announcementType"]), help="""The criteria to sort by. You can specify only one sort order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use. (Sorting by `announcementType` orders the announcements list according to importance.)""")
-@cli_util.option('--time-one-earliest-time', type=custom_types.CLI_DATETIME, help="""The boundary for the earliest `timeOneValue` date on announcements that you want to see.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-one-latest-time', type=custom_types.CLI_DATETIME, help="""The boundary for the latest `timeOneValue` date on announcements that you want to see.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@announcements_collection_group.command(name=cli_util.override('list_announcements.command_name', 'list-announcements'), help=u"""Gets a list of announcements for the current tenancy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment. Because announcements are specific to a tenancy, this is the OCID of the root compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--announcement-type', help=u"""The type of announcement.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The announcement's current lifecycle state.""")
+@cli_util.option('--is-banner', type=click.BOOL, help=u"""Whether the announcement is displayed as a console banner.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeOneValue", "timeTwoValue", "timeCreated", "referenceTicketNumber", "summary", "announcementType"]), help=u"""The criteria to sort by. You can specify only one sort order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. (Sorting by `announcementType` orders the announcements list according to importance.)""")
+@cli_util.option('--time-one-earliest-time', type=custom_types.CLI_DATETIME, help=u"""The boundary for the earliest `timeOneValue` date on announcements that you want to see.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-one-latest-time', type=custom_types.CLI_DATETIME, help=u"""The boundary for the latest `timeOneValue` date on announcements that you want to see.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -163,12 +163,12 @@ def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@announcement_user_status_group.command(name=cli_util.override('update_announcement_user_status.command_name', 'update'), help="""Updates the status of the specified announcement with regard to whether it has been marked as read.""")
-@cli_util.option('--announcement-id', required=True, help="""The OCID of the announcement.""")
-@cli_util.option('--user-status-announcement-id', required=True, help="""The OCID of the announcement that this status is associated with.""")
-@cli_util.option('--user-id', required=True, help="""The OCID of the user that this status is associated with.""")
-@cli_util.option('--time-acknowledged', type=custom_types.CLI_DATETIME, help="""The date and time the announcement was acknowledged, expressed in [RFC 3339] timestamp format. Example: `2019-01-01T17:43:01.389+0000`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--if-match', help="""The locking version, used for optimistic concurrency control.""")
+@announcement_user_status_group.command(name=cli_util.override('update_announcement_user_status.command_name', 'update'), help=u"""Updates the status of the specified announcement with regard to whether it has been marked as read.""")
+@cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
+@cli_util.option('--user-status-announcement-id', required=True, help=u"""The OCID of the announcement that this status is associated with.""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user that this status is associated with.""")
+@cli_util.option('--time-acknowledged', type=custom_types.CLI_DATETIME, help=u"""The date and time the announcement was acknowledged, expressed in [RFC 3339] timestamp format. Example: `2019-01-01T17:43:01.389+0000`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--if-match', help=u"""The locking version, used for optimistic concurrency control.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

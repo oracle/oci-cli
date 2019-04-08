@@ -7,7 +7,6 @@ import click
 from oci_cli_compute.generated import compute_cli
 
 from oci_cli import cli_util
-from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 
@@ -94,13 +93,8 @@ def get_app_catalog_listing_agreements(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(compute_cli.create_app_catalog_subscription, params_to_exclude=['oracle_terms_of_use_link', 'listing_resource_version'])
 @pic_subscription_group.command(name='create', help=compute_cli.create_app_catalog_subscription.help)
-@cli_util.option('--listing-id', required=True, help="""The OCID of the listing.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--resource-version', required=True, help="""Listing Resource Version.""")
-@cli_util.option('--signature', required=True, help="""A generated signature for this listing resource version retrieved the agreements API.""")
-@cli_util.option('--oracle-tou-link', required=True, help='''Oracle Terms of Use link''')
-@cli_util.option('--eula-link', required=True, help='''EULA link''')
-@cli_util.option('--time-retrieved', required=True, type=custom_types.CLI_DATETIME, help="""Date and time the agreements were retrieved, in RFC3339 format. Example: `2018-03-20T12:32:53.532Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--resource-version', help="""Listing Resource Version.""")
+@cli_util.option('--oracle-tou-link', help='''Oracle Terms of Use link''')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler({})
 @cli_util.wrap_exceptions

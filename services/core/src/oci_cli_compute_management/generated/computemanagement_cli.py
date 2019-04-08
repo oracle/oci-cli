@@ -48,13 +48,13 @@ compute_management_root_group.add_command(instance_group)
 compute_management_root_group.add_command(instance_configuration_group)
 
 
-@instance_pool_group.command(name=cli_util.override('attach_load_balancer.command_name', 'attach'), help="""Attach load balancer to the instance pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The OCID of the load balancer to attach to the pool.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set on the load balancer to add instances to.""")
-@cli_util.option('--port', required=True, type=click.INT, help="""The port value to use when creating the backend set.""")
-@cli_util.option('--vnic-selection', required=True, help="""Indicates which vnic on each instance in the pool should be used to associate with the load balancer. possible values are \"PrimaryVnic\" or the displayName of one of the secondary VNICs on the instance configuration that is associated to the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('attach_load_balancer.command_name', 'attach'), help=u"""Attach load balancer to the instance pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to attach to the pool.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to add instances to.""")
+@cli_util.option('--port', required=True, type=click.INT, help=u"""The port value to use when creating the backend set.""")
+@cli_util.option('--vnic-selection', required=True, help=u"""Indicates which vnic on each instance in the pool should be used to associate with the load balancer. possible values are \"PrimaryVnic\" or the displayName of one of the secondary VNICs on the instance configuration that is associated to the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -109,14 +109,14 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('create_instance_configuration.command_name', 'create'), help="""Creates an instance configuration""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment containing the instance configuration.""")
-@cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@instance_configuration_group.command(name=cli_util.override('create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
+@cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly name for the instance configuration""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-details': {'module': 'core', 'class': 'InstanceConfigurationInstanceDetails'}})
@@ -149,19 +149,19 @@ def create_instance_configuration(ctx, from_json, compartment_id, instance_detai
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('create_instance_pool.command_name', 'create'), help="""Create an instance pool.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment containing the instance pool""")
-@cli_util.option('--instance-configuration-id', required=True, help="""The OCID of the instance configuration associated to the instance pool.""")
-@cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--size', required=True, type=click.INT, help="""The number of instances that should be in the instance pool.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@instance_pool_group.command(name=cli_util.override('create_instance_pool.command_name', 'create'), help=u"""Create an instance pool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance pool""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration associated to the instance pool.""")
+@cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--size', required=True, type=click.INT, help=u"""The number of instances that should be in the instance pool.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name.  Does not have to be unique.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--display-name', help=u"""The user-friendly name.  Does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancers', type=custom_types.CLI_COMPLEX_TYPE, help="""The load balancers to attach to the instance pool.
+@cli_util.option('--load-balancers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The load balancers to attach to the instance pool.
 
 This option is a JSON list with items of type AttachLoadBalancerDetails.  For documentation on AttachLoadBalancerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AttachLoadBalancerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -224,9 +224,9 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('delete_instance_configuration.command_name', 'delete'), help="""Deletes an instance configuration.""")
-@cli_util.option('--instance-configuration-id', required=True, help="""The OCID of the instance configuration.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_configuration_group.command(name=cli_util.override('delete_instance_configuration.command_name', 'delete'), help=u"""Deletes an instance configuration.""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -249,11 +249,11 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('detach_load_balancer.command_name', 'detach'), help="""Detach a load balancer from the instance pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The OCID of the load balancer to detach from the pool.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set on the load balancer to detach from the pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('detach_load_balancer.command_name', 'detach'), help=u"""Detach a load balancer from the instance pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to detach from the pool.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to detach from the pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -306,8 +306,8 @@ def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('get_instance_configuration.command_name', 'get'), help="""Gets the specified instance configuration""")
-@cli_util.option('--instance-configuration-id', required=True, help="""The OCID of the instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('get_instance_configuration.command_name', 'get'), help=u"""Gets the specified instance configuration""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -327,8 +327,8 @@ def get_instance_configuration(ctx, from_json, instance_configuration_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('get_instance_pool.command_name', 'get'), help="""Gets the specified instance pool""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
+@instance_pool_group.command(name=cli_util.override('get_instance_pool.command_name', 'get'), help=u"""Gets the specified instance pool""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -348,9 +348,9 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('launch_instance_configuration.command_name', 'launch-instance-configuration'), help="""Launch an instance from an instance configuration""")
-@cli_util.option('--instance-configuration-id', required=True, help="""The OCID of the instance configuration.""")
-@cli_util.option('--instance-type', required=True, help="""The type of instance details. Supported instanceType is compute""")
+@instance_group.command(name=cli_util.override('launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Launch an instance from an instance configuration""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
+@cli_util.option('--instance-type', required=True, help=u"""The type of instance details. Supported instanceType is compute""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -375,13 +375,13 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help="""Launch an instance from an instance configuration""")
-@cli_util.option('--instance-configuration-id', required=True, help="""The OCID of the instance configuration.""")
-@cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@instance_group.command(name=cli_util.override('launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Launch an instance from an instance configuration""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
+@cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type InstanceConfigurationBlockVolumeDetails.  For documentation on InstanceConfigurationBlockVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationBlockVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--launch-details', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--secondary-vnics', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--launch-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--secondary-vnics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type InstanceConfigurationAttachVnicDetails.  For documentation on InstanceConfigurationAttachVnicDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationAttachVnicDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'block-volumes': {'module': 'core', 'class': 'list[InstanceConfigurationBlockVolumeDetails]'}, 'launch-details': {'module': 'core', 'class': 'InstanceConfigurationLaunchInstanceDetails'}, 'secondary-vnics': {'module': 'core', 'class': 'list[InstanceConfigurationAttachVnicDetails]'}})
@@ -418,16 +418,16 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('list_instance_configurations.command_name', 'list'), help="""Lists the available instanceConfigurations in the specific compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@instance_configuration_group.command(name=cli_util.override('list_instance_configurations.command_name', 'list'), help=u"""Lists the available instanceConfigurations in the specific compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -475,18 +475,18 @@ def list_instance_configurations(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('list_instance_pool_instances.command_name', 'list-instance-pool-instances'), help="""List the instances in the specified instance pool.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@instance_group.command(name=cli_util.override('list_instance_pool_instances.command_name', 'list-instance-pool-instances'), help=u"""List the instances in the specified instance pool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -542,18 +542,18 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('list_instance_pools.command_name', 'list'), help="""Lists the instance pools in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@instance_pool_group.command(name=cli_util.override('list_instance_pools.command_name', 'list'), help=u"""Lists the instance pools in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -605,9 +605,9 @@ def list_instance_pools(ctx, from_json, all_pages, page_size, compartment_id, di
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('reset_instance_pool.command_name', 'reset'), help="""Performs the reset (power off and power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('reset_instance_pool.command_name', 'reset'), help=u"""Performs the reset (power off and power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -654,9 +654,9 @@ def reset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('softreset_instance_pool.command_name', 'softreset'), help="""Performs the softreset (ACPI shutdown and power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('softreset_instance_pool.command_name', 'softreset'), help=u"""Performs the softreset (ACPI shutdown and power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -703,9 +703,9 @@ def softreset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('start_instance_pool.command_name', 'start'), help="""Performs the start (power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('start_instance_pool.command_name', 'start'), help=u"""Performs the start (power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -752,9 +752,9 @@ def start_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('stop_instance_pool.command_name', 'stop'), help="""Performs the stop (power off) action on the specified instance pool, which performs the action on all the instances in the pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('stop_instance_pool.command_name', 'stop'), help=u"""Performs the stop (power off) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -801,9 +801,9 @@ def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('terminate_instance_pool.command_name', 'terminate'), help="""Terminate the specified instance pool.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@instance_pool_group.command(name=cli_util.override('terminate_instance_pool.command_name', 'terminate'), help=u"""Terminate the specified instance pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -863,18 +863,18 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('update_instance_configuration.command_name', 'update'), help="""Updates the freeFormTags, definedTags, and display name of an instance configuration.""")
-@cli_util.option('--instance-configuration-id', required=True, help="""The OCID of the instance configuration.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@instance_configuration_group.command(name=cli_util.override('update_instance_configuration.command_name', 'update'), help=u"""Updates the freeFormTags, definedTags, and display name of an instance configuration.""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My instance configuration`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
@@ -914,21 +914,21 @@ def update_instance_configuration(ctx, from_json, force, instance_configuration_
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('update_instance_pool.command_name', 'update'), help="""Update the specified instance pool. The OCID of the instance pool remains the same.""")
-@cli_util.option('--instance-pool-id', required=True, help="""The OCID of the instance pool.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@instance_pool_group.command(name=cli_util.override('update_instance_pool.command_name', 'update'), help=u"""Update the specified instance pool. The OCID of the instance pool remains the same.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""The user-friendly name.  Does not have to be unique.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--display-name', help=u"""The user-friendly name.  Does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-configuration-id', help="""The OCID of the instance configuration associated to the intance pool.""")
-@cli_util.option('--placement-configurations', type=custom_types.CLI_COMPLEX_TYPE, help="""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the instance configuration associated to the intance pool.""")
+@cli_util.option('--placement-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.
 
 This option is a JSON list with items of type UpdateInstancePoolPlacementConfigurationDetails.  For documentation on UpdateInstancePoolPlacementConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateInstancePoolPlacementConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--size', type=click.INT, help="""The number of instances that should be in the instance pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

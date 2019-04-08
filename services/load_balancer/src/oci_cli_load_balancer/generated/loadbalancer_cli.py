@@ -154,27 +154,27 @@ lb_root_group.add_command(backend_set_group)
 lb_root_group.add_command(backend_group)
 
 
-@backend_group.command(name=cli_util.override('create_backend.command_name', 'create'), help="""Adds a backend server to a backend set.""")
-@cli_util.option('--ip-address', required=True, help="""The IP address of the backend server.
+@backend_group.command(name=cli_util.override('create_backend.command_name', 'create'), help=u"""Adds a backend server to a backend set.""")
+@cli_util.option('--ip-address', required=True, help=u"""The IP address of the backend server.
 
 Example: `10.0.0.3`""")
-@cli_util.option('--port', required=True, type=click.INT, help="""The communication port for the backend server.
+@cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the backend server.
 
 Example: `8080`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set and servers.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to add the backend server to.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and servers.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to add the backend server to.
 
 Example: `example_backend_set`""")
-@cli_util.option('--weight', type=click.INT, help="""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
+@cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
 
 Example: `3`""")
-@cli_util.option('--backup', type=click.BOOL, help="""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
+@cli_util.option('--backup', type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
 Example: `false`""")
-@cli_util.option('--drain', type=click.BOOL, help="""Whether the load balancer should drain this server. Servers marked \"drain\" receive no new incoming traffic.
+@cli_util.option('--drain', type=click.BOOL, help=u"""Whether the load balancer should drain this server. Servers marked \"drain\" receive no new incoming traffic.
 
 Example: `false`""")
-@cli_util.option('--offline', type=click.BOOL, help="""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
+@cli_util.option('--offline', type=click.BOOL, help=u"""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
 
 Example: `false`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -244,22 +244,22 @@ def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@backend_set_group.command(name=cli_util.override('create_backend_set.command_name', 'create'), help="""Adds a backend set to a load balancer.""")
-@cli_util.option('--name', required=True, help="""A friendly name for the backend set. It must be unique and it cannot be changed.
+@backend_set_group.command(name=cli_util.override('create_backend_set.command_name', 'create'), help=u"""Adds a backend set to a load balancer.""")
+@cli_util.option('--name', required=True, help=u"""A friendly name for the backend set. It must be unique and it cannot be changed.
 
 Valid backend set names include only alphanumeric characters, dashes, and underscores. Backend set names cannot contain spaces. Avoid entering confidential information.
 
 Example: `example_backend_set`""")
-@cli_util.option('--policy', required=True, help="""The load balancer policy for the backend set. To get a list of available policies, use the [ListPolicies] operation.
+@cli_util.option('--policy', required=True, help=u"""The load balancer policy for the backend set. To get a list of available policies, use the [ListPolicies] operation.
 
 Example: `LEAST_CONNECTIONS`""")
-@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer on which to add a backend set.""")
-@cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add a backend set.""")
+@cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -321,23 +321,23 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('create_certificate.command_name', 'create'), help="""Creates an asynchronous request to add an SSL certificate bundle.""")
-@cli_util.option('--certificate-name', required=True, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.
+@certificate_group.command(name=cli_util.override('create_certificate.command_name', 'create'), help=u"""Creates an asynchronous request to add an SSL certificate bundle.""")
+@cli_util.option('--certificate-name', required=True, help=u"""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.
 
 Example: `example_certificate_bundle`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer on which to add the certificate bundle.""")
-@cli_util.option('--passphrase', help="""A passphrase for encrypted private keys. This is needed only if you created your certificate with a passphrase.""")
-@cli_util.option('--private-key', help="""The SSL private key for your certificate, in PEM format.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add the certificate bundle.""")
+@cli_util.option('--passphrase', help=u"""A passphrase for encrypted private keys. This is needed only if you created your certificate with a passphrase.""")
+@cli_util.option('--private-key', help=u"""The SSL private key for your certificate, in PEM format.
 
 Example:
 
     -----BEGIN RSA PRIVATE KEY-----     jO1O1v2ftXMsawM90tnXwc6xhOAT1gDBC9S8DKeca..JZNUgYYwNS0dP2UK     tmyN+XqVcAKw4HqVmChXy5b5msu8eIq3uc2NqNVtR..2ksSLukP8pxXcHyb     +sEwvM4uf8qbnHAqwnOnP9+KV9vds6BaH1eRA4CHz..n+NVZlzBsTxTlS16     /Umr7wJzVrMqK5sDiSu4WuaaBdqMGfL5hLsTjcBFD..Da2iyQmSKuVD4lIZ     ...     -----END RSA PRIVATE KEY-----""")
-@cli_util.option('--public-certificate', help="""The public certificate, in PEM format, that you received from your SSL certificate provider.
+@cli_util.option('--public-certificate', help=u"""The public certificate, in PEM format, that you received from your SSL certificate provider.
 
 Example:
 
     -----BEGIN CERTIFICATE-----     MIIC2jCCAkMCAg38MA0GCSqGSIb3DQEBBQUAMIGbM..QswCQYDVQQGEwJKU     A1UECBMFVG9reW8xEDAOBgNVBAcTB0NodW8ta3UxE..TAPBgNVBAoTCEZyY     MRgwFgYDVQQLEw9XZWJDZXJ0IFN1cHBvcnQxGDAWB..gNVBAMTD0ZyYW5rN     YiBDQTEjMCEGCSqGSIb3DQEJARYUc3VwcG9ydEBmc..mFuazRkZC5jb20wH     ...     -----END CERTIFICATE-----""")
-@cli_util.option('--ca-certificate', help="""The Certificate Authority certificate, or any interim certificate, that you received from your SSL certificate provider.
+@cli_util.option('--ca-certificate', help=u"""The Certificate Authority certificate, or any interim certificate, that you received from your SSL certificate provider.
 
 Example:
 
@@ -404,14 +404,14 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@hostname_group.command(name=cli_util.override('create_hostname.command_name', 'create'), help="""Adds a hostname resource to the specified load balancer. For more information, see [Managing Request Routing].""")
-@cli_util.option('--name', required=True, help="""A friendly name for the hostname resource. It must be unique and it cannot be changed. Avoid entering confidential information.
+@hostname_group.command(name=cli_util.override('create_hostname.command_name', 'create'), help=u"""Adds a hostname resource to the specified load balancer. For more information, see [Managing Request Routing].""")
+@cli_util.option('--name', required=True, help=u"""A friendly name for the hostname resource. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_hostname_001`""")
-@cli_util.option('--hostname', required=True, help="""A virtual hostname. For more information about virtual hostname string construction, see [Managing Request Routing].
+@cli_util.option('--hostname', required=True, help=u"""A virtual hostname. For more information about virtual hostname string construction, see [Managing Request Routing].
 
 Example: `app.example.com`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to add the hostname to.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the hostname to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -463,27 +463,27 @@ def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@listener_group.command(name=cli_util.override('create_listener.command_name', 'create'), help="""Adds a listener to a load balancer.""")
-@cli_util.option('--default-backend-set-name', required=True, help="""The name of the associated backend set.
+@listener_group.command(name=cli_util.override('create_listener.command_name', 'create'), help=u"""Adds a listener to a load balancer.""")
+@cli_util.option('--default-backend-set-name', required=True, help=u"""The name of the associated backend set.
 
 Example: `example_backend_set`""")
-@cli_util.option('--port', required=True, type=click.INT, help="""The communication port for the listener.
+@cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, help="""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
+@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
 
 Example: `HTTP`""")
-@cli_util.option('--name', required=True, help="""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
+@cli_util.option('--name', required=True, help=u"""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_listener`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer on which to add a listener.""")
-@cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--path-route-set-name', help="""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which to add a listener.""")
+@cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--path-route-set-name', help=u"""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
 
 Example: `example_path_route_set`""")
-@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help="""The names of the [rule sets] to apply to the listener.
+@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The names of the [rule sets] to apply to the listener.
 
 Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -554,7 +554,7 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_group.command(name=cli_util.override('create_load_balancer.command_name', 'create'), help="""Creates a new load balancer in the specified compartment. For general information about load balancers, see [Overview of the Load Balancing Service].
+@load_balancer_group.command(name=cli_util.override('create_load_balancer.command_name', 'create'), help=u"""Creates a new load balancer in the specified compartment. For general information about load balancers, see [Overview of the Load Balancing Service].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the load balancer to reside. Notice that the load balancer doesn't have to be in the same compartment as the VCN or backend set. If you're not sure which compartment to use, put the load balancer in the same compartment as the VCN. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -567,15 +567,15 @@ All Oracle Cloud Infrastructure resources, including load balancers, get an Orac
 After you send your request, the new object's state will temporarily be PROVISIONING. Before using the object, first make sure its state has changed to RUNNING.
 
 When you create a load balancer, the system assigns an IP address. To get the IP address, use the [GetLoadBalancer] operation.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment in which to create the load balancer.""")
-@cli_util.option('--display-name', required=True, help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the load balancer.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
-@cli_util.option('--shape-name', required=True, help="""A template that determines the total pre-provisioned bandwidth (ingress plus egress). To get a list of available shapes, use the [ListShapes] operation.
+@cli_util.option('--shape-name', required=True, help=u"""A template that determines the total pre-provisioned bandwidth (ingress plus egress). To get a list of available shapes, use the [ListShapes] operation.
 
 Example: `100Mbps`""")
-@cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of subnet [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-private', type=click.BOOL, help="""Whether the load balancer has a VCN-local (private) IP address.
+@cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of subnet [OCIDs].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-private', type=click.BOOL, help=u"""Whether the load balancer has a VCN-local (private) IP address.
 
 If \"true\", the service assigns a private IP address to the load balancer.
 
@@ -584,28 +584,28 @@ If \"false\", the service assigns a public IP address to the load balancer.
 A public load balancer is accessible from the internet, depending on your VCN's [security list rules]. For more information about public and private load balancers, see [How Load Balancing Works].
 
 Example: `true`""")
-@cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, ListenerDetails).  For documentation on ListenerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/ListenerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostnames', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--hostnames', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, HostnameDetails).  For documentation on HostnameDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/HostnameDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--backend-sets', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--backend-sets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, BackendSetDetails).  For documentation on BackendSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, CertificateDetails).  For documentation on CertificateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/CertificateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--path-route-sets', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--path-route-sets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, PathRouteSetDetails).  For documentation on PathRouteSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/PathRouteSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rule-sets', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@cli_util.option('--rule-sets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documentation on RuleSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/RuleSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -686,12 +686,12 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@path_route_set_group.command(name=cli_util.override('create_path_route_set.command_name', 'create'), help="""Adds a path route set to a load balancer. For more information, see [Managing Request Routing].""")
-@cli_util.option('--name', required=True, help="""The name for this set of path route rules. It must be unique and it cannot be changed. Avoid entering confidential information.
+@path_route_set_group.command(name=cli_util.override('create_path_route_set.command_name', 'create'), help=u"""Adds a path route set to a load balancer. For more information, see [Managing Request Routing].""")
+@cli_util.option('--name', required=True, help=u"""The name for this set of path route rules. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_path_route_set`""")
-@cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to add the path route set to.""")
+@cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to add the path route set to.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -743,12 +743,12 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@rule_set_group.command(name=cli_util.override('create_rule_set.command_name', 'create'), help="""Creates a new rule set associated with the specified load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--name', required=True, help="""The name for this set of rules. It must be unique and it cannot be changed. Avoid entering confidential information.
+@rule_set_group.command(name=cli_util.override('create_rule_set.command_name', 'create'), help=u"""Creates a new rule set associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--name', required=True, help=u"""The name for this set of rules. It must be unique and it cannot be changed. Avoid entering confidential information.
 
 Example: `example_rule_set`""")
-@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -800,12 +800,12 @@ def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@backend_group.command(name=cli_util.override('delete_backend.command_name', 'delete'), help="""Removes a backend server from a given load balancer and backend set.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set and server.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the backend server.
+@backend_group.command(name=cli_util.override('delete_backend.command_name', 'delete'), help=u"""Removes a backend server from a given load balancer and backend set.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help="""The IP address and port of the backend server to remove.
+@cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to remove.
 
 Example: `10.0.0.3:8080`""")
 @cli_util.confirm_delete_option
@@ -862,11 +862,11 @@ def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@backend_set_group.command(name=cli_util.override('delete_backend_set.command_name', 'delete'), help="""Deletes the specified backend set. Note that deleting a backend set removes its backend servers from the load balancer.
+@backend_set_group.command(name=cli_util.override('delete_backend_set.command_name', 'delete'), help=u"""Deletes the specified backend set. Note that deleting a backend set removes its backend servers from the load balancer.
 
 Before you can delete a backend set, you must remove it from any active listeners.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to delete.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to delete.
 
 Example: `example_backend_set`""")
 @cli_util.confirm_delete_option
@@ -919,9 +919,9 @@ def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('delete_certificate.command_name', 'delete'), help="""Deletes an SSL certificate bundle from a load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the certificate bundle to be deleted.""")
-@cli_util.option('--certificate-name', required=True, help="""The name of the certificate bundle to delete.
+@certificate_group.command(name=cli_util.override('delete_certificate.command_name', 'delete'), help=u"""Deletes an SSL certificate bundle from a load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the certificate bundle to be deleted.""")
+@cli_util.option('--certificate-name', required=True, help=u"""The name of the certificate bundle to delete.
 
 Example: `example_certificate_bundle`""")
 @cli_util.confirm_delete_option
@@ -974,9 +974,9 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@hostname_group.command(name=cli_util.override('delete_hostname.command_name', 'delete'), help="""Deletes a hostname resource from the specified load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the hostname to delete.""")
-@cli_util.option('--name', required=True, help="""The name of the hostname resource to delete.
+@hostname_group.command(name=cli_util.override('delete_hostname.command_name', 'delete'), help=u"""Deletes a hostname resource from the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the hostname to delete.""")
+@cli_util.option('--name', required=True, help=u"""The name of the hostname resource to delete.
 
 Example: `example_hostname_001`""")
 @cli_util.confirm_delete_option
@@ -1029,9 +1029,9 @@ def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@listener_group.command(name=cli_util.override('delete_listener.command_name', 'delete'), help="""Deletes a listener from a load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the listener to delete.""")
-@cli_util.option('--listener-name', required=True, help="""The name of the listener to delete.
+@listener_group.command(name=cli_util.override('delete_listener.command_name', 'delete'), help=u"""Deletes a listener from a load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener to delete.""")
+@cli_util.option('--listener-name', required=True, help=u"""The name of the listener to delete.
 
 Example: `example_listener`""")
 @cli_util.confirm_delete_option
@@ -1084,8 +1084,8 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_group.command(name=cli_util.override('delete_load_balancer.command_name', 'delete'), help="""Stops a load balancer and removes it from service.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to delete.""")
+@load_balancer_group.command(name=cli_util.override('delete_load_balancer.command_name', 'delete'), help=u"""Stops a load balancer and removes it from service.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to delete.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1132,11 +1132,11 @@ def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@path_route_set_group.command(name=cli_util.override('delete_path_route_set.command_name', 'delete'), help="""Deletes a path route set from the specified load balancer.
+@path_route_set_group.command(name=cli_util.override('delete_path_route_set.command_name', 'delete'), help=u"""Deletes a path route set from the specified load balancer.
 
 To delete a path route rule from a path route set, use the [UpdatePathRouteSet] operation.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the path route set to delete.""")
-@cli_util.option('--path-route-set-name', required=True, help="""The name of the path route set to delete.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route set to delete.""")
+@cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to delete.
 
 Example: `example_path_route_set`""")
 @cli_util.confirm_delete_option
@@ -1189,11 +1189,11 @@ def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@rule_set_group.command(name=cli_util.override('delete_rule_set.command_name', 'delete'), help="""Deletes a rule set from the specified load balancer.
+@rule_set_group.command(name=cli_util.override('delete_rule_set.command_name', 'delete'), help=u"""Deletes a rule set from the specified load balancer.
 
 To delete a rule from a rule set, use the [UpdateRuleSet] operation.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--rule-set-name', required=True, help="""The name of the rule set to delete.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to delete.
 
 Example: `example_rule_set`""")
 @cli_util.confirm_delete_option
@@ -1246,12 +1246,12 @@ def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@backend_group.command(name=cli_util.override('get_backend.command_name', 'get'), help="""Gets the specified backend server's configuration information.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set and server.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set that includes the backend server.
+@backend_group.command(name=cli_util.override('get_backend.command_name', 'get'), help=u"""Gets the specified backend server's configuration information.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set that includes the backend server.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help="""The IP address and port of the backend server to retrieve.
+@cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to retrieve.
 
 Example: `10.0.0.3:8080`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1282,12 +1282,12 @@ def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name
     cli_util.render_response(result, ctx)
 
 
-@backend_health_group.command(name=cli_util.override('get_backend_health.command_name', 'get'), help="""Gets the current health status of the specified backend server.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend server health status to be retrieved.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the backend server to retrieve the health status for.
+@backend_health_group.command(name=cli_util.override('get_backend_health.command_name', 'get'), help=u"""Gets the current health status of the specified backend server.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend server health status to be retrieved.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server to retrieve the health status for.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help="""The IP address and port of the backend server to retrieve the health status for.
+@cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to retrieve the health status for.
 
 Example: `10.0.0.3:8080`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1318,9 +1318,9 @@ def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backe
     cli_util.render_response(result, ctx)
 
 
-@backend_set_group.command(name=cli_util.override('get_backend_set.command_name', 'get'), help="""Gets the specified backend set's configuration information.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to retrieve.
+@backend_set_group.command(name=cli_util.override('get_backend_set.command_name', 'get'), help=u"""Gets the specified backend set's configuration information.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to retrieve.
 
 Example: `example_backend_set`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1347,9 +1347,9 @@ def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name):
     cli_util.render_response(result, ctx)
 
 
-@backend_set_health_group.command(name=cli_util.override('get_backend_set_health.command_name', 'get'), help="""Gets the health status for the specified backend set.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set health status to be retrieved.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to retrieve the health status for.
+@backend_set_health_group.command(name=cli_util.override('get_backend_set_health.command_name', 'get'), help=u"""Gets the health status for the specified backend set.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set health status to be retrieved.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to retrieve the health status for.
 
 Example: `example_backend_set`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1376,9 +1376,9 @@ def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name):
     cli_util.render_response(result, ctx)
 
 
-@health_checker_group.command(name=cli_util.override('get_health_checker.command_name', 'get'), help="""Gets the health check policy information for a given load balancer and backend set.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the health check policy to be retrieved.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the health check policy to be retrieved.
+@health_checker_group.command(name=cli_util.override('get_health_checker.command_name', 'get'), help=u"""Gets the health check policy information for a given load balancer and backend set.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the health check policy to be retrieved.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the health check policy to be retrieved.
 
 Example: `example_backend_set`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1405,9 +1405,9 @@ def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name):
     cli_util.render_response(result, ctx)
 
 
-@hostname_group.command(name=cli_util.override('get_hostname.command_name', 'get'), help="""Gets the specified hostname resource's configuration information.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--name', required=True, help="""The name of the hostname resource to retrieve.
+@hostname_group.command(name=cli_util.override('get_hostname.command_name', 'get'), help=u"""Gets the specified hostname resource's configuration information.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--name', required=True, help=u"""The name of the hostname resource to retrieve.
 
 Example: `example_hostname_001`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1434,8 +1434,8 @@ def get_hostname(ctx, from_json, load_balancer_id, name):
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_group.command(name=cli_util.override('get_load_balancer.command_name', 'get'), help="""Gets the specified load balancer's configuration information.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to retrieve.""")
+@load_balancer_group.command(name=cli_util.override('get_load_balancer.command_name', 'get'), help=u"""Gets the specified load balancer's configuration information.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1456,8 +1456,8 @@ def get_load_balancer(ctx, from_json, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_health_group.command(name=cli_util.override('get_load_balancer_health.command_name', 'get'), help="""Gets the health status for the specified load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to return health status for.""")
+@load_balancer_health_group.command(name=cli_util.override('get_load_balancer_health.command_name', 'get'), help=u"""Gets the health status for the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to return health status for.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1478,9 +1478,9 @@ def get_load_balancer_health(ctx, from_json, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@path_route_set_group.command(name=cli_util.override('get_path_route_set.command_name', 'get'), help="""Gets the specified path route set's configuration information.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--path-route-set-name', required=True, help="""The name of the path route set to retrieve.
+@path_route_set_group.command(name=cli_util.override('get_path_route_set.command_name', 'get'), help=u"""Gets the specified path route set's configuration information.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to retrieve.
 
 Example: `example_path_route_set`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1507,9 +1507,9 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
     cli_util.render_response(result, ctx)
 
 
-@rule_set_group.command(name=cli_util.override('get_rule_set.command_name', 'get'), help="""Gets the specified set of rules.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--rule-set-name', required=True, help="""The name of the rule set to retrieve.
+@rule_set_group.command(name=cli_util.override('get_rule_set.command_name', 'get'), help=u"""Gets the specified set of rules.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to retrieve.
 
 Example: `example_rule_set`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1536,8 +1536,8 @@ def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help="""Gets the details of a work request.""")
-@cli_util.option('--work-request-id', required=True, help="""The [OCID] of the work request to retrieve.""")
+@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Gets the details of a work request.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1558,8 +1558,8 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@backend_set_group.command(name=cli_util.override('list_backend_sets.command_name', 'list'), help="""Lists all backend sets associated with a given load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend sets to retrieve.""")
+@backend_set_group.command(name=cli_util.override('list_backend_sets.command_name', 'list'), help=u"""Lists all backend sets associated with a given load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend sets to retrieve.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1581,9 +1581,9 @@ def list_backend_sets(ctx, from_json, all_pages, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@backend_group.command(name=cli_util.override('list_backends.command_name', 'list'), help="""Lists the backend servers for a given load balancer and backend set.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set and servers.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the backend servers.
+@backend_group.command(name=cli_util.override('list_backends.command_name', 'list'), help=u"""Lists the backend servers for a given load balancer and backend set.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and servers.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend servers.
 
 Example: `example_backend_set`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -1611,8 +1611,8 @@ def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name)
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('list_certificates.command_name', 'list'), help="""Lists all SSL certificates bundles associated with a given load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the certificate bundles to be listed.""")
+@certificate_group.command(name=cli_util.override('list_certificates.command_name', 'list'), help=u"""Lists all SSL certificates bundles associated with a given load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the certificate bundles to be listed.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1634,8 +1634,8 @@ def list_certificates(ctx, from_json, all_pages, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@hostname_group.command(name=cli_util.override('list_hostnames.command_name', 'list'), help="""Lists all hostname resources associated with the specified load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the hostnames to retrieve.""")
+@hostname_group.command(name=cli_util.override('list_hostnames.command_name', 'list'), help=u"""Lists all hostname resources associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the hostnames to retrieve.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1657,12 +1657,12 @@ def list_hostnames(ctx, from_json, all_pages, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_health_group.command(name=cli_util.override('list_load_balancer_healths.command_name', 'list'), help="""Lists the summary health statuses for all load balancers in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancers to return health status information for.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@load_balancer_health_group.command(name=cli_util.override('list_load_balancer_healths.command_name', 'list'), help=u"""Lists the summary health statuses for all load balancers in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancers to return health status information for.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1709,23 +1709,23 @@ def list_load_balancer_healths(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_group.command(name=cli_util.override('list_load_balancers.command_name', 'list'), help="""Lists all load balancers in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancers to list.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@load_balancer_group.command(name=cli_util.override('list_load_balancers.command_name', 'list'), help=u"""Lists all load balancers in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancers to list.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
-@cli_util.option('--detail', help="""The level of detail to return for each result. Can be `full` or `simple`.
+@cli_util.option('--detail', help=u"""The level of detail to return for each result. Can be `full` or `simple`.
 
 Example: `full`""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by.  You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.
 
 Example: `example_load_balancer`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "FAILED", "ACTIVE", "DELETING", "DELETED"]), help="""A filter to return only resources that match the given lifecycle state.
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "FAILED", "ACTIVE", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
 Example: `SUCCEEDED`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1782,8 +1782,8 @@ def list_load_balancers(ctx, from_json, all_pages, page_size, compartment_id, li
     cli_util.render_response(result, ctx)
 
 
-@path_route_set_group.command(name=cli_util.override('list_path_route_sets.command_name', 'list'), help="""Lists all path route sets associated with the specified load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the path route sets to retrieve.""")
+@path_route_set_group.command(name=cli_util.override('list_path_route_sets.command_name', 'list'), help=u"""Lists all path route sets associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route sets to retrieve.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1805,12 +1805,12 @@ def list_path_route_sets(ctx, from_json, all_pages, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_policy_group.command(name=cli_util.override('list_policies.command_name', 'list-policies'), help="""Lists the available load balancer policies.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancer policies to list.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@load_balancer_policy_group.command(name=cli_util.override('list_policies.command_name', 'list-policies'), help=u"""Lists the available load balancer policies.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancer policies to list.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1857,12 +1857,12 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_protocol_group.command(name=cli_util.override('list_protocols.command_name', 'list-protocols'), help="""Lists all supported traffic protocols.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancer protocols to list.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@load_balancer_protocol_group.command(name=cli_util.override('list_protocols.command_name', 'list-protocols'), help=u"""Lists all supported traffic protocols.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancer protocols to list.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1909,8 +1909,8 @@ def list_protocols(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@rule_set_group.command(name=cli_util.override('list_rule_sets.command_name', 'list'), help="""Lists all rule sets associated with the specified load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
+@rule_set_group.command(name=cli_util.override('list_rule_sets.command_name', 'list'), help=u"""Lists all rule sets associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1932,12 +1932,12 @@ def list_rule_sets(ctx, from_json, all_pages, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_shape_group.command(name=cli_util.override('list_shapes.command_name', 'list-shapes'), help="""Lists the valid load balancer shapes.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the load balancer shapes to list.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@load_balancer_shape_group.command(name=cli_util.override('list_shapes.command_name', 'list-shapes'), help=u"""Lists the valid load balancer shapes.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancer shapes to list.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1984,12 +1984,12 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help="""Lists the work requests for a given load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the work requests to retrieve.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""Lists the work requests for a given load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the work requests to retrieve.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `3`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -2039,24 +2039,24 @@ def list_work_requests(ctx, from_json, all_pages, page_size, load_balancer_id, l
     cli_util.render_response(result, ctx)
 
 
-@backend_group.command(name=cli_util.override('update_backend.command_name', 'update'), help="""Updates the configuration of a backend server within the specified backend set.""")
-@cli_util.option('--weight', required=True, type=click.INT, help="""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
+@backend_group.command(name=cli_util.override('update_backend.command_name', 'update'), help=u"""Updates the configuration of a backend server within the specified backend set.""")
+@cli_util.option('--weight', required=True, type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
 
 Example: `3`""")
-@cli_util.option('--backup', required=True, type=click.BOOL, help="""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
+@cli_util.option('--backup', required=True, type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
 Example: `false`""")
-@cli_util.option('--drain', required=True, type=click.BOOL, help="""Whether the load balancer should drain this server. Servers marked \"drain\" receive no new incoming traffic.
+@cli_util.option('--drain', required=True, type=click.BOOL, help=u"""Whether the load balancer should drain this server. Servers marked \"drain\" receive no new incoming traffic.
 
 Example: `false`""")
-@cli_util.option('--offline', required=True, type=click.BOOL, help="""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
+@cli_util.option('--offline', required=True, type=click.BOOL, help=u"""Whether the load balancer should treat this server as offline. Offline servers receive no incoming traffic.
 
 Example: `false`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set and server.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the backend server.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the backend server.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-name', required=True, help="""The IP address and port of the backend server to update.
+@cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to update.
 
 Example: `10.0.0.3:8080`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2120,18 +2120,18 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@backend_set_group.command(name=cli_util.override('update_backend_set.command_name', 'update'), help="""Updates a backend set.""")
-@cli_util.option('--policy', required=True, help="""The load balancer policy for the backend set. To get a list of available policies, use the [ListPolicies] operation.
+@backend_set_group.command(name=cli_util.override('update_backend_set.command_name', 'update'), help=u"""Updates a backend set.""")
+@cli_util.option('--policy', required=True, help=u"""The load balancer policy for the backend set. To get a list of available policies, use the [ListPolicies] operation.
 
 Example: `LEAST_CONNECTIONS`""")
-@cli_util.option('--backends', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the backend set.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set to update.
+@cli_util.option('--backends', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--health-checker', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to update.
 
 Example: `example_backend_set`""")
-@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2199,33 +2199,33 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@health_checker_group.command(name=cli_util.override('update_health_checker.command_name', 'update'), help="""Updates the health check policy for a given load balancer and backend set.""")
-@cli_util.option('--protocol', required=True, help="""The protocol the health check must use; either HTTP or TCP.
+@health_checker_group.command(name=cli_util.override('update_health_checker.command_name', 'update'), help=u"""Updates the health check policy for a given load balancer and backend set.""")
+@cli_util.option('--protocol', required=True, help=u"""The protocol the health check must use; either HTTP or TCP.
 
 Example: `HTTP`""")
-@cli_util.option('--port', required=True, type=click.INT, help="""The backend server port against which to run the health check.
+@cli_util.option('--port', required=True, type=click.INT, help=u"""The backend server port against which to run the health check.
 
 Example: `8080`""")
-@cli_util.option('--return-code', required=True, type=click.INT, help="""The status code a healthy backend server should return.
+@cli_util.option('--return-code', required=True, type=click.INT, help=u"""The status code a healthy backend server should return.
 
 Example: `200`""")
-@cli_util.option('--retries', required=True, type=click.INT, help="""The number of retries to attempt before a backend server is considered \"unhealthy\".
+@cli_util.option('--retries', required=True, type=click.INT, help=u"""The number of retries to attempt before a backend server is considered \"unhealthy\".
 
 Example: `3`""")
-@cli_util.option('--timeout-in-millis', required=True, type=click.INT, help="""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.
+@cli_util.option('--timeout-in-millis', required=True, type=click.INT, help=u"""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.
 
 Example: `3000`""")
-@cli_util.option('--interval-in-millis', required=True, type=click.INT, help="""The interval between health checks, in milliseconds.
+@cli_util.option('--interval-in-millis', required=True, type=click.INT, help=u"""The interval between health checks, in milliseconds.
 
 Example: `10000`""")
-@cli_util.option('--response-body-regex', required=True, help="""A regular expression for parsing the response body from the backend server.
+@cli_util.option('--response-body-regex', required=True, help=u"""A regular expression for parsing the response body from the backend server.
 
 Example: `^((?!false).|\\s)*$`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the health check policy to be updated.""")
-@cli_util.option('--backend-set-name', required=True, help="""The name of the backend set associated with the health check policy to be retrieved.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the health check policy to be updated.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set associated with the health check policy to be retrieved.
 
 Example: `example_backend_set`""")
-@cli_util.option('--url-path', help="""The path against which to run the health check.
+@cli_util.option('--url-path', help=u"""The path against which to run the health check.
 
 Example: `/healthcheck`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2291,12 +2291,12 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@hostname_group.command(name=cli_util.override('update_hostname.command_name', 'update'), help="""Overwrites an existing hostname resource on the specified load balancer. Use this operation to change a virtual hostname.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the virtual hostname to update.""")
-@cli_util.option('--name', required=True, help="""The name of the hostname resource to update.
+@hostname_group.command(name=cli_util.override('update_hostname.command_name', 'update'), help=u"""Overwrites an existing hostname resource on the specified load balancer. Use this operation to change a virtual hostname.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the virtual hostname to update.""")
+@cli_util.option('--name', required=True, help=u"""The name of the hostname resource to update.
 
 Example: `example_hostname_001`""")
-@cli_util.option('--hostname', help="""The virtual hostname to update. For more information about virtual hostname string construction, see [Managing Request Routing].
+@cli_util.option('--hostname', help=u"""The virtual hostname to update. For more information about virtual hostname string construction, see [Managing Request Routing].
 
 Example: `app.example.com`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2355,27 +2355,27 @@ def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@listener_group.command(name=cli_util.override('update_listener.command_name', 'update'), help="""Updates a listener for a given load balancer.""")
-@cli_util.option('--default-backend-set-name', required=True, help="""The name of the associated backend set.
+@listener_group.command(name=cli_util.override('update_listener.command_name', 'update'), help=u"""Updates a listener for a given load balancer.""")
+@cli_util.option('--default-backend-set-name', required=True, help=u"""The name of the associated backend set.
 
 Example: `example_backend_set`""")
-@cli_util.option('--port', required=True, type=click.INT, help="""The communication port for the listener.
+@cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, help="""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
+@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
 
 Example: `HTTP`""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the listener to update.""")
-@cli_util.option('--listener-name', required=True, help="""The name of the listener to update.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener to update.""")
+@cli_util.option('--listener-name', required=True, help=u"""The name of the listener to update.
 
 Example: `example_listener`""")
-@cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--path-route-set-name', help="""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
+@cli_util.option('--hostname-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of hostname resource names.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--path-route-set-name', help=u"""The name of the set of path-based routing rules, [PathRouteSet], applied to this listener's traffic.
 
 Example: `example_path_route_set`""")
-@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help="""The names of the [rule sets] to apply to the listener.
+@cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-set-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The names of the [rule sets] to apply to the listener.
 
 Example: [\"example_rule_set\"]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -2454,15 +2454,15 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@load_balancer_group.command(name=cli_util.override('update_load_balancer.command_name', 'update'), help="""Updates a load balancer's configuration.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer to update.""")
-@cli_util.option('--display-name', help="""The user-friendly display name for the load balancer. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+@load_balancer_group.command(name=cli_util.override('update_load_balancer.command_name', 'update'), help=u"""Updates a load balancer's configuration.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to update.""")
+@cli_util.option('--display-name', help=u"""The user-friendly display name for the load balancer. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -2530,12 +2530,12 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@path_route_set_group.command(name=cli_util.override('update_path_route_set.command_name', 'update'), help="""Overwrites an existing path route set on the specified load balancer. Use this operation to add, delete, or alter path route rules in a path route set.
+@path_route_set_group.command(name=cli_util.override('update_path_route_set.command_name', 'update'), help=u"""Overwrites an existing path route set on the specified load balancer. Use this operation to add, delete, or alter path route rules in a path route set.
 
 To add a new path route rule to a path route set, the `pathRoutes` in the [UpdatePathRouteSetDetails] object must include both the new path route rule to add and the existing path route rules to retain.""")
-@cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the load balancer associated with the path route set to update.""")
-@cli_util.option('--path-route-set-name', required=True, help="""The name of the path route set to update.
+@cli_util.option('--path-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of path route rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the path route set to update.""")
+@cli_util.option('--path-route-set-name', required=True, help=u"""The name of the path route set to update.
 
 Example: `example_path_route_set`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -2597,14 +2597,14 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@rule_set_group.command(name=cli_util.override('update_rule_set.command_name', 'update'), help="""Overwrites an existing set of rules on the specified load balancer. Use this operation to add or alter the rules in a rule set.
+@rule_set_group.command(name=cli_util.override('update_rule_set.command_name', 'update'), help=u"""Overwrites an existing set of rules on the specified load balancer. Use this operation to add or alter the rules in a rule set.
 
 To add a new rule to a set, the body must include both the new rule to add and the existing rules to retain.""")
-@cli_util.option('--load-balancer-id', required=True, help="""The [OCID] of the specified load balancer.""")
-@cli_util.option('--rule-set-name', required=True, help="""The name of the rule set to update.
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
+@cli_util.option('--rule-set-name', required=True, help=u"""The name of the rule set to update.
 
 Example: `example_rule_set`""")
-@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of rules that compose the rule set.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

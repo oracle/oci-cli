@@ -76,18 +76,18 @@ monitoring_root_group.add_command(alarm_group)
 monitoring_root_group.add_command(suppression_group)
 
 
-@alarm_group.command(name=cli_util.override('create_alarm.command_name', 'create'), help="""Creates a new alarm in the specified compartment.""")
-@cli_util.option('--display-name', required=True, help="""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+@alarm_group.command(name=cli_util.override('create_alarm.command_name', 'create'), help=u"""Creates a new alarm in the specified compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 This name is sent as the title for notifications related to this alarm.
 
 Example: `High CPU Utilization`""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the alarm.""")
-@cli_util.option('--metric-compartment-id', required=True, help="""The [OCID] of the compartment containing the metric being evaluated by the alarm.""")
-@cli_util.option('--namespace', required=True, help="""The source service or application emitting the metric that is evaluated by the alarm.
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the alarm.""")
+@cli_util.option('--metric-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric being evaluated by the alarm.""")
+@cli_util.option('--namespace', required=True, help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query', required=True, help="""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -104,35 +104,35 @@ Example of absence alarm:
     CpuUtilization[1m]{availabilityDomain=\"cumS:PHX-AD-1\"}.absent()
 
   -----""")
-@cli_util.option('--severity', required=True, help="""The perceived type of response required when the alarm is in the \"FIRING\" state.
+@cli_util.option('--severity', required=True, help=u"""The perceived type of response required when the alarm is in the \"FIRING\" state.
 
 Example: `CRITICAL`""")
-@cli_util.option('--destinations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""An array of [OCIDs] to which the notifications for this alarm will be delivered. An example destination is an OCID for a topic managed by the Oracle Cloud Infrastructure Notification service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', required=True, type=click.BOOL, help="""Whether the alarm is enabled.
+@cli_util.option('--destinations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of [OCIDs] to which the notifications for this alarm will be delivered. An example destination is an OCID for a topic managed by the Oracle Cloud Infrastructure Notification service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the alarm is enabled.
 
 Example: `true`""")
-@cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help="""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
+@cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help=u"""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
 
 Example: `true`""")
-@cli_util.option('--resolution', help="""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
-@cli_util.option('--pending-duration', help="""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
+@cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
+@cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
 
 The duration is specified as a string in ISO 8601 format (`PT10M` for ten minutes or `PT1H` for one hour). Minimum: PT1M. Maximum: PT1H. Default: PT1M.
 
 Under the default value of PT1M, the first evaluation that breaches the alarm updates the state to \"FIRING\" and the first evaluation that does not breach the alarm updates the state to \"OK\".
 
 Example: `PT5M`""")
-@cli_util.option('--body', help="""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
+@cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
-@cli_util.option('--repeat-notification-duration', help="""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
+@cli_util.option('--repeat-notification-duration', help=u"""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
 
 Default value: null (notifications are not re-submitted).
 
 Example: `PT2H`""")
-@cli_util.option('--suppression', type=custom_types.CLI_COMPLEX_TYPE, help="""The configuration details for suppressing an alarm.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--suppression', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details for suppressing an alarm.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -210,8 +210,8 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('delete_alarm.command_name', 'delete'), help="""Deletes the specified alarm.""")
-@cli_util.option('--alarm-id', required=True, help="""The [OCID] of an alarm.""")
+@alarm_group.command(name=cli_util.override('delete_alarm.command_name', 'delete'), help=u"""Deletes the specified alarm.""")
+@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -270,8 +270,8 @@ def delete_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('get_alarm.command_name', 'get'), help="""Gets the specified alarm.""")
-@cli_util.option('--alarm-id', required=True, help="""The [OCID] of an alarm.""")
+@alarm_group.command(name=cli_util.override('get_alarm.command_name', 'get'), help=u"""Gets the specified alarm.""")
+@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -292,21 +292,21 @@ def get_alarm(ctx, from_json, alarm_id):
     cli_util.render_response(result, ctx)
 
 
-@alarm_history_collection_group.command(name=cli_util.override('get_alarm_history.command_name', 'get-alarm-history'), help="""Get the history of the specified alarm.""")
-@cli_util.option('--alarm-id', required=True, help="""The [OCID] of an alarm.""")
-@cli_util.option('--alarm-historytype', type=custom_types.CliCaseInsensitiveChoice(["STATE_HISTORY", "STATE_TRANSITION_HISTORY"]), help="""The type of history entries to retrieve. State history (STATE_HISTORY) or state transition history (STATE_TRANSITION_HISTORY). If not specified, entries of both types are retrieved.
+@alarm_history_collection_group.command(name=cli_util.override('get_alarm_history.command_name', 'get-alarm-history'), help=u"""Get the history of the specified alarm.""")
+@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--alarm-historytype', type=custom_types.CliCaseInsensitiveChoice(["STATE_HISTORY", "STATE_TRANSITION_HISTORY"]), help=u"""The type of history entries to retrieve. State history (STATE_HISTORY) or state transition history (STATE_TRANSITION_HISTORY). If not specified, entries of both types are retrieved.
 
 Example: `STATE_HISTORY`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
 
 Default: 1000
 
 Example: 500""")
-@cli_util.option('--timestamp-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help="""A filter to return only alarm history entries with timestamps occurring on or after the specified date and time. Format defined by RFC3339.
+@cli_util.option('--timestamp-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only alarm history entries with timestamps occurring on or after the specified date and time. Format defined by RFC3339.
 
 Example: `2019-01-01T01:00:00.789Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--timestamp-less-than', type=custom_types.CLI_DATETIME, help="""A filter to return only alarm history entries with timestamps occurring before the specified date and time. Format defined by RFC3339.
+@cli_util.option('--timestamp-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return only alarm history entries with timestamps occurring before the specified date and time. Format defined by RFC3339.
 
 Example: `2019-01-02T01:00:00.789Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -339,23 +339,23 @@ def get_alarm_history(ctx, from_json, alarm_id, alarm_historytype, page, limit, 
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('list_alarms.command_name', 'list'), help="""Lists the alarms for the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
+@alarm_group.command(name=cli_util.override('list_alarms.command_name', 'list'), help=u"""Lists the alarms for the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
 
 Default: 1000
 
 Example: 500""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly. Use this filter to list an alarm by name. Alternatively, when you know the alarm OCID, use the GetAlarm operation.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help="""A filter to return only alarms that match the given lifecycle state exactly. When not specified, only alarms in the ACTIVE lifecycle state are listed.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "severity"]), help="""The field to use when sorting returned alarm definitions. Only one sorting level is provided.
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list an alarm by name. Alternatively, when you know the alarm OCID, use the GetAlarm operation.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help=u"""A filter to return only alarms that match the given lifecycle state exactly. When not specified, only alarms in the ACTIVE lifecycle state are listed.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "severity"]), help=u"""The field to use when sorting returned alarm definitions. Only one sorting level is provided.
 
 Example: `severity`""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use when sorting returned alarm definitions. Ascending (ASC) or descending (DESC).
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned alarm definitions. Ascending (ASC) or descending (DESC).
 
 Example: `ASC`""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help="""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -410,20 +410,20 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@alarm_status_group.command(name=cli_util.override('list_alarms_status.command_name', 'list-alarms-status'), help="""List the status of each alarm in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help="""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
+@alarm_status_group.command(name=cli_util.override('list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
 
 Default: 1000
 
 Example: 500""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly. Use this filter to list an alarm by name. Alternatively, when you know the alarm OCID, use the GetAlarm operation.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "severity"]), help="""The field to use when sorting returned alarm definitions. Only one sorting level is provided.
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list an alarm by name. Alternatively, when you know the alarm OCID, use the GetAlarm operation.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "severity"]), help=u"""The field to use when sorting returned alarm definitions. Only one sorting level is provided.
 
 Example: `severity`""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use when sorting returned alarm definitions. Ascending (ASC) or descending (DESC).
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned alarm definitions. Ascending (ASC) or descending (DESC).
 
 Example: `ASC`""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -478,33 +478,33 @@ def list_alarms_status(ctx, from_json, all_pages, page_size, compartment_id, com
     cli_util.render_response(result, ctx)
 
 
-@metric_group.command(name=cli_util.override('list_metrics.command_name', 'list'), help="""Returns metric definitions that match the criteria specified in the request. Compartment OCID required. For information about metrics, see [Metrics Overview].""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
-@cli_util.option('--name', help="""The metric name to use when searching for metric definitions.
+@metric_group.command(name=cli_util.override('list_metrics.command_name', 'list'), help=u"""Returns metric definitions that match the criteria specified in the request. Compartment OCID required. For information about metrics, see [Metrics Overview].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--name', help=u"""The metric name to use when searching for metric definitions.
 
 Example: `CpuUtilization`""")
-@cli_util.option('--namespace', help="""The source service or application to use when searching for metric definitions.
+@cli_util.option('--namespace', help=u"""The source service or application to use when searching for metric definitions.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--dimension-filters', type=custom_types.CLI_COMPLEX_TYPE, help="""Qualifiers that you want to use when searching for metric definitions. Available dimensions vary by metric namespace. Each dimension takes the form of a key-value pair.
+@cli_util.option('--dimension-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Qualifiers that you want to use when searching for metric definitions. Available dimensions vary by metric namespace. Each dimension takes the form of a key-value pair.
 
 Example: { \"resourceId\": \"<var>&lt;instance_OCID&gt;</var>\" }""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help="""Group metrics by these fields in the response. For example, to list all metric namespaces available in a compartment, groupBy the \"namespace\" field.
+@cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Group metrics by these fields in the response. For example, to list all metric namespaces available in a compartment, groupBy the \"namespace\" field.
 
 Example - group by namespace and resource: `[ \"namespace\", \"resourceId\" ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAMESPACE", "NAME"]), help="""The field to use when sorting returned metric definitions. Only one sorting level is provided.
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAMESPACE", "NAME"]), help=u"""The field to use when sorting returned metric definitions. Only one sorting level is provided.
 
 Example: `NAMESPACE`""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use when sorting returned metric definitions. Ascending (ASC) or descending (DESC).
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned metric definitions. Ascending (ASC) or descending (DESC).
 
 Example: `ASC`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].
 
 Default: 1000
 
 Example: 500""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help="""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'dimension-filters': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'group-by': {'module': 'monitoring', 'class': 'list[string]'}})
@@ -575,13 +575,13 @@ def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, nam
     cli_util.render_response(result, ctx)
 
 
-@metric_data_group.command(name=cli_util.override('post_metric_data.command_name', 'post'), help="""Publishes raw metric data points to the Monitoring service. For more information about publishing metrics, see [Publishing Custom Metrics].
+@metric_data_group.command(name=cli_util.override('post_metric_data.command_name', 'post'), help=u"""Publishes raw metric data points to the Monitoring service. For more information about publishing metrics, see [Publishing Custom Metrics].
 
 The endpoints for this operation differ from other Monitoring operations. Replace the string `telemetry` with `telemetry-ingestion` in the endpoint, as in the following example:
 
 https://telemetry-ingestion.eu-frankfurt-1.oraclecloud.com""")
-@cli_util.option('--metric-data', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""A metric object containing raw metric data points to be posted to the Monitoring service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--batch-atomicity', type=custom_types.CliCaseInsensitiveChoice(["ATOMIC", "NON_ATOMIC"]), help="""Batch atomicity behavior. Requires either partial or full pass of input validation for metric objects in PostMetricData requests. The default value of NON_ATOMIC requires a partial pass: at least one metric object in the request must pass input validation, and any objects that failed validation are identified in the returned summary, along with their error messages. A value of ATOMIC requires a full pass: all metric objects in the request must pass input validation.
+@cli_util.option('--metric-data', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A metric object containing raw metric data points to be posted to the Monitoring service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--batch-atomicity', type=custom_types.CliCaseInsensitiveChoice(["ATOMIC", "NON_ATOMIC"]), help=u"""Batch atomicity behavior. Requires either partial or full pass of input validation for metric objects in PostMetricData requests. The default value of NON_ATOMIC requires a partial pass: at least one metric object in the request must pass input validation, and any objects that failed validation are identified in the returned summary, along with their error messages. A value of ATOMIC requires a full pass: all metric objects in the request must pass input validation.
 
 Example: `NON_ATOMIC`""")
 @json_skeleton_utils.get_cli_json_input_option({'metric-data': {'module': 'monitoring', 'class': 'list[MetricDataDetails]'}})
@@ -608,8 +608,8 @@ def post_metric_data(ctx, from_json, metric_data, batch_atomicity):
     cli_util.render_response(result, ctx)
 
 
-@suppression_group.command(name=cli_util.override('remove_alarm_suppression.command_name', 'remove'), help="""Removes any existing suppression for the specified alarm.""")
-@cli_util.option('--alarm-id', required=True, help="""The [OCID] of an alarm.""")
+@suppression_group.command(name=cli_util.override('remove_alarm_suppression.command_name', 'remove'), help=u"""Removes any existing suppression for the specified alarm.""")
+@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -630,24 +630,24 @@ def remove_alarm_suppression(ctx, from_json, alarm_id):
     cli_util.render_response(result, ctx)
 
 
-@metric_data_group.command(name=cli_util.override('summarize_metrics_data.command_name', 'summarize-metrics-data'), help="""Returns aggregated data that match the criteria specified in the request. Compartment OCID required. For information on metric queries, see [Building Metric Queries].""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
-@cli_util.option('--namespace', required=True, help="""The source service or application to use when searching for metric data points to aggregate.
+@metric_data_group.command(name=cli_util.override('summarize_metrics_data.command_name', 'summarize-metrics-data'), help=u"""Returns aggregated data that match the criteria specified in the request. Compartment OCID required. For information on metric queries, see [Building Metric Queries].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--namespace', required=True, help=u"""The source service or application to use when searching for metric data points to aggregate.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query', required=True, help="""The Monitoring Query Language (MQL) expression to use when searching for metric data points to aggregate. The query must specify a metric, statistic, and interval. Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query', required=True, help=u"""The Monitoring Query Language (MQL) expression to use when searching for metric data points to aggregate. The query must specify a metric, statistic, and interval. Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example: `CpuUtilization[1m].sum()`""")
-@cli_util.option('--start-time', type=custom_types.CLI_DATETIME, help="""The beginning of the time range to use when searching for metric data points. Format is defined by RFC3339. The response includes metric data points for the startTime. Default value: the timestamp 3 hours before the call was sent.
+@cli_util.option('--start-time', type=custom_types.CLI_DATETIME, help=u"""The beginning of the time range to use when searching for metric data points. Format is defined by RFC3339. The response includes metric data points for the startTime. Default value: the timestamp 3 hours before the call was sent.
 
 Example: `2019-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help="""The end of the time range to use when searching for metric data points. Format is defined by RFC3339. The response excludes metric data points for the endTime. Default value: the timestamp representing when the call was sent.
+@cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help=u"""The end of the time range to use when searching for metric data points. Format is defined by RFC3339. The response excludes metric data points for the endTime. Default value: the timestamp representing when the call was sent.
 
 Example: `2019-02-01T02:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--resolution', help="""The time between calculated aggregation windows. Use with the query interval to vary the frequency at which aggregated data points are returned. For example, use a query interval of 5 minutes with a resolution of 1 minute to retrieve five-minute aggregations at a one-minute frequency. The resolution must be equal or less than the interval in the query. The default resolution is 1m (one minute). Supported values: `1m`-`60m` (also `1h`).
+@cli_util.option('--resolution', help=u"""The time between calculated aggregation windows. Use with the query interval to vary the frequency at which aggregated data points are returned. For example, use a query interval of 5 minutes with a resolution of 1 minute to retrieve five-minute aggregations at a one-minute frequency. The resolution must be equal or less than the interval in the query. The default resolution is 1m (one minute). Supported values: `1m`-`60m` (also `1h`).
 
 Example: `5m`""")
-@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help="""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -682,22 +682,22 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, sta
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('update_alarm.command_name', 'update'), help="""Updates the specified alarm.""")
-@cli_util.option('--alarm-id', required=True, help="""The [OCID] of an alarm.""")
-@cli_util.option('--display-name', help="""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+@alarm_group.command(name=cli_util.override('update_alarm.command_name', 'update'), help=u"""Updates the specified alarm.""")
+@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 This name is sent as the title for notifications related to this alarm.
 
 Example: `High CPU Utilization`""")
-@cli_util.option('--compartment-id', help="""The [OCID] of the compartment containing the alarm.""")
-@cli_util.option('--metric-compartment-id', help="""The [OCID] of the compartment containing the metric being evaluated by the alarm.""")
-@cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help="""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the alarm.""")
+@cli_util.option('--metric-compartment-id', help=u"""The [OCID] of the compartment containing the metric being evaluated by the alarm.""")
+@cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help=u"""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
 
 Example: `true`""")
-@cli_util.option('--namespace', help="""The source service or application emitting the metric that is evaluated by the alarm.
+@cli_util.option('--namespace', help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query', help="""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -714,32 +714,32 @@ Example of absence alarm:
     CpuUtilization[1m]{availabilityDomain=\"cumS:PHX-AD-1\"}.absent()
 
   -----""")
-@cli_util.option('--resolution', help="""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
-@cli_util.option('--pending-duration', help="""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
+@cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
+@cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
 
 The duration is specified as a string in ISO 8601 format (`PT10M` for ten minutes or `PT1H` for one hour). Minimum: PT1M. Maximum: PT1H. Default: PT1M.
 
 Under the default value of PT1M, the first evaluation that breaches the alarm updates the state to \"FIRING\" and the first evaluation that does not breach the alarm updates the state to \"OK\".
 
 Example: `PT5M`""")
-@cli_util.option('--severity', help="""The perceived severity of the alarm with regard to the affected system.
+@cli_util.option('--severity', help=u"""The perceived severity of the alarm with regard to the affected system.
 
 Example: `CRITICAL`""")
-@cli_util.option('--body', help="""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
+@cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
 
 Example: `High CPU usage alert. Follow runbook instructions for resolution.`""")
-@cli_util.option('--destinations', type=custom_types.CLI_COMPLEX_TYPE, help="""An array of [OCIDs] to which the notifications for this alarm will be delivered. An example destination is an OCID for a topic managed by the Oracle Cloud Infrastructure Notification service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--repeat-notification-duration', help="""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
+@cli_util.option('--destinations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of [OCIDs] to which the notifications for this alarm will be delivered. An example destination is an OCID for a topic managed by the Oracle Cloud Infrastructure Notification service.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-notification-duration', help=u"""The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, `PT4H` indicates four hours. Minimum: PT1M. Maximum: P30D.
 
 Default value: null (notifications are not re-submitted).
 
 Example: `PT2H`""")
-@cli_util.option('--suppression', type=custom_types.CLI_COMPLEX_TYPE, help="""The configuration details for suppressing an alarm.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help="""Whether the alarm is enabled.
+@cli_util.option('--suppression', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration details for suppressing an alarm.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the alarm is enabled.
 
 Example: `true`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

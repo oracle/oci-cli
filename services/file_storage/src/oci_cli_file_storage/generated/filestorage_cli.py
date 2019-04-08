@@ -86,15 +86,15 @@ fs_root_group.add_command(export_group)
 fs_root_group.add_command(snapshot_group)
 
 
-@export_group.command(name=cli_util.override('create_export.command_name', 'create'), help="""Creates a new export in the specified export set, path, and file system.""")
-@cli_util.option('--export-set-id', required=True, help="""The OCID of this export's export set.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of this export's file system.""")
-@cli_util.option('--path', required=True, help="""Path used to access the associated file system.
+@export_group.command(name=cli_util.override('create_export.command_name', 'create'), help=u"""Creates a new export in the specified export set, path, and file system.""")
+@cli_util.option('--export-set-id', required=True, help=u"""The OCID of this export's export set.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of this export's file system.""")
+@cli_util.option('--path', required=True, help=u"""Path used to access the associated file system.
 
 Avoid entering confidential information.
 
 Example: `/mediafiles`""")
-@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help="""Export options for the new export. If left unspecified, defaults to:
+@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Export options for the new export. If left unspecified, defaults to:
 
        [          {             \"source\" : \"0.0.0.0/0\",             \"requirePrivilegedSourcePort\" : false,             \"access\" : \"READ_WRITE\",             \"identitySquash\" : \"NONE\"           }        ]
 
@@ -155,7 +155,7 @@ def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('create_file_system.command_name', 'create'), help="""Creates a new file system in the specified compartment and availability domain. Instances can mount file systems in another availability domain, but doing so might increase latency when compared to mounting instances in the same availability domain.
+@file_system_group.command(name=cli_util.override('create_file_system.command_name', 'create'), help=u"""Creates a new file system in the specified compartment and availability domain. Instances can mount file systems in another availability domain, but doing so might increase latency when compared to mounting instances in the same availability domain.
 
 After you create a file system, you can associate it with a mount target. Instances can then mount the file system by connecting to the mount target's IP address. You can associate a file system with more than one mount target at a time.
 
@@ -164,15 +164,15 @@ For information about access control and compartments, see [Overview of the IAM 
 For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 All Oracle Cloud Infrastructure resources, including file systems, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type or by viewing the resource in the Console.""")
-@cli_util.option('--availability-domain', required=True, help="""The availability domain to create the file system in.
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain to create the file system in.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment to create the file system in.""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the file system in.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My file system`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -228,7 +228,7 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('create_mount_target.command_name', 'create'), help="""Creates a new mount target in the specified compartment and subnet. You can associate a file system with a mount target only when they exist in the same availability domain. Instances can connect to mount targets in another availablity domain, but you might see higher latency than with instances in the same availability domain as the mount target.
+@mount_target_group.command(name=cli_util.override('create_mount_target.command_name', 'create'), help=u"""Creates a new mount target in the specified compartment and subnet. You can associate a file system with a mount target only when they exist in the same availability domain. Instances can connect to mount targets in another availablity domain, but you might see higher latency than with instances in the same availability domain as the mount target.
 
 Mount targets have one or more private IP addresses that you can provide as the host portion of remote target parameters in client mount commands. These private IP addresses are listed in the privateIpIds property of the mount target and are highly available. Mount targets also consume additional IP addresses in their subnet. Do not use /30 or smaller subnets for mount target creation because they do not have sufficient available IP addresses. Allow at least three IP addresses for each mount target.
 
@@ -237,24 +237,24 @@ For information about access control and compartments, see [Overview of the IAM 
 For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 All Oracle Cloud Infrastructure Services resources, including mount targets, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.""")
-@cli_util.option('--availability-domain', required=True, help="""The availability domain in which to create the mount target.
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain in which to create the mount target.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment in which to create the mount target.""")
-@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet in which to create the mount target.""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the mount target.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet in which to create the mount target.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My mount target`""")
-@cli_util.option('--hostname-label', help="""The hostname for the mount target's IP address, used for DNS resolution. The value is the hostname portion of the private IP address's fully qualified domain name (FQDN). For example, `files-1` in the FQDN `files-1.subnet123.vcn1.oraclevcn.com`. Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
+@cli_util.option('--hostname-label', help=u"""The hostname for the mount target's IP address, used for DNS resolution. The value is the hostname portion of the private IP address's fully qualified domain name (FQDN). For example, `files-1` in the FQDN `files-1.subnet123.vcn1.oraclevcn.com`. Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
 For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `files-1`""")
-@cli_util.option('--ip-address', help="""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
+@cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -317,15 +317,15 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('create_snapshot.command_name', 'create'), help="""Creates a new snapshot of the specified file system. You can access the snapshot at `.snapshot/<name>`.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of the file system to take a snapshot of.""")
-@cli_util.option('--name', required=True, help="""Name of the snapshot. This value is immutable. It must also be unique with respect to all other non-DELETED snapshots on the associated file system.
+@snapshot_group.command(name=cli_util.override('create_snapshot.command_name', 'create'), help=u"""Creates a new snapshot of the specified file system. You can access the snapshot at `.snapshot/<name>`.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system to take a snapshot of.""")
+@cli_util.option('--name', required=True, help=u"""Name of the snapshot. This value is immutable. It must also be unique with respect to all other non-DELETED snapshots on the associated file system.
 
 Avoid entering confidential information.
 
 Example: `Sunday`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -378,9 +378,9 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('delete_export.command_name', 'delete'), help="""Deletes the specified export.""")
-@cli_util.option('--export-id', required=True, help="""The OCID of the export.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@export_group.command(name=cli_util.override('delete_export.command_name', 'delete'), help=u"""Deletes the specified export.""")
+@cli_util.option('--export-id', required=True, help=u"""The OCID of the export.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -440,9 +440,9 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('delete_file_system.command_name', 'delete'), help="""Deletes the specified file system. Before you delete the file system, verify that no remaining export resources still reference it. Deleting a file system also deletes all of its snapshots.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of the file system.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@file_system_group.command(name=cli_util.override('delete_file_system.command_name', 'delete'), help=u"""Deletes the specified file system. Before you delete the file system, verify that no remaining export resources still reference it. Deleting a file system also deletes all of its snapshots.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -502,9 +502,9 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('delete_mount_target.command_name', 'delete'), help="""Deletes the specified mount target. This operation also deletes the mount target's VNICs.""")
-@cli_util.option('--mount-target-id', required=True, help="""The OCID of the mount target.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@mount_target_group.command(name=cli_util.override('delete_mount_target.command_name', 'delete'), help=u"""Deletes the specified mount target. This operation also deletes the mount target's VNICs.""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -564,9 +564,9 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('delete_snapshot.command_name', 'delete'), help="""Deletes the specified snapshot.""")
-@cli_util.option('--snapshot-id', required=True, help="""The OCID of the snapshot.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@snapshot_group.command(name=cli_util.override('delete_snapshot.command_name', 'delete'), help=u"""Deletes the specified snapshot.""")
+@cli_util.option('--snapshot-id', required=True, help=u"""The OCID of the snapshot.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -626,8 +626,8 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('get_export.command_name', 'get'), help="""Gets the specified export's information.""")
-@cli_util.option('--export-id', required=True, help="""The OCID of the export.""")
+@export_group.command(name=cli_util.override('get_export.command_name', 'get'), help=u"""Gets the specified export's information.""")
+@cli_util.option('--export-id', required=True, help=u"""The OCID of the export.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -647,8 +647,8 @@ def get_export(ctx, from_json, export_id):
     cli_util.render_response(result, ctx)
 
 
-@export_set_group.command(name=cli_util.override('get_export_set.command_name', 'get'), help="""Gets the specified export set's information.""")
-@cli_util.option('--export-set-id', required=True, help="""The OCID of the export set.""")
+@export_set_group.command(name=cli_util.override('get_export_set.command_name', 'get'), help=u"""Gets the specified export set's information.""")
+@cli_util.option('--export-set-id', required=True, help=u"""The OCID of the export set.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -668,8 +668,8 @@ def get_export_set(ctx, from_json, export_set_id):
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('get_file_system.command_name', 'get'), help="""Gets the specified file system's information.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of the file system.""")
+@file_system_group.command(name=cli_util.override('get_file_system.command_name', 'get'), help=u"""Gets the specified file system's information.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -689,8 +689,8 @@ def get_file_system(ctx, from_json, file_system_id):
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('get_mount_target.command_name', 'get'), help="""Gets the specified mount target's information.""")
-@cli_util.option('--mount-target-id', required=True, help="""The OCID of the mount target.""")
+@mount_target_group.command(name=cli_util.override('get_mount_target.command_name', 'get'), help=u"""Gets the specified mount target's information.""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -710,8 +710,8 @@ def get_mount_target(ctx, from_json, mount_target_id):
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('get_snapshot.command_name', 'get'), help="""Gets the specified snapshot's information.""")
-@cli_util.option('--snapshot-id', required=True, help="""The OCID of the snapshot.""")
+@snapshot_group.command(name=cli_util.override('get_snapshot.command_name', 'get'), help=u"""Gets the specified snapshot's information.""")
+@cli_util.option('--snapshot-id', required=True, help=u"""The OCID of the snapshot.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -731,26 +731,26 @@ def get_snapshot(ctx, from_json, snapshot_id):
     cli_util.render_response(result, ctx)
 
 
-@export_set_group.command(name=cli_util.override('list_export_sets.command_name', 'list'), help="""Lists the export set resources in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
+@export_set_group.command(name=cli_util.override('list_export_sets.command_name', 'list'), help=u"""Lists the export set resources in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable.
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
-@cli_util.option('--id', help="""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -809,22 +809,22 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('list_exports.command_name', 'list'), help="""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID.""")
-@cli_util.option('--compartment-id', help="""The OCID of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@export_group.command(name=cli_util.override('list_exports.command_name', 'list'), help=u"""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--export-set-id', help="""The OCID of the export set.""")
-@cli_util.option('--file-system-id', help="""The OCID of the file system.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
-@cli_util.option('--id', help="""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "PATH"]), help="""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by path, results are shown in ascending alphanumeric order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--export-set-id', help=u"""The OCID of the export set.""")
+@cli_util.option('--file-system-id', help=u"""The OCID of the file system.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "PATH"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by path, results are shown in ascending alphanumeric order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -879,26 +879,26 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('list_file_systems.command_name', 'list'), help="""Lists the file system resources in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
+@file_system_group.command(name=cli_util.override('list_file_systems.command_name', 'list'), help=u"""Lists the file system resources in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable.
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
-@cli_util.option('--id', help="""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -957,27 +957,27 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('list_mount_targets.command_name', 'list'), help="""Lists the mount target resources in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--availability-domain', required=True, help="""The name of the availability domain.
+@mount_target_group.command(name=cli_util.override('list_mount_targets.command_name', 'list'), help=u"""Lists the mount target resources in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable.
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable.
 
 Example: `My resource`""")
-@cli_util.option('--export-set-id', help="""The OCID of the export set.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
-@cli_util.option('--id', help="""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can choose either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--export-set-id', help=u"""The OCID of the export set.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can choose either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1038,19 +1038,19 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('list_snapshots.command_name', 'list'), help="""Lists snapshots of the specified file system.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of the file system.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@snapshot_group.command(name=cli_util.override('list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
 Example: `500`""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
-@cli_util.option('--id', help="""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1100,16 +1100,16 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('update_export.command_name', 'update'), help="""Updates the specified export's information.""")
-@cli_util.option('--export-id', required=True, help="""The OCID of the export.""")
-@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help="""New export options for the export.
+@export_group.command(name=cli_util.override('update_export.command_name', 'update'), help=u"""Updates the specified export's information.""")
+@cli_util.option('--export-id', required=True, help=u"""The OCID of the export.""")
+@cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""New export options for the export.
 
 **Setting to the empty array will make the export invisible to all clients.**
 
 Leaving unset will leave the `exportOptions` unchanged.
 
 This option is a JSON list with items of type ClientOptions.  For documentation on ClientOptions please see our API reference: https://docs.cloud.oracle.com/api/#/en/filestorage/20171215/datatypes/ClientOptions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1168,14 +1168,14 @@ def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@export_set_group.command(name=cli_util.override('update_export_set.command_name', 'update'), help="""Updates the specified export set's information.""")
-@cli_util.option('--export-set-id', required=True, help="""The OCID of the export set.""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+@export_set_group.command(name=cli_util.override('update_export_set.command_name', 'update'), help=u"""Updates the specified export set's information.""")
+@cli_util.option('--export-set-id', required=True, help=u"""The OCID of the export set.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My export set`""")
-@cli_util.option('--max-fs-stat-bytes', type=click.INT, help="""Controls the maximum `tbytes`, `fbytes`, and `abytes` values reported by `NFS FSSTAT` calls through any associated mount targets. This is an advanced feature. For most applications, use the default value. The `tbytes` value reported by `FSSTAT` will be `maxFsStatBytes`. The value of `fbytes` and `abytes` will be `maxFsStatBytes` minus the metered size of the file system. If the metered size is larger than `maxFsStatBytes`, then `fbytes` and `abytes` will both be '0'.""")
-@cli_util.option('--max-fs-stat-files', type=click.INT, help="""Controls the maximum `ffiles`, `ffiles`, and `afiles` values reported by `NFS FSSTAT` calls through any associated mount targets. This is an advanced feature. For most applications, use the default value. The `tfiles` value reported by `FSSTAT` will be `maxFsStatFiles`. The value of `ffiles` and `afiles` will be `maxFsStatFiles` minus the metered size of the file system. If the metered size is larger than `maxFsStatFiles`, then `ffiles` and `afiles` will both be '0'.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--max-fs-stat-bytes', type=click.INT, help=u"""Controls the maximum `tbytes`, `fbytes`, and `abytes` values reported by `NFS FSSTAT` calls through any associated mount targets. This is an advanced feature. For most applications, use the default value. The `tbytes` value reported by `FSSTAT` will be `maxFsStatBytes`. The value of `fbytes` and `abytes` will be `maxFsStatBytes` minus the metered size of the file system. If the metered size is larger than `maxFsStatBytes`, then `fbytes` and `abytes` will both be '0'.""")
+@cli_util.option('--max-fs-stat-files', type=click.INT, help=u"""Controls the maximum `ffiles`, `ffiles`, and `afiles` values reported by `NFS FSSTAT` calls through any associated mount targets. This is an advanced feature. For most applications, use the default value. The `tfiles` value reported by `FSSTAT` will be `maxFsStatFiles`. The value of `ffiles` and `afiles` will be `maxFsStatFiles` minus the metered size of the file system. If the metered size is larger than `maxFsStatFiles`, then `ffiles` and `afiles` will both be '0'.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1235,14 +1235,14 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('update_file_system.command_name', 'update'), help="""Updates the specified file system's information. You can use this operation to rename a file system.""")
-@cli_util.option('--file-system-id', required=True, help="""The OCID of the file system.""")
-@cli_util.option('--display-name', help="""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+@file_system_group.command(name=cli_util.override('update_file_system.command_name', 'update'), help=u"""Updates the specified file system's information. You can use this operation to rename a file system.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My file system`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1307,14 +1307,14 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('update_mount_target.command_name', 'update'), help="""Updates the specified mount target's information.""")
-@cli_util.option('--mount-target-id', required=True, help="""The OCID of the mount target.""")
-@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
+@mount_target_group.command(name=cli_util.override('update_mount_target.command_name', 'update'), help=u"""Updates the specified mount target's information.""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My mount target`""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1379,11 +1379,11 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('update_snapshot.command_name', 'update'), help="""Updates the specified snapshot's information.""")
-@cli_util.option('--snapshot-id', required=True, help="""The OCID of the snapshot.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@snapshot_group.command(name=cli_util.override('update_snapshot.command_name', 'update'), help=u"""Updates the specified snapshot's information.""")
+@cli_util.option('--snapshot-id', required=True, help=u"""The OCID of the snapshot.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

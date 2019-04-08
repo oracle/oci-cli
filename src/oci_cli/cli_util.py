@@ -164,7 +164,6 @@ def create_config_and_signer_based_on_click_context(ctx):
             if ctx.obj['cert_bundle']:
                 signer_kwargs['federation_client_cert_bundle_verify'] = ctx.obj['cert_bundle']
             if ctx.obj['region']:
-                signer_kwargs['federation_endpoint'] = '{}/v1/x509'.format(oci.regions.endpoint_for('auth', ctx.obj['region']))
                 # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
                 # conflict with the caller intent (since they *DID* explicitly pass a region)
                 client_config['region'] = ctx.obj['region']

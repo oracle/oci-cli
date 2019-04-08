@@ -36,19 +36,19 @@ autoscaling_root_group.add_command(auto_scaling_configuration_group)
 autoscaling_root_group.add_command(auto_scaling_policy_group)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('create_auto_scaling_configuration.command_name', 'create'), help="""Create an AutoScalingConfiguration""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment containing the AutoScalingConfiguration.""")
-@cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--resource', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@auto_scaling_configuration_group.command(name=cli_util.override('create_auto_scaling_configuration.command_name', 'create'), help=u"""Create an AutoScalingConfiguration""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the AutoScalingConfiguration.""")
+@cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly name for the AutoScalingConfiguration. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--display-name', help=u"""A user-friendly name for the AutoScalingConfiguration. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--cool-down-in-seconds', type=click.INT, help="""The minimum period of time between scaling actions. The default is 300 seconds.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help="""If the AutoScalingConfiguration is enabled""")
+@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""The minimum period of time between scaling actions. The default is 300 seconds.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""If the AutoScalingConfiguration is enabled""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}, 'policies': {'module': 'autoscaling', 'class': 'list[CreateAutoScalingPolicyDetails]'}, 'resource': {'module': 'autoscaling', 'class': 'Resource'}})
 @cli_util.help_option
 @click.pass_context
@@ -87,11 +87,11 @@ def create_auto_scaling_configuration(ctx, from_json, compartment_id, policies, 
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy.command_name', 'create'), help="""Create a Policy for AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--policy-type', required=True, help="""Indicates type of Policy""")
-@cli_util.option('--display-name', help="""A user-friendly name for the Policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy.command_name', 'create'), help=u"""Create a Policy for AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--policy-type', required=True, help=u"""Indicates type of Policy""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the Policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}})
 @cli_util.help_option
 @click.pass_context
@@ -121,11 +121,11 @@ def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, ca
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy_create_threshold_policy_details.command_name', 'create-auto-scaling-policy-create-threshold-policy-details'), help="""Create a Policy for AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly name for the Policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy_create_threshold_policy_details.command_name', 'create-auto-scaling-policy-create-threshold-policy-details'), help=u"""Create a Policy for AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the Policy. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'rules': {'module': 'autoscaling', 'class': 'list[CreateConditionDetails]'}})
 @cli_util.help_option
 @click.pass_context
@@ -157,9 +157,9 @@ def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, a
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('delete_auto_scaling_configuration.command_name', 'delete'), help="""Deletes an AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('delete_auto_scaling_configuration.command_name', 'delete'), help=u"""Deletes an AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -183,10 +183,10 @@ def delete_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('delete_auto_scaling_policy.command_name', 'delete'), help="""Deletes an AutoScalingConfiguration Policy""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--auto-scaling-policy-id', required=True, help="""The ID of the auto scaling configuration policy.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@auto_scaling_policy_group.command(name=cli_util.override('delete_auto_scaling_policy.command_name', 'delete'), help=u"""Deletes an AutoScalingConfiguration Policy""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the auto scaling configuration policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -214,8 +214,8 @@ def delete_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, au
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('get_auto_scaling_configuration.command_name', 'get'), help="""Get AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('get_auto_scaling_configuration.command_name', 'get'), help=u"""Get AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -236,9 +236,9 @@ def get_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration_id
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('get_auto_scaling_policy.command_name', 'get'), help="""Get Policy from a specific AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--auto-scaling-policy-id', required=True, help="""The ID of the auto scaling configuration policy.""")
+@auto_scaling_policy_group.command(name=cli_util.override('get_auto_scaling_policy.command_name', 'get'), help=u"""Get Policy from a specific AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the auto scaling configuration policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -263,13 +263,13 @@ def get_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('list_auto_scaling_configurations.command_name', 'list'), help="""Lists AutoScalingConfigurations in the specific compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('list_auto_scaling_configurations.command_name', 'list'), help=u"""Lists AutoScalingConfigurations in the specific compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -320,13 +320,13 @@ def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('list_auto_scaling_policies.command_name', 'list'), help="""Lists Policies in an AutoScalingConfiguration.""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--display-name', help="""A filter to return only resources that match the given display name exactly.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@auto_scaling_policy_group.command(name=cli_util.override('list_auto_scaling_policies.command_name', 'list'), help=u"""Lists Policies in an AutoScalingConfiguration.""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -380,18 +380,18 @@ def list_auto_scaling_policies(ctx, from_json, all_pages, page_size, auto_scalin
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('update_auto_scaling_configuration.command_name', 'update'), help="""Updates an AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@auto_scaling_configuration_group.command(name=cli_util.override('update_auto_scaling_configuration.command_name', 'update'), help=u"""Updates an AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help="""If the AutoScalingConfiguration is enabled""")
-@cli_util.option('--cool-down-in-seconds', type=click.INT, help="""The minimum period of time between scaling actions. The default is 300 seconds.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""If the AutoScalingConfiguration is enabled""")
+@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""The minimum period of time between scaling actions. The default is 300 seconds.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}})
 @cli_util.help_option
@@ -438,13 +438,13 @@ def update_auto_scaling_configuration(ctx, from_json, force, auto_scaling_config
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('update_auto_scaling_policy.command_name', 'update'), help="""Updates a Policy in the specific AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--auto-scaling-policy-id', required=True, help="""The ID of the auto scaling configuration policy.""")
-@cli_util.option('--policy-type', required=True, help="""Indicates type of Policy""")
-@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help="""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@auto_scaling_policy_group.command(name=cli_util.override('update_auto_scaling_policy.command_name', 'update'), help=u"""Updates a Policy in the specific AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the auto scaling configuration policy.""")
+@cli_util.option('--policy-type', required=True, help=u"""Indicates type of Policy""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}})
 @cli_util.help_option
@@ -487,15 +487,15 @@ def update_auto_scaling_policy(ctx, from_json, force, auto_scaling_configuration
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('update_auto_scaling_policy_update_threshold_policy_details.command_name', 'update-auto-scaling-policy-update-threshold-policy-details'), help="""Updates a Policy in the specific AutoScalingConfiguration""")
-@cli_util.option('--auto-scaling-configuration-id', required=True, help="""The OCID of the auto scaling configuration.""")
-@cli_util.option('--auto-scaling-policy-id', required=True, help="""The ID of the auto scaling configuration policy.""")
-@cli_util.option('--display-name', help="""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help="""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help="""
+@auto_scaling_policy_group.command(name=cli_util.override('update_auto_scaling_policy_update_threshold_policy_details.command_name', 'update-auto-scaling-policy-update-threshold-policy-details'), help=u"""Updates a Policy in the specific AutoScalingConfiguration""")
+@cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The OCID of the auto scaling configuration.""")
+@cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the auto scaling configuration policy.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--capacity', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the Policy""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type UpdateConditionDetails.  For documentation on UpdateConditionDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/autoscaling/20181001/datatypes/UpdateConditionDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'capacity': {'module': 'autoscaling', 'class': 'Capacity'}, 'rules': {'module': 'autoscaling', 'class': 'list[UpdateConditionDetails]'}})
 @cli_util.help_option
