@@ -31,6 +31,7 @@ except ImportError:
 BOOTSTRAP_SERVICE_PORT = 8181
 BOOTSTRAP_PROCESS_CANCELED_MESSAGE = 'Bootstrap process canceled.'
 CONSOLE_AUTH_URL_FORMAT = "https://login.{region}.oraclecloud.com/v1/oauth2/authorize"
+CONSOLE_AUTH_GOV_URL_FORMAT = "https://login.{region}.oraclegovcloud.com/v1/oauth2/authorize"
 
 
 @cli_setup.setup_group.command('bootstrap', help="""
@@ -151,9 +152,14 @@ def create_user_session(region=''):
         'redirect_uri': 'http://localhost:{}'.format(BOOTSTRAP_SERVICE_PORT)
     }
 
+    if "-gov-" in region:
+        console_url = CONSOLE_AUTH_GOV_URL_FORMAT.format(region=region)
+    else:
+        console_url = CONSOLE_AUTH_URL_FORMAT.format(region=region)
+
     query_string = urlencode(query)
     url = "{console_auth_url}?{query_string}".format(
-        console_auth_url=CONSOLE_AUTH_URL_FORMAT.format(region=region),
+        console_auth_url=console_url,
         query_string=query_string
     )
 

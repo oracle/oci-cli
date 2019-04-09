@@ -44,12 +44,12 @@ kms_crypto_root_group.add_command(generated_key_group)
 kms_crypto_root_group.add_command(encrypted_data_group)
 
 
-@decrypted_data_group.command(name=cli_util.override('decrypt.command_name', 'decrypt'), help="""Decrypts data using the given DecryptDataDetails resource.
+@decrypted_data_group.command(name=cli_util.override('decrypt.command_name', 'decrypt'), help=u"""Decrypts data using the given DecryptDataDetails resource.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--ciphertext', required=True, help="""The encrypted data to decrypt.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key used to encrypt the ciphertext.""")
-@cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help="""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associatedData must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ciphertext', required=True, help=u"""The encrypted data to decrypt.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key used to encrypt the ciphertext.""")
+@cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associatedData must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'associated-data': {'module': 'key_management', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -75,12 +75,12 @@ def decrypt(ctx, from_json, ciphertext, key_id, associated_data):
     cli_util.render_response(result, ctx)
 
 
-@encrypted_data_group.command(name=cli_util.override('encrypt.command_name', 'encrypt'), help="""Encrypts data using the given EncryptDataDetails resource. Plaintext included in the example request is a base64-encoded value of a UTF-8 string.
+@encrypted_data_group.command(name=cli_util.override('encrypt.command_name', 'encrypt'), help=u"""Encrypts data using the given EncryptDataDetails resource. Plaintext included in the example request is a base64-encoded value of a UTF-8 string.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key to encrypt with.""")
-@cli_util.option('--plaintext', required=True, help="""The plaintext data to encrypt.""")
-@cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help="""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associatedData must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key to encrypt with.""")
+@cli_util.option('--plaintext', required=True, help=u"""The plaintext data to encrypt.""")
+@cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associatedData must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'associated-data': {'module': 'key_management', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -106,13 +106,13 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data):
     cli_util.render_response(result, ctx)
 
 
-@generated_key_group.command(name=cli_util.override('generate_data_encryption_key.command_name', 'generate-data-encryption-key'), help="""Generates a key that you can use to encrypt or decrypt data.
+@generated_key_group.command(name=cli_util.override('generate_data_encryption_key.command_name', 'generate-data-encryption-key'), help=u"""Generates a key that you can use to encrypt or decrypt data.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--include-plaintext-key', required=True, type=click.BOOL, help="""If true, the generated key is also returned unencrypted.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the master encryption key to encrypt the generated data encryption key with.""")
-@cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help="""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associatedData must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--include-plaintext-key', required=True, type=click.BOOL, help=u"""If true, the generated key is also returned unencrypted.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key to encrypt the generated data encryption key with.""")
+@cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associatedData must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'associated-data': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}})
 @cli_util.help_option
 @click.pass_context

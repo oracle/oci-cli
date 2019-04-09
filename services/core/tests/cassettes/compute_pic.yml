@@ -201,6 +201,42 @@ interactions:
       opc-request-id: [5F66E2F2178D41FBB359A7A5EA430205/303936DCD60BACF08A6E718D78D05713/FDBBF42E379A432D8B1F1F1D605AE393]
     status: {code: 200, message: OK}
 - request:
+    body: '{"listingId": "ocid1.appcataloglisting.oc1..aaaaaaaa64pllvo5eq3ou43wtvokl7h7oyzrpau2r2sf7exf4ry3sxdj6qca",
+      "timeRetrieved": "2018-09-24T20:11:47.421Z", "compartmentId": "ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca",
+      "oracleTermsOfUseLink": "https://objectstorage.us-ashburn-1.oraclecloud.com/n/partnerimagecatalog/b/eulas/o/oracle-terms-of-use.txt",
+      "listingResourceVersion": "1.8.02", "signature": "859d7f95b061d9d3cc56ab3fc4ad82c2edf74a2bf2f8ee47c646b006c85e9195"}'
+    headers:
+      Content-Length: ['659']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaa4vxfovwygtyjlqczmn6ju3korktidzlk6auw6c4tgsug5brc2ekq/c0:95:40:d6:2e:e6:01:58:81:89:f7:76:03:d8:ea:4e",signature="frC8WIr3WHyj0g7TdIqnyKKns90XHDhwOgLaVz0JduTQB1otZQv7X6kPdfP9COGlyB1U42N1FHLKfbDreJ7tE53rOyOILwmJQxiP0WKjA5BRJIVk4/MBX7dWRns/h2kG6Zoxy9sQva21xhG+Ep8eljeqzUhSxpEtVFnGb0PVsUswk0/pUDSQxCqrsWslwE8yUL+JkTmyugDSBDWMLRLQQixRdcEEZJqjt3rWqyS9YmMYd90hnCQHrWnWPM+VLdMg25Bb5M/R3vd88lMXNLJbUY2gLvIBc9f2B1goinDOMhj/teEei+rwtlECjjSmAVzOAQEMvSIhfoC/Yvajm+ZHOA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 24 Sep 2018 20:11:47 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.358]
+      opc-request-id: [5F66E2F2178D41FBB359A7A5EA430205]
+      opc-retry-token: [MVBv3uAMyezp7RIIUDbJBcOZkmIYLs]
+      user-agent: [Oracle-PythonSDK/2.0.4+preview.1.358 (python 3.5.3; x86_64-Darwin)
+          Oracle-PythonCLI/2.4.33+preview.1]
+      x-content-sha256: [WrUr9gnHSF2VIq63tZPaWjXX5CVqqcZiGq1E8mTmB6c=]
+    method: POST
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/appCatalogSubscriptions
+  response:
+    body: {string: "{\n  \"publisherName\" : null,\n  \"listingId\" : \"ocid1.appcataloglisting.oc1..aaaaaaaa64pllvo5eq3ou43wtvokl7h7oyzrpau2r2sf7exf4ry3sxdj6qca\"\
+        ,\n  \"listingResourceVersion\" : \"1.8.02\",\n  \"listingResourceId\" : null,\n\
+        \  \"displayName\" : null,\n  \"summary\" : null,\n  \"compartmentId\" : \"\
+        ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+        ,\n  \"timeCreated\" : null\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['381']
+      Content-Type: [application/json]
+      Date: ['Mon, 24 Sep 2018 20:11:49 GMT']
+      opc-request-id: [5F66E2F2178D41FBB359A7A5EA430205/303936DCD60BACF08A6E718D78D05713/FDBBF42E379A432D8B1F1F1D605AE393]
+    status: {code: 200, message: OK}
+- request:
     body: null
     headers:
       accept: [application/json]

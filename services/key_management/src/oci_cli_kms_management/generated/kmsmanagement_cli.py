@@ -37,14 +37,14 @@ kms_management_root_group.add_command(key_version_group)
 kms_management_root_group.add_command(key_group)
 
 
-@key_group.command(name=cli_util.override('create_key.command_name', 'create'), help="""Creates a new key.
+@key_group.command(name=cli_util.override('create_key.command_name', 'create'), help=u"""Creates a new key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment that contains this key.""")
-@cli_util.option('--display-name', required=True, help="""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this key.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
+@cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -99,10 +99,10 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help="""Generates new cryptographic material for a key. The key must be in an `ENABLED` state to be rotated.
+@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help=u"""Generates new cryptographic material for a key. The key must be in an `ENABLED` state to be rotated.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -123,11 +123,11 @@ def create_key_version(ctx, from_json, key_id):
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('disable_key.command_name', 'disable'), help="""Disables a key to make it unavailable for encryption or decryption.
+@key_group.command(name=cli_util.override('disable_key.command_name', 'disable'), help=u"""Disables a key to make it unavailable for encryption or decryption.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -175,11 +175,11 @@ def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('enable_key.command_name', 'enable'), help="""Enables a key to make it available for encryption or decryption.
+@key_group.command(name=cli_util.override('enable_key.command_name', 'enable'), help=u"""Enables a key to make it available for encryption or decryption.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -227,10 +227,10 @@ def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('get_key.command_name', 'get'), help="""Gets information about the specified key.
+@key_group.command(name=cli_util.override('get_key.command_name', 'get'), help=u"""Gets information about the specified key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -251,11 +251,11 @@ def get_key(ctx, from_json, key_id):
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('get_key_version.command_name', 'get'), help="""Gets information about the specified key version.
+@key_version_group.command(name=cli_util.override('get_key_version.command_name', 'get'), help=u"""Gets information about the specified key version.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
-@cli_util.option('--key-version-id', required=True, help="""The OCID of the key version.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--key-version-id', required=True, help=u"""The OCID of the key version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -280,14 +280,14 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('list_key_versions.command_name', 'list'), help="""Lists all key versions for the specified key.
+@key_version_group.command(name=cli_util.override('list_key_versions.command_name', 'list'), help=u"""Lists all key versions for the specified key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can specify only one sort order. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -339,14 +339,14 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('list_keys.command_name', 'list'), help="""Lists the keys in the specified vault and compartment.
+@key_group.command(name=cli_util.override('list_keys.command_name', 'list'), help=u"""Lists the keys in the specified vault and compartment.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help="""The field to sort by. You can specify only one sort order. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -395,14 +395,14 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help="""Updates the properties of a key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must in an `ACTIVE` or `CREATING` state to be updated.
+@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help=u"""Updates the properties of a key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must in an `ACTIVE` or `CREATING` state to be updated.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--key-id', required=True, help="""The OCID of the key.""")
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")

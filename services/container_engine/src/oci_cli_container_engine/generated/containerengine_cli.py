@@ -74,12 +74,12 @@ ce_root_group.add_command(work_request_group)
 ce_root_group.add_command(cluster_options_group)
 
 
-@cluster_group.command(name=cli_util.override('create_cluster.command_name', 'create'), help="""Create a new cluster.""")
-@cli_util.option('--name', required=True, help="""The name of the cluster. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment in which to create the cluster.""")
-@cli_util.option('--vcn-id', required=True, help="""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
-@cli_util.option('--kubernetes-version', required=True, help="""The version of Kubernetes to install into the cluster masters.""")
-@cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help="""Optional attributes for the cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cluster_group.command(name=cli_util.override('create_cluster.command_name', 'create'), help=u"""Create a new cluster.""")
+@cli_util.option('--name', required=True, help=u"""The name of the cluster. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the cluster.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
+@cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install into the cluster masters.""")
+@cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional attributes for the cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -132,11 +132,11 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('create_kubeconfig.command_name', 'create-kubeconfig'), help="""Create the Kubeconfig YAML for a cluster.""")
-@cli_util.option('--cluster-id', required=True, help="""The OCID of the cluster.""")
+@cluster_group.command(name=cli_util.override('create_kubeconfig.command_name', 'create-kubeconfig'), help=u"""Create the Kubeconfig YAML for a cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
-@cli_util.option('--token-version', help="""The version of the kubeconfig token.""")
-@cli_util.option('--expiration', type=click.INT, help="""The desired expiration, in seconds, to use for the kubeconfig token.""")
+@cli_util.option('--token-version', help=u"""The version of the kubeconfig token.""")
+@cli_util.option('--expiration', type=click.INT, help=u"""The desired expiration, in seconds, to use for the kubeconfig token.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -189,20 +189,20 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
         file.close()
 
 
-@node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'), help="""Create a new node pool.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment in which the node pool exists.""")
-@cli_util.option('--cluster-id', required=True, help="""The OCID of the cluster to which this node pool is attached.""")
-@cli_util.option('--name', required=True, help="""The name of the node pool. Avoid entering confidential information.""")
-@cli_util.option('--kubernetes-version', required=True, help="""The version of Kubernetes to install on the nodes in the node pool.""")
-@cli_util.option('--node-image-name', required=True, help="""The name of the image running on the nodes in the node pool.""")
-@cli_util.option('--node-shape', required=True, help="""The name of the node shape of the nodes in the node pool.""")
-@cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to each underlying OCI instance in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
+@node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'), help=u"""Create a new node pool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the node pool exists.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster to which this node pool is attached.""")
+@cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
+@cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
+@cli_util.option('--node-image-name', required=True, help=u"""The name of the image running on the nodes in the node pool.""")
+@cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
+@cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssh-public-key', help="""The SSH public key to add to each node in the node pool.""")
-@cli_util.option('--quantity-per-subnet', type=click.INT, help="""The number of nodes to create in each subnet.""")
+@cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool.""")
+@cli_util.option('--quantity-per-subnet', type=click.INT, help=u"""The number of nodes to create in each subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -267,9 +267,9 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('delete_cluster.command_name', 'delete'), help="""Delete a cluster.""")
-@cli_util.option('--cluster-id', required=True, help="""The OCID of the cluster.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cluster_group.command(name=cli_util.override('delete_cluster.command_name', 'delete'), help=u"""Delete a cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -318,9 +318,9 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('delete_node_pool.command_name', 'delete'), help="""Delete a node pool.""")
-@cli_util.option('--node-pool-id', required=True, help="""The OCID of the node pool.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@node_pool_group.command(name=cli_util.override('delete_node_pool.command_name', 'delete'), help=u"""Delete a node pool.""")
+@cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -369,9 +369,9 @@ def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('delete_work_request.command_name', 'delete'), help="""Cancel a work request that has not started.""")
-@cli_util.option('--work-request-id', required=True, help="""The OCID of the work request.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@work_request_group.command(name=cli_util.override('delete_work_request.command_name', 'delete'), help=u"""Cancel a work request that has not started.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -395,8 +395,8 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('get_cluster.command_name', 'get'), help="""Get the details of a cluster.""")
-@cli_util.option('--cluster-id', required=True, help="""The OCID of the cluster.""")
+@cluster_group.command(name=cli_util.override('get_cluster.command_name', 'get'), help=u"""Get the details of a cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -417,8 +417,8 @@ def get_cluster(ctx, from_json, cluster_id):
     cli_util.render_response(result, ctx)
 
 
-@cluster_options_group.command(name=cli_util.override('get_cluster_options.command_name', 'get'), help="""Get options available for clusters.""")
-@cli_util.option('--cluster-option-id', required=True, help="""The id of the option set to retrieve. Only \"all\" is supported.""")
+@cluster_options_group.command(name=cli_util.override('get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters.""")
+@cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Only \"all\" is supported.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -439,8 +439,8 @@ def get_cluster_options(ctx, from_json, cluster_option_id):
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('get_node_pool.command_name', 'get'), help="""Get the details of a node pool.""")
-@cli_util.option('--node-pool-id', required=True, help="""The OCID of the node pool.""")
+@node_pool_group.command(name=cli_util.override('get_node_pool.command_name', 'get'), help=u"""Get the details of a node pool.""")
+@cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -461,8 +461,8 @@ def get_node_pool(ctx, from_json, node_pool_id):
     cli_util.render_response(result, ctx)
 
 
-@node_pool_options_group.command(name=cli_util.override('get_node_pool_options.command_name', 'get'), help="""Get options available for node pools.""")
-@cli_util.option('--node-pool-option-id', required=True, help="""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
+@node_pool_options_group.command(name=cli_util.override('get_node_pool_options.command_name', 'get'), help=u"""Get options available for node pools.""")
+@cli_util.option('--node-pool-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -483,8 +483,8 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help="""Get the details of a work request.""")
-@cli_util.option('--work-request-id', required=True, help="""The OCID of the work request.""")
+@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Get the details of a work request.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -505,14 +505,14 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('list_clusters.command_name', 'list'), help="""List all the cluster objects in a compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""A cluster lifecycle state to filter on. Can have multiple parameters of this name.""")
-@cli_util.option('--name', help="""The name to filter on.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The optional order in which to sort the results.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help="""The optional field to sort the results by.""")
+@cluster_group.command(name=cli_util.override('list_clusters.command_name', 'list'), help=u"""List all the cluster objects in a compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help=u"""A cluster lifecycle state to filter on. Can have multiple parameters of this name.""")
+@cli_util.option('--name', help=u"""The name to filter on.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The optional order in which to sort the results.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help=u"""The optional field to sort the results by.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -565,14 +565,14 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('list_node_pools.command_name', 'list'), help="""List all the node pools in a compartment, and optionally filter by cluster.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--cluster-id', help="""The OCID of the cluster.""")
-@cli_util.option('--name', help="""The name to filter on.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The optional order in which to sort the results.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help="""The optional field to sort the results by.""")
+@node_pool_group.command(name=cli_util.override('list_node_pools.command_name', 'list'), help=u"""List all the node pools in a compartment, and optionally filter by cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
+@cli_util.option('--name', help=u"""The name to filter on.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The optional order in which to sort the results.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help=u"""The optional field to sort the results by.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -625,9 +625,9 @@ def list_node_pools(ctx, from_json, all_pages, page_size, compartment_id, cluste
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('list_work_request_errors.command_name', 'list'), help="""Get the errors of a work request.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--work-request-id', required=True, help="""The OCID of the work request.""")
+@work_request_error_group.command(name=cli_util.override('list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -650,9 +650,9 @@ def list_work_request_errors(ctx, from_json, all_pages, compartment_id, work_req
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'), help="""Get the logs of a work request.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--work-request-id', required=True, help="""The OCID of the work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get the logs of a work request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -675,16 +675,16 @@ def list_work_request_logs(ctx, from_json, all_pages, compartment_id, work_reque
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help="""List all work requests in a compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--cluster-id', help="""The OCID of the cluster.""")
-@cli_util.option('--resource-id', help="""The OCID of the resource associated with a work request""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["CLUSTER", "NODEPOOL"]), help="""Type of the resource associated with a work request""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""A work request status to filter on. Can have multiple parameters of this name.""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--page', help="""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The optional order in which to sort the results.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "OPERATION_TYPE", "STATUS", "TIME_ACCEPTED", "TIME_STARTED", "TIME_FINISHED"]), help="""The optional field to sort the results by.""")
+@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
+@cli_util.option('--resource-id', help=u"""The OCID of the resource associated with a work request""")
+@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["CLUSTER", "NODEPOOL"]), help=u"""Type of the resource associated with a work request""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""A work request status to filter on. Can have multiple parameters of this name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The optional order in which to sort the results.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "OPERATION_TYPE", "STATUS", "TIME_ACCEPTED", "TIME_STARTED", "TIME_FINISHED"]), help=u"""The optional field to sort the results by.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -741,11 +741,11 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, clu
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('update_cluster.command_name', 'update'), help="""Update the details of a cluster.""")
-@cli_util.option('--cluster-id', required=True, help="""The OCID of the cluster.""")
-@cli_util.option('--name', help="""The new name for the cluster. Avoid entering confidential information.""")
-@cli_util.option('--kubernetes-version', help="""The version of Kubernetes to which the cluster masters should be upgraded.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cluster_group.command(name=cli_util.override('update_cluster.command_name', 'update'), help=u"""Update the details of a cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--name', help=u"""The new name for the cluster. Avoid entering confidential information.""")
+@cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to which the cluster masters should be upgraded.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -803,16 +803,16 @@ def update_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('update_node_pool.command_name', 'update'), help="""Update the details of a node pool.""")
-@cli_util.option('--node-pool-id', required=True, help="""The OCID of the node pool.""")
-@cli_util.option('--name', help="""The new name for the cluster. Avoid entering confidential information.""")
-@cli_util.option('--kubernetes-version', help="""The version of Kubernetes to which the nodes in the node pool should be upgraded.""")
-@cli_util.option('--quantity-per-subnet', type=click.INT, help="""The number of nodes to ensure in each subnet.""")
-@cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
+@node_pool_group.command(name=cli_util.override('update_node_pool.command_name', 'update'), help=u"""Update the details of a node pool.""")
+@cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
+@cli_util.option('--name', help=u"""The new name for the cluster. Avoid entering confidential information.""")
+@cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to which the nodes in the node pool should be upgraded.""")
+@cli_util.option('--quantity-per-subnet', type=click.INT, help=u"""The number of nodes to ensure in each subnet.""")
+@cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the subnets in which to place nodes for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

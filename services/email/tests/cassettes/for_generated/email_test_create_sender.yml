@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateSender&serviceName=email&lang=PythonCLI
   response:
@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:57:56 GMT']
+      Date: ['Mon, 25 Mar 2019 16:46:55 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -22,104 +22,106 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=CreateSender&serviceName=email&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0416&apiName=CreateSender&serviceName=email&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"createSenderDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"__sts0106_7525@test.oracle.com","freeformTags":{"tag1":"value1.__STS0106_5645","tag2":"value2.__STS0106_5645"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_406","testing_service_tag_02":"tag5.__STS0106_406","testing_service_tag_03":"tag6.__STS0106_406"}}},"opcRequestId":"stsCreateSender"}},{"containerId":"ac2177aa-761a-4784-9a8a-73aa8955f22f","request":{"createSenderDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"","freeformTags":{"tag1":"value1.__STS0106_1879","tag2":"value2.__STS0106_1879"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_3706","testing_service_tag_02":"tag5.__STS0106_3706","testing_service_tag_03":"tag6.__STS0106_3706"}}},"opcRequestId":"stsCreateSender"}}]'}
+    body: {string: '[{"containerId":"fa8bea43-021f-4a46-a843-051e3dfa6b13","request":{"createSenderDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"__sts0416_6271@test.oracle.com","freeformTags":{"tag1":"value1.__STS0416_7938","tag2":"value2.__STS0416_7938"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0416_1633","testing_service_tag_02":"tag5.__STS0416_1633","testing_service_tag_03":"tag6.__STS0416_1633"}}},"opcRequestId":"stsCreateSender"}},{"containerId":"edbe4123-3e01-4d27-a8b7-3fb741787986","request":{"createSenderDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"","freeformTags":{"tag1":"value1.__STS0416_3300","tag2":"value2.__STS0416_3300"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0416_3816","testing_service_tag_02":"tag5.__STS0416_3816","testing_service_tag_03":"tag6.__STS0416_3816"}}},"opcRequestId":"stsCreateSender"}}]'}
     headers:
-      Content-Length: ['1050']
-      Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:57:57 GMT']
+      Content-Length: ['1053']
+      Content-Type: [text/plain]
+      Date: ['Mon, 25 Mar 2019 16:46:57 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
-      "tag5.__STS0106_406", "testing_service_tag_01": "tag4.__STS0106_406", "testing_service_tag_03":
-      "tag6.__STS0106_406"}}, "emailAddress": "__sts0106_7525@test.oracle.com", "compartmentId":
+      "tag5.__STS0416_1633", "testing_service_tag_01": "tag4.__STS0416_1633", "testing_service_tag_03":
+      "tag6.__STS0416_1633"}}, "emailAddress": "__sts0416_6271@test.oracle.com", "compartmentId":
       "ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla",
-      "freeformTags": {"tag2": "value2.__STS0106_5645", "tag1": "value1.__STS0106_5645"}}'
+      "freeformTags": {"tag2": "value2.__STS0416_7938", "tag1": "value1.__STS0416_7938"}}'
     headers:
-      Content-Length: ['431']
+      Content-Length: ['434']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="vxPkoStTLLoQyLkDYEmJ2/eC9EMW1Bi7tjj0233SwHdbtk+6SX6E5pu/zvWg6m5n7lok6QIGtUbaKe88O3x/Z8dshIOK09p3ByLGkYpxFeduJEj/6JlkkeDR44Fu5bUEoacIo0sQxW0c4GSTDrBwVVCJwqQ33PtZAvXUk+Bx6utmIfnyUa8V1VwLOT0dOt9pju9tBXVlKblpzYseWmg/YqnUGm2eELpfnZpFGrQGVbJxaatRFgQ0dfYUI439sllxgVv5Zhk4yTFD90LQKVkwyyankfq4ocXt0+VRbr3zJgH8pEXDdyfWQYN0LJTVFTNx67vdYShPphgHRebdFz/aig==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="UgCDcRWRfHlw/hWmafCublnQ2DB+iWvRkiVJTzIiAiNo3Itfwe1SY4ofH5DCSg+MtTElUbQ8lfSgPCfk/Xwd3kBKeWpnx+Ygm3y/erEdndpH0E8AOJjz4kaScbFtcQS/bc1kRxYgsMfBjy794LENsGq92spoJaBlW677HkstDkmoCaogtVk9bq2dHs8OOrhwbFbHZRimXvei6PtJm6Ie3lTDPa11FvK9p41vyRIjvifJQEEWm3kLE4QiS8WE5PPtIuQ9LqWzlAhM9ZLHj9SVr5TJqNAZkdARxAlU2R3/LFhND8E9Pk9IwjnkTTzWHfizU9b6Ed+RH7wgCzpElahxwQ==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 01 Feb 2019 13:58:00 GMT']
+      date: ['Mon, 25 Mar 2019 16:46:58 GMT']
       host: [email.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
-      opc-request-id: [DA26D20E5A03493B8696E5BC2DAEEFE9]
-      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.4.43]
-      x-content-sha256: [b3UVQ/J3z30W8dmg1+BRQpy1x4TnS5baPKofcMaf4xo=]
+      opc-client-info: [Oracle-PythonSDK/2.2.2+preview.1.0.738]
+      opc-request-id: [239447817BDD4CEEBE2F911987ECE2C5]
+      user-agent: [Oracle-PythonSDK/2.2.2+preview.1.0.738 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.3+preview.1]
+      x-content-sha256: [2Bg49CUYIW2iqhSOozmywiKX2K9rFTL/Xl62lgBtSzM=]
     method: POST
     uri: https://email.us-phoenix-1.oraclecloud.com/20170907/senders
   response:
-    body: {string: '{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0106_406","testing_service_tag_02":"tag5.__STS0106_406","testing_service_tag_03":"tag6.__STS0106_406"}},"freeformTags":{"tag1":"value1.__STS0106_5645","tag2":"value2.__STS0106_5645"},"emailAddress":"__sts0106_7525@test.oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa","lifecycleState":"CREATING","timeCreated":"2019-02-01T13:58:06.509Z","isSpf":false,"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla"}'}
+    body: {string: '{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0416_1633","testing_service_tag_02":"tag5.__STS0416_1633","testing_service_tag_03":"tag6.__STS0416_1633"}},"freeformTags":{"tag1":"value1.__STS0416_7938","tag2":"value2.__STS0416_7938"},"compartmentId":"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla","emailAddress":"__sts0416_6271@test.oracle.com","id":"ocid1.emailsender.oc1.phx.aaaaaaaac5nl3qrq7ji2v4q3sqskww24rv53w65fe6l3vr3wlqtrjskznoda","lifecycleState":"CREATING","timeCreated":"2019-03-25T16:47:01.702Z","isSpf":false}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
-      Content-Length: ['592']
+      Content-Length: ['595']
       Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:58:16 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:15 GMT']
+      ETag: [3b129aee]
       X-Application-Context: [application]
-      opc-request-id: [DA26D20E5A03493B8696E5BC2DAEEFE9/BBFF7F8F68683B30FC53ADBC48E4D640/5BED4E57D29976EA5916D90BBA0AAE66]
+      opc-request-id: [239447817BDD4CEEBE2F911987ECE2C5/0406E1ACEE9122ED3CDFAE6B98CC00B9/1631AA222A4050CC304C99D057F0A7E0]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"9D1089A6566F41D8987A8E3F0D327A25\",
-      \"sender\": {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_02\":
-      \"tag5.__STS0106_406\", \"testing_service_tag_01\": \"tag4.__STS0106_406\",
-      \"testing_service_tag_03\": \"tag6.__STS0106_406\"}}, \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaas3wgzldwz3k6bb4rexyapb27gt732wiyiggu7y5zmqxevf3sonfa\",
+    body: '{"responseJson": "{\"opcRequestId\": \"9F15F31674CB4DCD95F87D8987F276A3\",
+      \"etag\": \"3b129aee\", \"sender\": {\"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_02\": \"tag5.__STS0416_1633\", \"testing_service_tag_01\":
+      \"tag4.__STS0416_1633\", \"testing_service_tag_03\": \"tag6.__STS0416_1633\"}},
+      \"id\": \"ocid1.emailsender.oc1.phx.aaaaaaaac5nl3qrq7ji2v4q3sqskww24rv53w65fe6l3vr3wlqtrjskznoda\",
       \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\",
-      \"isSpf\": false, \"timeCreated\": \"2019-02-01T13:58:06.509000+00:00\", \"emailAddress\":
-      \"__sts0106_7525@test.oracle.com\", \"freeformTags\": {\"tag2\": \"value2.__STS0106_5645\",
-      \"tag1\": \"value1.__STS0106_5645\"}, \"lifecycleState\": \"CREATING\"}}", "requestJson":
+      \"isSpf\": false, \"timeCreated\": \"2019-03-25T16:47:01.702000+00:00\", \"emailAddress\":
+      \"__sts0416_6271@test.oracle.com\", \"freeformTags\": {\"tag2\": \"value2.__STS0416_7938\",
+      \"tag1\": \"value1.__STS0416_7938\"}, \"lifecycleState\": \"CREATING\"}}", "requestJson":
       "{\"opcRequestId\": \"stsCreateSender\", \"createSenderDetails\": {\"definedTags\":
-      {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\": \"tag6.__STS0106_406\",
-      \"testing_service_tag_01\": \"tag4.__STS0106_406\", \"testing_service_tag_02\":
-      \"tag5.__STS0106_406\"}}, \"emailAddress\": \"__sts0106_7525@test.oracle.com\",
+      {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\": \"tag6.__STS0416_1633\",
+      \"testing_service_tag_01\": \"tag4.__STS0416_1633\", \"testing_service_tag_02\":
+      \"tag5.__STS0416_1633\"}}, \"emailAddress\": \"__sts0416_6271@test.oracle.com\",
       \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\",
-      \"freeformTags\": {\"tag2\": \"value2.__STS0106_5645\", \"tag1\": \"value1.__STS0106_5645\"}}}",
-      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.CreateSenderRequest",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0416_7938\", \"tag1\": \"value1.__STS0416_7938\"}}}",
+      "containerId": "fa8bea43-021f-4a46-a843-051e3dfa6b13", "requestClass": "com.oracle.bmc.email.requests.CreateSenderRequest",
       "responseClass": "com.oracle.bmc.email.responses.CreateSenderResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['1508']
-      User-Agent: [python-requests/2.18.4]
+      Content-Length: ['1538']
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0416&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:58:17 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:16 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
-      "tag5.__STS0106_3706", "testing_service_tag_01": "tag4.__STS0106_3706", "testing_service_tag_03":
-      "tag6.__STS0106_3706"}}, "emailAddress": "", "compartmentId": "ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla",
-      "freeformTags": {"tag2": "value2.__STS0106_1879", "tag1": "value1.__STS0106_1879"}}'
+      "tag5.__STS0416_3816", "testing_service_tag_01": "tag4.__STS0416_3816", "testing_service_tag_03":
+      "tag6.__STS0416_3816"}}, "emailAddress": "", "compartmentId": "ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla",
+      "freeformTags": {"tag2": "value2.__STS0416_3300", "tag1": "value1.__STS0416_3300"}}'
     headers:
       Content-Length: ['404']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="ljPJIW6S8SHG2SLjHRglg3/lx3mXHKNZ/yehdXNha7L3eh4Xtl852+bbQNVuxIxzdUN/oUrYitt0dyyFAPgbMZqLs1jt/+GWbUkjXetvz5fdTjX+lsG2Cq9RXw+mD5rw5e9F/8eDs7jRZVJdguPfhpK3r82Cfi6oPK2eLRRlVx9rILJY82xRbWLegV1u+9JvCeBSO9pg5RpLHTdR9I6nLiSx+526dqxNc402qRvL/x1RRMSRqj8wbCu4DhEBc/nntXxcwJaePwuIF1pT6VsyIMol9wmD9IsPsm85jeUEE9gWv1OMBjICKMDFNY146KxHZ0I3ACQHVqzDcDXXrIO83A==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="a6op8d8uOiTECYrY7ooNdIXE/RpcBhYI786+JNLhYnnSvaUJngtq5dYXBaOSnFsE7/1CiHdVODgsfw0plPGunx8kWLndUTHIUvzNR3NSuI17yGf7gdBlGfzx8zVR4U6q9J+SQvmhDp5czClPaQctGS8rp1vEC8yY20qX9Je+av+EVquuJa9O/89C/5yi2oCEweFc4K2zsTAfiOyeYVIYKQwcrfVxUfbQ+LcTT0cDtemlQIWALi7xq2kMCfJfOX4m2gG71zbXIVfaSxc9UpnApdRUK4qxz35bsweawbszv1LiiCgjTdYDaS2nuasZTUZLkMyiqJpiTJCrqz4wvH5d8A==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 01 Feb 2019 13:58:17 GMT']
+      date: ['Mon, 25 Mar 2019 16:47:16 GMT']
       host: [email.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
-      opc-request-id: [D330005E5253449E838C2958EAADFABB]
-      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.4.43]
-      x-content-sha256: [S9CXbyHOGA9Yk3xlwGqmO/uV34erTh8vY3OpVX2tPkk=]
+      opc-client-info: [Oracle-PythonSDK/2.2.2+preview.1.0.738]
+      opc-request-id: [DFF3B72138A44355BF2630432DCA5E40]
+      user-agent: [Oracle-PythonSDK/2.2.2+preview.1.0.738 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.3+preview.1]
+      x-content-sha256: [aMOXOczgDbBpIaEiVT7oeI7b28LoUPVCbquvD6WyOms=]
     method: POST
     uri: https://email.us-phoenix-1.oraclecloud.com/20170907/senders
   response:
@@ -130,36 +132,36 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['148']
       Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:58:19 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:18 GMT']
       X-Application-Context: [application]
       errormsg: [compartmentId and emailAddress should be valid.]
-      opc-request-id: [D330005E5253449E838C2958EAADFABB/5AB48EE4F9B8DD35D4B522A4C775BEF1/14D20D1184189D619FCC1BFB61592BAB]
+      opc-request-id: [DFF3B72138A44355BF2630432DCA5E40/8582960D447638E6F573B4719E19ABB0/10134E4CEB4AA83131311180B3E97742]
     status: {code: 400, message: Bad Request}
 - request:
     body: '{"requestJson": "{\"opcRequestId\": \"stsCreateSender\", \"createSenderDetails\":
       {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\":
-      \"tag6.__STS0106_3706\", \"testing_service_tag_01\": \"tag4.__STS0106_3706\",
-      \"testing_service_tag_02\": \"tag5.__STS0106_3706\"}}, \"emailAddress\": \"\",
+      \"tag6.__STS0416_3816\", \"testing_service_tag_01\": \"tag4.__STS0416_3816\",
+      \"testing_service_tag_02\": \"tag5.__STS0416_3816\"}}, \"emailAddress\": \"\",
       \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaacq3ztcbrxvgfb35zj6wztdpwlkmzfh4rnsq63sugge624qr5cdla\",
-      \"freeformTags\": {\"tag2\": \"value2.__STS0106_1879\", \"tag1\": \"value1.__STS0106_1879\"}}}",
-      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"D330005E5253449E838C2958EAADFABB/5AB48EE4F9B8DD35D4B522A4C775BEF1/14D20D1184189D619FCC1BFB61592BAB\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0416_3300\", \"tag1\": \"value1.__STS0416_3300\"}}}",
+      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"DFF3B72138A44355BF2630432DCA5E40/8582960D447638E6F573B4719E19ABB0/10134E4CEB4AA83131311180B3E97742\",
       \"code\": \"InvalidParameter\", \"message\": \"compartmentId and emailAddress
-      should be valid.\"}", "containerId": "ac2177aa-761a-4784-9a8a-73aa8955f22f",
+      should be valid.\"}", "containerId": "edbe4123-3e01-4d27-a8b7-3fb741787986",
       "requestClass": "com.oracle.bmc.email.requests.CreateSenderRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['905']
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0106&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0416&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:58:20 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:19 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

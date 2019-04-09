@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.7 - 2019-04-09
+------------------
+Fixed
+~~~~~~
+* Fixed inconsistencies in SDK and CLI for Compute's create app catalog subscription. All the options are made optional to make it consistent with the SDK. 
+
+* Use of ``--region`` option with instance principal auth 
+
 2.5.6 - 2019-04-02
 ------------------
 Added

@@ -30,17 +30,17 @@ streaming_service_cli.streaming_service_group.add_command(stream_admin_root_grou
 stream_admin_root_group.add_command(stream_group)
 
 
-@stream_group.command(name=cli_util.override('create_stream.command_name', 'create'), help="""Starts the provisioning of a new stream. To track the progress of the provisioning, you can periodically call [GetStream]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
-@cli_util.option('--name', required=True, help="""The name of the stream. Avoid entering confidential information.
+@stream_group.command(name=cli_util.override('create_stream.command_name', 'create'), help=u"""Starts the provisioning of a new stream. To track the progress of the provisioning, you can periodically call [GetStream]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
+@cli_util.option('--name', required=True, help=u"""The name of the stream. Avoid entering confidential information.
 
 Example: `TelemetryEvents`""")
-@cli_util.option('--partitions', required=True, type=click.INT, help="""The number of partitions in the stream.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment that contains the stream.""")
-@cli_util.option('--retention-in-hours', type=click.INT, help="""The retention period of the stream, in hours. Accepted values are between 24 and 168 (7 days). If not specified, the stream will have a retention period of 24 hours.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
+@cli_util.option('--partitions', required=True, type=click.INT, help=u"""The number of partitions in the stream.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the stream.""")
+@cli_util.option('--retention-in-hours', type=click.INT, help=u"""The retention period of the stream, in hours. Accepted values are between 24 and 168 (7 days). If not specified, the stream will have a retention period of 24 hours.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -100,8 +100,8 @@ def create_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('delete_stream.command_name', 'delete'), help="""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifeCycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted.""")
-@cli_util.option('--stream-id', required=True, help="""The OCID of the stream to delete.""")
+@stream_group.command(name=cli_util.override('delete_stream.command_name', 'delete'), help=u"""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifeCycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to delete.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -160,8 +160,8 @@ def delete_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('get_stream.command_name', 'get'), help="""Gets detailed information about a stream, including the number of partitions.""")
-@cli_util.option('--stream-id', required=True, help="""The OCID of the stream to retrieve.""")
+@stream_group.command(name=cli_util.override('get_stream.command_name', 'get'), help=u"""Gets detailed information about a stream, including the number of partitions.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -182,15 +182,15 @@ def get_stream(ctx, from_json, stream_id):
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('list_streams.command_name', 'list'), help="""Lists the streams.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--id', help="""A filter to return only resources that match the given ID exactly.""")
-@cli_util.option('--name', help="""A filter to return only resources that match the given name exactly.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
-@cli_util.option('--page', help="""The page at which to start retrieving results.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help="""The field to sort by. You can provide no more than one sort order. By default, `TIMECREATED` sorts results in descending order and `NAME` sorts results in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
+@stream_group.command(name=cli_util.override('list_streams.command_name', 'list'), help=u"""Lists the streams.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
+@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide no more than one sort order. By default, `TIMECREATED` sorts results in descending order and `NAME` sorts results in ascending order.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -245,12 +245,12 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, id, name,
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('update_stream.command_name', 'update'), help="""Updates the tags applied to the stream.""")
-@cli_util.option('--stream-id', required=True, help="""The OCID of the stream to update.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
+@stream_group.command(name=cli_util.override('update_stream.command_name', 'update'), help=u"""Updates the tags applied to the stream.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to update.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)

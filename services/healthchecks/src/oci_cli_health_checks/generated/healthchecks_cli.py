@@ -74,23 +74,23 @@ healthchecks_root_group.add_command(ping_probe_result_group)
 healthchecks_root_group.add_command(http_probe_group)
 
 
-@http_monitor_group.command(name=cli_util.override('create_http_monitor.command_name', 'create'), help="""Creates an HTTP monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help="""""")
-@cli_util.option('--display-name', required=True, help="""A user-friendly and mutable name suitable for display in a user interface.""")
-@cli_util.option('--interval-in-seconds', required=True, type=click.INT, help="""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
-@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--port', type=click.INT, help="""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help="""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
-@cli_util.option('--method', type=custom_types.CliCaseInsensitiveChoice(["GET", "HEAD"]), help="""""")
-@cli_util.option('--path', help="""The optional URL path to probe, including query parameters.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help="""A dictionary of HTTP request headers.
+@http_monitor_group.command(name=cli_util.override('create_http_monitor.command_name', 'create'), help=u"""Creates an HTTP monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly and mutable name suitable for display in a user interface.""")
+@cli_util.option('--interval-in-seconds', required=True, type=click.INT, help=u"""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
+@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--port', type=click.INT, help=u"""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
+@cli_util.option('--method', type=custom_types.CliCaseInsensitiveChoice(["GET", "HEAD"]), help=u"""""")
+@cli_util.option('--path', help=u"""The optional URL path to probe, including query parameters.""")
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A dictionary of HTTP request headers.
 
 *Note:* Monitors and probes do not support the use of the `Authorization` HTTP header.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-enabled', type=click.BOOL, help="""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'healthchecks', 'class': 'list[string]'}, 'vantage-point-names': {'module': 'healthchecks', 'class': 'list[string]'}, 'headers': {'module': 'healthchecks', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'healthchecks', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'healthchecks', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
@@ -143,18 +143,18 @@ def create_http_monitor(ctx, from_json, compartment_id, targets, protocol, displ
     cli_util.render_response(result, ctx)
 
 
-@http_probe_group.command(name=cli_util.override('create_on_demand_http_probe.command_name', 'create-on-demand'), help="""Creates an on-demand HTTP probe. The location response header contains the URL for fetching the probe results.
+@http_probe_group.command(name=cli_util.override('create_on_demand_http_probe.command_name', 'create-on-demand'), help=u"""Creates an on-demand HTTP probe. The location response header contains the URL for fetching the probe results.
 
 *Note:* On-demand probe configurations are not saved.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help="""""")
-@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--port', type=click.INT, help="""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help="""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
-@cli_util.option('--method', type=custom_types.CliCaseInsensitiveChoice(["GET", "HEAD"]), help="""""")
-@cli_util.option('--path', help="""The optional URL path to probe, including query parameters.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help="""A dictionary of HTTP request headers.
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""""")
+@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--port', type=click.INT, help=u"""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
+@cli_util.option('--method', type=custom_types.CliCaseInsensitiveChoice(["GET", "HEAD"]), help=u"""""")
+@cli_util.option('--path', help=u"""The optional URL path to probe, including query parameters.""")
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A dictionary of HTTP request headers.
 
 *Note:* Monitors and probes do not support the use of the `Authorization` HTTP header.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'healthchecks', 'class': 'list[string]'}, 'vantage-point-names': {'module': 'healthchecks', 'class': 'list[string]'}, 'headers': {'module': 'healthchecks', 'class': 'dict(str, string)'}})
@@ -198,15 +198,15 @@ def create_on_demand_http_probe(ctx, from_json, compartment_id, targets, protoco
     cli_util.render_response(result, ctx)
 
 
-@ping_probe_group.command(name=cli_util.override('create_on_demand_ping_probe.command_name', 'create-on-demand'), help="""Creates an on-demand ping probe. The location response header contains the URL for fetching probe results.
+@ping_probe_group.command(name=cli_util.override('create_on_demand_ping_probe.command_name', 'create-on-demand'), help=u"""Creates an on-demand ping probe. The location response header contains the URL for fetching probe results.
 
 *Note:* The on-demand probe configuration is not saved.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help="""""")
-@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--port', type=click.INT, help="""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help="""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help=u"""""")
+@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--port', type=click.INT, help=u"""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
 @json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'healthchecks', 'class': 'list[string]'}, 'vantage-point-names': {'module': 'healthchecks', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -239,18 +239,18 @@ def create_on_demand_ping_probe(ctx, from_json, compartment_id, targets, protoco
     cli_util.render_response(result, ctx)
 
 
-@ping_monitor_group.command(name=cli_util.override('create_ping_monitor.command_name', 'create'), help="""Creates a ping monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`.""")
-@cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment.""")
-@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help="""""")
-@cli_util.option('--display-name', required=True, help="""A user-friendly and mutable name suitable for display in a user interface.""")
-@cli_util.option('--interval-in-seconds', required=True, type=click.INT, help="""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
-@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--port', type=click.INT, help="""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help="""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help="""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@ping_monitor_group.command(name=cli_util.override('create_ping_monitor.command_name', 'create'), help=u"""Creates a ping monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help=u"""""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly and mutable name suitable for display in a user interface.""")
+@cli_util.option('--interval-in-seconds', required=True, type=click.INT, help=u"""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
+@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--port', type=click.INT, help=u"""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'healthchecks', 'class': 'list[string]'}, 'vantage-point-names': {'module': 'healthchecks', 'class': 'list[string]'}, 'freeform-tags': {'module': 'healthchecks', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'healthchecks', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
@@ -294,9 +294,9 @@ def create_ping_monitor(ctx, from_json, compartment_id, targets, protocol, displ
     cli_util.render_response(result, ctx)
 
 
-@http_monitor_group.command(name=cli_util.override('delete_http_monitor.command_name', 'delete'), help="""Deletes the HTTP monitor and its configuration. All future probes of this monitor are stopped. Results associated with the monitor are not deleted.""")
-@cli_util.option('--monitor-id', required=True, help="""The OCID of a monitor.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@http_monitor_group.command(name=cli_util.override('delete_http_monitor.command_name', 'delete'), help=u"""Deletes the HTTP monitor and its configuration. All future probes of this monitor are stopped. Results associated with the monitor are not deleted.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -320,9 +320,9 @@ def delete_http_monitor(ctx, from_json, monitor_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@ping_monitor_group.command(name=cli_util.override('delete_ping_monitor.command_name', 'delete'), help="""Deletes the ping monitor and its configuration. All future probes of this monitor are stopped. Results associated with the monitor are not deleted.""")
-@cli_util.option('--monitor-id', required=True, help="""The OCID of a monitor.""")
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@ping_monitor_group.command(name=cli_util.override('delete_ping_monitor.command_name', 'delete'), help=u"""Deletes the ping monitor and its configuration. All future probes of this monitor are stopped. Results associated with the monitor are not deleted.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -346,9 +346,9 @@ def delete_ping_monitor(ctx, from_json, monitor_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@http_monitor_group.command(name=cli_util.override('get_http_monitor.command_name', 'get'), help="""Gets the configuration for the specified monitor.""")
-@cli_util.option('--monitor-id', required=True, help="""The OCID of a monitor.""")
-@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@http_monitor_group.command(name=cli_util.override('get_http_monitor.command_name', 'get'), help=u"""Gets the configuration for the specified monitor.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
+@cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -371,9 +371,9 @@ def get_http_monitor(ctx, from_json, monitor_id, if_none_match):
     cli_util.render_response(result, ctx)
 
 
-@ping_monitor_group.command(name=cli_util.override('get_ping_monitor.command_name', 'get'), help="""Gets the configuration for the specified ping monitor.""")
-@cli_util.option('--monitor-id', required=True, help="""The OCID of a monitor.""")
-@cli_util.option('--if-none-match', help="""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@ping_monitor_group.command(name=cli_util.override('get_ping_monitor.command_name', 'get'), help=u"""Gets the configuration for the specified ping monitor.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
+@cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -396,13 +396,13 @@ def get_ping_monitor(ctx, from_json, monitor_id, if_none_match):
     cli_util.render_response(result, ctx)
 
 
-@health_checks_vantage_point_group.command(name=cli_util.override('list_health_checks_vantage_points.command_name', 'list'), help="""Gets information about all vantage points available to the user.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "displayName"]), help="""The field to sort by when listing vantage points.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""Controls the sort order of results.""")
-@cli_util.option('--name', help="""Filters results that exactly match the `name` field.""")
-@cli_util.option('--display-name', help="""Filters results that exactly match the `displayName` field.""")
+@health_checks_vantage_point_group.command(name=cli_util.override('list_health_checks_vantage_points.command_name', 'list'), help=u"""Gets information about all vantage points available to the user.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "displayName"]), help=u"""The field to sort by when listing vantage points.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Controls the sort order of results.""")
+@cli_util.option('--name', help=u"""Filters results that exactly match the `name` field.""")
+@cli_util.option('--display-name', help=u"""Filters results that exactly match the `displayName` field.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -452,13 +452,13 @@ def list_health_checks_vantage_points(ctx, from_json, all_pages, page_size, limi
     cli_util.render_response(result, ctx)
 
 
-@http_monitor_group.command(name=cli_util.override('list_http_monitors.command_name', 'list'), help="""Gets a list of HTTP monitors.""")
-@cli_util.option('--compartment-id', required=True, help="""Filters results by compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName"]), help="""The field to sort by when listing monitors.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""Controls the sort order of results.""")
-@cli_util.option('--display-name', help="""Filters results that exactly match the `displayName` field.""")
+@http_monitor_group.command(name=cli_util.override('list_http_monitors.command_name', 'list'), help=u"""Gets a list of HTTP monitors.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Filters results by compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName"]), help=u"""The field to sort by when listing monitors.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Controls the sort order of results.""")
+@cli_util.option('--display-name', help=u"""Filters results that exactly match the `displayName` field.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -509,14 +509,14 @@ def list_http_monitors(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@http_probe_result_group.command(name=cli_util.override('list_http_probe_results.command_name', 'list'), help="""Gets the HTTP probe results for the specified probe or monitor, where the `probeConfigurationId` is the OCID of either a monitor or an on-demand probe.""")
-@cli_util.option('--probe-configuration-id', required=True, help="""The OCID of a monitor or on-demand probe.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--start-time-greater-than-or-equal-to', help="""Returns results with a `startTime` equal to or greater than the specified value.""")
-@cli_util.option('--start-time-less-than-or-equal-to', help="""Returns results with a `startTime` equal to or less than the specified value.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""Controls the sort order of results.""")
-@cli_util.option('--target', help="""Filters results that match the `target`.""")
+@http_probe_result_group.command(name=cli_util.override('list_http_probe_results.command_name', 'list'), help=u"""Gets the HTTP probe results for the specified probe or monitor, where the `probeConfigurationId` is the OCID of either a monitor or an on-demand probe.""")
+@cli_util.option('--probe-configuration-id', required=True, help=u"""The OCID of a monitor or on-demand probe.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--start-time-greater-than-or-equal-to', help=u"""Returns results with a `startTime` equal to or greater than the specified value.""")
+@cli_util.option('--start-time-less-than-or-equal-to', help=u"""Returns results with a `startTime` equal to or less than the specified value.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Controls the sort order of results.""")
+@cli_util.option('--target', help=u"""Filters results that match the `target`.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -572,15 +572,15 @@ def list_http_probe_results(ctx, from_json, all_pages, page_size, probe_configur
     cli_util.render_response(result, ctx)
 
 
-@ping_monitor_group.command(name=cli_util.override('list_ping_monitors.command_name', 'list'), help="""Gets a list of configured ping monitors.
+@ping_monitor_group.command(name=cli_util.override('list_ping_monitors.command_name', 'list'), help=u"""Gets a list of configured ping monitors.
 
 Results are paginated based on `page` and `limit`.  The `opc-next-page` header provides a URL for fetching the next page.""")
-@cli_util.option('--compartment-id', required=True, help="""Filters results by compartment.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName"]), help="""The field to sort by when listing monitors.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""Controls the sort order of results.""")
-@cli_util.option('--display-name', help="""Filters results that exactly match the `displayName` field.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Filters results by compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName"]), help=u"""The field to sort by when listing monitors.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Controls the sort order of results.""")
+@cli_util.option('--display-name', help=u"""Filters results that exactly match the `displayName` field.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -631,16 +631,16 @@ def list_ping_monitors(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@ping_probe_result_group.command(name=cli_util.override('list_ping_probe_results.command_name', 'list'), help="""Returns the results for the specified probe, where the `probeConfigurationId` is the OCID of either a monitor or an on-demand probe.
+@ping_probe_result_group.command(name=cli_util.override('list_ping_probe_results.command_name', 'list'), help=u"""Returns the results for the specified probe, where the `probeConfigurationId` is the OCID of either a monitor or an on-demand probe.
 
 Results are paginated based on `page` and `limit`.  The `opc-next-page` header provides a URL for fetching the next page.  Use `sortOrder` to set the order of the results.  If `sortOrder` is unspecified, results are sorted in ascending order by `startTime`.""")
-@cli_util.option('--probe-configuration-id', required=True, help="""The OCID of a monitor or on-demand probe.""")
-@cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.""")
-@cli_util.option('--page', help="""The value of the `opc-next-page` response header from the previous \"List\" call.""")
-@cli_util.option('--start-time-greater-than-or-equal-to', help="""Returns results with a `startTime` equal to or greater than the specified value.""")
-@cli_util.option('--start-time-less-than-or-equal-to', help="""Returns results with a `startTime` equal to or less than the specified value.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""Controls the sort order of results.""")
-@cli_util.option('--target', help="""Filters results that match the `target`.""")
+@cli_util.option('--probe-configuration-id', required=True, help=u"""The OCID of a monitor or on-demand probe.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--start-time-greater-than-or-equal-to', help=u"""Returns results with a `startTime` equal to or greater than the specified value.""")
+@cli_util.option('--start-time-less-than-or-equal-to', help=u"""Returns results with a `startTime` equal to or less than the specified value.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Controls the sort order of results.""")
+@cli_util.option('--target', help=u"""Filters results that match the `target`.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -696,24 +696,24 @@ def list_ping_probe_results(ctx, from_json, all_pages, page_size, probe_configur
     cli_util.render_response(result, ctx)
 
 
-@http_monitor_group.command(name=cli_util.override('update_http_monitor.command_name', 'update'), help="""Updates the configuration of the specified HTTP monitor. Only the fields specified in the request body will be updated; all other configuration properties will remain unchanged.""")
-@cli_util.option('--monitor-id', required=True, help="""The OCID of a monitor.""")
-@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--port', type=click.INT, help="""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help="""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
-@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help="""""")
-@cli_util.option('--method', type=custom_types.CliCaseInsensitiveChoice(["GET", "HEAD"]), help="""""")
-@cli_util.option('--path', help="""The optional URL path to probe, including query parameters.""")
-@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help="""A dictionary of HTTP request headers.
+@http_monitor_group.command(name=cli_util.override('update_http_monitor.command_name', 'update'), help=u"""Updates the configuration of the specified HTTP monitor. Only the fields specified in the request body will be updated; all other configuration properties will remain unchanged.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
+@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--port', type=click.INT, help=u"""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""""")
+@cli_util.option('--method', type=custom_types.CliCaseInsensitiveChoice(["GET", "HEAD"]), help=u"""""")
+@cli_util.option('--path', help=u"""The optional URL path to probe, including query parameters.""")
+@cli_util.option('--headers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A dictionary of HTTP request headers.
 
 *Note:* Monitors and probes do not support the use of the `Authorization` HTTP header.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help="""A user-friendly and mutable name suitable for display in a user interface.""")
-@cli_util.option('--interval-in-seconds', type=click.INT, help="""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help="""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--display-name', help=u"""A user-friendly and mutable name suitable for display in a user interface.""")
+@cli_util.option('--interval-in-seconds', type=click.INT, help=u"""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'healthchecks', 'class': 'list[string]'}, 'vantage-point-names': {'module': 'healthchecks', 'class': 'list[string]'}, 'headers': {'module': 'healthchecks', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'healthchecks', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'healthchecks', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
@@ -784,19 +784,19 @@ def update_http_monitor(ctx, from_json, force, monitor_id, targets, vantage_poin
     cli_util.render_response(result, ctx)
 
 
-@ping_monitor_group.command(name=cli_util.override('update_ping_monitor.command_name', 'update'), help="""Updates the configuration of the specified ping monitor. Only the fields specified in the request body will be updated; all other configuration properties will remain unchanged.""")
-@cli_util.option('--monitor-id', required=True, help="""The OCID of a monitor.""")
-@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help="""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--port', type=click.INT, help="""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
-@cli_util.option('--timeout-in-seconds', type=click.INT, help="""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
-@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help="""""")
-@cli_util.option('--display-name', help="""A user-friendly and mutable name suitable for display in a user interface.""")
-@cli_util.option('--interval-in-seconds', type=click.INT, help="""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
-@cli_util.option('--is-enabled', type=click.BOOL, help="""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@ping_monitor_group.command(name=cli_util.override('update_ping_monitor.command_name', 'update'), help=u"""Updates the configuration of the specified ping monitor. Only the fields specified in the request body will be updated; all other configuration properties will remain unchanged.""")
+@cli_util.option('--monitor-id', required=True, help=u"""The OCID of a monitor.""")
+@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vantage-point-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--port', type=click.INT, help=u"""The port on which to probe endpoints. If unspecified, probes will use the default port of their protocol.""")
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""The probe timeout in seconds. Valid values: 10, 20, 30, and 60. The probe timeout must be less than or equal to `intervalInSeconds` for monitors.""")
+@cli_util.option('--protocol', type=custom_types.CliCaseInsensitiveChoice(["ICMP", "TCP"]), help=u"""""")
+@cli_util.option('--display-name', help=u"""A user-friendly and mutable name suitable for display in a user interface.""")
+@cli_util.option('--interval-in-seconds', type=click.INT, help=u"""The monitor interval in seconds. Valid values: 10, 30, and 60.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Enables or disables the monitor. Set to 'true' to launch monitoring.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace.  For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'healthchecks', 'class': 'list[string]'}, 'vantage-point-names': {'module': 'healthchecks', 'class': 'list[string]'}, 'freeform-tags': {'module': 'healthchecks', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'healthchecks', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option

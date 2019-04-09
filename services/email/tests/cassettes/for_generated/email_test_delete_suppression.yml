@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteSuppression&serviceName=email&lang=PythonCLI
   response:
@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:58:57 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:55 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -22,15 +22,15 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=DeleteSuppression&serviceName=email&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0416&apiName=DeleteSuppression&serviceName=email&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"suppressionId":"ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq","opcRequestId":"stsDeleteSuppression"}}]'}
+    body: {string: '[{"containerId":"fa8bea43-021f-4a46-a843-051e3dfa6b13","request":{"suppressionId":"ocid1.emailsuppression.oc1..aaaaaaaad5m3mojby5ess5yzhuoh3ajt7gvgpxmgjpkdc7c25xvvdu2pijsq","opcRequestId":"stsDeleteSuppression"}}]'}
     headers:
       Content-Length: ['213']
-      Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:58:59 GMT']
+      Content-Type: [text/plain]
+      Date: ['Mon, 25 Mar 2019 16:47:57 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -39,47 +39,47 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="GdheXJL5ppT2ddphTcGtU3CUnus3reO5NcNkEQ7TjcIeLnzYAXGjAeaIUdEfV1AYnTfa+S9fsnnLLSJxq1zeSYcRzxd6LVOQuP/mTYxmRg/Y0ngSTZQvkEiVjzYcJtilx+CotgI931UQRKem7vu+TPJMsPHfOwCBpUdNMaIBPMyfYYddg5HZ/ou3HD8bvsBJ06kVqObfTR4ofMNJ+z7TmzSFieHjzaoV1vMU0NPnjo2oNLH2Mj1N22HEzWObMISN9c2GP8DW6mjWRbfyJMDjiQ5L7148BB/cEwHdmAiiDwQq+GP3MaAP3zgfgvSNrcrhrGeTUAb1tKU5lY6Lyu88LQ==",version="1"']
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="HTGylWWEfmT0nA0iIiK6Bt3SAoW94nOmMUfEcOchHvQYTaRUPQy8REP/zc0bsLXOZ+pb4a/AE40LtLYtN2h1v3/ctOU/UqbuWrSOv1otUXUBHx0c828tYqaJVwtRIlipFIO2tyan1RDliLOa2Oag+qVPCARXowfsubzhCyN9tmjlkyO4+Fkf2OjIsoFN69XrRB2zQqxwA0iQh7uU8mmn2HM5A4lSH4rnMbkUGVosgjiaDLolU5e8sPiwKrxUhru9Lu+NjZMSfbWkpTGW9/5Hhhmc2x4ZvBzFf9t+OE0hJwcc8ogl0H/4utJr/pz4r0wsKyZGuQxh2hbQ5WGL6H5tjQ==",version="1"']
       connection: [keep-alive]
       content-length: ['0']
       content-type: [application/json]
-      date: ['Fri, 01 Feb 2019 13:59:02 GMT']
+      date: ['Mon, 25 Mar 2019 16:48:00 GMT']
       host: [email.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
-      opc-request-id: [ECFC54C4135C4951A1A6BFB17C10B4CF]
-      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.4.43]
+      opc-client-info: [Oracle-PythonSDK/2.2.2+preview.1.0.738]
+      opc-request-id: [F936BAC8B2394DB4A93F2C2E09BD8666]
+      user-agent: [Oracle-PythonSDK/2.2.2+preview.1.0.738 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.3+preview.1]
     method: DELETE
-    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions/ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions/ocid1.emailsuppression.oc1..aaaaaaaad5m3mojby5ess5yzhuoh3ajt7gvgpxmgjpkdc7c25xvvdu2pijsq
   response:
     body: {string: ''}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
-      Date: ['Fri, 01 Feb 2019 13:59:10 GMT']
+      Date: ['Mon, 25 Mar 2019 16:48:09 GMT']
       X-Application-Context: [application]
-      opc-request-id: [ECFC54C4135C4951A1A6BFB17C10B4CF/4FF518C7DA1598AF8187A89B9EB88BDF/26E024E0937E018541BC49F510F6533A]
+      opc-request-id: [F936BAC8B2394DB4A93F2C2E09BD8666/09C5E043F2B704ABB7A22DC0C0D27468/BD1B6435E7E482D2582D729CA886CF51]
     status: {code: 204, message: No Content}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"FF814D9ACB244BE6A1024AD28204E3B8\"}",
+    body: '{"responseJson": "{\"opcRequestId\": \"C8FF2AE46C6741AABE686B39353828A9\"}",
       "requestJson": "{\"opcRequestId\": \"stsDeleteSuppression\", \"suppressionId\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq\"}",
-      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.DeleteSuppressionRequest",
+      \"ocid1.emailsuppression.oc1..aaaaaaaad5m3mojby5ess5yzhuoh3ajt7gvgpxmgjpkdc7c25xvvdu2pijsq\"}",
+      "containerId": "fa8bea43-021f-4a46-a843-051e3dfa6b13", "requestClass": "com.oracle.bmc.email.requests.DeleteSuppressionRequest",
       "responseClass": "com.oracle.bmc.email.responses.DeleteSuppressionResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['458']
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0416&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:59:12 GMT']
+      Date: ['Mon, 25 Mar 2019 16:48:11 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

@@ -39,20 +39,20 @@ notification_control_plane_root_group.add_command(notification_topic_group)
 notification_control_plane_root_group.add_command(topic_group)
 
 
-@notification_topic_group.command(name=cli_util.override('create_topic.command_name', 'create-topic'), help="""Creates a topic in the specified compartment. For general information about topics, see [Managing Topics and Subscriptions].
+@notification_topic_group.command(name=cli_util.override('create_topic.command_name', 'create-topic'), help=u"""Creates a topic in the specified compartment. For general information about topics, see [Managing Topics and Subscriptions].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the topic to reside. For information about access control and compartments, see [Overview of the IAM Service].
 
 You must specify a display name for the topic.
 
 All Oracle Cloud Infrastructure resources, including topics, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
-@cli_util.option('--name', required=True, help="""The name of the topic being created. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment to create the topic in.""")
-@cli_util.option('--description', help="""The description of the topic being created. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@cli_util.option('--name', required=True, help=u"""The name of the topic being created. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the topic in.""")
+@cli_util.option('--description', help=u"""The description of the topic being created. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}})
@@ -86,9 +86,9 @@ def create_topic(ctx, from_json, name, compartment_id, description, freeform_tag
     cli_util.render_response(result, ctx)
 
 
-@topic_group.command(name=cli_util.override('delete_topic.command_name', 'delete'), help="""Deletes the specified topic.""")
-@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic to delete.""")
-@cli_util.option('--if-match', help="""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@topic_group.command(name=cli_util.override('delete_topic.command_name', 'delete'), help=u"""Deletes the specified topic.""")
+@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to delete.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -112,8 +112,8 @@ def delete_topic(ctx, from_json, topic_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('get_topic.command_name', 'get-topic'), help="""Gets the specified topic's configuration information.""")
-@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic to retrieve.""")
+@notification_topic_group.command(name=cli_util.override('get_topic.command_name', 'get-topic'), help=u"""Gets the specified topic's configuration information.""")
+@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -134,15 +134,15 @@ def get_topic(ctx, from_json, topic_id):
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('list_topics.command_name', 'list-topics'), help="""Lists topics in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help="""The [OCID] of the compartment.""")
-@cli_util.option('--id', help="""A filter to only return resources that match the given id exactly.""")
-@cli_util.option('--name', help="""A filter to only return resources that match the given name exactly.""")
-@cli_util.option('--page', help="""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--limit', type=click.INT, help="""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "LIFECYCLESTATE"]), help="""The field to sort by. Only one field can be selected for sorting. Default value: TIMECREATED.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help="""The sort order to use (ascending or descending). Default value: ASC.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "CREATING"]), help="""Filter returned list by specified lifecycle state. This parameter is case-insensitive.""")
+@notification_topic_group.command(name=cli_util.override('list_topics.command_name', 'list-topics'), help=u"""Lists topics in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "LIFECYCLESTATE"]), help=u"""The field to sort by. Only one field can be selected for sorting. Default value: TIMECREATED.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ascending or descending). Default value: ASC.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "CREATING"]), help=u"""Filter returned list by specified lifecycle state. This parameter is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -197,16 +197,16 @@ def list_topics(ctx, from_json, all_pages, page_size, compartment_id, id, name, 
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('update_topic.command_name', 'update-topic'), help="""Updates the specified topic's configuration.""")
-@cli_util.option('--topic-id', required=True, help="""The [OCID] of the topic to update.""")
-@cli_util.option('--description', required=True, help="""The description of the topic. Avoid entering confidential information.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+@notification_topic_group.command(name=cli_util.override('update_topic.command_name', 'update-topic'), help=u"""Updates the specified topic's configuration.""")
+@cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to update.""")
+@cli_util.option('--description', required=True, help=u"""The description of the topic. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help="""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--if-match', help="""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option

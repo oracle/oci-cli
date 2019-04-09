@@ -90,17 +90,18 @@ class TestComputePic(unittest.TestCase):
     # This is async so it is very hard to verify.
     # May take 15 minutes or more.
     def test_060_compute_pic_subscription_create(self):
+        # without eula-link
         result = self.invoke(
-            ['compute', 'pic', 'subscription', 'create'])
-        self.assertTrue("Error: Missing option" in result.output)
-        self.assertTrue("listing-id" in result.output)
-        self.assertTrue("resource-version" in result.output)
-        self.assertTrue("compartment-id" in result.output)
-        self.assertTrue("signature" in result.output)
-        self.assertTrue("oracle-tou-link" in result.output)
-        self.assertTrue("eula-link" in result.output)
-        self.assertTrue("time-retrieved" in result.output)
+            ['compute', 'pic', 'subscription', 'create',
+                '--compartment-id', util.COMPARTMENT_ID,
+                '--listing-id', TestComputePic.listing_id,
+                '--resource-version', TestComputePic.version,
+                '--signature', TestComputePic.signature,
+                '--oracle-tou-link', TestComputePic.oracle_tou_link,
+                '--time-retrieved', TestComputePic.time_retrieved])
+        util.validate_response(result)
 
+        # with eula-link
         result = self.invoke(
             ['compute', 'pic', 'subscription', 'create',
                 '--compartment-id', util.COMPARTMENT_ID,

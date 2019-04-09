@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateSuppression&serviceName=email&lang=PythonCLI
   response:
@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:58:22 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:22 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -22,70 +22,70 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0106&apiName=CreateSuppression&serviceName=email&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0416&apiName=CreateSuppression&serviceName=email&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"d3782f68-116f-4af7-8d6e-3bd3dc0320b5","request":{"createSuppressionDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","emailAddress":"__sts0106_5168@test.oracle.com"},"opcRequestId":"stsCreateSuppression"}},{"containerId":"ac2177aa-761a-4784-9a8a-73aa8955f22f","request":{"createSuppressionDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","emailAddress":""},"opcRequestId":"stsCreateSuppression"}}]'}
+    body: {string: '[{"containerId":"fa8bea43-021f-4a46-a843-051e3dfa6b13","request":{"createSuppressionDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","emailAddress":"__sts0416_8355@test.oracle.com"},"opcRequestId":"stsCreateSuppression"}},{"containerId":"edbe4123-3e01-4d27-a8b7-3fb741787986","request":{"createSuppressionDetails":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","emailAddress":""},"opcRequestId":"stsCreateSuppression"}}]'}
     headers:
       Content-Length: ['531']
-      Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:58:23 GMT']
+      Content-Type: [text/plain]
+      Date: ['Mon, 25 Mar 2019 16:47:23 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
-    body: '{"emailAddress": "__sts0106_5168@test.oracle.com", "compartmentId": "ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}'
+    body: '{"emailAddress": "__sts0416_8355@test.oracle.com", "compartmentId": "ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}'
     headers:
       Content-Length: ['150']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="gWGNzxXhtQX/8CXxs1LmA9Qolfv9HDQ6niS/i3uHPUyFJd5vrnyh9naV0xWzxXuFDNqhzwyF9tv1pCMJUfDKf6hSvJZ5zwFh/MktpLly8frEzQxymR5hoKMY6uYh4TpRYPB8SV5jTmB2sWxz4dA0kL/Cu7hE3NnYnEyRZo4jpw1aWTH6PSjlqqPOwyDQ7IvNc9KNgJquX0Go9RmfUd5AemsN1v0oo+n9yNw/24aybEje9z8/Fuz32zKHMfjgHlG8kTIKspseCLeTrtF50nip0dmkfvQnSa+ZHPBa6YxREGaogLyW9ewC+iwiCOIrYv/4ydXrnXKtSa6Bi8yJERbnvA==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="vfVOWcvdO+S2uv1TDtMtg/CcOom6j4FX/ZeJyEUuNq5fASvV5HVfNidZLViWG1KdW1hvHdlyqi0UgK3kjSUGIRmvVSKOo3BqecOpbiDQaPDpbtdCSVOEamq6U29QBrnLHWT9XASEx+bTmrRc6MNum573JNod8ZKnIxoBUAaA+c0bA13xEwQ9awFsRcWAb5LgtO/ZCyOaIkS4+senqJrhG2Qk45zPjVM7yrteotnxrvJfQQVeGDDyZmnt4WtGV44cUeUUHW9E1KTGYIVLtO/1/QHcbtJgq2w0Z32hGEeg81TqNd/xo4KrASxBjlq12K072GQ3u47zzyWRJBDQpy3kIw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 01 Feb 2019 13:58:23 GMT']
+      date: ['Mon, 25 Mar 2019 16:47:23 GMT']
       host: [email.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
-      opc-request-id: [1355ADFC9FF840F6A2D3999D9FA33591]
-      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.4.43]
-      x-content-sha256: [M7zgZ1Ywi6EafmV1z5zayiWI98Dz6fJgol7BzQnOX9g=]
+      opc-client-info: [Oracle-PythonSDK/2.2.2+preview.1.0.738]
+      opc-request-id: [138AEB0C060E4952B5E9F00B671210F2]
+      user-agent: [Oracle-PythonSDK/2.2.2+preview.1.0.738 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.3+preview.1]
+      x-content-sha256: [CziXFyDPv1G9vhzgyj8PkCMONqp/EhQd5bLkef24OcM=]
     method: POST
     uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions
   response:
-    body: {string: '{"emailAddress":"__sts0106_5168@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq","reason":"MANUAL","timeCreated":"2019-02-01T13:58:32.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}'}
+    body: {string: '{"emailAddress":"__sts0416_8355@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad5m3mojby5ess5yzhuoh3ajt7gvgpxmgjpkdc7c25xvvdu2pijsq","reason":"MANUAL","timeCreated":"2019-03-25T16:47:32.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Connection: [keep-alive]
       Content-Length: ['302']
       Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:58:32 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:33 GMT']
       X-Application-Context: [application]
-      opc-request-id: [1355ADFC9FF840F6A2D3999D9FA33591/70F43A10446E4404832693C6424EA17D/422D763721C1EBF573B795A6F4F73CD2]
+      opc-request-id: [138AEB0C060E4952B5E9F00B671210F2/6F35F9E9F1A88E1892287833CA026955/E13B1D5E63DFCD5D730169C5944E7E1A]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"B720683FDBFB47CF84396C9AB6A6DD2B\",
-      \"suppression\": {\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaad3uxggdhc2n6popz6q6hcplmguqcrrkqcjh76viyucyaaj5xkcdq\",
-      \"emailAddress\": \"__sts0106_5168@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-02-01T13:58:32+00:00\"}}", "requestJson":
+    body: '{"responseJson": "{\"opcRequestId\": \"E2FF1FFAB06A4734B099D2C6478E4068\",
+      \"suppression\": {\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaad5m3mojby5ess5yzhuoh3ajt7gvgpxmgjpkdc7c25xvvdu2pijsq\",
+      \"emailAddress\": \"__sts0416_8355@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-03-25T16:47:32+00:00\"}}", "requestJson":
       "{\"opcRequestId\": \"stsCreateSuppression\", \"createSuppressionDetails\":
-      {\"emailAddress\": \"__sts0106_5168@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\"}}",
-      "containerId": "d3782f68-116f-4af7-8d6e-3bd3dc0320b5", "requestClass": "com.oracle.bmc.email.requests.CreateSuppressionRequest",
+      {\"emailAddress\": \"__sts0416_8355@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\"}}",
+      "containerId": "fa8bea43-021f-4a46-a843-051e3dfa6b13", "requestClass": "com.oracle.bmc.email.requests.CreateSuppressionRequest",
       "responseClass": "com.oracle.bmc.email.responses.CreateSuppressionResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['886']
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0106&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0416&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:58:34 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:34 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -95,15 +95,15 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="bHWGDGvKAJmp3MR80T6qr4mksxCUw2gPxo+inaBg9mc11A9/8mQ60FGvXRB1hBKIxwjUBcV6sZUS6AqtDalWhFlWD9fr2AuWewB8XLPm9zZwtpCYx/EZXWzLCPLuyI/MXEh31xpbEGscNvJ6rScxvuHurTaeb/l+TjUquMS4yktV9SRsGpNgFuTcxxfEbKj5NWD6i3O52y6eCvA99Kkt1hfQ5NQ09iN7hGyy0KzZBjbP4yQ/fq6mEgw702a4iFKE1rA96lxOR9zx1twsRYOT5wr70gz+s6ZiXn8IzAsyOxoz/9hCjQfY76xeWixty9u+41GypcPAiRK4722je+uCow==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="XJ4a4e3i+6+GkpRt8vQ67+48OF39WNehBkBWt5G/U5Rp4e7JB2EUaNzWe3dmZz0dy9MhHFHykYLifk13nhfahR1+SRorUXNZb85R2oc5gWKVONjGBSqXEShmrgjbz+o7BX/M2MntctHA08pEAjggIS+g4YACzIiywqVysYX9CpqqInlT1ly83FPHipRnh+leG9128L26kGuUmJPKOcNOzWViWbQqRTyLlLeceMvq/d+idR3dsoYRAvZF6pkQhOaFFaTr4CamyhicTZEtqOWotiNbQi5Uvu2p0ofSCwe0o2CYeVfOhmZa1DTOuWVmaATYDHlyu+9wXAbx2rmCLy0ppw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Fri, 01 Feb 2019 13:58:34 GMT']
+      date: ['Mon, 25 Mar 2019 16:47:34 GMT']
       host: [email.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.6+0.151.selfservice]
-      opc-request-id: [F677F78CC0CA48D2BAD2E132493E2897]
-      user-agent: [Oracle-PythonSDK/2.1.6+0.151.selfservice (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.4.43]
+      opc-client-info: [Oracle-PythonSDK/2.2.2+preview.1.0.738]
+      opc-request-id: [221514A508944917B045A1A6AC12CD5E]
+      user-agent: [Oracle-PythonSDK/2.2.2+preview.1.0.738 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.3+preview.1]
       x-content-sha256: [NYMSVPzSVoaeA1jxvxD6XGy3cy+FN+ndpvHrSjVc9NA=]
     method: POST
     uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions
@@ -115,32 +115,32 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['148']
       Content-Type: [application/json]
-      Date: ['Fri, 01 Feb 2019 13:58:35 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:36 GMT']
       X-Application-Context: [application]
       errormsg: [compartmentId and emailAddress should be valid.]
-      opc-request-id: [F677F78CC0CA48D2BAD2E132493E2897/C121668F657FFBA58DA5B146776F845E/5C9784B062E3E08AE3669F140CD365FF]
+      opc-request-id: [221514A508944917B045A1A6AC12CD5E/F2F7EA7AC453D9A1E1BB6A056165582D/EF59FFA7948C64380D98CFC707F08075]
     status: {code: 400, message: Bad Request}
 - request:
     body: '{"requestJson": "{\"opcRequestId\": \"stsCreateSuppression\", \"createSuppressionDetails\":
       {\"emailAddress\": \"\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\"}}",
-      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"F677F78CC0CA48D2BAD2E132493E2897/C121668F657FFBA58DA5B146776F845E/5C9784B062E3E08AE3669F140CD365FF\",
+      "errorJson": "{\"statusCode\": 400, \"opcRequestId\": \"221514A508944917B045A1A6AC12CD5E/F2F7EA7AC453D9A1E1BB6A056165582D/EF59FFA7948C64380D98CFC707F08075\",
       \"code\": \"InvalidParameter\", \"message\": \"compartmentId and emailAddress
-      should be valid.\"}", "containerId": "ac2177aa-761a-4784-9a8a-73aa8955f22f",
+      should be valid.\"}", "containerId": "edbe4123-3e01-4d27-a8b7-3fb741787986",
       "requestClass": "com.oracle.bmc.email.requests.CreateSuppressionRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['610']
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0106&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0416&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Fri, 01 Feb 2019 13:58:37 GMT']
+      Date: ['Mon, 25 Mar 2019 16:47:37 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1
