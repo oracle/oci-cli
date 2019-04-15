@@ -490,7 +490,7 @@ Options:
                   <command> --help.
 
 Commands:
-  attach-lb       Attach load balancer to the instance pool.
+  attach-lb       Attach a load balancer to the instance pool.
   create          Create an instance pool.
   detach-lb       Detach a load balancer from the instance...
   get             Gets the specified instance pool
@@ -507,22 +507,22 @@ Commands:
 $ oci compute-management instance-pool attach-lb --help
 Usage: oci compute-management instance-pool attach-lb [OPTIONS]
 
-  Attach load balancer to the instance pool.
+  Attach a load balancer to the instance pool.
 
 Options:
   --instance-pool-id TEXT         The OCID of the instance pool. [required]
   --load-balancer-id TEXT         The OCID of the load balancer to attach to the
-                                  pool. [required]
+                                  instance pool. [required]
   --backend-set-name TEXT         The name of the backend set on the load
                                   balancer to add instances to. [required]
   --port INTEGER                  The port value to use when creating the
                                   backend set. [required]
-  --vnic-selection TEXT           Indicates which vnic on each instance in the
+  --vnic-selection TEXT           Indicates which VNIC on each instance in the
                                   pool should be used to associate with the load
-                                  balancer. possible values are "PrimaryVnic" or
+                                  balancer. Possible values are "PrimaryVnic" or
                                   the displayName of one of the secondary VNICs
                                   on the instance configuration that is
-                                  associated to the instance pool. [required]
+                                  associated with the instance pool. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -728,9 +728,10 @@ Usage: oci compute-management instance-pool detach-lb [OPTIONS]
 Options:
   --instance-pool-id TEXT         The OCID of the instance pool. [required]
   --load-balancer-id TEXT         The OCID of the load balancer to detach from
-                                  the pool. [required]
+                                  the instance pool. [required]
   --backend-set-name TEXT         The name of the backend set on the load
-                                  balancer to detach from the pool. [required]
+                                  balancer to detach from the instance pool.
+                                  [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -1334,7 +1335,7 @@ Options:
                                   passing it back in via the file:// syntax.
   --instance-configuration-id TEXT
                                   The OCID of the instance configuration
-                                  associated to the intance pool.
+                                  associated with the instance pool.
   --placement-configurations COMPLEX TYPE
                                   The placement configurations for the instance
                                   pool. There should be 1 placement

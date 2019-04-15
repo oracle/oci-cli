@@ -13,6 +13,7 @@ import six
 import string
 from tests import util
 from tests import test_config_container
+from mimetypes import guess_type
 
 
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
@@ -368,6 +369,37 @@ def test_bulk_put_default_options():
     assert len(parsed_result['uploaded-objects']) == len(object_name_set)
     for object_name in object_name_set:
         assert object_name in parsed_result['uploaded-objects']
+
+    shutil.rmtree(download_folder)
+
+
+# Bulk puts objects with --content-type as auto
+@util.skip_while_rerecording
+def test_bulk_put_auto_content_type():
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--content-type', 'auto'])
+
+    # No failures or skips and we uploaded everything
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    # Pull everything down and verify that the files match (everything in source appears in destination and they are equal)
+    download_folder = 'tests/temp/verify_files_{}'.format(bulk_put_bucket_name)
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder])
+    object_name_set = set()
+    for dir_name, subdir_list, file_list in os.walk(root_bulk_put_folder):
+        for file in file_list:
+            source_file_path = os.path.join(dir_name, file)
+            downloaded_file_path = source_file_path.replace(root_bulk_put_folder, download_folder)
+
+            assert os.path.exists(downloaded_file_path)
+            assert filecmp.cmp(source_file_path, downloaded_file_path, shallow=False)
+            assert guess_type(source_file_path) == guess_type(downloaded_file_path)
+
+            # Sanity check that we're reporting back that we uploaded the right files
+            assert get_object_name_from_path(root_bulk_put_folder, source_file_path) in parsed_result['uploaded-objects']
+            object_name_set.add(get_object_name_from_path(root_bulk_put_folder, source_file_path))
 
     shutil.rmtree(download_folder)
 

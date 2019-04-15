@@ -13,9 +13,11 @@ Options:
                   <command> --help.
 
 Commands:
-  autonomous-data-warehouse       An Oracle Autonomous Data Warehouse.
+  autonomous-data-warehouse       **Deprecated.** See [AutonomousDatabase]
+                                  for...
   autonomous-data-warehouse-backup
-                                  An Autonomous Data Warehouse backup.
+                                  **Deprecated.** See
+                                  [AutonomousDatabaseBackup...
   autonomous-database             An Oracle Autonomous Database.
   autonomous-database-backup      An Autonomous Database backup.
   backup                          A database backup.
@@ -34,28 +36,30 @@ Commands:
 $ oci db autonomous-data-warehouse --help
 Usage: oci db autonomous-data-warehouse [OPTIONS] COMMAND [ARGS]...
 
-  An Oracle Autonomous Data Warehouse.
+  **Deprecated.** See [AutonomousDatabase] for reference information about
+  Autonomous Databases with the warehouse workload type.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  create           Creates a new Autonomous Data Warehouse.
-  delete           Deletes the specified Autonomous Data...
-  generate-wallet  Creates and downloads a wallet for the...
-  get              Gets the details of the specified Autonomous...
-  list             Gets a list of Autonomous Data Warehouses.
-  restore          Restores an Autonomous Data Warehouse based...
-  start            Starts the specified autonomous Data...
-  stop             Stops the specified Autonomous Data...
-  update           Updates the specified Autonomous Data...
+  create           **Deprecated.** To create a new Autonomous...
+  delete           **Deprecated.** To delete an Autonomous Data...
+  generate-wallet  **Deprecated.** To create and download a...
+  get              **Deprecated.** To get the details of an...
+  list             **Deprecated.** To get a list of Autonomous...
+  restore          **Deprecated.** To restore an Autonomous Data...
+  start            **Deprecated.** To start an Autonomous Data...
+  stop             **Deprecated.** To stop an Autonomous Data...
+  update           **Deprecated.** To update the CPU core count...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse create --help
 Usage: oci db autonomous-data-warehouse create [OPTIONS]
 
-  Creates a new Autonomous Data Warehouse.
+  **Deprecated.** To create a new Autonomous Data Warehouse, use the
+  [CreateAutonomousDatabase] operation and specify `DW` as the workload type.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment of the
@@ -175,7 +179,8 @@ Options:
 $ oci db autonomous-data-warehouse delete --help
 Usage: oci db autonomous-data-warehouse delete [OPTIONS]
 
-  Deletes the specified Autonomous Data Warehouse.
+  **Deprecated.** To delete an Autonomous Data Warehouse, use the
+  [DeleteAutonomousDatabase] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -238,7 +243,8 @@ Options:
 $ oci db autonomous-data-warehouse generate-wallet --help
 Usage: oci db autonomous-data-warehouse generate-wallet [OPTIONS]
 
-  Creates and downloads a wallet for the specified Autonomous Data Warehouse.
+  **Deprecated.** To create and download a wallet for an Autonomous Data
+  Warehouse, use the [GenerateAutonomousDatabaseWallet] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -284,7 +290,8 @@ Options:
 $ oci db autonomous-data-warehouse get --help
 Usage: oci db autonomous-data-warehouse get [OPTIONS]
 
-  Gets the details of the specified Autonomous Data Warehouse.
+  **Deprecated.** To get the details of an Autonomous Data Warehouse, use the
+  [GetAutonomousDatabase] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -322,7 +329,8 @@ Options:
 $ oci db autonomous-data-warehouse list --help
 Usage: oci db autonomous-data-warehouse list [OPTIONS]
 
-  Gets a list of Autonomous Data Warehouses.
+  **Deprecated.** To get a list of Autonomous Data Warehouses, use the
+  [ListAutonomousDatabases] operation and specify `DW` as the workload type.
 
 Options:
   -c, --compartment-id TEXT       The compartment [OCID]. [required]
@@ -387,8 +395,8 @@ Options:
 $ oci db autonomous-data-warehouse restore --help
 Usage: oci db autonomous-data-warehouse restore [OPTIONS]
 
-  Restores an Autonomous Data Warehouse based on the provided request
-  parameters.
+  **Deprecated.** To restore an Autonomous Data Warehouse, use the
+  [RestoreAutonomousDatabase] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -521,7 +529,8 @@ Options:
 $ oci db autonomous-data-warehouse start --help
 Usage: oci db autonomous-data-warehouse start [OPTIONS]
 
-  Starts the specified autonomous Data Warehouse.
+  **Deprecated.** To start an Autonomous Data Warehouse, use the
+  [StartAutonomousDatabase] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -582,7 +591,8 @@ Options:
 $ oci db autonomous-data-warehouse stop --help
 Usage: oci db autonomous-data-warehouse stop [OPTIONS]
 
-  Stops the specified Autonomous Data Warehouse.
+  **Deprecated.** To stop an Autonomous Data Warehouse, use the
+  [StopAutonomousDatabase] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -643,8 +653,8 @@ Options:
 $ oci db autonomous-data-warehouse update --help
 Usage: oci db autonomous-data-warehouse update [OPTIONS]
 
-  Updates the specified Autonomous Data Warehouse with a new CPU core count
-  and size.
+  **Deprecated.** To update the CPU core count and storage size of an
+  Autonomous Data Warehouse, use the [UpdateAutonomousDatabase] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -764,23 +774,24 @@ Options:
 $ oci db autonomous-data-warehouse-backup --help
 Usage: oci db autonomous-data-warehouse-backup [OPTIONS] COMMAND [ARGS]...
 
-  An Autonomous Data Warehouse backup.
+  **Deprecated.** See [AutonomousDatabaseBackup Reference] for reference
+  information about Autonomous Data Warehouse backups.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  create  Creates a new Autonomous Data Warehouse...
-  get     Gets information about the specified...
-  list    Gets a list of Autonomous Data Warehouse...
+  create  **Deprecated.** To create a new Autonomous...
+  get     **Deprecated.** To get information about a...
+  list    **Deprecated.** To get a list of Autonomous...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-data-warehouse-backup create --help
 Usage: oci db autonomous-data-warehouse-backup create [OPTIONS]
 
-  Creates a new Autonomous Data Warehouse backup for the specified database
-  based on the provided request parameters.
+  **Deprecated.** To create a new Autonomous Data Warehouse backup for a
+  specified database, use the [CreateAutonomousDatabaseBackup] operation.
 
 Options:
   --display-name TEXT             The user-friendly name for the backup. The
@@ -837,7 +848,8 @@ Options:
 $ oci db autonomous-data-warehouse-backup get --help
 Usage: oci db autonomous-data-warehouse-backup get [OPTIONS]
 
-  Gets information about the specified Autonomous Data Warehouse backup.
+  **Deprecated.** To get information about a specified Autonomous Data
+  Warehouse backup, use the [GetAutonomousDatabaseBackup] operation.
 
 Options:
   --autonomous-data-warehouse-backup-id TEXT
@@ -876,9 +888,8 @@ Options:
 $ oci db autonomous-data-warehouse-backup list --help
 Usage: oci db autonomous-data-warehouse-backup list [OPTIONS]
 
-  Gets a list of Autonomous Data Warehouse backups based on either the
-  `autonomousDataWarehouseId` or `compartmentId` specified as a query
-  parameter.
+  **Deprecated.** To get a list of Autonomous Data Warehouse backups, use the
+  [ListAutonomousDatabaseBackups] operation.
 
 Options:
   --autonomous-data-warehouse-id TEXT
@@ -990,7 +1001,10 @@ Options:
                                   character. It cannot contain the double quote
                                   symbol (") or the username "admin", regardless
                                   of casing. [required]
-  --db-workload [OLTP|DW]         The autonomous database workload type.
+  --db-workload [OLTP|DW]         The autonomous database workload type. OLTP
+                                  indicates an Autonomous Transaction Processing
+                                  database and DW indicates an Autonomous Data
+                                  Warehouse. The default is OLTP.
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
@@ -1038,7 +1052,7 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1114,7 +1128,10 @@ Options:
                                   that you will clone to create a new Autonomous
                                   Database. [required]
   --clone-type [FULL|METADATA]    The clone type. [required]
-  --db-workload [OLTP|DW]         The autonomous database workload type.
+  --db-workload [OLTP|DW]         The autonomous database workload type. OLTP
+                                  indicates an Autonomous Transaction Processing
+                                  database and DW indicates an Autonomous Data
+                                  Warehouse. The default is OLTP.
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
@@ -1162,7 +1179,7 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1224,7 +1241,7 @@ Options:
                                   the resource's current etag value.
   --force                         Perform deletion without prompting for
                                   confirmation.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1273,8 +1290,7 @@ Options:
 $ oci db autonomous-database generate-wallet --help
 Usage: oci db autonomous-database generate-wallet [OPTIONS]
 
-  Creates and downloads a wallet for the specified Autonomous Transaction
-  Processing database.
+  Creates and downloads a wallet for the specified Autonomous Database.
 
 Options:
   --autonomous-database-id TEXT  The database [OCID]. [required]
@@ -1378,7 +1394,7 @@ Options:
                                   domain, then sorted.
   --sort-order [ASC|DESC]         The sort order to use, either ascending
                                   (`ASC`) or descending (`DESC`).
-  --lifecycle-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --lifecycle-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   A filter to return only resources that match
                                   the given lifecycle state exactly.
   --db-workload [OLTP|DW]         A filter to return only autonomous database
@@ -1509,7 +1525,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1569,7 +1585,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1629,7 +1645,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1739,6 +1755,29 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
+                                  The new Oracle license model that applies to
+                                  the Oracle Autonomous Transaction Processing
+                                  database.
+  --whitelisted-ips COMPLEX TYPE  The client IP access control list (ACL). Only
+                                  clients connecting from an IP address included
+                                  in the ACL may access the Autonomous Database
+                                  instance. This is an array of CIDR (Classless
+                                  Inter-Domain Routing) notations for a subnet.
+                                  To delete all the existing white listed IP’s,
+                                  use an array with a single empty string entry.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -1748,7 +1787,7 @@ Options:
                                   the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|RESTORE_FAILED|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -4489,31 +4528,31 @@ Options:
                                   systems and 2-node RAC DB systems require
                                   ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
                                   [required]
-  --fault-domains COMPLEX TYPE    A fault domain is a grouping of hardware and
+  --fault-domains COMPLEX TYPE    A Fault Domain is a grouping of hardware and
                                   infrastructure within an availability domain.
-                                  Fault domains let you distribute your
+                                  Fault Domains let you distribute your
                                   instances so that they are not on the same
                                   physical hardware within a single availability
                                   domain. A hardware failure or maintenance that
-                                  affects one fault domain does not affect DB
-                                  systems in other fault domains.
+                                  affects one Fault Domain does not affect DB
+                                  systems in other Fault Domains.
                                   
                                   If you do not
-                                  specify the fault domain, the system selects
-                                  one for you. To change the fault domain for a
+                                  specify the Fault Domain, the system selects
+                                  one for you. To change the Fault Domain for a
                                   DB system, terminate it and launch a new DB
-                                  system in the preferred fault domain.
+                                  system in the preferred Fault Domain.
                                   
                                   If the
                                   node count is greater than 1, you can specify
-                                  which fault domains these nodes will be
+                                  which Fault Domains these nodes will be
                                   distributed into. The system assigns your
-                                  nodes automatically to the fault domains you
-                                  specify so that no fault domain contains more
+                                  nodes automatically to the Fault Domains you
+                                  specify so that no Fault Domain contains more
                                   than one node.
                                   
-                                  To get a list of fault
-                                  domains, use the [ListFaultDomains] operation
+                                  To get a list of Fault
+                                  Domains, use the [ListFaultDomains] operation
                                   in the Identity and Access Management Service
                                   API.
                                   
@@ -4828,31 +4867,31 @@ Options:
                                   systems and 2-node RAC DB systems require
                                   ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
                                   [required]
-  --fault-domains COMPLEX TYPE    A fault domain is a grouping of hardware and
+  --fault-domains COMPLEX TYPE    A Fault Domain is a grouping of hardware and
                                   infrastructure within an availability domain.
-                                  Fault domains let you distribute your
+                                  Fault Domains let you distribute your
                                   instances so that they are not on the same
                                   physical hardware within a single availability
                                   domain. A hardware failure or maintenance that
-                                  affects one fault domain does not affect DB
-                                  systems in other fault domains.
+                                  affects one Fault Domain does not affect DB
+                                  systems in other Fault Domains.
                                   
                                   If you do not
-                                  specify the fault domain, the system selects
-                                  one for you. To change the fault domain for a
+                                  specify the Fault Domain, the system selects
+                                  one for you. To change the Fault Domain for a
                                   DB system, terminate it and launch a new DB
-                                  system in the preferred fault domain.
+                                  system in the preferred Fault Domain.
                                   
                                   If the
                                   node count is greater than 1, you can specify
-                                  which fault domains these nodes will be
+                                  which Fault Domains these nodes will be
                                   distributed into. The system assigns your
-                                  nodes automatically to the fault domains you
-                                  specify so that no fault domain contains more
+                                  nodes automatically to the Fault Domains you
+                                  specify so that no Fault Domain contains more
                                   than one node.
                                   
-                                  To get a list of fault
-                                  domains, use the [ListFaultDomains] operation
+                                  To get a list of Fault
+                                  Domains, use the [ListFaultDomains] operation
                                   in the Identity and Access Management Service
                                   API.
                                   

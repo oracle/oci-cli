@@ -20,13 +20,13 @@ def db_root_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Data Warehouse backup.""")
+@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabaseBackup Reference] for reference information about Autonomous Data Warehouse backups.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_backup_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Data Warehouse.""")
+@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabase] for reference information about Autonomous Databases with the warehouse workload type.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_group():
     pass
@@ -183,7 +183,7 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('create_autonomous_data_warehouse.command_name', 'create'), help=u"""Creates a new Autonomous Data Warehouse.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('create_autonomous_data_warehouse.command_name', 'create'), help=u"""**Deprecated.** To create a new Autonomous Data Warehouse, use the [CreateAutonomousDatabase] operation and specify `DW` as the workload type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Data Warehouse.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
@@ -258,7 +258,7 @@ def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_backup_group.command(name=cli_util.override('create_autonomous_data_warehouse_backup.command_name', 'create'), help=u"""Creates a new Autonomous Data Warehouse backup for the specified database based on the provided request parameters.""")
+@autonomous_data_warehouse_backup_group.command(name=cli_util.override('create_autonomous_data_warehouse_backup.command_name', 'create'), help=u"""**Deprecated.** To create a new Autonomous Data Warehouse backup for a specified database, use the [CreateAutonomousDatabaseBackup] operation.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The [OCID] of the Autonomous Data Warehouse backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -313,7 +313,7 @@ def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
 @cli_util.option('--admin-password', required=True, help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
-@cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""The autonomous database workload type.""")
+@cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""The autonomous database workload type. OLTP indicates an Autonomous Transaction Processing database and DW indicates an Autonomous Data Warehouse. The default is OLTP.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -323,7 +323,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DATABASE"]), help=u"""The source of the database: Use NONE for creating a new Autonomous Database. Use DATABASE for creating a new Autonomous Database by cloning an existing Autonomous Database.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
@@ -399,7 +399,7 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--admin-password', required=True, help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
 @cli_util.option('--source-id', required=True, help=u"""The [OCID] of the source Autonomous Database that you will clone to create a new Autonomous Database.""")
 @cli_util.option('--clone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "METADATA"]), help=u"""The clone type.""")
-@cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""The autonomous database workload type.""")
+@cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""The autonomous database workload type. OLTP indicates an Autonomous Transaction Processing database and DW indicates an Autonomous Data Warehouse. The default is OLTP.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -408,7 +408,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
@@ -483,7 +483,7 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', required=True, type=click.INT, help=u"""The size, in terabytes, of the data volume that will be created and attached to the database. This storage can later be scaled up if needed.""")
 @cli_util.option('--admin-password', required=True, help=u"""The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.""")
-@cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""The autonomous database workload type.""")
+@cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""The autonomous database workload type. OLTP indicates an Autonomous Transaction Processing database and DW indicates an Autonomous Data Warehouse. The default is OLTP.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name for the Autonomous Database. The name does not have to be unique.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous Database. The default is BRING_YOUR_OWN_LICENSE.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -492,7 +492,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
@@ -1190,7 +1190,7 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('delete_autonomous_data_warehouse.command_name', 'delete'), help=u"""Deletes the specified Autonomous Data Warehouse.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('delete_autonomous_data_warehouse.command_name', 'delete'), help=u"""**Deprecated.** To delete an Autonomous Data Warehouse, use the [DeleteAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1256,7 +1256,7 @@ def delete_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1504,7 +1504,7 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'), help=u"""Creates and downloads a wallet for the specified Autonomous Data Warehouse.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'), help=u"""**Deprecated.** To create and download a wallet for an Autonomous Data Warehouse, use the [GenerateAutonomousDatabaseWallet] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -1555,7 +1555,7 @@ def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_d
         file.close()
 
 
-@autonomous_database_group.command(name=cli_util.override('generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help=u"""Creates and downloads a wallet for the specified Autonomous Transaction Processing database.""")
+@autonomous_database_group.command(name=cli_util.override('generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help=u"""Creates and downloads a wallet for the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -1606,7 +1606,7 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
         file.close()
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('get_autonomous_data_warehouse.command_name', 'get'), help=u"""Gets the details of the specified Autonomous Data Warehouse.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('get_autonomous_data_warehouse.command_name', 'get'), help=u"""**Deprecated.** To get the details of an Autonomous Data Warehouse, use the [GetAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1627,7 +1627,7 @@ def get_autonomous_data_warehouse(ctx, from_json, autonomous_data_warehouse_id):
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_backup_group.command(name=cli_util.override('get_autonomous_data_warehouse_backup.command_name', 'get'), help=u"""Gets information about the specified Autonomous Data Warehouse backup.""")
+@autonomous_data_warehouse_backup_group.command(name=cli_util.override('get_autonomous_data_warehouse_backup.command_name', 'get'), help=u"""**Deprecated.** To get information about a specified Autonomous Data Warehouse backup, use the [GetAutonomousDatabaseBackup] operation.""")
 @cli_util.option('--autonomous-data-warehouse-backup-id', required=True, help=u"""The [OCID] of the Autonomous Data Warehouse backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1996,13 +1996,13 @@ The maximum length of the combined hostname and domain is 63 characters.
 - BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
 
 This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
-@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one fault domain does not affect DB systems in other fault domains.
+@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
-If you do not specify the fault domain, the system selects one for you. To change the fault domain for a DB system, terminate it and launch a new DB system in the preferred fault domain.
+If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
 
-If the node count is greater than 1, you can specify which fault domains these nodes will be distributed into. The system assigns your nodes automatically to the fault domains you specify so that no fault domain contains more than one node.
+If the node count is greater than 1, you can specify which Fault Domains these nodes will be distributed into. The system assigns your nodes automatically to the Fault Domains you specify so that no Fault Domain contains more than one node.
 
-To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
@@ -2139,13 +2139,13 @@ The maximum length of the combined hostname and domain is 63 characters.
 This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
-@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one fault domain does not affect DB systems in other fault domains.
+@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
-If you do not specify the fault domain, the system selects one for you. To change the fault domain for a DB system, terminate it and launch a new DB system in the preferred fault domain.
+If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
 
-If the node count is greater than 1, you can specify which fault domains these nodes will be distributed into. The system assigns your nodes automatically to the fault domains you specify so that no fault domain contains more than one node.
+If the node count is greater than 1, you can specify which Fault Domains these nodes will be distributed into. The system assigns your nodes automatically to the Fault Domains you specify so that no Fault Domain contains more than one node.
 
-To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
@@ -2290,13 +2290,13 @@ The maximum length of the combined hostname and domain is 63 characters.
 This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
-@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one fault domain does not affect DB systems in other fault domains.
+@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
-If you do not specify the fault domain, the system selects one for you. To change the fault domain for a DB system, terminate it and launch a new DB system in the preferred fault domain.
+If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
 
-If the node count is greater than 1, you can specify which fault domains these nodes will be distributed into. The system assigns your nodes automatically to the fault domains you specify so that no fault domain contains more than one node.
+If the node count is greater than 1, you can specify which Fault Domains these nodes will be distributed into. The system assigns your nodes automatically to the Fault Domains you specify so that no Fault Domain contains more than one node.
 
-To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
@@ -2415,7 +2415,7 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_backup_group.command(name=cli_util.override('list_autonomous_data_warehouse_backups.command_name', 'list'), help=u"""Gets a list of Autonomous Data Warehouse backups based on either the `autonomousDataWarehouseId` or `compartmentId` specified as a query parameter.""")
+@autonomous_data_warehouse_backup_group.command(name=cli_util.override('list_autonomous_data_warehouse_backups.command_name', 'list'), help=u"""**Deprecated.** To get a list of Autonomous Data Warehouse backups, use the [ListAutonomousDatabaseBackups] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', help=u"""The database [OCID].""")
 @cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -2478,7 +2478,7 @@ def list_autonomous_data_warehouse_backups(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('list_autonomous_data_warehouses.command_name', 'list'), help=u"""Gets a list of Autonomous Data Warehouses.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('list_autonomous_data_warehouses.command_name', 'list'), help=u"""**Deprecated.** To get a list of Autonomous Data Warehouses, use the [ListAutonomousDatabases] operation and specify `DW` as the workload type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -2611,7 +2611,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
 
 **Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""A filter to return only autonomous database resources that match the specified workload type.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3386,7 +3386,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('restore_autonomous_data_warehouse.command_name', 'restore'), help=u"""Restores an Autonomous Data Warehouse based on the provided request parameters.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('restore_autonomous_data_warehouse.command_name', 'restore'), help=u"""**Deprecated.** To restore an Autonomous Data Warehouse, use the [RestoreAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--timestamp', required=True, type=custom_types.CLI_DATETIME, help=u"""The time to restore the database to.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3445,7 +3445,7 @@ def restore_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--timestamp', required=True, type=custom_types.CLI_DATETIME, help=u"""The time to restore the database to.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3561,7 +3561,7 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('start_autonomous_data_warehouse.command_name', 'start'), help=u"""Starts the specified autonomous Data Warehouse.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('start_autonomous_data_warehouse.command_name', 'start'), help=u"""**Deprecated.** To start an Autonomous Data Warehouse, use the [StartAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3613,7 +3613,7 @@ def start_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_sec
 @autonomous_database_group.command(name=cli_util.override('start_autonomous_database.command_name', 'start'), help=u"""Starts the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3659,7 +3659,7 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('stop_autonomous_data_warehouse.command_name', 'stop'), help=u"""Stops the specified Autonomous Data Warehouse.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('stop_autonomous_data_warehouse.command_name', 'stop'), help=u"""**Deprecated.** To stop an Autonomous Data Warehouse, use the [StopAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3711,7 +3711,7 @@ def stop_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seco
 @autonomous_database_group.command(name=cli_util.override('stop_autonomous_database.command_name', 'stop'), help=u"""Stops the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3882,7 +3882,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('update_autonomous_data_warehouse.command_name', 'update'), help=u"""Updates the specified Autonomous Data Warehouse with a new CPU core count and size.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('update_autonomous_data_warehouse.command_name', 'update'), help=u"""**Deprecated.** To update the CPU core count and storage size of an Autonomous Data Warehouse, use the [UpdateAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""Size, in terabytes, of the data volume that will be attached to the database.""")
@@ -3980,23 +3980,25 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The new Oracle license model that applies to the Oracle Autonomous Transaction Processing database.""")
+@cli_util.option('--whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The client IP access control list (ACL). Only clients connecting from an IP address included in the ACL may access the Autonomous Database instance. This is an array of CIDR (Classless Inter-Domain Routing) notations for a subnet. To delete all the existing white listed IP\u2019s, use an array with a single empty string entry.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, data_storage_size_in_tbs, display_name, admin_password, freeform_tags, defined_tags, if_match):
+def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, cpu_core_count, data_storage_size_in_tbs, display_name, admin_password, freeform_tags, defined_tags, license_model, whitelisted_ips, if_match):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or whitelisted_ips:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and whitelisted-ips will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4023,6 +4025,12 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if license_model is not None:
+        details['licenseModel'] = license_model
+
+    if whitelisted_ips is not None:
+        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     client = cli_util.build_client('database', ctx)
     result = client.update_autonomous_database(

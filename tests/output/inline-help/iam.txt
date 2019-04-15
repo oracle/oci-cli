@@ -29,7 +29,7 @@ Commands:
   scim-client-credentials  The OAuth2 client credentials.
   smtp-credential          Simple Mail Transfer Protocol (SMTP)...
   tag                      A tag definition that belongs to a specific...
-  tag-default              A document that specifies a default value for...
+  tag-default              Tag defaults let you specify a default tag...
   tag-namespace            A managed container for defined tags.
   user                     An individual employee or system that needs...
   work-request             The asynchronous API request does not take...
@@ -251,8 +251,8 @@ $ oci iam authentication-policy get --help
 Usage: oci iam authentication-policy get [OPTIONS]
 
   Gets the authentication policy for the given tenancy. You must specify your
-  tenant\u2019s OCID as the value for the compartment ID (remember that the
-  tenancy is simply the root compartment).
+  tenant’s OCID as the value for the compartment ID (remember that the tenancy
+  is simply the root compartment).
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment. [required]
@@ -1105,7 +1105,7 @@ Usage: oci iam dynamic-group create [OPTIONS]
 
   You must also specify a *name* for the dynamic group, which must be unique
   across all dynamic groups in your tenancy, and cannot be changed. Note that
-  this name has to be also unique accross all groups in your tenancy. You can
+  this name has to be also unique across all groups in your tenancy. You can
   use this name or the OCID when writing policies that apply to the dynamic
   group. For more information about policies, see [How Policies Work].
 
@@ -1132,6 +1132,43 @@ Options:
   --description TEXT              The description you assign to the group during
                                   creation. Does not have to be unique, and it's
                                   changeable. [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1339,6 +1376,43 @@ Options:
                                   instance certificate to this dynamic group.
                                   For rule syntax, see [Managing Dynamic
                                   Groups].
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -1346,6 +1420,8 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
   --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -3639,12 +3715,16 @@ Options:
 $ oci iam tag-default --help
 Usage: oci iam tag-default [OPTIONS] COMMAND [ARGS]...
 
-  A document that specifies a default value for a Tag Definition for all
-  resource types created in a Compartment.
+  Tag defaults let you specify a default tag (tagnamespace.tag="value") to
+  apply to all resource types in a specified compartment. The tag default is
+  applied at the time the resource is created. Resources that exist in the
+  compartment before you create the tag default are not tagged. The
+  `TagDefault` object specifies the tag and compartment details.
 
-  Tag Defaults are inherited by child compartments. This means that if you set
-  a Tag Default on the root Compartment for a tenancy, all resources are
-  guaranteed to be created with the referenced Tag Definition applied.
+  Tag defaults are inherited by child compartments. This means that if you set
+  a tag default on the root compartment for a tenancy, all resources that are
+  created in the tenancy are tagged. For more information about using tag
+  defaults, see [Managing Tag Defaults].
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator.
@@ -3654,29 +3734,29 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new Tag Default in the specified...
-  delete  Deletes the the specified Tag Default.
-  get     Retrieves the specified Tag Default.
-  list    Lists the Tag Defaults for Tag Definitions in...
-  update  Updates the the specified Tag Default.
+  create  Creates a new tag default in the specified...
+  delete  Deletes the the specified tag default.
+  get     Retrieves the specified tag default.
+  list    Lists the tag defaults for tag definitions in...
+  update  Updates the the specified tag default.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag-default create --help
 Usage: oci iam tag-default create [OPTIONS]
 
-  Creates a new Tag Default in the specified Compartment for the specified Tag
-  Definition.
+  Creates a new tag default in the specified compartment for the specified tag
+  definition.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the Compartment. The Tag Default
-                                  will apply to any resource contained in this
-                                  Compartment. [required]
-  --tag-definition-id TEXT        The OCID of the Tag Definition. The Tag
-                                  Default will always assign a default value for
-                                  this Tag Definition. [required]
-  --value TEXT                    The default value for the Tag Definition. This
-                                  will be applied to all resources created in
-                                  the Compartment. [required]
+  -c, --compartment-id TEXT       The OCID of the compartment. The tag default
+                                  will be applied to all new resources created
+                                  in this compartment. [required]
+  --tag-definition-id TEXT        The OCID of the tag definition. The tag
+                                  default will always assign a default value for
+                                  this tag definition. [required]
+  --value TEXT                    The default value for the tag definition. This
+                                  will be applied to all new resources created
+                                  in the compartment. [required]
   --wait-for-state [ACTIVE]       This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -3725,10 +3805,10 @@ Options:
 $ oci iam tag-default delete --help
 Usage: oci iam tag-default delete [OPTIONS]
 
-  Deletes the the specified Tag Default.
+  Deletes the the specified tag default.
 
 Options:
-  --tag-default-id TEXT           The OCID of the Tag Default. [required]
+  --tag-default-id TEXT           The OCID of the tag default. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -3786,10 +3866,10 @@ Options:
 $ oci iam tag-default get --help
 Usage: oci iam tag-default get [OPTIONS]
 
-  Retrieves the specified Tag Default.
+  Retrieves the specified tag default.
 
 Options:
-  --tag-default-id TEXT  The OCID of the Tag Default. [required]
+  --tag-default-id TEXT  The OCID of the tag default. [required]
   --from-json TEXT       Provide input to this command as a JSON document from a
                          file using the file://path-to/file syntax.
                          
@@ -3819,7 +3899,7 @@ Options:
 $ oci iam tag-default list --help
 Usage: oci iam tag-default list [OPTIONS]
 
-  Lists the Tag Defaults for Tag Definitions in the specified Compartment.
+  Lists the tag defaults for tag definitions in the specified compartment.
 
 Options:
   --page TEXT                 The value of the `opc-next-page` response header
@@ -3830,7 +3910,7 @@ Options:
                               specified OCID exactly.
   -c, --compartment-id TEXT   The OCID of the compartment (remember that the
                               tenancy is simply the root compartment).
-  --tag-definition-id TEXT    The OCID of the Tag Definition.
+  --tag-definition-id TEXT    The OCID of the tag definition.
   --lifecycle-state [ACTIVE]  A filter to only return resources that match the
                               given lifecycle state.  The state value is case-
                               insensitive.
@@ -3871,12 +3951,12 @@ Options:
 $ oci iam tag-default update --help
 Usage: oci iam tag-default update [OPTIONS]
 
-  Updates the the specified Tag Default. You can presently update the
-  following fields: `value`.
+  Updates the the specified tag default. You can update the following field:
+  `value`.
 
 Options:
-  --tag-default-id TEXT           The OCID of the Tag Default. [required]
-  --value TEXT                    The default value for the Tag Definition. This
+  --tag-default-id TEXT           The OCID of the tag default. [required]
+  --value TEXT                    The default value for the tag definition. This
                                   will be applied to all resources created in
                                   the Compartment. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
@@ -5155,8 +5235,8 @@ Options:
   --user-id TEXT                  The OCID of the user. [required]
   --description TEXT              The description you assign to the user. Does
                                   not have to be unique, and it's changeable.
-  --email TEXT                    The email you assign to the user. Has to be
-                                  unique across the tenancy.
+  --email TEXT                    The email address you assign to the user. Has
+                                  to be unique across the tenancy.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more

@@ -5,15 +5,80 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteIPSecConnection&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:03 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 20:58:07 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0922&apiName=DeleteIPSecConnection&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"3b96ac68-d340-4940-98fa-944d1f4aa38c","request":{"ipscId":"ocid1.ipsecconnection.oc1.phx.aaaaaaaahuvnamfty33rdo55v3riv3dvgkb7z5sbrpotl2qdb2hzeygu2ipq"}}]'}
+    headers:
+      Content-Length: ['170']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 20:58:08 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="pgGiueYqKnsTajwoVgWpNBWBWQtXwc23TMMnSQIzMEVUVsAxtTJzSpn5xLvsXX9XQzFd335ESw947Uwc/ftMLzb+GbzErQsBq7xI1Xt6sgSCQTSePI7G+ptRI+9g8Jr/kGaz34Oe5qJeo+8qycbOVvny/HufTYdLlc/IAg2MfFFxb45WQXQXCZ+vcu5cZDm6KHxihMiXeESJFw6h+mq+wMsVBkDjcg2VqwoELRivzJVGzowskN799qGxRmIQgWwx5AHTlT4q3dU4/ue4zlXhMm1azdFqu766wc5O8KUISSrIVrA0bVHi4ghMJl9KhDRHwNmsZEklTO6F2UXzazZ7mg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Mar 2019 20:58:08 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.774]
+      opc-request-id: [193F75F7639041E2A9D7E8A9DC88A21C]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.774 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.6+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/ipsecConnections/ocid1.ipsecconnection.oc1.phx.aaaaaaaahuvnamfty33rdo55v3riv3dvgkb7z5sbrpotl2qdb2hzeygu2ipq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Mar 2019 20:58:10 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [193F75F7639041E2A9D7E8A9DC88A21C/66FE013DC13045F2DCBD774981C8A2C5/DA3508E380EFA2A29FAF50495D39E4E7]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"21DBA13DE87C448BBC696ABC1E5291E3\"}",
+      "requestJson": "{\"ipscId\": \"ocid1.ipsecconnection.oc1.phx.aaaaaaaahuvnamfty33rdo55v3riv3dvgkb7z5sbrpotl2qdb2hzeygu2ipq\"}",
+      "containerId": "3b96ac68-d340-4940-98fa-944d1f4aa38c", "requestClass": "com.oracle.bmc.core.requests.DeleteIPSecConnectionRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteIPSecConnectionResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['415']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0922&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 20:58:11 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

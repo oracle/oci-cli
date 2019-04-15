@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateLocalPeeringGateway&serviceName=core&lang=PythonCLI
   response:
@@ -13,8 +13,8 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Wed, 28 Nov 2018 21:40:48 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 21:04:59 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -22,96 +22,96 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0988&apiName=UpdateLocalPeeringGateway&serviceName=core&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0922&apiName=UpdateLocalPeeringGateway&serviceName=core&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"ed57317f-1dae-4755-ac09-798062328551","request":{"localPeeringGatewayId":"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q","updateLocalPeeringGatewayDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0988_5294","testing_service_tag_02":"tag5.__STS0988_5294","testing_service_tag_03":"tag6.__STS0988_5294"}},"displayName":"__STS0988_6456","freeformTags":{"tag1":"value1.__STS0988_200","tag2":"value2.__STS0988_200"},"routeTableId":"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha"}}}]'}
+    body: {string: '[{"containerId":"3b96ac68-d340-4940-98fa-944d1f4aa38c","request":{"localPeeringGatewayId":"ocid1.localpeeringgateway.oc1.phx.aaaaaaaaodiyilt4l4tasdi3moifncqzva2t4td4nosa54vxbaca5pu24hga","updateLocalPeeringGatewayDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0922_9926","testing_service_tag_02":"tag5.__STS0922_9926","testing_service_tag_03":"tag6.__STS0922_9926"}},"displayName":"__STS0922_2304","freeformTags":{"tag1":"value1.__STS0922_2434","tag2":"value2.__STS0922_2434"},"routeTableId":"ocid1.routetable.oc1.phx.aaaaaaaarb6lct57aacgmfbota3ykwdaldlwfe3f6frxfqswmtewz74mceeq"}}}]'}
     headers:
-      Content-Length: ['625']
-      Content-Type: [application/json]
-      Date: ['Wed, 28 Nov 2018 21:40:48 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Content-Length: ['627']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 21:05:00 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
-      "tag5.__STS0988_5294", "testing_service_tag_01": "tag4.__STS0988_5294", "testing_service_tag_03":
-      "tag6.__STS0988_5294"}}, "displayName": "__STS0988_6456", "routeTableId": "ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha",
-      "freeformTags": {"tag2": "value2.__STS0988_200", "tag1": "value1.__STS0988_200"}}'
+      "tag5.__STS0922_9926", "testing_service_tag_01": "tag4.__STS0922_9926", "testing_service_tag_03":
+      "tag6.__STS0922_9926"}}, "displayName": "__STS0922_2304", "routeTableId": "ocid1.routetable.oc1.phx.aaaaaaaarb6lct57aacgmfbota3ykwdaldlwfe3f6frxfqswmtewz74mceeq",
+      "freeformTags": {"tag2": "value2.__STS0922_2434", "tag1": "value1.__STS0922_2434"}}'
     headers:
-      Content-Length: ['416']
+      Content-Length: ['418']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="CpUFu4958vxhWp6XSX0NKI/iPj2I9s/UVdBx6zf1OE3g8mJ6Def/bemMeBjh8IY3+BQs9V6+nZlKDlZDoE48U6GMQCIgfhZxZZQFtEOaKLY7pJSNLySF0YZ2DDsgrmNpAg2C7Q4yB+ctJizAiTUWHdDamavxMtZYzOIuwZgradPz/Ax50nIYiO2ii4tzIzFwoazSu7npBltSI5vmYxI1qF9vFteDLJRCVKVGuZ8SRUhjRlmVzYxIyemFwC2ZcQ6db4hsYXQls/pSakIeERaFHAQEs3tMP8rA/AJ6JQLQmvk3hwX05anhHJhH/5tUbjb6JIfZsslS6KrWQ3QMelU+sA==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="qGJBAzWdAuzkrQTBPMS/HZOiMQKHOKiuvWRyRqhM/D23eCl7gTZosqUg7bC/lEwF3KjANYEuoEmlM95g+E8pmduHbSAOnPpwcMSUHvjuy0RHTJFrbIbi5VMWsAcKHGOOBrx71eGmBdT/lWqlnjpfldT4LDnlxsqTkCMikk7u0U17reXaw726lxAmJ/MzrANcpKSMIGIu3Xmo97czqDFEWyX89iNP55SdUEWOLbodI2OwcozxQVTP6DJ9OT5mIFstIFVkQEspyjZr8mfqGxByrtC0n96nORof0lugfHVQ1y1BLt1ZWFq4tqUVM8S8moRUDmlAjbOXmh1HfCysMDbD9A==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Wed, 28 Nov 2018 21:40:58 GMT']
+      date: ['Thu, 28 Mar 2019 21:05:06 GMT']
       host: [iaas.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.2+preview.1]
-      opc-request-id: [1B19DF9FD7C143EC94629B02EF09F664]
-      user-agent: [Oracle-PythonSDK/2.1.2+preview.1 (python 3.5.3; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.39]
-      x-content-sha256: [wpbtjNYoXJjcpqIE8mEQ4nYJE5RWy5CYHe1jx2p9cqc=]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.774]
+      opc-request-id: [9E3F0570E8224D20AC61CCD83C41652B]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.774 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.6+preview.1]
+      x-content-sha256: [cDT4+7Hk9hXgk4TUDaFbLt/On+HIioj5lss3izRzI8A=]
     method: PUT
-    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/localPeeringGateways/ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/localPeeringGateways/ocid1.localpeeringgateway.oc1.phx.aaaaaaaaodiyilt4l4tasdi3moifncqzva2t4td4nosa54vxbaca5pu24hga
   response:
-    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"\
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
         ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
-        testing_service_tag_01\" : \"tag4.__STS0988_5294\",\n      \"testing_service_tag_02\"\
-        \ : \"tag5.__STS0988_5294\",\n      \"testing_service_tag_03\" : \"tag6.__STS0988_5294\"\
-        \n    }\n  },\n  \"displayName\" : \"__STS0988_6456\",\n  \"freeformTags\"\
-        \ : {\n    \"tag1\" : \"value1.__STS0988_200\",\n    \"tag2\" : \"value2.__STS0988_200\"\
-        \n  },\n  \"id\" : \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q\"\
+        testing_service_tag_01\" : \"tag4.__STS0922_9926\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0922_9926\",\n      \"testing_service_tag_03\" : \"tag6.__STS0922_9926\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0922_2304\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0922_2434\",\n    \"tag2\" : \"value2.__STS0922_2434\"\
+        \n  },\n  \"id\" : \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaaodiyilt4l4tasdi3moifncqzva2t4td4nosa54vxbaca5pu24hga\"\
         ,\n  \"isCrossTenancyPeering\" : false,\n  \"lifecycleState\" : \"AVAILABLE\"\
         ,\n  \"peeringStatus\" : \"NEW\",\n  \"peeringStatusDetails\" : \"Not connected\
-        \ to a peer.\",\n  \"routeTableId\" : \"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha\"\
-        ,\n  \"timeCreated\" : \"2018-11-28T21:40:55.932Z\",\n  \"vcnId\" : \"ocid1.vcn.oc1.phx.aaaaaaaa4e77qse4c7s2t7cyrgizkhuhfaebppaej2zqmaucoc4tuvchx3za\"\
+        \ to a peer.\",\n  \"routeTableId\" : \"ocid1.routetable.oc1.phx.aaaaaaaarb6lct57aacgmfbota3ykwdaldlwfe3f6frxfqswmtewz74mceeq\"\
+        ,\n  \"timeCreated\" : \"2019-03-28T21:05:04.613Z\",\n  \"vcnId\" : \"ocid1.vcn.oc1.phx.aaaaaaaaug3jdthfowp4ptfzuoerqemubrt72pguvbf4jd5pr5z6dnbjgjtq\"\
         \n}"}
     headers:
       Connection: [keep-alive]
-      Content-Length: ['985']
+      Content-Length: ['987']
       Content-Type: [application/json]
-      Date: ['Wed, 28 Nov 2018 21:40:59 GMT']
-      ETag: [2ebe009f]
+      Date: ['Thu, 28 Mar 2019 21:05:08 GMT']
+      ETag: [10b25a44]
       X-Content-Type-Options: [nosniff]
-      opc-request-id: [1B19DF9FD7C143EC94629B02EF09F664/3A5BBF4030C0C298258DAE316E044176/23B9B983114246B7A7F3BDBCFE4735EE]
+      opc-request-id: [9E3F0570E8224D20AC61CCD83C41652B/78142F5DBBF7E4B8585B2E424DC4168C/243893BBFC2441EE92F4652830507E4C]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"617E4B934B6146F08191DE3770CD405C\",
-      \"etag\": \"2ebe009f\", \"localPeeringGateway\": {\"definedTags\": {\"testing_service_tag_ns_001\":
-      {\"testing_service_tag_02\": \"tag5.__STS0988_5294\", \"testing_service_tag_01\":
-      \"tag4.__STS0988_5294\", \"testing_service_tag_03\": \"tag6.__STS0988_5294\"}},
-      \"peeringStatusDetails\": \"Not connected to a peer.\", \"displayName\": \"__STS0988_6456\",
-      \"isCrossTenancyPeering\": false, \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha\",
+    body: '{"responseJson": "{\"opcRequestId\": \"0D4D7A92D2B74C0287BB87AB2D853DC3\",
+      \"etag\": \"10b25a44\", \"localPeeringGateway\": {\"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_02\": \"tag5.__STS0922_9926\", \"testing_service_tag_01\":
+      \"tag4.__STS0922_9926\", \"testing_service_tag_03\": \"tag6.__STS0922_9926\"}},
+      \"peeringStatusDetails\": \"Not connected to a peer.\", \"displayName\": \"__STS0922_2304\",
+      \"isCrossTenancyPeering\": false, \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaarb6lct57aacgmfbota3ykwdaldlwfe3f6frxfqswmtewz74mceeq\",
       \"lifecycleState\": \"AVAILABLE\", \"peeringStatus\": \"NEW\", \"peerAdvertisedCidr\":
-      null, \"timeCreated\": \"2018-11-28T21:40:55.932000+00:00\", \"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaa4e77qse4c7s2t7cyrgizkhuhfaebppaej2zqmaucoc4tuvchx3za\",
-      \"id\": \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q\",
-      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\",
-      \"freeformTags\": {\"tag2\": \"value2.__STS0988_200\", \"tag1\": \"value1.__STS0988_200\"},
+      null, \"timeCreated\": \"2019-03-28T21:05:04.613000+00:00\", \"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaaug3jdthfowp4ptfzuoerqemubrt72pguvbf4jd5pr5z6dnbjgjtq\",
+      \"id\": \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaaodiyilt4l4tasdi3moifncqzva2t4td4nosa54vxbaca5pu24hga\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0922_2434\", \"tag1\": \"value1.__STS0922_2434\"},
       \"peerAdvertisedCidrDetails\": null}}", "requestJson": "{\"updateLocalPeeringGatewayDetails\":
       {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\":
-      \"tag6.__STS0988_5294\", \"testing_service_tag_01\": \"tag4.__STS0988_5294\",
-      \"testing_service_tag_02\": \"tag5.__STS0988_5294\"}}, \"displayName\": \"__STS0988_6456\",
-      \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaa3qcpmtawftpsqh67jv2orfnjcox76kyngkqwouaafewtd3xww3ha\",
-      \"freeformTags\": {\"tag2\": \"value2.__STS0988_200\", \"tag1\": \"value1.__STS0988_200\"}},
-      \"localPeeringGatewayId\": \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaa6tm2sopcsrtd4xir5lmzgce4t7jfftgcmi7pdqkwkzh3zshxdg7q\"}",
-      "containerId": "ed57317f-1dae-4755-ac09-798062328551", "requestClass": "com.oracle.bmc.core.requests.UpdateLocalPeeringGatewayRequest",
+      \"tag6.__STS0922_9926\", \"testing_service_tag_01\": \"tag4.__STS0922_9926\",
+      \"testing_service_tag_02\": \"tag5.__STS0922_9926\"}}, \"displayName\": \"__STS0922_2304\",
+      \"routeTableId\": \"ocid1.routetable.oc1.phx.aaaaaaaarb6lct57aacgmfbota3ykwdaldlwfe3f6frxfqswmtewz74mceeq\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0922_2434\", \"tag1\": \"value1.__STS0922_2434\"}},
+      \"localPeeringGatewayId\": \"ocid1.localpeeringgateway.oc1.phx.aaaaaaaaodiyilt4l4tasdi3moifncqzva2t4td4nosa54vxbaca5pu24hga\"}",
+      "containerId": "3b96ac68-d340-4940-98fa-944d1f4aa38c", "requestClass": "com.oracle.bmc.core.requests.UpdateLocalPeeringGatewayRequest",
       "responseClass": "com.oracle.bmc.core.responses.UpdateLocalPeeringGatewayResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['2019']
-      User-Agent: [python-requests/2.18.4]
+      Content-Length: ['2023']
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0988&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0922&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Wed, 28 Nov 2018 21:40:59 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 21:05:09 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

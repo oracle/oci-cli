@@ -887,7 +887,7 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @instance_console_connection_group.command(name=cli_util.override('delete_instance_console_connection.command_name', 'delete'), help=u"""Deletes the specified instance console connection.""")
-@cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the intance console connection""")
+@cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the instance console connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1517,7 +1517,7 @@ def get_instance(ctx, from_json, instance_id):
 
 
 @instance_console_connection_group.command(name=cli_util.override('get_instance_console_connection.command_name', 'get'), help=u"""Gets the specified instance console connection's information.""")
-@cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the intance console connection""")
+@cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the instance console connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

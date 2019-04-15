@@ -5,15 +5,97 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateRemotePeeringConnection&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:18 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 21:05:37 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0922&apiName=UpdateRemotePeeringConnection&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"3b96ac68-d340-4940-98fa-944d1f4aa38c","request":{"remotePeeringConnectionId":"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaaiuppfymezvjsni7f55lxllil7uat2gusyfnu2lelqkb5w65omqma","updateRemotePeeringConnectionDetails":{"displayName":"__STS0922_9455"}}}]'}
+    headers:
+      Content-Length: ['269']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 21:05:39 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"displayName": "__STS0922_9455"}'
+    headers:
+      Content-Length: ['33']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="VB/7czLDWcUZVp+SsSxbAQsCny3Emh7FPej0q4DclaEzAWX2dXSpmkk02CAar1pL1Y1YSxgLmk8/upS+dIgELUB0OZB5o1dOQpf81MHUD2kd7gxzrgsrMODMweWvagO+LG5sWIwLTj8s8SpJTlCJLEnURjh/xPtoZKd/CsPfN+rZHhZ19a7XrKvu4/yyCx7e0nVgFQQj6J0YcC5pzuBsLrydajyuH1i5BEUXkrqZNQ8VL98HzTxDuOcfdQ5sTz2nBlMMUferviI/TOl7xZb4wVv3L/iOufIonR6WTmBMtt8meyrIa+RptOnBEUhkPM/EfmQ9Al+zYxV1qJ9b3BWw4g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 28 Mar 2019 21:05:39 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.774]
+      opc-request-id: [9F2CDC91EFEE447A9C2CD610BB9D0623]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.774 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.6+preview.1]
+      x-content-sha256: [upGvdlX5MIurh4tUfXb9MSMgXjcc2gPxI1wvlda4fiQ=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/remotePeeringConnections/ocid1.remotepeeringconnection.oc1.phx.aaaaaaaaiuppfymezvjsni7f55lxllil7uat2gusyfnu2lelqkb5w65omqma
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
+        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0922_9455\",\n  \"\
+        drgId\" : \"ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q\"\
+        ,\n  \"freeformTags\" : { },\n  \"id\" : \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaaiuppfymezvjsni7f55lxllil7uat2gusyfnu2lelqkb5w65omqma\"\
+        ,\n  \"isCrossTenancyPeering\" : false,\n  \"lifecycleState\" : \"AVAILABLE\"\
+        ,\n  \"peerId\" : null,\n  \"peerRegionName\" : null,\n  \"peerTenancyId\"\
+        \ : null,\n  \"peeringStatus\" : \"NEW\",\n  \"timeCreated\" : \"2019-03-28T21:01:38.412Z\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['611']
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Mar 2019 21:05:44 GMT']
+      ETag: ['-1681423760']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [9F2CDC91EFEE447A9C2CD610BB9D0623/0D1C52BC4B9F399BED84F5FCFF8AC5E8/0CFB8B1CF17F39F2FC5C02D4E598C911]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"AB54DA19FA044665978E8024893BE39B\",
+      \"etag\": \"-1681423760\", \"remotePeeringConnection\": {\"peerId\": null, \"id\":
+      \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaaiuppfymezvjsni7f55lxllil7uat2gusyfnu2lelqkb5w65omqma\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"displayName\": \"__STS0922_9455\", \"isCrossTenancyPeering\": false, \"timeCreated\":
+      \"2019-03-28T21:01:38.412000+00:00\", \"peerTenancyId\": null, \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q\",
+      \"peeringStatus\": \"NEW\", \"lifecycleState\": \"AVAILABLE\", \"peerRegionName\":
+      null}}", "requestJson": "{\"remotePeeringConnectionId\": \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaaiuppfymezvjsni7f55lxllil7uat2gusyfnu2lelqkb5w65omqma\",
+      \"updateRemotePeeringConnectionDetails\": {\"displayName\": \"__STS0922_9455\"}}",
+      "containerId": "3b96ac68-d340-4940-98fa-944d1f4aa38c", "requestClass": "com.oracle.bmc.core.requests.UpdateRemotePeeringConnectionRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateRemotePeeringConnectionResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1170']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0922&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 21:05:45 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

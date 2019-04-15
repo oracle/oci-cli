@@ -1,0 +1,110 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=UpdateVolumeBackupPolicy&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 18:30:40 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0690&apiName=UpdateVolumeBackupPolicy&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"3b1df71d-8e39-44c3-a389-457bffb6af95","request":{"policyId":"ocid1.volumebackuppolicy.oc1.phx.aaaaaaaaioknj2dgfhuz4gpkcu5kxfe2kiiqermobju54c6fikrpyxxobf6q","updateVolumeBackupPolicyDetails":{"displayName":"__STS0690_6253","definedTags":{"testing_service_tag_ns_112":{"testing_service_tag_01":"tag4.__STS0690_2524","testing_service_tag_02":"tag5.__STS0690_2524","testing_service_tag_03":"tag6.__STS0690_2524"}},"freeformTags":{"tag1":"value1.__STS0690_103","tag2":"value2.__STS0690_103"}},"opcRetryToken":"73d59411-f051-46d7-97e4-51a4a23fce8a"}}]'}
+    headers:
+      Content-Length: ['562']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 18:30:41 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"definedTags": {"testing_service_tag_ns_112": {"testing_service_tag_02":
+      "tag5.__STS0690_2524", "testing_service_tag_01": "tag4.__STS0690_2524", "testing_service_tag_03":
+      "tag6.__STS0690_2524"}}, "displayName": "__STS0690_6253", "freeformTags": {"tag2":
+      "value2.__STS0690_103", "tag1": "value1.__STS0690_103"}}'
+    headers:
+      Content-Length: ['311']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocidv1:tenancy:oc1:phx:1457633080752:aaaaaaaajuwrfl57l7oa3mtr6hu7hqwcme/ocid1.user.oc1..aaaaaaaajkyp3zhdk63hpqqet2ntlcejwcemlvzlegs6xgvbsmyy5wtvbk2q/30:be:06:12:f9:b8:3d:eb:68:c7:cd:91:96:7f:c4:0d",signature="osr3/e4UahXAJgVOxo34U+WE1HAnwDzhFORjBh5j/fdJYwegBZfQBBxAXcspQ8R9vlyVkRybDfLZEF7pZ+cLi4BMw7cKT4ML+9Ware7YmKHwaZ0O2cmlg/qEGEfLmIz0xShWZMHqbvsa8zIJD5mAYq3C5tYhuAdU107nRx34n/PhfuqgpjlouywayNhMff2YtS2bXW3pvcuGWfHBt9ew8HnEhewY9Imf39IYH0jfWu8Ek7Upm2EZvfRLoP1gnrFR52vSzf+/pU4XtIJ56n+A/uGJEMYncUOnjmxK4lj/Syr98G+bXtECssFvyGhxQe9ZLwhISVOafvP3zXpU27zy/Q==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Thu, 21 Feb 2019 18:30:43 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1.706]
+      opc-request-id: [5CEABA0E4E964D89A8E02162FFB781CE]
+      opc-retry-token: [VqjVXkZZE1FsjTeiHvKBTjWNSKIdzG]
+      user-agent: [Oracle-PythonSDK/2.1.8+preview.1.706 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.4.45+preview.1]
+      x-content-sha256: [tmpSc+Nd4clzz/JSBBe1Z2e/U/VzVEgs45RoSOF5wMU=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/volumeBackupPolicies/ocid1.volumebackuppolicy.oc1.phx.aaaaaaaaioknj2dgfhuz4gpkcu5kxfe2kiiqermobju54c6fikrpyxxobf6q
+  response:
+    body: {string: "{\n  \"displayName\" : \"__STS0690_6253\",\n  \"id\" : \"ocid1.volumebackuppolicy.oc1.phx.aaaaaaaaioknj2dgfhuz4gpkcu5kxfe2kiiqermobju54c6fikrpyxxobf6q\"\
+        ,\n  \"schedules\" : [ ],\n  \"timeCreated\" : \"2019-02-21T18:30:42.877Z\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4puhbsxky4rakvalooddr4ekauzvbwibhzmryglyqvo4fzjcx62a\"\
+        ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_112\" : {\n      \"\
+        testing_service_tag_01\" : \"tag4.__STS0690_2524\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0690_2524\",\n      \"testing_service_tag_03\" : \"tag6.__STS0690_2524\"\
+        \n    }\n  },\n  \"freeformTags\" : {\n    \"tag1\" : \"value1.__STS0690_103\"\
+        ,\n    \"tag2\" : \"value2.__STS0690_103\"\n  }\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['652']
+      Content-Type: [application/json]
+      Date: ['Thu, 21 Feb 2019 18:30:44 GMT']
+      ETag: [ac45d739eefcbfc6816dfcabd3d000f6]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [5CEABA0E4E964D89A8E02162FFB781CE/2EADC157AF9C84DB3E2BD5AC8CBD880C/8DE35B6F057D9BBA381DA35D8A567C1F]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"5837F40767124D5697A31A381D4699AE\",
+      \"etag\": \"ac45d739eefcbfc6816dfcabd3d000f6\", \"volumeBackupPolicy\": {\"definedTags\":
+      {\"testing_service_tag_ns_112\": {\"testing_service_tag_02\": \"tag5.__STS0690_2524\",
+      \"testing_service_tag_01\": \"tag4.__STS0690_2524\", \"testing_service_tag_03\":
+      \"tag6.__STS0690_2524\"}}, \"id\": \"ocid1.volumebackuppolicy.oc1.phx.aaaaaaaaioknj2dgfhuz4gpkcu5kxfe2kiiqermobju54c6fikrpyxxobf6q\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4puhbsxky4rakvalooddr4ekauzvbwibhzmryglyqvo4fzjcx62a\",
+      \"displayName\": \"__STS0690_6253\", \"freeformTags\": {\"tag2\": \"value2.__STS0690_103\",
+      \"tag1\": \"value1.__STS0690_103\"}, \"schedules\": [], \"timeCreated\": \"2019-02-21T18:30:42.877000+00:00\"}}",
+      "requestJson": "{\"updateVolumeBackupPolicyDetails\": {\"definedTags\": {\"testing_service_tag_ns_112\":
+      {\"testing_service_tag_03\": \"tag6.__STS0690_2524\", \"testing_service_tag_01\":
+      \"tag4.__STS0690_2524\", \"testing_service_tag_02\": \"tag5.__STS0690_2524\"}},
+      \"displayName\": \"__STS0690_6253\", \"freeformTags\": {\"tag2\": \"value2.__STS0690_103\",
+      \"tag1\": \"value1.__STS0690_103\"}}, \"policyId\": \"ocid1.volumebackuppolicy.oc1.phx.aaaaaaaaioknj2dgfhuz4gpkcu5kxfe2kiiqermobju54c6fikrpyxxobf6q\",
+      \"opcRetryToken\": \"73d59411-f051-46d7-97e4-51a4a23fce8a\"}", "containerId":
+      "3b1df71d-8e39-44c3-a389-457bffb6af95", "requestClass": "com.oracle.bmc.core.requests.UpdateVolumeBackupPolicyRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateVolumeBackupPolicyResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1571']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0690&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 21 Feb 2019 18:30:45 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateNatGateway&serviceName=core&lang=PythonCLI
   response:
@@ -13,8 +13,8 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Mon, 05 Nov 2018 21:18:17 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 21:05:11 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -22,91 +22,93 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0697&apiName=UpdateNatGateway&serviceName=core&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0922&apiName=UpdateNatGateway&serviceName=core&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"5796b41a-badd-492d-90fd-483bc3b9566b","request":{"natGatewayId":"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a","updateNatGatewayDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0697_8460","testing_service_tag_02":"tag5.__STS0697_8460","testing_service_tag_03":"tag6.__STS0697_8460"}},"displayName":"__STS0697_5276","freeformTags":{"tag1":"value1.__STS0697_8448","tag2":"value2.__STS0697_8448"},"blockTraffic":true}}}]'}
+    body: {string: '[{"containerId":"3b96ac68-d340-4940-98fa-944d1f4aa38c","request":{"natGatewayId":"ocid1.natgateway.oc1.phx.aaaaaaaa7fgq3hhlkf7gklwxmzjbcre4qsyqgqeqmaektfa3422phsy6giha","updateNatGatewayDetails":{"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0922_5893","testing_service_tag_02":"tag5.__STS0922_5893","testing_service_tag_03":"tag6.__STS0922_5893"}},"displayName":"__STS0922_6169","freeformTags":{"tag1":"value1.__STS0922_7359","tag2":"value2.__STS0922_7359"},"blockTraffic":true}}}]'}
     headers:
       Content-Length: ['517']
-      Content-Type: [application/json]
-      Date: ['Mon, 05 Nov 2018 21:18:17 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 21:05:12 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
-      "tag5.__STS0697_8460", "testing_service_tag_01": "tag4.__STS0697_8460", "testing_service_tag_03":
-      "tag6.__STS0697_8460"}}, "displayName": "__STS0697_5276", "blockTraffic": true,
-      "freeformTags": {"tag2": "value2.__STS0697_8448", "tag1": "value1.__STS0697_8448"}}'
+      "tag5.__STS0922_5893", "testing_service_tag_01": "tag4.__STS0922_5893", "testing_service_tag_03":
+      "tag6.__STS0922_5893"}}, "displayName": "__STS0922_6169", "blockTraffic": true,
+      "freeformTags": {"tag2": "value2.__STS0922_7359", "tag1": "value1.__STS0922_7359"}}'
     headers:
       Content-Length: ['335']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaac2vk7nbkf7trfhr6vdxh6fve5ukhrv3hne233ngsdtui4pu3pagq/ocid1.user.oc1..aaaaaaaalomidn5dlsespicybohxhbjhqzhsodvi2uvrtvm2bghkb5iqbgdq/27:f0:c2:91:86:1a:8e:69:d9:3d:d6:f1:c1:92:45:2f",signature="iTBduPQxBV3b9iMbgnX0bgm//LnK5Dn8pOiJB/UlEa+H0lG0Qnc6MJe+8VJ0pLCKmMHB4f+Vy9wA+OcZOIW0865DvTrwSHlSGfwzwLWY0L+jP1Gsj/dNWd9Ma/Pfy76iKd2sEsqu35ROiDsiVx2IyafMRFghEbli5ezDepeUYO4qdQFlG0gaq1aXdShs9FFTY/sQh2Pg/HgFjIvV1Rieto5vEwqEAXlsGWFQsVLOeNzd+q1+uAxR2dfpvWzyPPKaDBxUBeT64qUu7mbKZa2Houni3knYfMwB10lP9/aqWZDeITU4JEQKD/rlDV9RGpWDyc8BqsuSLnKCl0TIgYiN5A==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="nMfFCuWcEI5L3xHduXFIBWyafKU9Go+zBEqG9FEcFgDbKQU+/BnzByXT9tFzwegj4cZVeB+zi646w5D+gVOJG4TjFfDbwabjzW/Eh6KlPftFYIKl++s87UELhLk7bzULMfAi6bQGedElUcCKJGD+n259RW1HqK7aer/XLva/auKito9Pv/LgO0rKFSNrshDUyC8b/YpvmK9rsoeoddQEMb/KXMaiuHk6tHvufJ4AusXGJdSIk1QG8zZf8mDk10OVjVcbFvGrh6emY9OH3kZPU+6cI5qO9xSoOfokXzsWoCJVjZdIY8IliC93eO9LscnlAdWranIaW27mTQ5Dhiz/VA==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Mon, 05 Nov 2018 21:18:23 GMT']
-      host: [iaas.us-ashburn-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.7]
-      opc-request-id: [BF220938D03F49AD8E598681DB79B8FB]
-      user-agent: [Oracle-PythonSDK/2.0.7 (python 3.5.3; x86_64-Darwin) Oracle-PythonCLI/2.4.38]
-      x-content-sha256: [nrsluKGg93KUHRC9llxt6LkGE2SPlIHnuJNvbUOz/6c=]
+      date: ['Thu, 28 Mar 2019 21:05:16 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.774]
+      opc-request-id: [CEDC5C91262A4E548AAB766AA696899A]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.774 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.6+preview.1]
+      x-content-sha256: [eRxvfk6yH2TItnp7IMHnWWc4nlm0oUtQYpamcHFCn3g=]
     method: PUT
-    uri: https://iaas.us-ashburn-1.oraclecloud.com/20160918/natGateways/ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/natGateways/ocid1.natgateway.oc1.phx.aaaaaaaa7fgq3hhlkf7gklwxmzjbcre4qsyqgqeqmaektfa3422phsy6giha
   response:
-    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq\"\
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
         ,\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n      \"\
-        testing_service_tag_01\" : \"tag4.__STS0697_8460\",\n      \"testing_service_tag_02\"\
-        \ : \"tag5.__STS0697_8460\",\n      \"testing_service_tag_03\" : \"tag6.__STS0697_8460\"\
-        \n    }\n  },\n  \"displayName\" : \"__STS0697_5276\",\n  \"freeformTags\"\
-        \ : {\n    \"tag1\" : \"value1.__STS0697_8448\",\n    \"tag2\" : \"value2.__STS0697_8448\"\
-        \n  },\n  \"id\" : \"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a\"\
+        testing_service_tag_01\" : \"tag4.__STS0922_5893\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0922_5893\",\n      \"testing_service_tag_03\" : \"tag6.__STS0922_5893\"\
+        \n    }\n  },\n  \"displayName\" : \"__STS0922_6169\",\n  \"freeformTags\"\
+        \ : {\n    \"tag1\" : \"value1.__STS0922_7359\",\n    \"tag2\" : \"value2.__STS0922_7359\"\
+        \n  },\n  \"id\" : \"ocid1.natgateway.oc1.phx.aaaaaaaa7fgq3hhlkf7gklwxmzjbcre4qsyqgqeqmaektfa3422phsy6giha\"\
         ,\n  \"blockTraffic\" : true,\n  \"lifecycleState\" : \"AVAILABLE\",\n  \"\
-        natIp\" : \"129.213.172.235\",\n  \"timeCreated\" : \"2018-11-05T21:18:21.363Z\"\
-        ,\n  \"vcnId\" : \"ocid1.vcn.oc1.iad.aaaaaaaa5n7ifkil5vrn4hzuuln7hinf36gwivsh3jjbkvik2efymgm2whtq\"\
+        natIp\" : \"129.146.151.144\",\n  \"timeCreated\" : \"2019-03-28T21:05:15.468Z\"\
+        ,\n  \"vcnId\" : \"ocid1.vcn.oc1.phx.aaaaaaaakdb2mojgei3anfgnazxxlalo5aat7tzmntbd6m3bfuwfelqyfzaq\"\
         \n}"}
     headers:
       Connection: [keep-alive]
       Content-Encoding: [UTF-8]
       Content-Length: ['809']
       Content-Type: [application/json]
-      Date: ['Mon, 05 Nov 2018 21:18:23 GMT']
-      ETag: ['3346073']
-      opc-request-id: [BF220938D03F49AD8E598681DB79B8FB/4FC3775064B6B578C543797175858236/47901235CBD1492DE9EAEA4DDEBCF518]
+      Date: ['Thu, 28 Mar 2019 21:05:18 GMT']
+      ETag: ['55427855']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [CEDC5C91262A4E548AAB766AA696899A/AF7F7CDBBEE2187A6123E185B44B0304/181F3BBCDEA4FED7244A3C1BDED071E2]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"E677DE35584C40229C2D81D6DFE49396\",
-      \"natGateway\": {\"natIp\": \"129.213.172.235\", \"id\": \"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a\",
-      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaogsejnfv3e3wrbevswam74pel2yfyypm7rga5m54fj7vyp5pl4yq\",
-      \"freeformTags\": {\"tag2\": \"value2.__STS0697_8448\", \"tag1\": \"value1.__STS0697_8448\"},
-      \"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaa5n7ifkil5vrn4hzuuln7hinf36gwivsh3jjbkvik2efymgm2whtq\",
-      \"displayName\": \"__STS0697_5276\", \"definedTags\": {\"testing_service_tag_ns_001\":
-      {\"testing_service_tag_02\": \"tag5.__STS0697_8460\", \"testing_service_tag_01\":
-      \"tag4.__STS0697_8460\", \"testing_service_tag_03\": \"tag6.__STS0697_8460\"}},
-      \"timeCreated\": \"2018-11-05T21:18:21.363000+00:00\", \"lifecycleState\": \"AVAILABLE\",
-      \"blockTraffic\": true}, \"etag\": \"3346073\"}", "requestJson": "{\"updateNatGatewayDetails\":
+    body: '{"responseJson": "{\"opcRequestId\": \"6E5BE32EEFCC46439A5916789F4CABAA\",
+      \"natGateway\": {\"natIp\": \"129.146.151.144\", \"id\": \"ocid1.natgateway.oc1.phx.aaaaaaaa7fgq3hhlkf7gklwxmzjbcre4qsyqgqeqmaektfa3422phsy6giha\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"freeformTags\": {\"tag2\": \"value2.__STS0922_7359\", \"tag1\": \"value1.__STS0922_7359\"},
+      \"vcnId\": \"ocid1.vcn.oc1.phx.aaaaaaaakdb2mojgei3anfgnazxxlalo5aat7tzmntbd6m3bfuwfelqyfzaq\",
+      \"displayName\": \"__STS0922_6169\", \"definedTags\": {\"testing_service_tag_ns_001\":
+      {\"testing_service_tag_02\": \"tag5.__STS0922_5893\", \"testing_service_tag_01\":
+      \"tag4.__STS0922_5893\", \"testing_service_tag_03\": \"tag6.__STS0922_5893\"}},
+      \"timeCreated\": \"2019-03-28T21:05:15.468000+00:00\", \"lifecycleState\": \"AVAILABLE\",
+      \"blockTraffic\": true}, \"etag\": \"55427855\"}", "requestJson": "{\"updateNatGatewayDetails\":
       {\"definedTags\": {\"testing_service_tag_ns_001\": {\"testing_service_tag_03\":
-      \"tag6.__STS0697_8460\", \"testing_service_tag_01\": \"tag4.__STS0697_8460\",
-      \"testing_service_tag_02\": \"tag5.__STS0697_8460\"}}, \"displayName\": \"__STS0697_5276\",
-      \"blockTraffic\": true, \"freeformTags\": {\"tag2\": \"value2.__STS0697_8448\",
-      \"tag1\": \"value1.__STS0697_8448\"}}, \"natGatewayId\": \"ocid1.natgateway.oc1.iad.aaaaaaaaa7qpdwt4iqhs4ygyfntahkvyi5fmszjfrggudcpd6sx7dg3nr62a\"}",
-      "containerId": "5796b41a-badd-492d-90fd-483bc3b9566b", "requestClass": "com.oracle.bmc.core.requests.UpdateNatGatewayRequest",
+      \"tag6.__STS0922_5893\", \"testing_service_tag_01\": \"tag4.__STS0922_5893\",
+      \"testing_service_tag_02\": \"tag5.__STS0922_5893\"}}, \"displayName\": \"__STS0922_6169\",
+      \"blockTraffic\": true, \"freeformTags\": {\"tag2\": \"value2.__STS0922_7359\",
+      \"tag1\": \"value1.__STS0922_7359\"}}, \"natGatewayId\": \"ocid1.natgateway.oc1.phx.aaaaaaaa7fgq3hhlkf7gklwxmzjbcre4qsyqgqeqmaektfa3422phsy6giha\"}",
+      "containerId": "3b96ac68-d340-4940-98fa-944d1f4aa38c", "requestClass": "com.oracle.bmc.core.requests.UpdateNatGatewayRequest",
       "responseClass": "com.oracle.bmc.core.responses.UpdateNatGatewayResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['1636']
-      User-Agent: [python-requests/2.18.4]
+      Content-Length: ['1637']
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0697&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0922&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Mon, 05 Nov 2018 21:18:23 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 21:05:19 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

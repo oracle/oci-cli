@@ -2986,7 +2986,7 @@ Usage: oci compute instance-console-connection delete [OPTIONS]
 
 Options:
   --instance-console-connection-id TEXT
-                                  The OCID of the intance console connection
+                                  The OCID of the instance console connection.
                                   [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
@@ -3056,7 +3056,7 @@ Usage: oci compute instance-console-connection get [OPTIONS]
 
 Options:
   --instance-console-connection-id TEXT
-                                  The OCID of the intance console connection
+                                  The OCID of the instance console connection.
                                   [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-

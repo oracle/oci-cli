@@ -13,6 +13,7 @@ import re
 import oci_cli
 from tests import util
 from tests import test_config_container
+from mimetypes import guess_type
 
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
@@ -482,6 +483,14 @@ def test_object_options(runner, config_file, config_profile, test_id, content_in
     assert 'foo1' in result.output
     assert 'bar2' in result.output
 
+    # Test object auto content-type for file input
+    result = invoke(runner, config_file, config_profile, required_args + ['--content-type', 'auto'])
+    validate_response(result)
+    result = invoke(runner, config_file, config_profile, head_required_args)
+    validate_response(result)
+    expected_content_type, _ = guess_type(content_input_file)
+    assert expected_content_type in result.output
+
     result = invoke(runner, config_file, config_profile, required_args + ['--metadata', '{"foo2":"bar2"}'])
     validate_response(result)
     result = invoke(runner, config_file, config_profile, head_required_args)
@@ -590,6 +599,104 @@ def test_object_put_from_stdin(runner, config_file, config_profile, test_id):
     validate_response(put_result)
 
     assert json.loads(put_result.output)['opc-content-md5'] == 'H8BEg3FCR+1WmoYYrQbc2Q=='
+
+    # delete object to clean up
+    delete_required_args = ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                            '--force']
+    invoke(runner, config_file, config_profile, delete_required_args)
+
+    # remove file to cleanup
+    os.remove(filename)
+
+
+@util.skip_while_rerecording
+def test_object_put_from_stdin_with_auto_content_type(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    object_name = "TestObject_" + test_id + ".txt"
+    filename = os.path.join("tests/temp", object_name)
+
+    with open(filename, 'w') as f:
+        f.write("Test object content")
+
+    with open(filename, 'r') as f:
+        put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--force', '--file',
+                             '-', '--name', object_name, '--content-type', 'auto']
+
+        # supply object content file through stdin
+        put_result = invoke(runner, config_file, config_profile, put_required_args, input=f)
+
+    validate_response(put_result)
+
+    head_required_args = ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name]
+    result = invoke(runner, config_file, config_profile, head_required_args)
+    expected_content_type, _ = guess_type(object_name)
+    assert expected_content_type in result.output
+
+    # delete object to clean up
+    delete_required_args = ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                            '--force']
+    invoke(runner, config_file, config_profile, delete_required_args)
+
+    # remove file to cleanup
+    os.remove(filename)
+
+
+# Tests for guess_type returns None for object_name.
+@util.skip_while_rerecording
+def test_object_put_from_stdin_with_invalid_object_name_extension_one(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    object_name = "TestObject_" + test_id + ".zzzzz"
+    filename = os.path.join("tests/temp", object_name)
+
+    with open(filename, 'w') as f:
+        f.write("Test object content")
+
+    with open(filename, 'r') as f:
+        put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--force', '--file',
+                             '-', '--name', object_name, '--content-type', 'auto']
+
+        # supply object content file through stdin
+        put_result = invoke(runner, config_file, config_profile, put_required_args, input=f)
+
+    validate_response(put_result)
+
+    head_required_args = ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name]
+    result = invoke(runner, config_file, config_profile, head_required_args)
+
+    assert "application/octet-stream" in result.output
+
+    # delete object to clean up
+    delete_required_args = ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                            '--force']
+    invoke(runner, config_file, config_profile, delete_required_args)
+
+    # remove file to cleanup
+    os.remove(filename)
+
+
+# Object Name extension mismatches with the input contents.
+@util.skip_while_rerecording
+def test_object_put_from_stdin_with_invalid_object_name_extension_two(runner, config_file, config_profile, test_id):
+    bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
+    object_name = "TestObject_" + test_id + ".txt"
+    filename = os.path.join("tests/temp", object_name)
+
+    with open(filename, 'wb') as f:
+        f.write("Test object content".encode('utf-8'))
+
+    with open(filename, 'r') as f:
+        put_required_args = ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--force', '--file',
+                             '-', '--name', object_name, '--content-type', 'auto']
+
+        # supply object content file through stdin
+        put_result = invoke(runner, config_file, config_profile, put_required_args, input=f)
+
+    validate_response(put_result)
+
+    head_required_args = ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name]
+    result = invoke(runner, config_file, config_profile, head_required_args)
+    expected_content_type, _ = guess_type(object_name)
+    assert expected_content_type in result.output
 
     # delete object to clean up
     delete_required_args = ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
