@@ -146,6 +146,7 @@ def create_config_and_signer_based_on_click_context(ctx):
 
     instance_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL
     session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
+    delegation_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
 
     signer = None
     kwargs = {}
@@ -158,7 +159,7 @@ def create_config_and_signer_based_on_click_context(ctx):
         if not instance_principal_auth:
             sys.exit("ERROR: " + str(e))
 
-    if instance_principal_auth:
+    if instance_principal_auth or delegation_token_auth:
         try:
             signer_kwargs = {}
             if ctx.obj['cert_bundle']:
@@ -167,7 +168,25 @@ def create_config_and_signer_based_on_click_context(ctx):
                 # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
                 # conflict with the caller intent (since they *DID* explicitly pass a region)
                 client_config['region'] = ctx.obj['region']
-            signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner(**signer_kwargs)
+            if delegation_token_auth:
+                delegation_token = None
+                delegation_token_location = client_config.get('delegation_token_file')
+                if delegation_token_location is None:
+                    raise ValueError('ERROR: Please specify the location of the delegation_token_file in the config.')
+                expanded_delegation_token_location = os.path.expanduser(delegation_token_location)
+                if not os.path.exists(expanded_delegation_token_location):
+                    raise IOError("ERROR: delegation_token_file not found at " + expanded_delegation_token_location)
+                with open(expanded_delegation_token_location, 'r') as delegation_token_file:
+                    delegation_token = delegation_token_file.read().strip()
+                signer_kwargs['delegation_token'] = delegation_token
+                if delegation_token is None:
+                    raise ValueError('ERROR: delegation_token was not provided.')
+                signer = oci.auth.signers.InstancePrincipalsDelegationTokenSigner(**signer_kwargs)
+            else:
+                # Normal instance principals
+                signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner(**signer_kwargs)
+        except (ValueError, IOError) as ex:
+            sys.exit(ex)
         except Exception as e:
             sys.exit("ERROR: Failed retrieving certificates from localhost. Instance principal auth is only possible from OCI compute instances. \nException: {}".format(str(e)))
         kwargs['signer'] = signer

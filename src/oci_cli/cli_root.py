@@ -33,7 +33,7 @@ logging.basicConfig(level=logging.WARN)
 
 BMCS_DEPRECATION_NOTICE = """WARNING: Invoking the CLI using 'bmcs' is deprecated and will be removed in future versions, starting in March 2018. To avoid interruption at that time, please move to invoking the CLI using 'oci' instead."""
 
-OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN]
+OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER]
 
 
 def eager_load_cli_rc_file(ctx, param, value):

@@ -48,12 +48,12 @@ compute_management_root_group.add_command(instance_group)
 compute_management_root_group.add_command(instance_configuration_group)
 
 
-@instance_pool_group.command(name=cli_util.override('attach_load_balancer.command_name', 'attach'), help=u"""Attach load balancer to the instance pool.""")
+@instance_pool_group.command(name=cli_util.override('attach_load_balancer.command_name', 'attach'), help=u"""Attach a load balancer to the instance pool.""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to attach to the pool.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to attach to the instance pool.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to add instances to.""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The port value to use when creating the backend set.""")
-@cli_util.option('--vnic-selection', required=True, help=u"""Indicates which vnic on each instance in the pool should be used to associate with the load balancer. possible values are \"PrimaryVnic\" or the displayName of one of the secondary VNICs on the instance configuration that is associated to the instance pool.""")
+@cli_util.option('--vnic-selection', required=True, help=u"""Indicates which VNIC on each instance in the pool should be used to associate with the load balancer. Possible values are \"PrimaryVnic\" or the displayName of one of the secondary VNICs on the instance configuration that is associated with the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -251,8 +251,8 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
 
 @instance_pool_group.command(name=cli_util.override('detach_load_balancer.command_name', 'detach'), help=u"""Detach a load balancer from the instance pool.""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to detach from the pool.""")
-@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to detach from the pool.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to detach from the instance pool.""")
+@cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to detach from the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -923,7 +923,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-configuration-id', help=u"""The OCID of the instance configuration associated to the intance pool.""")
+@cli_util.option('--instance-configuration-id', help=u"""The OCID of the instance configuration associated with the instance pool.""")
 @cli_util.option('--placement-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.
 
 This option is a JSON list with items of type UpdateInstancePoolPlacementConfigurationDetails.  For documentation on UpdateInstancePoolPlacementConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateInstancePoolPlacementConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

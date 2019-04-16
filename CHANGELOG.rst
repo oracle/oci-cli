@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.8 - 2019-04-16
+------------------
+Added
+~~~~~
+* Improve information to customer premise equipment by introducing Customer Reference Name in the VPN Service.
+
+  * (``oci network cpe create --customer-reference-name [text]``)
+  * (``oci network cpe update --customer-reference-name [text]``)
+
+* Improve information to IPSecConnection by introducing Customer Reference Name in the VPN Service.
+
+  * (``oci network ipsecconnection create --customer-reference-name [text]``)
+  * (``oci network ipsecconnection update --customer-reference-name [text]``)
+
+* Improve information to RemorePeeringConnection by introducing Provider Service Key Name in the VPN Service.
+
+  * (``oci network remote-peering-connection create --provider-service-key-name [text]``)
+  * (``oci network remote-peering-connection update --provider-service-key-name [text]``)
+
+* Support Autonomous Database to change the License Type in the Database Service.
+
+  * (``oci db autonomous-database update --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]``)
+
+* Support Autonomous Database to change the whitelistips in the Database Service.
+
+  * (``oci db autonomous-database update --whitelisted-ips '[  "1.1.1.1","2.2.2.2/24" ]'``)
+
+* Content-type auto option for object storage put and bulk-upload commands.
+
+* Tagging support for create Dynamic Group and update Dynamic Group flow as part of the Identity Service
+
+  * (``oci iam dynamic-group create --defined-tags --freeform-tags``)
+  * (``oci iam dynamic-group update --defined-tags --freeform-tags``)
+
+Fixed
+~~~~~
+* Installation issues in Ubuntu 18.04.
+
 2.5.7 - 2019-04-09
 ------------------
 Fixed

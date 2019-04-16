@@ -472,7 +472,7 @@ def verify_native_dependencies():
         python_dep = 'python3-dev' if is_python3 else 'python-dev'
         if distname == 'ubuntu' and version in ['12.04', '14.04'] or distname == 'debian' and version.startswith('7'):
             dep_list = ['libssl-dev', 'libffi-dev', python_dep]
-        elif distname == 'ubuntu' and version in ['15.10', '16.04']or distname == 'debian' and version.startswith('8'):
+        elif distname == 'ubuntu' and version in ['15.10', '16.04', '18.04'] or distname == 'debian' and (version.startswith('8') or version.startswith('10')):
             dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
     elif any(x in distname for x in ['centos', 'rhel', 'red hat']):
         verify_cmd_args = ['rpm', '-q']
@@ -493,7 +493,7 @@ def verify_install_dir_exec_path_conflict(install_dir, exec_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.')
+    parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.', allow_abbrev=False)
     parser.add_argument('--accept-all-defaults', action='store_true',
                         help='If this flag is specified, no user prompts will be displayed and all default prompt responses will be used.')
     parser.add_argument('--optional-features', help="""This input param is used to specify any optional

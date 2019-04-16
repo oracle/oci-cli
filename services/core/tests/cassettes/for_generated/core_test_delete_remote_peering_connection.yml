@@ -5,15 +5,80 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeleteRemotePeeringConnection&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Jun 2018 00:22:10 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Thu, 28 Mar 2019 20:58:40 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0922&apiName=DeleteRemotePeeringConnection&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"3b96ac68-d340-4940-98fa-944d1f4aa38c","request":{"remotePeeringConnectionId":"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaanywuasvkrvjgkvlttx3nl7zhmcyi2x5ck3c6dyp4o3mvhknz6msa"}}]'}
+    headers:
+      Content-Length: ['197']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 20:58:41 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="Midp07AxJ6UvNYUIb0/OZp/XQpD7Pe1CjLGq15eX9tOwr71CdeKYQUf+MtMyfdtyspRXA1lZkt5kCtBlIxPfFv4RfGrDb4Z00cpfxJPr8tUoPRbOYbn09mtsa5dKO9ptmsVHGZJjwSxeCyfp6H/qepNHy0KT3/o1zslvtA+wtSOxG5nYjQnXT/dkiETc/gi6kaq7iwbCBTSZIliexPfuHD7bRGW8NaC0Vfr/QBd5J6W1+GLPMshoNdp5Yf3MjjOkIYj3BVSpFdpjaGOfreP21XpXgyweyZuIxjcn7GlNp8yidVmE9oWlv5vExjI5ju7i/ZXvZiPkHin694RyNZpWLA==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Thu, 28 Mar 2019 20:58:42 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.774]
+      opc-request-id: [4375B5E42C474870A1A5D3E36E8A3261]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.774 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.6+preview.1]
+    method: DELETE
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/remotePeeringConnections/ocid1.remotepeeringconnection.oc1.phx.aaaaaaaanywuasvkrvjgkvlttx3nl7zhmcyi2x5ck3c6dyp4o3mvhknz6msa
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Thu, 28 Mar 2019 20:58:44 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [4375B5E42C474870A1A5D3E36E8A3261/5249BE9D9092CFBDEC8C95A535C3CC49/EA46B3757D72734A1A230FEE1D52511E]
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"FEC61D01EF33437A89F1B1223E0D0BBE\"}",
+      "requestJson": "{\"remotePeeringConnectionId\": \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaanywuasvkrvjgkvlttx3nl7zhmcyi2x5ck3c6dyp4o3mvhknz6msa\"}",
+      "containerId": "3b96ac68-d340-4940-98fa-944d1f4aa38c", "requestClass": "com.oracle.bmc.core.requests.DeleteRemotePeeringConnectionRequest",
+      "responseClass": "com.oracle.bmc.core.responses.DeleteRemotePeeringConnectionResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['458']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0922&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Thu, 28 Mar 2019 20:58:44 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

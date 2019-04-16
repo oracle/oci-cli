@@ -278,7 +278,7 @@ def internet_gateway_group():
     pass
 
 
-@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec tunnels. Creating this connection is one of the steps required when setting up an IPSec VPN. For more information, see [Overview of the Networking Service].
+@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec tunnels. Creating this connection is one of the steps required when setting up an IPSec VPN. For more information, see [IPSec VPN].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -1004,9 +1004,9 @@ After creating the IPSec connection, you need to configure your on-premises rout
 
 To get the status of the tunnels (whether they're up or down), use [GetIPSecConnectionDeviceStatus].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the IPSec connection.""")
-@cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
+@cli_util.option('--cpe-id', required=True, help=u"""The OCID of the [Cpe] object.""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
-@cli_util.option('--static-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address.
+@cli_util.option('--static-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. At least one route must be included. A static route's CIDR must not be a multicast address or class E address.
 
 Example: `10.0.1.0/24`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1016,6 +1016,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cpe-local-identifier', help=u"""Your identifier for your CPE device. Can be either an IP address or a hostname (specifically, the fully qualified domain name (FQDN)). The type of identifier you provide here must correspond to the value for `cpeLocalIdentifierType`.
+
+If you don't provide a value, the `ipAddress` attribute for the [Cpe] object specified by `cpeId` is used as the `cpeLocalIdentifier`.
+
+Example IP address: `10.0.3.3`
+
+Example hostname: `cpe.example.com`""")
+@cli_util.option('--cpe-local-identifier-type', type=custom_types.CliCaseInsensitiveChoice(["IP_ADDRESS", "HOSTNAME"]), help=u"""The type of identifier for your CPE device. The value you provide here must correspond to the value for `cpeLocalIdentifier`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1024,7 +1032,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
 @cli_util.wrap_exceptions
-def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, static_routes, defined_tags, display_name, freeform_tags):
+def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, static_routes, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type):
 
     kwargs = {}
 
@@ -1042,6 +1050,12 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if cpe_local_identifier is not None:
+        details['cpeLocalIdentifier'] = cpe_local_identifier
+
+    if cpe_local_identifier_type is not None:
+        details['cpeLocalIdentifierType'] = cpe_local_identifier_type
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_ip_sec_connection(
@@ -1636,7 +1650,11 @@ You can also add a DNS label for the subnet, which is required if you want the I
 Example: `172.16.1.0/24`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the subnet.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN to contain the subnet.""")
-@cli_util.option('--availability-domain', help=u"""The availability domain to contain the subnet.
+@cli_util.option('--availability-domain', help=u"""Controls whether the subnet is regional or specific to an availability domain. Oracle recommends creating regional subnets because they're more flexible and make it easier to implement failover across availability domains. Originally, AD-specific subnets were the only kind available to use.
+
+To create a regional subnet, omit this attribute. Then any resources later created in this subnet (such as a Compute instance) can be created in any availability domain in the region.
+
+To instead create an AD-specific subnet, set this attribute to the availability domain you want this subnet to be in. Then any resources later created in this subnet can only be created in that availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1656,7 +1674,7 @@ Example: `subnet123`""")
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--prohibit-public-ip-on-vnic', type=click.BOOL, help=u"""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch or VNIC creation (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (that is, it's a private subnet).
 
-Example: `true`""")
+ Example: `true`""")
 @cli_util.option('--route-table-id', help=u"""The OCID of the route table the subnet will use. If you don't provide a value, the subnet uses the VCN's default route table.""")
 @cli_util.option('--security-list-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the security list or lists the subnet will use. If you don't provide a value, the subnet uses the VCN's default security list. Remember that security lists are associated *with the subnet*, but the rules are applied to the individual VNICs in the subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3305,9 +3323,9 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
     cli_util.render_response(result, ctx)
 
 
-@fast_connect_provider_service_key_group.command(name=cli_util.override('get_fast_connect_provider_service_key.command_name', 'get'), help=u"""Gets the specified provider service key's information.""")
+@fast_connect_provider_service_key_group.command(name=cli_util.override('get_fast_connect_provider_service_key.command_name', 'get'), help=u"""Gets the specified provider service key's information. Use this operation to validate a provider service key. An invalid key returns a 404 error.""")
 @cli_util.option('--provider-service-id', required=True, help=u"""The OCID of the provider service.""")
-@cli_util.option('--provider-service-key-name', required=True, help=u"""The provider service key name.""")
+@cli_util.option('--provider-service-key-name', required=True, help=u"""The provider service key that the provider gives you when you set up a virtual circuit connection from the provider to Oracle Cloud Infrastructure. You can set up that connection and get your provider service key at the provider's website or portal. For the portal location, see the `description` attribute of the [FastConnectProviderService].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4563,9 +4581,7 @@ If you're listing all the private IPs associated with a given subnet or VNIC, th
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--ip-address', help=u"""An IP address.
-
-Example: `10.0.3.3`""")
+@cli_util.option('--ip-address', help=u"""An IP address. Example: `10.0.3.3`""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the subnet.""")
 @cli_util.option('--vnic-id', help=u"""The OCID of the VNIC.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -5731,23 +5747,32 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cpe-local-identifier', help=u"""Your identifier for your CPE device. Can be either an IP address or a hostname (specifically, the fully qualified domain name (FQDN)). The type of identifier you provide here must correspond to the value for `cpeLocalIdentifierType`.
+
+Example IP address: `10.0.3.3`
+
+Example hostname: `cpe.example.com`""")
+@cli_util.option('--cpe-local-identifier-type', type=custom_types.CliCaseInsensitiveChoice(["IP_ADDRESS", "HOSTNAME"]), help=u"""The type of identifier for your CPE device. The value you provide here must correspond to the value for `cpeLocalIdentifier`.""")
+@cli_util.option('--static-routes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. If you provide this attribute, it replaces the entire current set of static routes. A static route's CIDR must not be a multicast address or class E address.
+
+Example: `10.0.1.0/24`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
 @cli_util.wrap_exceptions
-def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, defined_tags, display_name, freeform_tags, if_match):
+def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type, static_routes, if_match):
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or static_routes:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and static-routes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5764,6 +5789,15 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if cpe_local_identifier is not None:
+        details['cpeLocalIdentifier'] = cpe_local_identifier
+
+    if cpe_local_identifier_type is not None:
+        details['cpeLocalIdentifierType'] = cpe_local_identifier_type
+
+    if static_routes is not None:
+        details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_ip_sec_connection(

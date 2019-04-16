@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Tue, 18 Dec 2018 19:37:32 GMT']
+      Date: ['Tue, 16 Oct 2018 19:17:11 GMT']
       Server: [Jetty(9.2.14.v20151106)]
     status: {code: 200, message: OK}
 - request:
@@ -24,13 +24,13 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.18.4]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0678&apiName=ListInstanceDevices&serviceName=core&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0496&apiName=ListInstanceDevices&serviceName=core&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"58c2212b-ecd7-4cfc-badb-802f30612e33","request":{"instanceId":"ocid1.instance.oc1.phx.abyhqljsrhpychaz6c2lgh2rjsna47gygplkevmeg32g6qqkrbsrcbktvjiq","isAvailable":true,"limit":100}}]'}
+    body: {string: '[{"containerId":"9cbb21ef-6be1-4881-bf4e-a5917e8c6394","request":{"instanceId":"ocid1.instance.oc1.phx.abyhqljs4nnusm6aitq7au4rxurlz4bkwktsn2h7rnuydsf22ouw6lx5e6ia","isAvailable":true,"limit":100}}]'}
     headers:
       Content-Length: ['198']
       Content-Type: [application/json]
-      Date: ['Tue, 18 Dec 2018 19:37:32 GMT']
+      Date: ['Tue, 16 Oct 2018 19:19:22 GMT']
       Server: [Jetty(9.2.14.v20151106)]
     status: {code: 200, message: OK}
 - request:
@@ -39,102 +39,89 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host",keyId="ocidv1:tenancy:oc1:phx:1457633080752:aaaaaaaajuwrfl57l7oa3mtr6hu7hqwcme/ocid1.user.oc1..aaaaaaaajkelakm7otpeswpz7uv57hy6h54ehkbh3cwatue7brax6ynqdzyq/db:b2:e9:59:17:25:16:21:8b:1e:3d:35:5f:0c:b5:d4",signature="Mr2+VJ3lmgxPnisB74R4I/clZkgctDMgOGCY/YsEGwA+dZNEu41PdD2qMEUkWdRAKULO0l04WFLr1YTvgrZtbAi2nN7ys0kLNJ4tcSg8rA/wWP5AVQS+6CvwH1DdxSL4XylOTkppfXuxvbVZ0uU/pUSLgREO8p4dE5XRKMNtDh+HsDWUO81ic7bJlMH+n2d6O/rKiPViZPnwFDhIYPZ3L1ZQigX2bTCcq9bMhhddKLABhTACHtdaEk6P+2+0QvHPIdH4Kfu7Uvx6VJMHWt56oX6FztMShXNRrUQI0zzv0dBRmHWZu36SwtroY1xYB0MTedsViIgFz9H5E9acxP4i4w==",version="1"']
+          host",keyId="ocidv1:tenancy:oc1:phx:1457633080752:aaaaaaaajuwrfl57l7oa3mtr6hu7hqwcme/ocid1.user.oc1..aaaaaaaajkelakm7otpeswpz7uv57hy6h54ehkbh3cwatue7brax6ynqdzyq/db:b2:e9:59:17:25:16:21:8b:1e:3d:35:5f:0c:b5:d4",signature="UaSu8LiXRylhlMlN5JL83Cj/xchZKJY0nP44R+8I9iUlDsRGM9a56MGURwaA5/cUr5NFXe9EjU2SnmELOPQwufhBZBP8euCc4Tbp/J2/cV4Hob7aVh/FwDxvz2LMHNjMAtA5Q4Qm0V1S9fZvJiw7qgz606W3yQjk1TeoA520hS4o5rLUju9ce7alUETUuezPPvNa4rpA8cWrTCaWI9GxL66YhYTgC4bQciHEhgRGSpdmKifD1OZETv82i3CchSb+Uzh2dk0IqoaBE4bb14j2Va/I7c8L9GjwuiYgz1V7K5QwLho2XLBRJ1sKJM3Rtu/1sFUO68jjc29RSuUE+l2whg==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Tue, 18 Dec 2018 19:38:52 GMT']
+      date: ['Tue, 16 Oct 2018 19:21:31 GMT']
       host: [iaas.us-phoenix-1.oraclecloud.com]
       opc-client-info: [Oracle-PythonSDK/2.0.4+preview.1.358]
-      opc-request-id: [A09E4B36266D450797C21154955583E0]
+      opc-request-id: [185F28486F274FB38F73EA221DA3C6A8]
       user-agent: [Oracle-PythonSDK/2.0.4+preview.1.358 (python 3.5.3; x86_64-Darwin)
           Oracle-PythonCLI/2.4.33+preview.1]
     method: GET
-    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/instances/ocid1.instance.oc1.phx.abyhqljsrhpychaz6c2lgh2rjsna47gygplkevmeg32g6qqkrbsrcbktvjiq/devices?isAvailable=True&limit=100
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/instances/ocid1.instance.oc1.phx.abyhqljs4nnusm6aitq7au4rxurlz4bkwktsn2h7rnuydsf22ouw6lx5e6ia/devices?isAvailable=True&limit=100
   response:
-    body: {string: "[ {\n  \"name\" : \"/dev/oracleoci/oraclevdb\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdc\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdd\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevde\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdf\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdg\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdh\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdi\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdj\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdk\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdl\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdm\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdn\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdo\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdp\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdq\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdr\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevds\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdt\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdu\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdv\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdw\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdx\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdy\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdz\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdaa\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdab\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdac\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdad\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdae\",\n  \"isAvailable\"\
-        \ : true\n}, {\n  \"name\" : \"/dev/oracleoci/oraclevdaf\",\n  \"isAvailable\"\
-        \ : true\n} ]"}
+    body: {string: "[ {\n  \"name\" : \"/dev/vdb\",\n  \"isAvailable\" : true\n},\
+        \ {\n  \"name\" : \"/dev/vdc\",\n  \"isAvailable\" : true\n}, {\n  \"name\"\
+        \ : \"/dev/vdd\",\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vde\"\
+        ,\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdf\",\n  \"isAvailable\"\
+        \ : true\n}, {\n  \"name\" : \"/dev/vdg\",\n  \"isAvailable\" : true\n}, {\n\
+        \  \"name\" : \"/dev/vdh\",\n  \"isAvailable\" : true\n}, {\n  \"name\" :\
+        \ \"/dev/vdi\",\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdj\"\
+        ,\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdk\",\n  \"isAvailable\"\
+        \ : true\n}, {\n  \"name\" : \"/dev/vdl\",\n  \"isAvailable\" : true\n}, {\n\
+        \  \"name\" : \"/dev/vdm\",\n  \"isAvailable\" : true\n}, {\n  \"name\" :\
+        \ \"/dev/vdn\",\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdo\"\
+        ,\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdp\",\n  \"isAvailable\"\
+        \ : true\n}, {\n  \"name\" : \"/dev/vdq\",\n  \"isAvailable\" : true\n}, {\n\
+        \  \"name\" : \"/dev/vdr\",\n  \"isAvailable\" : true\n}, {\n  \"name\" :\
+        \ \"/dev/vds\",\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdt\"\
+        ,\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdu\",\n  \"isAvailable\"\
+        \ : true\n}, {\n  \"name\" : \"/dev/vdv\",\n  \"isAvailable\" : true\n}, {\n\
+        \  \"name\" : \"/dev/vdw\",\n  \"isAvailable\" : true\n}, {\n  \"name\" :\
+        \ \"/dev/vdx\",\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdy\"\
+        ,\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdz\",\n  \"isAvailable\"\
+        \ : true\n}, {\n  \"name\" : \"/dev/vdaa\",\n  \"isAvailable\" : true\n},\
+        \ {\n  \"name\" : \"/dev/vdab\",\n  \"isAvailable\" : true\n}, {\n  \"name\"\
+        \ : \"/dev/vdac\",\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdad\"\
+        ,\n  \"isAvailable\" : true\n}, {\n  \"name\" : \"/dev/vdae\",\n  \"isAvailable\"\
+        \ : true\n}, {\n  \"name\" : \"/dev/vdaf\",\n  \"isAvailable\" : true\n} ]"}
     headers:
       Connection: [keep-alive]
-      Content-Length: ['2085']
+      Content-Length: ['1589']
       Content-Type: [application/json]
-      Date: ['Tue, 18 Dec 2018 19:38:54 GMT']
-      X-Content-Type-Options: [nosniff]
-      opc-request-id: [A09E4B36266D450797C21154955583E0/0BC41A4939FD7EE5016D7D007D5FD43E/DDBAAEE600BF1220D023CB005FBAA3DB]
+      Date: ['Tue, 16 Oct 2018 19:21:31 GMT']
+      opc-request-id: [185F28486F274FB38F73EA221DA3C6A8/8588EBDBFC884D2ABEC7CCFD80C28056/EE7F16515085CA2CB614D15B1FDC9E9D]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"945F416716684A4DA2DFC45F04BC0A99\",
-      \"items\": [{\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdb\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdc\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdd\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevde\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdf\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdg\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdh\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevdi\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdj\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdk\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdl\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevdm\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdn\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdo\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdp\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevdq\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdr\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevds\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdt\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevdu\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdv\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdw\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdx\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevdy\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdz\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdaa\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdab\"}, {\"isAvailable\": true, \"name\":
-      \"/dev/oracleoci/oraclevdac\"}, {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdad\"},
-      {\"isAvailable\": true, \"name\": \"/dev/oracleoci/oraclevdae\"}, {\"isAvailable\":
-      true, \"name\": \"/dev/oracleoci/oraclevdaf\"}]}", "requestJson": "{\"instanceId\":
-      \"ocid1.instance.oc1.phx.abyhqljsrhpychaz6c2lgh2rjsna47gygplkevmeg32g6qqkrbsrcbktvjiq\",
-      \"isAvailable\": true, \"limit\": 100}", "containerId": "58c2212b-ecd7-4cfc-badb-802f30612e33",
+    body: '{"responseJson": "{\"opcRequestId\": \"8520399F4C1F4DC3AC3E0D3018573442\",
+      \"items\": [{\"isAvailable\": true, \"name\": \"/dev/vdb\"}, {\"isAvailable\":
+      true, \"name\": \"/dev/vdc\"}, {\"isAvailable\": true, \"name\": \"/dev/vdd\"},
+      {\"isAvailable\": true, \"name\": \"/dev/vde\"}, {\"isAvailable\": true, \"name\":
+      \"/dev/vdf\"}, {\"isAvailable\": true, \"name\": \"/dev/vdg\"}, {\"isAvailable\":
+      true, \"name\": \"/dev/vdh\"}, {\"isAvailable\": true, \"name\": \"/dev/vdi\"},
+      {\"isAvailable\": true, \"name\": \"/dev/vdj\"}, {\"isAvailable\": true, \"name\":
+      \"/dev/vdk\"}, {\"isAvailable\": true, \"name\": \"/dev/vdl\"}, {\"isAvailable\":
+      true, \"name\": \"/dev/vdm\"}, {\"isAvailable\": true, \"name\": \"/dev/vdn\"},
+      {\"isAvailable\": true, \"name\": \"/dev/vdo\"}, {\"isAvailable\": true, \"name\":
+      \"/dev/vdp\"}, {\"isAvailable\": true, \"name\": \"/dev/vdq\"}, {\"isAvailable\":
+      true, \"name\": \"/dev/vdr\"}, {\"isAvailable\": true, \"name\": \"/dev/vds\"},
+      {\"isAvailable\": true, \"name\": \"/dev/vdt\"}, {\"isAvailable\": true, \"name\":
+      \"/dev/vdu\"}, {\"isAvailable\": true, \"name\": \"/dev/vdv\"}, {\"isAvailable\":
+      true, \"name\": \"/dev/vdw\"}, {\"isAvailable\": true, \"name\": \"/dev/vdx\"},
+      {\"isAvailable\": true, \"name\": \"/dev/vdy\"}, {\"isAvailable\": true, \"name\":
+      \"/dev/vdz\"}, {\"isAvailable\": true, \"name\": \"/dev/vdaa\"}, {\"isAvailable\":
+      true, \"name\": \"/dev/vdab\"}, {\"isAvailable\": true, \"name\": \"/dev/vdac\"},
+      {\"isAvailable\": true, \"name\": \"/dev/vdad\"}, {\"isAvailable\": true, \"name\":
+      \"/dev/vdae\"}, {\"isAvailable\": true, \"name\": \"/dev/vdaf\"}]}", "requestJson":
+      "{\"instanceId\": \"ocid1.instance.oc1.phx.abyhqljs4nnusm6aitq7au4rxurlz4bkwktsn2h7rnuydsf22ouw6lx5e6ia\",
+      \"isAvailable\": true, \"limit\": 100}", "containerId": "9cbb21ef-6be1-4881-bf4e-a5917e8c6394",
       "requestClass": "com.oracle.bmc.core.requests.ListInstanceDevicesRequest", "responseClass":
       "com.oracle.bmc.core.responses.ListInstanceDevicesResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['2481']
+      Content-Length: ['1985']
       User-Agent: [python-requests/2.18.4]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0678&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0496&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Tue, 18 Dec 2018 19:38:54 GMT']
+      Date: ['Tue, 16 Oct 2018 19:21:31 GMT']
       Server: [Jetty(9.2.14.v20151106)]
     status: {code: 200, message: OK}
 version: 1

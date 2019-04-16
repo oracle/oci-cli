@@ -226,9 +226,9 @@ def swift_password_group():
     pass
 
 
-@click.command(cli_util.override('tag_default_group.command_name', 'tag-default'), cls=CommandGroupWithAlias, help="""A document that specifies a default value for a Tag Definition for all resource types created in a Compartment.
+@click.command(cli_util.override('tag_default_group.command_name', 'tag-default'), cls=CommandGroupWithAlias, help="""Tag defaults let you specify a default tag (tagnamespace.tag=\"value\") to apply to all resource types in a specified compartment. The tag default is applied at the time the resource is created. Resources that exist in the compartment before you create the tag default are not tagged. The `TagDefault` object specifies the tag and compartment details.
 
-Tag Defaults are inherited by child compartments. This means that if you set a Tag Default on the root Compartment for a tenancy, all resources are guaranteed to be created with the referenced Tag Definition applied.
+Tag defaults are inherited by child compartments. This means that if you set a tag default on the root compartment for a tenancy, all resources that are created in the tenancy are tagged. For more information about using tag defaults, see [Managing Tag Defaults].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator.""")
 @cli_util.help_option_group
@@ -529,7 +529,7 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
 
-You must also specify a *name* for the dynamic group, which must be unique across all dynamic groups in your tenancy, and cannot be changed. Note that this name has to be also unique accross all groups in your tenancy. You can use this name or the OCID when writing policies that apply to the dynamic group. For more information about policies, see [How Policies Work].
+You must also specify a *name* for the dynamic group, which must be unique across all dynamic groups in your tenancy, and cannot be changed. Note that this name has to be also unique across all groups in your tenancy. You can use this name or the OCID when writing policies that apply to the dynamic group. For more information about policies, see [How Policies Work].
 
 You must also specify a *description* for the dynamic group (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateDynamicGroup].
 
@@ -538,15 +538,17 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @cli_util.option('--name', required=True, help=u"""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed.""")
 @cli_util.option('--matching-rule', required=True, help=u"""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups].""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the group during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
 @cli_util.wrap_exceptions
-def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, matching_rule, description):
+def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, matching_rule, description, freeform_tags, defined_tags):
 
     kwargs = {}
 
@@ -555,6 +557,12 @@ def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     details['name'] = name
     details['matchingRule'] = matching_rule
     details['description'] = description
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('identity', ctx)
     result = client.create_dynamic_group(
@@ -1149,10 +1157,10 @@ def create_tag(ctx, from_json, tag_namespace_id, name, description, freeform_tag
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('create_tag_default.command_name', 'create'), help=u"""Creates a new Tag Default in the specified Compartment for the specified Tag Definition.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the Compartment. The Tag Default will apply to any resource contained in this Compartment.""")
-@cli_util.option('--tag-definition-id', required=True, help=u"""The OCID of the Tag Definition. The Tag Default will always assign a default value for this Tag Definition.""")
-@cli_util.option('--value', required=True, help=u"""The default value for the Tag Definition. This will be applied to all resources created in the Compartment.""")
+@tag_default_group.command(name=cli_util.override('create_tag_default.command_name', 'create'), help=u"""Creates a new tag default in the specified compartment for the specified tag definition.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment. The tag default will be applied to all new resources created in this compartment.""")
+@cli_util.option('--tag-definition-id', required=True, help=u"""The OCID of the tag definition. The tag default will always assign a default value for this tag definition.""")
+@cli_util.option('--value', required=True, help=u"""The default value for the tag definition. This will be applied to all new resources created in the compartment.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1830,8 +1838,8 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('delete_tag_default.command_name', 'delete'), help=u"""Deletes the the specified Tag Default.""")
-@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the Tag Default.""")
+@tag_default_group.command(name=cli_util.override('delete_tag_default.command_name', 'delete'), help=u"""Deletes the the specified tag default.""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2217,8 +2225,8 @@ def get_tag(ctx, from_json, tag_namespace_id, tag_name):
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('get_tag_default.command_name', 'get'), help=u"""Retrieves the specified Tag Default.""")
-@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the Tag Default.""")
+@tag_default_group.command(name=cli_util.override('get_tag_default.command_name', 'get'), help=u"""Retrieves the specified tag default.""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2998,12 +3006,12 @@ def list_swift_passwords(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('list_tag_defaults.command_name', 'list'), help=u"""Lists the Tag Defaults for Tag Definitions in the specified Compartment.""")
+@tag_default_group.command(name=cli_util.override('list_tag_defaults.command_name', 'list'), help=u"""Lists the tag defaults for tag definitions in the specified compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the specified OCID exactly.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--tag-definition-id', help=u"""The OCID of the Tag Definition.""")
+@cli_util.option('--tag-definition-id', help=u"""The OCID of the tag definition.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3546,19 +3554,26 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @cli_util.option('--description', help=u"""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--matching-rule', help=u"""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'DynamicGroup'})
 @cli_util.wrap_exceptions
-def update_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_group_id, description, matching_rule, if_match):
+def update_dynamic_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_group_id, description, matching_rule, freeform_tags, defined_tags, if_match):
 
     if isinstance(dynamic_group_id, six.string_types) and len(dynamic_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -3571,6 +3586,12 @@ def update_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if matching_rule is not None:
         details['matchingRule'] = matching_rule
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('identity', ctx)
     result = client.update_dynamic_group(
@@ -4108,9 +4129,9 @@ def update_tag(ctx, from_json, force, tag_namespace_id, tag_name, description, i
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('update_tag_default.command_name', 'update'), help=u"""Updates the the specified Tag Default. You can presently update the following fields: `value`.""")
-@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the Tag Default.""")
-@cli_util.option('--value', required=True, help=u"""The default value for the Tag Definition. This will be applied to all resources created in the Compartment.""")
+@tag_default_group.command(name=cli_util.override('update_tag_default.command_name', 'update'), help=u"""Updates the the specified tag default. You can update the following field: `value`.""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
+@cli_util.option('--value', required=True, help=u"""The default value for the tag definition. This will be applied to all resources created in the Compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4217,7 +4238,7 @@ def update_tag_namespace(ctx, from_json, force, tag_namespace_id, description, i
 @user_group.command(name=cli_util.override('update_user.command_name', 'update'), help=u"""Updates the description of the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--description', help=u"""The description you assign to the user. Does not have to be unique, and it's changeable.""")
-@cli_util.option('--email', help=u"""The email you assign to the user. Has to be unique across the tenancy.""")
+@cli_util.option('--email', help=u"""The email address you assign to the user. Has to be unique across the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

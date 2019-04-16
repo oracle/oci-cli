@@ -3200,8 +3200,7 @@ Usage: oci network ip-sec-connection [OPTIONS] COMMAND [ARGS]...
 
   A connection between a DRG and CPE. This connection consists of multiple
   IPSec tunnels. Creating this connection is one of the steps required when
-  setting up an IPSec VPN. For more information, see [Overview of the
-  Networking Service].
+  setting up an IPSec VPN. For more information, see [IPSec VPN].
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -3259,7 +3258,7 @@ Usage: oci network ip-sec-connection create [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment to contain the
                                   IPSec connection. [required]
-  --cpe-id TEXT                   The OCID of the CPE. [required]
+  --cpe-id TEXT                   The OCID of the [Cpe] object. [required]
   --drg-id TEXT                   The OCID of the DRG. [required]
   --static-routes COMPLEX TYPE    Static routes to the CPE. At least one route
                                   must be included. The CIDR must not be a
@@ -3312,6 +3311,27 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --cpe-local-identifier TEXT     Your identifier for your CPE device. Can be
+                                  either an IP address or a hostname
+                                  (specifically, the fully qualified domain name
+                                  (FQDN)). The type of identifier you provide
+                                  here must correspond to the value for
+                                  `cpeLocalIdentifierType`.
+                                  
+                                  If you don't
+                                  provide a value, the `ipAddress` attribute for
+                                  the [Cpe] object specified by `cpeId` is used
+                                  as the `cpeLocalIdentifier`.
+                                  
+                                  Example IP
+                                  address: `10.0.3.3`
+                                  
+                                  Example hostname:
+                                  `cpe.example.com`
+  --cpe-local-identifier-type [IP_ADDRESS|HOSTNAME]
+                                  The type of identifier for your CPE device.
+                                  The value you provide here must correspond to
+                                  the value for `cpeLocalIdentifier`.
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -3609,6 +3629,41 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --cpe-local-identifier TEXT     Your identifier for your CPE device. Can be
+                                  either an IP address or a hostname
+                                  (specifically, the fully qualified domain name
+                                  (FQDN)). The type of identifier you provide
+                                  here must correspond to the value for
+                                  `cpeLocalIdentifierType`.
+                                  
+                                  Example IP address:
+                                  `10.0.3.3`
+                                  
+                                  Example hostname:
+                                  `cpe.example.com`
+  --cpe-local-identifier-type [IP_ADDRESS|HOSTNAME]
+                                  The type of identifier for your CPE device.
+                                  The value you provide here must correspond to
+                                  the value for `cpeLocalIdentifier`.
+  --static-routes COMPLEX TYPE    Static routes to the CPE. If you provide this
+                                  attribute, it replaces the entire current set
+                                  of static routes. A static route's CIDR must
+                                  not be a multicast address or class E address.
+                                  Example: `10.0.1.0/24`
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
@@ -3623,6 +3678,41 @@ Options:
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command
                                   line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --cpe-local-identifier TEXT     Your identifier for your CPE device. Can be
+                                  either an IP address or a hostname
+                                  (specifically, the fully qualified domain name
+                                  (FQDN)). The type of identifier you provide
+                                  here must correspond to the value for
+                                  `cpeLocalIdentifierType`.
+                                  
+                                  Example IP address:
+                                  `10.0.3.3`
+                                  
+                                  Example hostname:
+                                  `cpe.example.com`
+  --cpe-local-identifier-type [IP_ADDRESS|HOSTNAME]
+                                  The type of identifier for your CPE device.
+                                  The value you provide here must correspond to
+                                  the value for `cpeLocalIdentifier`.
+  --static-routes COMPLEX TYPE    Static routes to the CPE. If you provide this
+                                  attribute, it replaces the entire current set
+                                  of static routes. A static route's CIDR must
+                                  not be a multicast address or class E address.
+                                  Example: `10.0.1.0/24`
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -4727,9 +4817,7 @@ Options:
                        response header from the previous "List" call. For
                        important details about how pagination works, see [List
                        Pagination].
-  --ip-address TEXT    An IP address.
-                       
-                       Example: `10.0.3.3`
+  --ip-address TEXT    An IP address. Example: `10.0.3.3`
   --subnet-id TEXT     The OCID of the subnet.
   --vnic-id TEXT       The OCID of the VNIC.
   --all                Fetches all pages of results. If you provide this option,
@@ -7599,8 +7687,29 @@ Options:
                                   subnet. [required]
   --vcn-id TEXT                   The OCID of the VCN to contain the subnet.
                                   [required]
-  --availability-domain TEXT      The availability domain to contain the subnet.
-                                  Example: `Uocm:PHX-AD-1`
+  --availability-domain TEXT      Controls whether the subnet is regional or
+                                  specific to an availability domain. Oracle
+                                  recommends creating regional subnets because
+                                  they're more flexible and make it easier to
+                                  implement failover across availability
+                                  domains. Originally, AD-specific subnets were
+                                  the only kind available to use.
+                                  
+                                  To create a
+                                  regional subnet, omit this attribute. Then any
+                                  resources later created in this subnet (such
+                                  as a Compute instance) can be created in any
+                                  availability domain in the region.
+                                  
+                                  To instead
+                                  create an AD-specific subnet, set this
+                                  attribute to the availability domain you want
+                                  this subnet to be in. Then any resources later
+                                  created in this subnet can only be created in
+                                  that availability domain.
+                                  
+                                  Example: `Uocm:PHX-
+                                  AD-1`
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].

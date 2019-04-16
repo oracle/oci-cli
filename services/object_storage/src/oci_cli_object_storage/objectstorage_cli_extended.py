@@ -22,6 +22,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
 from oci_cli_object_storage.generated import objectstorage_cli
 from oci_cli import cli_util
+from mimetypes import guess_type
 
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
@@ -235,7 +236,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--if-match', help='The entity tag to match.')
 @cli_util.option('--content-md5', help='The base-64 encoded MD5 hash of the body.')
 @cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@cli_util.option('--content-type', help='The content type of the object.')
+@cli_util.option('--content-type', help='The content type of the object. If content type is set to auto, then the CLI will guess the content type of the file.')
 @cli_util.option('--content-language', help='The content language of the object.')
 @cli_util.option('--content-encoding', help='The content encoding of the object.')
 @cli_util.option('--force', is_flag=True, help='If the object already exists, overwrite the existing object without a confirmation prompt.')
@@ -318,7 +319,13 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
 
     if content_type is not None:
-        kwargs['content_type'] = content_type
+        # If content type is set to auto, then the CLI will guess the content type of the file.
+        # If we read the contents from stdin, we use name attribute to find the content_type.
+        # If a file path is given, we use the file name to guess the content_type.
+        if content_type == 'auto':
+            kwargs['content_type'], _ = guess_type(name) if file.name == '<stdin>' else guess_type(file.name)
+        else:
+            kwargs['content_type'] = content_type
 
     if content_language is not None:
         kwargs['content_language'] = content_language
@@ -421,7 +428,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 @cli_util.option('--src-dir', required=True, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.')
 @cli_util.option('--object-prefix', help='A prefix to apply to the names of all files being uploaded')
 @cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. This will be applied to all files being uploaded. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@cli_util.option('--content-type', help='The content type to apply to all files being uploaded.')
+@cli_util.option('--content-type', help='The content type to apply to all files being uploaded. If content type is set to auto, then the CLI will guess the content type of the file.')
 @cli_util.option('--content-language', help='The content language to apply to all files being uploaded.')
 @cli_util.option('--content-encoding', help='The content encoding to apply to all files being uploaded.')
 @cli_util.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object would be overwritten.
@@ -493,6 +500,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     """
     # there is existing retry logic for bulk_put so we don't want the Python SDK level retries to interfere / overlap with that
     ctx.obj['no_retry'] = True
+    auto_content_type = False
 
     if include and exclude:
         raise click.UsageError('The --include and --exclude parameters cannot both be provided')
@@ -516,7 +524,11 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     if metadata is not None:
         base_kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
     if content_type is not None:
-        base_kwargs['content_type'] = content_type
+        # If content type is set to auto, then the CLI will guess the content type of the file
+        if content_type == 'auto':
+            auto_content_type = True
+        else:
+            base_kwargs['content_type'] = content_type
     if content_language is not None:
         base_kwargs['content_language'] = content_language
     if content_encoding is not None:
@@ -565,6 +577,10 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
 
             if object_prefix:
                 object_name = '{}{}'.format(object_prefix, object_name)
+
+            # If content type is set to auto, then the CLI will guess the content type of the file
+            if auto_content_type:
+                base_kwargs['content_type'], _ = guess_type(object_name)
 
             try:
                 if not overwrite:

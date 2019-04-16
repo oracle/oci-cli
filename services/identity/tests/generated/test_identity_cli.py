@@ -6280,6 +6280,7 @@ def test_update_dynamic_group(cli_testing_service_client, runner, config_file, c
                         root_command_name, resource_group_command_name,
                         oci_cli.cli_util.override('update_dynamic_group.command_name', 'update')))
 
+            params.append('--force')
             params.extend(['--from-json', input_content])
             try:
                 util.set_admin_pass_phrase()
