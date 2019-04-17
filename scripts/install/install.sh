@@ -5,8 +5,8 @@
 # Example invocation: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
 
 SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/5a96643afa1f3c1e52cc58e4e9a7e75c60b4dda1/scripts/install/install.py"
-FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/9585506e3fa72304aa06fb3bb1417877edd5f1a8/scripts/install/install.py"
+FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/5a96643afa1f3c1e52cc58e4e9a7e75c60b4dda1/scripts/install/install.py"
 _TTY=/dev/tty
 
 # Below is the usage text to be printed when --help is invoked on this script.
