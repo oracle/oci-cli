@@ -493,7 +493,7 @@ def verify_install_dir_exec_path_conflict(install_dir, exec_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.', allow_abbrev=False)
+    parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.')
     parser.add_argument('--accept-all-defaults', action='store_true',
                         help='If this flag is specified, no user prompts will be displayed and all default prompt responses will be used.')
     parser.add_argument('--optional-features', help="""This input param is used to specify any optional
