@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_alarm(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'CreateAlarm'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'CreateAlarm')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_alarm.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_alarm', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_alarm.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_alarm'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_alarm.pem'])
+            config_file = 'tests/resources/config_for_test_create_alarm'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_group.command_name', 'alarm')
@@ -92,6 +116,10 @@ def test_create_alarm(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_alarm.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_alarm.pem')
+                if os.path.exists('tests/resources/config_for_test_create_alarm'):
+                    os.remove('tests/resources/config_for_test_create_alarm')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_create_alarm(cli_testing_service_client, runner, config_file, config_pr
 def test_delete_alarm(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'DeleteAlarm'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'DeleteAlarm')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_alarm.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_alarm', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_alarm.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_alarm'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_alarm.pem'])
+            config_file = 'tests/resources/config_for_test_delete_alarm'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_group.command_name', 'alarm')
@@ -168,6 +220,10 @@ def test_delete_alarm(cli_testing_service_client, runner, config_file, config_pr
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_alarm.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_alarm.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_alarm'):
+                    os.remove('tests/resources/config_for_test_delete_alarm')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -186,6 +242,30 @@ def test_delete_alarm(cli_testing_service_client, runner, config_file, config_pr
 def test_get_alarm(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'GetAlarm'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'GetAlarm')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_alarm.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_alarm', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_alarm.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_alarm'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_alarm.pem'])
+            config_file = 'tests/resources/config_for_test_get_alarm'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_group.command_name', 'alarm')
@@ -243,6 +323,10 @@ def test_get_alarm(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_alarm.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_alarm.pem')
+                if os.path.exists('tests/resources/config_for_test_get_alarm'):
+                    os.remove('tests/resources/config_for_test_get_alarm')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -261,6 +345,30 @@ def test_get_alarm(cli_testing_service_client, runner, config_file, config_profi
 def test_get_alarm_history(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'GetAlarmHistory'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'GetAlarmHistory')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_alarm_history.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_alarm_history', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_alarm_history.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_alarm_history'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_alarm_history.pem'])
+            config_file = 'tests/resources/config_for_test_get_alarm_history'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_history_collection_group.command_name', 'alarm_history_collection')
@@ -318,6 +426,10 @@ def test_get_alarm_history(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_alarm_history.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_alarm_history.pem')
+                if os.path.exists('tests/resources/config_for_test_get_alarm_history'):
+                    os.remove('tests/resources/config_for_test_get_alarm_history')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -336,6 +448,30 @@ def test_get_alarm_history(cli_testing_service_client, runner, config_file, conf
 def test_list_alarms(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'ListAlarms'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'ListAlarms')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_alarms.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_alarms', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_alarms.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_alarms'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_alarms.pem'])
+            config_file = 'tests/resources/config_for_test_list_alarms'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_group.command_name', 'alarm')
@@ -393,6 +529,10 @@ def test_list_alarms(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_alarms.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_alarms.pem')
+                if os.path.exists('tests/resources/config_for_test_list_alarms'):
+                    os.remove('tests/resources/config_for_test_list_alarms')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -411,6 +551,30 @@ def test_list_alarms(cli_testing_service_client, runner, config_file, config_pro
 def test_list_alarms_status(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'ListAlarmsStatus'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'ListAlarmsStatus')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_alarms_status.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_alarms_status', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_alarms_status.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_alarms_status'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_alarms_status.pem'])
+            config_file = 'tests/resources/config_for_test_list_alarms_status'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_status_group.command_name', 'alarm_status')
@@ -468,6 +632,10 @@ def test_list_alarms_status(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_alarms_status.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_alarms_status.pem')
+                if os.path.exists('tests/resources/config_for_test_list_alarms_status'):
+                    os.remove('tests/resources/config_for_test_list_alarms_status')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -486,6 +654,30 @@ def test_list_alarms_status(cli_testing_service_client, runner, config_file, con
 def test_list_metrics(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'ListMetrics'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'ListMetrics')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_metrics.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_metrics', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_metrics.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_metrics'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_metrics.pem'])
+            config_file = 'tests/resources/config_for_test_list_metrics'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('metric_group.command_name', 'metric')
@@ -551,6 +743,10 @@ def test_list_metrics(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_metrics.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_metrics.pem')
+                if os.path.exists('tests/resources/config_for_test_list_metrics'):
+                    os.remove('tests/resources/config_for_test_list_metrics')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -569,6 +765,30 @@ def test_list_metrics(cli_testing_service_client, runner, config_file, config_pr
 def test_post_metric_data(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'PostMetricData'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'PostMetricData')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_post_metric_data.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_post_metric_data', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_post_metric_data.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_post_metric_data'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_post_metric_data.pem'])
+            config_file = 'tests/resources/config_for_test_post_metric_data'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('metric_data_group.command_name', 'metric_data')
@@ -634,6 +854,10 @@ def test_post_metric_data(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_post_metric_data.pem'):
+                    os.remove('tests/resources/keyfile_for_test_post_metric_data.pem')
+                if os.path.exists('tests/resources/config_for_test_post_metric_data'):
+                    os.remove('tests/resources/config_for_test_post_metric_data')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -652,6 +876,30 @@ def test_post_metric_data(cli_testing_service_client, runner, config_file, confi
 def test_remove_alarm_suppression(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'RemoveAlarmSuppression'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'RemoveAlarmSuppression')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_remove_alarm_suppression.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_remove_alarm_suppression', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_remove_alarm_suppression.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_remove_alarm_suppression'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_remove_alarm_suppression.pem'])
+            config_file = 'tests/resources/config_for_test_remove_alarm_suppression'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('suppression_group.command_name', 'suppression')
@@ -709,6 +957,10 @@ def test_remove_alarm_suppression(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_remove_alarm_suppression.pem'):
+                    os.remove('tests/resources/keyfile_for_test_remove_alarm_suppression.pem')
+                if os.path.exists('tests/resources/config_for_test_remove_alarm_suppression'):
+                    os.remove('tests/resources/config_for_test_remove_alarm_suppression')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -727,6 +979,30 @@ def test_remove_alarm_suppression(cli_testing_service_client, runner, config_fil
 def test_summarize_metrics_data(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'SummarizeMetricsData'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'SummarizeMetricsData')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_summarize_metrics_data.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_summarize_metrics_data', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_summarize_metrics_data.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_summarize_metrics_data'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_summarize_metrics_data.pem'])
+            config_file = 'tests/resources/config_for_test_summarize_metrics_data'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('metric_data_group.command_name', 'metric_data')
@@ -792,6 +1068,10 @@ def test_summarize_metrics_data(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_summarize_metrics_data.pem'):
+                    os.remove('tests/resources/keyfile_for_test_summarize_metrics_data.pem')
+                if os.path.exists('tests/resources/config_for_test_summarize_metrics_data'):
+                    os.remove('tests/resources/config_for_test_summarize_metrics_data')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -810,6 +1090,30 @@ def test_summarize_metrics_data(cli_testing_service_client, runner, config_file,
 def test_update_alarm(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('monitoring', 'UpdateAlarm'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('monitoring', 'Monitoring', 'UpdateAlarm')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_alarm.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_alarm', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_alarm.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_alarm'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_alarm.pem'])
+            config_file = 'tests/resources/config_for_test_update_alarm'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('monitoring_root_group.command_name', 'monitoring')
     resource_group_command_name = oci_cli.cli_util.override('alarm_group.command_name', 'alarm')
@@ -876,6 +1180,10 @@ def test_update_alarm(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_alarm.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_alarm.pem')
+                if os.path.exists('tests/resources/config_for_test_update_alarm'):
+                    os.remove('tests/resources/config_for_test_update_alarm')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -891,7 +1199,7 @@ def test_update_alarm(cli_testing_service_client, runner, config_file, config_pr
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

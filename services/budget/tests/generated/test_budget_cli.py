@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_alert_rule(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'CreateAlertRule'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'CreateAlertRule')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_alert_rule.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_alert_rule', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_alert_rule.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_alert_rule'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_alert_rule.pem'])
+            config_file = 'tests/resources/config_for_test_create_alert_rule'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('alert_rule_group.command_name', 'alert_rule')
@@ -92,6 +116,10 @@ def test_create_alert_rule(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_alert_rule.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_alert_rule.pem')
+                if os.path.exists('tests/resources/config_for_test_create_alert_rule'):
+                    os.remove('tests/resources/config_for_test_create_alert_rule')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_create_alert_rule(cli_testing_service_client, runner, config_file, conf
 def test_create_budget(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'CreateBudget'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'CreateBudget')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_budget.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_budget', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_budget.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_budget'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_budget.pem'])
+            config_file = 'tests/resources/config_for_test_create_budget'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('budget_group.command_name', 'budget')
@@ -175,6 +227,10 @@ def test_create_budget(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_budget.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_budget.pem')
+                if os.path.exists('tests/resources/config_for_test_create_budget'):
+                    os.remove('tests/resources/config_for_test_create_budget')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -193,6 +249,30 @@ def test_create_budget(cli_testing_service_client, runner, config_file, config_p
 def test_delete_alert_rule(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'DeleteAlertRule'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'DeleteAlertRule')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_alert_rule.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_alert_rule', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_alert_rule.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_alert_rule'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_alert_rule.pem'])
+            config_file = 'tests/resources/config_for_test_delete_alert_rule'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('alert_rule_group.command_name', 'alert_rule')
@@ -251,6 +331,10 @@ def test_delete_alert_rule(cli_testing_service_client, runner, config_file, conf
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_alert_rule.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_alert_rule.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_alert_rule'):
+                    os.remove('tests/resources/config_for_test_delete_alert_rule')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -269,6 +353,30 @@ def test_delete_alert_rule(cli_testing_service_client, runner, config_file, conf
 def test_delete_budget(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'DeleteBudget'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'DeleteBudget')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_budget.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_budget', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_budget.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_budget'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_budget.pem'])
+            config_file = 'tests/resources/config_for_test_delete_budget'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('budget_group.command_name', 'budget')
@@ -327,6 +435,10 @@ def test_delete_budget(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_budget.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_budget.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_budget'):
+                    os.remove('tests/resources/config_for_test_delete_budget')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -345,6 +457,30 @@ def test_delete_budget(cli_testing_service_client, runner, config_file, config_p
 def test_get_alert_rule(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'GetAlertRule'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'GetAlertRule')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_alert_rule.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_alert_rule', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_alert_rule.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_alert_rule'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_alert_rule.pem'])
+            config_file = 'tests/resources/config_for_test_get_alert_rule'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('alert_rule_group.command_name', 'alert_rule')
@@ -402,6 +538,10 @@ def test_get_alert_rule(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_alert_rule.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_alert_rule.pem')
+                if os.path.exists('tests/resources/config_for_test_get_alert_rule'):
+                    os.remove('tests/resources/config_for_test_get_alert_rule')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -420,6 +560,30 @@ def test_get_alert_rule(cli_testing_service_client, runner, config_file, config_
 def test_get_budget(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'GetBudget'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'GetBudget')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_budget.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_budget', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_budget.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_budget'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_budget.pem'])
+            config_file = 'tests/resources/config_for_test_get_budget'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('budget_group.command_name', 'budget')
@@ -477,6 +641,10 @@ def test_get_budget(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_budget.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_budget.pem')
+                if os.path.exists('tests/resources/config_for_test_get_budget'):
+                    os.remove('tests/resources/config_for_test_get_budget')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -495,6 +663,30 @@ def test_get_budget(cli_testing_service_client, runner, config_file, config_prof
 def test_list_alert_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'ListAlertRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'ListAlertRules')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_alert_rules.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_alert_rules', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_alert_rules.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_alert_rules'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_alert_rules.pem'])
+            config_file = 'tests/resources/config_for_test_list_alert_rules'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('alert_rule_group.command_name', 'alert_rule')
@@ -552,6 +744,10 @@ def test_list_alert_rules(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_alert_rules.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_alert_rules.pem')
+                if os.path.exists('tests/resources/config_for_test_list_alert_rules'):
+                    os.remove('tests/resources/config_for_test_list_alert_rules')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -570,6 +766,30 @@ def test_list_alert_rules(cli_testing_service_client, runner, config_file, confi
 def test_list_budgets(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'ListBudgets'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'ListBudgets')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_budgets.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_budgets', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_budgets.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_budgets'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_budgets.pem'])
+            config_file = 'tests/resources/config_for_test_list_budgets'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('budget_group.command_name', 'budget')
@@ -627,6 +847,10 @@ def test_list_budgets(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_budgets.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_budgets.pem')
+                if os.path.exists('tests/resources/config_for_test_list_budgets'):
+                    os.remove('tests/resources/config_for_test_list_budgets')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -645,6 +869,30 @@ def test_list_budgets(cli_testing_service_client, runner, config_file, config_pr
 def test_update_alert_rule(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'UpdateAlertRule'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'UpdateAlertRule')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_alert_rule.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_alert_rule', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_alert_rule.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_alert_rule'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_alert_rule.pem'])
+            config_file = 'tests/resources/config_for_test_update_alert_rule'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('alert_rule_group.command_name', 'alert_rule')
@@ -711,6 +959,10 @@ def test_update_alert_rule(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_alert_rule.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_alert_rule.pem')
+                if os.path.exists('tests/resources/config_for_test_update_alert_rule'):
+                    os.remove('tests/resources/config_for_test_update_alert_rule')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -729,6 +981,30 @@ def test_update_alert_rule(cli_testing_service_client, runner, config_file, conf
 def test_update_budget(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('budget', 'UpdateBudget'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('budget', 'Budget', 'UpdateBudget')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_budget.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_budget', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_budget.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_budget'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_budget.pem'])
+            config_file = 'tests/resources/config_for_test_update_budget'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('budget_root_group.command_name', 'budget')
     resource_group_command_name = oci_cli.cli_util.override('budget_group.command_name', 'budget')
@@ -795,6 +1071,10 @@ def test_update_budget(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_budget.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_budget.pem')
+                if os.path.exists('tests/resources/config_for_test_update_budget'):
+                    os.remove('tests/resources/config_for_test_update_budget')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -810,7 +1090,7 @@ def test_update_budget(cli_testing_service_client, runner, config_file, config_p
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

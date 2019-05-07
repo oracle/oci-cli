@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_accept_recommendations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'AcceptRecommendations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'AcceptRecommendations')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_accept_recommendations.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_accept_recommendations', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_accept_recommendations.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_accept_recommendations'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_accept_recommendations.pem'])
+            config_file = 'tests/resources/config_for_test_accept_recommendations'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('recommendation_group.command_name', 'recommendation')
@@ -84,6 +108,10 @@ def test_accept_recommendations(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_accept_recommendations.pem'):
+                    os.remove('tests/resources/keyfile_for_test_accept_recommendations.pem')
+                if os.path.exists('tests/resources/config_for_test_accept_recommendations'):
+                    os.remove('tests/resources/config_for_test_accept_recommendations')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -102,6 +130,30 @@ def test_accept_recommendations(cli_testing_service_client, runner, config_file,
 def test_cancel_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'CancelWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'CancelWorkRequest')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_cancel_work_request.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_cancel_work_request', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_cancel_work_request.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_cancel_work_request'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_cancel_work_request.pem'])
+            config_file = 'tests/resources/config_for_test_cancel_work_request'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('work_request_group.command_name', 'work_request')
@@ -160,6 +212,10 @@ def test_cancel_work_request(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_cancel_work_request.pem'):
+                    os.remove('tests/resources/keyfile_for_test_cancel_work_request.pem')
+                if os.path.exists('tests/resources/config_for_test_cancel_work_request'):
+                    os.remove('tests/resources/config_for_test_cancel_work_request')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -178,6 +234,30 @@ def test_cancel_work_request(cli_testing_service_client, runner, config_file, co
 def test_create_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'CreateCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'CreateCertificate')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_certificate.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_certificate', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_certificate.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_certificate'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_certificate.pem'])
+            config_file = 'tests/resources/config_for_test_create_certificate'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('certificate_group.command_name', 'certificate')
@@ -243,6 +323,10 @@ def test_create_certificate(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_certificate.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_certificate.pem')
+                if os.path.exists('tests/resources/config_for_test_create_certificate'):
+                    os.remove('tests/resources/config_for_test_create_certificate')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -261,6 +345,30 @@ def test_create_certificate(cli_testing_service_client, runner, config_file, con
 def test_create_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'CreateWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'CreateWaasPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_waas_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_waas_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_waas_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_waas_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_waas_policy.pem'])
+            config_file = 'tests/resources/config_for_test_create_waas_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waas_policy_group.command_name', 'waas_policy')
@@ -326,6 +434,10 @@ def test_create_waas_policy(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_waas_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_waas_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_create_waas_policy'):
+                    os.remove('tests/resources/config_for_test_create_waas_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -344,6 +456,30 @@ def test_create_waas_policy(cli_testing_service_client, runner, config_file, con
 def test_delete_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'DeleteCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'DeleteCertificate')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_certificate.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_certificate', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_certificate.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_certificate'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_certificate.pem'])
+            config_file = 'tests/resources/config_for_test_delete_certificate'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('certificate_group.command_name', 'certificate')
@@ -402,6 +538,10 @@ def test_delete_certificate(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_certificate.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_certificate.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_certificate'):
+                    os.remove('tests/resources/config_for_test_delete_certificate')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -420,6 +560,30 @@ def test_delete_certificate(cli_testing_service_client, runner, config_file, con
 def test_delete_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'DeleteWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'DeleteWaasPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_waas_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_waas_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_waas_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_waas_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_waas_policy.pem'])
+            config_file = 'tests/resources/config_for_test_delete_waas_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waas_policy_group.command_name', 'waas_policy')
@@ -478,6 +642,10 @@ def test_delete_waas_policy(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_waas_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_waas_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_waas_policy'):
+                    os.remove('tests/resources/config_for_test_delete_waas_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -496,6 +664,30 @@ def test_delete_waas_policy(cli_testing_service_client, runner, config_file, con
 def test_get_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetCertificate')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_certificate.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_certificate', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_certificate.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_certificate'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_certificate.pem'])
+            config_file = 'tests/resources/config_for_test_get_certificate'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('certificate_group.command_name', 'certificate')
@@ -553,6 +745,10 @@ def test_get_certificate(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_certificate.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_certificate.pem')
+                if os.path.exists('tests/resources/config_for_test_get_certificate'):
+                    os.remove('tests/resources/config_for_test_get_certificate')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -571,6 +767,30 @@ def test_get_certificate(cli_testing_service_client, runner, config_file, config
 def test_get_device_fingerprint_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetDeviceFingerprintChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetDeviceFingerprintChallenge')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_device_fingerprint_challenge.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_device_fingerprint_challenge', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_device_fingerprint_challenge.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_device_fingerprint_challenge'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_device_fingerprint_challenge.pem'])
+            config_file = 'tests/resources/config_for_test_get_device_fingerprint_challenge'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('device_fingerprint_challenge_group.command_name', 'device_fingerprint_challenge')
@@ -628,6 +848,10 @@ def test_get_device_fingerprint_challenge(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_device_fingerprint_challenge.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_device_fingerprint_challenge.pem')
+                if os.path.exists('tests/resources/config_for_test_get_device_fingerprint_challenge'):
+                    os.remove('tests/resources/config_for_test_get_device_fingerprint_challenge')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -646,6 +870,30 @@ def test_get_device_fingerprint_challenge(cli_testing_service_client, runner, co
 def test_get_human_interaction_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetHumanInteractionChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetHumanInteractionChallenge')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_human_interaction_challenge.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_human_interaction_challenge', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_human_interaction_challenge.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_human_interaction_challenge'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_human_interaction_challenge.pem'])
+            config_file = 'tests/resources/config_for_test_get_human_interaction_challenge'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('human_interaction_challenge_group.command_name', 'human_interaction_challenge')
@@ -703,6 +951,10 @@ def test_get_human_interaction_challenge(cli_testing_service_client, runner, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_human_interaction_challenge.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_human_interaction_challenge.pem')
+                if os.path.exists('tests/resources/config_for_test_get_human_interaction_challenge'):
+                    os.remove('tests/resources/config_for_test_get_human_interaction_challenge')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -721,6 +973,30 @@ def test_get_human_interaction_challenge(cli_testing_service_client, runner, con
 def test_get_js_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetJsChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetJsChallenge')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_js_challenge.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_js_challenge', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_js_challenge.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_js_challenge'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_js_challenge.pem'])
+            config_file = 'tests/resources/config_for_test_get_js_challenge'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('js_challenge_group.command_name', 'js_challenge')
@@ -778,6 +1054,10 @@ def test_get_js_challenge(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_js_challenge.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_js_challenge.pem')
+                if os.path.exists('tests/resources/config_for_test_get_js_challenge'):
+                    os.remove('tests/resources/config_for_test_get_js_challenge')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -796,6 +1076,30 @@ def test_get_js_challenge(cli_testing_service_client, runner, config_file, confi
 def test_get_policy_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetPolicyConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetPolicyConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_policy_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_policy_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_policy_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_policy_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_policy_config.pem'])
+            config_file = 'tests/resources/config_for_test_get_policy_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('policy_config_group.command_name', 'policy_config')
@@ -853,6 +1157,10 @@ def test_get_policy_config(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_policy_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_policy_config.pem')
+                if os.path.exists('tests/resources/config_for_test_get_policy_config'):
+                    os.remove('tests/resources/config_for_test_get_policy_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -871,6 +1179,30 @@ def test_get_policy_config(cli_testing_service_client, runner, config_file, conf
 def test_get_protection_rule(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetProtectionRule'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetProtectionRule')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_protection_rule.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_protection_rule', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_protection_rule.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_protection_rule'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_protection_rule.pem'])
+            config_file = 'tests/resources/config_for_test_get_protection_rule'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('protection_rule_group.command_name', 'protection_rule')
@@ -928,6 +1260,10 @@ def test_get_protection_rule(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_protection_rule.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_protection_rule.pem')
+                if os.path.exists('tests/resources/config_for_test_get_protection_rule'):
+                    os.remove('tests/resources/config_for_test_get_protection_rule')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -946,6 +1282,30 @@ def test_get_protection_rule(cli_testing_service_client, runner, config_file, co
 def test_get_protection_settings(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetProtectionSettings'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetProtectionSettings')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_protection_settings.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_protection_settings', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_protection_settings.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_protection_settings'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_protection_settings.pem'])
+            config_file = 'tests/resources/config_for_test_get_protection_settings'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('protection_settings_group.command_name', 'protection_settings')
@@ -1003,6 +1363,10 @@ def test_get_protection_settings(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_protection_settings.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_protection_settings.pem')
+                if os.path.exists('tests/resources/config_for_test_get_protection_settings'):
+                    os.remove('tests/resources/config_for_test_get_protection_settings')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1021,6 +1385,30 @@ def test_get_protection_settings(cli_testing_service_client, runner, config_file
 def test_get_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetWaasPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_waas_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_waas_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_waas_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_waas_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_waas_policy.pem'])
+            config_file = 'tests/resources/config_for_test_get_waas_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waas_policy_group.command_name', 'waas_policy')
@@ -1078,6 +1466,10 @@ def test_get_waas_policy(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_waas_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_waas_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_waas_policy'):
+                    os.remove('tests/resources/config_for_test_get_waas_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1096,6 +1488,30 @@ def test_get_waas_policy(cli_testing_service_client, runner, config_file, config
 def test_get_waf_address_rate_limiting(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWafAddressRateLimiting'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetWafAddressRateLimiting')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_waf_address_rate_limiting.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_waf_address_rate_limiting', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_waf_address_rate_limiting.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_waf_address_rate_limiting'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_waf_address_rate_limiting.pem'])
+            config_file = 'tests/resources/config_for_test_get_waf_address_rate_limiting'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('address_rate_limiting_group.command_name', 'address_rate_limiting')
@@ -1153,6 +1569,10 @@ def test_get_waf_address_rate_limiting(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_waf_address_rate_limiting.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_waf_address_rate_limiting.pem')
+                if os.path.exists('tests/resources/config_for_test_get_waf_address_rate_limiting'):
+                    os.remove('tests/resources/config_for_test_get_waf_address_rate_limiting')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1171,6 +1591,30 @@ def test_get_waf_address_rate_limiting(cli_testing_service_client, runner, confi
 def test_get_waf_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWafConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetWafConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_waf_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_waf_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_waf_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_waf_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_waf_config.pem'])
+            config_file = 'tests/resources/config_for_test_get_waf_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waf_config_group.command_name', 'waf_config')
@@ -1228,6 +1672,10 @@ def test_get_waf_config(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_waf_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_waf_config.pem')
+                if os.path.exists('tests/resources/config_for_test_get_waf_config'):
+                    os.remove('tests/resources/config_for_test_get_waf_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1246,6 +1694,30 @@ def test_get_waf_config(cli_testing_service_client, runner, config_file, config_
 def test_get_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'GetWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'GetWorkRequest')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_work_request.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_work_request', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_work_request.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_work_request'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_work_request.pem'])
+            config_file = 'tests/resources/config_for_test_get_work_request'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('work_request_group.command_name', 'work_request')
@@ -1303,6 +1775,10 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_work_request.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_work_request.pem')
+                if os.path.exists('tests/resources/config_for_test_get_work_request'):
+                    os.remove('tests/resources/config_for_test_get_work_request')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1321,6 +1797,30 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
 def test_list_access_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListAccessRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListAccessRules')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_access_rules.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_access_rules', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_access_rules.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_access_rules'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_access_rules.pem'])
+            config_file = 'tests/resources/config_for_test_list_access_rules'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('access_rule_group.command_name', 'access_rule')
@@ -1378,6 +1878,10 @@ def test_list_access_rules(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_access_rules.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_access_rules.pem')
+                if os.path.exists('tests/resources/config_for_test_list_access_rules'):
+                    os.remove('tests/resources/config_for_test_list_access_rules')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1396,6 +1900,30 @@ def test_list_access_rules(cli_testing_service_client, runner, config_file, conf
 def test_list_captchas(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListCaptchas'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListCaptchas')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_captchas.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_captchas', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_captchas.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_captchas'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_captchas.pem'])
+            config_file = 'tests/resources/config_for_test_list_captchas'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('captcha_group.command_name', 'captcha')
@@ -1453,6 +1981,10 @@ def test_list_captchas(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_captchas.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_captchas.pem')
+                if os.path.exists('tests/resources/config_for_test_list_captchas'):
+                    os.remove('tests/resources/config_for_test_list_captchas')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1471,6 +2003,30 @@ def test_list_captchas(cli_testing_service_client, runner, config_file, config_p
 def test_list_certificates(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListCertificates'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListCertificates')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_certificates.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_certificates', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_certificates.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_certificates'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_certificates.pem'])
+            config_file = 'tests/resources/config_for_test_list_certificates'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('certificate_group.command_name', 'certificate')
@@ -1528,6 +2084,10 @@ def test_list_certificates(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_certificates.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_certificates.pem')
+                if os.path.exists('tests/resources/config_for_test_list_certificates'):
+                    os.remove('tests/resources/config_for_test_list_certificates')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1546,6 +2106,30 @@ def test_list_certificates(cli_testing_service_client, runner, config_file, conf
 def test_list_edge_subnets(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListEdgeSubnets'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListEdgeSubnets')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_edge_subnets.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_edge_subnets', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_edge_subnets.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_edge_subnets'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_edge_subnets.pem'])
+            config_file = 'tests/resources/config_for_test_list_edge_subnets'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('edge_subnet_group.command_name', 'edge_subnet')
@@ -1603,6 +2187,10 @@ def test_list_edge_subnets(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_edge_subnets.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_edge_subnets.pem')
+                if os.path.exists('tests/resources/config_for_test_list_edge_subnets'):
+                    os.remove('tests/resources/config_for_test_list_edge_subnets')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1621,6 +2209,30 @@ def test_list_edge_subnets(cli_testing_service_client, runner, config_file, conf
 def test_list_good_bots(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListGoodBots'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListGoodBots')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_good_bots.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_good_bots', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_good_bots.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_good_bots'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_good_bots.pem'])
+            config_file = 'tests/resources/config_for_test_list_good_bots'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('good_bot_group.command_name', 'good_bot')
@@ -1678,6 +2290,10 @@ def test_list_good_bots(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_good_bots.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_good_bots.pem')
+                if os.path.exists('tests/resources/config_for_test_list_good_bots'):
+                    os.remove('tests/resources/config_for_test_list_good_bots')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1696,6 +2312,30 @@ def test_list_good_bots(cli_testing_service_client, runner, config_file, config_
 def test_list_protection_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListProtectionRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListProtectionRules')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_protection_rules.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_protection_rules', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_protection_rules.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_protection_rules'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_protection_rules.pem'])
+            config_file = 'tests/resources/config_for_test_list_protection_rules'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('protection_rule_group.command_name', 'protection_rule')
@@ -1753,6 +2393,10 @@ def test_list_protection_rules(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_protection_rules.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_protection_rules.pem')
+                if os.path.exists('tests/resources/config_for_test_list_protection_rules'):
+                    os.remove('tests/resources/config_for_test_list_protection_rules')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1771,6 +2415,30 @@ def test_list_protection_rules(cli_testing_service_client, runner, config_file, 
 def test_list_recommendations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListRecommendations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListRecommendations')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_recommendations.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_recommendations', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_recommendations.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_recommendations'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_recommendations.pem'])
+            config_file = 'tests/resources/config_for_test_list_recommendations'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('recommendation_group.command_name', 'recommendation')
@@ -1828,6 +2496,10 @@ def test_list_recommendations(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_recommendations.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_recommendations.pem')
+                if os.path.exists('tests/resources/config_for_test_list_recommendations'):
+                    os.remove('tests/resources/config_for_test_list_recommendations')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1846,6 +2518,30 @@ def test_list_recommendations(cli_testing_service_client, runner, config_file, c
 def test_list_threat_feeds(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListThreatFeeds'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListThreatFeeds')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_threat_feeds.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_threat_feeds', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_threat_feeds.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_threat_feeds'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_threat_feeds.pem'])
+            config_file = 'tests/resources/config_for_test_list_threat_feeds'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('threat_feed_group.command_name', 'threat_feed')
@@ -1903,6 +2599,10 @@ def test_list_threat_feeds(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_threat_feeds.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_threat_feeds.pem')
+                if os.path.exists('tests/resources/config_for_test_list_threat_feeds'):
+                    os.remove('tests/resources/config_for_test_list_threat_feeds')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1921,6 +2621,30 @@ def test_list_threat_feeds(cli_testing_service_client, runner, config_file, conf
 def test_list_waas_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWaasPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWaasPolicies')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_waas_policies.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_waas_policies', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_waas_policies.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_waas_policies'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_waas_policies.pem'])
+            config_file = 'tests/resources/config_for_test_list_waas_policies'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waas_policy_group.command_name', 'waas_policy')
@@ -1978,6 +2702,10 @@ def test_list_waas_policies(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_waas_policies.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_waas_policies.pem')
+                if os.path.exists('tests/resources/config_for_test_list_waas_policies'):
+                    os.remove('tests/resources/config_for_test_list_waas_policies')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1996,6 +2724,30 @@ def test_list_waas_policies(cli_testing_service_client, runner, config_file, con
 def test_list_waf_blocked_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafBlockedRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWafBlockedRequests')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_waf_blocked_requests.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_waf_blocked_requests', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_waf_blocked_requests.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_waf_blocked_requests'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_waf_blocked_requests.pem'])
+            config_file = 'tests/resources/config_for_test_list_waf_blocked_requests'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waf_blocked_request_group.command_name', 'waf_blocked_request')
@@ -2053,6 +2805,10 @@ def test_list_waf_blocked_requests(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_waf_blocked_requests.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_waf_blocked_requests.pem')
+                if os.path.exists('tests/resources/config_for_test_list_waf_blocked_requests'):
+                    os.remove('tests/resources/config_for_test_list_waf_blocked_requests')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2071,6 +2827,30 @@ def test_list_waf_blocked_requests(cli_testing_service_client, runner, config_fi
 def test_list_waf_logs(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafLogs'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWafLogs')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_waf_logs.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_waf_logs', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_waf_logs.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_waf_logs'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_waf_logs.pem'])
+            config_file = 'tests/resources/config_for_test_list_waf_logs'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waf_log_group.command_name', 'waf_log')
@@ -2128,6 +2908,10 @@ def test_list_waf_logs(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_waf_logs.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_waf_logs.pem')
+                if os.path.exists('tests/resources/config_for_test_list_waf_logs'):
+                    os.remove('tests/resources/config_for_test_list_waf_logs')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2146,6 +2930,30 @@ def test_list_waf_logs(cli_testing_service_client, runner, config_file, config_p
 def test_list_waf_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWafRequests')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_waf_requests.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_waf_requests', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_waf_requests.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_waf_requests'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_waf_requests.pem'])
+            config_file = 'tests/resources/config_for_test_list_waf_requests'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waf_request_group.command_name', 'waf_request')
@@ -2203,6 +3011,10 @@ def test_list_waf_requests(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_waf_requests.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_waf_requests.pem')
+                if os.path.exists('tests/resources/config_for_test_list_waf_requests'):
+                    os.remove('tests/resources/config_for_test_list_waf_requests')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2221,6 +3033,30 @@ def test_list_waf_requests(cli_testing_service_client, runner, config_file, conf
 def test_list_waf_traffic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWafTraffic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWafTraffic')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_waf_traffic.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_waf_traffic', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_waf_traffic.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_waf_traffic'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_waf_traffic.pem'])
+            config_file = 'tests/resources/config_for_test_list_waf_traffic'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waf_traffic_datum_group.command_name', 'waf_traffic_datum')
@@ -2278,6 +3114,10 @@ def test_list_waf_traffic(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_waf_traffic.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_waf_traffic.pem')
+                if os.path.exists('tests/resources/config_for_test_list_waf_traffic'):
+                    os.remove('tests/resources/config_for_test_list_waf_traffic')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2296,6 +3136,30 @@ def test_list_waf_traffic(cli_testing_service_client, runner, config_file, confi
 def test_list_whitelists(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWhitelists'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWhitelists')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_whitelists.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_whitelists', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_whitelists.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_whitelists'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_whitelists.pem'])
+            config_file = 'tests/resources/config_for_test_list_whitelists'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('whitelist_group.command_name', 'whitelist')
@@ -2353,6 +3217,10 @@ def test_list_whitelists(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_whitelists.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_whitelists.pem')
+                if os.path.exists('tests/resources/config_for_test_list_whitelists'):
+                    os.remove('tests/resources/config_for_test_list_whitelists')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2371,6 +3239,30 @@ def test_list_whitelists(cli_testing_service_client, runner, config_file, config
 def test_list_work_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'ListWorkRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'ListWorkRequests')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_work_requests.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_work_requests', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_work_requests.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_work_requests'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_work_requests.pem'])
+            config_file = 'tests/resources/config_for_test_list_work_requests'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('work_request_group.command_name', 'work_request')
@@ -2428,6 +3320,10 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_work_requests.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_work_requests.pem')
+                if os.path.exists('tests/resources/config_for_test_list_work_requests'):
+                    os.remove('tests/resources/config_for_test_list_work_requests')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2446,6 +3342,30 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
 def test_update_access_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateAccessRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateAccessRules')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_access_rules.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_access_rules', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_access_rules.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_access_rules'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_access_rules.pem'])
+            config_file = 'tests/resources/config_for_test_update_access_rules'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('access_rule_group.command_name', 'access_rule')
@@ -2503,6 +3423,10 @@ def test_update_access_rules(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_access_rules.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_access_rules.pem')
+                if os.path.exists('tests/resources/config_for_test_update_access_rules'):
+                    os.remove('tests/resources/config_for_test_update_access_rules')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2521,6 +3445,30 @@ def test_update_access_rules(cli_testing_service_client, runner, config_file, co
 def test_update_captchas(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateCaptchas'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateCaptchas')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_captchas.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_captchas', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_captchas.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_captchas'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_captchas.pem'])
+            config_file = 'tests/resources/config_for_test_update_captchas'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('captcha_group.command_name', 'captcha')
@@ -2578,6 +3526,10 @@ def test_update_captchas(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_captchas.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_captchas.pem')
+                if os.path.exists('tests/resources/config_for_test_update_captchas'):
+                    os.remove('tests/resources/config_for_test_update_captchas')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2596,6 +3548,30 @@ def test_update_captchas(cli_testing_service_client, runner, config_file, config
 def test_update_certificate(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateCertificate'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateCertificate')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_certificate.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_certificate', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_certificate.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_certificate'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_certificate.pem'])
+            config_file = 'tests/resources/config_for_test_update_certificate'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('certificate_group.command_name', 'certificate')
@@ -2662,6 +3638,10 @@ def test_update_certificate(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_certificate.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_certificate.pem')
+                if os.path.exists('tests/resources/config_for_test_update_certificate'):
+                    os.remove('tests/resources/config_for_test_update_certificate')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2680,6 +3660,30 @@ def test_update_certificate(cli_testing_service_client, runner, config_file, con
 def test_update_device_fingerprint_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateDeviceFingerprintChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateDeviceFingerprintChallenge')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_device_fingerprint_challenge.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_device_fingerprint_challenge', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_device_fingerprint_challenge.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_device_fingerprint_challenge'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_device_fingerprint_challenge.pem'])
+            config_file = 'tests/resources/config_for_test_update_device_fingerprint_challenge'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('device_fingerprint_challenge_group.command_name', 'device_fingerprint_challenge')
@@ -2746,6 +3750,10 @@ def test_update_device_fingerprint_challenge(cli_testing_service_client, runner,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_device_fingerprint_challenge.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_device_fingerprint_challenge.pem')
+                if os.path.exists('tests/resources/config_for_test_update_device_fingerprint_challenge'):
+                    os.remove('tests/resources/config_for_test_update_device_fingerprint_challenge')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2764,6 +3772,30 @@ def test_update_device_fingerprint_challenge(cli_testing_service_client, runner,
 def test_update_good_bots(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateGoodBots'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateGoodBots')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_good_bots.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_good_bots', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_good_bots.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_good_bots'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_good_bots.pem'])
+            config_file = 'tests/resources/config_for_test_update_good_bots'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('good_bot_group.command_name', 'good_bot')
@@ -2821,6 +3853,10 @@ def test_update_good_bots(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_good_bots.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_good_bots.pem')
+                if os.path.exists('tests/resources/config_for_test_update_good_bots'):
+                    os.remove('tests/resources/config_for_test_update_good_bots')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2839,6 +3875,30 @@ def test_update_good_bots(cli_testing_service_client, runner, config_file, confi
 def test_update_human_interaction_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateHumanInteractionChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateHumanInteractionChallenge')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_human_interaction_challenge.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_human_interaction_challenge', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_human_interaction_challenge.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_human_interaction_challenge'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_human_interaction_challenge.pem'])
+            config_file = 'tests/resources/config_for_test_update_human_interaction_challenge'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('human_interaction_challenge_group.command_name', 'human_interaction_challenge')
@@ -2905,6 +3965,10 @@ def test_update_human_interaction_challenge(cli_testing_service_client, runner, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_human_interaction_challenge.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_human_interaction_challenge.pem')
+                if os.path.exists('tests/resources/config_for_test_update_human_interaction_challenge'):
+                    os.remove('tests/resources/config_for_test_update_human_interaction_challenge')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2923,6 +3987,30 @@ def test_update_human_interaction_challenge(cli_testing_service_client, runner, 
 def test_update_js_challenge(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateJsChallenge'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateJsChallenge')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_js_challenge.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_js_challenge', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_js_challenge.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_js_challenge'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_js_challenge.pem'])
+            config_file = 'tests/resources/config_for_test_update_js_challenge'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('js_challenge_group.command_name', 'js_challenge')
@@ -2989,6 +4077,10 @@ def test_update_js_challenge(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_js_challenge.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_js_challenge.pem')
+                if os.path.exists('tests/resources/config_for_test_update_js_challenge'):
+                    os.remove('tests/resources/config_for_test_update_js_challenge')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3007,6 +4099,30 @@ def test_update_js_challenge(cli_testing_service_client, runner, config_file, co
 def test_update_policy_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdatePolicyConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdatePolicyConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_policy_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_policy_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_policy_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_policy_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_policy_config.pem'])
+            config_file = 'tests/resources/config_for_test_update_policy_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('policy_config_group.command_name', 'policy_config')
@@ -3072,6 +4188,10 @@ def test_update_policy_config(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_policy_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_policy_config.pem')
+                if os.path.exists('tests/resources/config_for_test_update_policy_config'):
+                    os.remove('tests/resources/config_for_test_update_policy_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3090,6 +4210,30 @@ def test_update_policy_config(cli_testing_service_client, runner, config_file, c
 def test_update_protection_rules(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateProtectionRules'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateProtectionRules')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_protection_rules.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_protection_rules', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_protection_rules.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_protection_rules'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_protection_rules.pem'])
+            config_file = 'tests/resources/config_for_test_update_protection_rules'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('protection_rule_group.command_name', 'protection_rule')
@@ -3147,6 +4291,10 @@ def test_update_protection_rules(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_protection_rules.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_protection_rules.pem')
+                if os.path.exists('tests/resources/config_for_test_update_protection_rules'):
+                    os.remove('tests/resources/config_for_test_update_protection_rules')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3165,6 +4313,30 @@ def test_update_protection_rules(cli_testing_service_client, runner, config_file
 def test_update_protection_settings(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateProtectionSettings'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateProtectionSettings')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_protection_settings.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_protection_settings', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_protection_settings.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_protection_settings'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_protection_settings.pem'])
+            config_file = 'tests/resources/config_for_test_update_protection_settings'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('protection_settings_group.command_name', 'protection_settings')
@@ -3231,6 +4403,10 @@ def test_update_protection_settings(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_protection_settings.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_protection_settings.pem')
+                if os.path.exists('tests/resources/config_for_test_update_protection_settings'):
+                    os.remove('tests/resources/config_for_test_update_protection_settings')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3249,6 +4425,30 @@ def test_update_protection_settings(cli_testing_service_client, runner, config_f
 def test_update_threat_feeds(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateThreatFeeds'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateThreatFeeds')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_threat_feeds.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_threat_feeds', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_threat_feeds.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_threat_feeds'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_threat_feeds.pem'])
+            config_file = 'tests/resources/config_for_test_update_threat_feeds'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('threat_feed_group.command_name', 'threat_feed')
@@ -3306,6 +4506,10 @@ def test_update_threat_feeds(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_threat_feeds.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_threat_feeds.pem')
+                if os.path.exists('tests/resources/config_for_test_update_threat_feeds'):
+                    os.remove('tests/resources/config_for_test_update_threat_feeds')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3324,6 +4528,30 @@ def test_update_threat_feeds(cli_testing_service_client, runner, config_file, co
 def test_update_waas_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWaasPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateWaasPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_waas_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_waas_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_waas_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_waas_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_waas_policy.pem'])
+            config_file = 'tests/resources/config_for_test_update_waas_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waas_policy_group.command_name', 'waas_policy')
@@ -3390,6 +4618,10 @@ def test_update_waas_policy(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_waas_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_waas_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_update_waas_policy'):
+                    os.remove('tests/resources/config_for_test_update_waas_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3408,6 +4640,30 @@ def test_update_waas_policy(cli_testing_service_client, runner, config_file, con
 def test_update_waf_address_rate_limiting(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWafAddressRateLimiting'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateWafAddressRateLimiting')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_waf_address_rate_limiting.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_waf_address_rate_limiting', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_waf_address_rate_limiting.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_waf_address_rate_limiting'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_waf_address_rate_limiting.pem'])
+            config_file = 'tests/resources/config_for_test_update_waf_address_rate_limiting'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('address_rate_limiting_group.command_name', 'address_rate_limiting')
@@ -3473,6 +4729,10 @@ def test_update_waf_address_rate_limiting(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_waf_address_rate_limiting.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_waf_address_rate_limiting.pem')
+                if os.path.exists('tests/resources/config_for_test_update_waf_address_rate_limiting'):
+                    os.remove('tests/resources/config_for_test_update_waf_address_rate_limiting')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3491,6 +4751,30 @@ def test_update_waf_address_rate_limiting(cli_testing_service_client, runner, co
 def test_update_waf_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWafConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateWafConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_waf_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_waf_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_waf_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_waf_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_waf_config.pem'])
+            config_file = 'tests/resources/config_for_test_update_waf_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('waf_config_group.command_name', 'waf_config')
@@ -3557,6 +4841,10 @@ def test_update_waf_config(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_waf_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_waf_config.pem')
+                if os.path.exists('tests/resources/config_for_test_update_waf_config'):
+                    os.remove('tests/resources/config_for_test_update_waf_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3575,6 +4863,30 @@ def test_update_waf_config(cli_testing_service_client, runner, config_file, conf
 def test_update_whitelists(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('waas', 'UpdateWhitelists'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('waas', 'Waas', 'UpdateWhitelists')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_whitelists.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_whitelists', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_whitelists.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_whitelists'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_whitelists.pem'])
+            config_file = 'tests/resources/config_for_test_update_whitelists'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('waas_root_group.command_name', 'waas')
     resource_group_command_name = oci_cli.cli_util.override('whitelist_group.command_name', 'whitelist')
@@ -3632,6 +4944,10 @@ def test_update_whitelists(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_whitelists.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_whitelists.pem')
+                if os.path.exists('tests/resources/config_for_test_update_whitelists'):
+                    os.remove('tests/resources/config_for_test_update_whitelists')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3647,7 +4963,7 @@ def test_update_whitelists(cli_testing_service_client, runner, config_file, conf
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

@@ -5,15 +5,92 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=containerengine&apiName=ListWorkRequestLogs
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListWorkRequestLogs&serviceName=containerengine&lang=PythonCLI
   response:
-    body: {string: !!python/unicode 'false'}
+    body: {string: 'true'}
     headers:
-      content-length: ['5']
-      content-type: [text/plain]
-      date: ['Mon, 11 Mar 2019 22:42:12 GMT']
-      server: [Jetty(9.4.7.v20170914)]
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 24 Apr 2019 01:17:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0165&apiName=ListWorkRequestLogs&serviceName=containerengine&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"f30b6ab3-34d9-4010-82ee-70dd7e987a0b","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca","workRequestId":"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaeydonjtgy4gczlfgqztkzrzmezdkylbmjrdaojthw4taylgg44g"}}]'}
+    headers:
+      Content-Length: ['283']
+      Content-Type: [text/plain]
+      Date: ['Wed, 24 Apr 2019 01:17:59 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="djVGO1V+YOI8CJDWmp4MYuWMGFfCgt6eUkucyfwvaCH9sUN9Mag+oetNXior1ZCyoDs9miN+4Wk1uk9WSAbxIEFpk/c7NZkhQbBN3/hOCmV3ZWNw8qy85sFq1mtrSb4TKpdldiBDzXKb8zjdHhETlhvXNR/mql65iwO4yRvjbEAvpMnjnlidO0MUXfg0BzmWxMBiRC0LWYjuctOzCLDyPLPPHkPXmPmqBQSvip6eyfO3IyYQvWZljCg2tRHwkcTtkGmzCEy4Vzs7jcpzTiX2dren2TeDeYQweIrhyWrYaZDDQRmK5LaDMuLQdMw0vmF7oDjTUU1DZT1QFjCSDWFNmQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 24 Apr 2019 01:26:12 GMT']
+      host: [containerengine.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.791]
+      opc-request-id: [C5AA41FEECE7412785EDD2080EFFE8C2]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.791 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.9+preview.1]
+    method: GET
+    uri: https://containerengine.us-phoenix-1.oraclecloud.com/20180222/workRequests/ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaeydonjtgy4gczlfgqztkzrzmezdkylbmjrdaojthw4taylgg44g/logs?compartmentId=ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca
+  response:
+    body: {string: "[\n  {\n    \"message\": \"extending job lease time\",\n    \"\
+        timestamp\": \"2019-04-24T01:18:17Z\"\n  },\n  {\n    \"message\": \"extending\
+        \ job lease time\",\n    \"timestamp\": \"2019-04-24T01:23:17Z\"\n  }\n]"}
+    headers:
+      Access-Control-Allow-Methods: ['DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['opc-work-request-id, opc-retry-token, opc-request-id']
+      Content-Length: ['186']
+      Content-Type: [application/json]
+      Date: ['Wed, 24 Apr 2019 01:26:23 GMT']
+      Opc-Request-Id: [C5AA41FEECE7412785EDD2080EFFE8C2/244A7EC21F594AFDBE1B4AB91BB4C975/B69C65E41EA24496990EC85B8B0CF6E5]
+      Uri: [/20180222/workRequests/_id_/logs]
+      Vary: [Accept-Encoding]
+      X-Rate-Limit-Duration: ['1']
+      X-Rate-Limit-Limit: ['16.70']
+      X-Rate-Limit-Request-Forwarded-For: ['10.0.88.8, 10.237.5.50']
+      X-Rate-Limit-Request-Remote-Addr: ['10.237.5.50:46679']
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"1F06DCC05B164D908837A2C7AE3455A9\",
+      \"items\": [{\"timestamp\": \"2019-04-24T01:18:17Z\", \"message\": \"extending
+      job lease time\"}, {\"timestamp\": \"2019-04-24T01:23:17Z\", \"message\": \"extending
+      job lease time\"}]}", "requestJson": "{\"workRequestId\": \"ocid1.clustersworkrequest.oc1.phx.aaaaaaaaaeydonjtgy4gczlfgqztkzrzmezdkylbmjrdaojthw4taylgg44g\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaabf7prp3qxkumkkv265phy56oi4d6q4fblrxhswygvuz3t5qs5uca\"}",
+      "containerId": "f30b6ab3-34d9-4010-82ee-70dd7e987a0b", "requestClass": "com.oracle.bmc.containerengine.requests.ListWorkRequestLogsRequest",
+      "responseClass": "com.oracle.bmc.containerengine.responses.ListWorkRequestLogsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['737']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0165&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 24 Apr 2019 01:26:15 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

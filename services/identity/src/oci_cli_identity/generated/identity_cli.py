@@ -363,7 +363,7 @@ def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('change_tag_namespace_compartment.command_name', 'change-tag-namespace-compartment'), help=u"""Moves the specified tag namespace to the specified compartment within the same tenancy.
+@tag_namespace_group.command(name=cli_util.override('change_tag_namespace_compartment.command_name', 'change-compartment'), help=u"""Moves the specified tag namespace to the specified compartment within the same tenancy.
 
 To move the tag namespace, you must have the manage tag-namespaces permission on both compartments. For more information about IAM policies, see [Details for IAM].
 

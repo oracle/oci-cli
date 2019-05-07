@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_cancel_vault_deletion(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'CancelVaultDeletion'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsVault', 'CancelVaultDeletion')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_cancel_vault_deletion.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_cancel_vault_deletion', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_cancel_vault_deletion.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_cancel_vault_deletion'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_cancel_vault_deletion.pem'])
+            config_file = 'tests/resources/config_for_test_cancel_vault_deletion'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_vault_root_group.command_name', 'kms-vault')
     resource_group_command_name = oci_cli.cli_util.override('vault_group.command_name', 'vault')
@@ -85,6 +109,10 @@ def test_cancel_vault_deletion(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_cancel_vault_deletion.pem'):
+                    os.remove('tests/resources/keyfile_for_test_cancel_vault_deletion.pem')
+                if os.path.exists('tests/resources/config_for_test_cancel_vault_deletion'):
+                    os.remove('tests/resources/config_for_test_cancel_vault_deletion')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -103,6 +131,30 @@ def test_cancel_vault_deletion(cli_testing_service_client, runner, config_file, 
 def test_create_vault(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'CreateVault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsVault', 'CreateVault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_vault.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_vault', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_vault.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_vault'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_vault.pem'])
+            config_file = 'tests/resources/config_for_test_create_vault'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_vault_root_group.command_name', 'kms-vault')
     resource_group_command_name = oci_cli.cli_util.override('vault_group.command_name', 'vault')
@@ -169,6 +221,10 @@ def test_create_vault(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_vault.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_vault.pem')
+                if os.path.exists('tests/resources/config_for_test_create_vault'):
+                    os.remove('tests/resources/config_for_test_create_vault')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -187,6 +243,30 @@ def test_create_vault(cli_testing_service_client, runner, config_file, config_pr
 def test_get_vault(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GetVault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsVault', 'GetVault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_vault.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_vault', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_vault.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_vault'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_vault.pem'])
+            config_file = 'tests/resources/config_for_test_get_vault'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_vault_root_group.command_name', 'kms-vault')
     resource_group_command_name = oci_cli.cli_util.override('vault_group.command_name', 'vault')
@@ -245,6 +325,10 @@ def test_get_vault(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_vault.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_vault.pem')
+                if os.path.exists('tests/resources/config_for_test_get_vault'):
+                    os.remove('tests/resources/config_for_test_get_vault')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -263,6 +347,30 @@ def test_get_vault(cli_testing_service_client, runner, config_file, config_profi
 def test_list_vaults(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'ListVaults'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsVault', 'ListVaults')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_vaults.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_vaults', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_vaults.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_vaults'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_vaults.pem'])
+            config_file = 'tests/resources/config_for_test_list_vaults'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_vault_root_group.command_name', 'kms-vault')
     resource_group_command_name = oci_cli.cli_util.override('vault_group.command_name', 'vault')
@@ -321,6 +429,10 @@ def test_list_vaults(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_vaults.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_vaults.pem')
+                if os.path.exists('tests/resources/config_for_test_list_vaults'):
+                    os.remove('tests/resources/config_for_test_list_vaults')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -339,6 +451,30 @@ def test_list_vaults(cli_testing_service_client, runner, config_file, config_pro
 def test_schedule_vault_deletion(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'ScheduleVaultDeletion'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsVault', 'ScheduleVaultDeletion')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_schedule_vault_deletion.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_schedule_vault_deletion', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_schedule_vault_deletion.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_schedule_vault_deletion'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_schedule_vault_deletion.pem'])
+            config_file = 'tests/resources/config_for_test_schedule_vault_deletion'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_vault_root_group.command_name', 'kms-vault')
     resource_group_command_name = oci_cli.cli_util.override('vault_group.command_name', 'vault')
@@ -405,6 +541,10 @@ def test_schedule_vault_deletion(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_schedule_vault_deletion.pem'):
+                    os.remove('tests/resources/keyfile_for_test_schedule_vault_deletion.pem')
+                if os.path.exists('tests/resources/config_for_test_schedule_vault_deletion'):
+                    os.remove('tests/resources/config_for_test_schedule_vault_deletion')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -423,6 +563,30 @@ def test_schedule_vault_deletion(cli_testing_service_client, runner, config_file
 def test_update_vault(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'UpdateVault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsVault', 'UpdateVault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_vault.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_vault', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_vault.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_vault'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_vault.pem'])
+            config_file = 'tests/resources/config_for_test_update_vault'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_vault_root_group.command_name', 'kms-vault')
     resource_group_command_name = oci_cli.cli_util.override('vault_group.command_name', 'vault')
@@ -490,6 +654,10 @@ def test_update_vault(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_vault.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_vault.pem')
+                if os.path.exists('tests/resources/config_for_test_update_vault'):
+                    os.remove('tests/resources/config_for_test_update_vault')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -505,7 +673,7 @@ def test_update_vault(cli_testing_service_client, runner, config_file, config_pr
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

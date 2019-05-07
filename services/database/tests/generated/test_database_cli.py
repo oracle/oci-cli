@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_complete_external_backup_job(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CompleteExternalBackupJob'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CompleteExternalBackupJob')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_complete_external_backup_job.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_complete_external_backup_job', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_complete_external_backup_job.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_complete_external_backup_job'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_complete_external_backup_job.pem'])
+            config_file = 'tests/resources/config_for_test_complete_external_backup_job'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('external_backup_job_group.command_name', 'external_backup_job')
@@ -92,6 +116,10 @@ def test_complete_external_backup_job(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_complete_external_backup_job.pem'):
+                    os.remove('tests/resources/keyfile_for_test_complete_external_backup_job.pem')
+                if os.path.exists('tests/resources/config_for_test_complete_external_backup_job'):
+                    os.remove('tests/resources/config_for_test_complete_external_backup_job')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_complete_external_backup_job(cli_testing_service_client, runner, config
 def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_create_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -175,6 +227,10 @@ def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_create_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_create_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -193,6 +249,30 @@ def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, co
 def test_create_autonomous_data_warehouse_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDataWarehouseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateAutonomousDataWarehouseBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_autonomous_data_warehouse_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_autonomous_data_warehouse_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_autonomous_data_warehouse_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_autonomous_data_warehouse_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_autonomous_data_warehouse_backup.pem'])
+            config_file = 'tests/resources/config_for_test_create_autonomous_data_warehouse_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous_data_warehouse_backup')
@@ -258,6 +338,10 @@ def test_create_autonomous_data_warehouse_backup(cli_testing_service_client, run
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_autonomous_data_warehouse_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_autonomous_data_warehouse_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_create_autonomous_data_warehouse_backup'):
+                    os.remove('tests/resources/config_for_test_create_autonomous_data_warehouse_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -276,6 +360,30 @@ def test_create_autonomous_data_warehouse_backup(cli_testing_service_client, run
 def test_create_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_create_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -361,6 +469,10 @@ def test_create_autonomous_database(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_create_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_create_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -379,6 +491,30 @@ def test_create_autonomous_database(cli_testing_service_client, runner, config_f
 def test_create_autonomous_database_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDatabaseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateAutonomousDatabaseBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_autonomous_database_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_autonomous_database_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_autonomous_database_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_autonomous_database_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_autonomous_database_backup.pem'])
+            config_file = 'tests/resources/config_for_test_create_autonomous_database_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_backup_group.command_name', 'autonomous_database_backup')
@@ -444,6 +580,10 @@ def test_create_autonomous_database_backup(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_autonomous_database_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_autonomous_database_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_create_autonomous_database_backup'):
+                    os.remove('tests/resources/config_for_test_create_autonomous_database_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -462,6 +602,30 @@ def test_create_autonomous_database_backup(cli_testing_service_client, runner, c
 def test_create_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_backup.pem'])
+            config_file = 'tests/resources/config_for_test_create_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('backup_group.command_name', 'backup')
@@ -527,6 +691,10 @@ def test_create_backup(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_create_backup'):
+                    os.remove('tests/resources/config_for_test_create_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -545,6 +713,30 @@ def test_create_backup(cli_testing_service_client, runner, config_file, config_p
 def test_create_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateDataGuardAssociation')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_data_guard_association.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_data_guard_association', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_data_guard_association.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_data_guard_association'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_data_guard_association.pem'])
+            config_file = 'tests/resources/config_for_test_create_data_guard_association'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('data_guard_association_group.command_name', 'data_guard_association')
@@ -630,6 +822,10 @@ def test_create_data_guard_association(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_data_guard_association.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_data_guard_association.pem')
+                if os.path.exists('tests/resources/config_for_test_create_data_guard_association'):
+                    os.remove('tests/resources/config_for_test_create_data_guard_association')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -648,6 +844,30 @@ def test_create_data_guard_association(cli_testing_service_client, runner, confi
 def test_create_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateDbHome')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_db_home.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_db_home', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_db_home.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_db_home'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_db_home.pem'])
+            config_file = 'tests/resources/config_for_test_create_db_home'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_home_group.command_name', 'db_home')
@@ -733,6 +953,10 @@ def test_create_db_home(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_db_home.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_db_home.pem')
+                if os.path.exists('tests/resources/config_for_test_create_db_home'):
+                    os.remove('tests/resources/config_for_test_create_db_home')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -751,6 +975,30 @@ def test_create_db_home(cli_testing_service_client, runner, config_file, config_
 def test_create_external_backup_job(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateExternalBackupJob'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateExternalBackupJob')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_external_backup_job.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_external_backup_job', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_external_backup_job.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_external_backup_job'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_external_backup_job.pem'])
+            config_file = 'tests/resources/config_for_test_create_external_backup_job'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('external_backup_job_group.command_name', 'external_backup_job')
@@ -816,6 +1064,10 @@ def test_create_external_backup_job(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_external_backup_job.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_external_backup_job.pem')
+                if os.path.exists('tests/resources/config_for_test_create_external_backup_job'):
+                    os.remove('tests/resources/config_for_test_create_external_backup_job')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -834,6 +1086,30 @@ def test_create_external_backup_job(cli_testing_service_client, runner, config_f
 def test_db_node_action(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DbNodeAction'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'DbNodeAction')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_db_node_action.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_db_node_action', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_db_node_action.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_db_node_action'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_db_node_action.pem'])
+            config_file = 'tests/resources/config_for_test_db_node_action'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_node_group.command_name', 'db_node')
@@ -891,6 +1167,10 @@ def test_db_node_action(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_db_node_action.pem'):
+                    os.remove('tests/resources/keyfile_for_test_db_node_action.pem')
+                if os.path.exists('tests/resources/config_for_test_db_node_action'):
+                    os.remove('tests/resources/config_for_test_db_node_action')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -909,6 +1189,30 @@ def test_db_node_action(cli_testing_service_client, runner, config_file, config_
 def test_delete_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'DeleteAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_delete_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -967,6 +1271,10 @@ def test_delete_autonomous_data_warehouse(cli_testing_service_client, runner, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_delete_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -985,6 +1293,30 @@ def test_delete_autonomous_data_warehouse(cli_testing_service_client, runner, co
 def test_delete_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'DeleteAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_delete_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -1043,6 +1375,10 @@ def test_delete_autonomous_database(cli_testing_service_client, runner, config_f
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_delete_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1061,6 +1397,30 @@ def test_delete_autonomous_database(cli_testing_service_client, runner, config_f
 def test_delete_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'DeleteBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_backup.pem'])
+            config_file = 'tests/resources/config_for_test_delete_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('backup_group.command_name', 'backup')
@@ -1119,6 +1479,10 @@ def test_delete_backup(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_backup'):
+                    os.remove('tests/resources/config_for_test_delete_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1137,6 +1501,30 @@ def test_delete_backup(cli_testing_service_client, runner, config_file, config_p
 def test_delete_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'DeleteDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'DeleteDbHome')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_db_home.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_db_home', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_db_home.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_db_home'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_db_home.pem'])
+            config_file = 'tests/resources/config_for_test_delete_db_home'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_home_group.command_name', 'db_home')
@@ -1195,6 +1583,10 @@ def test_delete_db_home(cli_testing_service_client, runner, config_file, config_
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_db_home.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_db_home.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_db_home'):
+                    os.remove('tests/resources/config_for_test_delete_db_home')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1213,6 +1605,30 @@ def test_delete_db_home(cli_testing_service_client, runner, config_file, config_
 def test_failover_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'FailoverDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'FailoverDataGuardAssociation')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_failover_data_guard_association.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_failover_data_guard_association', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_failover_data_guard_association.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_failover_data_guard_association'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_failover_data_guard_association.pem'])
+            config_file = 'tests/resources/config_for_test_failover_data_guard_association'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('data_guard_association_group.command_name', 'data_guard_association')
@@ -1278,6 +1694,10 @@ def test_failover_data_guard_association(cli_testing_service_client, runner, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_failover_data_guard_association.pem'):
+                    os.remove('tests/resources/keyfile_for_test_failover_data_guard_association.pem')
+                if os.path.exists('tests/resources/config_for_test_failover_data_guard_association'):
+                    os.remove('tests/resources/config_for_test_failover_data_guard_association')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1296,6 +1716,30 @@ def test_failover_data_guard_association(cli_testing_service_client, runner, con
 def test_generate_autonomous_data_warehouse_wallet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GenerateAutonomousDataWarehouseWallet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GenerateAutonomousDataWarehouseWallet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_generate_autonomous_data_warehouse_wallet.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_generate_autonomous_data_warehouse_wallet', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_generate_autonomous_data_warehouse_wallet.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_generate_autonomous_data_warehouse_wallet'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_generate_autonomous_data_warehouse_wallet.pem'])
+            config_file = 'tests/resources/config_for_test_generate_autonomous_data_warehouse_wallet'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -1370,6 +1814,10 @@ def test_generate_autonomous_data_warehouse_wallet(cli_testing_service_client, r
             finally:
                 if os.path.isfile(tmp_file_name):
                     os.unlink(tmp_file_name)  # deletes the file
+                if os.path.exists('tests/resources/keyfile_for_test_generate_autonomous_data_warehouse_wallet.pem'):
+                    os.remove('tests/resources/keyfile_for_test_generate_autonomous_data_warehouse_wallet.pem')
+                if os.path.exists('tests/resources/config_for_test_generate_autonomous_data_warehouse_wallet'):
+                    os.remove('tests/resources/config_for_test_generate_autonomous_data_warehouse_wallet')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1388,6 +1836,30 @@ def test_generate_autonomous_data_warehouse_wallet(cli_testing_service_client, r
 def test_generate_autonomous_database_wallet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GenerateAutonomousDatabaseWallet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GenerateAutonomousDatabaseWallet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_generate_autonomous_database_wallet.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_generate_autonomous_database_wallet', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_generate_autonomous_database_wallet.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_generate_autonomous_database_wallet'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_generate_autonomous_database_wallet.pem'])
+            config_file = 'tests/resources/config_for_test_generate_autonomous_database_wallet'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -1462,6 +1934,10 @@ def test_generate_autonomous_database_wallet(cli_testing_service_client, runner,
             finally:
                 if os.path.isfile(tmp_file_name):
                     os.unlink(tmp_file_name)  # deletes the file
+                if os.path.exists('tests/resources/keyfile_for_test_generate_autonomous_database_wallet.pem'):
+                    os.remove('tests/resources/keyfile_for_test_generate_autonomous_database_wallet.pem')
+                if os.path.exists('tests/resources/config_for_test_generate_autonomous_database_wallet'):
+                    os.remove('tests/resources/config_for_test_generate_autonomous_database_wallet')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1480,6 +1956,30 @@ def test_generate_autonomous_database_wallet(cli_testing_service_client, runner,
 def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_get_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -1537,6 +2037,10 @@ def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_get_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_get_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1555,6 +2059,30 @@ def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, confi
 def test_get_autonomous_data_warehouse_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDataWarehouseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetAutonomousDataWarehouseBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_autonomous_data_warehouse_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_autonomous_data_warehouse_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_autonomous_data_warehouse_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_autonomous_data_warehouse_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_autonomous_data_warehouse_backup.pem'])
+            config_file = 'tests/resources/config_for_test_get_autonomous_data_warehouse_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous_data_warehouse_backup')
@@ -1612,6 +2140,10 @@ def test_get_autonomous_data_warehouse_backup(cli_testing_service_client, runner
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_autonomous_data_warehouse_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_autonomous_data_warehouse_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_get_autonomous_data_warehouse_backup'):
+                    os.remove('tests/resources/config_for_test_get_autonomous_data_warehouse_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1630,6 +2162,30 @@ def test_get_autonomous_data_warehouse_backup(cli_testing_service_client, runner
 def test_get_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_get_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -1687,6 +2243,10 @@ def test_get_autonomous_database(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_get_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_get_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1705,6 +2265,30 @@ def test_get_autonomous_database(cli_testing_service_client, runner, config_file
 def test_get_autonomous_database_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDatabaseBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetAutonomousDatabaseBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_autonomous_database_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_autonomous_database_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_autonomous_database_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_autonomous_database_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_autonomous_database_backup.pem'])
+            config_file = 'tests/resources/config_for_test_get_autonomous_database_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_backup_group.command_name', 'autonomous_database_backup')
@@ -1762,6 +2346,10 @@ def test_get_autonomous_database_backup(cli_testing_service_client, runner, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_autonomous_database_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_autonomous_database_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_get_autonomous_database_backup'):
+                    os.remove('tests/resources/config_for_test_get_autonomous_database_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1780,6 +2368,30 @@ def test_get_autonomous_database_backup(cli_testing_service_client, runner, conf
 def test_get_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_backup.pem'])
+            config_file = 'tests/resources/config_for_test_get_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('backup_group.command_name', 'backup')
@@ -1837,6 +2449,10 @@ def test_get_backup(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_get_backup'):
+                    os.remove('tests/resources/config_for_test_get_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1855,6 +2471,30 @@ def test_get_backup(cli_testing_service_client, runner, config_file, config_prof
 def test_get_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDataGuardAssociation')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_data_guard_association.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_data_guard_association', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_data_guard_association.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_data_guard_association'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_data_guard_association.pem'])
+            config_file = 'tests/resources/config_for_test_get_data_guard_association'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('data_guard_association_group.command_name', 'data_guard_association')
@@ -1912,6 +2552,10 @@ def test_get_data_guard_association(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_data_guard_association.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_data_guard_association.pem')
+                if os.path.exists('tests/resources/config_for_test_get_data_guard_association'):
+                    os.remove('tests/resources/config_for_test_get_data_guard_association')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1930,6 +2574,30 @@ def test_get_data_guard_association(cli_testing_service_client, runner, config_f
 def test_get_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_database.pem'])
+            config_file = 'tests/resources/config_for_test_get_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('database_group.command_name', 'database')
@@ -1987,6 +2655,10 @@ def test_get_database(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_database.pem')
+                if os.path.exists('tests/resources/config_for_test_get_database'):
+                    os.remove('tests/resources/config_for_test_get_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2005,6 +2677,30 @@ def test_get_database(cli_testing_service_client, runner, config_file, config_pr
 def test_get_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbHome')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_home.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_home', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_home.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_home'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_home.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_home'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_home_group.command_name', 'db_home')
@@ -2062,6 +2758,10 @@ def test_get_db_home(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_home.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_home.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_home'):
+                    os.remove('tests/resources/config_for_test_get_db_home')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2080,6 +2780,30 @@ def test_get_db_home(cli_testing_service_client, runner, config_file, config_pro
 def test_get_db_home_patch(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbHomePatch'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbHomePatch')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_home_patch.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_home_patch', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_home_patch.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_home_patch'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_home_patch.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_home_patch'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_group.command_name', 'patch')
@@ -2137,6 +2861,10 @@ def test_get_db_home_patch(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_home_patch.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_home_patch.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_home_patch'):
+                    os.remove('tests/resources/config_for_test_get_db_home_patch')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2155,6 +2883,30 @@ def test_get_db_home_patch(cli_testing_service_client, runner, config_file, conf
 def test_get_db_home_patch_history_entry(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbHomePatchHistoryEntry'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbHomePatchHistoryEntry')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_home_patch_history_entry.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_home_patch_history_entry', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_home_patch_history_entry.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_home_patch_history_entry'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_home_patch_history_entry.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_home_patch_history_entry'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_history_entry_group.command_name', 'patch_history_entry')
@@ -2212,6 +2964,10 @@ def test_get_db_home_patch_history_entry(cli_testing_service_client, runner, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_home_patch_history_entry.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_home_patch_history_entry.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_home_patch_history_entry'):
+                    os.remove('tests/resources/config_for_test_get_db_home_patch_history_entry')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2230,6 +2986,30 @@ def test_get_db_home_patch_history_entry(cli_testing_service_client, runner, con
 def test_get_db_node(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbNode'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbNode')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_node.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_node', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_node.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_node'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_node.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_node'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_node_group.command_name', 'db_node')
@@ -2287,6 +3067,10 @@ def test_get_db_node(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_node.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_node.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_node'):
+                    os.remove('tests/resources/config_for_test_get_db_node')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2305,6 +3089,30 @@ def test_get_db_node(cli_testing_service_client, runner, config_file, config_pro
 def test_get_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbSystem')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_system.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_system', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_system.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_system'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_system.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_system'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -2362,6 +3170,10 @@ def test_get_db_system(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_system.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_system.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_system'):
+                    os.remove('tests/resources/config_for_test_get_db_system')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2380,6 +3192,30 @@ def test_get_db_system(cli_testing_service_client, runner, config_file, config_p
 def test_get_db_system_patch(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbSystemPatch'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbSystemPatch')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_system_patch.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_system_patch', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_system_patch.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_system_patch'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_system_patch.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_system_patch'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_group.command_name', 'patch')
@@ -2437,6 +3273,10 @@ def test_get_db_system_patch(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_system_patch.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_system_patch.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_system_patch'):
+                    os.remove('tests/resources/config_for_test_get_db_system_patch')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2455,6 +3295,30 @@ def test_get_db_system_patch(cli_testing_service_client, runner, config_file, co
 def test_get_db_system_patch_history_entry(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetDbSystemPatchHistoryEntry'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetDbSystemPatchHistoryEntry')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_db_system_patch_history_entry.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_db_system_patch_history_entry', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_db_system_patch_history_entry.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_db_system_patch_history_entry'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_db_system_patch_history_entry.pem'])
+            config_file = 'tests/resources/config_for_test_get_db_system_patch_history_entry'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_history_entry_group.command_name', 'patch_history_entry')
@@ -2512,6 +3376,10 @@ def test_get_db_system_patch_history_entry(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_db_system_patch_history_entry.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_db_system_patch_history_entry.pem')
+                if os.path.exists('tests/resources/config_for_test_get_db_system_patch_history_entry'):
+                    os.remove('tests/resources/config_for_test_get_db_system_patch_history_entry')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2530,6 +3398,30 @@ def test_get_db_system_patch_history_entry(cli_testing_service_client, runner, c
 def test_get_exadata_iorm_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetExadataIormConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetExadataIormConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_exadata_iorm_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_exadata_iorm_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_exadata_iorm_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_exadata_iorm_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_exadata_iorm_config.pem'])
+            config_file = 'tests/resources/config_for_test_get_exadata_iorm_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -2587,6 +3479,10 @@ def test_get_exadata_iorm_config(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_exadata_iorm_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_exadata_iorm_config.pem')
+                if os.path.exists('tests/resources/config_for_test_get_exadata_iorm_config'):
+                    os.remove('tests/resources/config_for_test_get_exadata_iorm_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2605,6 +3501,30 @@ def test_get_exadata_iorm_config(cli_testing_service_client, runner, config_file
 def test_get_external_backup_job(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetExternalBackupJob'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetExternalBackupJob')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_external_backup_job.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_external_backup_job', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_external_backup_job.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_external_backup_job'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_external_backup_job.pem'])
+            config_file = 'tests/resources/config_for_test_get_external_backup_job'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('external_backup_job_group.command_name', 'external_backup_job')
@@ -2662,6 +3582,10 @@ def test_get_external_backup_job(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_external_backup_job.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_external_backup_job.pem')
+                if os.path.exists('tests/resources/config_for_test_get_external_backup_job'):
+                    os.remove('tests/resources/config_for_test_get_external_backup_job')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2680,6 +3604,30 @@ def test_get_external_backup_job(cli_testing_service_client, runner, config_file
 def test_launch_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'LaunchDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'LaunchDbSystem')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_launch_db_system.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_launch_db_system', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_launch_db_system.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_launch_db_system'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_launch_db_system.pem'])
+            config_file = 'tests/resources/config_for_test_launch_db_system'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -2765,6 +3713,10 @@ def test_launch_db_system(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_launch_db_system.pem'):
+                    os.remove('tests/resources/keyfile_for_test_launch_db_system.pem')
+                if os.path.exists('tests/resources/config_for_test_launch_db_system'):
+                    os.remove('tests/resources/config_for_test_launch_db_system')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2783,6 +3735,30 @@ def test_launch_db_system(cli_testing_service_client, runner, config_file, confi
 def test_list_autonomous_data_warehouse_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDataWarehouseBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousDataWarehouseBackups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_data_warehouse_backups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_data_warehouse_backups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_data_warehouse_backups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_data_warehouse_backups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_data_warehouse_backups.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_data_warehouse_backups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous_data_warehouse_backup')
@@ -2840,6 +3816,10 @@ def test_list_autonomous_data_warehouse_backups(cli_testing_service_client, runn
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_data_warehouse_backups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_data_warehouse_backups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_data_warehouse_backups'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_data_warehouse_backups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2858,6 +3838,30 @@ def test_list_autonomous_data_warehouse_backups(cli_testing_service_client, runn
 def test_list_autonomous_data_warehouses(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDataWarehouses'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousDataWarehouses')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_data_warehouses.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_data_warehouses', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_data_warehouses.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_data_warehouses'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_data_warehouses.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_data_warehouses'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -2915,6 +3919,10 @@ def test_list_autonomous_data_warehouses(cli_testing_service_client, runner, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_data_warehouses.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_data_warehouses.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_data_warehouses'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_data_warehouses')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2933,6 +3941,30 @@ def test_list_autonomous_data_warehouses(cli_testing_service_client, runner, con
 def test_list_autonomous_database_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDatabaseBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousDatabaseBackups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_database_backups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_database_backups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_database_backups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_database_backups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_database_backups.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_database_backups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_backup_group.command_name', 'autonomous_database_backup')
@@ -2990,6 +4022,10 @@ def test_list_autonomous_database_backups(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_database_backups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_database_backups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_database_backups'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_database_backups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3008,6 +4044,30 @@ def test_list_autonomous_database_backups(cli_testing_service_client, runner, co
 def test_list_autonomous_databases(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousDatabases'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousDatabases')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_databases.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_databases', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_databases.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_databases'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_databases.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_databases'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -3065,6 +4125,10 @@ def test_list_autonomous_databases(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_databases.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_databases.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_databases'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_databases')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3083,6 +4147,30 @@ def test_list_autonomous_databases(cli_testing_service_client, runner, config_fi
 def test_list_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListBackups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_backups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_backups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_backups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_backups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_backups.pem'])
+            config_file = 'tests/resources/config_for_test_list_backups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('backup_group.command_name', 'backup')
@@ -3140,6 +4228,10 @@ def test_list_backups(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_backups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_backups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_backups'):
+                    os.remove('tests/resources/config_for_test_list_backups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3158,6 +4250,30 @@ def test_list_backups(cli_testing_service_client, runner, config_file, config_pr
 def test_list_data_guard_associations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDataGuardAssociations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDataGuardAssociations')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_data_guard_associations.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_data_guard_associations', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_data_guard_associations.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_data_guard_associations'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_data_guard_associations.pem'])
+            config_file = 'tests/resources/config_for_test_list_data_guard_associations'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('data_guard_association_group.command_name', 'data_guard_association')
@@ -3215,6 +4331,10 @@ def test_list_data_guard_associations(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_data_guard_associations.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_data_guard_associations.pem')
+                if os.path.exists('tests/resources/config_for_test_list_data_guard_associations'):
+                    os.remove('tests/resources/config_for_test_list_data_guard_associations')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3233,6 +4353,30 @@ def test_list_data_guard_associations(cli_testing_service_client, runner, config
 def test_list_databases(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDatabases'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDatabases')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_databases.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_databases', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_databases.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_databases'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_databases.pem'])
+            config_file = 'tests/resources/config_for_test_list_databases'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('database_group.command_name', 'database')
@@ -3290,6 +4434,10 @@ def test_list_databases(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_databases.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_databases.pem')
+                if os.path.exists('tests/resources/config_for_test_list_databases'):
+                    os.remove('tests/resources/config_for_test_list_databases')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3308,6 +4456,30 @@ def test_list_databases(cli_testing_service_client, runner, config_file, config_
 def test_list_db_home_patch_history_entries(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbHomePatchHistoryEntries'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbHomePatchHistoryEntries')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_home_patch_history_entries.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_home_patch_history_entries', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_home_patch_history_entries.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_home_patch_history_entries'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_home_patch_history_entries.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_home_patch_history_entries'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_history_entry_group.command_name', 'patch_history_entry')
@@ -3365,6 +4537,10 @@ def test_list_db_home_patch_history_entries(cli_testing_service_client, runner, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_home_patch_history_entries.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_home_patch_history_entries.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_home_patch_history_entries'):
+                    os.remove('tests/resources/config_for_test_list_db_home_patch_history_entries')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3383,6 +4559,30 @@ def test_list_db_home_patch_history_entries(cli_testing_service_client, runner, 
 def test_list_db_home_patches(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbHomePatches'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbHomePatches')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_home_patches.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_home_patches', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_home_patches.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_home_patches'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_home_patches.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_home_patches'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_group.command_name', 'patch')
@@ -3440,6 +4640,10 @@ def test_list_db_home_patches(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_home_patches.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_home_patches.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_home_patches'):
+                    os.remove('tests/resources/config_for_test_list_db_home_patches')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3458,6 +4662,30 @@ def test_list_db_home_patches(cli_testing_service_client, runner, config_file, c
 def test_list_db_homes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbHomes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbHomes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_homes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_homes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_homes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_homes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_homes.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_homes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_home_group.command_name', 'db_home')
@@ -3515,6 +4743,10 @@ def test_list_db_homes(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_homes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_homes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_homes'):
+                    os.remove('tests/resources/config_for_test_list_db_homes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3533,6 +4765,30 @@ def test_list_db_homes(cli_testing_service_client, runner, config_file, config_p
 def test_list_db_nodes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbNodes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbNodes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_nodes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_nodes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_nodes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_nodes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_nodes.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_nodes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_node_group.command_name', 'db_node')
@@ -3590,6 +4846,10 @@ def test_list_db_nodes(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_nodes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_nodes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_nodes'):
+                    os.remove('tests/resources/config_for_test_list_db_nodes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3608,6 +4868,30 @@ def test_list_db_nodes(cli_testing_service_client, runner, config_file, config_p
 def test_list_db_system_patch_history_entries(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystemPatchHistoryEntries'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbSystemPatchHistoryEntries')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_system_patch_history_entries.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_system_patch_history_entries', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_system_patch_history_entries.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_system_patch_history_entries'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_system_patch_history_entries.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_system_patch_history_entries'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_history_entry_group.command_name', 'patch_history_entry')
@@ -3665,6 +4949,10 @@ def test_list_db_system_patch_history_entries(cli_testing_service_client, runner
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_system_patch_history_entries.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_system_patch_history_entries.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_system_patch_history_entries'):
+                    os.remove('tests/resources/config_for_test_list_db_system_patch_history_entries')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3683,6 +4971,30 @@ def test_list_db_system_patch_history_entries(cli_testing_service_client, runner
 def test_list_db_system_patches(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystemPatches'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbSystemPatches')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_system_patches.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_system_patches', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_system_patches.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_system_patches'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_system_patches.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_system_patches'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('patch_group.command_name', 'patch')
@@ -3740,6 +5052,10 @@ def test_list_db_system_patches(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_system_patches.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_system_patches.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_system_patches'):
+                    os.remove('tests/resources/config_for_test_list_db_system_patches')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3758,6 +5074,30 @@ def test_list_db_system_patches(cli_testing_service_client, runner, config_file,
 def test_list_db_system_shapes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystemShapes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbSystemShapes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_system_shapes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_system_shapes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_system_shapes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_system_shapes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_system_shapes.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_system_shapes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_shape_group.command_name', 'db_system_shape')
@@ -3815,6 +5155,10 @@ def test_list_db_system_shapes(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_system_shapes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_system_shapes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_system_shapes'):
+                    os.remove('tests/resources/config_for_test_list_db_system_shapes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3833,6 +5177,30 @@ def test_list_db_system_shapes(cli_testing_service_client, runner, config_file, 
 def test_list_db_systems(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbSystems'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbSystems')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_systems.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_systems', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_systems.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_systems'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_systems.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_systems'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -3890,6 +5258,10 @@ def test_list_db_systems(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_systems.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_systems.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_systems'):
+                    os.remove('tests/resources/config_for_test_list_db_systems')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3908,6 +5280,30 @@ def test_list_db_systems(cli_testing_service_client, runner, config_file, config
 def test_list_db_versions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ListDbVersions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListDbVersions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_db_versions.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_db_versions', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_db_versions.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_db_versions'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_db_versions.pem'])
+            config_file = 'tests/resources/config_for_test_list_db_versions'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_version_group.command_name', 'db_version')
@@ -3965,6 +5361,10 @@ def test_list_db_versions(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_db_versions.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_db_versions.pem')
+                if os.path.exists('tests/resources/config_for_test_list_db_versions'):
+                    os.remove('tests/resources/config_for_test_list_db_versions')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3983,6 +5383,30 @@ def test_list_db_versions(cli_testing_service_client, runner, config_file, confi
 def test_reinstate_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ReinstateDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ReinstateDataGuardAssociation')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_reinstate_data_guard_association.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_reinstate_data_guard_association', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_reinstate_data_guard_association.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_reinstate_data_guard_association'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_reinstate_data_guard_association.pem'])
+            config_file = 'tests/resources/config_for_test_reinstate_data_guard_association'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('data_guard_association_group.command_name', 'data_guard_association')
@@ -4048,6 +5472,10 @@ def test_reinstate_data_guard_association(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_reinstate_data_guard_association.pem'):
+                    os.remove('tests/resources/keyfile_for_test_reinstate_data_guard_association.pem')
+                if os.path.exists('tests/resources/config_for_test_reinstate_data_guard_association'):
+                    os.remove('tests/resources/config_for_test_reinstate_data_guard_association')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4066,6 +5494,30 @@ def test_reinstate_data_guard_association(cli_testing_service_client, runner, co
 def test_restore_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'RestoreAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'RestoreAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_restore_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_restore_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_restore_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_restore_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_restore_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_restore_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -4131,6 +5583,10 @@ def test_restore_autonomous_data_warehouse(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_restore_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_restore_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_restore_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_restore_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4149,6 +5605,30 @@ def test_restore_autonomous_data_warehouse(cli_testing_service_client, runner, c
 def test_restore_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'RestoreAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'RestoreAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_restore_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_restore_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_restore_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_restore_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_restore_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_restore_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -4214,6 +5694,10 @@ def test_restore_autonomous_database(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_restore_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_restore_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_restore_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_restore_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4232,6 +5716,30 @@ def test_restore_autonomous_database(cli_testing_service_client, runner, config_
 def test_restore_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'RestoreDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'RestoreDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_restore_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_restore_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_restore_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_restore_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_restore_database.pem'])
+            config_file = 'tests/resources/config_for_test_restore_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('database_group.command_name', 'database')
@@ -4297,6 +5805,10 @@ def test_restore_database(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_restore_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_restore_database.pem')
+                if os.path.exists('tests/resources/config_for_test_restore_database'):
+                    os.remove('tests/resources/config_for_test_restore_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4315,6 +5827,30 @@ def test_restore_database(cli_testing_service_client, runner, config_file, confi
 def test_start_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StartAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'StartAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_start_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_start_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_start_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_start_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_start_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_start_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -4372,6 +5908,10 @@ def test_start_autonomous_data_warehouse(cli_testing_service_client, runner, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_start_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_start_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_start_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_start_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4390,6 +5930,30 @@ def test_start_autonomous_data_warehouse(cli_testing_service_client, runner, con
 def test_start_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StartAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'StartAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_start_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_start_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_start_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_start_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_start_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_start_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -4447,6 +6011,10 @@ def test_start_autonomous_database(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_start_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_start_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_start_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_start_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4465,6 +6033,30 @@ def test_start_autonomous_database(cli_testing_service_client, runner, config_fi
 def test_stop_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StopAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'StopAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_stop_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_stop_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_stop_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_stop_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_stop_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_stop_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -4522,6 +6114,10 @@ def test_stop_autonomous_data_warehouse(cli_testing_service_client, runner, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_stop_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_stop_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_stop_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_stop_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4540,6 +6136,30 @@ def test_stop_autonomous_data_warehouse(cli_testing_service_client, runner, conf
 def test_stop_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'StopAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'StopAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_stop_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_stop_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_stop_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_stop_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_stop_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_stop_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -4597,6 +6217,10 @@ def test_stop_autonomous_database(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_stop_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_stop_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_stop_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_stop_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4615,6 +6239,30 @@ def test_stop_autonomous_database(cli_testing_service_client, runner, config_fil
 def test_switchover_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'SwitchoverDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'SwitchoverDataGuardAssociation')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_switchover_data_guard_association.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_switchover_data_guard_association', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_switchover_data_guard_association.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_switchover_data_guard_association'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_switchover_data_guard_association.pem'])
+            config_file = 'tests/resources/config_for_test_switchover_data_guard_association'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('data_guard_association_group.command_name', 'data_guard_association')
@@ -4680,6 +6328,10 @@ def test_switchover_data_guard_association(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_switchover_data_guard_association.pem'):
+                    os.remove('tests/resources/keyfile_for_test_switchover_data_guard_association.pem')
+                if os.path.exists('tests/resources/config_for_test_switchover_data_guard_association'):
+                    os.remove('tests/resources/config_for_test_switchover_data_guard_association')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4698,6 +6350,30 @@ def test_switchover_data_guard_association(cli_testing_service_client, runner, c
 def test_terminate_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'TerminateDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'TerminateDbSystem')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_terminate_db_system.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_terminate_db_system', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_terminate_db_system.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_terminate_db_system'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_terminate_db_system.pem'])
+            config_file = 'tests/resources/config_for_test_terminate_db_system'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -4756,6 +6432,10 @@ def test_terminate_db_system(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_terminate_db_system.pem'):
+                    os.remove('tests/resources/keyfile_for_test_terminate_db_system.pem')
+                if os.path.exists('tests/resources/config_for_test_terminate_db_system'):
+                    os.remove('tests/resources/config_for_test_terminate_db_system')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4774,6 +6454,30 @@ def test_terminate_db_system(cli_testing_service_client, runner, config_file, co
 def test_update_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateAutonomousDataWarehouse')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_autonomous_data_warehouse.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_autonomous_data_warehouse', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_autonomous_data_warehouse.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_autonomous_data_warehouse'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_autonomous_data_warehouse.pem'])
+            config_file = 'tests/resources/config_for_test_update_autonomous_data_warehouse'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous_data_warehouse')
@@ -4840,6 +6544,10 @@ def test_update_autonomous_data_warehouse(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_autonomous_data_warehouse.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_autonomous_data_warehouse.pem')
+                if os.path.exists('tests/resources/config_for_test_update_autonomous_data_warehouse'):
+                    os.remove('tests/resources/config_for_test_update_autonomous_data_warehouse')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4858,6 +6566,30 @@ def test_update_autonomous_data_warehouse(cli_testing_service_client, runner, co
 def test_update_autonomous_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateAutonomousDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateAutonomousDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_autonomous_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_autonomous_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_autonomous_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_autonomous_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_autonomous_database.pem'])
+            config_file = 'tests/resources/config_for_test_update_autonomous_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('autonomous_database_group.command_name', 'autonomous_database')
@@ -4924,6 +6656,10 @@ def test_update_autonomous_database(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_autonomous_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_autonomous_database.pem')
+                if os.path.exists('tests/resources/config_for_test_update_autonomous_database'):
+                    os.remove('tests/resources/config_for_test_update_autonomous_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4942,6 +6678,30 @@ def test_update_autonomous_database(cli_testing_service_client, runner, config_f
 def test_update_database(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateDatabase'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_database.pem'])
+            config_file = 'tests/resources/config_for_test_update_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('database_group.command_name', 'database')
@@ -5008,6 +6768,10 @@ def test_update_database(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_database.pem')
+                if os.path.exists('tests/resources/config_for_test_update_database'):
+                    os.remove('tests/resources/config_for_test_update_database')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5026,6 +6790,30 @@ def test_update_database(cli_testing_service_client, runner, config_file, config
 def test_update_db_home(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateDbHome'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateDbHome')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_db_home.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_db_home', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_db_home.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_db_home'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_db_home.pem'])
+            config_file = 'tests/resources/config_for_test_update_db_home'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_home_group.command_name', 'db_home')
@@ -5092,6 +6880,10 @@ def test_update_db_home(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_db_home.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_db_home.pem')
+                if os.path.exists('tests/resources/config_for_test_update_db_home'):
+                    os.remove('tests/resources/config_for_test_update_db_home')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5110,6 +6902,30 @@ def test_update_db_home(cli_testing_service_client, runner, config_file, config_
 def test_update_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateDbSystem')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_db_system.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_db_system', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_db_system.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_db_system'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_db_system.pem'])
+            config_file = 'tests/resources/config_for_test_update_db_system'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -5176,6 +6992,10 @@ def test_update_db_system(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_db_system.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_db_system.pem')
+                if os.path.exists('tests/resources/config_for_test_update_db_system'):
+                    os.remove('tests/resources/config_for_test_update_db_system')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5194,6 +7014,30 @@ def test_update_db_system(cli_testing_service_client, runner, config_file, confi
 def test_update_exadata_iorm_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'UpdateExadataIormConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateExadataIormConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_exadata_iorm_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_exadata_iorm_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_exadata_iorm_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_exadata_iorm_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_exadata_iorm_config.pem'])
+            config_file = 'tests/resources/config_for_test_update_exadata_iorm_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
     resource_group_command_name = oci_cli.cli_util.override('db_system_group.command_name', 'db_system')
@@ -5260,6 +7104,10 @@ def test_update_exadata_iorm_config(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_exadata_iorm_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_exadata_iorm_config.pem')
+                if os.path.exists('tests/resources/config_for_test_update_exadata_iorm_config'):
+                    os.remove('tests/resources/config_for_test_update_exadata_iorm_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5275,7 +7123,7 @@ def test_update_exadata_iorm_config(cli_testing_service_client, runner, config_f
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_stream(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'CreateStream'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('streaming', 'StreamAdmin', 'CreateStream')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_stream.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_stream', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_stream.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_stream'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_stream.pem'])
+            config_file = 'tests/resources/config_for_test_create_stream'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('stream_admin_root_group.command_name', 'stream-admin')
     resource_group_command_name = oci_cli.cli_util.override('stream_group.command_name', 'stream')
@@ -93,6 +117,10 @@ def test_create_stream(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_stream.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_stream.pem')
+                if os.path.exists('tests/resources/config_for_test_create_stream'):
+                    os.remove('tests/resources/config_for_test_create_stream')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -111,6 +139,30 @@ def test_create_stream(cli_testing_service_client, runner, config_file, config_p
 def test_delete_stream(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'DeleteStream'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('streaming', 'StreamAdmin', 'DeleteStream')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_stream.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_stream', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_stream.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_stream'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_stream.pem'])
+            config_file = 'tests/resources/config_for_test_delete_stream'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('stream_admin_root_group.command_name', 'stream-admin')
     resource_group_command_name = oci_cli.cli_util.override('stream_group.command_name', 'stream')
@@ -170,6 +222,10 @@ def test_delete_stream(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_stream.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_stream.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_stream'):
+                    os.remove('tests/resources/config_for_test_delete_stream')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -188,6 +244,30 @@ def test_delete_stream(cli_testing_service_client, runner, config_file, config_p
 def test_get_stream(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'GetStream'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('streaming', 'StreamAdmin', 'GetStream')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_stream.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_stream', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_stream.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_stream'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_stream.pem'])
+            config_file = 'tests/resources/config_for_test_get_stream'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('stream_admin_root_group.command_name', 'stream-admin')
     resource_group_command_name = oci_cli.cli_util.override('stream_group.command_name', 'stream')
@@ -246,6 +326,10 @@ def test_get_stream(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_stream.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_stream.pem')
+                if os.path.exists('tests/resources/config_for_test_get_stream'):
+                    os.remove('tests/resources/config_for_test_get_stream')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -264,6 +348,30 @@ def test_get_stream(cli_testing_service_client, runner, config_file, config_prof
 def test_list_streams(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'ListStreams'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('streaming', 'StreamAdmin', 'ListStreams')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_streams.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_streams', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_streams.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_streams'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_streams.pem'])
+            config_file = 'tests/resources/config_for_test_list_streams'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('stream_admin_root_group.command_name', 'stream-admin')
     resource_group_command_name = oci_cli.cli_util.override('stream_group.command_name', 'stream')
@@ -322,6 +430,10 @@ def test_list_streams(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_streams.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_streams.pem')
+                if os.path.exists('tests/resources/config_for_test_list_streams'):
+                    os.remove('tests/resources/config_for_test_list_streams')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -340,6 +452,30 @@ def test_list_streams(cli_testing_service_client, runner, config_file, config_pr
 def test_update_stream(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('streaming', 'UpdateStream'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('streaming', 'StreamAdmin', 'UpdateStream')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_stream.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_stream', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_stream.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_stream'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_stream.pem'])
+            config_file = 'tests/resources/config_for_test_update_stream'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('stream_admin_root_group.command_name', 'stream-admin')
     resource_group_command_name = oci_cli.cli_util.override('stream_group.command_name', 'stream')
@@ -407,6 +543,10 @@ def test_update_stream(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_stream.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_stream.pem')
+                if os.path.exists('tests/resources/config_for_test_update_stream'):
+                    os.remove('tests/resources/config_for_test_update_stream')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -422,7 +562,7 @@ def test_update_stream(cli_testing_service_client, runner, config_file, config_p
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

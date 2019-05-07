@@ -116,7 +116,7 @@ def backend_health_group():
     pass
 
 
-@click.command(cli_util.override('rule_set_group.command_name', 'rule-set'), cls=CommandGroupWithAlias, help="""A named set of rules associated with a load balancer. Rules are objects that represent actions to apply to a listener, such as adding, altering, or removing HTTP headers.""")
+@click.command(cli_util.override('rule_set_group.command_name', 'rule-set'), cls=CommandGroupWithAlias, help="""A named set of rules associated with a load balancer. Rules are objects that represent actions to apply to a listener, such as adding, altering, or removing HTTP headers. For more information, see [Managing Rule Sets].""")
 @cli_util.help_option_group
 def rule_set_group():
     pass
@@ -743,7 +743,7 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@rule_set_group.command(name=cli_util.override('create_rule_set.command_name', 'create'), help=u"""Creates a new rule set associated with the specified load balancer.""")
+@rule_set_group.command(name=cli_util.override('create_rule_set.command_name', 'create'), help=u"""Creates a new rule set associated with the specified load balancer. For more information, see [Managing Rule Sets].""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the specified load balancer.""")
 @cli_util.option('--name', required=True, help=u"""The name for this set of rules. It must be unique and it cannot be changed. Avoid entering confidential information.
 

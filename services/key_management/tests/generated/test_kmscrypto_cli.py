@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_decrypt(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'Decrypt'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsCrypto', 'Decrypt')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_decrypt.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_decrypt', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_decrypt.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_decrypt'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_decrypt.pem'])
+            config_file = 'tests/resources/config_for_test_decrypt'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_crypto_root_group.command_name', 'kms-crypto')
     resource_group_command_name = oci_cli.cli_util.override('decrypted_data_group.command_name', 'decrypted_data')
@@ -96,6 +120,10 @@ def test_decrypt(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_decrypt.pem'):
+                    os.remove('tests/resources/keyfile_for_test_decrypt.pem')
+                if os.path.exists('tests/resources/config_for_test_decrypt'):
+                    os.remove('tests/resources/config_for_test_decrypt')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -114,6 +142,30 @@ def test_decrypt(cli_testing_service_client, runner, config_file, config_profile
 def test_encrypt(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'Encrypt'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsCrypto', 'Encrypt')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_encrypt.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_encrypt', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_encrypt.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_encrypt'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_encrypt.pem'])
+            config_file = 'tests/resources/config_for_test_encrypt'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_crypto_root_group.command_name', 'kms-crypto')
     resource_group_command_name = oci_cli.cli_util.override('encrypted_data_group.command_name', 'encrypted_data')
@@ -183,6 +235,10 @@ def test_encrypt(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_encrypt.pem'):
+                    os.remove('tests/resources/keyfile_for_test_encrypt.pem')
+                if os.path.exists('tests/resources/config_for_test_encrypt'):
+                    os.remove('tests/resources/config_for_test_encrypt')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -201,6 +257,30 @@ def test_encrypt(cli_testing_service_client, runner, config_file, config_profile
 def test_generate_data_encryption_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GenerateDataEncryptionKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsCrypto', 'GenerateDataEncryptionKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_generate_data_encryption_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_generate_data_encryption_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_generate_data_encryption_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_generate_data_encryption_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_generate_data_encryption_key.pem'])
+            config_file = 'tests/resources/config_for_test_generate_data_encryption_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_crypto_root_group.command_name', 'kms-crypto')
     resource_group_command_name = oci_cli.cli_util.override('generated_key_group.command_name', 'generated_key')
@@ -270,6 +350,10 @@ def test_generate_data_encryption_key(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_generate_data_encryption_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_generate_data_encryption_key.pem')
+                if os.path.exists('tests/resources/config_for_test_generate_data_encryption_key'):
+                    os.remove('tests/resources/config_for_test_generate_data_encryption_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -285,7 +369,7 @@ def test_generate_data_encryption_key(cli_testing_service_client, runner, config
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

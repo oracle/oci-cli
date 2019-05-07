@@ -1149,7 +1149,9 @@ Options:
                                   files being uploaded. Must be in JSON format.
                                   Example: '{"key1":"value1","key2":"value2"}'
   --content-type TEXT             The content type to apply to all files being
-                                  uploaded.
+                                  uploaded. If content type is set to auto, then
+                                  the CLI will guess the content type of the
+                                  file.
   --content-language TEXT         The content language to apply to all files
                                   being uploaded.
   --content-encoding TEXT         The content encoding to apply to all files
@@ -1658,7 +1660,9 @@ Options:
   --metadata TEXT                 Arbitrary string keys and values for user-
                                   defined metadata. Must be in JSON format.
                                   Example: '{"key1":"value1","key2":"value2"}'
-  --content-type TEXT             The content type of the object.
+  --content-type TEXT             The content type of the object. If content
+                                  type is set to auto, then the CLI will guess
+                                  the content type of the file.
   --content-language TEXT         The content language of the object.
   --content-encoding TEXT         The content encoding of the object.
   --force                         If the object already exists, overwrite the

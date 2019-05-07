@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.9 - 2018-05-07
+------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the Tokyo (NRT) region (``--region ap-tokyo-1``)
+
+Changed
+~~~~~~~
+* Jinja2 was upgraded to version 2.10.1 to address a vulnerability identified on GitHub as CVE-2019-10906. Jinga isn't used in our run-time system but as part of our documentation build process.
+
 2.5.8 - 2019-04-16
 ------------------
 Added

@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_attach_load_balancer(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'AttachLoadBalancer'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'AttachLoadBalancer')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_attach_load_balancer.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_attach_load_balancer', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_attach_load_balancer.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_attach_load_balancer'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_attach_load_balancer.pem'])
+            config_file = 'tests/resources/config_for_test_attach_load_balancer'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -93,6 +117,10 @@ def test_attach_load_balancer(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_attach_load_balancer.pem'):
+                    os.remove('tests/resources/keyfile_for_test_attach_load_balancer.pem')
+                if os.path.exists('tests/resources/config_for_test_attach_load_balancer'):
+                    os.remove('tests/resources/config_for_test_attach_load_balancer')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -111,6 +139,30 @@ def test_attach_load_balancer(cli_testing_service_client, runner, config_file, c
 def test_create_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'CreateInstanceConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_instance_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_instance_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_instance_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_instance_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_instance_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_create_instance_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_configuration_group.command_name', 'instance_configuration')
@@ -177,6 +229,10 @@ def test_create_instance_configuration(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_instance_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_instance_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_create_instance_configuration'):
+                    os.remove('tests/resources/config_for_test_create_instance_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -195,6 +251,30 @@ def test_create_instance_configuration(cli_testing_service_client, runner, confi
 def test_create_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'CreateInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_create_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -261,6 +341,10 @@ def test_create_instance_pool(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_create_instance_pool'):
+                    os.remove('tests/resources/config_for_test_create_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -279,6 +363,30 @@ def test_create_instance_pool(cli_testing_service_client, runner, config_file, c
 def test_delete_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'DeleteInstanceConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_instance_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_instance_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_instance_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_instance_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_instance_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_delete_instance_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_configuration_group.command_name', 'instance_configuration')
@@ -338,6 +446,10 @@ def test_delete_instance_configuration(cli_testing_service_client, runner, confi
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_instance_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_instance_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_instance_configuration'):
+                    os.remove('tests/resources/config_for_test_delete_instance_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -356,6 +468,30 @@ def test_delete_instance_configuration(cli_testing_service_client, runner, confi
 def test_detach_load_balancer(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DetachLoadBalancer'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'DetachLoadBalancer')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_detach_load_balancer.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_detach_load_balancer', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_detach_load_balancer.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_detach_load_balancer'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_detach_load_balancer.pem'])
+            config_file = 'tests/resources/config_for_test_detach_load_balancer'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -422,6 +558,10 @@ def test_detach_load_balancer(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_detach_load_balancer.pem'):
+                    os.remove('tests/resources/keyfile_for_test_detach_load_balancer.pem')
+                if os.path.exists('tests/resources/config_for_test_detach_load_balancer'):
+                    os.remove('tests/resources/config_for_test_detach_load_balancer')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -440,6 +580,30 @@ def test_detach_load_balancer(cli_testing_service_client, runner, config_file, c
 def test_get_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'GetInstanceConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_instance_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_instance_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_instance_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_instance_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_instance_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_get_instance_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_configuration_group.command_name', 'instance_configuration')
@@ -498,6 +662,10 @@ def test_get_instance_configuration(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_instance_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_instance_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_get_instance_configuration'):
+                    os.remove('tests/resources/config_for_test_get_instance_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -516,6 +684,30 @@ def test_get_instance_configuration(cli_testing_service_client, runner, config_f
 def test_get_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'GetInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_get_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -574,6 +766,10 @@ def test_get_instance_pool(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_get_instance_pool'):
+                    os.remove('tests/resources/config_for_test_get_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -592,6 +788,30 @@ def test_get_instance_pool(cli_testing_service_client, runner, config_file, conf
 def test_launch_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'LaunchInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'LaunchInstanceConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_launch_instance_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_launch_instance_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_launch_instance_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_launch_instance_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_launch_instance_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_launch_instance_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_group.command_name', 'instance')
@@ -668,6 +888,10 @@ def test_launch_instance_configuration(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_launch_instance_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_launch_instance_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_launch_instance_configuration'):
+                    os.remove('tests/resources/config_for_test_launch_instance_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -686,6 +910,30 @@ def test_launch_instance_configuration(cli_testing_service_client, runner, confi
 def test_list_instance_configurations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInstanceConfigurations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'ListInstanceConfigurations')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_instance_configurations.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_instance_configurations', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_instance_configurations.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_instance_configurations'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_instance_configurations.pem'])
+            config_file = 'tests/resources/config_for_test_list_instance_configurations'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_configuration_group.command_name', 'instance_configuration')
@@ -744,6 +992,10 @@ def test_list_instance_configurations(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_instance_configurations.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_instance_configurations.pem')
+                if os.path.exists('tests/resources/config_for_test_list_instance_configurations'):
+                    os.remove('tests/resources/config_for_test_list_instance_configurations')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -762,6 +1014,30 @@ def test_list_instance_configurations(cli_testing_service_client, runner, config
 def test_list_instance_pool_instances(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInstancePoolInstances'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'ListInstancePoolInstances')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_instance_pool_instances.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_instance_pool_instances', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_instance_pool_instances.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_instance_pool_instances'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_instance_pool_instances.pem'])
+            config_file = 'tests/resources/config_for_test_list_instance_pool_instances'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_group.command_name', 'instance')
@@ -820,6 +1096,10 @@ def test_list_instance_pool_instances(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_instance_pool_instances.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_instance_pool_instances.pem')
+                if os.path.exists('tests/resources/config_for_test_list_instance_pool_instances'):
+                    os.remove('tests/resources/config_for_test_list_instance_pool_instances')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -838,6 +1118,30 @@ def test_list_instance_pool_instances(cli_testing_service_client, runner, config
 def test_list_instance_pools(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInstancePools'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'ListInstancePools')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_instance_pools.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_instance_pools', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_instance_pools.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_instance_pools'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_instance_pools.pem'])
+            config_file = 'tests/resources/config_for_test_list_instance_pools'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -896,6 +1200,10 @@ def test_list_instance_pools(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_instance_pools.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_instance_pools.pem')
+                if os.path.exists('tests/resources/config_for_test_list_instance_pools'):
+                    os.remove('tests/resources/config_for_test_list_instance_pools')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -914,6 +1222,30 @@ def test_list_instance_pools(cli_testing_service_client, runner, config_file, co
 def test_reset_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ResetInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'ResetInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_reset_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_reset_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_reset_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_reset_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_reset_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_reset_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -972,6 +1304,10 @@ def test_reset_instance_pool(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_reset_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_reset_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_reset_instance_pool'):
+                    os.remove('tests/resources/config_for_test_reset_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -990,6 +1326,30 @@ def test_reset_instance_pool(cli_testing_service_client, runner, config_file, co
 def test_softreset_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'SoftresetInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'SoftresetInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_softreset_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_softreset_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_softreset_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_softreset_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_softreset_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_softreset_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -1048,6 +1408,10 @@ def test_softreset_instance_pool(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_softreset_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_softreset_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_softreset_instance_pool'):
+                    os.remove('tests/resources/config_for_test_softreset_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1066,6 +1430,30 @@ def test_softreset_instance_pool(cli_testing_service_client, runner, config_file
 def test_start_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'StartInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'StartInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_start_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_start_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_start_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_start_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_start_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_start_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -1124,6 +1512,10 @@ def test_start_instance_pool(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_start_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_start_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_start_instance_pool'):
+                    os.remove('tests/resources/config_for_test_start_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1142,6 +1534,30 @@ def test_start_instance_pool(cli_testing_service_client, runner, config_file, co
 def test_stop_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'StopInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'StopInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_stop_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_stop_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_stop_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_stop_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_stop_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_stop_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -1200,6 +1616,10 @@ def test_stop_instance_pool(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_stop_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_stop_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_stop_instance_pool'):
+                    os.remove('tests/resources/config_for_test_stop_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1218,6 +1638,30 @@ def test_stop_instance_pool(cli_testing_service_client, runner, config_file, con
 def test_terminate_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'TerminateInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'TerminateInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_terminate_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_terminate_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_terminate_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_terminate_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_terminate_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_terminate_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -1277,6 +1721,10 @@ def test_terminate_instance_pool(cli_testing_service_client, runner, config_file
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_terminate_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_terminate_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_terminate_instance_pool'):
+                    os.remove('tests/resources/config_for_test_terminate_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1295,6 +1743,30 @@ def test_terminate_instance_pool(cli_testing_service_client, runner, config_file
 def test_update_instance_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateInstanceConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'UpdateInstanceConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_instance_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_instance_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_instance_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_instance_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_instance_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_update_instance_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_configuration_group.command_name', 'instance_configuration')
@@ -1362,6 +1834,10 @@ def test_update_instance_configuration(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_instance_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_instance_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_update_instance_configuration'):
+                    os.remove('tests/resources/config_for_test_update_instance_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1380,6 +1856,30 @@ def test_update_instance_configuration(cli_testing_service_client, runner, confi
 def test_update_instance_pool(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateInstancePool'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'ComputeManagement', 'UpdateInstancePool')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_instance_pool.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_instance_pool', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_instance_pool.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_instance_pool'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_instance_pool.pem'])
+            config_file = 'tests/resources/config_for_test_update_instance_pool'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('compute_management_root_group.command_name', 'compute-management')
     resource_group_command_name = oci_cli.cli_util.override('instance_pool_group.command_name', 'instance_pool')
@@ -1447,6 +1947,10 @@ def test_update_instance_pool(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_instance_pool.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_instance_pool.pem')
+                if os.path.exists('tests/resources/config_for_test_update_instance_pool'):
+                    os.remove('tests/resources/config_for_test_update_instance_pool')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1462,7 +1966,7 @@ def test_update_instance_pool(cli_testing_service_client, runner, config_file, c
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

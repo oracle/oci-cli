@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_steering_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'CreateSteeringPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'CreateSteeringPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_steering_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_steering_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_steering_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_steering_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_steering_policy.pem'])
+            config_file = 'tests/resources/config_for_test_create_steering_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_group.command_name', 'steering_policy')
@@ -92,6 +116,10 @@ def test_create_steering_policy(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_steering_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_steering_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_create_steering_policy'):
+                    os.remove('tests/resources/config_for_test_create_steering_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_create_steering_policy(cli_testing_service_client, runner, config_file,
 def test_create_steering_policy_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'CreateSteeringPolicyAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'CreateSteeringPolicyAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_steering_policy_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_steering_policy_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_steering_policy_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_steering_policy_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_steering_policy_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_create_steering_policy_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_attachment_group.command_name', 'steering_policy_attachment')
@@ -175,6 +227,10 @@ def test_create_steering_policy_attachment(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_steering_policy_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_steering_policy_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_create_steering_policy_attachment'):
+                    os.remove('tests/resources/config_for_test_create_steering_policy_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -193,6 +249,30 @@ def test_create_steering_policy_attachment(cli_testing_service_client, runner, c
 def test_create_zone(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'CreateZone'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'CreateZone')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_zone.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_zone', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_zone.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_zone'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_zone.pem'])
+            config_file = 'tests/resources/config_for_test_create_zone'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('zone_group.command_name', 'zone')
@@ -258,6 +338,10 @@ def test_create_zone(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_zone.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_zone.pem')
+                if os.path.exists('tests/resources/config_for_test_create_zone'):
+                    os.remove('tests/resources/config_for_test_create_zone')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -276,6 +360,30 @@ def test_create_zone(cli_testing_service_client, runner, config_file, config_pro
 def test_delete_domain_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'DeleteDomainRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'DeleteDomainRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_domain_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_domain_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_domain_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_domain_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_domain_records.pem'])
+            config_file = 'tests/resources/config_for_test_delete_domain_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -334,6 +442,10 @@ def test_delete_domain_records(cli_testing_service_client, runner, config_file, 
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_domain_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_domain_records.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_domain_records'):
+                    os.remove('tests/resources/config_for_test_delete_domain_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -352,6 +464,30 @@ def test_delete_domain_records(cli_testing_service_client, runner, config_file, 
 def test_delete_rr_set(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'DeleteRRSet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'DeleteRRSet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_rr_set.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_rr_set', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_rr_set.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_rr_set'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_rr_set.pem'])
+            config_file = 'tests/resources/config_for_test_delete_rr_set'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('rr_set_group.command_name', 'rr_set')
@@ -410,6 +546,10 @@ def test_delete_rr_set(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_rr_set.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_rr_set.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_rr_set'):
+                    os.remove('tests/resources/config_for_test_delete_rr_set')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -428,6 +568,30 @@ def test_delete_rr_set(cli_testing_service_client, runner, config_file, config_p
 def test_delete_steering_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'DeleteSteeringPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'DeleteSteeringPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_steering_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_steering_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_steering_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_steering_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_steering_policy.pem'])
+            config_file = 'tests/resources/config_for_test_delete_steering_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_group.command_name', 'steering_policy')
@@ -486,6 +650,10 @@ def test_delete_steering_policy(cli_testing_service_client, runner, config_file,
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_steering_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_steering_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_steering_policy'):
+                    os.remove('tests/resources/config_for_test_delete_steering_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -504,6 +672,30 @@ def test_delete_steering_policy(cli_testing_service_client, runner, config_file,
 def test_delete_steering_policy_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'DeleteSteeringPolicyAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'DeleteSteeringPolicyAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_steering_policy_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_steering_policy_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_steering_policy_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_steering_policy_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_steering_policy_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_delete_steering_policy_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_attachment_group.command_name', 'steering_policy_attachment')
@@ -562,6 +754,10 @@ def test_delete_steering_policy_attachment(cli_testing_service_client, runner, c
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_steering_policy_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_steering_policy_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_steering_policy_attachment'):
+                    os.remove('tests/resources/config_for_test_delete_steering_policy_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -580,6 +776,30 @@ def test_delete_steering_policy_attachment(cli_testing_service_client, runner, c
 def test_delete_zone(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'DeleteZone'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'DeleteZone')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_zone.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_zone', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_zone.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_zone'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_zone.pem'])
+            config_file = 'tests/resources/config_for_test_delete_zone'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('zone_group.command_name', 'zone')
@@ -638,6 +858,10 @@ def test_delete_zone(cli_testing_service_client, runner, config_file, config_pro
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_zone.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_zone.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_zone'):
+                    os.remove('tests/resources/config_for_test_delete_zone')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -656,6 +880,30 @@ def test_delete_zone(cli_testing_service_client, runner, config_file, config_pro
 def test_get_domain_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'GetDomainRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'GetDomainRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_domain_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_domain_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_domain_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_domain_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_domain_records.pem'])
+            config_file = 'tests/resources/config_for_test_get_domain_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -713,6 +961,10 @@ def test_get_domain_records(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_domain_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_domain_records.pem')
+                if os.path.exists('tests/resources/config_for_test_get_domain_records'):
+                    os.remove('tests/resources/config_for_test_get_domain_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -731,6 +983,30 @@ def test_get_domain_records(cli_testing_service_client, runner, config_file, con
 def test_get_rr_set(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'GetRRSet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'GetRRSet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_rr_set.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_rr_set', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_rr_set.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_rr_set'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_rr_set.pem'])
+            config_file = 'tests/resources/config_for_test_get_rr_set'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('rr_set_group.command_name', 'rr_set')
@@ -788,6 +1064,10 @@ def test_get_rr_set(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_rr_set.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_rr_set.pem')
+                if os.path.exists('tests/resources/config_for_test_get_rr_set'):
+                    os.remove('tests/resources/config_for_test_get_rr_set')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -806,6 +1086,30 @@ def test_get_rr_set(cli_testing_service_client, runner, config_file, config_prof
 def test_get_steering_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'GetSteeringPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'GetSteeringPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_steering_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_steering_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_steering_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_steering_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_steering_policy.pem'])
+            config_file = 'tests/resources/config_for_test_get_steering_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_group.command_name', 'steering_policy')
@@ -863,6 +1167,10 @@ def test_get_steering_policy(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_steering_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_steering_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_steering_policy'):
+                    os.remove('tests/resources/config_for_test_get_steering_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -881,6 +1189,30 @@ def test_get_steering_policy(cli_testing_service_client, runner, config_file, co
 def test_get_steering_policy_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'GetSteeringPolicyAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'GetSteeringPolicyAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_steering_policy_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_steering_policy_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_steering_policy_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_steering_policy_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_steering_policy_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_get_steering_policy_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_attachment_group.command_name', 'steering_policy_attachment')
@@ -938,6 +1270,10 @@ def test_get_steering_policy_attachment(cli_testing_service_client, runner, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_steering_policy_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_steering_policy_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_get_steering_policy_attachment'):
+                    os.remove('tests/resources/config_for_test_get_steering_policy_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -956,6 +1292,30 @@ def test_get_steering_policy_attachment(cli_testing_service_client, runner, conf
 def test_get_zone(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'GetZone'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'GetZone')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_zone.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_zone', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_zone.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_zone'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_zone.pem'])
+            config_file = 'tests/resources/config_for_test_get_zone'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('zones_group.command_name', 'zones')
@@ -1013,6 +1373,10 @@ def test_get_zone(cli_testing_service_client, runner, config_file, config_profil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_zone.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_zone.pem')
+                if os.path.exists('tests/resources/config_for_test_get_zone'):
+                    os.remove('tests/resources/config_for_test_get_zone')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1031,6 +1395,30 @@ def test_get_zone(cli_testing_service_client, runner, config_file, config_profil
 def test_get_zone_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'GetZoneRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'GetZoneRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_zone_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_zone_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_zone_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_zone_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_zone_records.pem'])
+            config_file = 'tests/resources/config_for_test_get_zone_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -1088,6 +1476,10 @@ def test_get_zone_records(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_zone_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_zone_records.pem')
+                if os.path.exists('tests/resources/config_for_test_get_zone_records'):
+                    os.remove('tests/resources/config_for_test_get_zone_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1106,6 +1498,30 @@ def test_get_zone_records(cli_testing_service_client, runner, config_file, confi
 def test_list_steering_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'ListSteeringPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'ListSteeringPolicies')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_steering_policies.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_steering_policies', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_steering_policies.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_steering_policies'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_steering_policies.pem'])
+            config_file = 'tests/resources/config_for_test_list_steering_policies'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_group.command_name', 'steering_policy')
@@ -1163,6 +1579,10 @@ def test_list_steering_policies(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_steering_policies.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_steering_policies.pem')
+                if os.path.exists('tests/resources/config_for_test_list_steering_policies'):
+                    os.remove('tests/resources/config_for_test_list_steering_policies')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1181,6 +1601,30 @@ def test_list_steering_policies(cli_testing_service_client, runner, config_file,
 def test_list_steering_policy_attachments(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'ListSteeringPolicyAttachments'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'ListSteeringPolicyAttachments')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_steering_policy_attachments.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_steering_policy_attachments', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_steering_policy_attachments.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_steering_policy_attachments'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_steering_policy_attachments.pem'])
+            config_file = 'tests/resources/config_for_test_list_steering_policy_attachments'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_attachment_group.command_name', 'steering_policy_attachment')
@@ -1238,6 +1682,10 @@ def test_list_steering_policy_attachments(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_steering_policy_attachments.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_steering_policy_attachments.pem')
+                if os.path.exists('tests/resources/config_for_test_list_steering_policy_attachments'):
+                    os.remove('tests/resources/config_for_test_list_steering_policy_attachments')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1256,6 +1704,30 @@ def test_list_steering_policy_attachments(cli_testing_service_client, runner, co
 def test_list_zones(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'ListZones'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'ListZones')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_zones.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_zones', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_zones.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_zones'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_zones.pem'])
+            config_file = 'tests/resources/config_for_test_list_zones'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('zones_group.command_name', 'zones')
@@ -1313,6 +1785,10 @@ def test_list_zones(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_zones.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_zones.pem')
+                if os.path.exists('tests/resources/config_for_test_list_zones'):
+                    os.remove('tests/resources/config_for_test_list_zones')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1331,6 +1807,30 @@ def test_list_zones(cli_testing_service_client, runner, config_file, config_prof
 def test_patch_domain_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'PatchDomainRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'PatchDomainRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_patch_domain_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_patch_domain_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_patch_domain_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_patch_domain_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_patch_domain_records.pem'])
+            config_file = 'tests/resources/config_for_test_patch_domain_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -1396,6 +1896,10 @@ def test_patch_domain_records(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_patch_domain_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_patch_domain_records.pem')
+                if os.path.exists('tests/resources/config_for_test_patch_domain_records'):
+                    os.remove('tests/resources/config_for_test_patch_domain_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1414,6 +1918,30 @@ def test_patch_domain_records(cli_testing_service_client, runner, config_file, c
 def test_patch_rr_set(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'PatchRRSet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'PatchRRSet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_patch_rr_set.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_patch_rr_set', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_patch_rr_set.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_patch_rr_set'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_patch_rr_set.pem'])
+            config_file = 'tests/resources/config_for_test_patch_rr_set'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('rr_set_group.command_name', 'rr_set')
@@ -1479,6 +2007,10 @@ def test_patch_rr_set(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_patch_rr_set.pem'):
+                    os.remove('tests/resources/keyfile_for_test_patch_rr_set.pem')
+                if os.path.exists('tests/resources/config_for_test_patch_rr_set'):
+                    os.remove('tests/resources/config_for_test_patch_rr_set')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1497,6 +2029,30 @@ def test_patch_rr_set(cli_testing_service_client, runner, config_file, config_pr
 def test_patch_zone_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'PatchZoneRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'PatchZoneRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_patch_zone_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_patch_zone_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_patch_zone_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_patch_zone_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_patch_zone_records.pem'])
+            config_file = 'tests/resources/config_for_test_patch_zone_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -1562,6 +2118,10 @@ def test_patch_zone_records(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_patch_zone_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_patch_zone_records.pem')
+                if os.path.exists('tests/resources/config_for_test_patch_zone_records'):
+                    os.remove('tests/resources/config_for_test_patch_zone_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1580,6 +2140,30 @@ def test_patch_zone_records(cli_testing_service_client, runner, config_file, con
 def test_update_domain_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'UpdateDomainRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'UpdateDomainRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_domain_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_domain_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_domain_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_domain_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_domain_records.pem'])
+            config_file = 'tests/resources/config_for_test_update_domain_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -1646,6 +2230,10 @@ def test_update_domain_records(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_domain_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_domain_records.pem')
+                if os.path.exists('tests/resources/config_for_test_update_domain_records'):
+                    os.remove('tests/resources/config_for_test_update_domain_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1664,6 +2252,30 @@ def test_update_domain_records(cli_testing_service_client, runner, config_file, 
 def test_update_rr_set(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'UpdateRRSet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'UpdateRRSet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_rr_set.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_rr_set', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_rr_set.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_rr_set'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_rr_set.pem'])
+            config_file = 'tests/resources/config_for_test_update_rr_set'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('record_collection_group.command_name', 'record_collection')
@@ -1730,6 +2342,10 @@ def test_update_rr_set(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_rr_set.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_rr_set.pem')
+                if os.path.exists('tests/resources/config_for_test_update_rr_set'):
+                    os.remove('tests/resources/config_for_test_update_rr_set')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1748,6 +2364,30 @@ def test_update_rr_set(cli_testing_service_client, runner, config_file, config_p
 def test_update_steering_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'UpdateSteeringPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'UpdateSteeringPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_steering_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_steering_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_steering_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_steering_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_steering_policy.pem'])
+            config_file = 'tests/resources/config_for_test_update_steering_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_group.command_name', 'steering_policy')
@@ -1814,6 +2454,10 @@ def test_update_steering_policy(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_steering_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_steering_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_update_steering_policy'):
+                    os.remove('tests/resources/config_for_test_update_steering_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1832,6 +2476,30 @@ def test_update_steering_policy(cli_testing_service_client, runner, config_file,
 def test_update_steering_policy_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'UpdateSteeringPolicyAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'UpdateSteeringPolicyAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_steering_policy_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_steering_policy_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_steering_policy_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_steering_policy_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_steering_policy_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_update_steering_policy_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('steering_policy_attachment_group.command_name', 'steering_policy_attachment')
@@ -1897,6 +2565,10 @@ def test_update_steering_policy_attachment(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_steering_policy_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_steering_policy_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_update_steering_policy_attachment'):
+                    os.remove('tests/resources/config_for_test_update_steering_policy_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1915,6 +2587,30 @@ def test_update_steering_policy_attachment(cli_testing_service_client, runner, c
 def test_update_zone(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'UpdateZone'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'UpdateZone')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_zone.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_zone', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_zone.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_zone'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_zone.pem'])
+            config_file = 'tests/resources/config_for_test_update_zone'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('zone_group.command_name', 'zone')
@@ -1981,6 +2677,10 @@ def test_update_zone(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_zone.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_zone.pem')
+                if os.path.exists('tests/resources/config_for_test_update_zone'):
+                    os.remove('tests/resources/config_for_test_update_zone')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1999,6 +2699,30 @@ def test_update_zone(cli_testing_service_client, runner, config_file, config_pro
 def test_update_zone_records(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('dns', 'UpdateZoneRecords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('dns', 'Dns', 'UpdateZoneRecords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_zone_records.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_zone_records', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_zone_records.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_zone_records'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_zone_records.pem'])
+            config_file = 'tests/resources/config_for_test_update_zone_records'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('dns_root_group.command_name', 'dns')
     resource_group_command_name = oci_cli.cli_util.override('records_group.command_name', 'records')
@@ -2065,6 +2789,10 @@ def test_update_zone_records(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_zone_records.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_zone_records.pem')
+                if os.path.exists('tests/resources/config_for_test_update_zone_records'):
+                    os.remove('tests/resources/config_for_test_update_zone_records')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2080,7 +2808,7 @@ def test_update_zone_records(cli_testing_service_client, runner, config_file, co
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

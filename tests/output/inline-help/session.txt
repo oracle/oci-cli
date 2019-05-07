@@ -28,9 +28,10 @@ Usage: oci session authenticate [OPTIONS]
   [required] argument
 
 Options:
-  --region TEXT   us-phoenix-1,us-ashburn-1,eu-frankfurt-1,uk-london-1,ca-
-                  toronto-1,us-langley-1,us-luke-1,us-gov-ashburn-1,us-gov-
-                  chicago-1,us-gov-phoenix-1
+  --region TEXT   ap-mumbai-1,ap-saopaolo-1,ap-seoul-1,ap-sydney-1,ap-
+                  tokyo-1,ca-toronto-1,eu-frankfurt-1,eu-zurich-1,us-
+                  ashburn-1,us-phoenix-1,uk-london-1,us-langley-1,us-luke-1,us-
+                  gov-ashburn-1,us-gov-chicago-1,us-gov-phoenix-1
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 

@@ -2716,12 +2716,20 @@ Commands:
 $ oci network fast-connect-provider-service-key get --help
 Usage: oci network fast-connect-provider-service-key get [OPTIONS]
 
-  Gets the specified provider service key's information.
+  Gets the specified provider service key's information. Use this operation to
+  validate a provider service key. An invalid key returns a 404 error.
 
 Options:
   --provider-service-id TEXT      The OCID of the provider service. [required]
   --provider-service-key-name TEXT
-                                  The provider service key name. [required]
+                                  The provider service key that the provider
+                                  gives you when you set up a virtual circuit
+                                  connection from the provider to Oracle Cloud
+                                  Infrastructure. You can set up that connection
+                                  and get your provider service key at the
+                                  provider's website or portal. For the portal
+                                  location, see the `description` attribute of
+                                  the [FastConnectProviderService]. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -3619,41 +3627,6 @@ Options:
                                   a complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-  --cpe-local-identifier TEXT     Your identifier for your CPE device. Can be
-                                  either an IP address or a hostname
-                                  (specifically, the fully qualified domain name
-                                  (FQDN)). The type of identifier you provide
-                                  here must correspond to the value for
-                                  `cpeLocalIdentifierType`.
-                                  
-                                  Example IP address:
-                                  `10.0.3.3`
-                                  
-                                  Example hostname:
-                                  `cpe.example.com`
-  --cpe-local-identifier-type [IP_ADDRESS|HOSTNAME]
-                                  The type of identifier for your CPE device.
-                                  The value you provide here must correspond to
-                                  the value for `cpeLocalIdentifier`.
-  --static-routes COMPLEX TYPE    Static routes to the CPE. If you provide this
-                                  attribute, it replaces the entire current set
-                                  of static routes. A static route's CIDR must
-                                  not be a multicast address or class E address.
-                                  Example: `10.0.1.0/24`
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   

@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreateHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'CreateHttpMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_http_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_http_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_http_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_http_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_http_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_create_http_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_monitor_group.command_name', 'http_monitor')
@@ -92,6 +116,10 @@ def test_create_http_monitor(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_http_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_http_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_create_http_monitor'):
+                    os.remove('tests/resources/config_for_test_create_http_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_create_http_monitor(cli_testing_service_client, runner, config_file, co
 def test_create_on_demand_http_probe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreateOnDemandHttpProbe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'CreateOnDemandHttpProbe')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_on_demand_http_probe.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_on_demand_http_probe', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_on_demand_http_probe.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_on_demand_http_probe'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_on_demand_http_probe.pem'])
+            config_file = 'tests/resources/config_for_test_create_on_demand_http_probe'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_probe_group.command_name', 'http_probe')
@@ -175,6 +227,10 @@ def test_create_on_demand_http_probe(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_on_demand_http_probe.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_on_demand_http_probe.pem')
+                if os.path.exists('tests/resources/config_for_test_create_on_demand_http_probe'):
+                    os.remove('tests/resources/config_for_test_create_on_demand_http_probe')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -193,6 +249,30 @@ def test_create_on_demand_http_probe(cli_testing_service_client, runner, config_
 def test_create_on_demand_ping_probe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreateOnDemandPingProbe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'CreateOnDemandPingProbe')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_on_demand_ping_probe.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_on_demand_ping_probe', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_on_demand_ping_probe.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_on_demand_ping_probe'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_on_demand_ping_probe.pem'])
+            config_file = 'tests/resources/config_for_test_create_on_demand_ping_probe'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_probe_group.command_name', 'ping_probe')
@@ -258,6 +338,10 @@ def test_create_on_demand_ping_probe(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_on_demand_ping_probe.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_on_demand_ping_probe.pem')
+                if os.path.exists('tests/resources/config_for_test_create_on_demand_ping_probe'):
+                    os.remove('tests/resources/config_for_test_create_on_demand_ping_probe')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -276,6 +360,30 @@ def test_create_on_demand_ping_probe(cli_testing_service_client, runner, config_
 def test_create_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'CreatePingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'CreatePingMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_ping_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_ping_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_ping_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_ping_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_ping_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_create_ping_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_monitor_group.command_name', 'ping_monitor')
@@ -341,6 +449,10 @@ def test_create_ping_monitor(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_ping_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_ping_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_create_ping_monitor'):
+                    os.remove('tests/resources/config_for_test_create_ping_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -359,6 +471,30 @@ def test_create_ping_monitor(cli_testing_service_client, runner, config_file, co
 def test_delete_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'DeleteHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'DeleteHttpMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_http_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_http_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_http_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_http_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_http_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_delete_http_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_monitor_group.command_name', 'http_monitor')
@@ -417,6 +553,10 @@ def test_delete_http_monitor(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_http_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_http_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_http_monitor'):
+                    os.remove('tests/resources/config_for_test_delete_http_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -435,6 +575,30 @@ def test_delete_http_monitor(cli_testing_service_client, runner, config_file, co
 def test_delete_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'DeletePingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'DeletePingMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_ping_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_ping_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_ping_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_ping_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_ping_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_delete_ping_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_monitor_group.command_name', 'ping_monitor')
@@ -493,6 +657,10 @@ def test_delete_ping_monitor(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_ping_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_ping_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_ping_monitor'):
+                    os.remove('tests/resources/config_for_test_delete_ping_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -511,6 +679,30 @@ def test_delete_ping_monitor(cli_testing_service_client, runner, config_file, co
 def test_get_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'GetHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'GetHttpMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_http_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_http_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_http_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_http_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_http_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_get_http_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_monitor_group.command_name', 'http_monitor')
@@ -568,6 +760,10 @@ def test_get_http_monitor(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_http_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_http_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_get_http_monitor'):
+                    os.remove('tests/resources/config_for_test_get_http_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -586,6 +782,30 @@ def test_get_http_monitor(cli_testing_service_client, runner, config_file, confi
 def test_get_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'GetPingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'GetPingMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_ping_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_ping_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_ping_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_ping_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_ping_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_get_ping_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_monitor_group.command_name', 'ping_monitor')
@@ -643,6 +863,10 @@ def test_get_ping_monitor(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_ping_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_ping_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_get_ping_monitor'):
+                    os.remove('tests/resources/config_for_test_get_ping_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -661,6 +885,30 @@ def test_get_ping_monitor(cli_testing_service_client, runner, config_file, confi
 def test_list_health_checks_vantage_points(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListHealthChecksVantagePoints'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'ListHealthChecksVantagePoints')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_health_checks_vantage_points.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_health_checks_vantage_points', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_health_checks_vantage_points.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_health_checks_vantage_points'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_health_checks_vantage_points.pem'])
+            config_file = 'tests/resources/config_for_test_list_health_checks_vantage_points'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('health_checks_vantage_point_group.command_name', 'health_checks_vantage_point')
@@ -718,6 +966,10 @@ def test_list_health_checks_vantage_points(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_health_checks_vantage_points.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_health_checks_vantage_points.pem')
+                if os.path.exists('tests/resources/config_for_test_list_health_checks_vantage_points'):
+                    os.remove('tests/resources/config_for_test_list_health_checks_vantage_points')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -736,6 +988,30 @@ def test_list_health_checks_vantage_points(cli_testing_service_client, runner, c
 def test_list_http_monitors(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListHttpMonitors'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'ListHttpMonitors')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_http_monitors.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_http_monitors', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_http_monitors.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_http_monitors'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_http_monitors.pem'])
+            config_file = 'tests/resources/config_for_test_list_http_monitors'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_monitor_group.command_name', 'http_monitor')
@@ -793,6 +1069,10 @@ def test_list_http_monitors(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_http_monitors.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_http_monitors.pem')
+                if os.path.exists('tests/resources/config_for_test_list_http_monitors'):
+                    os.remove('tests/resources/config_for_test_list_http_monitors')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -811,6 +1091,30 @@ def test_list_http_monitors(cli_testing_service_client, runner, config_file, con
 def test_list_http_probe_results(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListHttpProbeResults'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'ListHttpProbeResults')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_http_probe_results.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_http_probe_results', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_http_probe_results.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_http_probe_results'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_http_probe_results.pem'])
+            config_file = 'tests/resources/config_for_test_list_http_probe_results'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_probe_result_group.command_name', 'http_probe_result')
@@ -868,6 +1172,10 @@ def test_list_http_probe_results(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_http_probe_results.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_http_probe_results.pem')
+                if os.path.exists('tests/resources/config_for_test_list_http_probe_results'):
+                    os.remove('tests/resources/config_for_test_list_http_probe_results')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -886,6 +1194,30 @@ def test_list_http_probe_results(cli_testing_service_client, runner, config_file
 def test_list_ping_monitors(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListPingMonitors'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'ListPingMonitors')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_ping_monitors.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_ping_monitors', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_ping_monitors.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_ping_monitors'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_ping_monitors.pem'])
+            config_file = 'tests/resources/config_for_test_list_ping_monitors'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_monitor_group.command_name', 'ping_monitor')
@@ -943,6 +1275,10 @@ def test_list_ping_monitors(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_ping_monitors.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_ping_monitors.pem')
+                if os.path.exists('tests/resources/config_for_test_list_ping_monitors'):
+                    os.remove('tests/resources/config_for_test_list_ping_monitors')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -961,6 +1297,30 @@ def test_list_ping_monitors(cli_testing_service_client, runner, config_file, con
 def test_list_ping_probe_results(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'ListPingProbeResults'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'ListPingProbeResults')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_ping_probe_results.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_ping_probe_results', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_ping_probe_results.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_ping_probe_results'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_ping_probe_results.pem'])
+            config_file = 'tests/resources/config_for_test_list_ping_probe_results'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_probe_result_group.command_name', 'ping_probe_result')
@@ -1018,6 +1378,10 @@ def test_list_ping_probe_results(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_ping_probe_results.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_ping_probe_results.pem')
+                if os.path.exists('tests/resources/config_for_test_list_ping_probe_results'):
+                    os.remove('tests/resources/config_for_test_list_ping_probe_results')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1036,6 +1400,30 @@ def test_list_ping_probe_results(cli_testing_service_client, runner, config_file
 def test_update_http_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'UpdateHttpMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'UpdateHttpMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_http_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_http_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_http_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_http_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_http_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_update_http_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('http_monitor_group.command_name', 'http_monitor')
@@ -1102,6 +1490,10 @@ def test_update_http_monitor(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_http_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_http_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_update_http_monitor'):
+                    os.remove('tests/resources/config_for_test_update_http_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1120,6 +1512,30 @@ def test_update_http_monitor(cli_testing_service_client, runner, config_file, co
 def test_update_ping_monitor(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('healthchecks', 'UpdatePingMonitor'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('healthchecks', 'HealthChecks', 'UpdatePingMonitor')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_ping_monitor.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_ping_monitor', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_ping_monitor.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_ping_monitor'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_ping_monitor.pem'])
+            config_file = 'tests/resources/config_for_test_update_ping_monitor'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('healthchecks_root_group.command_name', 'healthchecks')
     resource_group_command_name = oci_cli.cli_util.override('ping_monitor_group.command_name', 'ping_monitor')
@@ -1186,6 +1602,10 @@ def test_update_ping_monitor(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_ping_monitor.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_ping_monitor.pem')
+                if os.path.exists('tests/resources/config_for_test_update_ping_monitor'):
+                    os.remove('tests/resources/config_for_test_update_ping_monitor')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1201,7 +1621,7 @@ def test_update_ping_monitor(cli_testing_service_client, runner, config_file, co
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

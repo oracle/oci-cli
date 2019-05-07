@@ -3187,7 +3187,7 @@ Usage: oci lb rule-set [OPTIONS] COMMAND [ARGS]...
 
   A named set of rules associated with a load balancer. Rules are objects that
   represent actions to apply to a listener, such as adding, altering, or
-  removing HTTP headers.
+  removing HTTP headers. For more information, see [Managing Rule Sets].
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -3204,7 +3204,8 @@ Commands:
 $ oci lb rule-set create --help
 Usage: oci lb rule-set create [OPTIONS]
 
-  Creates a new rule set associated with the specified load balancer.
+  Creates a new rule set associated with the specified load balancer. For more
+  information, see [Managing Rule Sets].
 
 Options:
   --load-balancer-id TEXT         The [OCID] of the specified load balancer.

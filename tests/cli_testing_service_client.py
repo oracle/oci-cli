@@ -124,6 +124,7 @@ class CLITestingServiceClient:
         }
 
         if result.exit_code == 0:
+
             # remove known warnings from output that would break JSON parsing
             output = result.output.replace(LIST_NOT_ALL_ITEMS_RETURNED_WARNING, '')
 
@@ -262,6 +263,23 @@ class CLITestingServiceClient:
         service_name = service_name.replace('_', '').lower()
 
         url = '{service_root_url}/endpoint'.format(service_root_url=SERVICE_ROOT_URL)
+        params = {
+            'sessionId': self.session_id,
+            'serviceName': service_name,
+            'clientName': client_name,
+            'lang': SERVICE_LANGUAGE,
+            'apiName': api_name
+        }
+
+        response = requests.get(url, params=params)
+        assert response.status_code == 200, response.content
+        return response.content.decode('UTF-8')
+
+    def get_config(self, service_name, client_name, api_name):
+        # standardize service name to convention for Java SDK model namespaces (all lower case one word)
+        service_name = service_name.replace('_', '').lower()
+
+        url = '{service_root_url}/config'.format(service_root_url=SERVICE_ROOT_URL)
         params = {
             'sessionId': self.session_id,
             'serviceName': service_name,

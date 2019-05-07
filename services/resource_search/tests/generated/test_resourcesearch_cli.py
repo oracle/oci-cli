@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_get_resource_type(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('resource_search', 'GetResourceType'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('resource_search', 'ResourceSearch', 'GetResourceType')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_resource_type.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_resource_type', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_resource_type.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_resource_type'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_resource_type.pem'])
+            config_file = 'tests/resources/config_for_test_get_resource_type'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('search_root_group.command_name', 'search')
     resource_group_command_name = oci_cli.cli_util.override('resource_type_group.command_name', 'resource_type')
@@ -84,6 +108,10 @@ def test_get_resource_type(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_resource_type.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_resource_type.pem')
+                if os.path.exists('tests/resources/config_for_test_get_resource_type'):
+                    os.remove('tests/resources/config_for_test_get_resource_type')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -102,6 +130,30 @@ def test_get_resource_type(cli_testing_service_client, runner, config_file, conf
 def test_list_resource_types(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('resource_search', 'ListResourceTypes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('resource_search', 'ResourceSearch', 'ListResourceTypes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_resource_types.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_resource_types', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_resource_types.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_resource_types'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_resource_types.pem'])
+            config_file = 'tests/resources/config_for_test_list_resource_types'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('search_root_group.command_name', 'search')
     resource_group_command_name = oci_cli.cli_util.override('resource_type_group.command_name', 'resource_type')
@@ -159,6 +211,10 @@ def test_list_resource_types(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_resource_types.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_resource_types.pem')
+                if os.path.exists('tests/resources/config_for_test_list_resource_types'):
+                    os.remove('tests/resources/config_for_test_list_resource_types')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -177,6 +233,30 @@ def test_list_resource_types(cli_testing_service_client, runner, config_file, co
 def test_search_resources(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('resource_search', 'SearchResources'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('resource_search', 'ResourceSearch', 'SearchResources')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_search_resources.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_search_resources', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_search_resources.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_search_resources'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_search_resources.pem'])
+            config_file = 'tests/resources/config_for_test_search_resources'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('search_root_group.command_name', 'search')
     resource_group_command_name = oci_cli.cli_util.override('resource_summary_collection_group.command_name', 'resource_summary_collection')
@@ -262,6 +342,10 @@ def test_search_resources(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_search_resources.pem'):
+                    os.remove('tests/resources/keyfile_for_test_search_resources.pem')
+                if os.path.exists('tests/resources/config_for_test_search_resources'):
+                    os.remove('tests/resources/config_for_test_search_resources')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -277,7 +361,7 @@ def test_search_resources(cli_testing_service_client, runner, config_file, confi
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

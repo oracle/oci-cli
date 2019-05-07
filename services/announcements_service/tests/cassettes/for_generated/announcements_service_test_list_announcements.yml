@@ -5,15 +5,243 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ListAnnouncements&serviceName=announcementsservice&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/request/enable?apiName=ListAnnouncements&serviceName=announcementsservice&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Wed, 09 Jan 2019 21:31:50 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Wed, 24 Apr 2019 01:49:46 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0913&apiName=ListAnnouncements&serviceName=announcementsservice&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"c3b97e47-1e75-4fc7-a362-518bb1b15917","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq","limit":10}}]'}
+    headers:
+      Content-Length: ['177']
+      Content-Type: [text/plain]
+      Date: ['Wed, 24 Apr 2019 01:49:47 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="t4zD2xJHybW2IwmGCo/wg7n9gDFcb4mE/4FNIijql1JV5yoziecMThZEfvdyvofCH9GRaUUfdl4+NEFynSZp+9Lci0p/xuKbJELCBN/r6q5hqKcLgXEK7/jQKwmYJHEZ2TDmZaeqthd2zV0jWmuhRGyfNGFQrlfABcQrERZHagvbQa7PJScdWWVCOeDUHSx4/E0iKJDscrHboPcLbu0V/VpLJ+eifd4gc66NgWOP0S6B3t27jDvQ5EBvFst7Kn5radcjuQqSc++kY3VAMiLGYuZUxuYvcyWgDYWQ1WQNDdKx0hIPXamxAC/3wAn4A/SFxx5HcwHisX+0sWmvAsMTBQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 24 Apr 2019 01:49:47 GMT']
+      host: [announcements.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.791]
+      opc-request-id: [ECCE41E061034588A8E977816F6565B2]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.791 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.9+preview.1]
+    method: GET
+    uri: https://announcements.us-phoenix-1.oraclecloud.com/20180904/announcements?compartmentId=ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq
+  response:
+    body: {string: "{\n  \"items\" : [ {\n    \"type\" : \"AnnouncementSummary\",\n\
+        \    \"id\" : \"ocid1.announcement.oc1..aaaaaaaanrdek2o6gz3ejizfgjhj7bwibmbwoerqfnq4bde23fxksat22ljq\"\
+        ,\n    \"referenceTicketNumber\" : \"CN-4368\",\n    \"summary\" : \"Container\
+        \ Engine for Kubernetes\",\n    \"timeOneTitle\" : \"Start Time\",\n    \"\
+        timeOneType\" : \"START_TIME\",\n    \"timeOneValue\" : \"2019-03-22T12:00:00.000Z\"\
+        ,\n    \"timeTwoTitle\" : \"End Time\",\n    \"timeTwoType\" : \"END_TIME\"\
+        ,\n    \"timeTwoValue\" : \"2019-03-22T22:36:00.000Z\",\n    \"services\"\
+        \ : [ \"Oracle Cloud Infrastructure Container Engine for Kubernetes\" ],\n\
+        \    \"affectedRegions\" : [ \"Multiple Regions\" ],\n    \"announcementType\"\
+        \ : \"PRODUCTION_EVENT_NOTIFICATION\",\n    \"lifecycleState\" : \"INACTIVE\"\
+        ,\n    \"isBanner\" : false,\n    \"timeCreated\" : \"2019-03-23T00:02:34.969Z\"\
+        ,\n    \"timeUpdated\" : \"2019-03-23T00:02:34.969Z\"\n  }, {\n    \"type\"\
+        \ : \"AnnouncementSummary\",\n    \"id\" : \"ocid1.announcement.oc1..aaaaaaaafvmcv6l3csuq5ud7asdiflob3byae5faww4qjage3djurl6sn6ya\"\
+        ,\n    \"referenceTicketNumber\" : \"CN-4368\",\n    \"summary\" : \"Container\
+        \ Engine for Kubernetes\",\n    \"timeOneTitle\" : \"Start Time\",\n    \"\
+        timeOneType\" : \"START_TIME\",\n    \"timeOneValue\" : \"2019-03-22T12:00:00.000Z\"\
+        ,\n    \"timeTwoTitle\" : null,\n    \"timeTwoType\" : null,\n    \"timeTwoValue\"\
+        \ : null,\n    \"services\" : [ \"Oracle Cloud Infrastructure Container Engine\
+        \ for Kubernetes\" ],\n    \"affectedRegions\" : [ \"Multiple Regions\" ],\n\
+        \    \"announcementType\" : \"PRODUCTION_EVENT_NOTIFICATION\",\n    \"lifecycleState\"\
+        \ : \"ACTIVE\",\n    \"isBanner\" : false,\n    \"timeCreated\" : \"2019-03-22T20:54:50.250Z\"\
+        ,\n    \"timeUpdated\" : \"2019-03-22T23:28:00.446Z\"\n  }, {\n    \"type\"\
+        \ : \"AnnouncementSummary\",\n    \"id\" : \"ocid1.announcement.oc1..aaaaaaaa7ebuapomdynuc65xqxmtjnbmma3q7fcsgbowjx7st5bexhvcmgca\"\
+        ,\n    \"referenceTicketNumber\" : \"CN-4368\",\n    \"summary\" : \"Container\
+        \ Engine for Kubernetes\",\n    \"timeOneTitle\" : \"Start Time\",\n    \"\
+        timeOneType\" : \"START_TIME\",\n    \"timeOneValue\" : \"2019-03-22T12:25:00.000Z\"\
+        ,\n    \"timeTwoTitle\" : null,\n    \"timeTwoType\" : null,\n    \"timeTwoValue\"\
+        \ : null,\n    \"services\" : [ \"Oracle Cloud Infrastructure Container Engine\
+        \ for Kubernetes\" ],\n    \"affectedRegions\" : [ \"Multiple Regions\" ],\n\
+        \    \"announcementType\" : \"PRODUCTION_EVENT_NOTIFICATION\",\n    \"lifecycleState\"\
+        \ : \"ACTIVE\",\n    \"isBanner\" : false,\n    \"timeCreated\" : \"2019-03-22T18:36:20.283Z\"\
+        ,\n    \"timeUpdated\" : \"2019-03-22T20:55:02.984Z\"\n  }, {\n    \"type\"\
+        \ : \"AnnouncementSummary\",\n    \"id\" : \"ocid1.announcement.oc1..aaaaaaaawxrannhy3cvsullp572bz3m5dnzgdpw2mmyvppac56vwnpso5taa\"\
+        ,\n    \"referenceTicketNumber\" : \"CN-4368\",\n    \"summary\" : \"Container\
+        \ Engine for Kubernetes\",\n    \"timeOneTitle\" : \"Start Time\",\n    \"\
+        timeOneType\" : \"START_TIME\",\n    \"timeOneValue\" : \"2019-03-22T12:25:00.000Z\"\
+        ,\n    \"timeTwoTitle\" : null,\n    \"timeTwoType\" : null,\n    \"timeTwoValue\"\
+        \ : null,\n    \"services\" : [ \"Oracle Cloud Infrastructure Container Engine\
+        \ for Kubernetes\" ],\n    \"affectedRegions\" : [ \"Multiple Regions\" ],\n\
+        \    \"announcementType\" : \"PRODUCTION_EVENT_NOTIFICATION\",\n    \"lifecycleState\"\
+        \ : \"ACTIVE\",\n    \"isBanner\" : false,\n    \"timeCreated\" : \"2019-03-22T18:15:40.149Z\"\
+        ,\n    \"timeUpdated\" : \"2019-03-22T18:36:22.140Z\"\n  }, {\n    \"type\"\
+        \ : \"AnnouncementSummary\",\n    \"id\" : \"ocid1.announcement.oc1..aaaaaaaahjlokchyps52rousb4ilghzvn6dulwn3fwvfmz2lixgs4pea6zlq\"\
+        ,\n    \"referenceTicketNumber\" : \"CN-3934\",\n    \"summary\" : \"Developer\
+        \ Services : Container Engine for Kubernetes: Node Pool Security List Update\"\
+        ,\n    \"timeOneTitle\" : \"Notification Date\",\n    \"timeOneType\" : \"\
+        START_TIME\",\n    \"timeOneValue\" : \"2019-02-05T15:00:36.805Z\",\n    \"\
+        timeTwoTitle\" : null,\n    \"timeTwoType\" : null,\n    \"timeTwoValue\"\
+        \ : null,\n    \"services\" : [ \"Developer Services : Container Engine for\
+        \ Kubernetes\" ],\n    \"affectedRegions\" : [ \"All Regions\" ],\n    \"\
+        announcementType\" : \"ACTION_REQUIRED\",\n    \"lifecycleState\" : \"ACTIVE\"\
+        ,\n    \"isBanner\" : false,\n    \"timeCreated\" : \"2019-02-05T16:15:46.007Z\"\
+        ,\n    \"timeUpdated\" : \"2019-02-05T21:52:56.121Z\"\n  }, {\n    \"type\"\
+        \ : \"AnnouncementSummary\",\n    \"id\" : \"ocid1.announcement.oc1..aaaaaaaacdedeg3u5433izkgsw2523dhpk3rcbcrb4az7gofy7n43ak5w7da\"\
+        ,\n    \"referenceTicketNumber\" : \"sdk/cli testdata\",\n    \"summary\"\
+        \ : \"sdk/cli testdata\",\n    \"timeOneTitle\" : \"sdk/cli testdata\",\n\
+        \    \"timeOneType\" : \"START_TIME\",\n    \"timeOneValue\" : \"2018-12-21T08:00:00.000Z\"\
+        ,\n    \"timeTwoTitle\" : \"sdk/cli testdata\",\n    \"timeTwoType\" : \"\
+        END_TIME\",\n    \"timeTwoValue\" : \"2018-12-28T08:00:00.000Z\",\n    \"\
+        services\" : [ \"Compute\" ],\n    \"affectedRegions\" : [ \"us-phoenix-1\"\
+        \ ],\n    \"announcementType\" : \"ACTION_RECOMMENDED\",\n    \"lifecycleState\"\
+        \ : \"INACTIVE\",\n    \"isBanner\" : false,\n    \"timeCreated\" : \"2018-12-21T18:58:43.281Z\"\
+        ,\n    \"timeUpdated\" : \"2018-12-21T21:58:57.629Z\"\n  }, {\n    \"type\"\
+        \ : \"AnnouncementSummary\",\n    \"id\" : \"ocid1.announcement.oc1..aaaaaaaadk5ug6k6zudcowsvtvdn3t5zk65mxmxtcx5izyvtvan22hqhnqea\"\
+        ,\n    \"referenceTicketNumber\" : \"bar\",\n    \"summary\" : \"baz\",\n\
+        \    \"timeOneTitle\" : \"foo\",\n    \"timeOneType\" : \"START_TIME\",\n\
+        \    \"timeOneValue\" : \"2018-12-17T08:00:00.000Z\",\n    \"timeTwoTitle\"\
+        \ : \"bar\",\n    \"timeTwoType\" : \"END_TIME\",\n    \"timeTwoValue\" :\
+        \ \"2019-01-01T08:00:00.000Z\",\n    \"services\" : [ \"Compute\" ],\n   \
+        \ \"affectedRegions\" : [ \"us-phoenix-1\" ],\n    \"announcementType\" :\
+        \ \"ACTION_RECOMMENDED\",\n    \"lifecycleState\" : \"INACTIVE\",\n    \"\
+        isBanner\" : false,\n    \"timeCreated\" : \"2018-12-19T19:37:04.180Z\",\n\
+        \    \"timeUpdated\" : \"2018-12-21T21:59:02.327Z\"\n  } ],\n  \"userStatuses\"\
+        \ : [ {\n    \"userStatusAnnouncementId\" : \"ocid1.announcement.oc1..aaaaaaaanrdek2o6gz3ejizfgjhj7bwibmbwoerqfnq4bde23fxksat22ljq\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  }, {\n    \"userStatusAnnouncementId\"\
+        \ : \"ocid1.announcement.oc1..aaaaaaaafvmcv6l3csuq5ud7asdiflob3byae5faww4qjage3djurl6sn6ya\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  }, {\n    \"userStatusAnnouncementId\"\
+        \ : \"ocid1.announcement.oc1..aaaaaaaa7ebuapomdynuc65xqxmtjnbmma3q7fcsgbowjx7st5bexhvcmgca\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  }, {\n    \"userStatusAnnouncementId\"\
+        \ : \"ocid1.announcement.oc1..aaaaaaaawxrannhy3cvsullp572bz3m5dnzgdpw2mmyvppac56vwnpso5taa\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  }, {\n    \"userStatusAnnouncementId\"\
+        \ : \"ocid1.announcement.oc1..aaaaaaaahjlokchyps52rousb4ilghzvn6dulwn3fwvfmz2lixgs4pea6zlq\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  }, {\n    \"userStatusAnnouncementId\"\
+        \ : \"ocid1.announcement.oc1..aaaaaaaacdedeg3u5433izkgsw2523dhpk3rcbcrb4az7gofy7n43ak5w7da\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  }, {\n    \"userStatusAnnouncementId\"\
+        \ : \"ocid1.announcement.oc1..aaaaaaaadk5ug6k6zudcowsvtvdn3t5zk65mxmxtcx5izyvtvan22hqhnqea\"\
+        ,\n    \"userId\" : \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"\
+        ,\n    \"timeAcknowledged\" : null\n  } ]\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['7202']
+      Content-Type: [application/json]
+      Date: ['Wed, 24 Apr 2019 01:49:59 GMT']
+      Vary: [Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [ECCE41E061034588A8E977816F6565B2/0AD46D5C2201E2D7825E54156AF69F19/B40B39DEBFB64E1F982F7511DE371ED1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"861A1CC981824719A9333A28ADC4CCFA\",
+      \"announcementsCollection\": {\"userStatuses\": [{\"timeAcknowledged\": null,
+      \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaanrdek2o6gz3ejizfgjhj7bwibmbwoerqfnq4bde23fxksat22ljq\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"},
+      {\"timeAcknowledged\": null, \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaafvmcv6l3csuq5ud7asdiflob3byae5faww4qjage3djurl6sn6ya\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"},
+      {\"timeAcknowledged\": null, \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaa7ebuapomdynuc65xqxmtjnbmma3q7fcsgbowjx7st5bexhvcmgca\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"},
+      {\"timeAcknowledged\": null, \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaawxrannhy3cvsullp572bz3m5dnzgdpw2mmyvppac56vwnpso5taa\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"},
+      {\"timeAcknowledged\": null, \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaahjlokchyps52rousb4ilghzvn6dulwn3fwvfmz2lixgs4pea6zlq\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"},
+      {\"timeAcknowledged\": null, \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaacdedeg3u5433izkgsw2523dhpk3rcbcrb4az7gofy7n43ak5w7da\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"},
+      {\"timeAcknowledged\": null, \"userStatusAnnouncementId\": \"ocid1.announcement.oc1..aaaaaaaadk5ug6k6zudcowsvtvdn3t5zk65mxmxtcx5izyvtvan22hqhnqea\",
+      \"userId\": \"ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa\"}],
+      \"items\": [{\"isBanner\": false, \"timeUpdated\": \"2019-03-23T00:02:34.969000+00:00\",
+      \"id\": \"ocid1.announcement.oc1..aaaaaaaanrdek2o6gz3ejizfgjhj7bwibmbwoerqfnq4bde23fxksat22ljq\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2019-03-23T00:02:34.969000+00:00\",
+      \"lifecycleState\": \"INACTIVE\", \"summary\": \"Container Engine for Kubernetes\",
+      \"referenceTicketNumber\": \"CN-4368\", \"services\": [\"Oracle Cloud Infrastructure
+      Container Engine for Kubernetes\"], \"timeTwoValue\": \"2019-03-22T22:36:00+00:00\",
+      \"announcementType\": \"PRODUCTION_EVENT_NOTIFICATION\", \"timeOneValue\": \"2019-03-22T12:00:00+00:00\",
+      \"timeOneTitle\": \"Start Time\", \"timeTwoTitle\": \"End Time\", \"affectedRegions\":
+      [\"Multiple Regions\"]}, {\"isBanner\": false, \"timeUpdated\": \"2019-03-22T23:28:00.446000+00:00\",
+      \"id\": \"ocid1.announcement.oc1..aaaaaaaafvmcv6l3csuq5ud7asdiflob3byae5faww4qjage3djurl6sn6ya\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2019-03-22T20:54:50.250000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"summary\": \"Container Engine for Kubernetes\",
+      \"referenceTicketNumber\": \"CN-4368\", \"services\": [\"Oracle Cloud Infrastructure
+      Container Engine for Kubernetes\"], \"timeTwoValue\": null, \"announcementType\":
+      \"PRODUCTION_EVENT_NOTIFICATION\", \"timeOneValue\": \"2019-03-22T12:00:00+00:00\",
+      \"timeOneTitle\": \"Start Time\", \"timeTwoTitle\": null, \"affectedRegions\":
+      [\"Multiple Regions\"]}, {\"isBanner\": false, \"timeUpdated\": \"2019-03-22T20:55:02.984000+00:00\",
+      \"id\": \"ocid1.announcement.oc1..aaaaaaaa7ebuapomdynuc65xqxmtjnbmma3q7fcsgbowjx7st5bexhvcmgca\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2019-03-22T18:36:20.283000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"summary\": \"Container Engine for Kubernetes\",
+      \"referenceTicketNumber\": \"CN-4368\", \"services\": [\"Oracle Cloud Infrastructure
+      Container Engine for Kubernetes\"], \"timeTwoValue\": null, \"announcementType\":
+      \"PRODUCTION_EVENT_NOTIFICATION\", \"timeOneValue\": \"2019-03-22T12:25:00+00:00\",
+      \"timeOneTitle\": \"Start Time\", \"timeTwoTitle\": null, \"affectedRegions\":
+      [\"Multiple Regions\"]}, {\"isBanner\": false, \"timeUpdated\": \"2019-03-22T18:36:22.140000+00:00\",
+      \"id\": \"ocid1.announcement.oc1..aaaaaaaawxrannhy3cvsullp572bz3m5dnzgdpw2mmyvppac56vwnpso5taa\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2019-03-22T18:15:40.149000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"summary\": \"Container Engine for Kubernetes\",
+      \"referenceTicketNumber\": \"CN-4368\", \"services\": [\"Oracle Cloud Infrastructure
+      Container Engine for Kubernetes\"], \"timeTwoValue\": null, \"announcementType\":
+      \"PRODUCTION_EVENT_NOTIFICATION\", \"timeOneValue\": \"2019-03-22T12:25:00+00:00\",
+      \"timeOneTitle\": \"Start Time\", \"timeTwoTitle\": null, \"affectedRegions\":
+      [\"Multiple Regions\"]}, {\"isBanner\": false, \"timeUpdated\": \"2019-02-05T21:52:56.121000+00:00\",
+      \"id\": \"ocid1.announcement.oc1..aaaaaaaahjlokchyps52rousb4ilghzvn6dulwn3fwvfmz2lixgs4pea6zlq\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2019-02-05T16:15:46.007000+00:00\",
+      \"lifecycleState\": \"ACTIVE\", \"summary\": \"Developer Services : Container
+      Engine for Kubernetes: Node Pool Security List Update\", \"referenceTicketNumber\":
+      \"CN-3934\", \"services\": [\"Developer Services : Container Engine for Kubernetes\"],
+      \"timeTwoValue\": null, \"announcementType\": \"ACTION_REQUIRED\", \"timeOneValue\":
+      \"2019-02-05T15:00:36.805000+00:00\", \"timeOneTitle\": \"Notification Date\",
+      \"timeTwoTitle\": null, \"affectedRegions\": [\"All Regions\"]}, {\"isBanner\":
+      false, \"timeUpdated\": \"2018-12-21T21:58:57.629000+00:00\", \"id\": \"ocid1.announcement.oc1..aaaaaaaacdedeg3u5433izkgsw2523dhpk3rcbcrb4az7gofy7n43ak5w7da\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2018-12-21T18:58:43.281000+00:00\",
+      \"lifecycleState\": \"INACTIVE\", \"summary\": \"sdk/cli testdata\", \"referenceTicketNumber\":
+      \"sdk/cli testdata\", \"services\": [\"Compute\"], \"timeTwoValue\": \"2018-12-28T08:00:00+00:00\",
+      \"announcementType\": \"ACTION_RECOMMENDED\", \"timeOneValue\": \"2018-12-21T08:00:00+00:00\",
+      \"timeOneTitle\": \"sdk/cli testdata\", \"timeTwoTitle\": \"sdk/cli testdata\",
+      \"affectedRegions\": [\"us-phoenix-1\"]}, {\"isBanner\": false, \"timeUpdated\":
+      \"2018-12-21T21:59:02.327000+00:00\", \"id\": \"ocid1.announcement.oc1..aaaaaaaadk5ug6k6zudcowsvtvdn3t5zk65mxmxtcx5izyvtvan22hqhnqea\",
+      \"type\": \"AnnouncementSummary\", \"timeCreated\": \"2018-12-19T19:37:04.180000+00:00\",
+      \"lifecycleState\": \"INACTIVE\", \"summary\": \"baz\", \"referenceTicketNumber\":
+      \"bar\", \"services\": [\"Compute\"], \"timeTwoValue\": \"2019-01-01T08:00:00+00:00\",
+      \"announcementType\": \"ACTION_RECOMMENDED\", \"timeOneValue\": \"2018-12-17T08:00:00+00:00\",
+      \"timeOneTitle\": \"foo\", \"timeTwoTitle\": \"bar\", \"affectedRegions\": [\"us-phoenix-1\"]}]}}",
+      "requestJson": "{\"limit\": 10, \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq\"}",
+      "containerId": "c3b97e47-1e75-4fc7-a362-518bb1b15917", "requestClass": "com.oracle.bmc.announcementsservice.requests.ListAnnouncementsRequest",
+      "responseClass": "com.oracle.bmc.announcementsservice.responses.ListAnnouncementsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['7112']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0913&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 24 Apr 2019 01:49:52 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1
